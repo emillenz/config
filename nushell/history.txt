@@ -1,5 +1,3 @@
-startup
-doom sync
 ls
 git status
 git add i3
@@ -9998,3 +9996,5 @@ inu
 hello nu
 ls --help | bat --language man
 g
+git remote add origin https://github.com/emillenz/config.git
+git remote -v

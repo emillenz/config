@@ -1,4 +1,4 @@
-#+title:    Doom emacs config
+#+title:    Doom emacsn config
 #+author:   Emil Lenz
 #+email:    emillenz@protonmail.com
 #+date:     Tuesday, November 1, 2022
@@ -150,13 +150,13 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  fill-column 100)
 #+end_src
 
-- Automatically prompt me for buffer/dir to open after splitting/newtab. (using buffer/recentfile fzf)
-- I always do this so automate it (DRY)
-#+begin_src emacs-lisp
+** [?] Autoprompt for buffer after split
+- Automatically prompt for buffer/dir to open after splitting/newtab.
+- I use different functions depending on what i want to do.
+#+begin_src emacs-lisp :tangle no
 (defadvice! prompt-for-buffer (&rest _)
   :after '(tab-bar-new-tab-to tab-bar-new-tab evil-window-split evil-window-vsplit)
-  (consult-buffer)
-  )
+  (consult-buffer))
 #+end_src
 
 ** Completion menus
@@ -332,7 +332,8 @@ Also works after entering change/delete operator state // EX: ~c`({~ => ~)~ -> ~
         "`" 'evil-surround-edit)
   (map!
    :nmv "`" 'evil-surround-region
-   :nmv "`" 'evil-surround-region))
+   :nmv "`" 'evil-surround-region
+   ))
 #+end_src
 
 ** Org mode
@@ -348,12 +349,14 @@ Also works after entering change/delete operator state // EX: ~c`({~ => ~)~ -> ~
         ;; already using Meta for global navigation thus reassign
         :inmv "C-k" 'org-metaup
         :inmv "C-h" 'org-metaleft
-        :inmv "C-l" 'org-metaright)
+        :inmv "C-l" 'org-metaright
+        )
 
   (map! :localleader
         :map evil-org-mode-map
         "~"    'z/org-convert-keywords-downcase
-        "l f"  'z/org-link-file))
+        "l f"  'z/org-link-file
+        ))
 #+end_src
 
 ** Dired
@@ -385,13 +388,7 @@ Also works after entering change/delete operator state // EX: ~c`({~ => ~)~ -> ~
         :nm "." 'dired-omit-mode
         :nm "e" 'dired-create-empty-file
         :nm "E" 'dired-create-directory
-        )
-
-  ;; TODO
-  (map! :map peep-dired-mode-map
-        :nm "j" 'peep-dired-next-file
-        :nm "k" 'peep-dired-prev-file)
-  )
+        ))
 #+end_src
 
 * Evil mode
@@ -412,7 +409,8 @@ Also works after entering change/delete operator state // EX: ~c`({~ => ~)~ -> ~
    evil-move-cursor-back t
    evil-kill-on-visual-paste nil
    evil-want-C-i-jump t
-   evil-want-minibuffer t)
+   evil-want-minibuffer t
+   )
 
   (setq
    evil-snipe-scope 'visible
@@ -428,17 +426,16 @@ Also works after entering change/delete operator state // EX: ~c`({~ => ~)~ -> ~
              +lookup/references
              +lookup/implementations
              ))
-
     (evil-add-command-properties cmd :jump t)))
 #+end_src
 
 * Lsp & completion
-- Customize if wanted,
+- Lsp yak-shaves time visibly, so we want it fast and always.
 #+begin_src emacs-lisp
 (after! company
   (setq
    company-minimum-prefix-length 1
-   company-idle-delay 0.2 ;;never set to 0
+   company-idle-delay 0.2 ;; BUG: never set to 0
    company-show-quick-access t
    company-global-modes
    '(not
@@ -459,26 +456,16 @@ Also works after entering change/delete operator state // EX: ~c`({~ => ~)~ -> ~
  )
 #+end_src
 
-** Snippet helper
-- This is used in the custom yasnippet: ~src_block~ => inserts src block with the language prefilled.
-#+begin_src emacs-lisp
-(defun z/org-last-src-lang ()
-  "Return the language of the last src-block, if it exists."
-  (save-excursion
-    (beginning-of-line)
-    (when (re-search-backward "^[ \t]*#\\+begin_src" nil t)
-      (org-element-property :language (org-element-context)))))
-#+end_src
-
 * Dired Mode
 - always open media files externally (emacs bad at graphical stuff)
 #+begin_src emacs-lisp
-(setq dired-omit-files ;; hidden files
+(setq dired-omit-files
       (rx (or
            (seq bol (? ".") "#")
            (seq bol "." (not (any ".")))
            (seq "~" eol)
            (seq bol "CVS" eol))))
+
 (setq dired-open-extensions
       '(("mkv"  . "mpv")
         ("mp4"  . "mpv")
@@ -496,12 +483,14 @@ Also works after entering change/delete operator state // EX: ~c`({~ => ~)~ -> ~
 
 (setq
  dired-recursive-copies 'always
- dired-recursive-deletes 'top ;; confirm once
- global-auto-revert-non-file-buffers t ;; auto update when something changes
- dired-kill-when-opening-new-dired-buffer t) ;; reuse dired buffer
+ dired-recursive-deletes 'top
+ global-auto-revert-non-file-buffers t
+ dired-kill-when-opening-new-dired-buffer t
+ )
 
 (setq peep-dired-cleanup-eagerly t
-      peep-dired-ignored-extensions '("mkv" "iso" "mp4" "gif" "mp3"))
+      peep-dired-ignored-extensions '("mkv" "iso" "mp4" "gif" "mp3")
+      )
 #+end_src
 
 * Org Mode
@@ -521,12 +510,14 @@ Also works after entering change/delete operator state // EX: ~c`({~ => ~)~ -> ~
           org-checklist
           org-collector
           org-toc
-          org-velocity))
+          org-velocity
+          ))
 
   (add-hook! 'org-mode-hook :append
              '(visual-line-mode
                org-num-mode
-               org-appear-mode))
+               org-appear-mode
+               ))
 
   ;; NOTE: add org-babel-tangle to save-hook upon entering org-mode (org-mode-hook)
   (add-hook! 'org-mode-hook :append
@@ -1106,8 +1097,7 @@ End the "(after! org" block
  indent-tabs-mode nil
  )
 
-(setq-hook!
-    'prog-mode-hook
+(setq-hook! 'prog-mode-hook
   org-indent-indentation-per-level 2
   evil-shift-width 2
   standard-indent 2

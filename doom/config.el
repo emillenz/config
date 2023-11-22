@@ -110,13 +110,6 @@
  fill-column 100)
 ;; Window layout & behavior:3 ends here
 
-;; [[file:config.org::*Window layout & behavior][Window layout & behavior:4]]
-(defadvice! prompt-for-buffer (&rest _)
-  :after '(tab-bar-new-tab-to tab-bar-new-tab evil-window-split evil-window-vsplit)
-  (consult-buffer)
-  )
-;; Window layout & behavior:4 ends here
-
 ;; [[file:config.org::*Completion menus][Completion menus:1]]
 (setq consult-async-min-input 0)
 ;; Completion menus:1 ends here
@@ -240,7 +233,8 @@
         "`" 'evil-surround-edit)
   (map!
    :nmv "`" 'evil-surround-region
-   :nmv "`" 'evil-surround-region))
+   :nmv "`" 'evil-surround-region
+   ))
 ;; Evil surround operator:1 ends here
 
 ;; [[file:config.org::*Org mode][Org mode:1]]
@@ -255,12 +249,14 @@
         ;; already using Meta for global navigation thus reassign
         :inmv "C-k" 'org-metaup
         :inmv "C-h" 'org-metaleft
-        :inmv "C-l" 'org-metaright)
+        :inmv "C-l" 'org-metaright
+        )
 
   (map! :localleader
         :map evil-org-mode-map
         "~"    'z/org-convert-keywords-downcase
-        "l f"  'z/org-link-file))
+        "l f"  'z/org-link-file
+        ))
 ;; Org mode:1 ends here
 
 ;; [[file:config.org::*Dired][Dired:1]]
@@ -282,13 +278,7 @@
         :nm "." 'dired-omit-mode
         :nm "e" 'dired-create-empty-file
         :nm "E" 'dired-create-directory
-        )
-
-  ;; TODO
-  (map! :map peep-dired-mode-map
-        :nm "j" 'peep-dired-next-file
-        :nm "k" 'peep-dired-prev-file)
-  )
+        ))
 ;; Dired:1 ends here
 
 ;; [[file:config.org::*Evil mode][Evil mode:1]]
@@ -302,7 +292,8 @@
    evil-move-cursor-back t
    evil-kill-on-visual-paste nil
    evil-want-C-i-jump t
-   evil-want-minibuffer t)
+   evil-want-minibuffer t
+   )
 
   (setq
    evil-snipe-scope 'visible
@@ -318,7 +309,6 @@
              +lookup/references
              +lookup/implementations
              ))
-
     (evil-add-command-properties cmd :jump t)))
 ;; Evil mode:1 ends here
 
@@ -326,7 +316,7 @@
 (after! company
   (setq
    company-minimum-prefix-length 1
-   company-idle-delay 0.2 ;;never set to 0
+   company-idle-delay 0.2 ;; BUG: never set to 0
    company-show-quick-access t
    company-global-modes
    '(not
@@ -345,22 +335,14 @@
  )
 ;; Templates & snippets:1 ends here
 
-;; [[file:config.org::*Snippet helper][Snippet helper:1]]
-(defun z/org-last-src-lang ()
-  "Return the language of the last src-block, if it exists."
-  (save-excursion
-    (beginning-of-line)
-    (when (re-search-backward "^[ \t]*#\\+begin_src" nil t)
-      (org-element-property :language (org-element-context)))))
-;; Snippet helper:1 ends here
-
 ;; [[file:config.org::*Dired Mode][Dired Mode:1]]
-(setq dired-omit-files ;; hidden files
+(setq dired-omit-files
       (rx (or
            (seq bol (? ".") "#")
            (seq bol "." (not (any ".")))
            (seq "~" eol)
            (seq bol "CVS" eol))))
+
 (setq dired-open-extensions
       '(("mkv"  . "mpv")
         ("mp4"  . "mpv")
@@ -378,12 +360,14 @@
 
 (setq
  dired-recursive-copies 'always
- dired-recursive-deletes 'top ;; confirm once
- global-auto-revert-non-file-buffers t ;; auto update when something changes
- dired-kill-when-opening-new-dired-buffer t) ;; reuse dired buffer
+ dired-recursive-deletes 'top
+ global-auto-revert-non-file-buffers t
+ dired-kill-when-opening-new-dired-buffer t
+ )
 
 (setq peep-dired-cleanup-eagerly t
-      peep-dired-ignored-extensions '("mkv" "iso" "mp4" "gif" "mp3"))
+      peep-dired-ignored-extensions '("mkv" "iso" "mp4" "gif" "mp3")
+      )
 ;; Dired Mode:1 ends here
 
 ;; [[file:config.org::*Org Mode][Org Mode:1]]
@@ -396,12 +380,14 @@
         org-checklist
         org-collector
         org-toc
-        org-velocity))
+        org-velocity
+        ))
 
 (add-hook! 'org-mode-hook :append
            '(visual-line-mode
              org-num-mode
-             org-appear-mode))
+             org-appear-mode
+             ))
 
 ;; NOTE: add org-babel-tangle to save-hook upon entering org-mode (org-mode-hook)
 (add-hook! 'org-mode-hook :append
@@ -831,8 +817,7 @@ Jumps at tangled code from org src block."
  indent-tabs-mode nil
  )
 
-(setq-hook!
-    'prog-mode-hook
+(setq-hook! 'prog-mode-hook
   org-indent-indentation-per-level 2
   evil-shift-width 2
   standard-indent 2

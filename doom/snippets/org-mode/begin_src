@@ -3,6 +3,9 @@
 # uuid: src
 # key: src
 # --
-#+begin_src ${1:`(or (z/org-last-src-lang) "?")`}
+#+begin_src ${1:`(or (save-excursion
+    (beginning-of-line)
+    (when (re-search-backward "^[ \t]*#\\+begin_src" nil t)
+      (org-element-property :language (org-element-context)))) "?")`}
 `%`$0
 #+end_src

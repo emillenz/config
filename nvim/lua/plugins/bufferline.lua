@@ -1,0 +1,35 @@
+return {
+	"akinsho/bufferline.nvim",
+	keys = {
+		{ "<leader>bo", "<Cmd>BufferLineCloseOthers<CR>", desc = "Delete other buffers" },
+		{ "[b", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev buffer" },
+		{ "]b", "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer" },
+		{ "<a-j>", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev buffer" },
+		{ "<a-S-j>", "<cmd>BufferLineMovePrev<cr>", desc = "Move Buffer next" },
+		{ "<a-k>", "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer" },
+		{ "<a-S-k>", "<cmd>BufferLineMoveNext<cr>", desc = "Move Buffer prev" },
+		{ "<a-1>", "<cmd>BufferLineGoToBuffer 1<cr>", desc = "Goto buffer 1" },
+		{ "<a-2>", "<cmd>BufferLineGoToBuffer 2<cr>", desc = "Goto buffer 2" },
+		{ "<a-3>", "<cmd>BufferLineGoToBuffer 3<cr>", desc = "Goto buffer 3" },
+		{ "<a-4>", "<cmd>BufferLineGoToBuffer 4<cr>", desc = "Goto buffer 4" },
+		{ "<a-5>", "<cmd>BufferLineGoToBuffer 5<cr>", desc = "Goto buffer 5" },
+		{ "<a-6>", "<cmd>BufferLineGoToBuffer 6<cr>", desc = "Goto buffer 6" },
+		{ "<a-7>", "<cmd>BufferLineGoToBuffer 7<cr>", desc = "Goto buffer 7" },
+		{ "<a-8>", "<cmd>BufferLineGoToBuffer 8<cr>", desc = "Goto buffer 8" },
+		{ "<a-9>", "<cmd>BufferLineGoToBuffer 9<cr>", desc = "Goto buffer 9" },
+	},
+	opts = {
+		options = {
+			mode = "tabs",
+			numbers = "ordinal",
+			indicator = {
+				style = "underline",
+			},
+			show_buffer_close_icons = false,
+			show_close_icon = false,
+			color_icons = true,
+			always_show_bufferline = true,
+			show_duplicate_prefix = false,
+		},
+	},
+}

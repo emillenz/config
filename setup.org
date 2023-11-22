@@ -1,0 +1,115 @@
+#+title:     Setup
+#+author:    Emil Lenz
+#+email:     emillenz@protonmail.com
+#+date:      Wednesday, June 28, 2023
+#+property:  header-args:sh :tangle yes :shebang #!/bin/bash
+
+* Info
+- These packages are for arch based distributions, using yay to also install packages which are found in the AUR.
+- If you use a different packagemanager you must ensure to install these programs on your own in order to get my workflow to work.
+- Run this script as root -> get no prompts // ~sudo su~
+
+* Setup
+#+begin_src sh
+sudo pacman -Syyu
+#+end_src
+
+* Core tools
+** Terminal, Nushell
+#+begin_src sh
+yay --noconfirm -S alacritty curl libtool xorg-xset fzf fd ripgrep xclip xdg-utils cmake npm bat git gcc make xdotool tldr htop carapace ttf-terminus-nerd terminus-font nushell tmux
+#+end_src
+
+Set nushell to loginshell
+#+begin_src sh
+sudo chsh -s /usr/bin/nu root
+chsh -s /usr/bin/nu
+#+end_src
+
+** Never sudo-password-prompt
+- Neccessarry for the [[file:bin/startup][Startup]] script
+#+begin_src sh
+echo "$USER ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/$USER"
+#+end_src
+
+** Make system-scripts executeable
+#+begin_src sh
+fd . ~/.config/bin -tf -x chmod +x {}
+#+end_src
+
+* Editor: doom emacs
+#+begin_src sh
+yay --noconfirm -S emacs-nativecomp
+
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+~/.config/emacs/bin/doom install
+#+end_src
+
+* Gui apps & packages
+#+begin_src sh
+yay --noconfirm -S i3 i3lock zathura zathura-pdf-mupdf arandr mpv rofi light wmctrl sxiv unclutter firefox pavucontrol pasystray polybar playerctl blueman xorg-xprop wmctrl xremap-x11-bin polybar light thunar networkmanager network-manager-applet mpd dunst notify-send nsxiv xorg-xwininfo keepassxc maim pulsemixer
+#+end_src
+
+** Enable daemons
+#+begin_src sh
+sudo systemctl enable sshd
+sudo systemctl enable mpd
+sudo systemctl enable bluetooth
+#+end_src
+
+* Personal packages
+- These packages are needed for my work, but not necessary for the workflow of this config.
+** languages
+*** latex
+- For writing papers
+#+begin_src sh :tangle no
+yay --noconfirm -S texlive-basic latex-mk pandoc
+#+end_src
+
+*** Rust
+- The main language for anything that is a program and not a script.
+#+begin_src sh :tangle no
+yay --noconfirm -S rustup
+rustup component add rust-analyzer-preview
+cargo install rustfmt rust-analyzer
+#+end_src
+
+*** C
+- When you need access on the lowest level.
+#+begin_src sh :tangle no
+yay --noconfirm -S clang gdb strace libgccjit
+#+end_src
+
+*** Python
+- I hate python passionately for its inconsitencies and trashy syntax, but it's everywhere like a virus so i need support for it.
+#+begin_src sh :tangle no
+yay --noconfirm -S python pls python-black flake8
+#+end_src
+
+** Misc
+- I have multiple laptops, and i want all my files to be in perfect sync, so no matter on which device i am, i have all my files.
+- I use peer-downloads -> torrent-cli
+#+begin_src sh :tangle no
+yay --noconfirm -S syncthing transmission-cli
+#+end_src
+** Blackarch repo
+- For pentesting
+#+begin_src sh :tangle no
+# Run https://blackarch.org/strap.sh as root and follow the instructions.
+curl -O https://blackarch.org/strap.sh
+
+# Set execute bit
+chmod +x strap.sh
+
+# Run strap.sh
+sudo ./strap.sh
+
+# Enable multilib following https://wiki.archlinux.org/index.php/Official_repositories#Enabling_multilib and run:
+yay --noconfirm -Syu
+#+end_src
+
+** Obs & Nvidia drivers
+#+begin_src sh :tangle no
+yay --noconfirm -S -S obs-studio
+yay --noconfirm -S -S nvidia nvidia-utils lib32-nvidia-utils nvidia-settings
+#+end_src

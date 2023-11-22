@@ -1,0 +1,20 @@
+;; -*- no-byte-compile: t; -*-
+
+(package! flycheck-aspell)
+(package! dired-open)
+(package! dired-subtree)
+(package! elfeed-goodies)
+(package! peep-dired)
+(package! rainbow-mode)
+(package! wc-mode)
+(package! beacon)
+(package! clippy)
+(package! org-appear)
+(package! org-roam)
+(package! doct) ;;TODO
+(package! all-the-icons-ivy)
+(package! org-super-agenda)
+(package! tldr)
+(package! org-superstar)
+(package! org-tidy)
+(package! evil-numbers)

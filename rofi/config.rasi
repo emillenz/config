@@ -1,0 +1,269 @@
+//NOTE: use S-RET to spawn app / command in terminal.
+//NOTE: use S-DEL to delete entry permanently
+
+configuration {
+  case-insensitive: true;
+  matching: "glob"; // normal, regex, glob, fuzzy, prefix
+
+  terminal : "alacritty";
+  font     : "Terminus 8";
+
+  modi: "drun,run,window,windowcd,ssh,filebrowser,keys";
+
+  show-icons          : true;
+  display-drun        : " ";
+  display-run         : " ";
+  display-filebrowser : " ";
+  display-window      : " ";
+
+  window-format    : "{w} | {c} | {t} ";
+  window-command   : "wmctrl -i -R {window}";
+  window-thumbnail : false;
+
+  drun-display-format       : "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
+  drun-categories           : "";
+  drun-match-fields         : "name,generic,exec,categories,keywords";
+  drun-display-format       : "{name} [<span weight='light' size='small'><i>({generic})</i></span>]";
+  drun-show-actions         : false;
+  drun-url-launcher         : "xdg-open";
+  drun-use-desktop-cache    : false;
+  drun-reload-desktop-cache : false;
+
+  drun {
+    parse-user:   true;
+    parse-system: true;
+  }
+
+  run-command:       "{cmd}";
+  run-list-command:  "";
+  run-shell-command: "{terminal} -e {cmd}";
+}
+
+window {
+  transparency     : "real";
+  location         : southwest;
+  anchor           : southwest;
+  fullscreen       : false;
+  width            : 100%;
+  x-offset         : 0px;
+  y-offset         : 0px;
+
+  enabled          : true;
+  margin           : 0px;
+  padding          : 0px;
+  border           : 0px 0px 0px 0px;
+  border-color     : @selected;
+  cursor           : "default";
+  background-color : @background;
+}
+
+mainbox {
+  enabled          : true;
+  spacing          : 5px;
+  margin           : 0px;
+  padding          : 5px;
+  border           : 0px 0px 0px 0px;
+  border-color     : @selected;
+  background-color : transparent;
+  children         : [ "inputbar", "listview" ];
+}
+
+inputbar {
+  enabled          : true;
+  spacing          : 10px;
+  margin           : 0px;
+  padding          : 5px;
+  border           : 0px 0px 1px 0px;
+  border-color     : @selected;
+  background-color : @background;
+  text-color       : @foreground;
+  children         : [ "prompt", "entry" ];
+}
+
+prompt {
+  enabled          : true;
+  padding          : 0px;
+  background-color : inherit;
+  text-color       : inherit;
+}
+textbox-prompt-colon {
+  enabled          : true;
+  expand           : false;
+  str              : ">>";
+  background-color : inherit;
+  text-color       : inherit;
+}
+entry {
+  enabled           : true;
+  padding           : 0px;
+  background-color  : inherit;
+  text-color        : inherit;
+  cursor            : text;
+  placeholder       : "";
+  placeholder-color : inherit;
+}
+
+listview {
+  enabled          : true;
+  columns          : 1;
+  lines            : 10; // => maximum items
+  cycle            : true;
+  dynamic          : true;
+  scrollbar        : false;
+  layout           : vertical;
+  reverse          : false;
+  fixed-height     : true; // nice and consistent prompt
+  fixed-columns    : false;
+
+  spacing          : 0px;
+  margin           : 0px;
+  padding          : 0px;
+  border           : 0px 0px 0px 0px;
+  border-color     : @selected;
+  background-color : transparent;
+  text-color       : @foreground;
+  cursor           : "default";
+}
+
+scrollbar {
+  handle-width     : 5px ;
+  handle-color     : @selected;
+  border           : 0px 0px 0px 0px;
+  background-color : @background;
+}
+
+element {
+  enabled          : true;
+  spacing          : 10px;
+  margin           : 0px;
+  padding          : 5px;
+  border           : 0px 0px 0px 0px;
+  border-color     : @selected;
+  background-color : transparent;
+  text-color       : @foreground;
+  cursor           : pointer;
+}
+element normal.normal {
+  background-color : @background;
+  text-color       : @foreground;
+}
+element normal.urgent {
+  background-color : @urgent;
+  text-color       : @background;
+}
+element normal.active {
+  background-color : @active;
+  text-color       : @background;
+}
+element selected.normal {
+  background-color : @selected;
+  text-color       : @background;
+}
+element selected.urgent {
+  background-color : @active;
+  text-color       : @background;
+}
+element selected.active {
+  background-color : @urgent;
+  text-color       : @background;
+}
+element alternate.normal {
+  background-color : @background;
+  text-color       : @foreground;
+}
+element alternate.urgent {
+  background-color : @urgent;
+  text-color       : @background;
+}
+element alternate.active {
+  background-color : @active;
+  text-color       : @background;
+}
+element-icon {
+  background-color : transparent;
+  text-color       : inherit;
+  size             : 16px;
+  cursor           : inherit;
+}
+element-text {
+  background-color : transparent;
+  text-color       : inherit;
+  highlight        : inherit;
+  cursor           : inherit;
+  vertical-align   : 0.5;
+  horizontal-align : 0.0;
+}
+
+mode-switcher{
+  enabled          : true;
+  spacing          : 10px;
+  margin           : 0px;
+  padding          : 0px;
+  border           : 0px 0px 0px 0px;
+  border-color     : @selected;
+  background-color : transparent;
+  text-color       : @foreground;
+}
+button {
+  padding          : 10px;
+  border           : 0px 0px 0px 0px;
+  border-radius    : 0px;
+  border-color     : @selected;
+  background-color : @background;
+  text-color       : inherit;
+  cursor           : pointer;
+}
+button selected {
+  background-color : @selected;
+  text-color       : @background;
+}
+
+message {
+  enabled          : true;
+  margin           : 0px;
+  padding          : 0px;
+  border           : 0px 0px 0px 0px;
+  border-color     : @selected;
+  background-color : transparent;
+  text-color       : @foreground;
+}
+textbox {
+  padding           : 5px;
+  border            : 0px 0px 0px 0px;
+  border-color      : @selected;
+  background-color  : @background;
+  text-color        : @foreground;
+  vertical-align    : 0.5;
+  horizontal-align  : 0.0;
+  highlight         : none;
+  placeholder-color : @foreground;
+  blink             : true;
+  markup            : true;
+}
+error-message {
+  padding          : 5px;
+  border           : 0px 0px 0px 0px;
+  border-color     : @selected;
+  background-color : @background;
+  text-color       : @foreground;
+}
+
+// solarized-dark
+* {
+  background:     #002B36;
+  background-alt: #002b36;
+  foreground:     #839496;
+  selected:       #268BD2;
+  active:         #859900;
+  urgent:         #DC322F;
+}
+
+// // solarized-light
+// * {
+//   background:     #F2E6CE;
+//   background-alt: #F2E6CE;
+//   foreground:     #586E75;
+//   selected:       #268BD2;
+//   active:         #859900;
+//   urgent:         #DC322F;
+// }

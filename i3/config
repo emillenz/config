@@ -1,0 +1,178 @@
+exec_always --no-startup-id "~/.config/bin/startup"
+
+workspace_auto_back_and_forth no
+workspace_layout tabbed
+force_focus_wrapping no
+default_orientation horizontal
+default_border pixel 1
+hide_edge_borders smart
+title_align left
+font pango: Terminus 8
+for_window [all] title_window_icon yes
+assign [all] output primary
+for_window [urgent="latest"] focus
+
+workspace 1 output primary
+
+set $mod Mod4
+
+floating_modifier $mod
+bindsym --release button2 kill
+bindsym --whole-window $mod+button2 floating toggle
+bindsym button4 nop
+bindsym button5 nop
+
+bindsym XF86MonBrightnessDown exec sudo light -U 5
+bindsym XF86MonBrightnessUp   exec sudo light -A 5
+bindsym XF86Display           exec ~/.config/bin/output_select
+bindsym XF86ScreenSaver       exec xset dpms force off
+bindsym XF86Sleep             exec i3lock -e --color F2E6CE; systemctl suspend
+
+bindsym XF86AudioPlay         exec playerctl play
+bindsym XF86AudioPause        exec playerctl pause
+bindsym XF86AudioNext         exec playerctl next
+bindsym XF86AudioPrev         exec playerctl previous
+bindsym XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute         exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+bindsym Print                 exec ~/.config/bin/screenshot
+bindsym $mod+backslash        exec playerctl play-pause
+bindsym $mod+bracketright     exec playerctl next
+bindsym $mod+bracketleft      exec playerctl previous
+bindsym $mod+equal            exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym $mod+minus            exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym $mod+shift+backslash  exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+bindsym $mod+Tab       move workspace to output next;
+bindsym $mod+1         workspace 1
+bindsym $mod+2         workspace 2
+bindsym $mod+3         workspace 3
+bindsym $mod+4         workspace 4
+bindsym $mod+shift+1   move container to workspace 1
+bindsym $mod+shift+2   move container to workspace 2
+bindsym $mod+shift+3   move container to workspace 3
+bindsym $mod+shift+4   move container to workspace 4
+
+bindsym $mod+j          focus prev
+bindsym $mod+shift+j    move left
+bindsym $mod+k          focus next
+bindsym $mod+shift+k    move right
+bindsym $mod+q          kill
+bindsym $mod+f          exec rofi -show drun
+bindsym $mod+shift+f    exec ~/.config/bin/xopen
+bindsym $mod+g          exec rofi -show window
+bindsym $mod+semicolon  exec rofi -show run
+bindsym $mod+m          exec i3-input -F 'mark %s' -l 1 -P 'Mark:'
+bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto'
+
+for_window [class="(?i)cmd"] mark c
+bindsym $mod+c exec i3-msg '[con_mark="c"] focus' || alacritty --class cmd -T cmd -e tmux new-session -A -s cmd &
+
+# HACK: if multiple instances exist and the one with mark is closed, focus last instance of the program and mark it.
+for_window [class="(?i)zathura"] mark z
+bindsym $mod+z exec i3-msg '[con_mark="z"] focus' || wmctrl -xa zathura && i3-msg 'mark z' || ~/.config/bin/xopen --extension 'pdf' &
+bindsym $mod+shift+z exec ~/.config/bin/xopen --extension 'pdf' &
+
+for_window [class="(?i)emacs"] mark e
+bindsym $mod+e exec i3-msg '[con_mark="e"] focus' || wmctrl -xa emacs && i3-msg 'mark e' || emacsclient --reuse-frame || emacs --daemon --execute '(doom/reload)' &
+bindsym $mod+shift+e exec emacsclient --eval '(emacs-everywhere)' &
+
+# HACK: if multiple instances exist and the one with mark is closed, focus last instance of the program and mark it.
+for_window [class="(?i)firefox"]  mark b
+bindsym $mod+b exec i3-msg '[con_mark="b"] focus' || wmctrl -xa firefox && i3-msg 'mark b' || firefox &
+
+for_window [class="(?i)ncmpcpp"] mark a
+bindsym $mod+a exec i3-msg '[con_mark="a"] focus' || alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp &
+
+for_window [class="(?i)mpv"] mark p
+for_window [class="(?i)nsxiv"] mark P
+bindsym $mod+p exec i3-msg '[con_mark="p"] focus' || wmctrl -xa mpv && i3-msg 'mark p' || mpv $(xclip -o) &
+bindsym $mod+shift+p exec i3-msg '[con_mark="P"] focus' || nsxiv &
+
+bindsym $mod+s exec i3-msg '[con_mark="s"] focus' || keepassxc &
+for_window [class="(?i)keepassxc"] mark s
+
+bindsym $mod+space mode "$leader"
+set $leader <leader> audios | ^audio | nmtui | outputs | [^o] layouts | btctl | [p] killprocess | [^p] htop | keyboard+ | timer+ | sysact+ | ^screenshot+
+
+mode "$leader" {
+  bindsym a       exec ~/.config/bin/audios; mode "default"
+  bindsym shift+a exec i3-msg '[con_mark="audio"] focus' || alacritty --class 'audio' -T 'audio' -e pulsemixer &; mode "default"
+  bindsym o       exec ~/.config/bin/outputs; mode "default"
+  bindsym shift+o exec ~/.config/bin/layouts; mode "default"
+  bindsym shift+s exec ~/.config/bin/screenshot; mode "default"
+  bindsym b       exec ~/.config/bin/btcontrol; mode "default"
+  bindsym p       exec ~/.config/bin/killprocess; mode "default"
+  bindsym shift+p exec i3-msg '[con_mark="htop"] focus' || alacritty --class 'htop' -T 'htop' -e htop --tree &; mode "default"
+  bindsym n       exec i3-msg '[con_mark="nmtui"] focus' || alacritty --class 'nmtui' -T 'nmtui' -e nmtui &; mode "default"
+
+  bindsym k      mode "$keyboard"
+  bindsym s      mode "$sysact"
+  bindsym t      mode "$timer"
+  bindsym Escape mode "default"
+}
+
+for_window [class="(?i)htop"]  mark htop
+for_window [class="(?i)nmtui"] mark nmtui
+for_window [class="(?i)audio"] mark audio
+
+set $keyboard <keyboard> dvorak | ch | us | remaps
+mode "$keyboard" {
+  bindsym d      exec setxkbmap us dvorak; mode "default"
+  bindsym c      exec setxkbmap ch;        mode "default"
+  bindsym u      exec setxkbmap us;        mode "default"
+  bindsym Escape                           mode "default"
+}
+
+set $sysact <sysact> restart-i3 | ^reboot | lock | screen-off | poweroff | exit | hibernate | ^startup
+mode "$sysact" {
+  bindsym r       exec i3-msg restart;                              mode "default"
+  bindsym e       exec i3-msg exit;                                 mode "default"
+  bindsym shift+r exec systemctl reboot;                            mode "default"
+  bindsym h       exec systemctl hibernate;                         mode "default"
+  bindsym l       exec i3lock -e --color F2E6CE; systemctl suspend; mode "default"
+  bindsym s       exec xset dpms force off;                         mode "default"
+  bindsym p       exec systemctl poweroff;                          mode "default"
+  bindsym shift+s exec ~/.config/bin/startup;                       mode "default"
+  bindsym Escape                                                    mode "default"
+}
+
+set $timer <timer> toggle | reset | stopwatch | interval: 60/5 | ^interval: 30/5 | prompt | [1-9] timer: *10m
+mode "$timer" {
+  bindsym t       exec ~/.config/bin/timer toggle;       mode "default"
+  bindsym r       exec ~/.config/bin/timer reset;        mode "default"
+  bindsym s       exec ~/.config/bin/timer start;        mode "default"
+  bindsym i       exec ~/.config/bin/timer start 60m 5m; mode "default"
+  bindsym shift+i exec ~/.config/bin/timer start 30m 5m; mode "default"
+  bindsym 1       exec ~/.config/bin/timer start 10m;    mode "default"
+  bindsym 2       exec ~/.config/bin/timer start 20m;    mode "default"
+  bindsym 3       exec ~/.config/bin/timer start 30m;    mode "default"
+  bindsym 4       exec ~/.config/bin/timer start 40m;    mode "default"
+  bindsym 5       exec ~/.config/bin/timer start 50m;    mode "default"
+  bindsym 6       exec ~/.config/bin/timer start 60m;    mode "default"
+  bindsym 7       exec ~/.config/bin/timer start 70m;    mode "default"
+  bindsym 8       exec ~/.config/bin/timer start 80m;    mode "default"
+  bindsym 9       exec ~/.config/bin/timer start 90m;    mode "default"
+  bindsym Escape                                         mode "default"
+}
+
+set $backg      #002b36
+set $foreg      #839496
+set $main       #268BD2
+set $yellow     #B58900
+set $orange     #CB4B16
+set $red        #DC322F
+set $purple     #6C71C4
+set $magenta    #d33682
+set $blue       #268BD2
+set $cyan       #2AA198
+set $green      #859900
+
+# class                 border  backg   text    indicator child_border
+client.focused          $main   $main   $backg  $foreg    $main
+client.focused_inactive $backg  $backg  $backg  $backg    $backg
+client.unfocused        $backg  $backg  $foreg  $backg    $backg
+client.urgent           $red    $red    $backg  $backg    $backg
+client.placeholder      $backg  $backg  $foreg  $backg    $backg
+client.background       $backg

@@ -1,0 +1,68 @@
+# HACK: this mapping scheme is using the dvorak layout and xremaps maps to the keycodes directly to the hardware layout: us-qwerty
+# => thus the assigned keys but they just need to be translated
+# be efficient in key usage, use kill line instead of holding-down the delete key.
+#
+# - Remap unergonomic keys to more ergo positions, allowing you to keep the hands on the homerow
+# - Use adjacent-alts for the navigational keys: alt_l: os, alt_r: app
+# - Left thumb: escape; right thumb: space
+
+virtual_modifiers:
+  - capslock
+
+modmap:
+  - name: global
+    remap:
+      alt_l:
+        alone: esc
+        held:  super_l
+        one_timeout_millis: 100
+      capslock:
+        alone: backspace
+        held:  capslock
+        one_timeout_millis: 100
+      backspace:
+        alone: backspace
+        held:  capslock
+        one_timeout_millis: 100
+
+keymap:
+  - name: global
+    remap:
+      capslock-c: down                            # j
+      capslock-v: up                              # k
+      capslock-j: left                            # h
+      capslock-p: right                           # l
+      capslock-f: pageup                          # u
+      capslock-h: pagedown                        # d
+      capslock-a: end                             # a
+      capslock-g: home                            # i
+      capslock-b: delete                          # x
+      capslock-d: c-right                         # e
+      capslock-n: c-left                          # b
+      capslock-r: c-v                             # p
+      capslock-t: c-c                             # y
+      capslock-u: c-home                          # g
+      capslock-shift-u: c-end                     # g
+      capslock-comma: [c-right, c-right, c-left] # w // change word
+      capslock-i: [home, shift-end, delete] # c // change line
+      capslock-s: [end, enter]                    # o // insert line below
+      capslock-shift-s: [up, end, enter]          # shift+o // insert line above
+      # relative line jumping
+      capslock-1: [down]
+      capslock-2: [down, down]
+      capslock-3: [down, down, down]
+      capslock-4: [down, down, down, down]
+      capslock-5: [down, down, down, down, down]
+      capslock-6: [down, down, down, down, down, down]
+      capslock-7: [down, down, down, down, down, down, down]
+      capslock-8: [down, down, down, down, down, down, down, down]
+      capslock-9: [down, down, down, down, down, down, down, down, down]
+      capslock-shift-1: [up]
+      capslock-shift-2: [up, up]
+      capslock-shift-3: [up, up, up]
+      capslock-shift-4: [up, up, up, up]
+      capslock-shift-5: [up, up, up, up, up]
+      capslock-shift-6: [up, up, up, up, up, up]
+      capslock-shift-7: [up, up, up, up, up, up, up]
+      capslock-shift-8: [up, up, up, up, up, up, up, up]
+      capslock-shift-9: [up, up, up, up, up, up, up, up, up]

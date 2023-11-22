@@ -1,0 +1,35 @@
+#!/usr/bin/env nu
+
+# -----
+# title:  Killprocess
+# author: Emil Lenz
+# email:  emillenz@protonmail.com
+# date:   Tuesday, 8 August, 2023
+# info:   Utility script using rofi, to kill a specific process by name.
+# -----
+def main [] {
+  ~/.config/bin/remaps
+
+  let start_ps = [
+    "flameshot",
+    "polybar",
+    "nm-applet",
+    "playerctld",
+    "unclutter",
+    "keepassxc",
+    "xset s 3600 3600",
+    "xsetroot -solid '#002b36'", # solarized_dark: #002b36; solarized_light: #F2E6CE
+    "xset -dpms",
+    "syncthing",
+    "tmux new-session -s 'cmd'",
+  ]
+
+  let pss = (ps | get name | each {split words | get 0})
+
+  for p in $start_ps {
+    let exists = (($p | split words | get 0) in $pss)
+    if not $exists {
+      $"($p) &>/dev/null &" | bash
+    }
+  }
+}

@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: header
+# key: header
+# uuid: header
+# --
+
+`comment-start`----- 
+`comment-start`title:  ${2:`(capitalize (replace-regexp-in-string "[-_.]" " " (file-name-sans-extension (file-name-nondirectory (buffer-file-name (current-buffer))))))`}
+`comment-start`author: `user-full-name`
+`comment-start`email:  `user-mail-address`
+`comment-start`date:   `(format-time-string "%A, %e %B, %Y")`
+`comment-start`info:   ${3:Short description}
+`comment-start`-----
+$0

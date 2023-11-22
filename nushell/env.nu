@@ -1,0 +1,93 @@
+# Using starship is bloat if you can define your own prompt inside nushell.
+use std
+
+# Directories to search for scripts when calling source or use
+$env.NU_LIB_DIRS = [
+	($nu.default-config-dir | path join 'user')
+]
+
+# Directories to search for plugin binaries when calling register
+$env.NU_PLUGIN_DIRS = [
+	($nu.default-config-dir | path join 'plugins')
+]
+
+def create_left_prompt [] {
+  let dir = (
+    if ($env.PWD | path split | zip ($nu.home-path | path split) | all { $in.0 == $in.1 }) {
+      ($env.PWD | str replace $nu.home-path "~")
+    } else {
+      $env.PWD
+    }
+  )
+  let path_color = (if (is-admin) { ansi red_bold } else { ansi green_bold })
+  let path = ([$path_color, $dir, (ansi reset)] | str join)
+
+  let last_exit_code = match $env.LAST_EXIT_CODE {
+      0 => ""
+      _ => $"(ansi red)[err] (ansi reset)"
+  }
+
+  let dur = (
+    [
+    (ansi yellow),
+    ($"($env.CMD_DURATION_MS)ms" | into duration | format duration sec),
+    (ansi reset)
+    ] | str join
+  )
+
+  let time = (
+    [
+    (ansi magenta),
+    (date now | format date '%x %X'),
+    (ansi reset),
+    ] | str join)
+
+  let modules = [$dur, $time]
+  let status = $"[ ($modules | str join ' │ ') ]"
+
+  let fill_len = ((term size | get columns) - ($status | ansi strip | str length))
+  let fill = [
+    (ansi white)
+    ('─' | std repeat $fill_len | str join)
+  ] | str join
+
+  return ([$fill, $status "\n", $path, $last_exit_code] | str join " ")
+}
+
+# Use nushell functions to define your right and left prompt
+$env.PROMPT_COMMAND = {|| create_left_prompt }
+$env.PROMPT_COMMAND_RIGHT = ""
+
+# The prompt indicators are environmental variables that represent
+# the state of the prompt
+$env.PROMPT_INDICATOR = {|| $"(ansi blue_bold)│ " }
+$env.PROMPT_INDICATOR_VI_INSERT = {|| $"(ansi blue_bold)│ " }
+$env.PROMPT_INDICATOR_VI_NORMAL = {|| $"(ansi blue_bold)│ " }
+$env.PROMPT_MULTILINE_INDICATOR = {|| $"(ansi blue_bold)│   " }
+
+# If you want previously entered commands to have a different prompt from the usual one,
+# you can uncomment one or more of the following lines.
+# This can be useful if you have a 2-line prompt and it's taking up a lot of space
+# because every command entered takes up 2 lines instead of 1. You can then uncomment
+# the line below so that previously entered commands show with a single `🚀`.
+# $env.TRANSIENT_PROMPT_COMMAND = {|| "... " }
+# $env.TRANSIENT_PROMPT_INDICATOR = {|| "" }
+# $env.TRANSIENT_PROMPT_INDICATOR_VI_INSERT = {|| "" }
+# $env.TRANSIENT_PROMPT_INDICATOR_VI_NORMAL = {|| "" }
+# $env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = {|| "" }
+# $env.TRANSIENT_PROMPT_COMMAND_RIGHT = {|| "" }
+
+# Specifies how environment variables are:
+# - converted from a string to a value on Nushell startup (from_string)
+# - converted from a value back to a string when running external commands (to_string)
+# Note: The conversions happen *after* config.nu is loaded
+$env.ENV_CONVERSIONS = {
+    "PATH": {
+        from_string: { |s| $s | split row (char esep) | path expand --no-symlink }
+        to_string: { |v| $v | path expand --no-symlink | str join (char esep) }
+    }
+    "Path": {
+        from_string: { |s| $s | split row (char esep) | path expand --no-symlink }
+        to_string: { |v| $v | path expand --no-symlink | str join (char esep) }
+    }
+}

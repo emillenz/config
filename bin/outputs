@@ -1,0 +1,128 @@
+#!/usr/bin/env nu
+
+const icon = "󰍹"
+# -----
+# title:  Outputselect
+# author: Emil Lenz
+# email:  emillenz@protonmail.com
+# date:   Monday,  7 August, 2023
+# info:   A completion-menu for detecting and selecting external outputs.
+#         Probes xrandr for connected & prompts using rofi.
+# -----
+def main [] {
+  let outputs = (
+    xrandr --listmonitors |
+    lines |
+    skip 1 |
+    split column ' ' |
+    get column6
+  )
+
+  if ($outputs | length) == 1 {
+    notify-send $"($icon)  Outputselect" "Only one output detected."
+    single $outputs $outputs.0
+  } else {
+    let opts = ($outputs | append "multi")
+    let choice = (prompt $icon "output:" $opts)
+    if ($choice == "multi") {
+      double $outputs
+    } else {
+      single $outputs $choice
+    }
+  }
+}
+
+def double [outputs: list] {
+  let mirror = (
+    (prompt --keymenu $icon "Mirror: [n/y]" [n y])
+    == "y"
+  )
+  let primary = (prompt $icon "Primary:" $outputs)
+  mut secondary = ""
+  if ($outputs | length) == 2 {
+    $secondary = ($outputs | where {|e| $e != $primary})
+  } else {
+    $secondary = (
+      prompt $icon "Secondary:" ($outputs | where {|e| $e != $primary})
+    )
+  }
+
+  if $mirror {
+    mirror $primary $secondary
+  } else {
+    extend $primary $secondary
+  }
+}
+
+def single [outputs: list, output: string] {
+  xrandr --output $output --auto --primary
+  let others = ($outputs | where {|e| $e != $output})
+  # for o in  $others {
+  #   xrandr --output $o --off
+  # }
+  notify-send $"($icon)  Outputselect" $"Single\n> ($output)"
+}
+
+def mirror [primary: string, secondary: string] {
+  xrandr --output $primary --auto --primary
+  xrandr --output $secondary --same-as $primary --auto
+  notify-send $"($icon)  Outputselect" $"Mirroring\n> ($primary)\n  ($secondary)"
+}
+
+def extend [primary: string, secondary: string] {
+  let pos = (
+    prompt --keymenu
+    $icon
+    $"Position of #2:($secondary): [j] down | [k] up | [h] left | [l] right"
+    [h j k l]
+  )
+  xrandr --output $primary --auto --primary
+  match $pos {
+    "h" => {xrandr --output ($secondary) --left-of  ($primary) --auto},
+    "j" => {xrandr --output ($secondary) --right-of ($primary) --auto},
+    "k" => {xrandr --output ($secondary) --above    ($primary) --auto},
+    "l" => {xrandr --output ($secondary) --below    ($primary) --auto},
+  }
+  notify-send $"($icon)  Outputselect" $"Extended\n> ($primary)\n  ($secondary)"
+}
+
+def prompt [
+  --custom(-c),  # Let the user input custom text
+  --keymenu(-k), # single char keymenu to select static items -> items must be a list of chars // the chars that are the start of each item mnemonically, display msg: `Choose: [a] anna | [b] bonnie | [c] chris | [C] clyde` and the letters [a b c C] as input
+  name: string   # name of program/script (or better: icon)
+  msg: string,   # msg to display before prompt
+  input?: list,
+] {
+  if $custom {
+    let ans = (rofi -dmenu -i -p $"($name) ($msg)" | str trim)
+    if $ans == "" {
+      print $"($name): exit by user"
+      exit 0
+    }
+    return $ans
+  } else if $keymenu {
+    let ans = (
+      $input |
+      str join "\n" |
+      rofi -dmenu -no-custom -auto-select -p $"($name) ($msg)" | # NOTE: case sensitive
+      str trim
+    )
+    if $ans == "" {
+      print $"($name): exit by user"
+      exit 0
+    }
+    return $ans
+  } else {
+    let ans = (
+      $input |
+      str join "\n" |
+      rofi -dmenu -i -no-custom -p $"($name) ($msg)" |
+      str trim
+    )
+    if $ans == "" {
+      print $"($name): exit by user"
+      exit 0
+    }
+    return $ans
+  }
+}

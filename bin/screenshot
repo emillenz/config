@@ -1,0 +1,99 @@
+#!/usr/bin/env nu
+
+# -----
+# title:  Screenshot
+# author: Emil Lenz
+# email:  emillenz@protonmail.com
+# date:   Saturday, 14 October, 2023
+# info:   Rofi powered menu to take a screenshot of the whole screen, a selected
+#         area or the active window. The image is then saved and copied to the
+#         clipboard.
+#         Uses: date maim notify-send rofi xclip xdotool
+# -----
+def main [] {
+  let scrotPath = $"~/screenshot_(date now | format date '%Y-%m-%d-%H%M%S').png"
+
+  let icon = " "
+  let ans = (
+    prompt --keymenu
+    $icon
+    "[s] screen | [a] area | [w] window"
+    [s a w]
+  )
+  match $ans {
+    "s" => {(
+        maim
+        --hidecursor
+        --quiet
+        --quality=3
+        --format='png'
+        --delay=1
+        $scrotPath
+    )},
+    "a" => {(
+      maim
+      --hidecursor
+      --quiet
+      --quality=3
+      --format='png'
+      --delay=0.1
+      --select
+      --highlight
+      --color=0.85,0.87,0.91,0.2
+      $scrotPath
+    )},
+    "w" => {(
+      maim
+      --hidecursor
+      --quiet
+      --quality=3
+      --format='png'
+      --delay=1
+      --window=(xdotool getactivewindow)
+      $scrotPath
+    )},
+    "" => {exit 0}
+  }
+  notify-send $"($icon)  Screenshot" $"Saved as ($scrotPath)"
+}
+
+def prompt [
+  --custom(-c),  # Let the user input custom text
+  --keymenu(-k), # single char keymenu to select static items -> items must be a list of chars // the chars that are the start of each item mnemonically, display msg: `Choose: [a] anna | [b] bonnie | [c] chris | [C] clyde` and the letters [a b c C] as input
+  name: string   # name of program/script (or better: icon)
+  msg: string,   # msg to display before prompt
+  input?: list,
+] {
+  if $custom {
+    let ans = (rofi -dmenu -i -p $"($name) ($msg)" | str trim)
+    if $ans == "" {
+      print $"($name): exit by user"
+      exit 0
+    }
+    return $ans
+  } else if $keymenu {
+    let ans = (
+      $input |
+      str join "\n" |
+      rofi -dmenu -no-custom -auto-select -p $"($name) ($msg)" | # NOTE: case sensitive
+      str trim
+    )
+    if $ans == "" {
+      print $"($name): exit by user"
+      exit 0
+    }
+    return $ans
+  } else {
+    let ans = (
+      $input |
+      str join "\n" |
+      rofi -dmenu -i -no-custom -p $"($name) ($msg)" |
+      str trim
+    )
+    if $ans == "" {
+      print $"($name): exit by user"
+      exit 0
+    }
+    return $ans
+  }
+}

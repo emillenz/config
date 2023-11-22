@@ -1,0 +1,63 @@
+#!/usr/bin/env nu
+
+# -----
+# title:    Audioselect
+# author:   Emil Lenz
+# email:    emillenz@protonmail.com
+# date:     Monday, 7 August, 2023
+# info:     This program lets you select the default audio output channel
+#           using rofi and notify-send.
+# -----
+def main [] {
+  let sinks = (pactl --format json list sinks | from json)
+  let choice = (prompt "󱀞" "" $sinks.description)
+  let sink = ($sinks | where {|v| $v.description =~ $choice})
+  pactl set-default-sink $sink.name.0
+
+  let sink_inputs =  (pactl -f json list sink-inputs | from json)
+  for s in $sink_inputs {
+    pactl move-sink-input $s.index $sink.name.0
+  }
+  notify-send "󱀞 Audioselect" $"Changed output\n($choice)"
+}
+
+def prompt [
+  --custom(-c),  # Let the user input custom text
+  --keymenu(-k), # single char keymenu to select static items -> items must be a list of chars // the chars that are the start of each item mnemonically, display msg: `Choose: [a] anna | [b] bonnie | [c] chris | [C] clyde` and the letters [a b c C] as input
+  name: string   # name of program/script (or better: icon)
+  msg: string,   # msg to display before prompt
+  input?: list,
+] {
+  if $custom {
+    let ans = (rofi -dmenu -i -p $"($name) ($msg)" | str trim)
+    if $ans == "" {
+      print $"($name): exit by user"
+      exit 0
+    }
+    return $ans
+  } else if $keymenu {
+    let ans = (
+      $input |
+      str join "\n" |
+      rofi -dmenu -no-custom -auto-select -p $"($name) ($msg)" | # NOTE: case sensitive
+      str trim
+    )
+    if $ans == "" {
+      print $"($name): exit by user"
+      exit 0
+    }
+    return $ans
+  } else {
+    let ans = (
+      $input |
+      str join "\n" |
+      rofi -dmenu -i -no-custom -p $"($name) ($msg)" |
+      str trim
+    )
+    if $ans == "" {
+      print $"($name): exit by user"
+      exit 0
+    }
+    return $ans
+  }
+}

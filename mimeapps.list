@@ -1,0 +1,18 @@
+[Default Applications]
+image/jpeg=gimp.desktop;nsxiv.desktop;
+application/octet-stream=emacsclient.desktop
+application/pdf=org.pwmt.zathura.desktop
+application/mp4=mpv.desktop
+application/octet-stream=emacsclient.desktop;emacs.desktop;
+application/pdf=org.pwmt.zathura-pdf-mupdf.desktop
+video/x-matroska=mpv.desktop
+audio/mpeg=mpv.desktop
+text/org=emacsclient.desktop
+x-scheme-handler/eclipse+installer=_home_lenz_Downloads_eclipse-installer_.desktop
+x-scheme-handler/eclipse+command x-scheme-handler/eclipse+mpc=_home_lenz_.eclipse_java-2023-09_eclipse_.desktop
+
+[Added Associations]
+video/x-matroska=mpv.desktop;
+text/x-java=emacsclient.desktop;
+text/org=emacsclient.desktop;nvim.desktop;
+text/markdown=nvim.desktop;

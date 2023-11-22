@@ -1,0 +1,15 @@
+#!/usr/bin/env nu
+
+# -----
+# title:  Remaps
+# author: Emil Lenz
+# email:  emillenz@protonmail.com
+# date:   Monday,  7 August, 2023
+# info:   This is a script that will get you vim-like remaps in any text field using Alt.
+#         Attention, the remaps defined in ~/.config/xremap/config.yml are for the dvorak keyboard layout and not standard qwerty.
+# -----
+def main [] {
+  $"sudo xremap --watch=device ~/.config/xremap/config.yml &>/dev/null &" | bash
+  sleep 2sec # HACK: wait for xremap to finish
+  xset r rate 300 70
+}

@@ -218,7 +218,7 @@
    :inmvorem "C-s" #'basic-save-buffer
    :inmvorem "C-z" #'evil-scroll-line-to-center
    :inmvorem "C-w" #'next-window-any-frame
-   :inmvorem "C-q" #'kill-current-buffer
+   :inmvorem "C-q" #'evil-window-delete
    :inmv     "C-j" #'drag-stuff-down
    :inmv     "C-k" #'drag-stuff-up
    ))

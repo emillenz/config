@@ -83,7 +83,7 @@ bindsym XF86MonBrightnessDown exec sudo light -U 5
 bindsym XF86MonBrightnessUp   exec sudo light -A 5
 bindsym XF86Display           exec ~/.config/bin/output_select
 bindsym XF86ScreenSaver       exec xset dpms force off
-bindsym XF86Sleep             exec i3lock -e --color F2E6CE; systemctl suspend
+bindsym XF86Sleep             exec i3lock -e --color 002b36; systemctl suspend
 
 bindsym XF86AudioPlay         exec playerctl play
 bindsym XF86AudioPause        exec playerctl pause
@@ -183,10 +183,11 @@ bindsym $mod+b exec i3-msg '[con_mark="b"] focus' || wmctrl -xa firefox && i3-ms
 for_window [class="(?i)ncmpcpp"] mark a
 bindsym $mod+a exec i3-msg '[con_mark="a"] focus' || alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp &
 
-for_window [class="(?i)mpv"] mark p
-for_window [class="(?i)nsxiv"] mark P
-bindsym $mod+p exec i3-msg '[con_mark="p"] focus' || wmctrl -xa mpv && i3-msg 'mark p' || mpv $(xclip -o) &
-bindsym $mod+shift+p exec i3-msg '[con_mark="P"] focus' || nsxiv &
+# View media (video, pictures)
+for_window [class="(?i)mpv"] mark v
+for_window [class="(?i)nsxiv"] mark V
+bindsym $mod+v exec i3-msg '[con_mark="v"] focus' || wmctrl -xa mpv && i3-msg 'mark p' || mpv $(xclip -o) &
+bindsym $mod+shift+v exec i3-msg '[con_mark="V"] focus' || nsxiv &
 
 bindsym $mod+s exec i3-msg '[con_mark="s"] focus' || keepassxc &
 for_window [class="(?i)keepassxc"] mark s
@@ -242,7 +243,7 @@ mode "$sysact" {
   bindsym e       exec i3-msg exit;                                 mode "default"
   bindsym shift+r exec systemctl reboot;                            mode "default"
   bindsym h       exec systemctl hibernate;                         mode "default"
-  bindsym l       exec i3lock -e --color F2E6CE; systemctl suspend; mode "default"
+  bindsym l       exec i3lock -e --color 002b36; systemctl suspend; mode "default"
   bindsym s       exec xset dpms force off;                         mode "default"
   bindsym p       exec systemctl poweroff;                          mode "default"
   bindsym shift+s exec ~/.config/bin/startup;                       mode "default"

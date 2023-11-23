@@ -190,15 +190,14 @@
    :nmv  "Q"   #'evil-execute-last-recorded-macro
    :nmv  "RET" #'electric-newline-and-maybe-indent
 
-   :nmv  "]e"   #'flycheck-next-error
-   :nmv  "[e"   #'flycheck-previous-error
+   :nmv  "]e"  #'flycheck-next-error
+   :nmv  "[e"  #'flycheck-previous-error
 
    :nmv  "H"   #'evil-first-non-blank
    :nmv  "L"   #'evil-end-of-visual-line
 
-   ;; REVIEW: test out other sp-functions and see if others are more efficient/useful
-   :nmv  "(" #'sp-backward-sexp
-   :nmv  ")" #'sp-forward-sexp
+   :nmv  "("   #'sp-backward-sexp
+   :nmv  ")"   #'sp-forward-sexp
 
    :nmv  "+"   #'evil-numbers/inc-at-pt
    :nmv  "-"   #'evil-numbers/dec-at-pt
@@ -238,10 +237,10 @@
 ;; [[file:config.org::*Evil surround operator][Evil surround operator:1]]
 (after! evil
   (map! :map evil-operator-state-map
-        "`" #'evil-surround-edit)
+        "'" #'evil-surround-edit)
   (map!
-   :nmv "`" #'evil-surround-region
-   :nmv "`" #'evil-surround-region
+   :nmv "'" #'evil-surround-region
+   :nmv "'" #'evil-surround-region
    ))
 ;; Evil surround operator:1 ends here
 
@@ -687,7 +686,7 @@
 (defun z/insert-todays-date ()
   "Insert todays date (text or data format)."
   (interactive)
-  (let ((char (read-char-choice "Date format: Text | Data " '(?t ?d))))
+  (let ((char (read-char-choice "Date format: [t] text | [d] data " '(?t ?d))))
     (let ((fstring (cond
                     ((equal char ?t) "%A, %B %d, %Y")
                     ((equal char ?d) "%Y-%m-%d"))))

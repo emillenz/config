@@ -265,6 +265,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - ~HL~ are useless (learn relative linejumps you ape!) and thus "stronger" versions of the regular ~hl~ motions in Vim. (~JK~ do not need stronger versions as you should use relative line jumps or ~C-u/d~ for larger motions (efficiency))
 - ~()~ are near useless
   + remap to quick/smart jump forward/backward/out/in delimiters and expressions.
+
 #+begin_src emacs-lisp
 (after! evil
   (map!
@@ -275,15 +276,14 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
    :nmv  "Q"   #'evil-execute-last-recorded-macro
    :nmv  "RET" #'electric-newline-and-maybe-indent
 
-   :nmv  "]e"   #'flycheck-next-error
-   :nmv  "[e"   #'flycheck-previous-error
+   :nmv  "]e"  #'flycheck-next-error
+   :nmv  "[e"  #'flycheck-previous-error
 
    :nmv  "H"   #'evil-first-non-blank
    :nmv  "L"   #'evil-end-of-visual-line
 
-   ;; REVIEW: test out other sp-functions and see if others are more efficient/useful
-   :nmv  "(" #'sp-backward-sexp
-   :nmv  ")" #'sp-forward-sexp
+   :nmv  "("   #'sp-backward-sexp
+   :nmv  ")"   #'sp-forward-sexp
 
    :nmv  "+"   #'evil-numbers/inc-at-pt
    :nmv  "-"   #'evil-numbers/dec-at-pt
@@ -336,15 +336,15 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 *** Evil surround operator
 For adding delimiters around objects.
 Very useful and thus getting a first-level-mapping.
-Also works after entering change/delete operator state // EX: ~c`({~ => ~)~ -> ~{~
-(always use ~'~ over ~`~)
+Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~{~
+(always use ~`~ over ~'~)
 #+begin_src emacs-lisp
 (after! evil
   (map! :map evil-operator-state-map
-        "`" #'evil-surround-edit)
+        "'" #'evil-surround-edit)
   (map!
-   :nmv "`" #'evil-surround-region
-   :nmv "`" #'evil-surround-region
+   :nmv "'" #'evil-surround-region
+   :nmv "'" #'evil-surround-region
    ))
 #+end_src
 
@@ -939,13 +939,15 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
           ))
 #+end_src
 
+
+
 ** Insert date
 - Insert dates using the calendar quickly for writing Notes and ~#+date:~ in header's.
 #+begin_src emacs-lisp
   (defun z/insert-todays-date ()
     "Insert todays date (text or data format)."
     (interactive)
-    (let ((char (read-char-choice "Date format: Text | Data " '(?t ?d))))
+    (let ((char (read-char-choice "Date format: [t] text | [d] data " '(?t ?d))))
       (let ((fstring (cond
                       ((equal char ?t) "%A, %B %d, %Y")
                       ((equal char ?d) "%Y-%m-%d"))))

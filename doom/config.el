@@ -103,7 +103,7 @@
    dired-mode-hook
    org-agenda-mode-hook)
  :append
- 'visual-fill-column-mode)
+ #'visual-fill-column-mode)
 
 (global-display-fill-column-indicator-mode -1) ;; distracting
 (setq
@@ -129,16 +129,16 @@
                "V" 'visual-fill-column-mode
                "C" 'company-mode)
       (:prefix ("i" . "insert")
-               "d" 'z/insert-todays-date
-               "D" 'z/insert-any-date)
+               "d" #'z/insert-todays-date
+               "D" #'z/insert-any-date)
       (:prefix ("c" . "code")
-               "w" 'z/clean-whitespace
+               "w" #'z/clean-whitespace
                (:prefix ("b" . "org-babel")
-                        "d" 'org-babel-detangle
-                        "J" 'org-babel-tangle-jump-to-org
-                        "j" 'z/jump-src
-                        "t" 'org-babel-tangle
-                        "e" 'org-edit-special)))
+                        "d" #'org-babel-detangle
+                        "J" #'org-babel-tangle-jump-to-org
+                        "j" #'z/jump-src
+                        "t" #'org-babel-tangle
+                        "e" #'org-edit-special)))
 ;; Leader:1 ends here
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:1]]
@@ -146,13 +146,13 @@
 
 ;; HACK: ~:inmvorem~ binds globally no matter where you are
 (map! :map  'override
-      :inmvorem "M-j" 'tab-bar-switch-to-prev-tab
-      :inmvorem "M-J" 'tab-bar-move-tab-backward
-      :inmvorem "M-k" 'tab-bar-switch-to-next-tab
-      :inmvorem "M-K" 'tab-bar-move-tab
-      :inmvorem "M-q" 'tab-bar-close-tab
-      :inmvorem "M-Q" 'save-buffers-kill-terminal
-      :inmvorem "M-t" 'tab-bar-new-tab-to
+      :inmvorem "M-j" #'tab-bar-switch-to-prev-tab
+      :inmvorem "M-J" #'tab-bar-move-tab-backward
+      :inmvorem "M-k" #'tab-bar-switch-to-next-tab
+      :inmvorem "M-K" #'tab-bar-move-tab
+      :inmvorem "M-q" #'tab-bar-close-tab
+      :inmvorem "M-Q" #'save-buffers-kill-terminal
+      :inmvorem "M-t" #'tab-bar-new-tab-to
       :inmvorem "M-1" (cmd! (tab-bar-select-tab 1))
       :inmvorem "M-2" (cmd! (tab-bar-select-tab 2))
       :inmvorem "M-3" (cmd! (tab-bar-select-tab 3))
@@ -162,64 +162,65 @@
       :inmvorem "M-7" (cmd! (tab-bar-select-tab 7))
       :inmvorem "M-8" (cmd! (tab-bar-select-tab 8))
       :inmvorem "M-9" (cmd! (tab-bar-select-tab 9))
-      :inmvorem "M-e" 'find-file
+      :inmvorem "M-e" #'find-file
       :inmvorem "M-F" (cmd! (consult-find "~"))
-      :inmvorem "M-f" 'consult-find
-      :inmvorem "M-g" 'consult-buffer
-      :inmvorem "M-c" 'shell-command
-      :inmvorem "M-;" 'execute-extended-command
-      :inmvorem "M-'" 'consult-bookmark
+      :inmvorem "M-f" #'consult-find
+      :inmvorem "M-g" #'consult-buffer
+      :inmvorem "M-c" #'shell-command
+      :inmvorem "M-;" #'execute-extended-command
+      :inmvorem "M-'" #'consult-bookmark
 
-      :inmvorem "C--" 'doom/decrease-font-size
-      :inmvorem "C-=" 'doom/increase-font-size
-      :inmvorem "C-0" 'doom/reset-font-size)
+      :inmvorem "C--" #'doom/decrease-font-size
+      :inmvorem "C-=" #'doom/increase-font-size
+      :inmvorem "C-0" #'doom/reset-font-size)
 
 (after! evil-org
   (map! :map evil-org-agenda-mode-map
-        :inmvorem "M-j" 'evil-tab-previous
-        :inmvorem "M-k" 'evil-tab-next
+        :inmvorem "M-j" #'evil-tab-previous
+        :inmvorem "M-k" #'evil-tab-next
         ))
 ;; Global navigation scheme:1 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
 (after! evil
   (map!
-   :nmvo "j"   'evil-next-visual-line
-   :nmvo "k"   'evil-previous-visual-line
+   :nmvo "j"   #'evil-next-visual-line
+   :nmvo "k"   #'evil-previous-visual-line
 
-   :nmv  "U"   'evil-redo
-   :nmv  "Q"   'evil-execute-last-recorded-macro
-   :nmv  "RET" 'electric-newline-and-maybe-indent
+   :nmv  "U"   #'evil-redo
+   :nmv  "Q"   #'evil-execute-last-recorded-macro
+   :nmv  "RET" #'electric-newline-and-maybe-indent
 
-   :nmv "]e"   'flycheck-next-error
-   :nmv "[e"   'flycheck-previous-error
+   :nmv "]e"   #'flycheck-next-error
+   :nmv "[e"   #'flycheck-previous-error
 
-   :nmv  "H"   'evil-first-non-blank
-   :nmv  "L"   'evil-end-of-visual-line
+   :nmv  "H"   #'evil-first-non-blank
+   :nmv  "L"   #'evil-end-of-visual-line
 
-   :nmv  "+"   'evil-numbers/inc-at-pt
-   :nmv  "-"   'evil-numbers/dec-at-pt
-   :nmv  "g+"  'evil-numbers/inc-at-pt-incremental
-   :nmv  "g-"  'evil-numbers/dec-at-pt-incremental
+   :nmv  "+"   #'evil-numbers/inc-at-pt
+   :nmv  "-"   #'evil-numbers/dec-at-pt
+   :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
+   :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
    ))
 ;; Evil-mode:1 ends here
 
 ;; [[file:config.org::*Alignment][Alignment:1]]
 (after! evil
   (map!
-   :nmv "g<" 'evil-lion-left
-   :nmv "g>" 'evil-lion-right
+   :nmv "g<" #'evil-lion-left
+   :nmv "g>" #'evil-lion-right
    ))
 ;; Alignment:1 ends here
 
 ;; [[file:config.org::*Control-bindings][Control-bindings:1]]
 (after! evil
   (map!
-   :inmvorem "C-s" 'basic-save-buffer
-   :inmvorem "C-z" 'evil-scroll-line-to-center
-   :inmvorem "C-w" 'next-window-any-frame
-   :inmv     "C-j" 'drag-stuff-down
-   :inmv     "C-k" 'drag-stuff-up
+   :inmvorem "C-s" #'basic-save-buffer
+   :inmvorem "C-z" #'evil-scroll-line-to-center
+   :inmvorem "C-w" #'next-window-any-frame
+   :inmvorem "C-q" #'kill-current-buffer
+   :inmv     "C-j" #'drag-stuff-down
+   :inmv     "C-k" #'drag-stuff-up
    ))
 ;; Control-bindings:1 ends here
 
@@ -227,42 +228,42 @@
 (after! avy (setq avy-keys '(?a ?o ?e ?u ?i ?d ?h ?t ?n ?s ?p ?y ?f ?g ?c ?r ?l ?q ?j ?k ?x ?b ?m ?w ?v ?z)))
 (after! evil
   (map! :map evil-snipe-local-mode-map ;; need to override evil-snipe
-        :nmvo "s" 'evil-avy-goto-char-2-below
-        :nmvo "S" 'evil-avy-goto-char-2-above))
+        :nmvo "s" #'evil-avy-goto-char-2-below
+        :nmvo "S" #'evil-avy-goto-char-2-above))
 ;; Instant jumping:1 ends here
 
 ;; [[file:config.org::*Evil surround operator][Evil surround operator:1]]
 (after! evil
   (map! :map evil-operator-state-map
-        "`" 'evil-surround-edit)
+        "`" #'evil-surround-edit)
   (map!
-   :nmv "`" 'evil-surround-region
-   :nmv "`" 'evil-surround-region
+   :nmv "`" #'evil-surround-region
+   :nmv "`" #'evil-surround-region
    ))
 ;; Evil surround operator:1 ends here
 
 ;; [[file:config.org::*Org mode][Org mode:1]]
 (after! evil-org
   (map! :map evil-org-mode-map
-        :inmv "S-RET" 'org-meta-return
-        :inmv "C-RET" '+org/insert-item-below
-        :nmv "RET"   'org-return-maybe-indent
-        :nmvo "H"     'evil-org-beginning-of-line
-        :nmvo "L"     'evil-org-end-of-line
-        :inmv "C-j"   'org-metadown
-        :inmv "C-k"   'org-metaup
-        :inmv "C-h"   'org-metaleft
-        :inmv "C-l"   'org-metaright
+        :inmv "S-RET" #'org-meta-return
+        :inmv "C-RET" #'+org/insert-item-below
+        :nmv  "RET"   #'org-return-maybe-indent
+        :nmvo "H"     #'evil-org-beginning-of-line
+        :nmvo "L"     #'evil-org-end-of-line
+        :inmv "C-j"   #'org-metadown
+        :inmv "C-k"   #'org-metaup
+        :inmv "C-h"   #'org-metaleft
+        :inmv "C-l"   #'org-metaright
         )
 
   (map! :localleader
         :map evil-org-mode-map
-        "~"    'z/org-convert-keywords-downcase
-        "l f"  'z/org-link-file
+        "~"    #'z/org-convert-keywords-downcase
+        "l f"  #'z/org-link-file
         )
   (map! :map org-src-mode-map
-        :nm "ZZ" 'org-edit-src-exit
-        :nm "ZQ" 'org-edit-src-abort
+        :nm "ZZ" #'org-edit-src-exit
+        :nm "ZQ" #'org-edit-src-abort
         )
   )
 ;; Org mode:1 ends here
@@ -270,22 +271,22 @@
 ;; [[file:config.org::*Dired][Dired:1]]
 (after! dired
   (map! :map dired-mode-map
-        :nm "h" 'dired-up-directory
-        :nm "l" 'dired-open-file
-        :nm "c" 'dired-do-copy
-        :nm "C" 'dired-do-compress
-        :nm "r" 'dired-do-rename
-        :nm "R" 'dired-do-redisplay
-        :nm "d" 'dired-do-delete
-        :nm "x" 'dired-do-chmod
-        :nm "s" 'dired-sort-toggle-or-edit
-        :nm "o" 'dired-do-chown
-        :nm "p" 'dired-do-print
-        :nm "y" 'dired-copy-filenamecopy-filename-as-kill
-        :nm "z" 'dired-do-compress
-        :nm "." 'dired-omit-mode
-        :nm "e" 'dired-create-empty-file
-        :nm "E" 'dired-create-directory
+        :nm "h" #'dired-up-directory
+        :nm "l" #'dired-open-file
+        :nm "c" #'dired-do-copy
+        :nm "C" #'dired-do-compress
+        :nm "r" #'dired-do-rename
+        :nm "R" #'dired-do-redisplay
+        :nm "d" #'dired-do-delete
+        :nm "x" #'dired-do-chmod
+        :nm "s" #'dired-sort-toggle-or-edit
+        :nm "o" #'dired-do-chown
+        :nm "p" #'dired-do-print
+        :nm "y" #'dired-copy-filenamecopy-filename-as-kill
+        :nm "z" #'dired-do-compress
+        :nm "." #'dired-omit-mode
+        :nm "e" #'dired-create-empty-file
+        :nm "E" #'dired-create-directory
         ))
 ;; Dired:1 ends here
 
@@ -380,10 +381,6 @@
       )
 ;; Dired Mode:1 ends here
 
-;; [[file:config.org::*Syntax highlighting][Syntax highlighting:1]]
-(add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1)))
-;; Syntax highlighting:1 ends here
-
 ;; [[file:config.org::*Org Mode][Org Mode:1]]
 (after! org
 ;; Org Mode:1 ends here
@@ -398,14 +395,14 @@
             ))
 
 (add-hook! 'org-mode-hook :append
-           '(visual-line-mode
-             org-num-mode
-             org-appear-mode
-             ))
+           #'visual-line-mode
+           #'org-num-mode
+           #'org-appear-mode
+           )
 
 ;; NOTE: add hook AFTER entering org-mode
 (add-hook! 'org-mode-hook :append
-  (lambda () (add-hook! 'after-save-hook :append 'org-babel-tangle)))
+  (lambda () (add-hook! 'after-save-hook :append #'org-babel-tangle)))
 
 (setq
  org-directory "~/Documents/org"
@@ -462,7 +459,7 @@
 ;; Options:1 ends here
 
 ;; [[file:config.org::*Symbols][Symbols:1]]
-(add-hook! 'org-mode-hook :append '(org-superstar-mode prettify-symbols-mode))
+(add-hook! 'org-mode-hook :append #'org-superstar-mode #'prettify-symbols-mode)
 (setq
  org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
  org-superstar-item-bullet-alist
@@ -813,12 +810,12 @@ Jumps at tangled code from org src block."
 
 ;; [[file:config.org::*Programming mode][Programming mode:1]]
 (add-hook! 'prog-mode-hook :append
-           '(rainbow-mode
-             rainbow-delimiters-mode))
+           #'rainbow-mode
+           #'rainbow-delimiters-mode)
 
 ;; NOTE: add hook AFTER entering prog-mode
 (add-hook! 'prog-mode-hook :append
-  (lambda () (add-hook! 'before-save-hook :append '+format/region-or-buffer)))
+  (lambda () (add-hook! 'before-save-hook :append #'+format/region-or-buffer)))
 ;; Programming mode:1 ends here
 
 ;; [[file:config.org::*Indentation: 2 spaces][Indentation: 2 spaces:1]]

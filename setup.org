@@ -17,7 +17,7 @@ sudo pacman -Syyu
 * Core tools
 ** Terminal, Nushell
 #+begin_src sh
-yay --noconfirm -S alacritty curl libtool xorg-xset fzf fd ripgrep xclip xdg-utils cmake npm bat git git-delta gcc make xdotool tldr htop carapace ttf-terminus-nerd terminus-font nushell tmux
+yay --noconfirm -S alacritty curl libtool xorg-xset fzf fd ripgrep xclip xdg-utils cmake npm bat git gcc make xdotool tldr htop carapace ttf-terminus-nerd terminus-font nushell tmux
 #+end_src
 
 Set nushell to loginshell

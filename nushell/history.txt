@@ -1,6 +1,3 @@
-syncthing -h | bat cli  -h | bat
-syncthing cli  -h | bat
-syncthing-cli  -h | bat
 man syncthing cli 
 sycthing continue
 syncthing --paused
@@ -9998,3 +9995,6 @@ ls
 nu
 nu
 ls
+git-delta
+delta  --help | bat --language man
+git diff

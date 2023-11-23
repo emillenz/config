@@ -56,6 +56,11 @@ workspace 1 output primary
 Using Alt inside Applications to get the same behaviour, but in the app  in order to minimize conflict with existing shortcuts.
 eg. Emacs: Alt+f-> find-file, eg. Terminal: Alt+e->edit-command-in-editor
 
+| key | assignment |
+|-----+------------|
+|     |            |
+
+
 ** Modkey
 Using Super (Mod4)
 + Alt is used for in-app mappings
@@ -183,7 +188,6 @@ bindsym $mod+b exec i3-msg '[con_mark="b"] focus' || wmctrl -xa firefox && i3-ms
 for_window [class="(?i)ncmpcpp"] mark a
 bindsym $mod+a exec i3-msg '[con_mark="a"] focus' || alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp &
 
-# View media (video, pictures)
 for_window [class="(?i)mpv"] mark v
 for_window [class="(?i)nsxiv"] mark V
 bindsym $mod+v exec i3-msg '[con_mark="v"] focus' || wmctrl -xa mpv && i3-msg 'mark p' || mpv $(xclip -o) &

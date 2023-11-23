@@ -190,11 +190,15 @@
    :nmv  "Q"   #'evil-execute-last-recorded-macro
    :nmv  "RET" #'electric-newline-and-maybe-indent
 
-   :nmv "]e"   #'flycheck-next-error
-   :nmv "[e"   #'flycheck-previous-error
+   :nmv  "]e"   #'flycheck-next-error
+   :nmv  "[e"   #'flycheck-previous-error
 
    :nmv  "H"   #'evil-first-non-blank
    :nmv  "L"   #'evil-end-of-visual-line
+
+   ;; REVIEW: test out other sp-functions and see if others are more efficient/useful
+   :nmv  "(" #'sp-backward-sexp
+   :nmv  ")" #'sp-forward-sexp
 
    :nmv  "+"   #'evil-numbers/inc-at-pt
    :nmv  "-"   #'evil-numbers/dec-at-pt

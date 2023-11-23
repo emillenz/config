@@ -18,10 +18,15 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   + packages:[[file:packages.el]]
 - Use the same completer for all menus: consult+vertico // fastest, and most consistent
 
+** On comments
+- Valid comments should describe the why, the philosophy, the principle, the reason, and never explain what something does.
+- Emacs is self documenting, instead of explaining what a function does with a comment, you should just read the ALREADY EXISTING writtten documentation for it (function doc).
+- This is a principle which is elegant, extensible, structured for the following reasons:
+  + If code is changed, comment isn't updated automatically -> can & will be forgotter (redundant/confusing comments)
+  + Code is data (rewrite code flow such that it is more understandeable)
+
 * User
 #+begin_src emacs-lisp
-;; clowned
-;; great
 (setq
  user-full-name "Emil Lenz"
  user-mail-address "emillenz@protonmail.com")
@@ -29,7 +34,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 * Theme
 - Disable italics -> better readability (use bold if you want something to stand out.)
-
 #+begin_src emacs-lisp
 (setq
  doom-themes-enable-bold t
@@ -84,6 +88,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  delete-by-moving-to-trash t
  truncate-string-ellipsis "…"
  auto-save-default t
+
  confirm-kill-emacs nil
  undo-limit 80000000
  history-length 1000
@@ -155,10 +160,10 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 ** [?] Autoprompt for buffer after split
-- Automatically prompt for buffer/dir to open after splitting/newtab.
 - I use different functions depending on what i want to do.
 #+begin_src emacs-lisp :tangle no
 (defadvice! prompt-for-buffer (&rest _)
+  "Prompt for buffer/dir to open after splitting/newtab."
   :after '(tab-bar-new-tab-to tab-bar-new-tab evil-window-split evil-window-vsplit)
   (consult-buffer))
 #+end_src
@@ -213,6 +218,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (setq tab-bar-new-tab-to 'rightmost)
 
 ;; HACK: ~:inmvorem~ binds globally no matter where you are
+(after! evil
 (map! :map  'override
       :inmvorem "M-j" #'tab-bar-switch-to-prev-tab
       :inmvorem "M-J" #'tab-bar-move-tab-backward
@@ -241,6 +247,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
       :inmvorem "C--" #'doom/decrease-font-size
       :inmvorem "C-=" #'doom/increase-font-size
       :inmvorem "C-0" #'doom/reset-font-size)
+)
 
 (after! evil-org
   (map! :map evil-org-agenda-mode-map
@@ -264,11 +271,16 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - ~:w~ is the statistically most run vim-ex-command, but very unergonomic.
   + Map it to the os-consistent key
 - ~HL~ are useless (learn relative linejumps you ape!) and thus "stronger" versions of the regular ~hl~ motions in Vim. (~JK~ do not need stronger versions as you should use relative line jumps or ~C-u/d~ for larger motions (efficiency))
-- ~()~ are near useless
+- ~()~ are near useless and ~{}~ is too dependent on how the author formatted his code (always use relative jumps and ~C-u/d~ for bigger vertical movement)
   + remap to quick/smart jump forward/backward/out/in delimiters and expressions.
 
 #+begin_src emacs-lisp
 (after! evil
+  ;; HACK disable all default-maps (custom map below)
+  (add-hook 'evil-mode-hook #'evil-cleverparens-mode)
+  (setq evil-cleverparens-use-s-and-S nil
+        evil-cleverparens-use-additional-bindings nil
+        evil-cleverparens-use-additional-movement-keys nil)
   (map!
    :nmvo "j"   #'evil-next-visual-line
    :nmvo "k"   #'evil-previous-visual-line
@@ -283,14 +295,19 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
    :nmv  "H"   #'evil-first-non-blank
    :nmv  "L"   #'evil-end-of-visual-line
 
-   :nmv  "("   #'sp-backward-up-sexp ;; or: #'sp-backward-sexp
-   :nmv  ")"   #'sp-up-sexp ;; or: #'sp-forward-sexp
+   :nmv  "("   #'evil-cp-backward-up-sexp
+   :nmv  ")"   #'evil-cp-up-sexp
+   :nmv  "{"   #'evil-cp-previous-opening
+   :nmv  "}"   #'evil-cp-next-closing
 
    :nmv  "+"   #'evil-numbers/inc-at-pt
    :nmv  "-"   #'evil-numbers/dec-at-pt
    :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
    :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
-   ))
+
+   :nmv  "go" #'consult-outline
+   )
+  )
 #+end_src
 
 ** Alignment
@@ -331,7 +348,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (after! evil
   (map! :map evil-snipe-local-mode-map ;; need to override evil-snipe
         :nmvo "s" #'evil-avy-goto-char-2-below
-        :nmvo "S" #'evil-avy-goto-char-2-above))
+        :nmvo "S" #'evil-avy-goto-char-2-above
+        ))
 #+end_src
 
 *** Evil surround operator
@@ -353,6 +371,8 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 #+begin_src emacs-lisp
 (after! evil-org
   (map! :map evil-org-mode-map
+        :nmv "]]"     #'org-forward-paragraph
+        :nmv "[["     #'org-backward-paragraph
         :inmv "S-RET" #'org-meta-return
         :inmv "C-RET" #'+org/insert-item-below
         :nmv  "RET"   #'org-return-maybe-indent
@@ -362,6 +382,11 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
         :inmv "C-k"   #'org-metaup
         :inmv "C-h"   #'org-metaleft
         :inmv "C-l"   #'org-metaright
+        )
+  (map! :leader
+        (:prefix ("c" . "code")
+                 "f" #'z/org-format-buffer
+                 )
         )
 
   (map! :localleader
@@ -405,7 +430,8 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
         :nm "." #'dired-omit-mode
         :nm "e" #'dired-create-empty-file
         :nm "E" #'dired-create-directory
-        ))
+        )
+)
 #+end_src
 
 * Evil mode
@@ -420,10 +446,11 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
   (evil-surround-mode 1)
 
   (setq
-   evil-magic t
+   evil-magic 'verymagic ;; less escaping
    evil-want-fine-undo nil
    evil-ex-substitute-global t
    evil-move-cursor-back t
+   evil-move-beyond-eol nil
    evil-kill-on-visual-paste nil
    evil-want-C-i-jump t
    evil-want-minibuffer t
@@ -523,13 +550,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 - Each file gets its own entry in ~~/Archive/org~
 - Auto-tangle a file after saving (efficient default behavior)
 #+begin_src emacs-lisp
-(appendq! org-modules
-          '(org-inlinetask
-            org-checklist
-            org-collector
-            org-toc
-            org-velocity
-            ))
+(use-package! org-pandoc-import :after org)
 
 (add-hook! 'org-mode-hook
            #'visual-line-mode
@@ -616,6 +637,24 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
                 ("#+end_comment" . "⫽")
                 ("#+RESULTS:" . "󰞖"))) ;; HACK: results is an uppercase artifact
 #+end_src
+
+- These ligatures are bad for code editability
+#+begin_src emacs-lisp
+(plist-put! +ligatures-extra-symbols
+            :and           nil
+            :or            nil
+            :for           nil
+            :not           nil
+            :true          nil
+            :false         nil
+            :int           nil
+            :float         nil
+            :str           nil
+            :bool          nil
+            :list          nil
+            )
+#+end_src
+
 
 ** Todo states
 - These are todo states are used for personal daily organization & studying at university (keeping track of lectures, assignments, events, exercise sheets.)
@@ -728,16 +767,16 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 
 ** Babel
 #+begin_src emacs-lisp
-  (setq org-babel-default-header-args
-        '((:session  . "none")
-          (:results  . "replace")
-          (:exports  . "code")
-          (:cache    . "no")
-          (:noweb    . "no")
-          (:hlines   . "no")
-          (:tangle   . "no")
-          (:mkdirp   . "yes")
-          (:comments . "no")))
+(setq org-babel-default-header-args
+      '((:session  . "none")
+        (:results  . "replace")
+        (:exports  . "code")
+        (:cache    . "no")
+        (:noweb    . "no")
+        (:hlines   . "no")
+        (:tangle   . "no")
+        (:mkdirp   . "yes")
+        (:comments . "no")))
 #+end_src
 
 *** Org-src-edit-mode
@@ -938,7 +977,6 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 #+end_src
 
 
-
 ** Insert date
 - Insert dates using the calendar quickly for writing Notes and ~#+date:~ in header's.
 #+begin_src emacs-lisp
@@ -985,9 +1023,20 @@ More convenient, with a nice display.
        (format " [[%s][%s]]" file (replace-regexp-in-string "file:" "" (capitalize (replace-regexp-in-string "[-_.]" " " (file-name-sans-extension (file-name-nondirectory file)))))))))
 #+end_src
 
+** Format org buffer
+#+begin_src emacs-lisp
+(defun z/org-format-buffer ()
+  "Regenerating the text from its internal parsed representation. Quite amazing."
+  (interactive)
+  (when (y-or-n-p "Really format current buffer? ")
+    (let ((document (org-element-interpret-data (org-element-parse-buffer))))
+      (erase-buffer)
+      (insert document)
+      (goto-char (point-min)))))
+#+end_src
+
+
 ** Jump to src file
-- The opposite of ~org-babel-tangle-jump-to-org~. Jumps at tangled code from org src block.
-- NOTE: only works if header-arg includes ~:tangle <filename>~
 - When done with the edits: ~org-bable-detangle~.
 #+begin_src emacs-lisp
   (defun z/jump-src ()
@@ -1163,3 +1212,6 @@ End the "(after! org" block
 #+begin_src emacs-lisp
 (load! "user/nushell-mode.el")
 #+end_src
+
+* Future impl
+** [?] org-ql

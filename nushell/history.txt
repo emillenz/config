@@ -1,6 +1,3 @@
-emacs  -h | bat
-man emacs 
-emacs --daemon
 ^emacs --daemon
 git status
 syncthing
@@ -9998,3 +9995,6 @@ mpv $(xclip -o) --background==F2E6CE
 mpv --background==F2E6CE https://oc-vp-dist-downloads.ethz.ch/mh_default_org/oaipmh-mmp/af8e2ef6-9438-4550-bc23-56b073f68565/1ee2d55a-d50f-4f07-b13c-42901990bfa9/presentation_347abe91_1cb7_4d38_92c4_c011585dada0.mp4
 mpv --background='#F2E6CE' https://oc-vp-dist-downloads.ethz.ch/mh_default_org/oaipmh-mmp/af8e2ef6-9438-4550-bc23-56b073f68565/1ee2d55a-d50f-4f07-b13c-42901990bfa9/presentation_347abe91_1cb7_4d38_92c4_c011585dada0.mp4
 mpv https://oc-vp-dist-downloads.ethz.ch/mh_default_org/oaipmh-mmp/af8e2ef6-9438-4550-bc23-56b073f68565/1ee2d55a-d50f-4f07-b13c-42901990bfa9/presentation_347abe91_1cb7_4d38_92c4_c011585dada0.mp4
+man zathura 
+doom doctor
+emacs --debug-init

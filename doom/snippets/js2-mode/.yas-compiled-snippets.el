@@ -1,2 +1,2 @@
 ;;; Compiled snippets and support files for `js2-mode'
-;;; Do not edit! File generated at Tue Oct 31 17:43:58 2023
+;;; Do not edit! File generated at Thu Nov 23 12:56:44 2023

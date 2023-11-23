@@ -1,6 +1,4 @@
 ;; [[file:config.org::*User][User:1]]
-;; clowned
-;; great
 (setq
  user-full-name "Emil Lenz"
  user-mail-address "emillenz@protonmail.com")
@@ -55,6 +53,7 @@
  delete-by-moving-to-trash t
  truncate-string-ellipsis "…"
  auto-save-default t
+
  confirm-kill-emacs nil
  undo-limit 80000000
  history-length 1000
@@ -146,6 +145,7 @@
 (setq tab-bar-new-tab-to 'rightmost)
 
 ;; HACK: ~:inmvorem~ binds globally no matter where you are
+(after! evil
 (map! :map  'override
       :inmvorem "M-j" #'tab-bar-switch-to-prev-tab
       :inmvorem "M-J" #'tab-bar-move-tab-backward
@@ -174,6 +174,7 @@
       :inmvorem "C--" #'doom/decrease-font-size
       :inmvorem "C-=" #'doom/increase-font-size
       :inmvorem "C-0" #'doom/reset-font-size)
+)
 
 (after! evil-org
   (map! :map evil-org-agenda-mode-map
@@ -184,6 +185,11 @@
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
 (after! evil
+  ;; HACK disable all default-maps (custom map below)
+  (add-hook 'evil-mode-hook #'evil-cleverparens-mode)
+  (setq evil-cleverparens-use-s-and-S nil
+        evil-cleverparens-use-additional-bindings nil
+        evil-cleverparens-use-additional-movement-keys nil)
   (map!
    :nmvo "j"   #'evil-next-visual-line
    :nmvo "k"   #'evil-previous-visual-line
@@ -198,14 +204,19 @@
    :nmv  "H"   #'evil-first-non-blank
    :nmv  "L"   #'evil-end-of-visual-line
 
-   :nmv  "("   #'sp-backward-up-sexp ;; or: #'sp-backward-sexp
-   :nmv  ")"   #'sp-up-sexp ;; or: #'sp-forward-sexp
+   :nmv  "("   #'evil-cp-backward-up-sexp
+   :nmv  ")"   #'evil-cp-up-sexp
+   :nmv  "{"   #'evil-cp-previous-opening
+   :nmv  "}"   #'evil-cp-next-closing
 
    :nmv  "+"   #'evil-numbers/inc-at-pt
    :nmv  "-"   #'evil-numbers/dec-at-pt
    :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
    :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
-   ))
+
+   :nmv  "go" #'consult-outline
+   )
+  )
 ;; Evil-mode:1 ends here
 
 ;; [[file:config.org::*Alignment][Alignment:1]]
@@ -233,7 +244,8 @@
 (after! evil
   (map! :map evil-snipe-local-mode-map ;; need to override evil-snipe
         :nmvo "s" #'evil-avy-goto-char-2-below
-        :nmvo "S" #'evil-avy-goto-char-2-above))
+        :nmvo "S" #'evil-avy-goto-char-2-above
+        ))
 ;; Instant jumping:1 ends here
 
 ;; [[file:config.org::*Evil surround operator][Evil surround operator:1]]
@@ -249,6 +261,8 @@
 ;; [[file:config.org::*Org mode][Org mode:1]]
 (after! evil-org
   (map! :map evil-org-mode-map
+        :nmv "]]"     #'org-forward-paragraph
+        :nmv "[["     #'org-backward-paragraph
         :inmv "S-RET" #'org-meta-return
         :inmv "C-RET" #'+org/insert-item-below
         :nmv  "RET"   #'org-return-maybe-indent
@@ -258,6 +272,11 @@
         :inmv "C-k"   #'org-metaup
         :inmv "C-h"   #'org-metaleft
         :inmv "C-l"   #'org-metaright
+        )
+  (map! :leader
+        (:prefix ("c" . "code")
+                 "f" #'z/org-format-buffer
+                 )
         )
 
   (map! :localleader
@@ -291,7 +310,8 @@
         :nm "." #'dired-omit-mode
         :nm "e" #'dired-create-empty-file
         :nm "E" #'dired-create-directory
-        ))
+        )
+)
 ;; Dired:1 ends here
 
 ;; [[file:config.org::*Evil mode][Evil mode:1]]
@@ -299,10 +319,11 @@
   (evil-surround-mode 1)
 
   (setq
-   evil-magic t
+   evil-magic 'verymagic ;; less escaping
    evil-want-fine-undo nil
    evil-ex-substitute-global t
    evil-move-cursor-back t
+   evil-move-beyond-eol nil
    evil-kill-on-visual-paste nil
    evil-want-C-i-jump t
    evil-want-minibuffer t
@@ -389,13 +410,7 @@
 ;; Org Mode:1 ends here
 
 ;; [[file:config.org::*Options][Options:1]]
-(appendq! org-modules
-          '(org-inlinetask
-            org-checklist
-            org-collector
-            org-toc
-            org-velocity
-            ))
+(use-package! org-pandoc-import :after org)
 
 (add-hook! 'org-mode-hook
            #'visual-line-mode
@@ -479,6 +494,22 @@
                 ("#+end_comment" . "⫽")
                 ("#+RESULTS:" . "󰞖"))) ;; HACK: results is an uppercase artifact
 ;; Symbols:1 ends here
+
+;; [[file:config.org::*Symbols][Symbols:2]]
+(plist-put! +ligatures-extra-symbols
+            :and           nil
+            :or            nil
+            :for           nil
+            :not           nil
+            :true          nil
+            :false         nil
+            :int           nil
+            :float         nil
+            :str           nil
+            :bool          nil
+            :list          nil
+            )
+;; Symbols:2 ends here
 
 ;; [[file:config.org::*Todo states][Todo states:1]]
 (setq org-todo-keywords
@@ -720,6 +751,17 @@
     (insert
      (format " [[%s][%s]]" file (replace-regexp-in-string "file:" "" (capitalize (replace-regexp-in-string "[-_.]" " " (file-name-sans-extension (file-name-nondirectory file)))))))))
 ;; Link file:1 ends here
+
+;; [[file:config.org::*Format org buffer][Format org buffer:1]]
+(defun z/org-format-buffer ()
+  "Regenerating the text from its internal parsed representation. Quite amazing."
+  (interactive)
+  (when (y-or-n-p "Really format current buffer? ")
+    (let ((document (org-element-interpret-data (org-element-parse-buffer))))
+      (erase-buffer)
+      (insert document)
+      (goto-char (point-min)))))
+;; Format org buffer:1 ends here
 
 ;; [[file:config.org::*Jump to src file][Jump to src file:1]]
 (defun z/jump-src ()

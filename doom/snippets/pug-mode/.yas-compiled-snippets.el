@@ -2,7 +2,10 @@
 ;;; Snippet definitions:
 ;;;
 (yas-define-snippets 'pug-mode
-                     '(("link" "link(rel=\"stylesheet\", href=\"${1:stylesheet.css}\", type=\"type/css\")" "link type=\"stylesheet\"" nil nil nil "/home/lenz/.config/doom/snippets/pug-mode/link" nil nil)))
+                     '(("link"
+                        "link(rel=\"stylesheet\", href=\"${1:stylesheet.css}\", type=\"type/css\")"
+                        "link type=\"stylesheet\"" nil nil nil
+                        "/home/lenz/.config/doom/snippets/pug-mode/link" nil nil)))
 
 
-;;; Do not edit! File generated at Tue Oct 31 17:43:59 2023
+;;; Do not edit! File generated at Thu Nov 23 12:56:45 2023

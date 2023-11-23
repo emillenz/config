@@ -18,3 +18,8 @@
 (package! org-superstar)
 (package! org-tidy)
 (package! evil-numbers)
+(package! evil-cleverparens)
+(package! org-pandoc-import
+  :recipe (:host github
+           :repo "tecosaur/org-pandoc-import"
+           :files ("*.el" "filters" "preprocessors")))

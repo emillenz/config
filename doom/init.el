@@ -31,8 +31,9 @@
        hl-todo           ; highlight keywords: TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW/BUG
        ;;hydra
        indent-guides     ; highlighted indent columns
-       (ligatures)         ; ligatures and symbols
-       ;;    +extra           ;; replaces programming keywords with math sybols for conciseness (eg: int -> ℤ)
+       (ligatures         ; ligatures and symbols
+        +extra
+        )
 
        ;; minimap           ; show a map of the code on the side
        (modeline)  ;; light => no icons
@@ -179,7 +180,7 @@
         +noter                      ; enhanced PDF notetaking
         +jupyter                    ; ipython/jupyter support for babel
         +pandoc                     ; export-with-pandoc support
-        +gnuplot                    ; who doesn't like pretty pictures
+        ;; +gnuplot                    ; who doesn't like pretty pictures
         ;;+pomodoro                 ; be fruitful with the tomato technique
         +journal
         +pretty

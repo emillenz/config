@@ -102,7 +102,6 @@
  '(text-mode-hook
    dired-mode-hook
    org-agenda-mode-hook)
- :append
  #'visual-fill-column-mode)
 
 (global-display-fill-column-indicator-mode -1) ;; distracting
@@ -334,7 +333,7 @@
      help-mode
      gud-mode
      vterm-mode))
-  (add-hook 'evil-normal-state-entry-hook #'company-abort)
+  (add-hook! 'evil-normal-state-entry-hook #'company-abort) ;; abortions are better
   )
 ;; Lsp & completion:1 ends here
 
@@ -394,15 +393,15 @@
             org-velocity
             ))
 
-(add-hook! 'org-mode-hook :append
+(add-hook! 'org-mode-hook
            #'visual-line-mode
            #'org-num-mode
            #'org-appear-mode
            )
 
 ;; NOTE: add hook AFTER entering org-mode
-(add-hook! 'org-mode-hook :append
-  (lambda () (add-hook! 'after-save-hook :append #'org-babel-tangle)))
+(add-hook! 'org-mode-hook
+  (lambda () (add-hook! 'after-save-hook #'org-babel-tangle)))
 
 (setq
  org-directory "~/Documents/org"
@@ -459,7 +458,7 @@
 ;; Options:1 ends here
 
 ;; [[file:config.org::*Symbols][Symbols:1]]
-(add-hook! 'org-mode-hook :append #'org-superstar-mode #'prettify-symbols-mode)
+(add-hook! 'org-mode-hook #'org-superstar-mode #'prettify-symbols-mode)
 (setq
  org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
  org-superstar-item-bullet-alist
@@ -809,13 +808,13 @@ Jumps at tangled code from org src block."
 ;; Capture templates:1 ends here
 
 ;; [[file:config.org::*Programming mode][Programming mode:1]]
-(add-hook! 'prog-mode-hook :append
+(add-hook! 'prog-mode-hook
            #'rainbow-mode
            #'rainbow-delimiters-mode)
 
 ;; NOTE: add hook AFTER entering prog-mode
-(add-hook! 'prog-mode-hook :append
-  (lambda () (add-hook! 'before-save-hook :append #'+format/region-or-buffer)))
+(add-hook! 'prog-mode-hook
+  (lambda () (add-hook! 'before-save-hook #'+format/region-or-buffer)))
 ;; Programming mode:1 ends here
 
 ;; [[file:config.org::*Indentation: 2 spaces][Indentation: 2 spaces:1]]

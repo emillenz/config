@@ -101,7 +101,9 @@
 (add-hook!
  '(text-mode-hook
    dired-mode-hook
-   org-agenda-mode-hook)
+   org-agenda-mode-hook
+   magit-mode-hook
+   )
  #'visual-fill-column-mode)
 
 (global-display-fill-column-indicator-mode -1) ;; distracting
@@ -196,8 +198,8 @@
    :nmv  "H"   #'evil-first-non-blank
    :nmv  "L"   #'evil-end-of-visual-line
 
-   :nmv  "("   #'sp-backward-sexp
-   :nmv  ")"   #'sp-forward-sexp
+   :nmv  "("   #'sp-backward-up-sexp ;; or: #'sp-backward-sexp
+   :nmv  ")"   #'sp-up-sexp ;; or: #'sp-forward-sexp
 
    :nmv  "+"   #'evil-numbers/inc-at-pt
    :nmv  "-"   #'evil-numbers/dec-at-pt
@@ -336,7 +338,6 @@
      help-mode
      gud-mode
      vterm-mode))
-  (add-hook! 'evil-normal-state-entry-hook #'company-abort) ;; abortions are better
   )
 ;; Lsp & completion:1 ends here
 
@@ -349,38 +350,38 @@
 ;; Templates & snippets:1 ends here
 
 ;; [[file:config.org::*Dired Mode][Dired Mode:1]]
-(setq dired-omit-files
-      (rx (or
-           (seq bol (? ".") "#")
-           (seq bol "." (not (any ".")))
-           (seq "~" eol)
-           (seq bol "CVS" eol))))
+(after! dired
+  (setq dired-omit-files
+        (rx (or
+             (seq bol (? ".") "#")
+             (seq bol "." (not (any ".")))
+             (seq "~" eol)
+             (seq bol "CVS" eol))))
 
-(setq dired-open-extensions
-      '(("mkv"  . "mpv")
-        ("mp4"  . "mpv")
-        ("mp3"  . "ncmpcpp")
-        ("gif"  . "nsxiv")
-        ("jpeg" . "nsxiv")
-        ("jpg"  . "nsxiv")
-        ("png"  . "nsxiv")
-        ("docx" . "libreoffice")
-        ("odt"  . "libreoffice")
-        ("odf"  . "libreoffice")
-        ("epub" . "zathura")
-        ("pdf"  . "zathura")
-        ))
+  (setq dired-open-extensions
+        '(("mkv"  . "mpv")
+          ("mp4"  . "mpv")
+          ("mp3"  . "ncmpcpp")
+          ("gif"  . "nsxiv")
+          ("jpeg" . "nsxiv")
+          ("jpg"  . "nsxiv")
+          ("png"  . "nsxiv")
+          ("docx" . "libreoffice")
+          ("odt"  . "libreoffice")
+          ("odf"  . "libreoffice")
+          ("epub" . "zathura")
+          ("pdf"  . "zathura")
+          ))
 
-(setq
- dired-recursive-copies 'always
- dired-recursive-deletes 'top
- global-auto-revert-non-file-buffers t
- dired-kill-when-opening-new-dired-buffer t
- )
+  (add-hook! 'dired-mode-hook #'dired-hide-details-mode)
 
-(setq peep-dired-cleanup-eagerly t
-      peep-dired-ignored-extensions '("mkv" "iso" "mp4" "gif" "mp3")
-      )
+  (setq
+   dired-recursive-copies 'always
+   dired-recursive-deletes 'top
+   global-auto-revert-non-file-buffers t
+   dired-kill-when-opening-new-dired-buffer t
+   )
+  )
 ;; Dired Mode:1 ends here
 
 ;; [[file:config.org::*Org Mode][Org Mode:1]]
@@ -476,10 +477,10 @@
                 ("#+end_quote" . "")
                 ("#+begin_comment" . "⫽")
                 ("#+end_comment" . "⫽")
-                ("#+RESULTS:" . "󰞖"))) ;; HACK: results is an uppercas artifact
+                ("#+RESULTS:" . "󰞖"))) ;; HACK: results is an uppercase artifact
 ;; Symbols:1 ends here
 
-;; [[file:config.org::*todo][todo:1]]
+;; [[file:config.org::*Todo states][Todo states:1]]
 (setq org-todo-keywords
       '((type
          "[#](#)"
@@ -492,9 +493,9 @@
          "[X](x!)"
          "[^](^@)"
          "[@](d@)"))) ;; HACK: cannot use"@"
-;; todo:1 ends here
+;; Todo states:1 ends here
 
-;; [[file:config.org::*todo][todo:2]]
+;; [[file:config.org::*Todo states][Todo states:2]]
 (setq org-todo-keyword-faces
       '(("[#]"  . +org-todo-project)
         ("[ ]"  . +org-todo-cancel)
@@ -506,9 +507,9 @@
         ("[X]"  . org-done)
         ("[^]"  . org-done)
         ))
-;; todo:2 ends here
+;; Todo states:2 ends here
 
-;; [[file:config.org::*todo][todo:3]]
+;; [[file:config.org::*Todo states][Todo states:3]]
 (setq
  org-log-done 'time
  org-log-repeat 'time
@@ -525,7 +526,7 @@
  '((?1  . 'all-the-icons-red)
    (?2 . 'all-the-icons-orange)
    (?3 . 'all-the-icons-yellow)))
-;; todo:3 ends here
+;; Todo states:3 ends here
 
 ;; [[file:config.org::*Babel][Babel:1]]
 (setq org-babel-default-header-args

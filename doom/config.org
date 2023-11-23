@@ -141,7 +141,9 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (add-hook!
  '(text-mode-hook
    dired-mode-hook
-   org-agenda-mode-hook)
+   org-agenda-mode-hook
+   magit-mode-hook
+   )
  #'visual-fill-column-mode)
 
 (global-display-fill-column-indicator-mode -1) ;; distracting
@@ -170,8 +172,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 * Keybindings
-- HACK: Each binding must have its modes explicitly defined. (not just once at the top of the list).
-- ~<leader>hk~ and ~<leader>hbf~ are crucial to understanding what your tools can do for you (ex: magit, dired...)
+- ~helpful-key~ and ~which-key-show-full-keymap~ are crucial to understanding what your tools can do for you (ex: magit, dired, org-mode)
   + Always keep on exploring, learning new, efficient keybindings and break your old routines for newer, more effcient one's after evaluating wether they are faster or not.
 
 ** Leader
@@ -282,8 +283,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
    :nmv  "H"   #'evil-first-non-blank
    :nmv  "L"   #'evil-end-of-visual-line
 
-   :nmv  "("   #'sp-backward-sexp
-   :nmv  ")"   #'sp-forward-sexp
+   :nmv  "("   #'sp-backward-up-sexp ;; or: #'sp-backward-sexp
+   :nmv  ")"   #'sp-up-sexp ;; or: #'sp-forward-sexp
 
    :nmv  "+"   #'evil-numbers/inc-at-pt
    :nmv  "-"   #'evil-numbers/dec-at-pt
@@ -384,7 +385,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
   + use fuzzyfinding of files that exist
     + create files/directories in other directories
     + cd into different dir
-- change some mappings for convenience
+- Remap some mappings for convenience:
 #+begin_src emacs-lisp
 (after! dired
   (map! :map dired-mode-map
@@ -460,7 +461,6 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
      help-mode
      gud-mode
      vterm-mode))
-  (add-hook! 'evil-normal-state-entry-hook #'company-abort) ;; abortions are better
   )
 #+end_src
 
@@ -475,40 +475,40 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 #+end_src
 
 * Dired Mode
-- always open media files externally (emacs bad at graphical stuff)
+- Always open media files externally (emacs bad at graphical stuff)
 #+begin_src emacs-lisp
-(setq dired-omit-files
-      (rx (or
-           (seq bol (? ".") "#")
-           (seq bol "." (not (any ".")))
-           (seq "~" eol)
-           (seq bol "CVS" eol))))
+(after! dired
+  (setq dired-omit-files
+        (rx (or
+             (seq bol (? ".") "#")
+             (seq bol "." (not (any ".")))
+             (seq "~" eol)
+             (seq bol "CVS" eol))))
 
-(setq dired-open-extensions
-      '(("mkv"  . "mpv")
-        ("mp4"  . "mpv")
-        ("mp3"  . "ncmpcpp")
-        ("gif"  . "nsxiv")
-        ("jpeg" . "nsxiv")
-        ("jpg"  . "nsxiv")
-        ("png"  . "nsxiv")
-        ("docx" . "libreoffice")
-        ("odt"  . "libreoffice")
-        ("odf"  . "libreoffice")
-        ("epub" . "zathura")
-        ("pdf"  . "zathura")
-        ))
+  (setq dired-open-extensions
+        '(("mkv"  . "mpv")
+          ("mp4"  . "mpv")
+          ("mp3"  . "ncmpcpp")
+          ("gif"  . "nsxiv")
+          ("jpeg" . "nsxiv")
+          ("jpg"  . "nsxiv")
+          ("png"  . "nsxiv")
+          ("docx" . "libreoffice")
+          ("odt"  . "libreoffice")
+          ("odf"  . "libreoffice")
+          ("epub" . "zathura")
+          ("pdf"  . "zathura")
+          ))
 
-(setq
- dired-recursive-copies 'always
- dired-recursive-deletes 'top
- global-auto-revert-non-file-buffers t
- dired-kill-when-opening-new-dired-buffer t
- )
+  (add-hook! 'dired-mode-hook #'dired-hide-details-mode)
 
-(setq peep-dired-cleanup-eagerly t
-      peep-dired-ignored-extensions '("mkv" "iso" "mp4" "gif" "mp3")
-      )
+  (setq
+   dired-recursive-copies 'always
+   dired-recursive-deletes 'top
+   global-auto-revert-non-file-buffers t
+   dired-kill-when-opening-new-dired-buffer t
+   )
+  )
 #+end_src
 
 * Org Mode
@@ -614,14 +614,13 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
                 ("#+end_quote" . "")
                 ("#+begin_comment" . "⫽")
                 ("#+end_comment" . "⫽")
-                ("#+RESULTS:" . "󰞖"))) ;; HACK: results is an uppercas artifact
+                ("#+RESULTS:" . "󰞖"))) ;; HACK: results is an uppercase artifact
 #+end_src
 
 ** Todo states
 - These are todo states are used for personal daily organization & studying at university (keeping track of lectures, assignments, events, exercise sheets.)
 - Using symbols instead of words to represent states -> less clutter, more concise, readeable & structured
 - Order them with priorities to assign order of execution if there are many tasks
-- HACK: Faces are different from keywords, -> but this coloring makes more sense.
 - States with ~@~ prompt for note // if want to do manually: ~org-add-note~
   + Reflecting
   + Log/track:
@@ -669,7 +668,6 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 *[X]*: Completed // cross-out sign
 - ~[X] Assignment~
 
-**** todo
 #+begin_src emacs-lisp
   (setq org-todo-keywords
         '((type

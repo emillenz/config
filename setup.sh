@@ -1,7 +1,7 @@
 #!/bin/bash
 sudo pacman -Syyu
 
-yay --noconfirm -S alacritty curl libtool xorg-xset fzf fd ripgrep xclip xdg-utils cmake npm bat git gcc make xdotool tldr htop carapace ttf-terminus-nerd terminus-font nushell tmux
+yay --noconfirm -S alacritty curl libtool xorg-xset fzf fd ripgrep xclip xdg-utils cmake npm bat git git-delta gcc make xdotool tldr htop carapace ttf-terminus-nerd terminus-font nushell tmux
 
 sudo chsh -s /usr/bin/nu root
 chsh -s /usr/bin/nu
@@ -10,7 +10,7 @@ echo "$USER ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/$USER"
 
 fd . ~/.config/bin -tf -x chmod +x {}
 
-yay --noconfirm -S emacs-nativecomp neovim
+yay --noconfirm -S emacs-nativecomp
 
 git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 ~/.config/emacs/bin/doom install

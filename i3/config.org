@@ -201,14 +201,14 @@ set $leader <leader> audios | ^audio | nmtui | outputs | [^o] layouts | btctl | 
 
 mode "$leader" {
   bindsym a       exec ~/.config/bin/audios; mode "default"
-  bindsym shift+a exec i3-msg '[con_mark="audio"] focus' || alacritty --class 'audio' -T 'audio' -e pulsemixer &; mode "default"
+  bindsym shift+a exec i3-msg '[con_mark="*a"] focus' || alacritty --class 'audio' -T 'audio' -e pulsemixer &; mode "default"
   bindsym o       exec ~/.config/bin/outputs; mode "default"
   bindsym shift+o exec ~/.config/bin/layouts; mode "default"
   bindsym shift+s exec ~/.config/bin/screenshot; mode "default"
   bindsym b       exec ~/.config/bin/btcontrol; mode "default"
   bindsym p       exec ~/.config/bin/killprocess; mode "default"
-  bindsym shift+p exec i3-msg '[con_mark="htop"] focus' || alacritty --class 'htop' -T 'htop' -e htop --tree &; mode "default"
-  bindsym n       exec i3-msg '[con_mark="nmtui"] focus' || alacritty --class 'nmtui' -T 'nmtui' -e nmtui &; mode "default"
+  bindsym shift+p exec i3-msg '[con_mark="*h"] focus' || alacritty --class 'htop' -T 'htop' -e htop --tree &; mode "default"
+  bindsym n       exec i3-msg '[con_mark="*n"] focus' || alacritty --class 'nmtui' -T 'nmtui' -e nmtui &; mode "default"
 
   bindsym k      mode "$keyboard"
   bindsym s      mode "$sysact"
@@ -216,9 +216,9 @@ mode "$leader" {
   bindsym Escape mode "default"
 }
 
-for_window [class="(?i)htop"]  mark htop
-for_window [class="(?i)nmtui"] mark nmtui
-for_window [class="(?i)audio"] mark audio
+for_window [class="(?i)htop"]  mark *h
+for_window [class="(?i)nmtui"] mark *n
+for_window [class="(?i)audio"] mark *a
 #+end_src
 
 *** Keyboard layout

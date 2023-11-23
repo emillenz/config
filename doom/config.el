@@ -57,6 +57,7 @@
  auto-save-default t
  confirm-kill-emacs nil
  undo-limit 80000000
+ history-length 1000
  which-key-idle-delay 1
  which-key-allow-multiple-replacements t
  hscroll-margin 0
@@ -70,8 +71,10 @@
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
 (beacon-mode 1)
+
 (tab-bar-mode 1)
-(setq tab-bar-tab-hints t)
+(setq tab-bar-tab-hints t
+      tab-bar-close-button-show nil)
 ;; Misc Options:1 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:1]]
@@ -118,8 +121,8 @@
 (setq
  doom-leader-key "SPC"
  doom-leader-alt-key "M-SPC"
- doom-localleader-key "\\"
- doom-leader-alt-key "M-\\")
+ doom-localleader-key ","
+ doom-leader-alt-key "M-,")
 
 (map! :leader
       (:prefix ("t" . "toggle")
@@ -181,23 +184,23 @@
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
 (after! evil
   (map!
-   :nmvo  "j" 'evil-next-visual-line
-   :nmvo  "k" 'evil-previous-visual-line
+   :nmvo "j"   'evil-next-visual-line
+   :nmvo "k"   'evil-previous-visual-line
 
-   :nmv   "U" 'evil-redo
-   :nmv   "Q" 'evil-execute-last-recorded-macro
-   :nmv "RET" 'electric-newline-and-maybe-indent
+   :nmv  "U"   'evil-redo
+   :nmv  "Q"   'evil-execute-last-recorded-macro
+   :nmv  "RET" 'electric-newline-and-maybe-indent
 
-   :nmv "]e" 'flycheck-next-error
-   :nmv "[e" 'flycheck-previous-error
+   :nmv "]e"   'flycheck-next-error
+   :nmv "[e"   'flycheck-previous-error
 
-   :nmv "H" 'evil-first-non-blank
-   :nmv "L" 'evil-end-of-visual-line
+   :nmv  "H"   'evil-first-non-blank
+   :nmv  "L"   'evil-end-of-visual-line
 
-   :nmv  "+" 'evil-numbers/inc-at-pt
-   :nmv  "-" 'evil-numbers/dec-at-pt
-   :nmv  "g+" 'evil-numbers/inc-at-pt-incremental
-   :nmv  "g-" 'evil-numbers/dec-at-pt-incremental
+   :nmv  "+"   'evil-numbers/inc-at-pt
+   :nmv  "-"   'evil-numbers/dec-at-pt
+   :nmv  "g+"  'evil-numbers/inc-at-pt-incremental
+   :nmv  "g-"  'evil-numbers/dec-at-pt-incremental
    ))
 ;; Evil-mode:1 ends here
 
@@ -215,7 +218,8 @@
    :inmvorem "C-s" 'basic-save-buffer
    :inmvorem "C-z" 'evil-scroll-line-to-center
    :inmvorem "C-w" 'next-window-any-frame
-   :inmvorem "C-q" 'evil-quit
+   :inmv     "C-j" 'drag-stuff-down
+   :inmv     "C-k" 'drag-stuff-up
    ))
 ;; Control-bindings:1 ends here
 
@@ -242,21 +246,25 @@
   (map! :map evil-org-mode-map
         :inmv "S-RET" 'org-meta-return
         :inmv "C-RET" '+org/insert-item-below
-        :inmv "RET"   'org-return-maybe-indent
+        :nmv "RET"   'org-return-maybe-indent
         :nmvo "H"     'evil-org-beginning-of-line
         :nmvo "L"     'evil-org-end-of-line
-        :inmv "C-j" 'org-metadown
-        ;; already using Meta for global navigation thus reassign
-        :inmv "C-k" 'org-metaup
-        :inmv "C-h" 'org-metaleft
-        :inmv "C-l" 'org-metaright
+        :inmv "C-j"   'org-metadown
+        :inmv "C-k"   'org-metaup
+        :inmv "C-h"   'org-metaleft
+        :inmv "C-l"   'org-metaright
         )
 
   (map! :localleader
         :map evil-org-mode-map
         "~"    'z/org-convert-keywords-downcase
         "l f"  'z/org-link-file
-        ))
+        )
+  (map! :map org-src-mode-map
+        :nm "ZZ" 'org-edit-src-exit
+        :nm "ZQ" 'org-edit-src-abort
+        )
+  )
 ;; Org mode:1 ends here
 
 ;; [[file:config.org::*Dired][Dired:1]]
@@ -324,7 +332,9 @@
      message-mode
      help-mode
      gud-mode
-     vterm-mode)))
+     vterm-mode))
+  (add-hook 'evil-normal-state-entry-hook #'company-abort)
+  )
 ;; Lsp & completion:1 ends here
 
 ;; [[file:config.org::*Templates & snippets][Templates & snippets:1]]
@@ -370,18 +380,22 @@
       )
 ;; Dired Mode:1 ends here
 
+;; [[file:config.org::*Syntax highlighting][Syntax highlighting:1]]
+(add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1)))
+;; Syntax highlighting:1 ends here
+
 ;; [[file:config.org::*Org Mode][Org Mode:1]]
 (after! org
 ;; Org Mode:1 ends here
 
 ;; [[file:config.org::*Options][Options:1]]
 (appendq! org-modules
-      '(org-inlinetask
-        org-checklist
-        org-collector
-        org-toc
-        org-velocity
-        ))
+          '(org-inlinetask
+            org-checklist
+            org-collector
+            org-toc
+            org-velocity
+            ))
 
 (add-hook! 'org-mode-hook :append
            '(visual-line-mode
@@ -389,9 +403,9 @@
              org-appear-mode
              ))
 
-;; NOTE: add org-babel-tangle to save-hook upon entering org-mode (org-mode-hook)
+;; NOTE: add hook AFTER entering org-mode
 (add-hook! 'org-mode-hook :append
-  (lambda () (add-hook! 'before-save-hook :append 'org-babel-tangle)))
+  (lambda () (add-hook! 'after-save-hook :append 'org-babel-tangle)))
 
 (setq
  org-directory "~/Documents/org"
@@ -463,7 +477,7 @@
                 ("#+end_quote" . "")
                 ("#+begin_comment" . "⫽")
                 ("#+end_comment" . "⫽")
-                ("#+results:" . "󰞖")))
+                ("#+RESULTS:" . "󰞖"))) ;; HACK: results is an uppercas artifact
 ;; Symbols:1 ends here
 
 ;; [[file:config.org::*todo][todo:1]]
@@ -802,11 +816,12 @@ Jumps at tangled code from org src block."
            '(rainbow-mode
              rainbow-delimiters-mode))
 
+;; NOTE: add hook AFTER entering prog-mode
 (add-hook! 'prog-mode-hook :append
   (lambda () (add-hook! 'before-save-hook :append '+format/region-or-buffer)))
 ;; Programming mode:1 ends here
 
-;; [[file:config.org::*Indentation: spaces][Indentation: spaces:1]]
+;; [[file:config.org::*Indentation: 2 spaces][Indentation: 2 spaces:1]]
 (advice-add #'doom-highlight-non-default-indentation-h :override #'ignore) ;; turn off whitespace highlighting
 (setq
  org-indent-indentation-per-level 2
@@ -843,7 +858,7 @@ Jumps at tangled code from org src block."
 (setq-hook! 'lisp-mode-hook
   lisp-body-indent 2
   lisp-indent-offset 2)
-;; Indentation: spaces:1 ends here
+;; Indentation: 2 spaces:1 ends here
 
 ;; [[file:config.org::*Format buffer][Format buffer:1]]
 (defun z/clean-whitespace ()

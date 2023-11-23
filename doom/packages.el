@@ -18,3 +18,4 @@
 (package! org-superstar)
 (package! org-tidy)
 (package! evil-numbers)
+(package! magit-delta)

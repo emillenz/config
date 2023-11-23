@@ -86,6 +86,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  auto-save-default t
  confirm-kill-emacs nil
  undo-limit 80000000
+ history-length 1000
  which-key-idle-delay 1
  which-key-allow-multiple-replacements t
  hscroll-margin 0
@@ -99,8 +100,10 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
 (beacon-mode 1)
+
 (tab-bar-mode 1)
-(setq tab-bar-tab-hints t)
+(setq tab-bar-tab-hints t
+      tab-bar-close-button-show nil)
 #+end_src
 
 * Window layout & behavior
@@ -176,8 +179,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (setq
  doom-leader-key "SPC"
  doom-leader-alt-key "M-SPC"
- doom-localleader-key "\\"
- doom-leader-alt-key "M-\\")
+ doom-localleader-key ","
+ doom-leader-alt-key "M-,")
 
 (map! :leader
       (:prefix ("t" . "toggle")
@@ -263,28 +266,29 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+begin_src emacs-lisp
 (after! evil
   (map!
-   :nmvo  "j" 'evil-next-visual-line
-   :nmvo  "k" 'evil-previous-visual-line
+   :nmvo "j"   'evil-next-visual-line
+   :nmvo "k"   'evil-previous-visual-line
 
-   :nmv   "U" 'evil-redo
-   :nmv   "Q" 'evil-execute-last-recorded-macro
-   :nmv "RET" 'electric-newline-and-maybe-indent
+   :nmv  "U"   'evil-redo
+   :nmv  "Q"   'evil-execute-last-recorded-macro
+   :nmv  "RET" 'electric-newline-and-maybe-indent
 
-   :nmv "]e" 'flycheck-next-error
-   :nmv "[e" 'flycheck-previous-error
+   :nmv "]e"   'flycheck-next-error
+   :nmv "[e"   'flycheck-previous-error
 
-   :nmv "H" 'evil-first-non-blank
-   :nmv "L" 'evil-end-of-visual-line
+   :nmv  "H"   'evil-first-non-blank
+   :nmv  "L"   'evil-end-of-visual-line
 
-   :nmv  "+" 'evil-numbers/inc-at-pt
-   :nmv  "-" 'evil-numbers/dec-at-pt
-   :nmv  "g+" 'evil-numbers/inc-at-pt-incremental
-   :nmv  "g-" 'evil-numbers/dec-at-pt-incremental
+   :nmv  "+"   'evil-numbers/inc-at-pt
+   :nmv  "-"   'evil-numbers/dec-at-pt
+   :nmv  "g+"  'evil-numbers/inc-at-pt-incremental
+   :nmv  "g-"  'evil-numbers/dec-at-pt-incremental
    ))
 #+end_src
 
 ** Alignment
 - Implement aliging keywords in multiple lines as one vertical column via either a char or regex (press ~/~ char).
+- "Stronger indentation" => ~g</>~
 #+begin_src emacs-lisp
 (after! evil
   (map!
@@ -305,12 +309,13 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
    :inmvorem "C-s" 'basic-save-buffer
    :inmvorem "C-z" 'evil-scroll-line-to-center
    :inmvorem "C-w" 'next-window-any-frame
-   :inmvorem "C-q" 'evil-quit
+   :inmv     "C-j" 'drag-stuff-down
+   :inmv     "C-k" 'drag-stuff-up
    ))
 #+end_src
 
 *** Instant jumping
-- emacs answer to the mouse (even more efficient)
+- Emacs's answer to the mouse (even more efficient)
 - Override the otherwise useless ~s~ key with a precise char jump. No more relative line jumping and then ~f~ or ~t~ jumping inline. Instead just jump to the exact position you need to get to immediately without the mental overhead (of doing both steps).
 - Dvorak keyboard layout! -> order is mapped by ergonomics of access: homerow -> upper-row -> lower-row.
 #+begin_src emacs-lisp
@@ -342,21 +347,25 @@ Also works after entering change/delete operator state // EX: ~c`({~ => ~)~ -> ~
   (map! :map evil-org-mode-map
         :inmv "S-RET" 'org-meta-return
         :inmv "C-RET" '+org/insert-item-below
-        :inmv "RET"   'org-return-maybe-indent
+        :nmv "RET"   'org-return-maybe-indent
         :nmvo "H"     'evil-org-beginning-of-line
         :nmvo "L"     'evil-org-end-of-line
-        :inmv "C-j" 'org-metadown
-        ;; already using Meta for global navigation thus reassign
-        :inmv "C-k" 'org-metaup
-        :inmv "C-h" 'org-metaleft
-        :inmv "C-l" 'org-metaright
+        :inmv "C-j"   'org-metadown
+        :inmv "C-k"   'org-metaup
+        :inmv "C-h"   'org-metaleft
+        :inmv "C-l"   'org-metaright
         )
 
   (map! :localleader
         :map evil-org-mode-map
         "~"    'z/org-convert-keywords-downcase
         "l f"  'z/org-link-file
-        ))
+        )
+  (map! :map org-src-mode-map
+        :nm "ZZ" 'org-edit-src-exit
+        :nm "ZQ" 'org-edit-src-abort
+        )
+  )
 #+end_src
 
 ** Dired
@@ -443,7 +452,9 @@ Also works after entering change/delete operator state // EX: ~c`({~ => ~)~ -> ~
      message-mode
      help-mode
      gud-mode
-     vterm-mode)))
+     vterm-mode))
+  (add-hook 'evil-normal-state-entry-hook #'company-abort)
+  )
 #+end_src
 
 * Templates & snippets
@@ -493,6 +504,13 @@ Also works after entering change/delete operator state // EX: ~c`({~ => ~)~ -> ~
       )
 #+end_src
 
+** Magit mode
+*** Syntax highlighting
+Install with: src_sh[:exports none]{sudo pacman -S git-delta}
+#+begin_src emacs-lisp
+(add-hook 'magit-mode-hook (lambda () (magit-delta-mode +1)))
+#+end_src
+
 * Org Mode
 - for the whole org-mode section
 #+begin_src emacs-lisp
@@ -505,76 +523,76 @@ Also works after entering change/delete operator state // EX: ~c`({~ => ~)~ -> ~
 - Each file gets its own entry in ~~/Archive/org~
 - Auto-tangle a file after saving (efficient default behavior)
 #+begin_src emacs-lisp
-  (appendq! org-modules
-        '(org-inlinetask
-          org-checklist
-          org-collector
-          org-toc
-          org-velocity
-          ))
+(appendq! org-modules
+          '(org-inlinetask
+            org-checklist
+            org-collector
+            org-toc
+            org-velocity
+            ))
 
-  (add-hook! 'org-mode-hook :append
-             '(visual-line-mode
-               org-num-mode
-               org-appear-mode
-               ))
+(add-hook! 'org-mode-hook :append
+           '(visual-line-mode
+             org-num-mode
+             org-appear-mode
+             ))
 
-  ;; NOTE: add org-babel-tangle to save-hook upon entering org-mode (org-mode-hook)
-  (add-hook! 'org-mode-hook :append
-    (lambda () (add-hook! 'before-save-hook :append 'org-babel-tangle)))
+;; NOTE: add hook AFTER entering org-mode
+(add-hook! 'org-mode-hook :append
+  (lambda () (add-hook! 'after-save-hook :append 'org-babel-tangle)))
 
-  (setq
-   org-directory "~/Documents/org"
-   org-archive-location "~/Archive/org/%s::" ;; archive based on file path
-   org-blank-before-new-entry '((heading . t)
-                                (plain-list-item . nil))
-   org-use-property-inheritance t
-   org-startup-with-inline-images t
-   org-startup-indented t
-   org-list-allow-alphabetical t
-   org-tags-column 0
-   org-fold-catch-invisible-edits 'smart
-   org-export-headline-levels 5
-   org-refile-use-outline-path 'file
-   org-refile-allow-creating-parent-nodes 'confirm
-   org-use-sub-superscripts 't
-   org-startup-with-inline-images t
-   org-fontify-quote-and-verse-blocks t
-   org-fontify-whole-block-delimiter-line t
-   org-export-with-sub-superscripts '{}
-   doom-themes-org-fontify-special-tags t
-   org-startup-with-latex-preview nil
-   org-insert-heading-respect-content t
-   org-M-RET-may-split-line t
-   org-ellipsis "…"
-   org-num-max-level 3
-   org-table-convert-region-max-lines 20000)
+(setq
+ org-directory "~/Documents/org"
+ org-archive-location "~/Archive/org/%s::" ;; archive based on file path
+ org-blank-before-new-entry '((heading . t)
+                              (plain-list-item . nil))
+ org-use-property-inheritance t
+ org-startup-with-inline-images t
+ org-startup-indented t
+ org-list-allow-alphabetical t
+ org-tags-column 0
+ org-fold-catch-invisible-edits 'smart
+ org-export-headline-levels 5
+ org-refile-use-outline-path 'file
+ org-refile-allow-creating-parent-nodes 'confirm
+ org-use-sub-superscripts 't
+ org-startup-with-inline-images t
+ org-fontify-quote-and-verse-blocks t
+ org-fontify-whole-block-delimiter-line t
+ org-export-with-sub-superscripts '{}
+ doom-themes-org-fontify-special-tags t
+ org-startup-with-latex-preview nil
+ org-insert-heading-respect-content t
+ org-M-RET-may-split-line t
+ org-ellipsis "…"
+ org-num-max-level 3
+ org-table-convert-region-max-lines 20000)
 
-  (setq
-   org-hide-leading-stars t
-   org-appear-autoemphasis t
-   org-appear-autosubmarkers t
-   org-appear-autolinks t
-   org-appear-autoentities t
-   org-hide-emphasis-markers t)
+(setq
+ org-hide-leading-stars t
+ org-appear-autoemphasis t
+ org-appear-autosubmarkers t
+ org-appear-autolinks t
+ org-appear-autoentities t
+ org-hide-emphasis-markers t)
 
-  (+org-pretty-mode 1)
+(+org-pretty-mode 1)
 
-  (setq
-   org-pretty-entities t
-   org-pretty-entities-include-sub-superscripts t)
+(setq
+ org-pretty-entities t
+ org-pretty-entities-include-sub-superscripts t)
 
-  (setq
-   org-list-demote-modify-bullet
-   '( ("-"  . "+")
-      ("+"  . "+")
-      ("*"  . "+")
-      ("1."  . "a.")
-      ("1)" . "a)")))
+(setq
+ org-list-demote-modify-bullet
+ '( ("-"  . "+")
+    ("+"  . "+")
+    ("*"  . "+")
+    ("1."  . "a.")
+    ("1)" . "a)")))
 
-  (setf org-blank-before-new-entry
-        '((heading          . t)
-          (plain-list-item . nil)))
+(setf org-blank-before-new-entry
+      '((heading          . t)
+        (plain-list-item . nil)))
 #+end_src
 
 ** Symbols
@@ -596,7 +614,7 @@ Also works after entering change/delete operator state // EX: ~c`({~ => ~)~ -> ~
                   ("#+end_quote" . "")
                   ("#+begin_comment" . "⫽")
                   ("#+end_comment" . "⫽")
-                  ("#+results:" . "󰞖")))
+                  ("#+RESULTS:" . "󰞖"))) ;; HACK: results is an uppercas artifact
 #+end_src
 
 ** Todo states
@@ -1075,11 +1093,12 @@ End the "(after! org" block
            '(rainbow-mode
              rainbow-delimiters-mode))
 
+;; NOTE: add hook AFTER entering prog-mode
 (add-hook! 'prog-mode-hook :append
   (lambda () (add-hook! 'before-save-hook :append '+format/region-or-buffer)))
 #+end_src
 
-** Indentation: spaces
+** Indentation: 2 spaces
 - The only reliable, repeatable, transportable way to ensure that indentation remains consistent across viewing environments is to indent you code using only spaces.
   + With tabs you will always get some cases where there is spaces where there should be a tab and vice versa, this needs then to be fixed manually. (eg: evil shift, or evil-align)
 - Having 8x or 4x indentations makes the code move too far to the right, and makes it really incoherent and spaced out on a 100-character terminal screen.

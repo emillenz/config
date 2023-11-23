@@ -1,4 +1,3 @@
-# Using starship is bloat if you can define your own prompt inside nushell.
 use std
 
 # Directories to search for scripts when calling source or use
@@ -11,6 +10,7 @@ $env.NU_PLUGIN_DIRS = [
 	($nu.default-config-dir | path join 'plugins')
 ]
 
+# Using starship is bloat if you can define your own prompt inside nushell: super transparent and extensible.
 def create_left_prompt [] {
   let dir = (
     if ($env.PWD | path split | zip ($nu.home-path | path split) | all { $in.0 == $in.1 }) {

@@ -55,12 +55,12 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 * Font
 #+begin_src emacs-lisp
 (setq
- doom-font-increment 2
- doom-big-font-increment 2
- doom-font                (font-spec :family "Terminess Nerd Font" :size 12)
- doom-variable-pitch-font (font-spec :family "Terminess Nerd Font" :size 12)
- doom-serif-font          (font-spec :family "Terminess Nerd Font" :size 12)
- doom-big-font            (font-spec :family "Terminess Nerd Font" :size 24))
+ doom-font-increment 1
+ doom-big-font-increment 1
+ doom-font                (font-spec :family "Terminus" :size 12)
+ doom-variable-pitch-font (font-spec :family "Terminus" :size 12)
+ doom-serif-font          (font-spec :family "Terminus" :size 12)
+ doom-big-font            (font-spec :family "Terminus" :size 24))
 
 (custom-set-faces!
   '(font-lock-keyword-face :slant normal :weight bold)
@@ -259,20 +259,14 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         ))
 #+end_src
 
-- Smart-close window function.
+- Smart-quit window function.
 #+begin_src emacs-lisp
 (defun z/quit ()
   "Close the current window, current tab or frame."
   (interactive)
   (when (buffer-modified-p)
     (evil-write nil nil))
-  (condition-case nil
-      (kill-buffer-and-window) ;; NOTE: don't make emacs slow by accumulating buffers
-    (error
-     (condition-case nil
-         (tab-bar-close-tab)
-       (error
-        (delete-frame))))))
+  (evil-window-delete))
 #+end_src
 
 ** Evil-mode
@@ -706,9 +700,10 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
            "[=](=@)"
            "[&](&@)"
            "|"
-           "[x](x!)"
+           "[@](d@)"
            "[\\](\\@)"
-           "[@](d@)"))) ;; HACK: cannot use"@"
+           "[x](x!)"
+           ))) ;; HACK: cannot use"@"
 #+end_src
 
 - Color coding is done to give sense of importance: Red > orange > green > grey // purple: misc
@@ -724,12 +719,12 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
         '(("[#]"  . +org-todo-project)
           ("[ ]"  . +org-todo-cancel)
           ("[>]"  . +org-todo-onhold)
-          ("[@]"  . +org-todo-active)
           ("[?]"  . org-todo)
           ("[=]"  . org-todo)
           ("[&]"  . org-todo)
-          ("[X]"  . org-done)
+          ("[@]"  . +org-todo-active)
           ("[\\]" . org-done)
+          ("[X]"  . org-done)
           ))
 #+end_src
 
@@ -987,68 +982,94 @@ End the "(after! org" block
 #+end_src
 
 ** Capture templates
-- Create capture-templates for each of your frequently used projects, ex: university, personal, work, ...
+- Create capture-templates for each of your frequently used projects, ex: university, personal, work ...
 - Capture templates are used to collect & capture notes, events, tasks and your daily reflection journal structured, tagged, sorted into a specific file.
 - This is very customizeable allows you to setup complex templates. (ex: insert into table)
 - Use the heading: ~Inbox~ for collecting the captured items -> might want to review/refile these items later.
+- For each project there is a separate folder (relative to org-dir) with:
+  + tasks
+  + events
+  + notes
 
+- [ ] fix file substitution
 #+begin_src emacs-lisp
-;; NOTE: files are relative to org-dir
-(setq +org-capture-todo-file     "todo.org"
-      +org-capture-notes-file    "notes.org"
-      +org-capture-journal-file  "journal.org"
-      +org-capture-events-file   "events.org"
-      +org-capture-projects-file "projects.org"
-      org-capture-templates
-      '(("p" "personal")
-        ("pt" "todo" entry
-         (file+headline +org-capture-todo-file "Inbox")
-         "* [ ] %^{task} %^g\n%?"
-         :prepend t
-         :empty-lines-after 1
-         :clock-keep t)
-        ("pn" "note" entry
-         (file+headline +org-capture-notes-file "Inbox")
-         "* %^{title} %^g\n:PROPERTIES:\n:CREATED: %U\n:END:\n%?"
-         :prepend t
-         :empty-lines-after 1
-         :clock-keep t)
-        ("pe" "event" entry
-         (file+headline +org-capture-events-file "Inbox")
-         "* %^{event} %^g\n%^t\nLOCATION: %^{Location}\nMATERIAL: %^{Material}\n%?"
-         :prepend t
-         :empty-lines-after 1
-         :clock-keep t
-         )
-        ("pj" "journal" entry
-         (file+headline +org-capture-journal-file)
-         "* %^{title} %^g\n:PROPERTIES:\n:CREATED: %U\n:END:\n%?"
-         :prepend t
-         :empty-lines-after 1
-         :clock-keep t)
+(setq
+ org-capture-templates
+ (doct
+  '(("task" :keys "t"
+     :template
+     ("* [ ] %^{title} %^g"
+      "%?"
+      )
+     :headline "inbox"
+     :type entry
+     :empty-lines-after 1
+     :prepend t
+     :clock-keep t
+     :children
+     (("cs"       :keys "c" :file "cs/tasks.org")
+      ("personal" :keys "p" :file "personal/tasks.org")
+      ("config"   :keys "C" :file "config/tasks.org")
+      )
+     )
 
-        ;; ("pj" "journal" entry
-        ;;  (file+olp+datetree +org-capture-journal-file)
-        ;;  "* %U\n%[~/Documents/templates/journal_template.org]"
-        ;;  :prepend t
-        ;;  :empty-lines-after 1
-        ;;  :clock-keep t)
+    ("event" :keys "e"
+     :template
+     ("* [#] %^{title} %^g"
+      "%^t"
+      "LOCATION: %^{location}"
+      "PRE: %^{pre}"
+      "%?"
+      )
+     :headline "inbox"
+     :type entry
+     :empty-lines-after 1
+     :prepend t
+     :clock-keep t
+     :children
+     (("cs"       :keys "c" :file "cs/events.org")
+      ("personal" :keys "p" :file "personal/events.org")
+      )
+     )
 
-        ("c" "computerscience")
-        ("ct" "todo" entry
-         (file+headline "~/Documents/org/cs_todo.org" "Inbox")
-         "* [ ] %^{task} %^g\n%?"
-         :prepend t
-         :empty-lines-after 1
-         :clock-keep t)
-        ("cn" "note" entry
-         (file+headline "~/Documents/org/cs_notes.org" "Inbox")
-         "* %^{title} %^g\n:PROPERTIES:\n:CREATED: %U\n:END:\n%?"
-         :prepend t
-         :empty-lines-after 1
-         :clock-keep t)
-        ))
+    ("note" :keys "n"
+     :template
+     ("* %^{title} %^g"
+      ":PROPERTIES:"
+      ":CREATED: %U"
+      ":END:"
+      "%?"
+      )
+     :headline "inbox"
+     :type entry
+     :empty-lines-after 1
+     :prepend t
+     :clock-keep t
+     :children
+     (("cs"       :keys "c" :file "cs/notes.org")
+      ("personal" :keys "p" :file "personal/notes.org")
+      )
+     )
+
+    ("journal" :keys "j"
+     :template
+     ("* %^{title} %^g"
+      ":PROPERTIES:"
+      ":CREATED: %U"
+      ":END:"
+      "%?"
+      )
+     :type entry
+     :empty-lines-after 1
+     :prepend t
+     :clock-keep t
+     :children ("personal" :keys "p" :file "personal/journal.org")
+     ))))
 #+end_src
+
+#+RESULTS:
+| t  | task |       |                                    |                 |
+| tc | cs   | entry | (file+headline cs/tasks.org inbox) | * [ ] %^{title} %^g |
 
 * Programming mode
 - Format on save

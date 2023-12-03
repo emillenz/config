@@ -20,6 +20,7 @@
 (package! evil-numbers)
 (package! org-auto-tangle)
 (package! evil-cleverparens)
+(package! doct)
 (package! org-pandoc-import
   :recipe (:host github
            :repo "tecosaur/org-pandoc-import"

@@ -183,7 +183,7 @@
         ;; +gnuplot                    ; who doesn't like pretty pictures
         ;;+pomodoro                 ; be fruitful with the tomato technique
         +pretty
-        +present                    ; using org-mode for presentations
+        ;; +present                    ; using org-mode for presentations
         +roam2)                     ; wander around notes
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more

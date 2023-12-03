@@ -94,14 +94,14 @@ set $leader <leader> audios | ^audio | nmtui | outputs | [^o] layouts | btconnec
 
 mode "$leader" {
   bindsym a       exec ~/.config/bin/mini-audio; mode "default"
-  bindsym shift+a exec i3-msg '[con_mark="*a"] focus' || alacritty --class 'audio' -T 'audio' -e pulsemixer &; mode "default"
+  bindsym shift+a exec i3-msg '[con_mark="_a"] focus' || alacritty --class 'audio' -T 'audio' -e pulsemixer &; mode "default"
   bindsym o       exec ~/.config/bin/mini-output; mode "default"
   bindsym shift+o exec ~/.config/bin/mini-layout; mode "default"
   bindsym shift+s exec ~/.config/bin/mini-screenshot; mode "default"
   bindsym b       exec ~/.config/bin/mini-bluetooth; mode "default"
   bindsym p       exec ~/.config/bin/mini-killprocess; mode "default"
-  bindsym shift+p exec i3-msg '[con_mark="*h"] focus' || alacritty --class 'htop' -T 'htop' -e htop --tree &; mode "default"
-  bindsym n       exec i3-msg '[con_mark="*n"] focus' || alacritty --class 'nmtui' -T 'nmtui' -e nmtui &; mode "default"
+  bindsym shift+p exec i3-msg '[con_mark="_h"] focus' || alacritty --class 'htop' -T 'htop' -e htop --tree &; mode "default"
+  bindsym n       exec i3-msg '[con_mark="_n"] focus' || alacritty --class 'nmtui' -T 'nmtui' -e nmtui &; mode "default"
 
   bindsym f      mode "$find"
   bindsym k      mode "$keyboard"
@@ -110,9 +110,9 @@ mode "$leader" {
   bindsym Escape mode "default"
 }
 
-for_window [class="(?i)htop"]  mark *h
-for_window [class="(?i)nmtui"] mark *n
-for_window [class="(?i)audio"] mark *a
+for_window [class="(?i)htop"]  mark _h
+for_window [class="(?i)nmtui"] mark _n
+for_window [class="(?i)audio"] mark _a
 
 set $keyboard <keyboard> dvorak | ch | us | remaps
 mode "$keyboard" {

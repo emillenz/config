@@ -11,7 +11,7 @@ def main [
   --directory(-d): string = "~/.screenlayout" # specify custom directory // default: ~/.screenlayout
 ] {
   let icon = "󰍹 "
-  let layout = (ls $directory | get name | path basename | to text | rofi -dmenu -i -no-custom -p $"($icon)" | str trim )
+  let layout = (ls $directory | get name | path basename | to text | rofi -dmenu -i -no-custom -p $"($icon)" | str trim | if $in == "" {exit 1} else {$in})
 
   nu -c ($directory | path join $layout); # HACK: is in bash
   notify-send -i $icon "Layoutselect" $"Switched to:\n ($layout)"

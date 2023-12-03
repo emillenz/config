@@ -10,7 +10,7 @@
 # -----
 def main [] {
   let sinks = (pactl --format json list sinks | from json)
-  let choice = ($sinks.description | to text | rofi -dmenu -i -no-custom -p $"󱀞" | str trim)
+  let choice = ($sinks.description | to text | rofi -dmenu -i -no-custom -p $"󱀞" | str trim | if $in == "" {exit 1} else {$in})
   let sink = ($sinks | where {|v| $v.description =~ $choice})
   pactl set-default-sink $sink.name.0
 

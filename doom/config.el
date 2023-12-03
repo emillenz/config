@@ -24,12 +24,12 @@
 
 ;; [[file:config.org::*Font][Font:1]]
 (setq
- doom-font-increment 2
- doom-big-font-increment 2
- doom-font                (font-spec :family "Terminess Nerd Font" :size 12)
- doom-variable-pitch-font (font-spec :family "Terminess Nerd Font" :size 12)
- doom-serif-font          (font-spec :family "Terminess Nerd Font" :size 12)
- doom-big-font            (font-spec :family "Terminess Nerd Font" :size 24))
+ doom-font-increment 1
+ doom-big-font-increment 1
+ doom-font                (font-spec :family "Terminus" :size 12)
+ doom-variable-pitch-font (font-spec :family "Terminus" :size 12)
+ doom-serif-font          (font-spec :family "Terminus" :size 12)
+ doom-big-font            (font-spec :family "Terminus" :size 24))
 
 (custom-set-faces!
   '(font-lock-keyword-face :slant normal :weight bold)
@@ -190,13 +190,7 @@
   (interactive)
   (when (buffer-modified-p)
     (evil-write nil nil))
-  (condition-case nil
-      (kill-buffer-and-window) ;; NOTE: don't make emacs slow by accumulating buffers
-    (error
-     (condition-case nil
-         (tab-bar-close-tab)
-       (error
-        (delete-frame))))))
+  (evil-window-delete))
 ;; Global navigation scheme:2 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
@@ -504,9 +498,10 @@
          "[=](=@)"
          "[&](&@)"
          "|"
-         "[x](x!)"
+         "[@](d@)"
          "[\\](\\@)"
-         "[@](d@)"))) ;; HACK: cannot use"@"
+         "[x](x!)"
+         ))) ;; HACK: cannot use"@"
 ;; Todo states:1 ends here
 
 ;; [[file:config.org::*Todo states][Todo states:2]]
@@ -514,12 +509,12 @@
       '(("[#]"  . +org-todo-project)
         ("[ ]"  . +org-todo-cancel)
         ("[>]"  . +org-todo-onhold)
-        ("[@]"  . +org-todo-active)
         ("[?]"  . org-todo)
         ("[=]"  . org-todo)
         ("[&]"  . org-todo)
-        ("[X]"  . org-done)
+        ("[@]"  . +org-todo-active)
         ("[\\]" . org-done)
+        ("[X]"  . org-done)
         ))
 ;; Todo states:2 ends here
 
@@ -714,61 +709,78 @@ Jumps at tangled code from org src block."
 ;; Jump to src file:2 ends here
 
 ;; [[file:config.org::*Capture templates][Capture templates:1]]
-;; NOTE: files are relative to org-dir
-(setq +org-capture-todo-file     "todo.org"
-      +org-capture-notes-file    "notes.org"
-      +org-capture-journal-file  "journal.org"
-      +org-capture-events-file   "events.org"
-      +org-capture-projects-file "projects.org"
-      org-capture-templates
-      '(("p" "personal")
-        ("pt" "todo" entry
-         (file+headline +org-capture-todo-file "Inbox")
-         "* [ ] %^{task} %^g\n%?"
-         :prepend t
-         :empty-lines-after 1
-         :clock-keep t)
-        ("pn" "note" entry
-         (file+headline +org-capture-notes-file "Inbox")
-         "* %^{title} %^g\n:PROPERTIES:\n:CREATED: %U\n:END:\n%?"
-         :prepend t
-         :empty-lines-after 1
-         :clock-keep t)
-        ("pe" "event" entry
-         (file+headline +org-capture-events-file "Inbox")
-         "* %^{event} %^g\n%^t\nLOCATION: %^{Location}\nMATERIAL: %^{Material}\n%?"
-         :prepend t
-         :empty-lines-after 1
-         :clock-keep t
-         )
-        ("pj" "journal" entry
-         (file+headline +org-capture-journal-file)
-         "* %^{title} %^g\n:PROPERTIES:\n:CREATED: %U\n:END:\n%?"
-         :prepend t
-         :empty-lines-after 1
-         :clock-keep t)
+(setq
+ org-capture-templates
+ (doct
+  '(("task" :keys "t"
+     :template
+     ("* [ ] %^{title} %^g"
+      "%?"
+      )
+     :headline "inbox"
+     :type entry
+     :empty-lines-after 1
+     :prepend t
+     :clock-keep t
+     :children
+     (("cs"       :keys "c" :file "cs/tasks.org")
+      ("personal" :keys "p" :file "personal/tasks.org")
+      ("config"   :keys "C" :file "config/tasks.org")
+      )
+     )
 
-        ;; ("pj" "journal" entry
-        ;;  (file+olp+datetree +org-capture-journal-file)
-        ;;  "* %U\n%[~/Documents/templates/journal_template.org]"
-        ;;  :prepend t
-        ;;  :empty-lines-after 1
-        ;;  :clock-keep t)
+    ("event" :keys "e"
+     :template
+     ("* [#] %^{title} %^g"
+      "%^t"
+      "LOCATION: %^{location}"
+      "PRE: %^{pre}"
+      "%?"
+      )
+     :headline "inbox"
+     :type entry
+     :empty-lines-after 1
+     :prepend t
+     :clock-keep t
+     :children
+     (("cs"       :keys "c" :file "cs/events.org")
+      ("personal" :keys "p" :file "personal/events.org")
+      )
+     )
 
-        ("c" "computerscience")
-        ("ct" "todo" entry
-         (file+headline "~/Documents/org/cs_todo.org" "Inbox")
-         "* [ ] %^{task} %^g\n%?"
-         :prepend t
-         :empty-lines-after 1
-         :clock-keep t)
-        ("cn" "note" entry
-         (file+headline "~/Documents/org/cs_notes.org" "Inbox")
-         "* %^{title} %^g\n:PROPERTIES:\n:CREATED: %U\n:END:\n%?"
-         :prepend t
-         :empty-lines-after 1
-         :clock-keep t)
-        ))
+    ("note" :keys "n"
+     :template
+     ("* %^{title} %^g"
+      ":PROPERTIES:"
+      ":CREATED: %U"
+      ":END:"
+      "%?"
+      )
+     :headline "inbox"
+     :type entry
+     :empty-lines-after 1
+     :prepend t
+     :clock-keep t
+     :children
+     (("cs"       :keys "c" :file "cs/notes.org")
+      ("personal" :keys "p" :file "personal/notes.org")
+      )
+     )
+
+    ("journal" :keys "j"
+     :template
+     ("* %^{title} %^g"
+      ":PROPERTIES:"
+      ":CREATED: %U"
+      ":END:"
+      "%?"
+      )
+     :type entry
+     :empty-lines-after 1
+     :prepend t
+     :clock-keep t
+     :children ("personal" :keys "p" :file "personal/journal.org")
+     ))))
 ;; Capture templates:1 ends here
 
 ;; [[file:config.org::*Programming mode][Programming mode:1]]

@@ -24,7 +24,7 @@ def main [] {
     single $outputs $outputs.0
   } else {
     let opts = ($outputs | append "multi")
-    let choice = ($opts | to text | rofi -dmenu -i -no-custom -p $"($icon) output:" | str trim)
+    let choice = ($opts | to text | rofi -dmenu -i -no-custom -p $"($icon) output:" | str trim | if $in == "" {exit 1} else {$in})
     if ($choice == "multi") {
       double $outputs
     } else {
@@ -35,14 +35,14 @@ def main [] {
 
 def double [outputs: list] {
   let mirror = (
-    ([n y] | to text | rofi -dmenu -no-custom -auto-select -p $"($icon) Mirror: [n/y]" | str trim)
+    ([n y] | to text | rofi -dmenu -no-custom -auto-select -p $"($icon) Mirror: [n/y]" | str trim | if $in == "" {exit 1} else {$in})
     == "y"
   )
-  let primary = ($outputs | to text | rofi -dmenu -i -no-custom -p $"($icon) Primary:" )
+  let primary = ($outputs | to text | rofi -dmenu -i -no-custom -p $"($icon) Primary:" | if $in == "" {exit 1} else {$in})
   let secondary = (
     match ($outputs | length) {
       2 => {$outputs | where {|e| $e != $primary}},
-      _ => {$outputs | where {|e| $e != $primary} | to text | rofi -dmenu -i -no-custom -p $"($icon) Secondary:"},
+      _ => {$outputs | where {|e| $e != $primary} | to text | rofi -dmenu -i -no-custom -p $"($icon) Secondary:" | if $in == "" {exit 1} else {$in}},
     }
   )
 
@@ -74,6 +74,7 @@ def extend [primary: string, secondary: string] {
     | to text
     | rofi -dmenu -no-custom -auto-select -p $"($icon) Position of #2:($secondary): [j] down | [k] up | [h] left | [l] right"
     | str trim
+    | if $in == "" {exit 1} else {$in}
   )
   xrandr --output $primary --auto --primary
   match $pos {

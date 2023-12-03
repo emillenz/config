@@ -19,6 +19,7 @@ def main [] {
     | to text
     | rofi -dmenu -no-custom -auto-select -p $"$icon [s] screen | [a] area | [w] window"
     | str trim
+    | if $in == "" {exit 1} else {$in}
   )
   match $ans {
     "s" => {(

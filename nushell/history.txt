@@ -1,42 +1,3 @@
-ps | where {str contains obs}
-ps | where {get name | str contains obs}
-startup
-nmtui
-sudo dnf search nmtui
-sudo dnf search nm tui
-sudo dnf search nm-tui
-sudo dnf search tui network
-sudo dnf install NetworkManager-tui
-nm-tui
-nmtui
-syncthing
-ls
-lf
-fd. 
-fd .
-fd . -x chmod -x 
-wa 2 pow 5
-2 pow 3
-wa 2 pow 4
-bc -l
-syncthing
-x (fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
-(fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
-nu (fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
-(fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
-scratch.un
-scratch.nu
-x scratch.nu
-exe scratch.nu
-exec scratch.nu
-./scratch.nu
-[1 2 3 4] | enumerate
-man [1 2 3 4] | enumerate
- -h | bat
-enumerate  -h | bat
-clip
-std clip -h | bat
-let<\n>for in in letter
 nu
 nu
 nu
@@ -9998,3 +9959,42 @@ this
 yay terminess
 yay terminus
 ls
+ils
+ls **/*.sync-conflict
+ls **/*sync-conflict
+ls **/*sync
+ls **/*conflict
+bluetoothctl off
+bluetoothctl help
+mini-audio 
+yay iosevka 
+ls
+(fd -tf | fzf --preview='bat --theme Solarized (dark) {}' | str trim)
+mv -h
+cp 
+cp -dh
+cp -h
+ls
+ls -la
+yay iosevka
+fc-list
+fc-list | find iosev
+fc-list | find iosevkaterm
+ls
+this 
+ps
+this 
+this i
+ls -la
+nvim
+g
+ps -la
+ps
+doom sync
+doom upgrade 
+doom upgrade --force
+nvim tmux/tmux.conf
+doom sync
+emacs --debug-init
+doom sync
+startup

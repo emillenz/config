@@ -1,0 +1,19 @@
+#!/usr/bin/env nu
+
+
+# -----
+# title:  Bluetoothconnect
+# author: Emil Lenz
+# email:  emillenz@protonmail.com
+# date:   Saturday,  4 November, 2023
+# info:   Connect to a bluetooth device.
+# -----
+def main [] {
+  let icon = ""
+
+  bluetoothctl power on
+  let devs = (bluetoothctl devices | lines | parse '{cat} {addr} {name}')
+  let dev = ($devs | get name | to text | rofi -dmenu -i -no-custom -p $"($icon)" | str trim)
+  let dev_addr = ($devs | where name == $dev | get addr)
+  bluetoothctl connect $dev_addr
+}

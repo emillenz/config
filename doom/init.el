@@ -177,12 +177,11 @@
        (org                         ; organize your plain life in plain text
         +dragndrop                  ; drag & drop files/images into org buffers
         ;;+hugo                     ; use Emacs for hugo blogging
-        +noter                      ; enhanced PDF notetaking
+        ;; +noter                      ; enhanced PDF notetaking
         +jupyter                    ; ipython/jupyter support for babel
         +pandoc                     ; export-with-pandoc support
         ;; +gnuplot                    ; who doesn't like pretty pictures
         ;;+pomodoro                 ; be fruitful with the tomato technique
-        +journal
         +pretty
         +present                    ; using org-mode for presentations
         +roam2)                     ; wander around notes

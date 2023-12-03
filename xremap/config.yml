@@ -43,10 +43,12 @@ keymap:
       capslock-t: c-c                             # y
       capslock-u: c-home                          # g
       capslock-shift-u: c-end                     # g
-      capslock-comma: [c-right, c-right, c-left] # w // change word
-      capslock-i: [home, shift-end, delete] # c // change line
-      capslock-s: [end, enter]                    # o // insert line below
-      capslock-shift-s: [up, end, enter]          # shift+o // insert line above
+      capslock-comma: [c-right, c-right, c-left]  # w
+      capslock-i: [c-backspace]                   # c
+      capslock-shift-i: [home, shift-end, delete] # C
+      capslock-s: [end, enter]                    # o
+      capslock-shift-s: [up, end, enter]          # shift+o
+      capslock-t: [c-a, c-c]                      # y
       # relative line jumping
       capslock-1: [down]
       capslock-2: [down, down]

@@ -1,3 +1,1348 @@
+ps | where {str contains obs}
+ps | where {get name | str contains obs}
+startup
+nmtui
+sudo dnf search nmtui
+sudo dnf search nm tui
+sudo dnf search nm-tui
+sudo dnf search tui network
+sudo dnf install NetworkManager-tui
+nm-tui
+nmtui
+syncthing
+ls
+lf
+fd. 
+fd .
+fd . -x chmod -x 
+wa 2 pow 5
+2 pow 3
+wa 2 pow 4
+bc -l
+syncthing
+x (fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
+(fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
+nu (fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
+(fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
+scratch.un
+scratch.nu
+x scratch.nu
+exe scratch.nu
+exec scratch.nu
+./scratch.nu
+[1 2 3 4] | enumerate
+man [1 2 3 4] | enumerate
+ -h | bat
+enumerate  -h | bat
+clip
+std clip -h | bat
+let<\n>for in in letter
+nu
+nu
+nu
+nu
+nu
+nu
+this 
+let<\n>for in in letter
+let<\n>for in in letter\
+ls
+eao
+this 
+greac
+ls
+err
+ls
+nls
+ls
+great
+fuck
+this si great
+this "is <\n><\n>"
+tihs 
+un
+ls
+err
+ls
+tihs 
+great
+suck
+ls
+success
+ls
+occ
+this 
+great
+ls
+this 
+ls
+tihs 
+greant
+ls
+this is great
+ls
+ech
+let a = 122<\n>let c = [1 2 3]<\n>for i in c {<\n>    print $i<\n>}
+let a = 122<\n>let c = [1 2 3]<\n>for i in c {<\n>    print $i a<\n>}
+let a = 122<\n>let c = [1 2 3]<\n>for i in c {<\n>    print $ia<\n>}
+ls
+cargo init cacher_testing
+ syncthing 
+sudo dnf install pipewire-pulseaudio --allowerasing
+yay pulseaudio
+sudo dnf search pulsemx
+sudo dnf search pulsemin
+sudo dnf search pulsemi
+sudo dnf install ffmpeg-libs
+sudo dnf search ffmpeg-libs
+sudo dnf search ffmpeg
+pactl set-sink-volume @DEFAULT_SINK@ +2%
+systemctl --user start pipewire-pulse.service pipewire-pulse.socket<\n>
+pactl set-sink-volume @DEFAULT_SINK@ +2%
+ cargo install xremap --features x11   # X11
+sudo xremap config.yml
+cd .cargo/
+./xremap
+xremap config.yml
+sudo xremap config.yml
+sudo ~/.cargo/bin/xremap config.yml
+md xremap
+touch config.yml
+xremap config.yml
+setxkbmap us dvorak
+xremap config.yml
+sudo xremap config.yml
+sudo ~/.cargo/bin/xremap config.yml
+remaps
+syncthing
+"xremap ~/.config/xremap/config.yml &" | bash
+xremap ~/.config/xremap/config.yml
+sudo xremap ~/.config/xremap/config.yml
+sudo ~/.cargo/bin/xremap ~/.config/xremap/config.yml
+startup
+nvim
+sudo dnf search java
+sudo dnf search javac
+sudo dnf search java com
+sudo dnf search openjdk
+git statu
+git status
+git add xremap
+git commit -am 'sync'; git push
+dnfs java development
+dnfs openjdk
+dnfs java-latest
+dnfs java-latest-openjdk
+dnfi java-latest-openjdk
+sudo dnf search jdtls
+dnfs java language server
+dnfs java language
+dnfs eclips jd
+dnfs eclips 
+dnfs eclipse 
+dnfs openjdk
+dnfs java-latest-openjdk-devel
+dnfi java-latest-openjdk-devel
+sudo dnf search jdtls
+dnfs jdt lang
+javac hello_world.java
+cd enums_test/
+javac Main.java
+ls -la
+ls -h
+java Main
+javac Main.java
+java Main
+javac Main.java
+java Main
+javac Main.java
+java Main
+javac Main.java
+ps 
+ps | get name | $in ~= xremaps
+ps | get name | where str contains xremaps
+ps | get name | where (str contains xremaps)
+ps | get name 
+startup
+ps | get name | where (str contains xremap) 
+true in (ps | get name | str contains xremap)
+ps | get name | str contains xremap
+ git status
+git commit -am 'sync'; git push
+syncthing
+killall syncthing
+syncthing
+javac Main.java
+rg . 'leader_layout'
+rg 'leader_layout' .
+rg 'leader_layout'
+git status
+git add zellij
+git commit -am 'sync'; git push
+javac Main.java
+bat packages
+./packages
+xremap ~/.config/xremap/config.yml
+./packages
+xremap
+$env.PAT
+$env.PATH
+bat commands
+bat packages
+cargo install xremap --features x11
+ls
+dnfi tmux
+lf
+ls
+tree
+lf
+thsi 
+tmux
+tmux 
+tree
+this is greatness
+ls
+xremap
+startup
+bat ./scripts/startup
+ps | get name | str contains xremap
+sudo xremap ~/.config/xremap/config.yml
+sudo su
+startup
+dnfi wine
+dns wine
+dnfs wine
+dnfi wine
+startu
+startup
+bat packages
+dnfs xautolock
+dnfi xautolock
+startup
+dnfs pipewire
+startup
+sudo fdisk -l
+lsblk
+tldr lsblk
+lsblk -a
+sudo fdisk -l
+sudo fdisk -l | find /dev
+sudo fdisk -l | find --regex "^/dev"
+sudo fdisk -l | find  -h | bat
+sudo fdisk -l | find -r '^/dev'
+sudo fdisk -l | find -r '/dev'
+sudo fdisk -l | find -r '^\/dev'
+sudo fdisk -l | find -r '^.dev'
+sudo fdisk -l | find -r '.dev'
+sudo fdisk -l | find  -h | bat
+sudo fdisk -l | find  -rm ^/dev
+sudo fdisk -l | find  -rm "^\/dev"
+sudo fdisk -l | find  -mr "^\/dev"
+sudo fdisk -l | find  -mr "^$"
+sudo fdisk -l | lines | find  -mr "^$"
+sudo fdisk -l | lines | find  -mr "^/dev$"
+sudo fdisk -l | lines | find  -mr "^/dev"
+sudo fdisk -l | lines | find  -mr "^/dev" | column
+sudo fdisk -l | lines | find  -mr "^/dev" | columns
+sudo fdisk -l | lines | find  -mr "^/dev" | split column 
+sudo fdisk -l | lines | find  -mr "^/dev" | split column ' '
+sudo fdisk -l | lines | find  -mr "^/dev" | split words
+sudo fdisk -l | lines | find  -mr "^/dev" | split column '\s'
+sudo fdisk -l | lines | find  -mr "^/dev" | split column ''
+sudo fdisk -l | lines | find  -mr "^/dev" | split column ' '
+sudo fdisk -l | lines | find  -mr "^/dev" | split column '\t'
+sudo fdisk -l | lines | find  -mr "^/dev" | split column  -h | bat
+sudo fdisk -l | lines | find  -mr "^/dev" | split column  -r '\s*'
+sudo fdisk -l | lines | find  -mr "^/dev" | split column  -r '\s'
+sudo fdisk -l | lines | find  -mr "^/dev" 
+sudo fdisk -l | lines | find  -mr "^/dev" | split column  -r '\s*'
+sudo fdisk -l | lines | find  -mr "^/dev" | split column  -r \s*
+sudo fdisk -l | lines | find  -mr "^/dev" | split column  
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -h | bat
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '\t'
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '\s'
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '{\s}*'
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '*{\s}'
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '\s{*}'
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '\s{2}'
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '\s'
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '\s*'
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '(\s*)'
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '\s*'
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '[\s*]'
+sudo fdisk -l | lines | find  -mr "^/dev" 
+ls
+^ls
+^ls -la
+^ls -la | lines | split column -r '\s*'
+split column  -h | bat
+['a bbbb       c' 'a     bb  c'] | split column -r '\s*'
+split column  -h | bat
+['a bbbb       c' 'a     bb  c'] | split column -r '\s\s'
+['a bbbb       c' 'a     bb  c'] | split column -r '\s\s*'
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '\s\s*'
+sudo fdisk -l | lines | find  -mr "^/dev" | split words
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '\s\s*'
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '\s\s*' | get column1
+    let disks: table = sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '\s\s*'
+    let disks: table = (sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '\s\s*')
+disks
+$disks
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '\s\s*' | get column1
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '\s\s*' | head -h | bat
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '\s\s*' | header -h | bat
+rename -h | bat
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '\s\s*' | header -h | bat
+sudo fdisk -l | lines | find  -mr "^/dev" | split column   -r '\s\s*' 
+sudo fdisk -l | lines 
+sudo fdisk -l | find -r '^Device'
+sudo fdisk -l | find -mr '^Device'
+sudo fdisk -l | lines |find -mr '^Device'
+find  -h | bat
+str contains  -h | bat
+str  -h | bat
+sudo fdisk -l | lines | where {str starts-with 'Device' }
+each while  -h | bat
+take -h | bat
+sudo fdisk -l | lines | where {str starts-with 'Device' | take 10}
+sudo fdisk -l | lines | where {str starts-with 'Device'} | take 10
+drop  -h | bat
+skip  -h | bat
+sudo fdisk -l | lines | skip until {str contains 'Device'}
+sudo fdisk -l | lines | skip until (str contains 'Device')
+sudo fdisk -l | lines | skip until {true}
+sudo fdisk -l | lines | skip until {str starts-with 'D'}
+sudo fdisk -l | lines | skip until {|x| $x | str starts-with 'D'}
+sudo fdisk -l | lines | skip until {str starts-with 'D'}
+sudo fdisk -l | lines | skip until {$in str starts-with 'D'}
+sudo fdisk -l | lines | skip until {$in | str starts-with 'D'}
+sudo fdisk -l | lines | find  -mr "^/dev"
+sudo fdisk -l | lines | find  -mr "^Device"
+find -h | bat
+sudo fdisk -l | lines | skip until {|x| $x | str starts-with 'D'}
+sudo fdisk -l | lines | skip until {|x| $x | str starts-with '^D'}
+sudo fdisk -l | lines | skip until {|x| $x | str starts-with 'D'}
+sudo fdisk -l | lines | skip until {|x| str starts-with 'D'}
+sudo fdisk -l | lines | skip until {|x| $x starts-with 'D'}
+str  -h | bat
+str starts-with  -h | bat
+[1 2 3 4] | skip until {|x| $x >= 3}
+['a' 'b' 'c'] | skip until {|x| $x == 'a'}
+['a' 'b' 'c'] | skip until {|x| $x == 'b'}
+['a' 'b' 'c'] | skip until {|x| $x =~ 'b'}
+['accc' 'aoeu' 'cooaobaoeu' 'aoeub'] | skip until {|x| $x =~ 'b'}
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'}
+sudo fdisk -l | lines | skip until {|x| $x }
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'}
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until -h | bat
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == '^$'}
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == '^\s*$'}
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == '\s*'}
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''}
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | header
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | headers
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers |into string
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | str join '\n'
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | str join ''
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | each {str join '\'}
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | each {str join ' '}
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | into string
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join '\n'
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join -h | bat
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | into string
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | into string | echo
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | echo
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | print
+parse
+parse -h | bat
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | parse 
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | parse '{dev start end sectors size end}'
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | parse '{dev} {start} {end} {sectors} {size} {end}}'
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | parse '{dev} {start} {end} {sectors} {size} {end}'
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | parse -r '\s\s*'
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device 
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | into binary 
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | into string 
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str collect -h | bat
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join  -h | bat
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join 
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join ' \n '
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join '\n' | ^echo
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join '\n' | echo
+echo (sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join '\n')
+sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join '\n'
+['asoeuh' 'sathoeu' aseotuh] 
+['asoeuh' 'sathoeu' aseotuh] | str join '\n'
+['asoeuh' 'sathoeu' aseotuh] | str join  -h | bat
+['asoeuh' 'sathoeu' aseotuh] | str join  "\n"
+sudo fdisk -l | lines | skip until {|x| $x =~ Device} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join \n
+sudo fdisk -l | lines | skip until {|x| $x =~ Device} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join "\n"
+sudo fdisk -l | lines | skip until {|x| $x =~ "Device"} | take until {|x| $x == ""} | split column -r "\s\s*" | headers | get Device | str join "\n"
+sudo fdisk -l | lines | skip until {|x| $x =~ "Device"} | take until {|x| $x == ""} | split column -r \s\s* | headers | get Device | str join "\n"
+sudo fdisk -l | lines | skip until {|x| $x =~ "Device"} | take until {|x| $x == ""} | split column -r \s\s* | headers | get Device | str join \n
+sudo fdisk -l | lines | skip until {|x| $x =~ "Device"} | take until {|x| $x == ""} | split column -r \s\s* | headers | get Device | str join "\n"
+sudo fdisk -l | lines | skip until {|x| $x =~ "Device"} | take until {|x| $x == ""} | split column -r \s\s* | headers | get Device | str join '\n'
+sudo fdisk -l | lines | skip until {|x| $x =~ "Device"} | take until {|x| $x == ""} | split column -r \s\s* | headers | get Device | str join "\n"
+sudo fdisk -l | lines | skip until {|x| $x =~ "Device"} | take until {|x| $x == ""} | split column -r \s\s* | headers | get Device | str join \n
+xset r rate 300 70 # key repeat rate speedup
+x (fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
+(fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
+mount
+    let disks = (    sudo fdisk -l     | lines     | skip until {|x| $x =~ 'Device'}     | take until {|x| $x == ''}     | split column -r \s\s*     | headers    ) # contains disk data in table
+$disks
+sudo fdisk 
+sudo fdisk -l
+$disks
+$disks.Device
+$disks.Device | str join "\n" | rofi -dmenu -p "Choose disk to mount: "
+$disks.Type | str join "\n" | rofi -dmenu -p "Choose disk to mount: "
+$disks | str join "\n" | rofi -dmenu -p "Choose disk to mount: "
+read -h | bat
+read  -h | bat
+read --help
+input  -h | bat
+Choose Disk \(1..($disks |length)\): 
+print "Choose Disk \(1..($disks |length)\): "
+print $"Choose Disk \(1..($disks |length)\): "
+$disks
+mount 
+    let disks = (    sudo fdisk -l     | lines     | skip until {|x| $x =~ 'Device'}     | take until {|x| $x == ''}     | split column -r \s\s*     | headers    ) # contains disk data in table    print $disks
+    let disks = (<\n>    sudo fdisk -l <\n>    | lines <\n>    | skip until {|x| $x =~ 'Device'} <\n>    | take until {|x| $x == ''} <\n>    | split column -r \s\s* <\n>    | headers<\n>    ) # contains disk data in table<\n>    print $disks
+mnt  -h | bat
+mnt
+mounter
+$disks.1
+mounter
+$disks.1
+$disks | get 1
+mounter
+sudo umount /dev/nvme0n1p4
+sudo umount tmp
+nvim
+e
+dnfs red
+dnfs redshift
+dnfi redshift-gtk
+redshift
+lf
+git status
+git add nushell
+git commit -am 'sync'; git push
+tree \
+tree /
+tree /
+syncthing
+git statu
+git status
+htop
+def tester [inp: string] {<\n>    if $inp == null {<\n>        print "null"<\n>    } else {<\n>        $inp<\n>    }<\n>}
+tester
+def tester [inp?: string] {<\n>    if $inp == null {<\n>        print "null"<\n>    } else {<\n>        $inp<\n>    }<\n>}
+tester 
+tester hello
+to -h | bat
+"hEllO" | str downcase
+focus tui editor
+focus tui htop
+mut cmd = ''
+$cmd = 11
+cmd = 'aaaaa'
+$cmd
+let comm = "hollea"
+$comm
+cmd -h | bat
+$cmd
+cmd = 'aaa'
+let cmd = 'aaa'
+$cmd
+focus tui htop
+let cmd
+focus tui htop
+focus tui htop htop
+focus tui htop
+dnfs xfce4
+dnfs xfce4-scr
+sudo dnf  -h | bat 
+sudo dnf info xfce
+sudo dnf info xfce4-screensaver
+sudo dnf install xfce4-screensaver
+dnfr xfce4-screensaver
+dnfr xfce4-power-manager
+dnfr xfce4-screensaver-preferences
+dnfr xdg-screensaver
+xautolock  -h | bat
+xautoleck
+xautolock
+xautolock -exit
+wa derivative of log(a)
+wa "derivative of log(a)"
+wa "derivative of log(a^b)"
+wa "derivative of log(a**b)"
+wa "derivative of log(a**4)"
+wa "derivative of log(2a**4)"
+population switzerland
+wa "population switzerland"
+wa "population switzerland town ammerswil"
+wa "population switzerland town lenzburg"
+wa "number of students ethz"
+wa "number of computer science students ethz"
+wa "number of students ethz"
+wa "number of students mit"
+wa "number of students caltec"
+wa "when invention of money"
+wa "when was money first used"
+wa "s"
+wa "umlaut"
+wa "sharp s"
+wa "sharp S"
+wa "zathura"
+wa "zathura software"
+wa "software zathura"
+wa "linux"
+wa "gnu"
+wa "gnu software"
+wa "gnu software foundation"
+wa "free software foundation"
+wa "derivative of log(sqrt(log(m)))"
+syncthing
+focus tui zathura zathura
+focus gui zathura zathura
+javac Card.java
+javac Card.java "l"
+javac Card.java 
+java Main
+Java Card
+Java Card.class
+java Card.class
+java Card.java
+javac Card.java 
+java Card.java
+javac Card.java; java Card.java
+java -h | bat
+javac Card.java; java Card.java
+mv card_ex/ caret_ex
+javac Caret; java Caret.java
+javac Caret.java; java Caret.java
+mv Card.java Caret.java
+javac Caret.java; java Caret.java
+javac Caret.java
+java Caret.java
+javac Caret.java; java Caret.java
+javac Caret.java; java Caret.java=
+javac Caret.java; java Caret.java
+javac Caret.java
+java Caret.java
+javac Caret.java; java Caret.java
+rm Card.class
+rm Caret.class
+rm Card.java
+javac Caret.java
+java Caret.java
+mounter
+sudo fdisk -l
+sudo mount /dev/sda1 ~/mnt/ 
+sudo thuner
+sudo thunar
+sudo umount mnt
+sudo umount /dev/sda1
+klil
+killall xautolock
+ syncthing 
+killall xautolock
+man xset
+tldr xset
+ps | get name | str contains xset
+tldr xset
+xset r  -h | bat
+xset s off # no screensaver either on or locked with xautolock after 30min
+bash -c	grep -qP -m1 '[^un]bind.+\/[^:]+\(usb\)' <(udevadm monitor -u -t seat -s input -s usb)
+udevadm monitor -u -t seat -s input -s usb
+sudo xset s off
+xset s off
+bc -l
+syncthing
+startup
+tldr zathura
+pip install calcure
+dnfi pi
+dnfi pip
+pip install calcure
+calcure
+ calcure
+sudo dnfi calcurse
+dnfi calcurse
+pip  -h | bat 
+pip  uninstall calcure
+calcurse 
+cal
+cal  -h | bat
+date
+date now
+date format
+date humanize
+date now | date to-record
+date now | date humanize
+date now | date to-record
+date now | date to-table
+take -h | bat
+date now | date to-record
+date now | date to-record | take 3
+date now | date to-record | first 3
+date format -h | bat
+date format -l
+date now | date format "%Y_%m_%d.md"
+let d = "~/Notes"
+let n = daily_template.md
+path join  -h | bat
+$d | path join $n
+if !true
+if not true
+if not (true)
+if not (2  == 2) { print h}
+if (2  == 2) { print h}
+if !(2  == 2) { print h}
+if true or false {print a}
+if false or false {print a}
+nvim ~/Notes/
+nvim ~/Notes
+file  -h | bat
+cp  -h | bat
+mv  -h | bat
+cp -h | bat
+cp  -h | bat
+touch test.txt
+mv test.txt Notes/taste.txt
+cd .config/
+x(fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
+x (fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
+makenote
+    let daily_notes = "~/Notes/daily_notes"<\n>    let today_title = (date now | date format "%Y_%m_%d.md")<\n>    let todays_note = ($daily_notes | path join $today_title)
+$todays_note
+makenoet
+makmakenote
+makenote
+$todays_note | path exists
+<\n>    let daily_notes = "~/Notes/daily_notes"<\n>    let today_title = (date now | date format "%Y-%m-%d.md")<\n>    let todays_note = ($daily_notes | path join $today_title)<\n>    let daily_template = "~/Notes/templates/daily_template.md"
+$todays_note | path exists
+makenote 
+dailynete
+dailynote 
+flatpak remove flathub md.obsidian.Obsidian
+dnfi calcurse
+flatpak install flathub md.obsidian.Obsidian
+calcurse
+man calcurse
+man calcurse | less
+cp layout.kdl leader_layout.kdl
+git status
+git add zellij/
+git add calcurse/
+git add scripts/
+git commit -am 'sync'; git push
+startup
+makenote
+dailynote 
+alacritty -e nvim ~/.config/
+git st
+git status
+git git commit -am 'sync'; git push
+git commit -am 'sync'; git push
+flatpak remove flathub md.obsidian.Obsidian
+nvim ~/Notes
+zellij kill-server
+nvim
+e
+ls
+cd daily_notes/
+ls | get name | split list '-'
+ls | get name 
+ls | get name | each {|x| split list '-'}
+ls | get name | each {|x| split words}
+ls | get name | each {|x| split column }
+ls | get name | each {|x| split column '-'}
+ls | get name | split column '-'
+ls
+cd .
+cd..
+ls
+cd ..
+ls
+cd 2023
+for i in (seq 3 6) {mkdir $i}
+for i in (seq 3 6| into string ) {mkdir $i}
+rm -r 3
+rm -r 4 5
+rm -r 6
+for i in (seq 3 6 | into string) {mkdir $i}
+ls
+ls | skip 1
+ls | skip 1 | get name
+ls | skip 1 | get name | each {|x| mv $x (["0", $x] | str join '')} 
+ls
+ls | get name | split column '-' 
+ls | get name | split column '-' | get column 2
+ls | get name | split column '-' | get column2
+ls | get name 
+ls | get name | each {|x| print $x ("../2023" | path join ($x | split column '-' | get column2 ) | path join $x)}
+ls | get name | each {|x| print $x ("../2023" | path join ($x | split list '-' | get 2 ) | path join $x)}
+split words
+split words -h | bat
+ls | get name | each {|x| print $x ("../2023" | path join ($x | split words  | get 2 ) | path join $x)}
+ls 
+cd ../daily_notes/
+ls | get name | split words
+ls | get name | split list
+ls | get name | split list '-'
+ls | get name | split row
+ls | get name | split row '-'
+ls | get name | split column '-'-
+ls | get name | split column '-'
+ls | get name | each {|x| print $x ("../2023" | path join ($x | split column '-' | get column2 | into string ) | path join $x)}
+ls | get name | each {|x| print $x ("../2023" | path join ($x | split column '-' | get column2 )}
+ls | get name | each {|x| print $x ("../2023" | path join ($x | split column '-' | get column2 ))}
+ls | get name | each {|x| print $x ("../2023" |  ($x | split column '-' | get column2 ))}
+ls | get name | each {|x| print $x |split column '-'}
+ls | get name | each {|x| $x |split column '-'}
+ls | get name | each {|x| $x |split column '-' |get column 2}
+ls | get name | each {|x| $x |split column '-' |get column2}
+ls | get name |split column '-' |get column2 }
+ls | get name | split column '-' |get column2 }
+ls | get name | split column '-' |get column2 
+ls | get name | {|x| split column '-' | get column2 }
+ls | get name | {|x| split column '-' | get column2 |print $x }
+ls | get name | each{|x| split column '-' | get column2 }
+ls | get name | each {|x| split column '-' | get column2 }
+ls | get name | each {|x| split-by}
+ls | get name | each {|x| split-by head}
+split words -h | bat
+split chars  -h | bat
+ls | get name | each {|x| split column '-'}
+ls | get name | split column '-'
+ls | get name | split column '-' | each {|x| echo $x }
+ls | get name | split column '-' | each {|x| echo $x ("../2023" | path join $x.column2)}
+ls | get name | each {|x| echo $x ("../2023" | path join $x.column2)}
+ls | get name | each {|x| echo $x ("../2023" | path join ($x | split column '-' | get column2)}
+ls | get name | each {|x| echo $x ("../2023" | path join ($x | split column '-' | get column2) }
+ls | get name | each {|x| echo $x ("../2023" | path join ($x | split column '-' | get column2)) }
+ls | get name | each {|x| echo $x ("../2023" | path join ($x | split column '-' | get column2 | flatten)) }
+ls | get name | each {|x| echo ($x | split column '-' | get column2 )) }
+ls | get name | each {|x| echo ($x | split column '-' | get column2 ) }
+ls | get name | each {|x| echo ($x | split column '-' | get column2.0 ) }
+ls | get name | each {|x| echo ($x | split column '-' ) }
+ls | get name | each {|x| echo $x ("../2023" | path join ($x | split column '-' | get column2.0 )) }
+ls | get name | each {|x| echo $x ("../2023" | path join ($x | split column '-' | get column2.0 ) | path join $x) }
+ls | get name | each {|x| mv $x ("../2023" | path join ($x | split column '-' | get column2.0 ) | path join $x) }
+ls | get name | each {|x| echo $x ("~/journal/2023" | path join ($x | split column '-' | get column2.0 ) | path join $x) }
+cd 20200
+open `2022-00-00.md`
+for i in (open `2022-00-00.md`) {print $i}
+open `2022-00-00.md` | lines
+open `2022-00-00.md` | lines | find -h | bat
+open `2022-00-00.md` | lines | find '###'
+open `2022-00-00.md` | lines | find -r '^### \d'
+for line in (open `2022-00-00.md`) {if ($line =~ "^### \d") {print $line}}
+for line in (open `2022-00-00.md`) {if ($line =~ "^### ") {print $line}}
+for line in (open `2022-00-00.md`) {if ($line =~ "### ") {print $line}}
+open `2022-00-00.md` | lines | find -r '^### \d'
+for line in (open `2022-00-00.md`) {<\n>    if ($line | str starts-with '### ') {<\n>        print $line<\n>    }<\n>}
+for line in (open `2022-00-00.md`) {<\n>    if ($line | str starts-with '###') {<\n>        print $line<\n>    }<\n>}
+for line in (open `2022-00-00.md`) {if ($line =~ "### ") {print $line}}
+for line in (open `2022-00-00.md`) {if ($line | str starts-with "### " ) {print $line}}
+for line in (open `2022-00-00.md`) {if ($line | str starts-with '### ' ) {print $line}}
+open `2022-00-00.md` | lines 
+open `2022-00-00.md` | lines | split column "\n" 
+open `2022-00-00.md` | lines | split column \n
+open `2022-00-00.md` | lines | each {split column \n}
+open `2022-00-00.md` | lines | each {split list "\n"}
+open `2022-00-00.md` | lines | each {split row "\n"}
+open `2022-00-00.md` | lines | each {split row "\n"} | flatten 
+open `2022-00-00.md` | lines | each {split row "\n"} | flatten -h
+open `2022-00-00.md` | lines | each {split row "\n"} | split list ''
+open `2022-00-00.md` | lines | each {split row "\n"} | split list null
+open `2022-00-00.md` | lines | each {split row "\n"} | range -h | bat
+open `2022-00-00.md` | lines | each {split row "\n"} 
+takke -h | bat
+take -h | bat
+open `2022-00-00.md` | lines | each {split row "\n"} | take until null
+open `2022-00-00.md` | lines | each {split row "\n"} | take while not null
+open `2022-00-00.md` | lines | each {split row "\n"} | take while (not null)
+take until  -h | bat
+open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| == null}
+open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| == ''}
+open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| = []}
+open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| $x == []}
+open `2022-00-00.md` | lines | each {split row "\n"} 
+open `2022-00-00.md` | lines | each {split row "\n"} | get 0 
+open `2022-00-00.md` | lines | each {split row "\n"} | each {flatten} 
+open `2022-00-00.md` | lines | each {split row "\n"} | flatten
+open `2022-00-00.md` | lines | take until {|x| $x == '\n'}
+open `2022-00-00.md` | lines 
+open `2022-00-00.md` | lines | take until {|x| $x == ''}
+open `2022-00-00.md` | lines | take while {|x| $x == ''}
+open `2022-00-00.md` | lines | take while {|x| $x != ''}
+open `2022-00-00.md` | lines | take while {|x| $x == ''}
+open `2022-00-00.md` | lines | take while {|x| $x != ''}
+open `2022-00-00.md` | lines | enumerate
+split-by "\n\n"
+open `2022-00-00.md` | split-by  "\n\n"
+open `2022-00-00.md` | lines | split-by "\n\n"
+open `2022-00-00.md` | str collect | split-by "\n\n"
+open `2022-00-00.md` | str join | split-by "\n\n"
+open `2022-00-00.md` | lines | get 0
+open `2022-00-00.md` | lines | get 0 | index
+get  -h | bat
+split-by -h | bat 
+open `2022-00-00.md` | lines 
+open `2022-00-00.md` | lines | split row '\s'
+open `2022-00-00.md` | lines | split row '\n'
+open `2022-00-00.md` | lines | split row "\n"
+open `2022-00-00.md` | lines | split row "n"
+open `2022-00-00.md` | lines | split list a
+open `2022-00-00.md` | lines 
+open `2022-00-00.md` | lines | take 4
+open `2022-00-00.md` | lines | take 4 | length 
+mut end = ((open `2022-00-00.md` | lines | take while {|x| $x != ''} | length) -1 )
+mut end = ((open `2022-00-00.md` | lines | take while {|x| $x != ''} | length) - 1 )
+$end
+range -h | bat
+let data = (open `2022-00-00.md`) <\n>mut begin = 0<\n>mut end (($data| lines | take while {|x| $x != ''} | length) - 1)<\n>for i in ($data | range $begin $end) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md`) <\n>mut begin = 0<\n>mut end = (($data| lines | take while {|x| $x != ''} | length) - 1)<\n>for i in ($data | range $begin $end) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md`) <\n>mut begin = 0<\n>mut end = (($data| lines | take while {|x| $x != ''} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md`) <\n>mut begin = 0<\n>mut end = (($data| lines | take while {|x| $x != ''} | length) - 1)
+$end
+$begin
+$data | range 0..($end)
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ''} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+open `2022-00-00.md` | lines 
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != '### '} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| ($x | str starts-with "### ")} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| ($x | str starts-with '###')} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x =~  '###'} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data | take while {|x| $x =~  '###'} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data | take while {|x| $x =~  '###'} | length) - 1)<\n>$end
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data | take while {|x| ($x | str starts-with '###'} | length) - 1)<\n>$end
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data | take while {|x| ($x | str starts-with '###')} | length) - 1)<\n>$end
+$data | take until {|x| $x =~ "#"}
+$data
+$data | take until {|x| $x =~ "\#"}
+$data | take until {|x| $x =~ "a"}
+$data | take until {|x| x =~ "a"}
+$data | take until {|x| $x =~ "a"}
+take -h | bat
+take until -h | bat
+$data | take until {|x| $x = ""}
+$data | take until {|x| $x = " "}
+$data | take until {|x| $x == ""}
+$data | take until {|x| $x ~= ""}
+$data | take until {|x| $x != ""}
+$data | take until {|x| $x == ""}
+$data | take until {|x| ($x | str starts-with '') }
+$data | take until {|x| ($x | str starts-with '#') }
+$data | take until {|x| ($x | str starts-with '\#') }
+$data | take until {|x| $x == ""}
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x == ""} | length) - 1)<\n>$end<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x == ""} | length) - 1)<\n>$end<\n># for i in ($data | range ($begin)..($end)) {<\n>#     print $i<\n># }
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>$end<\n># for i in ($data | range ($begin)..($end)) {<\n>#     print $i<\n># }
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>touch test.txt<\n>for i in ($data | range ($begin)..($end)) {<\n>    $i | save -a test.txt<\n>}
+bat test.txt
+save -h | bat
+rm test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = []<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>}<\n>$paragraph
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = []<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>}<\n>$paragraph
+touch test.txt
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = []<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>}<\n>$paragraph
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = []<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>    print $i<\n>}<\n>$paragraph
+append -h | bat
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = [aa]<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>    print $i<\n>}<\n>$paragraph
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = [aa]<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append ($i | into string)<\n>}<\n>$paragraph
+str -h | bat
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph =  [1, 2]<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>}<\n>$paragraph
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph =  [1, 2]<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append "aa"<\n>}<\n>$paragraph
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph =  [1, 2]<\n>for i in ($data | range ($begin)..($end)) {<\n>    paragraph | append "aa"<\n>}<\n>$paragraph
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>$data | range ($begin)..($end) | save test.txt<\n>bat test.txt
+rm test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>$data | range ($begin)..($end) | save test.txt<\n>bat test.txt
+rm test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>while $end != ($data | length) {<\n>    $data | range ($begin)..($end) | save test.txt<\n>    begin = $end<\n>    end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>}<\n>bat test.txt
+let data = (open `2022-00-00.md` | lines) <\n>($data| | take while {|x| $x != ""}) | save test<\n>bat test
+rm test
+touch test
+open test | length
+cp  `2022-00-00.md` old.md
+open old.md | skip 3
+open old.md 
+skip  -h | bat
+drop -h | bat
+skip 1
+open old.md | skip 1
+open old.md | skip 1 | str join
+open old.md | lines
+open old.md 
+open old.md | lines
+open old.md | lines | skip 1
+open old.md | lines | skip 1000
+open old.md | lines | skip 10000
+while (open 'old.md' | lines| length) == 0 {<\n>    let data = (open `old.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""}) | <\n>    $paragraph | save test<\n>    $data | skip ($paragraph | length)<\n>}<\n>bat test
+while (open 'old.md' | lines| length) == 0 {<\n>    let data = (open `old.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save test<\n>    $data | skip ($paragraph | length)<\n>}<\n>bat test
+open old.md | lines 
+open old.md | lines | length 
+while (open 'old.md' | lines| length) != 0 {<\n>    let data = (open `old.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save test<\n>    $data | skip ($paragraph | length)<\n>}<\n>bat test
+while (open 'old.md' | lines| length) != 0 {<\n>    let data = (open `old.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f test<\n>    $data | skip ($paragraph | length)<\n>}<\n>bat test
+cp -f -h | bat
+cp  -h | bat
+cp `2022-00-00.md` old.md
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) != 0 {<\n>    let data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    data = $data | skip ($paragraph | length)<\n>    print $data<\n>    "" | save -f out.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) != 0 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    data = $data | skip ($paragraph | length)<\n>    print $data<\n>    "" | save -f out.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) != 0 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = $data | skip ($paragraph | length)<\n>    print $data<\n>    "" | save -f out.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) != 0 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    print $data<\n>    $paragraph | save -f out.md<\n>    # $data = $data | skip ($paragraph | length)<\n>    "" | save -f out.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) != 0 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    print $data<\n>    $paragraph | save -f out.md<\n>    # $data = $data | skip ($paragraph | length)<\n>    rm copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    print $data<\n>    $paragraph | save -f out.md<\n>    # $data = $data | skip ($paragraph | length)<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    print $data<\n>    $paragraph | save -f out.md<\n>    $data = $data | skip ($paragraph | length)<\n>    "" | save -f copy.md<\n>}<\n>bat test
+open old.md | lines | rang 1..10
+open old.md | lines | range 1..10
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    print $data<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip ($paragraph | length))<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip ($paragraph | length))<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip 1000)<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    print ($paragraph | length)<\n>    $data = ($data | skip ($paragraph | length))<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip ($paragraph | length))<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip ($paragraph | length + 1))<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    print ($data | skip (($paragraph | length ) + 1)) <\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>}<\n>bat test<\n><\n># while (open 'copy.md' | lines| length) > 1 {
+ls | get name | find tmp 
+ls | get name | find tmp | rm 
+ls | get name | find tmp | each {|x| rm $x}
+save  -h | bat
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    $data | save -f 'copy.md'<\n>}<\n>bat test<\n><\n># while (open 'copy.md' | lines| length) > 1 {
+ls | get name | find tmp | each {|x| rm $x}
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    $data<\n>}<\n>bat test<\n><\n># while (open 'copy.md' | lines| length) > 1 {
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip ($paragraph | length ))<\n>    $data<\n>}<\n>bat test<\n><\n># while (open 'copy.md' | lines| length) > 1 
+bat copy.md
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip ($paragraph | length ))<\n>    $paragraph | length<\n>}<\n>bat test<\n><\n># while (open 'copy.md' | lines| length) > 1
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip ($paragraph | length ))<\n>    print ($paragraph | length)<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip ($paragraph | length ))<\n>    print $data<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 1) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    print $data<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+save -h | bat
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    print $data | str join "\n"<\n>    # $data | str join "\n" <\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    print ($data | first 50 | str join "\n")<\n>    # $data | str join "\n" <\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+collect -h | bat
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1) | str join "\n")<\n>    print ($data | first 20 )<\n>    # $data | str join "\n" <\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1) | str join "\n")<\n>    print ($data | lines | first 20 )<\n>    # $data | str join "\n" <\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1) | str join "\n")<\n>    print ($data | lines | first 20 )<\n>    $data | save -f copy.md<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+bat `2022-00-00.md`
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != "***"})<\n>    $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1) | str join "\n")<\n>    print ($data | lines | first 20 )<\n>    $data | save -f copy.md<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+flatpak install flathub md.obsidian.Obsidian
+zellij kill-session  -h | bat 
+zellij kill-session  notes
+e
+fd .
+fd ./
+fd .
+cd 2023
+fd .
+fd . -x mv {} ../
+fd . 
+cd ..
+fd . 
+ls 
+ls | where type == dir
+ls | where type == dir | find
+ls | where type == dir | find 0
+ls | where type == dir | ls  -h | bat
+ls | where type == dir 
+fd .
+fd . -x mv {} ~/journal/
+zellij kill-session  notes
+e
+ synctihng
+dnfi emacs
+lf
+ls
+doom install
+ls
+./doom install
+doom sync
+./doom sync
+emacs
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+rm -r ~/.config/emacs
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+~/.config/emacs/bin/doom install
+^emacs --daemon
+starutp
+ps
+ps | find emacs
+ps  -h | bat
+ps  -l | find emacs
+ps  -l | get command | find firefox
+ps  -l | get command | find flameshot
+ps  -l | get command 
+ps  -l | get command | find nm
+ps  -l | get command | find  xauto
+starutup
+startup
+git status
+git add nvim
+git add scripts
+git add zellij
+git commit -am 'sync'; git push
+e
+doom sync
+startup
+ls
+git status
+fd  -h | bat
+fd  'sync-conflict'
+fd  'sync-conflict' -x rm
+fd  'sync-conflict'
+git status
+git status -h | bat
+git status --long
+git status -v
+git status  -h | bat
+bat .git/index
+ls
+git  -h | bat
+git  show
+git   -h | bat
+git status
+ls -/a
+ls -la
+ls
+git statuts
+git status
+bat readme.org
+git status
+git commit -am 'sync'; git push
+ssh-keygen -t rsa -b 4096 -C "bbotak@protonmail.com"
+xclip -h | bat
+"aaa" | xclpi
+"aaa" | xclip
+cat ~/.ssh/id_rsa.pub
+git commit -am 'sync'; git push
+bash -c eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa<\n>
+git commit -am 'sync'; git push
+gitt commit
+git commit
+git commit  -h | bat
+git commit  -a
+git push
+ssh-add ~/.ssh/id_ed25519
+ssh-keygen -t ed25519 -C "your_email@example.com"
+bash -c eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+ssh-keygen -t ed25519 -C "bbotak@protonmail.com"
+ssh-add ~/.ssh/id_ed25519
+cat ~/.ssh/id_ed25519.pub
+git status
+git git commit -am 'sync'; git push
+git commit -am 'sync'; git push
+git init
+git status
+git add alacritty commands doom fonts htop i3 keepassxc lf mpv nushell nvim packages polybar readme.org rofi scripts starship.toml themes xremap zathura zellij
+git status
+git  -h | bat
+tldr git
+git --help
+man git 
+git remote  -h | bat
+man git remote  
+git remote add  -h | bat
+git remote add master https://github.com/bbotakk/config
+ls
+git status
+git push
+git push -h | bat
+git push --set upstream master master
+git remote -v
+git remote add upstream https://github.com/bbotakk/config
+git push --set-upstream upstream master
+git branch
+git remote -v
+git remote  -h | bat
+git remote  remove upstream
+git remote  -h | bat
+git remote -v
+git branch -h | bat
+man git branch 
+git branch -l
+git branch --show-current
+git remote -h | bat
+git remote -h | bat add -h | bat
+git remote add
+git remote add origin -h | bat
+git remote remove master
+git remote -v
+git remote add origin https://github.com/bbotakk/config
+git remote -v
+git commit -am 'sync'; git push
+git commit -am 'sync'; git push --set-upstream origin master
+git remote add origin git@github.com:bbotakk/config.git
+git remote remove origin
+git remote add origin git@github.com:bbotakk/config.git
+git remote -v
+git status
+git git commit -am 'sync'; git push
+git commit -am 'sync'; git push
+git commit -am 'sync'; git push --set-upstream origin master
+git push --help
+git push  -h | bat
+git commit -am 'sync'; git push --set-upstream origin master -f
+dnfs carpace
+git status
+dnfr qualculate-gtk
+dnfs qalculate-gtk
+dnfr qalculate-gtk
+nu
+keepassxc  --help
+man keepassxc 
+man 
+calcurse
+lf
+syncthing
+fd  'sync-conflict'
+^emacs --daemon
+startup
+pandoc
+dnfi pandoc
+pandoc -s -f html -t org https://www.polyphasic.net/adaptation/strictness-of-sleep-times/ -o output.org
+wget -O input.html https://www.polyphasic.net/adaptation/strictness-of-sleep-times/
+pandoc -s -f html -t org input.html -o output.org
+bat output.org
+wget -O input.html https://www.polyphasic.net/adaptation
+pandoc -s -f html -t org input.html -o output.org
+calcurse
+dnfr calcurse
+syncthing
+dired
+emacsclient -c --eval '(delete frame)'
+emacsclient -c --eval '(delete-frame)'
+emacsclient -c 
+ls
+git status
+syncthing
+git status
+fd  'sync-conflict'
+fd  'sync-conflict' -x rm
+git status
+emacs --debug-init
+^emacs --daemon
+^emacs --debug-init
+emacs
+^emacs
+vim .
+vi .
+^emacs --debug-init
+emacs --
+^emacs --debug-init
+dnfi vi
+nvim .
+^emacs --debug-init
+startup
+ps -l | get command
+ps -l | get command | find emacs
+syncthing
+startup
+^emacs --daemon
+startup
+^emacs -nw
+startup
+emacs --debug-init
+^emacs --debug-init
+^emacs 
+dnfs rust-src
+dnfi rust-src
+syncthing
+dnfs vterm
+doom sync
+startup
+emacs
+^emacs
+emacs --debug-init
+^emacs --debug-init
+^emacs
+startup
+^emacs
+cargo run
+ls
+starutp
+startup
+syncthing
+git status
+git commit -am 'sync'; git push
+dnfi rust-src
+keybindings list
+emacs
+^emacs
+startup
+^emacs
+syncthing
+cargo run  -h | bat
+cargo  -h | bat
+^emacs --debug-init
+^emacs
+startup
+^emacs
+startup
+doom sync
+ls
+^emacs
+doom sync
+startup
+emacs  -h | bat
+^emacs  -h | bat
+^emacs  --help
+startup
+emacs -nw
+uptime
+dnfi pandoc
+dnfi rust-src
+^emacs --debug-init
+startup
+^emacs --debug-init
+emacs
+^emacs
+^emacs --debug-init
+nvim ~/.config/doom/config.el
+^emacs --debug-init
+cd .config/doom/
+bat packages.el
+nvim ~/.config/doom/config.el
+^emacs --debug-init
+nvim ~/.config/doom/config.el
+^emacs --debug-init
+nvim ~/.config/doom/config.org
+cd .config/doom/
+mv config.org ~
+^emacs 
+nvim config.el
+mv config.el ~
+^emacs 
+mv ~/config.org .
+mv config.org ~
+mv ~/config.el .
+^emacs --debug-init
+nvim config.el
+ls ~
+mv ~/config.org .
+nvim config.org
+emacs
+startup
+^emacs --debug-init
+^emacs
+bat config.el
+^emacs
+cd ~/Books/
+^emacs booklist.org
+startup
+^emacs booklist.org
+startup
+^emacs booklist.org
+^emacs
+^emacs booklist.orgc
+^emacs booklist.org
+^emacs --eval '(dired-jump)'
+^emacs 
+startup
+^emacs
+startup4
+startup
+emacsclient -c 
+startup
+emacsclient -c 
+^emacs
+doom sync
+^emacs
+doom sync
+^emacs
+ps -l | get command | find ema
+ps -l | get command | find emacs
+startup
+emacsclient -c 
+wmctrl emacs 
+wmctrl -xa emacs 
+sudo dnfs nuview
+dnfs nuview
+ls 
+ls | nuview
+^emacs
+ps 
+ps | find syncthing
+syncthing
+"syncthing &" 
+"syncthing &" | bash
+syncthing -h | bat
+man syncthing 
+startup
+starutp
+emacs --daemon
+startup
+setxkbmap us dvorak
+tsnahoeu
+startup
+keepassxc  --help
+man keepass
+man keepassxc
+man keepassxc-cli
+startup
+emacsclient --eval '(emacs-everywhere)'
+xwininfo
+dnfi xwininfo
+dnfi xdotool
+dnfi xprop
+sudo dnf -y --allowerasing install tldr i3 i3status i3lock bc alacritty zathura zathura-pdf-mupdf arandr htop mpv curl libtool xset flameshot ripgrep fzf rofi light xclip xdg-utils xdotool wmctrl cmake sxiv fd-find npm bat unclutter firefox pavucontrol pamix pasystray polybar ffmpeg-free syncthing clementine playerctl keepassxc blueman lxappearance git gcc gcc-g++ make pkgconfig libX11-devel libXtst-devel libXi-devel texlive-scheme-basic latexmk cargo flatpak xautolock autofs emacs pandoc rust-src xwininfo xdotool xprop xclip<\n>
+dnfi xclip xdotool xprop xwininfo
+startup
+sudo xremap ~/.config/xremap/config.yml
+xremap ~/.config/xremap/config.yml
+sode xremap ~/.config/xremap/config.yml
+sudo xremap ~/.config/xremap/config.yml
+xremap ~/.config/xremap/config.yml
+sudo ~/.cargo/bin/xremap ~/.config/xremap/config.yml
+keepassxc  --help
+sudo ~/.cargo/bin/xremap ~/.config/xremap/config.yml
+vim .
+vi .
+sudo ~/.cargo/bin/xremap ~/.config/xremap/config.yml
+startup
+emacs -h | bat
+emacs -e '(emacs-everywhere)'
+dnfs xdotool
+dnfi xdotool
+dnfi xprop
+dnfi xwininfo
+'emacsclient -c --eval "(emacs-everywhere)"' | bash
+emacs --eval "(emacs-everywhere)"
+emacs -h
+emacsclient -h
+dnfs xbindkeys
+dnfi xbindkeys
+touch ~/.xbindkeysrc
+xbindkey
+xbindkeys
+xbindkeys -h | bat
+dnfr xbindkeys 
+startup
+doom sync
+ls
+git status
+git add i3
+syncthing
+syncthing  -h | bat
+man syncthing  
+syncthing -h | bat
+syncthing -h | bat cli  -h | bat
+syncthing cli  -h | bat
+syncthing-cli  -h | bat
+man syncthing cli 
+sycthing continue
+syncthing --paused
+date
+date now
+doom sync
+emacs  -h | bat
+man emacs 
+emacs --daemon
 ^emacs --daemon
 git status
 syncthing
@@ -8306,1695 +9651,350 @@ doom sync
 xset s 3600 3600; xset -dpms<\n>
 1+3+
 1 + 3 
-bluetoothctl scan on
-bluetoothctl
-bluetoothctl connect
-bluetoothctl connect -h | bat
-bluetoothctl connect  --help | bat
-bluetoothctl
-bluetoothctl devices | lines
-bluetoothctl devices | lines | parse 
-bluetoothctl devices | lines | parse {f} {b}
-bluetoothctl devices | lines | parse '{f} {b}'
-bluetoothctl devices | lines | parse '{d} {a} {n}'
-bluetoothctl pair AirPods
-bluetoothctl pair 58:0A:D4:ED:37:9E
-chmod +x btctrl 
-btctrl 
-bluetoothctl devices | parse '{cat} {addr} {name}'
-bluetoothctl devices | parse '{d} {a} {n}'
-bluetoothctl devices | lines |parse '{d} {a} {n}'
-btctrl 
-parse  --help | bat
-btctrl 
-bluetoothctl  --help | bat
-btctrl 
+nvim
 killprocess
-rustfmt  --help | bat
-man rustfmt
-rustfmt main.rs
-cat main.rs
-bat main.rs 
-ls
-cp ~/.config/rustfmt/rustfmt.toml .
-mv rustfmt.toml ../
-rm /rustfmt.toml
-sudo rm /rustfmt.toml
-ls nvim
-curl -s https://raw.githubusercontent.com/doom-neovim/doom-nvim/main/tools/install.sh | sh
-nvim
-nvim (fd -tf | fzf --reverse --height=30 --color=light --scheme=path --preview='bat {}' | str trim)
-ls-
-ls
-xrandr --query | lines | where {|x| $x =~ 'connected'} | each {split row ' ' | get 0}
-xrandr --query | lines 
-xrandr --query  --help | bat
-xrandr --listactivemonitors 
-xrandr --listmonitors 
-bat (fd -tf | fzf --reverse --height=30 --color=light --scheme=path --preview='bat {}' | str trim)
-jshell
-xev
-git pull
-git fetch 
-git pull 
-git reset 
-git reset --hard 
-ls
-rm ./nvim/**
-rm ./nvim/.*
-rm ./nvim/*
-ls nnvim
-ls nvim/
-ls nvim
-git clone https://github.com/LazyVim/starter ~/.config/nvim
-rm -rf ~/.config/nvim/.git
-emacs emacsclient -c -nw
-emacsclient -c -nw
-tmux kill-session cmd
-tmux kill-session 
-nu
-nu
-emacsclient -c -nw
-emacs
-pacman -R emacs
-sudo pacman -R emacs
-nvim
-ls
-nvim
-doom upgrade
-sudo     pacman -S emacs-nativecomp
-emacs
-nvim
-e
-nvim
-tmux new-session  --help | bat
-tmux new-session help
-tmux  --help | bat
-man tmux
-man wmctrl 
-nvim
-nu
-nu
-nvim
-e
-xev
-e
-alacritty --command aoeusnth || htop
-tmux kill-session  
-:q
-tmux new-session
-nvim
-e
-yay obsidian
-e
-e .bashrc
-e
-ls
-$env
-$env.COLORTERM
-$env.TERM
-ls
-e
-ls
-ls lualine.lua
-bat lualine.lua 
-e
-tldr
-tldr pandoc
-pandoc config.org -o readme.md
-bat readme.md 
-ls
-e
-obsidian
-yay obsidian
-sudo pacma -Syyu
-sudo pacman -Syyu
-sudo pacman -S jre-openjdk
-yay neovim
-sudo pacman -Syyu
-obsidian
-yay obsidian
-e
-pandoc philosophy.md -o editor_notes.org
-bat editor_notes.org 
-e
-ls journal
-ls templates/
-e (fd -tf | fzf --reverse --height=30 --color=light --scheme=path --preview='bat {}' | str trim)
-e
-e telescope_file_browser.lua
-e
-e .
-e telescope_file_browser.lua
-e
-view filebrowser.lua
-e filebrowser.lua
-e telescope.lua
-e .
-e 3.
-e .
-yay lf
-e
-lf
-e
-lf
-e
-ls
-e lf/lfrc
-lf
-tput bold
-ls
-lf
-ya -R lf
-yay -R lf
-e
-e
-yay aunpack
-ls -ld
-^ls -ld
-^ls -ld --color-always
-yay atool
-lf
-yay lf
-lf
-(fd -tf | fzf --reverse --height=30 --color=light --scheme=path --preview='bat {}' | str trim)
-lf
-not "" == ""
-.bashrc | path type 
-".bashrc" | path type 
-lfg
-lf
-(fd -tf | fzf --reverse --height=30 --color=light --scheme=path --preview='bat {}' | str trim)
-e
-e lfcd.nu
-ls
-e
-nvi
-mktmp
-mktemp
-path type 
-"Documents" | path type 
-lfcd
-nvim
-ls
-e
-e lf.lua
-e
-e
-lf
-lfcd
-lf
-lfcd
-lf
-lfcd
-e
-lf
-lfcd
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-e
-nu
-nu
-nu
-e
-cat main.rs
-e main.rs
-bat main.rs
-e main.rs
-lf
-e
-e
-e keymaps.lua
-e
-e
-lf
-e
-rm telescope.lua
-e
-bat main.rs 
-e main.rs
-e lazygit.lua\
-mv lazygit.lua\ lazygit.lua
-e .
-lazygit
-yay lazygit
-yay emacs
-yay emacs-nat
-this
-yay -R lf
-yay -R obsidian
-nvim
-bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
-lvim
-nvim
-this
-l
+syncthing
 ls
 ls -la
-yay -S obsidian
-obsidian
-input listen w
-keybindings default 
-keybindings list 
-ethe
-e
-ls
-(fd -tf | fzf --reverse --height=30 --color=light --scheme=path --preview='bat {}' | str trim)
-tldr xclip
-keybindings list 
-git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-nu
-nu
-nu
-nu
-ls
-tmux source-file ~/.config/tmux/tmux.conf
-e
-ls
-git clone https://github.com/nvim-lua/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
-rm lvim/
-nvim
-cd ..
-rm `"${XDG_CONFIG_HOME:-$HOME/`
-rm nvim
-mv ~/Archive/.config/nvim ./nvim
-nvim
-e
-nvim
-e
-nvim
-e
-nvim
-e
-nvim
-e 
-nvim\
-nvim
-nvim\
-nvim
-nvim
-e
-nvim
-e
-nvim
-e
-nvim
-e
-nvim
-e
-nvim
-rm mini_files.lua
-nvim\
-nvim
-this
-ls
-ls -la
-(fd -tf | fzf --reverse --height=30 --color=light --scheme=path --preview='bat {}' | str trim)
-nvim (fd -tf | fzf --reverse --height=30 --color=light --scheme=path --preview='bat {}' | str trim)
-ls
-nu
-nu
-bash
-doom everywhere
-doom +everywhere
-yay -R obsidian
-wmctrl -xa mpv
-mpv $(xclip -o)
-ls -la
-ls
-ls -la
-ls
-ls -la
-man  --help | bat
-man man 
-ls
-(1920 - 667) / 2
-(1920 - (1080 / 2)) / 2
-ls
-xsetroot -solid "#RRGGBB"
-yay xsetroot
-xsetroot -solid "#RRGGBB"
-xsetroot -solid "#F2E6CE"
+rm /tmp/timer.json
 ls
 ls -la
 nvim
-(fd -tf | fzf --reverse --height=30 --color=light --scheme=path --preview='bat {}' | str trim)
-"killall polybar; polybar &" | bash 
+e
+yay dvipng
+yay dvipng
+yay texlive-latex
+yay dvisvgn
+yay dvisvgm
+yay ulem
+yay ulem
 ls
-ls -la
-cls
+audios 
+pactl list short | lines | filter {$in =~ 'PipeWire'}
+sudo systemctl start bluetooth
+emacsclient -c
+18 / 4
+18 / 3
+12 - 9.5
+12 - 9.5 + 13 - 15.5
+18 / 4
+18 / 5
+4.5 * 35
+htop
 ls
-ls -la
-lazygit
-yay -R lazygit
-ls
-javac PersonenAnalyse.java; PersonenAnalyse
-javac PersonenAnalyse.java; ./PersonenAnalyse
-javac PersonenAnalyse.java; java PersonenAnalyse
-yay opjdk
-yay openjdk
-yay openjdk jre
-which java
-which javac
-sudo pacman -S jdk-openjdk
-ls
-javac PersonenAnalyse.java; java PersonenAnalyse
-javac src/PersonenAnalyse.java; java PersonenAnalyse
-ls
-rm PersonenAnalyse.class
-rm Person.class
-ls lib
-ls test
-ls bin
-rm bin/*
-ls bin
-rm bin/*
-ls
-javac PersonenAnalyse.java; java PersonenAnalyse
-/usr/bin/mvn -Djdt.js.server.root\=/home/lenz/.eclipse/bin -Djunit.runner.root\=/home/lenz/.eclipse/bintest-runner/ -Djunit.runner.fileName\=junit-platform-console-standalone.jar -Djava.debug.root\=/home/lenz/.eclipse/bin/bundles clean package -Djdt.download.url\=https\://download.eclipse.org/jdtls/milestones/1.12.0/jdt-language-server-1.12.0-202206011637.tar.gz<\n>
-which jdtls
-javac PersonenAnalyse.java; java PersonenAnalyse
-rm bin/*
-cd ..
-rm bin/*
-ls bin
-rm bin/*
-yay -R jdk17-openjdk 
+ps\
+ps
+ps 
+ps | sort meme
+ps | sort mem
+ps | sort
+ps | get mem | sort
+ps -l | sort-by mem
+ps | sort-by mem
+yay libreoffice
+yay -Syyu libreoffice
+yay jdk
+yay jre
+yay -R jre-openjdk
+yay -Syyu
+sudo pacman -R jre-openjdk 
+sudo pacman -af jre-openjdk 
+sudo pacman -Rf jre-openjdk 
+sudo pacman -R jdk-openjdk
+sudo pacman -R jre-openjdk 
+sudo pacman -R jdtls 
+sudo pacman -R jre-openjdk 
+yay jdk
+yay -Q jdk
 yay -Qs jdk
-yay -R jdk-openjdk jre17-openjdk jre17-openjdk-headless
-yay -R jre17-openjdk jre17-openjdk-headless
-ls
+yay -R jre-openjdk-headless
 yay jdk
-yay -S jdk
-yay -S jre-openjdk
-pacman -S jre-openjdk
-sudo pacman -S jre-openjdk
-yay eclipse
-ls **/.project*
-ls **/.project* | get name | print $in
-ls **/.project* | get name | print $"rm ($in)"
-ls **/.project* | get name | for f in $in {print $f}
-ls **/.project* | get name | each {print $in}
-ls **/.project* | get name | each {rm $in}
-ls **/.project* | get name 
-ls **/.project* 
-ls -la
-rm .eclipse .eclipse-workspace/
-rm .eclipse-workspace
-yay jdk
-yay openjdk
-sudo pacman -S jdk17-openjdk
-jshell
+yay -Syyu libreoffice
+nvim
+8 | math sqrt 
+8 | math sqrt | into int 
+fd
+fd | lines | save tmp
+bat tmp
+fd | to nuon 
+fd | lines | to nuon 
+fd | lines | to nuon | from nuon 
+fd | lines
+bat tmp
+rm tmp
 ls
-ls  --help | bat
-ln  --help | bat
-ln --help | bat
-man ln 
-ln  --help | bat --theme 'Solarized (light)'
-man ln
-bat  --help | bat --theme 'Solarized (light)'
-man ln | less -RF
-less 
-less less  --help | bat --theme 'Solarized (light)'
-less --help | bat --theme 'Solarized (light)'
-ls /usr/bin
-ln -s /usr/bin eclipse/java-2023-09/eclipse/eclipse 
-ln -s eclipse/java-2023-09/eclipse/eclipse /usr/bin
-sudo ln -s eclipse/java-2023-09/eclipse/eclipse /usr/bin
-ls /usr/bin | find eclipse
-eclipse
-ln  --help | bat --theme 'Solarized (light)'
-bash 
+[1 2 3] | save tmp
+bat tmp
 ls
-ls /usr/bin
-ls /usr/bin | find eclipse
-rm /usr/bin/eclipse
-sudo rm /usr/bin/eclipse
-ls /usr/bin/eclipse
-eclipse
-ls /usr/share/applications
-sudo xremap --watch=device ~/.config/xremap/config.yml &>/dev/null &
-sudo xremap --watch=device ~/.config/xremap/config.yml
-remaps
-startup
-sudo xremap --watch=device ~/.config/xremap/config.yml
-vim ~/.config/xremap/config.yml
-nvim ~/.config/xremap/config.yml
-sudo xremap --watch=device ~/.config/xremap/config.yml
-nvim ~/.config/xremap/config.yml
-sudo xremap --watch=device ~/.config/xremap/config.yml
-LS
-24 * 60
-* 60
-24 * 60 * 60
-24 * 60 * 60 * 1000
-jshell
+{a: 1, b: 2} | save tmp
+s
 ls
-ls -la
-ls
-man dmenu 
+htop
+yay librewolf
 ls
 jshell
-yay tp
-yay tpm
-yay tpm | tmux
-yay tpm | find tmux
-yay -Qs tpm | find tmux
-yay -Ss tpm | find tmux
-yay -Ss tpm
-git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-rm ~/.config/tmux
-yay -R tpm
-yay -Ss tpm
-yay -R tmux-plugin-manager
-git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+mpv (xclip -o)
+1 / 35
+l
 ls
-tmux source-file ~/.config/tmux/tmux.conf
-ls
-tmux source-file ~/.config/tmux/tmux.conf
-ls
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-tmux source-file ~/.config/tmux/tmux.conf
-ls
-tmux source-file ~/.config/tmux/tmux.conf
-ls
-tmux source-file ~/.config/tmux/tmux.conf
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-rm ~/.tmux
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-ls
-tmux
-tmux source-file ~/.config/tmux/tmux.conf
-git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
-tmux source-file ~/.config/tmux/tmux.conf
-ls
-tmux
-tpm
-./tpm
-ls
-$env.SHELL
-ls
-lsn
-#($env.SHELL)
-$env.SHELL
-ls
-bash
-ls
-git
-ls
-this 
-ls
-whoami
-ls -la
-ls
-ls -l/a
-ls -la
+-6 | mod 5
+-6 | math mod 5
+-6 % 5
+-6 mod 5
+-1 mod 5
+xrandr  --help | bat --language man
+xrandr --output --auto
+man xrandr 
+firefox  --help | bat --language man
 uptime
-uptime  --help | bat --theme 'Solarized (light)'
-uptime -p
-tls
-ls
-ls -la
-"killall polybar; polybar &" | bash 
-uptime 
-^uptime  --help | bat --theme 'Solarized (light)'
-uptime -p
-up
-uptime -p
-hostnae
-hostname
-"killall polybar; polybar &" | bash 
-bash -c "ps -p $$ -o comm="
-ps -p $$
-echo $0
-els
-ls
-bash
-bash
-ls -la
-fd .
-fd /
-fd . /
-ls
-asontehu
-ls
-laoeustndh
-"killall polybar; polybar &" | bash 
-ls
-ls -la
-tmux show-option -gqv
-ls
-"killall polybar; polybar &" | bash 
-2 ** 100
-ps 
-2 * 3 * 19
-114 /48
-114 / 48
-114 / 76
-ls
-ls -la
-polybar
-(fd -tf | fzf -R -h=30 -c=light -S=path -p 'bat {}' | str trim)
-fd -tf 
-fd -tf | lines
-grog --help | bat --theme 'Solarized (light)'
-ls
-this is all i need
-ls
-yay pdfunite
-man pdfmerger 
-pdfmerger  --help | bat --theme 'Solarized (light)'
-ls
-setxkbmap  --help | bat --theme 'Solarized (light)'
-ls
-jshell
-"killall polybar; polybar &" | bash 
-doom doctor
-doom env
-nvim .
-emacs --daemon --execute '(doom/reload)'
-emacs --debug-init
-emacs --daemon 
-this
-ls
-ls -la
-ps -l
-ls
-fd
-fd | grep aa
-ls\
-ls
-emacs --debug-init
-ls
-ls -la
-ls
-ls -l/a
-ls -la
-ls
-emacs --daemon --execute '(doom/reload)'
-ls
-emacs --daemon 
-emacs --debug-init
-sudo killall emacs
-ps 
-ps | find emacs
-ps | find emacs | each {kill $in.pid }
-ls
-ps
-ps | find emacs 
-ps | find emacs | each {print $in.pid }
-ps | find emacs | each {sudo kill $in.pid }
-ps | find emacs | each {print $in.pid }
-emacs --debug-init
-emacs --daemon --execute '(doom/reload)'
-doom update
-doom upgrade
-ls
-ls -/la
-ls -la
-ls
-emacs --daemon --execute '(doom/reload)'
-ls
-emacs --daemon 
-fd |find e
-ls
-ls -la
-ls my ass
-ls -la
-ls
-"killall polybar; polybar &" | bash 
-ls -la
-(fd -tf | fzf --preview='bat {}' | str trim)
-pd
-fd
+nvim
+(fd -tf | fzf --preview='bat --theme Solarized (dark) {}' | str trim)
+bat Adder.java 
+ls  --help | bat --language man
+ls -lat
+ls to jason
+ls | to json
+hash  --help | bat --language man
 ls
 nvim
+uptime
+htop
+nvim
 ls
-fzf --help | bat --theme 'Solarized (dark)'
-ls -l/a
-ls -/la
-ls -la
-ths 
-ps -la
-ps -l
-lsd
-exa
-exa --icons 
-exa --icons  -l
-exa --icons  -la
-ls -la
-"killall polybar; polybar &" | bash 
+htop
+emacs  --help | bat --language man
+xprop
+xev
+i3-msg "split toggle"
+i3-msg "move absolute position left"
+i3-msg "move right"
+i3-msg "move "
+i3-msg "move right"
+i3-msg "move left"
+i3-msg "move right"
+keybindings list 
+keybindings default 
+keybindings list  
+keybindings listen
+ls \;
+ls \\;
+man fd 
+man fd
+tldr fd 
+fd --extension=pdf . ~
 ls
-ls -la
-startup
-xsetroot -solid '#002b36'
-fd  --help | bat --theme 'Solarized (dark)'
-xopen -e 'pdf' 
-fd  --help | bat --theme 'Solarized (dark)'
-xopen -e pdf
-aa != bb
-"aa" != "bb"
-xopen -e pdf
-notify-send  --help | bat --theme 'Solarized (dark)'
-acpi -k
-acpi -b
-acpi
-acpi  --help | bat --theme 'Solarized (dark)'
-notify-send  --help | bat --theme 'Solarized (dark)'
-man   notify-send <\n>
-/
-pacmd
-amixer
-amixer --help | bat --theme 'Solarized (dark)'
-amixer -R
-amixer sget Master | grep -o -m 1 '[0-9]*%'
-amixer  --help | bat --theme 'Solarized (dark)'
-amixer sget
-amixer sget master
-amixer sget Master
-pactl 
-pactl  --help | bat --theme 'Solarized (dark)'
-tldr pactl
-pactl get-sink-volume @DEFAULT_SINK@
-pactl get-sink-volume @DEFAULT_SINK@ --help | bat --theme 'Solarized (dark)'
-pactl get-sink-volume  --help | bat --theme 'Solarized (dark)'
-man pactl 
-pactl get-sink-volume @DEFAULT_SINK@
-pactl get-sink-volume @DEFAULT_SINK@ | cut -f1
-pactl get-sink-volume @DEFAULT_SINK@ | cut -d ' ' -f1
-pactl get-sink-volume @DEFAULT_SINK@ | cut -d ' ' -f5
-pactl get-sink-volume @DEFAULT_SINK@ | cut -d ' ' -f4
-pactl get-sink-volume @DEFAULT_SINK@ | cut -d ' ' -f6
-pactl get-sink-volume @DEFAULT_SINK@
-pactl  --help | bat --theme 'Solarized (dark)'
-pactl get-sink-mute @DEFAULT_SINK@
-"killall polybar; polybar &" | bash 
-l
-ls
-dunstrc
-dunst --help | bat --theme 'Solarized (dark)'
-man dunst 
-"killall polybar; polybar &" | bash 
-ls
-xclip -i
-tldr xclip
-xclip -o -sel clip
-print haha (xclip -o -sel clip)
-echo (xclip -o -sel clip)
-ls
-nushell
-man nu 
-nu  --help | bat --theme 'Solarized (dark)'
-l"killall polybar; polybar &" | bash l
-"killall polybar; polybar &" | bash
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-doom upgrade
-doom upgrade --force
-ls
-ls -la
-ls
-ls -la
-ls
-nl
-ls
-ls -la
-ls
-ls -la
-ls
-nls
-ls
-ls -la
-ls
-ls -la
-ls
-ls -la
-ls
-starship
-starship config
-ls
-starship  --help | bat --theme 'Solarized (dark)'
-starship   --help | bat 
-ls
-man starship 
-ls
-starship   --help | bat --theme 'Solarized (dark)'
-ls
-starship --help | bat 
-ls
-thisls
-ls
-this 
-great
-ls
-ls -la
-ls
-ls -la
-this is great
-ls -la
-ls -a
-ls -la
-ls
-ls -la
-ls my ass
-ls
-ls -la
-ls -
-ls -la
-ls
-nusheel
-ls -la
-this is great
-ls -la
-ls
-ls -lmoa
-ls
-nu
-nu
-nu
-nu
-nu
-nu
-ls -la
-ls
-ls -la;
-ls 
-ls -la
-ls
-ls 
-nushell
-ls
-greeedy
-ls
-ls my ass
-haha
-great
-ls doo
-ls
-ls y ass
-ls -la
-ls
-asonethu
-ls
-ls -la
-ls
-lmao
-ls
-this is great
-ls -la
-ls doom
-ls
-ls -la
-ls
-ls -la
-ls
-ls -la
-ls
-ls -la
-ls
-ls -la
-this is great
-ls
-ls -la
-ls
-ls -la
-ls
-this 
-ls
-this
-ls
-la
-this is iass
-ls -la
-ls
-ls -la
-ls
-ls my ass
-this is great
-ls my ass
-ls
-ls myass
-xopen --extension 'pdf' &
-xopen --extension 'pdf'
-i3-msg exec xopen --extension 'pdf'
-i3-msg exec "xopen --extension 'pdf'"
-i3-msg exec "xopen --extension 'pdf' &"
-ls
-blyat
-this is blyat
-ls
-ls my arse
-print whitetrash
-ls
-whitetrash
-print trashwhites
-ls-
-ls
-print whitetrash
-ls
-ls 
-this 
-ls -la
-ls
-ls -la
-this is great
-ls
-this is great
-ls -la
-ps -la
-ps -l
-ls
-echo asnoteuh
-fd.
-fd 
+fd --extension 'pdf' . ~/Documents/uni/cs
+xopen ~
+xdg-open ~
+fd --type dir
 fd -td
-fd -td -d 1
-fd -tf -d 1
-fd -d 1
-fd -d 1 | bat
-ls | bat
+yay fish
 ls
-laoeu
-print 'this is a pretty cool shell'
-print 'itchy butthole'
-zip --help | bat
-glob --help | bat
-glob *.org
-glob -d 100 *.org
-glob **/*.org
-ls
-ls -td
-ls -d
-glob --no-file 
-glob --no-file *
-glob --no-file -n '.*' *
-glob --no-file -n [.*] *
-glob --no-file -n [.*] * | zip [donkey monkey]
-zip  --help | bat
-ansi  --help | bat 
-ansi rb
-lss
-ls -la
-ls
+emacs --debug-init
+fd --extension pdf . ~ | ~/.config/bin/xopen
+def doodle [] {<\n>print $in<\n>}
+echo "abc" | doodle
+ls | doodle
+^ls | doodle
 $env
-$env | term
-$env | find term
-$env | find width
-$env | find size
-$env.config | find size
-term 
-term size
-term  --help | bat
-term size
-8 * 'a'
-'a' * 8
-repeat --help | bat
-use std
-repeat --help | bat
-std repeat --help | bat
-'a' | std repeat | str join ''
-'a' | std repeat 8 | str join ''
-ls
-'a' | std repeat 8
-exit
-nu
-std repeat
-std repeat  --help | bat
-'a' | std repeat 8 | str join 
-'a' | std repeat 8 
-ls
-ls mycock
-ls
-ths
-ls
-saotnehu
-ls
-ls-
-ls
-ls-
-ls
-ls 
-ls
-great
-ls
-inu
-ls
-great
-ls
-this 
-ls -la
-ths
-ls
-thsi 
-ls 
-duration  --help | bat 
-format duration  --help | bat
-0800 | format duration
-0800 | format duration s
-0800ms | format duration s
-800ms | format duration s
-800ms | format duration sec
-ls
-ls-
-nui
-ls
-ls-
-ls 
-ls
-ls 
-ls
-fd 
-ls
-fd 
-fd ~
-fd . ~
-ls **/*
-nu
-nu
-nu
-ls
-asonetuh
-ls
-hello nushelleans 
-print nushelleans
-ls
-ls -la
-ls
-great
-ls
-this 
-saotheu
-ls
-this 
-ls
-str length 
-'abc' str length 
-'abc' |  str length 
-ls
-ls yass
-ls
-this
-ths 
-ls
-ls 
-ls
-"a(ansi white)" | str length -g
-"a(ansi white)" | str length
-"a(ansi white)" | str length -d
-"a(ansi white)" | str length -b 
-"a(ansi white)" | str length --utf-8-bytes 
-"a(ansi white)" | str length -g
-"a(ansi white)" | ansi strip | str length  
-$"a(ansi white)" | str length  
-$"a(ansi white)" | str length -g
-$"a(ansi white)" | str length -b
-$"a(ansi white)" | ansi strip | str length
-ls
-ls-
-ls
-snathoeu
-ls
-ls myass
-ls my ass
-this is great
-ls
-print am i sane?
-ls
-for i in (ls | get name) {<\n>print is this insane<\n>}
-ls
-this 
-ls -la
-ln
-ls
-ls 
-ls
-jiiinu
-ls
-hnu
-ls
-ls-
-ls
-for i in (ls) {<\n>print hello<\n>}
-for i in (ls) {<\n>}
-for 
-each \
-ls
-for i in (ls) {<\n>print not done <\n>}
-ls
-this 
-ths
-ls 
-ls
-av packages.sh
-av packages.org
-yay -Ss starshiy
-yay -Ss starship
-yay -Rs starship
-ls
-sleep 5sec; print unamed
-"killall polybar; polybar &" | bash
-ls
-"killall polybar; polybar &" | bash
-ls
-ls -la
-str join "a" "b"
-"a" | str join "a"
-"a" | str join "b"
-"a bbb" | str join "b"
-str 
-merge 
-"a" | merge  "b"
-ls
-du
-format date --help
-date now | format date "%Y-%m-%d %H:%M:%S"
-date now | format date "%x"
-date now | format date "%x %X"
-ls
-fd /
-fd . /
-ls
-asnoteuh
-ls
-asonteuh
-ls
-asonetuh
-ls
-asoentuh
-ls
-sanotheu
-ls
-asoenuth
-ls-
-asoetuh
-ls
-this is fucking great
-ls -lra
-ls la
-lns
-ls
-ls -la
-ls
-ls -la
-this is fucking great
-print this is amazing
-print "this is amazing"
-ls -la
-ls
-ls -la
-cnu
-ls
-asoentuh
-ls-
-ls
-ls 
-ls
-asonteuh
-ls
-this is great
-ls
-ls -la
-ps -l
-ls -l
-ls
-lsasonteuh
-ls
-asoneuh
-ls
-ls -la
-this 
-"killall polybar; polybar &" | bash
-ls
-ls -la
-ls
-ls -la
-uptime -p
-transmission-cli magnet:?xt=urn:btih:89C097F2E1B1DCDAA86351067908EF6C798A97D3&dn=100+Tracks+Rain+Sounds+Songs+Playlist+Spotify+Mp3%7E%5B320%5D++kbps+Beats%E2%AD%90&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.cyberia.is%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.iamhansen.xyz%3A2000%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.tiny-vps.com%3A6969%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451%2Fannounce&tr=udp%3A%2F%2Ftracker.moeking.me%3A6969%2Fannounce&tr=udp%3A%2F%2Fipv4.tracker.harry.lu%3A80%2Fannounce&tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce
-glob *pdf
-glob *pdf | rm $in
-glob *pdf | rm
-glob *pdf | each { rm $in}
-cat nerd-font-symbols.toml
-glob *PDF | each { rm $in}
-rm nerd-font-symbols.toml binary_search_tree_query.md
-ls org
-rm org
-sanotehu
-asoetnuh
-ls
-sudo transmission-cli magnet:?xt=urn:btih:89C097F2E1B1DCDAA86351067908EF6C798A97D3&dn=100+Tracks+Rain+Sounds+Songs+Playlist+Spotify+Mp3%7E%5B320%5D++kbps+Beats%E2%AD%90&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.cyberia.is%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.iamhansen.xyz%3A2000%2Fannounce&tr=udp%3A%2F%2Fp4p.arenabg.com%3A1337%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.tiny-vps.com%3A6969%2Fannounce&tr=udp%3A%2F%2Fexodus.desync.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451%2Fannounce&tr=udp%3A%2F%2Ftracker.moeking.me%3A6969%2Fannounce&tr=udp%3A%2F%2Fipv4.tracker.harry.lu%3A80%2Fannounce&tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce 
-ls dd
-ls gz
-ls 
-transmission-cli  --help | bat
-glob *part
-glob *part | each { rm $in}
-transmission-cli  --help | bat
-htop
-ls
-ls -la
-bat
-ls
-bat eduroam-linux-SFIoTZ-eduroam_ETH_Zurich.py 
-ip
-ipls
-+x eduroam-linux-SFIoTZ-eduroam_ETH_Zurich.py
-nu
-yay yt
-yay ytdlp
-yay youtube-dl
-yay yt-dlp
-sudo pacmen -Syyu yt-dlp
-sudo pacman -Syyu yt-dlp
-yt-dlp
-yt-dlp https://www.youtube.com/watch?v=7JyE47-Ykjo
-yt-dlp  --help | bat
-yt-dlp https://www.youtube.com/watch?v=7JyE47-Ykjo
-yt-dlp -x https://www.youtube.com/watch?v=7JyE47-Ykjo
-xdg-open `Gentle Night Rain 12 HOURS Rain Sounds for Sleeping - DARK SCREEN to Sleep Fast & End Insomnia [7JyE47-Ykjo].opus`
-xdg-open `Amon Amarth - Twilight Of The Thunder God.mp3`
-fdisk -l
-sudo fdisk -l
-ls /mnt
-lsblk
-wmctrl  --help | bat
-wmctrl
-wmctrl -l
-wmctrl  --help | bat
-wmctrl -l | find Thunar
-ls
-l
-ls
-ls -la
-ls
-lsnu
-doom sync
-wmctrl  --help | bat
-wmctrl -lx
-wmctrl -xl
-wmctrl -l
-mv --force  config_using_marks.org ~/.config/i3/config.org
-~/.config/bin/xopen
-def-env
-dev --env
-def --env
-def  --help | bat
+fd --extension pdf . ~ | ~/.config/bin/xopen
+fd --extension pdf . ~ 
+fd --extension pdf . ~ | ~/.config/bin/xopen
+(fd -tf | fzf --preview='bat --theme Solarized (dark) {}' | str trim)
+./xopen
+"abc" | ./xopen
+man main
+main help
+helpdef 
 help def 
+ls | ./rofimenu
+ls | ./rofimenu.nu
+let x = if true {1} else {2}
+$x
+let x = if false {1} else {2}
+$x
+./xopen
+"abc " | ./xopen
+"abc" | rofimenu
+"abc" | ./rofimenu.nu
+"abc" | ./rofimenu.nu 'nema' 'aa'
+"abc" | ./rofimenu.nu
+ls | xopen 
+ls | xopen.nu 
+ls | xopen
+ls | xopen ""\
+ls | xopen ""
+ls | xopen
+~/.config/emacs/bin/doom install --force
+ls | xopen
+./xopen
+"aaaa" | ./xopen
+xopener
+outputs 
+outputs
+[a b c ] | to text 
+outputs
+man exit 
+outputs
+"abc" | xopen
+xopen
+fd --extension pdf . ~/Documents/uni/cs | ~/.config/bin/rofimenu '' 'pdf'
+fd --extension pdf . ~/Documents/uni/cs | ~/.config/bin/rofimenu ' ' 'pdf'
+xopn
+xopen
+l-
 ls
-v
-man mpv
-cargo --help | bat
-man cargo 
-man cargo
-cargo add  --help | bat
+./xopen.nu
+"abc" | ./xopen.nu
+xopen (fd --extension pdf . ~ | rofi ' ' 'pdf')
+rofi -dmenu -p "ass"
+xopen (fd --extension pdf . ~)
 ls
-~/.config/bin/timers
-fd
+./xopen (fd --extension pdf . ~)
+xopen $"(fd --extension pdf . ~)"
+"abc" | opener
+echo "abc" | opener
+fd | opener
+fd 
+fd | opener
+killprocess
+playerctld
+systemctl playerctld
+tldr systemctl
+systemctl status playerctld
+man playerctld 
+playerctl
+man playerctl
+tldr emacs 
+emacs --daemon -h
+man emacs 
 ls
-e
-ls
-nvim
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-ls
-nvim
-ls
-e
-e
-$env
-$env | find term
-$env | find TERM
-emacsclient  --help | bat
-nnu
-$env | info 
-$env | describe 
-$env | merge $envnu
-alias
-ls
-alias  --help | bat
-help alias
-$env.TERM_PROGRAM
-$env.TERM
-$env.MANPAGER
-$env.PAGER
-e
-doom sync
-e
-ls
-e
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-e
-ls
-e
-tmux set  --help | bat
-tmux  --help | bat
-man tmux 
-ls
-nu
-e
-ls
-$env.TERM
-ls
-l-s
-ls
-bat tmux-24bit.terminfo 
-bat xterm-24bit.terminfo 
-"xterm-24bit|xterm with 24-bit direct color mode,<\n>   use=xterm-256color,<\n>   sitm=\E[3m,<\n>   ritm=\E[23m,<\n>   setb24=\E[48;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,<\n>   setf24=\E[38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm," | save --force xterm-24bit.terminfo
-'xterm-24bit|xterm with 24-bit direct color mode,<\n>   use=xterm-256color,<\n>   sitm=\E[3m,<\n>   ritm=\E[23m,<\n>   setb24=\E[48;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,<\n>   setf24=\E[38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,' | save --raw --force xterm-24bit.terminfo
-bat xterm-24bit.terminfo 
-/usr/bin/tic -x -o ~/.terminfo xterm-24bit.terminfo
-bat .terminfo
-ls .terminfo/
-ls .terminfo/x
-bat .terminfo/x/xterm-24bit
-exe terminf
-rm .terminfo/
-rm tmux-24bit.terminfo
-rm xterm-24bit.terminfo
-./terminf
+ls -h
 ls -la
-ls .terminfo/x/xterm-24bit
-ls .terminfo/x/xterm-24bits
-$env
-$env.TERM
-nu
-$env.TERM
-e
-nvim
-emacsclient -c -nw
-emacsclient -r -nw
-emacs --tty
-emacsclient --tty
-emacsclient --tty
-$env.COLORTERM
-e
-emacs  --help | bat 
-emacsclient  --help | bat
-e
-nu
+ls -la | find xprofile
+ls -la | find x
+ls -la | find profile
+ln -s ~/.xprofile ~/.config/xprofile
+rm ~/.xprofile 
+ln -s ~/.xprofile ~/.config/xprofile
+ln -s ~/.config/xprofile ~.xprofile
+sudo ln -s ~/.config/xprofile ~.xprofile
+tldr git
+git init -h\
+git init 
+git branch -m main
 ls
-$env.EDITOR
-e
-emacsclient  --reuse-frame
-ls
-lsaoentuh
-ls
-htop
-timer  --help | bat
-timer  --help | bat --language man
-ls
-timer  --help | bat
-man fzf 
-timer  --help | bat --language man
-ls
-ls 
-rm terminf .terminfo/
-ls
-timer  --help | bat --language man
-grep  --help | bat --language man
-timer  --help | bat --language man
-nu
-doom sync
-cargo build; rm ../timer; cp ./target/debug/timer ../timer; sudo chmod +x ../timer
-timer toggle
-timer start 15m 0s
-timer reset
-cargo build; rm ../timer; cp ./target/debug/timer ../timer; sudo chmod +x ../timer
-timer start 15m 0s
-timer start 15s 0
-timer start 15s 0s
-cargo build; rm ../timer; cp ./target/debug/timer ../timer; sudo chmod +x ../timer
-timer start 15s 0s
-timer start 5s 0s
-cargo build; rm ../timer; cp ./target/debug/timer ../timer; sudo chmod +x ../timer
-timer start 5s 0s
-cargo build; rm ../timer; cp ./target/debug/timer ../timer; sudo chmod +x ../timer
-nvim
-nvi
-nvim
-ls
-nvim
-e
-nvim
-timer check
-timer status
-ls /tmp/timer.Json
-ls /tmp
-ls /tmp/timer.json
-bat /tmp/timer.json
-open /tmp/timer.json
-timer status
-timer status | xclip
-timer status | xclip -i
-rm /tmp/timer.json
-timer 5s 0s
-timer start 5s 0s
-cargo build; rm ../timer; cp ./target/debug/timer ../timer; sudo chmod +x ../timer
-timer start 5s 0s
-cargo build; rm ../timer; cp ./target/debug/timer ../timer; sudo chmod +x ../timer
-rm /tmp/timer.json
-ls
-nu
-nvim
-doom sync-
-doom sync
-nvib
-nvim
-yay nnn
-nnn
-man nnn
-nnn --help | bat --language man
-nvi
-yay -R nnn
-nvim
-e
-nvim
-ls
-nvim
-nvi
-nvim
-nvi
-nvim
-ls
-ls -la
-ls
-print this is my asshole
-e
-ls
-e (fd -tf | fzf --preview='bat --theme Solarized (dark) {}' | str trim)
-for i i
-e
-e\
-e
-nvi
-nvim
-e
-ls
-e config
-e config.org
-e config
-e (fd -tf | fzf --preview='bat --theme Solarized (dark) {}' | str trim)
-doom sync
-e 
-e
-ls -la
-e
-tmux  --help | bat --language man
-nu
-nu
-e
-ls
-e
-ls
-e
-yay lazygit
-lazygit
-ls
-e
-nvim
-ls-
-ls
-doom sync
-ls -la
-tmux send-keys  --help | bat --language man
-tmux  --help | bat --language man
-alacritty --class cmd -T nvim -e tmux -c nvim new-session -A -n nvim -s nvim
-alacritty --class cmd -T nvim -e tmux new-session -A -n nvim -s nvim
-tmux send-keys  'editor'
-tmux send-keys  -t cmd 'editor'
-tmux attach -t editor
-tmux new-session editor
-tmux new-session editor
-tmtmux kill-session  
-tmux new-session -s editor
-alacritty --class cmd -T nvim -e tmux new-session -A nvim &
-alacritty --class cmd -T nvim -e tmux new-session -dA nvim &
-ls
-alacritty --class cmd -T nvim -e tmux new-session -dA nvim
-alacritty --class cmd -T nvim -e tmux new-session -A nvim
-"alacritty --class cmd -T nvim -e tmux new-session -A nvim &" | bash
-"alacritty --class cmd -T nvim -e tmux new-session -snA nvim &" | bash
-"alacritty --class cmd -T nvim -e tmux new-session -As nvim &" | bash
-e
-"alacritty --class cmd -T nvim -e tmux new-session -snA nvim &" | bash
-e
-alacritty --class cmd -T nvim -e tmux new-session -A -n nvim -s nvim
-e
-alacritty --class cmd -T nvim -e tmux new-session -As nvim
-alacritty --class cmd -T nvim -e tmux new-session -Ans nvim nvim
-alacritty --class cmd -T nvim -e tmux new-session -Ans nvim
-alacritty --class cmd -T nvim -e tmux new-session -A -s nvim -n nvim nvim
-ls
-alacritty --class cmd -T nvim -e tmux new-session -A -s nvim -n nvim nvim
-e
-ls
-e
-alacritty --class cmd -T nvim -e tmux new-session -A -s nvim -n nvim nvim
-e
-alacritty --class cmd -T nvim -e tmux new-session -A -s nvim -n nvim
-e
-tmux kill-session  
-ls-
-ls
-e
-ls
-alacritty --class cmd -T nvim -e tmux new-session -A -s nvim -n nvim
-e
-ls
-alacritty --class cmd -T nvim -e tmux new-session -A -s nvim -n nvim
-nvim
-e
-rm lualine.lua
-ze
-e
-ls
-cargo build; rm ../timer; cp ./target/debug/timer ../timer; sudo chmod +x ../timer
-cargo build
-!tmux select-window -t cmd; tmux send-keys C-l C-c Up Enter
-tmux select-window -t cmd; tmux send-keys C-l C-c Up Enter
-cargo build
-tmux select-window -t cmd; tmux send-keys C-l C-c Up Enter
-fd .
-tmux select-window -t cmd; tmux send-keys Up Enter
-tmux select-window -t cmd; tmux send-keys C-l C-c Up Enter
-fd .
-cargo build
-cargo build; rm ../timer; cp ./target/debug/timer ../timer; sudo chmod +x ../timer
-ls
-ls target
-ls target/debug/
-cargo build; rm ../timer; cp target/debug/timer ../timer; sudo chmod +x ../timer
-cargo build
-cargo build; rm ../timer; cp target/debug/timer ../timer; sudo chmod +x ../timer
-ls
+ls .git
 gg
-lazygit
-lg
-gg
-ggg
-gg
-git reset --hard master/main
-bash
-mv inc-rename.lua inc_rename.lua
-gg
-ls
-gg
-git status
-git add nvim
-gg
-git status
-git add lazygit nvim bin
-git status
-ls
-yay tig
-tig
-yay -R tig
-ls
-bat fugitive.lua 
-mv fugitive.lua neogit.lua
-path  --help | bat --language man
-../timer | path join ass
-"../timer" | path join ass
-mv inc_rename.lua ../plugins/
-ls ../plugins/
-[lualine.lua neogit.lua notify.lua] | each {mv $in ../plugins}
-yay -R lazygit
-rm plugins/
-tmux last-window
-tmux --help | bat --language man
-man tmux
-bind-key l last-window<\n>
-tmux list-keys | grep last-window<\n>
-tmux list-keys <\n>
-mv discipline.lua greedy.lua
-mv lasttab.lua alternate_tab.lua
-mv alternate_tab.lua alt_tab.lua
-tmux last-window
-ls
-gg
-lazygit
-doo sync
-doom sync
-e
-ls
-e .
-e 
-e
-ps 
-^ps
-tmux run-shell "ps -o state= -o comm= -t '#{pane_tty}'"
-nvim
-tmux run-shell "echo '#{pane_current_command}' ] | grep -iq '.+\(nvim\|emacsclient\).+'"
-tmux run-shell "echo '#{pane_current_command}' ] | grep -i '.+\(nvim\|emacsclient\).+'"
-tmux run-shell "echo '#{pane_current_command}' ]"
-tmux run-shell "echo '#{pane_current_command}'"
-tmux run-shell "'#{pane_current_command}' | grep -iq '.+\(nvim\|emacsclient\).+'"
-tmux run-shell "'#{pane_current_command}'"
-tmux run-shell "#{pane_current_command}"
-tmux run-shell "print #{pane_current_command}"
-tmux run-shell "ls"
-emacsclient -t
-e 
-e
-which /bin/sh
-ls
-e
-ls
-e
-doom sync
-emacs --debug-init
-emacsclient -t
-emacs --daemon --execute '(doom/reload)' 
-emacs --execute '(doom/reload)' &
-emacs --execute '(doom/reload)'
-ps
-ls
-ps
-e
-nvim
-ls
-ls -la
-ls
-exa
-ls --mime-type 
-e
-doom sync
-e
-jshell
-nvi
-/usr/bin/mvn -Djdt.js.server.root\=/home/lenz/.config/emacs/.local/etc/lsp/eclipse.jdt.ls/ -Djunit.runner.root\=/home/lenz/.config/emacs/.local/etc/lsp/eclipse.jdt.ls/test-runner/ -Djunit.runner.fileName\=junit-platform-console-standalone.jar -Djava.debug.root\=/home/lenz/.config/emacs/.local/etc/lsp/eclipse.jdt.ls/bundles clean package -Djdt.download.url\=https\://download.eclipse.org/jdtls/milestones/1.12.0/jdt-language-server-1.12.0-202206011637.tar.gz
-nvim
-e
-nvim
-jshell
-doom sync
-nvi
-yay texlive-ost
-yay texlive-most
-./emacswrapper --tty
-e
-emacsclient  --help | bat --language man
-e
-emacs --daemon --execute '(doom/reload)' 
-e
 g
-x
-g
-e ./killprocess
-e 
-pandoc -h   
-pandoc cost_of_context_switching_interruptions.md -o cost_of_context_switching_interruptions.org
 ls
-ls -la
+ls .auctex-auto
+rm ./.auctex-auto
+ls
+g\
+g
+ls
+emacsclient -h
+ls
+tldr git
+git -h
+git  --help | bat --theme Solarized (dark) --language man
+git --help | bat --theme 'Solarized (dark)' --language man
+man git 
+ls **/*.org
+(ls **/*.org | get name | str join " ")
+git add (ls **/*.org | get name | str join " ")
+(ls --full-paths -a **/*.org | get name | str join " ")
+git add (ls --full-paths -a **/*.org | get name | str join " ")
+git add (ls --full-paths -a **/*.org | get name | str join " ") --help | bat --theme 'Solarized (dark)' --language man
+(ls --full-paths -a **/*.org | get name | str join " ") --help | bat --theme 'Solarized (dark)' --language man
+(ls **/*.org | get name | str join " ")
+(ls --full-paths **/*.org | get name | str join " ")
+git add (ls --full-paths **/*.org | get name | str join " ")
+git add fasting.org
+ls **/*.org | get name | each {git add $in}
+g
+ls **/*.org | get name 
+ls **/*.org | get name | each {git add $in}
+g
+man av 
+av  --help | bat --theme 'Solarized (dark)' --language man
+ls
+av  --help | bat --theme 'Solarized (dark)' --language man
+ls **/*.docx
+ls **/*.docx | get name | each {av $in}
+ls **/*.docx
+ls
+fc-list
+fc-list | find iosev
+yay iosevka
+fc-list | find iosev
+fc-list | find comic
+ls
+yay -R iosev
+yay iosev
+yay -R ttf-iosevka-nerd
+yay cozzette
+yay cozette
+ls
+yay -R ttf-cozette
+yay  ttf-cozette
+yay  tf-cozette
+yay  cozette
+yay -R cozette-ttf
+yay cozette-otb
+ls
 this 
 ls
-thisis config.org  │ file │<\n>custom.el   │ file │<\n>init.el     │ file │<\n>packages.el │ file │<\n>snippets    │ dir  │ 
-g
-x
-g
-x
-e
-x
-g
-e
-g
-nu
-e
-g
-e
-cargo build; rm ../timer; cp target/debug/timer ../timer; sudo chmod +x ../timer
-e
-cargo build; rm ../timer; cp target/debug/timer ../timer; sudo chmod +x ../timer
-doom sync
-doom doctor
-doom upgrade --force
-emacs --deb
-emacs --debug-init
-doom sync
+ls -la
+yay dina
+yay dina | find otb
+yay dina | rg otb
+yay dina 
 ls
-for 
-}
-nvim<\n>
-emacs --daemon --execute '(doom/reload)' 
-emacs --debug-init
-inu
-hello nu
-ls --help | bat --language man
-g
-git remote add origin https://github.com/emillenz/config.git
-git remote -v
-git remote set-url origin git@github.com:emillenz/config.git
-yay git-delta
-cargo install git-delta
+ls -la
 ls
+ls -rla
+ls -la
+yay dina
+yay -R dina-font
+yay dina-font-otb
+yay dina-powerline
+ttf-dina-remastered
+yay ttf-dina-remastered
+yay dina
+nu 
 nu
 nu
+nu
+nu
+yay dina-otb
+yay dina-obt
+yay dina
+yay -R dina-font-otb
+yay tamzen
 ls
-git-delta
-delta  --help | bat --language man
-git diff
-mpv  --help | bat --language man
-mpv --list-options 
-mpv $(xclip -o) --background==F2E6CE
-mpv --background==F2E6CE https://oc-vp-dist-downloads.ethz.ch/mh_default_org/oaipmh-mmp/af8e2ef6-9438-4550-bc23-56b073f68565/1ee2d55a-d50f-4f07-b13c-42901990bfa9/presentation_347abe91_1cb7_4d38_92c4_c011585dada0.mp4
-mpv --background='#F2E6CE' https://oc-vp-dist-downloads.ethz.ch/mh_default_org/oaipmh-mmp/af8e2ef6-9438-4550-bc23-56b073f68565/1ee2d55a-d50f-4f07-b13c-42901990bfa9/presentation_347abe91_1cb7_4d38_92c4_c011585dada0.mp4
-mpv https://oc-vp-dist-downloads.ethz.ch/mh_default_org/oaipmh-mmp/af8e2ef6-9438-4550-bc23-56b073f68565/1ee2d55a-d50f-4f07-b13c-42901990bfa9/presentation_347abe91_1cb7_4d38_92c4_c011585dada0.mp4
-man zathura 
-doom doctor
-emacs --debug-init
+ls -la
+yay fixedsys
+yay -Qs ttf
+fc-list | find comic
+fc-list | find fixed
+ls
+ls -la
+ls
+ls -la
+ls
+ls -la
+ps
+ls -> las
+ls
+yay cherry
+yay dine
+yay dina
+ls
+ls -la
+ils
+this 
+yay terminess
+yay terminus
+ls

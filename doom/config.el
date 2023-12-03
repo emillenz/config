@@ -24,12 +24,12 @@
 
 ;; [[file:config.org::*Font][Font:1]]
 (setq
- doom-font-increment 1
- doom-big-font-increment 1
- doom-font                (font-spec :family "Terminus" :size 12)
- doom-variable-pitch-font (font-spec :family "Terminus" :size 12)
- doom-serif-font          (font-spec :family "Terminus" :size 12)
- doom-big-font            (font-spec :family "Terminus" :size 24))
+ doom-font-increment 2
+ doom-big-font-increment 2
+ doom-font                (font-spec :family "Terminess Nerd Font" :size 12)
+ doom-variable-pitch-font (font-spec :family "Terminess Nerd Font" :size 12)
+ doom-serif-font          (font-spec :family "Terminess Nerd Font" :size 12)
+ doom-big-font            (font-spec :family "Terminess Nerd Font" :size 24))
 
 (custom-set-faces!
   '(font-lock-keyword-face :slant normal :weight bold)
@@ -128,9 +128,6 @@
       (:prefix ("t" . "toggle")
                "V" 'visual-fill-column-mode
                "C" 'company-mode)
-      (:prefix ("i" . "insert")
-               "d" #'z/insert-todays-date
-               "D" #'z/insert-any-date)
       (:prefix ("c" . "code")
                "w" #'z/clean-whitespace
                (:prefix ("b" . "org-babel")
@@ -146,42 +143,61 @@
 
 ;; HACK: ~:inmvorem~ binds globally no matter where you are
 (after! evil
-(map! :map  'override
-      :inmvorem "M-j" #'tab-bar-switch-to-prev-tab
-      :inmvorem "M-J" #'tab-bar-move-tab-backward
-      :inmvorem "M-k" #'tab-bar-switch-to-next-tab
-      :inmvorem "M-K" #'tab-bar-move-tab
-      :inmvorem "M-q" #'tab-bar-close-tab
-      :inmvorem "M-Q" #'save-buffers-kill-terminal
-      :inmvorem "M-t" #'tab-bar-new-tab-to
-      :inmvorem "M-1" (cmd! (tab-bar-select-tab 1))
-      :inmvorem "M-2" (cmd! (tab-bar-select-tab 2))
-      :inmvorem "M-3" (cmd! (tab-bar-select-tab 3))
-      :inmvorem "M-4" (cmd! (tab-bar-select-tab 4))
-      :inmvorem "M-5" (cmd! (tab-bar-select-tab 5))
-      :inmvorem "M-6" (cmd! (tab-bar-select-tab 6))
-      :inmvorem "M-7" (cmd! (tab-bar-select-tab 7))
-      :inmvorem "M-8" (cmd! (tab-bar-select-tab 8))
-      :inmvorem "M-9" (cmd! (tab-bar-select-tab 9))
-      :inmvorem "M-e" #'find-file
-      :inmvorem "M-F" (cmd! (consult-find "~"))
-      :inmvorem "M-f" #'consult-find
-      :inmvorem "M-g" #'consult-buffer
-      :inmvorem "M-c" #'shell-command
-      :inmvorem "M-;" #'execute-extended-command
-      :inmvorem "M-'" #'consult-bookmark
+  (map! :map  'override
+        :nvim "M-j"     #'tab-bar-switch-to-prev-tab
+        :nvim "M-J"     #'tab-bar-move-tab-backward
+        :nvim "M-k"     #'tab-bar-switch-to-next-tab
+        :nvim "M-K"     #'tab-bar-move-tab
+        :nvim "M-q"     #'tab-bar-close-tab
+        :nvim "M-Q"     #'save-buffers-kill-terminal
+        :nvim "M-t"     #'tab-bar-new-tab-to
+        :nvim "M-1"     (cmd! (tab-bar-select-tab 1))
+        :nvim "M-2"     (cmd! (tab-bar-select-tab 2))
+        :nvim "M-3"     (cmd! (tab-bar-select-tab 3))
+        :nvim "M-4"     (cmd! (tab-bar-select-tab 4))
+        :nvim "M-5"     (cmd! (tab-bar-select-tab 5))
+        :nvim "M-6"     (cmd! (tab-bar-select-tab 6))
+        :nvim "M-7"     (cmd! (tab-bar-select-tab 7))
+        :nvim "M-8"     (cmd! (tab-bar-select-tab 8))
+        :nvim "M-9"     (cmd! (tab-bar-select-tab 9))
+        :nvim "M-TAB"   #'next-window-any-frame
+        :nvim "M-S-TAB" #'previous-window-any-frame
+        :nvim "M-q"     #'z/quit
+        :nvim "M-o"     #'find-file
+        :nvim "M-f"     #'consult-find
+        :nvim "M-F"     (cmd! (consult-find "~"))
+        :nvim "M-g"     #'consult-buffer
+        :nvim "M-c"     #'shell-command
+        :nvim "M-;"     #'execute-extended-command
+        :nvim "M-'"     #'consult-bookmark
 
-      :inmvorem "C--" #'doom/decrease-font-size
-      :inmvorem "C-=" #'doom/increase-font-size
-      :inmvorem "C-0" #'doom/reset-font-size)
-)
+        :nvim "C--"     #'doom/decrease-font-size
+        :nvim "C-="     #'doom/increase-font-size
+        :nvim "C-0"     #'doom/reset-font-size
+        )
+  )
 
 (after! evil-org
   (map! :map evil-org-agenda-mode-map
-        :inmvorem "M-j" #'evil-tab-previous
-        :inmvorem "M-k" #'evil-tab-next
+        :nvim "M-j" #'evil-tab-previous
+        :nvim "M-k" #'evil-tab-next
         ))
 ;; Global navigation scheme:1 ends here
+
+;; [[file:config.org::*Global navigation scheme][Global navigation scheme:2]]
+(defun z/quit ()
+  "Close the current window, current tab or frame."
+  (interactive)
+  (when (buffer-modified-p)
+    (evil-write nil nil))
+  (condition-case nil
+      (kill-buffer-and-window) ;; NOTE: don't make emacs slow by accumulating buffers
+    (error
+     (condition-case nil
+         (tab-bar-close-tab)
+       (error
+        (delete-frame))))))
+;; Global navigation scheme:2 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
 (after! evil
@@ -206,15 +222,14 @@
 
    :nmv  "("   #'evil-cp-backward-up-sexp
    :nmv  ")"   #'evil-cp-up-sexp
-   :nmv  "{"   #'evil-cp-previous-opening
-   :nmv  "}"   #'evil-cp-next-closing
 
    :nmv  "+"   #'evil-numbers/inc-at-pt
    :nmv  "-"   #'evil-numbers/dec-at-pt
    :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
    :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
 
-   :nmv  "go" #'consult-outline
+   :nmv  "go"  #'consult-imenu
+   :nmv  "gs"  #'+default/search-buffer
    )
   )
 ;; Evil-mode:1 ends here
@@ -230,12 +245,9 @@
 ;; [[file:config.org::*Control-bindings][Control-bindings:1]]
 (after! evil
   (map!
-   :inmvorem "C-s" #'basic-save-buffer
-   :inmvorem "C-z" #'evil-scroll-line-to-center
-   :inmvorem "C-w" #'next-window-any-frame
-   :inmvorem "C-q" #'evil-window-delete
-   :inmv     "C-j" #'drag-stuff-down
-   :inmv     "C-k" #'drag-stuff-up
+   :inmv "C-s" #'basic-save-buffer
+   :inmv "C-j" #'drag-stuff-down
+   :inmv "C-k" #'drag-stuff-up
    ))
 ;; Control-bindings:1 ends here
 
@@ -261,32 +273,22 @@
 ;; [[file:config.org::*Org mode][Org mode:1]]
 (after! evil-org
   (map! :map evil-org-mode-map
-        :nmv "]]"     #'org-forward-paragraph
-        :nmv "[["     #'org-backward-paragraph
+        :nmv "]]"     #'org-forward-heading-same-level
+        :nmv "[["     #'org-backward-heading-same-level
         :inmv "S-RET" #'org-meta-return
         :inmv "C-RET" #'+org/insert-item-below
         :nmv  "RET"   #'org-return-maybe-indent
-        :nmvo "H"     #'evil-org-beginning-of-line
+        :nmvo "H"     #'evil-first-non-blank
         :nmvo "L"     #'evil-org-end-of-line
         :inmv "C-j"   #'org-metadown
         :inmv "C-k"   #'org-metaup
         :inmv "C-h"   #'org-metaleft
         :inmv "C-l"   #'org-metaright
         )
-  (map! :leader
-        (:prefix ("c" . "code")
-                 "f" #'z/org-format-buffer
-                 )
-        )
-
   (map! :localleader
         :map evil-org-mode-map
         "~"    #'z/org-convert-keywords-downcase
         "l f"  #'z/org-link-file
-        )
-  (map! :map org-src-mode-map
-        :nm "ZZ" #'org-edit-src-exit
-        :nm "ZQ" #'org-edit-src-abort
         )
   )
 ;; Org mode:1 ends here
@@ -296,6 +298,7 @@
   (map! :map dired-mode-map
         :nm "h" #'dired-up-directory
         :nm "l" #'dired-open-file
+        :nm "f" #'dired-goto-file
         :nm "c" #'dired-do-copy
         :nm "C" #'dired-do-compress
         :nm "r" #'dired-do-rename
@@ -305,7 +308,7 @@
         :nm "s" #'dired-sort-toggle-or-edit
         :nm "o" #'dired-do-chown
         :nm "p" #'dired-do-print
-        :nm "y" #'dired-copy-filenamecopy-filename-as-kill
+        :nm "y" #'dired-copy-filename-as-kill
         :nm "z" #'dired-do-compress
         :nm "." #'dired-omit-mode
         :nm "e" #'dired-create-empty-file
@@ -319,7 +322,7 @@
   (evil-surround-mode 1)
 
   (setq
-   evil-magic 'verymagic ;; less escaping
+   evil-magic 'very-magic
    evil-want-fine-undo nil
    evil-ex-substitute-global t
    evil-move-cursor-back t
@@ -410,17 +413,12 @@
 ;; Org Mode:1 ends here
 
 ;; [[file:config.org::*Options][Options:1]]
-(use-package! org-pandoc-import :after org)
-
 (add-hook! 'org-mode-hook
            #'visual-line-mode
            #'org-num-mode
            #'org-appear-mode
+           #'org-auto-tangle-mode
            )
-
-;; NOTE: add hook AFTER entering org-mode
-(add-hook! 'org-mode-hook
-  (lambda () (add-hook! 'after-save-hook #'org-babel-tangle)))
 
 (setq
  org-directory "~/Documents/org"
@@ -481,48 +479,33 @@
 (setq
  org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
  org-superstar-item-bullet-alist
- '((?-  . "━")
-   (?* . "●")
-   (?+ . "")))
-
-(setq-default prettify-symbols-alist
-              '(("#+begin_src" . "")
-                ("#+end_src" . "")
-                ("#+begin_quote" . "")
-                ("#+end_quote" . "")
-                ("#+begin_comment" . "⫽")
-                ("#+end_comment" . "⫽")
-                ("#+RESULTS:" . "󰞖"))) ;; HACK: results is an uppercase artifact
+ '((?-  . "─")
+   (?* . "─") ;; NOTE: bullets always made with dashes
+   (?+ . "→")))
 ;; Symbols:1 ends here
 
-;; [[file:config.org::*Symbols][Symbols:2]]
-(plist-put! +ligatures-extra-symbols
-            :and           nil
-            :or            nil
-            :for           nil
-            :not           nil
-            :true          nil
-            :false         nil
-            :int           nil
-            :float         nil
-            :str           nil
-            :bool          nil
-            :list          nil
-            )
-;; Symbols:2 ends here
+;; [[file:config.org::*Ligatures][Ligatures:1]]
+(setq-default prettify-symbols-alist
+              '(("->" . "→")
+                ("<-" . "←")
+                ("=>" . "⇒")
+                ("<=" . "⇐")
+                ("<=>" . "⇔")
+                ))
+;; Ligatures:1 ends here
 
 ;; [[file:config.org::*Todo states][Todo states:1]]
 (setq org-todo-keywords
       '((type
          "[#](#)"
-         "[ ](t)"
+         "[ ](\s)"
          "[?](?!)"
          "[>](>@)"
-         "[\\](\\@)"
+         "[=](=@)"
          "[&](&@)"
          "|"
-         "[X](x!)"
-         "[^](^@)"
+         "[x](x!)"
+         "[\\](\\@)"
          "[@](d@)"))) ;; HACK: cannot use"@"
 ;; Todo states:1 ends here
 
@@ -533,10 +516,10 @@
         ("[>]"  . +org-todo-onhold)
         ("[@]"  . +org-todo-active)
         ("[?]"  . org-todo)
-        ("[\\]" . org-todo)
+        ("[=]"  . org-todo)
         ("[&]"  . org-todo)
         ("[X]"  . org-done)
-        ("[^]"  . org-done)
+        ("[\\]" . org-done)
         ))
 ;; Todo states:2 ends here
 
@@ -560,64 +543,19 @@
 ;; Todo states:3 ends here
 
 ;; [[file:config.org::*Babel][Babel:1]]
-(setq org-babel-default-header-args
-      '((:session  . "none")
-        (:results  . "replace")
-        (:exports  . "code")
-        (:cache    . "no")
-        (:noweb    . "no")
-        (:hlines   . "no")
-        (:tangle   . "no")
-        (:mkdirp   . "yes")
-        (:comments . "no")))
+(setq
+ org-babel-default-header-args
+ '((:session  . "none")
+   (:results  . "replace")
+   (:exports  . "code")
+   (:cache    . "no")
+   (:noweb    . "no")
+   (:hlines   . "no")
+   (:tangle   . "no")
+   (:mkdirp   . "yes")
+   (:comments . "no"))
+ )
 ;; Babel:1 ends here
-
-;; [[file:config.org::*Org-src-edit-mode][Org-src-edit-mode:1]]
-(defvar org-babel-lang-list
-  '("python"
-    "ipython"
-    "bash"
-    "sh"
-    "c"
-    "cpp"
-    "java"
-    "rust"
-    ))
-
-(cl-defmacro lsp-org-babel-enable (lang)
-  "Support LANG in org source code block."
-  (setq centaur-lsp 'lsp-mode)
-  (cl-check-type lang stringp)
-  (let*
-      ((edit-pre (intern (format
-                          "org-babel-edit-prep:%s"
-                          lang)))
-       (intern-pre (intern (format
-                            "lsp--%s"
-                            (symbol-name edit-pre)))))
-    `(progn
-       (defun ,intern-pre (info)
-         (let ((file-name (->> info caddr (alist-get :file))))
-           (unless file-name
-             (setq file-name (make-temp-file "babel-lsp-")))
-           (setq buffer-file-name file-name)
-           (lsp-deferred)))
-       (put ',intern-pre 'function-documentation
-            (format
-             "Enable lsp-mode in the buffer of org source block (%s)."
-             (upcase ,lang)))
-       (if (fboundp ',edit-pre)
-           (advice-add ',edit-pre :after ',intern-pre)
-         (progn
-           (defun ,edit-pre (info)
-             (,intern-pre info))
-           (put ',edit-pre 'function-documentation
-                (format
-                 "Prepare local buffer environment for org source block (%s)."
-                 (upcase ,lang))))))))
-(dolist (lang org-babel-lang-list)
-  (eval `(lsp-org-babel-enable ,lang)))
-;; Org-src-edit-mode:1 ends here
 
 ;; [[file:config.org::*Agenda][Agenda:1]]
 (after! org-agenda (org-super-agenda-mode))
@@ -714,22 +652,6 @@
         ))
 ;; Personal tags (TODO: custmize):1 ends here
 
-;; [[file:config.org::*Insert date][Insert date:1]]
-(defun z/insert-todays-date ()
-  "Insert todays date (text or data format)."
-  (interactive)
-  (let ((char (read-char-choice "Date format: [t] text | [d] data " '(?t ?d))))
-    (let ((fstring (cond
-                    ((equal char ?t) "%A, %B %d, %Y")
-                    ((equal char ?d) "%Y-%m-%d"))))
-      (insert (format-time-string fstring)))))
-
-(defun z/insert-any-date (date)
-  "Insert DATE using the current locale."
-  (interactive (list (calendar-read-date)))
-  (insert (calendar-date-string date)))
-;; Insert date:1 ends here
-
 ;; [[file:config.org::*Keywords to downcase][Keywords to downcase:1]]
 (defun z/org-convert-keywords-downcase ()
   "Convert all #+KEYWORDS => #+keywords && :keyword: => :keyword:"
@@ -751,17 +673,6 @@
     (insert
      (format " [[%s][%s]]" file (replace-regexp-in-string "file:" "" (capitalize (replace-regexp-in-string "[-_.]" " " (file-name-sans-extension (file-name-nondirectory file)))))))))
 ;; Link file:1 ends here
-
-;; [[file:config.org::*Format org buffer][Format org buffer:1]]
-(defun z/org-format-buffer ()
-  "Regenerating the text from its internal parsed representation. Quite amazing."
-  (interactive)
-  (when (y-or-n-p "Really format current buffer? ")
-    (let ((document (org-element-interpret-data (org-element-parse-buffer))))
-      (erase-buffer)
-      (insert document)
-      (goto-char (point-min)))))
-;; Format org buffer:1 ends here
 
 ;; [[file:config.org::*Jump to src file][Jump to src file:1]]
 (defun z/jump-src ()
@@ -811,42 +722,49 @@ Jumps at tangled code from org src block."
       +org-capture-projects-file "projects.org"
       org-capture-templates
       '(("p" "personal")
-        ("pt" "TODO :personal" entry
+        ("pt" "todo" entry
          (file+headline +org-capture-todo-file "Inbox")
-         "* [ ] %^{task} %^G\nSCHEDULED: %^t\n%?"
+         "* [ ] %^{task} %^g\n%?"
          :prepend t
          :empty-lines-after 1
          :clock-keep t)
-        ("pn" "NOTE :personal" entry
+        ("pn" "note" entry
          (file+headline +org-capture-notes-file "Inbox")
-         "* %^{title} %^G\n:PROPERTIES:\n:CREATED: %U\n:END:\n%?"
+         "* %^{title} %^g\n:PROPERTIES:\n:CREATED: %U\n:END:\n%?"
          :prepend t
          :empty-lines-after 1
          :clock-keep t)
-        ("pe" "EVENT :personal" entry
+        ("pe" "event" entry
          (file+headline +org-capture-events-file "Inbox")
-         "* %^{event} %^G\n%^t\nLOCATION: %^{Location}\nMATERIAL: %^{Material}\n%?"
+         "* %^{event} %^g\n%^t\nLOCATION: %^{Location}\nMATERIAL: %^{Material}\n%?"
          :prepend t
          :empty-lines-after 1
          :clock-keep t
          )
-        ("pj" "JOURNAL :personal" entry
-         (file+olp+datetree +org-capture-journal-file)
-         "* %U\n%[~/Documents/templates/journal_template.org]"
+        ("pj" "journal" entry
+         (file+headline +org-capture-journal-file)
+         "* %^{title} %^g\n:PROPERTIES:\n:CREATED: %U\n:END:\n%?"
          :prepend t
          :empty-lines-after 1
          :clock-keep t)
 
+        ;; ("pj" "journal" entry
+        ;;  (file+olp+datetree +org-capture-journal-file)
+        ;;  "* %U\n%[~/Documents/templates/journal_template.org]"
+        ;;  :prepend t
+        ;;  :empty-lines-after 1
+        ;;  :clock-keep t)
+
         ("c" "computerscience")
-        ("ct" "TODO :cs" entry
+        ("ct" "todo" entry
          (file+headline "~/Documents/org/cs_todo.org" "Inbox")
-         "* [ ] %^{task} %^G\nSCHEDULED: %^t\n%?"
+         "* [ ] %^{task} %^g\n%?"
          :prepend t
          :empty-lines-after 1
          :clock-keep t)
-        ("cn" "NOTE :cs" entry
+        ("cn" "note" entry
          (file+headline "~/Documents/org/cs_notes.org" "Inbox")
-         "* %^{title} %^G\n:PROPERTIES:\n:CREATED: %U\n:END:\n%?"
+         "* %^{title} %^g\n:PROPERTIES:\n:CREATED: %U\n:END:\n%?"
          :prepend t
          :empty-lines-after 1
          :clock-keep t)
@@ -873,33 +791,6 @@ Jumps at tangled code from org src block."
  evil-indent-convert-tabs t
  indent-tabs-mode nil
  )
-
-(setq-hook! 'prog-mode-hook
-  org-indent-indentation-per-level 2
-  evil-shift-width 2
-  standard-indent 2
-  tab-width 2
-  evil-indent-convert-tabs t
-  indent-tabs-mode nil
-  )
-
-(setq-hook! 'python-mode-hook
-  python-indent 2
-  python-indent-offset 2)
-
-(setq-hook! 'rustic-mode-hook
-  rustic-indent 2
-  rustic-indent-offset 2)
-
-(setq-hook! 'nushell-mode-hook
-  nushell-indent-offset 2)
-
-(setq-hook! 'c-mode-hook
-  c-basic-offset 2)
-
-(setq-hook! 'lisp-mode-hook
-  lisp-body-indent 2
-  lisp-indent-offset 2)
 ;; Indentation: 2 spaces:1 ends here
 
 ;; [[file:config.org::*Format buffer][Format buffer:1]]

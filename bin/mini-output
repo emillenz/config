@@ -1,6 +1,7 @@
 #!/usr/bin/env nu
 
-const icon = "󰍹"
+const icon = "󰍹 "
+
 # -----
 # title:  Outputselect
 # author: Emil Lenz
@@ -23,7 +24,7 @@ def main [] {
     single $outputs $outputs.0
   } else {
     let opts = ($outputs | append "multi")
-    let choice = (prompt $icon "output:" $opts)
+    let choice = ($opts | to text | rofi -dmenu -i -no-custom -p $"($icon) output:" | str trim)
     if ($choice == "multi") {
       double $outputs
     } else {
@@ -34,18 +35,16 @@ def main [] {
 
 def double [outputs: list] {
   let mirror = (
-    (prompt --keymenu $icon "Mirror: [n/y]" [n y])
+    ([n y] | to text | rofi -dmenu -no-custom -auto-select -p $"($icon) Mirror: [n/y]" | str trim)
     == "y"
   )
-  let primary = (prompt $icon "Primary:" $outputs)
-  mut secondary = ""
-  if ($outputs | length) == 2 {
-    $secondary = ($outputs | where {|e| $e != $primary})
-  } else {
-    $secondary = (
-      prompt $icon "Secondary:" ($outputs | where {|e| $e != $primary})
-    )
-  }
+  let primary = ($outputs | to text | rofi -dmenu -i -no-custom -p $"($icon) Primary:" )
+  let secondary = (
+    match ($outputs | length) {
+      2 => {$outputs | where {|e| $e != $primary}},
+      _ => {$outputs | where {|e| $e != $primary} | to text | rofi -dmenu -i -no-custom -p $"($icon) Secondary:"},
+    }
+  )
 
   if $mirror {
     mirror $primary $secondary
@@ -71,10 +70,10 @@ def mirror [primary: string, secondary: string] {
 
 def extend [primary: string, secondary: string] {
   let pos = (
-    prompt --keymenu
-    $icon
-    $"Position of #2:($secondary): [j] down | [k] up | [h] left | [l] right"
     [h j k l]
+    | to text
+    | rofi -dmenu -no-custom -auto-select -p $"($icon) Position of #2:($secondary): [j] down | [k] up | [h] left | [l] right"
+    | str trim
   )
   xrandr --output $primary --auto --primary
   match $pos {
@@ -84,45 +83,4 @@ def extend [primary: string, secondary: string] {
     "l" => {xrandr --output ($secondary) --below    ($primary) --auto},
   }
   notify-send $"($icon)  Outputselect" $"Extended\n> ($primary)\n  ($secondary)"
-}
-
-def prompt [
-  --custom(-c),  # Let the user input custom text
-  --keymenu(-k), # single char keymenu to select static items -> items must be a list of chars // the chars that are the start of each item mnemonically, display msg: `Choose: [a] anna | [b] bonnie | [c] chris | [C] clyde` and the letters [a b c C] as input
-  name: string   # name of program/script (or better: icon)
-  msg: string,   # msg to display before prompt
-  input?: list,
-] {
-  if $custom {
-    let ans = (rofi -dmenu -i -p $"($name) ($msg)" | str trim)
-    if $ans == "" {
-      print $"($name): exit by user"
-      exit 0
-    }
-    return $ans
-  } else if $keymenu {
-    let ans = (
-      $input |
-      str join "\n" |
-      rofi -dmenu -no-custom -auto-select -p $"($name) ($msg)" | # NOTE: case sensitive
-      str trim
-    )
-    if $ans == "" {
-      print $"($name): exit by user"
-      exit 0
-    }
-    return $ans
-  } else {
-    let ans = (
-      $input |
-      str join "\n" |
-      rofi -dmenu -i -no-custom -p $"($name) ($msg)" |
-      str trim
-    )
-    if $ans == "" {
-      print $"($name): exit by user"
-      exit 0
-    }
-    return $ans
-  }
 }

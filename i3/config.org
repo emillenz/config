@@ -6,12 +6,12 @@
 
 * About
 - All the packages (and more) required for the full setup are found under:
-  + [[file:~/.config/packages.org]]
+  + [[setup][file:~/.config/setup.org]]
 
 * Preface
  - Eliminate mental overhead and reduce computational steps to get to where you need to be.
  - Finetuned to automate the workflow as much as possible.
- - Accessing a program is as efficient as possible and always consistent, no matter where in your desktop you are (different monitor/workspace/app order) You will not Alt+tab through apps to get to the one you are thinking of. Instead the app is always bound to the same mnemonical keybinding.
+ - Accessing a program is as efficient as possible and always consistent, no matter where in your desktop you are (different monitor/workspace/app order) You will not Alt+tab through apps to get to the one you are thinking of. Instead the app is always bound to the same mnemonical keybind.
    + We do not use a per-app workspace workflow
      + No additional layering
      + All apps in the same "container", // vs unneccessarily individually nested and layered.
@@ -60,10 +60,9 @@ eg. Emacs: Alt+f-> find-file, eg. Terminal: Alt+e->edit-command-in-editor
 |-----+------------|
 |     |            |
 
-
 ** Modkey
 Using Super (Mod4)
-+ Alt is used for in-app mappings
++ Alt is used for in-app keybindings
 + Xremap [[file:~/.config/xremap/config.yml][Config]] makes alt_l -> super, alt_r -> alt
 #+begin_src conf
 set $mod Mod4
@@ -88,7 +87,7 @@ bindsym XF86MonBrightnessDown exec sudo light -U 5
 bindsym XF86MonBrightnessUp   exec sudo light -A 5
 bindsym XF86Display           exec ~/.config/bin/output_select
 bindsym XF86ScreenSaver       exec xset dpms force off
-bindsym XF86Sleep             exec i3lock -e --color 002b36; systemctl suspend
+bindsym XF86Sleep             exec i3lock -e --color 002b36 && systemctl suspend
 
 bindsym XF86AudioPlay         exec playerctl play
 bindsym XF86AudioPause        exec playerctl pause
@@ -118,15 +117,13 @@ bindsym XF86MonBrightnessDown exec sudo xbacklight -5
 
 ** Workspaces
 #+begin_src conf
-bindsym $mod+Tab       move workspace to output next;
+bindsym $mod+Next      move workspace to output next
 bindsym $mod+1         workspace 1
 bindsym $mod+2         workspace 2
 bindsym $mod+3         workspace 3
-bindsym $mod+4         workspace 4
 bindsym $mod+shift+1   move container to workspace 1
 bindsym $mod+shift+2   move container to workspace 2
 bindsym $mod+shift+3   move container to workspace 3
-bindsym $mod+shift+4   move container to workspace 4
 #+end_src
 
 ** Core navigation
@@ -140,7 +137,7 @@ bindsym $mod+shift+4   move container to workspace 4
   + program that is not assigned a hotkey because it is used so infrequent
 - using ~i3-back~ for hot-switching to previous window // i3-back sets mark: ~_back~ to previous window -> focus mark: ~_back~
 - If you absolutely need to use a split, pin a window to the side
-  + without splits we need no mappings for resizing, for splitting and for layouts...
+  + without splits we need no keybindings for resizing, for splitting and for layouts...
 #+begin_src conf
 bindsym $mod+j          focus prev
 bindsym $mod+shift+j    move left
@@ -148,7 +145,6 @@ bindsym $mod+k          focus next
 bindsym $mod+shift+k    move right
 bindsym $mod+q          kill
 bindsym $mod+f          exec rofi -show drun
-bindsym $mod+shift+f    exec ~/.config/bin/xopen
 bindsym $mod+g          exec rofi -show window
 bindsym $mod+semicolon  exec rofi -show run
 bindsym $mod+m          exec i3-input -F 'mark %s' -l 1 -P 'Mark:'
@@ -156,28 +152,27 @@ bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto'
 #+end_src
 
 ** Core programs
-Do not remap these keybindings to other keys, you may want to use other programs (eg vim as editor), which is fine, but the binding-chars are universal and used in many apps so they should keep their function.
+Do not change these keybindings to other keys, you may want to use other programs (eg vim as editor), which is fine, but the binding-chars are universal and used in many apps so they should keep their function.
 
 - Using i3-input here, because if the mark is not set, then i want to launch the program.
   + Better than focusing per-class, because marks can be reassigned and get automatically updated when a new instance of a program is opened (eg: multiple zathura windows)
   + For programs that usually multiple instances exist (zathura, firefox...), we automatically update marks on opening new instance / closing old one (with wmctrl + i3-mark)
   + Only when no instance exsists -> spawn one
-- emacs-everywhere: select content to edit, then hit mapping to invoke.
+- emacs-everywhere: select content to edit, then hit keybind to invoke.
 #+begin_src conf
 for_window [class="(?i)cmd"] mark c
 bindsym $mod+c exec i3-msg '[con_mark="c"] focus' || alacritty --class cmd -T cmd -e tmux new-session -A -s cmd &
 
 # HACK: if multiple instances exist and the one with mark is closed, focus last instance of the program and mark it.
 for_window [class="(?i)zathura"] mark z
-bindsym $mod+z exec i3-msg '[con_mark="z"] focus' || wmctrl -xa zathura && i3-msg 'mark z' || ~/.config/bin/xopen --extension 'pdf' &
-bindsym $mod+shift+z exec ~/.config/bin/xopen --extension 'pdf' &
+bindsym $mod+z exec i3-msg '[con_mark="z"] focus' || wmctrl -xa zathura && i3-msg 'mark z' || fd --extension pdf . ~ | ~/.config/bin/xopen &
 
 for_window [class="(?i)emacs"] mark e
 bindsym $mod+e exec i3-msg '[con_mark="e"] focus' || wmctrl -xa emacs && i3-msg 'mark e' || emacsclient --reuse-frame || emacs --daemon --execute '(doom/reload)' &
 bindsym $mod+shift+e exec emacsclient --eval '(emacs-everywhere)' &
 
 # HACK: if multiple instances exist and the one with mark is closed, focus last instance of the program and mark it.
-for_window [class="(?i)firefox"]  mark b
+for_window [class="(?i)firefox"] mark b
 bindsym $mod+b exec i3-msg '[con_mark="b"] focus' || wmctrl -xa firefox && i3-msg 'mark b' || firefox &
 #+end_src
 
@@ -190,31 +185,31 @@ bindsym $mod+a exec i3-msg '[con_mark="a"] focus' || alacritty --class 'ncmpcpp'
 
 for_window [class="(?i)mpv"] mark v
 for_window [class="(?i)nsxiv"] mark V
-bindsym $mod+v exec i3-msg '[con_mark="v"] focus' || wmctrl -xa mpv && i3-msg 'mark p' || mpv $(xclip -o) &
+bindsym $mod+v exec i3-msg '[con_mark="v"] focus' || wmctrl -xa mpv && i3-msg 'mark v' || mpv $(xclip -o) &
 bindsym $mod+shift+v exec i3-msg '[con_mark="V"] focus' || nsxiv &
 
 bindsym $mod+s exec i3-msg '[con_mark="s"] focus' || keepassxc &
 for_window [class="(?i)keepassxc"] mark s
-
 #+end_src
 
 ** Leader
 - For all system related apps and tasks.
 #+begin_src conf
 bindsym $mod+space mode "$leader"
-set $leader <leader> audios | ^audio | nmtui | outputs | [^o] layouts | btctl | [p] killprocess | [^p] htop | keyboard+ | timer+ | sysact+ | ^screenshot+
+set $leader <leader> audios | ^audio | nmtui | outputs | [^o] layouts | btconnect | [p] killprocess | [^p] htop | find+ | keyboard+ | timer+ | sysact+ | ^screenshot+
 
 mode "$leader" {
-  bindsym a       exec ~/.config/bin/audios; mode "default"
+  bindsym a       exec ~/.config/bin/mini-audio; mode "default"
   bindsym shift+a exec i3-msg '[con_mark="*a"] focus' || alacritty --class 'audio' -T 'audio' -e pulsemixer &; mode "default"
-  bindsym o       exec ~/.config/bin/outputs; mode "default"
-  bindsym shift+o exec ~/.config/bin/layouts; mode "default"
-  bindsym shift+s exec ~/.config/bin/screenshot; mode "default"
-  bindsym b       exec ~/.config/bin/btcontrol; mode "default"
-  bindsym p       exec ~/.config/bin/killprocess; mode "default"
+  bindsym o       exec ~/.config/bin/mini-output; mode "default"
+  bindsym shift+o exec ~/.config/bin/mini-layout; mode "default"
+  bindsym shift+s exec ~/.config/bin/mini-screenshot; mode "default"
+  bindsym b       exec ~/.config/bin/mini-bluetooth; mode "default"
+  bindsym p       exec ~/.config/bin/mini-killprocess; mode "default"
   bindsym shift+p exec i3-msg '[con_mark="*h"] focus' || alacritty --class 'htop' -T 'htop' -e htop --tree &; mode "default"
   bindsym n       exec i3-msg '[con_mark="*n"] focus' || alacritty --class 'nmtui' -T 'nmtui' -e nmtui &; mode "default"
 
+  bindsym f      mode "$find"
   bindsym k      mode "$keyboard"
   bindsym s      mode "$sysact"
   bindsym t      mode "$timer"
@@ -243,15 +238,15 @@ mode "$keyboard" {
 #+begin_src conf
 set $sysact <sysact> restart-i3 | ^reboot | lock | screen-off | poweroff | exit | hibernate | ^startup
 mode "$sysact" {
-  bindsym r       exec i3-msg restart;                              mode "default"
-  bindsym e       exec i3-msg exit;                                 mode "default"
-  bindsym shift+r exec systemctl reboot;                            mode "default"
-  bindsym h       exec systemctl hibernate;                         mode "default"
-  bindsym l       exec i3lock -e --color 002b36; systemctl suspend; mode "default"
-  bindsym s       exec xset dpms force off;                         mode "default"
-  bindsym p       exec systemctl poweroff;                          mode "default"
-  bindsym shift+s exec ~/.config/bin/startup;                       mode "default"
-  bindsym Escape                                                    mode "default"
+  bindsym r       exec i3-msg restart;                                mode "default"
+  bindsym e       exec i3-msg exit;                                   mode "default"
+  bindsym shift+r exec systemctl reboot;                              mode "default"
+  bindsym h       exec systemctl hibernate;                           mode "default"
+  bindsym l       exec i3lock -e --color 002b36 && systemctl suspend; mode "default"
+  bindsym s       exec xset dpms force off;                           mode "default"
+  bindsym p       exec systemctl poweroff;                            mode "default"
+  bindsym shift+s exec ~/.config/bin/startup;                         mode "default"
+  bindsym Escape                                                      mode "default"
 }
 #+end_src
 
@@ -275,6 +270,16 @@ mode "$timer" {
   bindsym 8       exec ~/.config/bin/timer start 80m;    mode "default"
   bindsym 9       exec ~/.config/bin/timer start 90m;    mode "default"
   bindsym Escape                                         mode "default"
+}
+#+end_src
+
+*** Find
+#+begin_src conf
+set $find <find> pdf | uni
+mode "$find" {
+  bindsym p exec xdg-open $(fd --extension pdf | rofi -dmenu -i -no-custom -p '  pdf'); mode "default"
+  bindsym u exec xdg-open $(fd --extension pdf . ~/Documents/uni/cs | rofi -dmenu -i -no-custom -p '  pdf'); mode "default"
+  bindsym Escape mode "default"
 }
 #+end_src
 

@@ -16,3 +16,4 @@ video/x-matroska=mpv.desktop;
 text/x-java=emacsclient.desktop;
 text/org=emacsclient.desktop;nvim.desktop;
 text/markdown=nvim.desktop;
+application/rtf=libreoffice-writer.desktop;emacsclient.desktop;

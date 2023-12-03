@@ -1,0 +1,15 @@
+#!/usr/bin/env nu
+
+# -----
+# title:  Killprocess
+# author: Emil Lenz
+# email:  emillenz@protonmail.com
+# date:   Tuesday, 8 August, 2023
+# info:   Utility script using rofi, to kill a specific process by name.
+# -----
+def main []  {
+  let $icon = " "
+  let ps = (ps | get name | to text | rofi -dmenu -i -no-custom -p $"($icon)" | str trim)
+  sudo killall $ps
+  notify-send $"($icon) Killprocess" $ps
+}

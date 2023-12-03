@@ -1,0 +1,22 @@
+#!/usr/bin/env nu
+
+# -----
+# title:    Audioselect
+# author:   Emil Lenz
+# email:    emillenz@protonmail.com
+# date:     Monday, 7 August, 2023
+# info:     This program lets you select the default audio output channel
+#           using rofi and notify-send.
+# -----
+def main [] {
+  let sinks = (pactl --format json list sinks | from json)
+  let choice = ($sinks.description | to text | rofi -dmenu -i -no-custom -p $"󱀞" | str trim)
+  let sink = ($sinks | where {|v| $v.description =~ $choice})
+  pactl set-default-sink $sink.name.0
+
+  let sink_inputs =  (pactl -f json list sink-inputs | from json)
+  for s in $sink_inputs {
+    pactl move-sink-input $s.index $sink.name.0
+  }
+  notify-send "󱀞 Audioselect" $"Changed output\n($choice)"
+}

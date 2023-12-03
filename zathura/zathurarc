@@ -31,7 +31,7 @@ map = zoom in
 map - zoom out
 map i recolor
 map p print
-map ` map_evaluate
+map ` mark_evaluate
 
 # # solarized light
 # set notification-error-bg       "#eee8d5" # base2

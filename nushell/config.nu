@@ -30,8 +30,6 @@ $env.PATH = (
   append [
     "~/.config/bin",
     "~/.cargo/bin",
-    "~/go/bin",
-    "~/.config/carapace/bin",
     "~/.config/emacs/bin",
   ] |
   uniq
@@ -46,8 +44,10 @@ $env.BROWSER = "firefox"
 $env.MANPAGER = "bat --theme 'Solarized (dark)' --language man"
 $env.PAGER = "bat --theme 'Solarized (dark)'"
 
-let carapace_completer = {|spans|
-  carapace $spans.0 nushell $spans | from json
+let fish_completer = {|spans|
+    fish --command $'complete "--do-complete=($spans | str join " ")"'
+    | $"value(char tab)description(char newline)" + $in
+    | from tsv --flexible --no-infer
 }
 
 $env.config = {
@@ -124,7 +124,7 @@ $env.config = {
     external: {
       enable: true
       max_results: 30
-      completer: $carapace_completer
+      completer: $fish_completer
     }
   }
 
@@ -175,8 +175,7 @@ $env.config = {
       text: blue
       selected_text: blue_reverse
       description_text: blue
-    }
-    }
+    }}
 
     {
     name: history_menu
@@ -187,8 +186,7 @@ $env.config = {
       text: blue
       selected_text: blue_reverse
       description_text: yellow
-    }
-    }
+    }}
 
     {
     name: help_menu
@@ -206,8 +204,7 @@ $env.config = {
       text: blue
       selected_text: blue_reverse
       description_text: yellow
-    }
-    }
+    }}
   ]
 
   keybindings: [
@@ -221,8 +218,7 @@ $env.config = {
         {send: menu name: completion_menu}
         {send: menunext}
       ]
-    }
-    }
+    }}
 
     {
     name: completion_previous
@@ -233,32 +229,24 @@ $env.config = {
     }
 
     {
+    name: help_menu
+    modifier: control
+    keycode: char_k
+    mode: [emacs vi_normal vi_insert]
+    event: {send: menu name: help_menu}
+    }
+
+    {
     name: history_menu
-    modifier: alt
+    modifier: control
     keycode: char_r
     mode: [emacs vi_normal vi_insert]
     event: {send: menu name: history_menu}
     }
 
     {
-    name: next_page
-    modifier: control
-    keycode: char_u
-    mode: [emacs vi_normal vi_insert]
-    event: {send: menupagenext}
-    }
-
-    {
-    name: previous_page
-    modifier: control
-    keycode: char_d
-    mode: [emacs vi_normal vi_insert]
-    event: {send: menupageprevious}
-    }
-
-    {
     name: insert_file
-    modifier: alt
+    modifier: control
     keycode: char_f
     mode: [emacs, vi_normal, vi_insert]
     event: [
@@ -269,8 +257,8 @@ $env.config = {
 
     {
     name: change_dir
-    modifier: alt_shift
-    keycode: char_f
+    modifier: control
+    keycode: char_g
     mode: [emacs, vi_normal, vi_insert]
     event: [
     {send: executehostcommand, cmd: "cd (fd -td --hidden | fzf --preview='ls {}' | str trim)"}
@@ -278,22 +266,22 @@ $env.config = {
     }
 
     {
-    name: quick_help
-    modifier: alt
+    name: help_documentation
+    modifier: shift
     keycode: char_h
-    mode: [emacs, vi_normal, vi_insert]
+    mode: vi_normal
     event: [
       {edit: MoveToLineEnd}
-      {edit: InsertString, value: " --help | bat --language man"}
+      {edit: InsertString, value: " --help | bat --theme 'Solarized (dark)' --language man"}
       {send: Enter}
     ]
     }
 
     {
-    name: long_help
-    modifier: alt_shift
-    keycode: char_h
-    mode: [emacs, vi_normal, vi_insert]
+    name: documentation
+    modifier: shift
+    keycode: char_k
+    mode: vi_normal
     event: [
       {edit: MoveToLineStart}
       {edit: InsertString, value: "man "}
@@ -303,7 +291,7 @@ $env.config = {
 
     {
     name: prev_dir
-    modifier: alt
+    modifier: control
     keycode: char_p
     mode: [emacs, vi_normal, vi_insert]
     event: {send: executehostcommand, cmd: "cd .."}
@@ -311,7 +299,7 @@ $env.config = {
 
     {
     name: home_dir
-    modifier: alt_shift
+    modifier: control_shift
     keycode: char_p
     mode: [emacs, vi_normal, vi_insert]
     event: {send: executehostcommand, cmd: "cd ~"}
@@ -319,21 +307,37 @@ $env.config = {
 
     {
     name: open_editor
-    modifier: alt_shift
+    modifier: control
     keycode: char_e
     mode: [emacs vi_normal vi_insert]
     event: [
-      {send: OpenEditor}
+      {send: openeditor}
       {send: Enter}
     ]
     }
 
     {
     name: listcontents
-    modifier: alt
-    keycode: char_l
+    modifier: control
+    keycode: char_v
     mode: [emacs, vi_normal, vi_insert]
     event: {send: executehostcommand, cmd: " ls"}
+    }
+
+    {
+      name: redo_change
+      modifier: shift
+      keycode: char_u
+      mode: vi_normal
+      event: {edit: redo}
+    }
+
+    {
+      name: undo_change
+      modifier: none
+      keycode: char_u
+      mode: vi_normal
+      event: {edit: undo}
     }
 
   ]

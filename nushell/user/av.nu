@@ -6,7 +6,6 @@
 # info:   Shortcut to archive files, use this instead of deleting them when you
 #         created this content / might still use it in the future.
 # -----
-
 export def --env main [file: string] {
   let dest = ("~/Archive" | path join ($file | path expand | path relative-to ~) | path expand)
   if not ($dest | path dirname | path exists) {

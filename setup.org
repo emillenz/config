@@ -17,7 +17,7 @@ sudo pacman -Syyu
 * Core tools
 ** Terminal, Nushell
 #+begin_src sh
-yay --noconfirm -S alacritty curl libtool xorg-xset fzf fd ripgrep xclip xdg-utils cmake npm bat git gcc make xdotool tldr htop carapace ttf-terminus-nerd terminus-font nushell tmux
+yay --noconfirm -S alacritty curl libtool xorg-xset fzf fd ripgrep xclip xdg-utils cmake npm bat git gcc make xdotool tldr htop fish ttf-terminus-nerd terminus-font nushell tmux
 #+end_src
 
 Set nushell to loginshell
@@ -35,6 +35,11 @@ echo "$USER ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/$USER"
 ** Make system-scripts executeable
 #+begin_src sh
 fd . ~/.config/bin -tf -x chmod +x {}
+#+end_src
+
+** Stupid xorg should be replaced (/uses it anyway/)
+#+begin_src sh
+sudo ln -s ~/.xprofile ~/.config/xprofile
 #+end_src
 
 * Editor: doom emacs
@@ -63,7 +68,7 @@ sudo systemctl enable bluetooth
 *** latex
 - For writing papers
 #+begin_src sh :tangle no
-yay --noconfirm -S texlive-basic latex-mk pandoc
+yay --noconfirm -S texlive-basic latex-mk pandoc texlive-plaingeneric
 #+end_src
 
 *** Rust

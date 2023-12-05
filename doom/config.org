@@ -97,7 +97,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  which-key-idle-delay 1
  which-key-allow-multiple-replacements t
  hscroll-margin 0
- scroll-margin 0 ;; maximize screen real estate (minimize context switching)
+ scroll-margin 10
  highlight-indent-guides-responsive  t
  display-line-numbers-type 'visual)
 
@@ -107,6 +107,10 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
 (beacon-mode 1)
+
+(tab-bar-mode 1)
+(setq tab-bar-tab-hints t
+      tab-bar-close-button-show nil)
 #+end_src
 
 * Window layout & behavior
@@ -157,44 +161,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  fill-column 100)
 #+end_src
 
-** Centaur tabs
-- De-clutter UI & make smaller
-#+begin_src emacs-lisp
-(setq centaur-tabs-bar-height 8
-      centaur-tabs-set-close-button nil
-      centaur-tabs-label-fixed-length 8
-      centaur-tabs-show-new-tab-button nil
-      centaur-tabs-set-bar 'over
-      centaur-tabs-show-jump-identifier 'always
-      )
-#+end_src
-
-- Remove grouping by filetype (no mental overhead all files instantly accessible)
-#+begin_src emacs-lisp
-(after! centaur-tabs
-  (defun centaur-tabs-buffer-groups ()
-    "`centaur-tabs-buffer-groups' control buffers' group rules."
-    (list
-     (cond
-      ((or (string-equal "*" (substring (buffer-name) 0 1))
-	   (memq major-mode '(magit-process-mode
-			      magit-status-mode
-			      magit-diff-mode
-			      magit-log-mode
-			      magit-file-mode
-			      magit-blob-mode
-			      magit-blame-mode
-			      )))
-       "Emacs")
-
-      ((derived-mode-p 'dired-mode)
-       "Dired")
-      (t
-       (centaur-tabs-get-group-name (current-buffer))))))
-  )
-#+end_src
-
-
 * Keybindings
 - ~helpful-key~ and ~which-key-show-full-keymap~ are crucial to understanding what your tools can do for you (ex: magit, dired, org-mode)
   + Always keep on exploring, learning new, efficient keybindings and break your old routines for newer, more effcient one's after evaluating wether they are faster or not.
@@ -236,20 +202,20 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 ;; HACK: ~:inmvorem~ binds globally no matter where you are
 (after! evil
   (map! :map  'override
-        :nvim "M-j"     #'centaur-tabs-backward-tab
-        :nvim "M-J"     #'centaur-tabs-move-current-tab-to-left
-        :nvim "M-k"     #'centaur-tabs-forward-tab
-        :nvim "M-K"     #'centaur-tabs-move-current-tab-to-right
-        ;; :nvim "M-t"     #'find-file ;; dont need this mapping as simply opening new file is enough
-        :nvim "M-1"     (cmd! (centaur-tabs-select-visible-nth-tab 1))
-        :nvim "M-2"     (cmd! (centaur-tabs-select-visible-nth-tab 2))
-        :nvim "M-3"     (cmd! (centaur-tabs-select-visible-nth-tab 3))
-        :nvim "M-4"     (cmd! (centaur-tabs-select-visible-nth-tab 4))
-        :nvim "M-5"     (cmd! (centaur-tabs-select-visible-nth-tab 5))
-        :nvim "M-6"     (cmd! (centaur-tabs-select-visible-nth-tab 6))
-        :nvim "M-7"     (cmd! (centaur-tabs-select-visible-nth-tab 7))
-        :nvim "M-8"     (cmd! (centaur-tabs-select-visible-nth-tab 8))
-        :nvim "M-9"     (cmd! (centaur-tabs-select-visible-nth-tab 9))
+        :nvim "M-j"     #'tab-bar-switch-to-prev-tab
+        :nvim "M-J"     #'tab-bar-move-tab-backward
+        :nvim "M-k"     #'tab-bar-switch-to-next-tab
+        :nvim "M-K"     #'tab-bar-move-tab
+        :nvim "M-t"     #'tab-bar-new-tab-to
+        :nvim "M-1"     (cmd! (tab-bar-select-tab 1))
+        :nvim "M-2"     (cmd! (tab-bar-select-tab 2))
+        :nvim "M-3"     (cmd! (tab-bar-select-tab 3))
+        :nvim "M-4"     (cmd! (tab-bar-select-tab 4))
+        :nvim "M-5"     (cmd! (tab-bar-select-tab 5))
+        :nvim "M-6"     (cmd! (tab-bar-select-tab 6))
+        :nvim "M-7"     (cmd! (tab-bar-select-tab 7))
+        :nvim "M-8"     (cmd! (tab-bar-select-tab 8))
+        :nvim "M-9"     (cmd! (tab-bar-select-tab 9))
         :nvim "M-TAB"   #'next-window-any-frame
         :nvim "M-S-TAB" #'previous-window-any-frame
         :nvim "M-q"     #'z/quit
@@ -281,7 +247,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   "Close the current window, current tab or frame. (Does not close emacs daemon)"
   (interactive)
   (when (buffer-modified-p) (condition-case nil (evil-write nil nil) (error)))
-  (kill-current-buffer)
+  (kill-buffer-and-window)
   )
 #+end_src
 

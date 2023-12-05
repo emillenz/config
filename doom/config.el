@@ -62,7 +62,7 @@
  which-key-idle-delay 1
  which-key-allow-multiple-replacements t
  hscroll-margin 0
- scroll-margin 0 ;; maximize screen real estate (minimize context switching)
+ scroll-margin 10
  highlight-indent-guides-responsive  t
  display-line-numbers-type 'visual)
 
@@ -72,6 +72,10 @@
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
 (beacon-mode 1)
+
+(tab-bar-mode 1)
+(setq tab-bar-tab-hints t
+      tab-bar-close-button-show nil)
 ;; Misc Options:1 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:1]]
@@ -111,40 +115,6 @@
  fill-column 100)
 ;; Window layout & behavior:3 ends here
 
-;; [[file:config.org::*Centaur tabs][Centaur tabs:1]]
-(setq centaur-tabs-bar-height 8
-      centaur-tabs-set-close-button nil
-      centaur-tabs-label-fixed-length 8
-      centaur-tabs-show-new-tab-button nil
-      centaur-tabs-set-bar 'over
-      centaur-tabs-show-jump-identifier 'always
-      )
-;; Centaur tabs:1 ends here
-
-;; [[file:config.org::*Centaur tabs][Centaur tabs:2]]
-(after! centaur-tabs
-  (defun centaur-tabs-buffer-groups ()
-    "`centaur-tabs-buffer-groups' control buffers' group rules."
-    (list
-     (cond
-      ((or (string-equal "*" (substring (buffer-name) 0 1))
-	   (memq major-mode '(magit-process-mode
-			      magit-status-mode
-			      magit-diff-mode
-			      magit-log-mode
-			      magit-file-mode
-			      magit-blob-mode
-			      magit-blame-mode
-			      )))
-       "Emacs")
-
-      ((derived-mode-p 'dired-mode)
-       "Dired")
-      (t
-       (centaur-tabs-get-group-name (current-buffer))))))
-  )
-;; Centaur tabs:2 ends here
-
 ;; [[file:config.org::*Leader][Leader:1]]
 (setq
  doom-leader-key "SPC"
@@ -170,20 +140,20 @@
 ;; HACK: ~:inmvorem~ binds globally no matter where you are
 (after! evil
   (map! :map  'override
-        :nvim "M-j"     #'centaur-tabs-backward-tab
-        :nvim "M-J"     #'centaur-tabs-move-current-tab-to-left
-        :nvim "M-k"     #'centaur-tabs-forward-tab
-        :nvim "M-K"     #'centaur-tabs-move-current-tab-to-right
-        ;; :nvim "M-t"     #'find-file ;; dont need this mapping as simply opening new file is enough
-        :nvim "M-1"     (cmd! (centaur-tabs-select-visible-nth-tab 1))
-        :nvim "M-2"     (cmd! (centaur-tabs-select-visible-nth-tab 2))
-        :nvim "M-3"     (cmd! (centaur-tabs-select-visible-nth-tab 3))
-        :nvim "M-4"     (cmd! (centaur-tabs-select-visible-nth-tab 4))
-        :nvim "M-5"     (cmd! (centaur-tabs-select-visible-nth-tab 5))
-        :nvim "M-6"     (cmd! (centaur-tabs-select-visible-nth-tab 6))
-        :nvim "M-7"     (cmd! (centaur-tabs-select-visible-nth-tab 7))
-        :nvim "M-8"     (cmd! (centaur-tabs-select-visible-nth-tab 8))
-        :nvim "M-9"     (cmd! (centaur-tabs-select-visible-nth-tab 9))
+        :nvim "M-j"     #'tab-bar-switch-to-prev-tab
+        :nvim "M-J"     #'tab-bar-move-tab-backward
+        :nvim "M-k"     #'tab-bar-switch-to-next-tab
+        :nvim "M-K"     #'tab-bar-move-tab
+        :nvim "M-t"     #'tab-bar-new-tab-to
+        :nvim "M-1"     (cmd! (tab-bar-select-tab 1))
+        :nvim "M-2"     (cmd! (tab-bar-select-tab 2))
+        :nvim "M-3"     (cmd! (tab-bar-select-tab 3))
+        :nvim "M-4"     (cmd! (tab-bar-select-tab 4))
+        :nvim "M-5"     (cmd! (tab-bar-select-tab 5))
+        :nvim "M-6"     (cmd! (tab-bar-select-tab 6))
+        :nvim "M-7"     (cmd! (tab-bar-select-tab 7))
+        :nvim "M-8"     (cmd! (tab-bar-select-tab 8))
+        :nvim "M-9"     (cmd! (tab-bar-select-tab 9))
         :nvim "M-TAB"   #'next-window-any-frame
         :nvim "M-S-TAB" #'previous-window-any-frame
         :nvim "M-q"     #'z/quit
@@ -214,7 +184,7 @@
   "Close the current window, current tab or frame. (Does not close emacs daemon)"
   (interactive)
   (when (buffer-modified-p) (condition-case nil (evil-write nil nil) (error)))
-  (kill-current-buffer)
+  (kill-buffer-and-window)
   )
 ;; Global navigation scheme:2 ends here
 

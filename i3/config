@@ -68,7 +68,7 @@ bindsym $mod+c exec i3-msg '[con_mark="c"] focus' || alacritty --class cmd -T cm
 
 # HACK: if multiple instances exist and the one with mark is closed, focus last instance of the program and mark it.
 for_window [class="(?i)zathura"] mark z
-bindsym $mod+z exec i3-msg '[con_mark="z"] focus' || wmctrl -xa zathura && i3-msg 'mark z' || fd --extension pdf . ~ | ~/.config/bin/xopen &
+bindsym $mod+z exec i3-msg '[con_mark="z"] focus' || wmctrl -xa zathura && i3-msg 'mark z' || xdg-open "$(fd --extension pdf | rofi -dmenu -i -no-custom -p '  pdf')" &
 
 for_window [class="(?i)emacs"] mark e
 bindsym $mod+e exec i3-msg '[con_mark="e"] focus' || wmctrl -xa emacs && i3-msg 'mark e' || emacsclient --reuse-frame || emacs --daemon --execute '(doom/reload)' &

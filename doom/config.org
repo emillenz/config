@@ -92,6 +92,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  confirm-kill-emacs nil
  undo-limit 80000000
  history-length 1000
+
+ consult-async-min-input 0
  which-key-idle-delay 1
  which-key-allow-multiple-replacements t
  hscroll-margin 0
@@ -105,10 +107,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
 (beacon-mode 1)
-
-(tab-bar-mode 1)
-(setq tab-bar-tab-hints t
-      tab-bar-close-button-show nil)
 #+end_src
 
 * Window layout & behavior
@@ -159,22 +157,43 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  fill-column 100)
 #+end_src
 
-** [?] Autoprompt for buffer after split
-- I use different functions depending on what i want to do.
-#+begin_src emacs-lisp :tangle no
-(defadvice! prompt-for-buffer (&rest _)
-  "Prompt for buffer/dir to open after splitting/newtab."
-  :after '(tab-bar-new-tab-to tab-bar-new-tab evil-window-split evil-window-vsplit)
-  (consult-buffer))
+** Centaur tabs
+- De-clutter UI & make smaller
+#+begin_src emacs-lisp
+(setq centaur-tabs-bar-height 8
+      centaur-tabs-set-close-button nil
+      centaur-tabs-label-fixed-length 8
+      centaur-tabs-show-new-tab-button nil
+      centaur-tabs-set-bar 'over
+      centaur-tabs-show-jump-identifier 'always
+      )
 #+end_src
 
-** Completion menus
-- Always on the bottom, where the statusbar and the cmd-line is.
-- Fixed prompt field (not jumping around.)
-- Start showing matches immediately
+- Remove grouping by filetype (no mental overhead all files instantly accessible)
 #+begin_src emacs-lisp
-(setq consult-async-min-input 0)
+(after! centaur-tabs
+  (defun centaur-tabs-buffer-groups ()
+    "`centaur-tabs-buffer-groups' control buffers' group rules."
+    (list
+     (cond
+      ((or (string-equal "*" (substring (buffer-name) 0 1))
+	   (memq major-mode '(magit-process-mode
+			      magit-status-mode
+			      magit-diff-mode
+			      magit-log-mode
+			      magit-file-mode
+			      magit-blob-mode
+			      magit-blame-mode
+			      )))
+       "Emacs")
+
+      ((derived-mode-p 'dired-mode)
+       "Dired")
+      (t
+       (centaur-tabs-get-group-name (current-buffer))))))
+  )
 #+end_src
+
 
 * Keybindings
 - ~helpful-key~ and ~which-key-show-full-keymap~ are crucial to understanding what your tools can do for you (ex: magit, dired, org-mode)
@@ -214,30 +233,27 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   + Instead if needed we can execute oneliners with ~(shell-command)~
 
 #+begin_src emacs-lisp
-(setq tab-bar-new-tab-to 'rightmost)
-
 ;; HACK: ~:inmvorem~ binds globally no matter where you are
 (after! evil
   (map! :map  'override
-        :nvim "M-j"     #'tab-bar-switch-to-prev-tab
-        :nvim "M-J"     #'tab-bar-move-tab-backward
-        :nvim "M-k"     #'tab-bar-switch-to-next-tab
-        :nvim "M-K"     #'tab-bar-move-tab
-        :nvim "M-q"     #'tab-bar-close-tab
-        :nvim "M-Q"     #'save-buffers-kill-terminal
-        :nvim "M-t"     #'tab-bar-new-tab-to
-        :nvim "M-1"     (cmd! (tab-bar-select-tab 1))
-        :nvim "M-2"     (cmd! (tab-bar-select-tab 2))
-        :nvim "M-3"     (cmd! (tab-bar-select-tab 3))
-        :nvim "M-4"     (cmd! (tab-bar-select-tab 4))
-        :nvim "M-5"     (cmd! (tab-bar-select-tab 5))
-        :nvim "M-6"     (cmd! (tab-bar-select-tab 6))
-        :nvim "M-7"     (cmd! (tab-bar-select-tab 7))
-        :nvim "M-8"     (cmd! (tab-bar-select-tab 8))
-        :nvim "M-9"     (cmd! (tab-bar-select-tab 9))
+        :nvim "M-j"     #'centaur-tabs-backward-tab
+        :nvim "M-J"     #'centaur-tabs-move-current-tab-to-left
+        :nvim "M-k"     #'centaur-tabs-forward-tab
+        :nvim "M-K"     #'centaur-tabs-move-current-tab-to-right
+        ;; :nvim "M-t"     #'find-file ;; dont need this mapping as simply opening new file is enough
+        :nvim "M-1"     (cmd! (centaur-tabs-select-visible-nth-tab 1))
+        :nvim "M-2"     (cmd! (centaur-tabs-select-visible-nth-tab 2))
+        :nvim "M-3"     (cmd! (centaur-tabs-select-visible-nth-tab 3))
+        :nvim "M-4"     (cmd! (centaur-tabs-select-visible-nth-tab 4))
+        :nvim "M-5"     (cmd! (centaur-tabs-select-visible-nth-tab 5))
+        :nvim "M-6"     (cmd! (centaur-tabs-select-visible-nth-tab 6))
+        :nvim "M-7"     (cmd! (centaur-tabs-select-visible-nth-tab 7))
+        :nvim "M-8"     (cmd! (centaur-tabs-select-visible-nth-tab 8))
+        :nvim "M-9"     (cmd! (centaur-tabs-select-visible-nth-tab 9))
         :nvim "M-TAB"   #'next-window-any-frame
         :nvim "M-S-TAB" #'previous-window-any-frame
         :nvim "M-q"     #'z/quit
+        :nvim "M-Q"     #'save-buffers-kill-terminal
         :nvim "M-o"     #'find-file
         :nvim "M-f"     #'consult-find
         :nvim "M-F"     (cmd! (consult-find "~"))
@@ -264,12 +280,11 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (defun z/quit ()
   "Close the current window, current tab or frame. (Does not close emacs daemon)"
   (interactive)
-  (when (buffer-modified-p)
-    (condition-case nil (evil-write nil nil) (error))
-    )
-  (evil-window-delete)
+  (when (buffer-modified-p) (condition-case nil (evil-write nil nil) (error)))
+  (kill-current-buffer)
   )
 #+end_src
+
 
 ** Evil-mode
 - Make vim's bindings even more mnemonic and improve consistency of implementation.
@@ -344,7 +359,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+begin_src emacs-lisp
 (after! evil
   (map!
-   :inmv "C-s" #'basic-save-buffer
+   :inmv "C-s" #'evil-write
    :inmv "C-j" #'drag-stuff-down
    :inmv "C-k" #'drag-stuff-up
    ))
@@ -635,8 +650,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 #+end_src
 
 ** Ligatures
-- For org-mode, using ~ligatures-extra~
-- i use alot of this notation for conciseness -> make it look nicer.
+- I use concise notation -> make it look coherent and take up less space.
 #+begin_src emacs-lisp
 (setq-default prettify-symbols-alist
               '(("->" . "→")
@@ -646,7 +660,6 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
                 ("<=>" . "⇔")
                 ))
 #+end_src
-
 
 ** Task states
 - These are task states are used for personal daily organization & studying at university (keeping track of lectures, assignments, events, exercise sheets.)
@@ -907,20 +920,6 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
   + ex: ~- [ ] Change keybindings :config:emacs:~
 - org-agenda: filter for all headings with that specific tag across all files (eg. sort class specific todos w tags)
 
-*** Personal tags (TODO: custmize)
-#+begin_src emacs-lisp :
-  (setq org-tag-persistent-alist
-        '(
-          ("ep "      . ?e)
-          ("la"       . ?l)
-          ("ad"       . ?a)
-          ("dm"       . ?d)
-          ("cs"       . ?c)
-          ("personal" . ?p)
-          ("config"   . ?C)
-          ))
-#+end_src
-
 
 ** Keywords to downcase
 - By default emacs has these as uppercase (the poor man's bold), however times change and the lowercase standard should be used globally.
@@ -1109,7 +1108,46 @@ End the "(after! org" block
  )
 #+end_src
 
-*** [?] Override language indentation (not consistent -> disabled)
+** Format buffer
+- More than 1 empty line is inconsistent and makes things unneccessary hard to read.
+#+begin_src emacs-lisp
+(defun z/clean-whitespace ()
+  "Deletes consecutive empty lines if > 1."
+  (interactive)
+  (delete-trailing-whitespace)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "\n\n+" nil t)
+      (replace-match "\n\n"))))
+#+end_src
+
+* Nushell
+- Nushell: screw that old POSIX-standard crap and use a user friendly shell
+- Major-mode: nushell files/scripts => syntax highlighting
+#+begin_src emacs-lisp
+(load! "user/nushell-mode.el")
+#+end_src
+
+
+* [?] Under review
+** Personal tags
+- Not used currently
+#+begin_src emacs-lisp :tangle no
+  (setq org-tag-persistent-alist
+        '(
+          ("ep "      . ?e)
+          ("la"       . ?l)
+          ("ad"       . ?a)
+          ("dm"       . ?d)
+          ("cs"       . ?c)
+          ("personal" . ?p)
+          ("config"   . ?C)
+          ))
+#+end_src
+
+** org-ql
+** Override language indentation
+-  not consistent -> disabled
 #+begin_src emacs-lisp :tangle no
 (setq-hook! 'prog-mode-hook
   org-indent-indentation-per-level 2
@@ -1138,27 +1176,3 @@ End the "(after! org" block
   lisp-body-indent 2
   lisp-indent-offset 2)
 #+end_src
-
-** Format buffer
-- More than 1 empty line is inconsistent and makes things unneccessary hard to read.
-#+begin_src emacs-lisp
-(defun z/clean-whitespace ()
-  "Deletes consecutive empty lines if > 1."
-  (interactive)
-  (delete-trailing-whitespace)
-  (save-excursion
-    (goto-char (point-min))
-    (while (re-search-forward "\n\n+" nil t)
-      (replace-match "\n\n"))))
-#+end_src
-
-* Nushell
-- Nushell: screw that old POSIX-standard crap and use a user friendly shell
-- Major-mode: nushell files/scripts => syntax highlighting
-#+begin_src emacs-lisp
-(load! "user/nushell-mode.el")
-#+end_src
-
-
-
-* [?] org-ql

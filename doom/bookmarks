@@ -15,11 +15,11 @@
  (position . 777)
  (last-modified 25924 37515 723831 699000))
 ("org-capture-last-stored"
- (filename . "~/Documents/org/config/tasks.org")
- (front-context-string . "** [ ] structure")
- (rear-context-string . " inbox :config:\n")
- (position . 171)
- (last-modified 25965 47920 862500 728000))
+ (filename . "~/Documents/journal/2023-12-05.org")
+ (front-context-string . "* start of day\n*")
+ (rear-context-string . " December, 2023\n")
+ (position . 203)
+ (last-modified 25966 49359 44326 485000))
 ("cs_todo.org"
  (filename . "~/Documents/org/cs_todo.org")
  (front-context-string . "#+title:    CS T")

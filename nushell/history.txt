@@ -1,3 +1,264 @@
+sudo dnf info | lines | first 200 | where {str contains "Name"} | split column "[ ]*"
+sudo dnf info | lines | first 200 | where {str contains "Name"} | split words
+sudo dnf info | lines | first 200 | where {str contains "Name"} | each {split words}
+sudo dnf info | lines | first 200 | where {str contains "Name"} | split column " "
+sudo dnf info | lines | first 200 | where {str contains "Name"} | split column " " | get column11
+sudo dnf info | lines | first 200 | where {str contains "Name"} | split column " " | get column11 | my cocoo
+sudo dnf info | lines | where {str contains "Name"} | split column " " | get column11 | length
+sudo dnf info | lines | where {str contains "Name"} 
+sudo dnf info | lines | where {str contains "Name"} | length
+sudo dnf install chromium
+sudo dnf search q torrent
+sudo dnf search qbittorrent
+sudo dnf instal qbittorrent
+sudo dnf install qbittorrent
+pulsemixer --change-volume +2 --max-volume 100
+pamix --change-volume +2 --max-volume 100
+pulsemixer
+pa
+pasystray
+sudo dnf search ffm
+sudo dnf install ffmpeg-free
+sudo dnf install gstreamer1-plugins-{bad-\*,good-\*,base} gstreamer1-plugin-openh264 gstreamer1-libav --exclude=gstreamer1-plugins-bad-free-devel
+ls
+ps
+ps -
+ps -l | where {|i| $i.command |str contains "timer"} | get pid.0
+ps -l | where {|i| $i.command | str contains "timer"} | get pid.0
+ps -l | where {|i| $i.command | str contains "firefox"} | get pid.0
+curl -s  -h | bat
+let input = "helsinki distance"
+let question_string = ([[i]; [($input | str join ' ')]] | to-url)
+let question_string = ([[i]; [($input | str join ' ')]] | url)
+let question_string = ([[i]; [($input | str join ' ')]] )
+[[i]; [($input | str join ' ')]]
+[[($input | str join ' ')]]
+[($input | str join ' ')]
+[($input | str join ' ')] | url -h | bat
+[($input | str join ' ')] | url join
+[[i]; [($input | str join ' ')]] | url join
+[[i]; [($input | str join ' ')]] | url join -h | bat
+[[i]; [($input | str join ' ')]] | url join 
+url
+url parse
+url encode -h | bat
+[[i]; [($input | str join ' ')]] | url encode
+ [($input | str join ' ')] | url encode
+use -h | bat
+use  -h | bat
+use help
+help use
+wa helsinki switzerland distance
+url  -h | bat
+url  encode -h | bat
+["abc"] |str join
+["abc"] 
+wa helsinki switzerland distance
+curl -s 
+wa helsinki switzerland distance
+curl -s
+curl -si
+curl -h
+wa helsinki switzerland distance
+wa distance between helsinki and zurich
+wa what is the biggest known prime
+wa what is most popular developer language
+wa most popular developer language
+wa double integral of sine
+wa 800 * 900
+wa "(800 * 23)^2"
+wa 2000 per month, how many is that in a day
+wa 2000 per month => per day
+wa 2000 querys per mont
+wa 2000 querys per month
+wa 2000 querys per month into daily
+wa 2000/month = per day
+wa 2000/month => per day
+wa 2000/month =
+wa 2000 * 12 / 365
+wa 2000 * 12 / 365 exact
+wa 2000 * 12 / 365 float
+wa 2000 * 12 / 365 not exact
+wa is my ass
+wa energy of living human
+zathura  -h | bat
+zathura ~/Books/cs/rust_programming_lang.pdf# i read every day, first thing i do on the computer, so i want the book to be there starting up<\n>
+zathura ~/Books/cs/rust_programming_lang.pdf # i read every day, first thing i do on the computer, so i want the book to be there starting up<\n>
+flameshot -h | bat
+flameshot -g
+flameshot
+^flameshot
+^flameshot --help
+flameshot gui
+xrandr --listactivemonitors 
+xrandr 
+xrandr
+xrandr  -h | bat
+xrandr  --help
+xrandr  --listmonitors
+xrandr
+xrandr --help
+xrandr -q
+xrandr -q | lines 
+xrandr -q | lines | where {str contains "connected"}
+xrandr -q | lines | where {str contains "connected"} | split column
+xrandr -q | lines | where {str contains "connected"} | split column " "
+xrandr -q | lines | where {str contains " connected"} | split column " " 
+xrandr -q | lines | where {str contains " connected"} | split column " " | get column1
+nvim
+rofi  -h | bat
+rofi filebrowser
+rofi -show filebrowser
+rofi -show windowcd
+rofi -show  -h | bat
+rofi -dmenu
+man rofi 
+rofi-dmenu
+man rofi-dmenu
+rofi-dmenu -h
+man rofi-dmenu
+rofi -dmenu -p "monkey"
+rofi -dmenu -p "monkey: "
+[a, b, c] | rofi -dmenu -p "monkey: "
+[a, b, c] |str join | rofi -dmenu -p "monkey: "
+[a, b, c] |str join "\n" | rofi -dmenu -p "monkey: "
+[a, b, c] | str join "\n" | rofi -dmenu -p -x "Displays: "
+[a, b, c] | str join "\n" | rofi -dmenu -x -p "Displays: "
+[a, b, c] | str join "\n" | rofi -dmenu -multi-select -p "Displays: "
+e
+let monitors = (xrandr -q | lines | where {str contains " connected"} | split column " " | get column1)<\n>$monitors | rofi -dmenu -multi-select -p "Displays: "
+let monitors = (xrandr -q | lines | where {str contains " connected"} | split column " " | get column1 | str join "\n")<\n>$monitors | rofi -dmenu -multi-select -p "Displays: "
+xrandr 
+xrandr -h
+xrandr --h
+xrandr --help
+tldr xrandr
+xrandr --auto
+x (fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
+displayselect 
+xrandr -q | lines | where {str contains " connected"} | split column " " | get column1
+    let monitors = (xrandr -q | lines | where {str contains " connected"} | split column " " | get column1)<\n>    print $monitors<\n>
+displayselect 
+let on = [d1, d2, d2]
+d1 in $on
+print ("d1" in $on)
+print ("d3" in $on)
+print ("d2" in $on)
+displayselect 
+print ("d2" in $on)
+displayselect 
+xrandr -h | bat
+xrandr --help | bat
+displayselect 
+ls
+syncthing
+polybar_launcher
+man nu
+man rg
+ls  -h | bat
+ls
+zellij list-sessions | lines 
+zellij
+lf
+cd ~
+nvim
+(fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
+cargo init lifetimes_testing
+cargo run
+xed
+xset
+xprop
+xev
+nm-applet
+polybar_launcher
+network-manager
+nm-connection-editor 
+syncthing
+cargo init randmaxima_alg
+syncthing
+wa rust collections
+cargo run
+xautolock
+sudo dnf search xautolock
+sudo dnf install xautolock
+xautolock -time 10 -locker "systemctl suspend && i3lock"
+i3lock -h | bat
+man i3lock 
+sudo dnf remove xfce4-power-manager
+sudo dnf remove xfce4-screensaver
+xautolock -time 30 -locker 'i3lock -e --color fdf6e3' && systemctl suspend
+xautolock -time 30 -locker 'i3lock -e --color fdf6e3' && systemctl suspend | bash
+    "xautolock -time 30 -locker 'i3lock -e --color fdf6e3 && systemctl suspend' &" | bash
+git status
+git remove xfce4/
+get  -h | bat
+git -h | bat
+git rm xfce4
+git status
+git rm -r xfce4
+git rm -rf xfce4
+git status
+git commit -am 'sync'; git push
+wa "a[1] =1; a[n+1] = 2*a[n] +1"
+ udevadm monitor -u -t seat -s input -s usb
+sudo dnf search automounter
+sudo dnf search mount
+sudo dnf search autofs
+sudo dnf install autofs
+xrandr
+startup
+ps
+ps 
+(ps).name | str contains "xauto"
+# program name and launch command<\n>let progs = [<\n>    {"keepassxc": "keepassxc"},<\n>    {"flameshot": "flameshot"},<\n>    {"nm-applet": "nm-applet"},<\n>    {"playerctld": "playerctld"},<\n>    {"unclutter": "unclutter"}, # hides mousecursor<\n>    {"firefox": "firefox"},<\n>    {"zathura": "zathura"}, # i read books everyday<\n>    {"Obsidian": "flatpak run md.obsidian.Obsidian"}, # i take notes everyday<\n>    {"xautolock": "xautolock -time 30 -locker 'i3lock -e --color fdf6e3 && systemctl suspend'"}, # lock the screen after 30min<\n>]
+$progs
+# program name and launch command<\n>let progs = [<\n>    ["name", "command"];<\n>    ["keepassxc", "keepassxc"],<\n>    ["flameshot", "flameshot"],<\n>    ["nm-applet", "nm-applet"],<\n>    ["playerctld", "playerctld"],<\n>    ["unclutter", "unclutter"], # hides mousecursor<\n>    ["firefox", "firefox"],<\n>    ["zathura", "zathura"], # i read books everyday<\n>    ["Obsidian", "flatpak run md.obsidian.Obsidian"], # i take notes everyday<\n>    ["xautolock", "xautolock -time 30 -locker 'i3lock -e --color fdf6e3 && systemctl suspend'"], # lock the screen after 30min<\n>]<\n><\n>
+$progs
+startup
+ps 
+ps | str contains obsid
+ps | str contains "obsid"
+ps | get name | str contains "obsid"
+ps | get name | where {str contains obs}
+ps | where {str contains obs}
+ps | where {get name | str contains obs}
+startup
+nmtui
+sudo dnf search nmtui
+sudo dnf search nm tui
+sudo dnf search nm-tui
+sudo dnf search tui network
+sudo dnf install NetworkManager-tui
+nm-tui
+nmtui
+syncthing
+ls
+lf
+fd. 
+fd .
+fd . -x chmod -x 
+wa 2 pow 5
+2 pow 3
+wa 2 pow 4
+bc -l
+syncthing
+x (fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
+(fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
+nu (fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
+(fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
+scratch.un
+scratch.nu
+x scratch.nu
+exe scratch.nu
+exec scratch.nu
+./scratch.nu
+[1 2 3 4] | enumerate
+man [1 2 3 4] | enumerate
+ -h | bat
+enumerate  -h | bat
+clip
+std clip -h | bat
+let<\n>for in in letter
 nu
 nu
 nu
@@ -9718,283 +9979,22 @@ ls | to json
 hash  --help | bat --language man
 ls
 nvim
-uptime
-htop
-nvim
-ls
-htop
-emacs  --help | bat --language man
-xprop
-xev
-i3-msg "split toggle"
-i3-msg "move absolute position left"
-i3-msg "move right"
-i3-msg "move "
-i3-msg "move right"
-i3-msg "move left"
-i3-msg "move right"
-keybindings list 
-keybindings default 
-keybindings list  
-keybindings listen
-ls \;
-ls \\;
-man fd 
-man fd
-tldr fd 
-fd --extension=pdf . ~
-ls
-fd --extension 'pdf' . ~/Documents/uni/cs
-xopen ~
-xdg-open ~
-fd --type dir
-fd -td
-yay fish
-ls
-emacs --debug-init
-fd --extension pdf . ~ | ~/.config/bin/xopen
-def doodle [] {<\n>print $in<\n>}
-echo "abc" | doodle
-ls | doodle
-^ls | doodle
-$env
-fd --extension pdf . ~ | ~/.config/bin/xopen
-fd --extension pdf . ~ 
-fd --extension pdf . ~ | ~/.config/bin/xopen
-(fd -tf | fzf --preview='bat --theme Solarized (dark) {}' | str trim)
-./xopen
-"abc" | ./xopen
-man main
-main help
-helpdef 
-help def 
-ls | ./rofimenu
-ls | ./rofimenu.nu
-let x = if true {1} else {2}
-$x
-let x = if false {1} else {2}
-$x
-./xopen
-"abc " | ./xopen
-"abc" | rofimenu
-"abc" | ./rofimenu.nu
-"abc" | ./rofimenu.nu 'nema' 'aa'
-"abc" | ./rofimenu.nu
-ls | xopen 
-ls | xopen.nu 
-ls | xopen
-ls | xopen ""\
-ls | xopen ""
-ls | xopen
-~/.config/emacs/bin/doom install --force
-ls | xopen
-./xopen
-"aaaa" | ./xopen
-xopener
-outputs 
-outputs
-[a b c ] | to text 
-outputs
-man exit 
-outputs
-"abc" | xopen
-xopen
-fd --extension pdf . ~/Documents/uni/cs | ~/.config/bin/rofimenu '' 'pdf'
-fd --extension pdf . ~/Documents/uni/cs | ~/.config/bin/rofimenu ' ' 'pdf'
-xopn
-xopen
-l-
-ls
-./xopen.nu
-"abc" | ./xopen.nu
-xopen (fd --extension pdf . ~ | rofi ' ' 'pdf')
-rofi -dmenu -p "ass"
-xopen (fd --extension pdf . ~)
-ls
-./xopen (fd --extension pdf . ~)
-xopen $"(fd --extension pdf . ~)"
-"abc" | opener
-echo "abc" | opener
-fd | opener
-fd 
-fd | opener
-killprocess
-playerctld
-systemctl playerctld
-tldr systemctl
-systemctl status playerctld
-man playerctld 
-playerctl
-man playerctl
-tldr emacs 
-emacs --daemon -h
-man emacs 
-ls
-ls -h
-ls -la
-ls -la | find xprofile
-ls -la | find x
-ls -la | find profile
-ln -s ~/.xprofile ~/.config/xprofile
-rm ~/.xprofile 
-ln -s ~/.xprofile ~/.config/xprofile
-ln -s ~/.config/xprofile ~.xprofile
-sudo ln -s ~/.config/xprofile ~.xprofile
-tldr git
-git init -h\
-git init 
-git branch -m main
-ls
-ls .git
-gg
-g
-ls
-ls .auctex-auto
-rm ./.auctex-auto
-ls
-g\
-g
-ls
-emacsclient -h
-ls
-tldr git
-git -h
-git  --help | bat --theme Solarized (dark) --language man
-git --help | bat --theme 'Solarized (dark)' --language man
-man git 
-ls **/*.org
-(ls **/*.org | get name | str join " ")
-git add (ls **/*.org | get name | str join " ")
-(ls --full-paths -a **/*.org | get name | str join " ")
-git add (ls --full-paths -a **/*.org | get name | str join " ")
-git add (ls --full-paths -a **/*.org | get name | str join " ") --help | bat --theme 'Solarized (dark)' --language man
-(ls --full-paths -a **/*.org | get name | str join " ") --help | bat --theme 'Solarized (dark)' --language man
-(ls **/*.org | get name | str join " ")
-(ls --full-paths **/*.org | get name | str join " ")
-git add (ls --full-paths **/*.org | get name | str join " ")
-git add fasting.org
-ls **/*.org | get name | each {git add $in}
-g
-ls **/*.org | get name 
-ls **/*.org | get name | each {git add $in}
-g
-man av 
-av  --help | bat --theme 'Solarized (dark)' --language man
-ls
-av  --help | bat --theme 'Solarized (dark)' --language man
-ls **/*.docx
-ls **/*.docx | get name | each {av $in}
-ls **/*.docx
-ls
-fc-list
-fc-list | find iosev
-yay iosevka
-fc-list | find iosev
-fc-list | find comic
-ls
-yay -R iosev
-yay iosev
-yay -R ttf-iosevka-nerd
-yay cozzette
-yay cozette
-ls
-yay -R ttf-cozette
-yay  ttf-cozette
-yay  tf-cozette
-yay  cozette
-yay -R cozette-ttf
-yay cozette-otb
-ls
-this 
-ls
-ls -la
-yay dina
-yay dina | find otb
-yay dina | rg otb
-yay dina 
-ls
-ls -la
-ls
-ls -rla
-ls -la
-yay dina
-yay -R dina-font
-yay dina-font-otb
-yay dina-powerline
-ttf-dina-remastered
-yay ttf-dina-remastered
-yay dina
-nu 
-nu
-nu
-nu
-nu
-yay dina-otb
-yay dina-obt
-yay dina
-yay -R dina-font-otb
-yay tamzen
-ls
-ls -la
-yay fixedsys
-yay -Qs ttf
-fc-list | find comic
-fc-list | find fixed
-ls
-ls -la
-ls
-ls -la
-ls
-ls -la
-ps
-ls -> las
-ls
-yay cherry
-yay dine
-yay dina
-ls
-ls -la
-ils
-this 
-yay terminess
-yay terminus
-ls
-ils
-ls **/*.sync-conflict
-ls **/*sync-conflict
-ls **/*sync
-ls **/*conflict
-bluetoothctl off
-bluetoothctl help
-mini-audio 
-yay iosevka 
-ls
-(fd -tf | fzf --preview='bat --theme Solarized (dark) {}' | str trim)
-mv -h
-cp 
-cp -dh
-cp -h
-ls
-ls -la
-yay iosevka
-fc-list
-fc-list | find iosev
-fc-list | find iosevkaterm
-ls
-this 
-ps
-this 
-this i
-ls -la
-nvim
-g
-ps -la
-ps
-doom sync
-doom upgrade 
+doom upgrade
+yay -S fish
+yay -R carapace-bin
+yay carapace-bin
+yay carapace
+yay -R carapace
+sudo ln -s ~/.xprofile ~/.config/xprofile
+tldr ln
+sudo ln -s ~/.config/xprofile ~/.xprofile
 doom upgrade --force
-nvim tmux/tmux.conf
+doom syncg
 doom sync
-emacs --debug-init
-doom sync
-startup
+ls
+ls -la
+ls
+ls -la
+yay --noconfirm -S texlive-basic latex-mk pandoc texlive-plaingeneric
+mini-bluetooth 
+160!

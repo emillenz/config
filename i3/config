@@ -48,9 +48,9 @@ bindsym $mod+Next      move workspace to output next
 bindsym $mod+1         workspace 1
 bindsym $mod+2         workspace 2
 bindsym $mod+3         workspace 3
-bindsym $mod+shift+1   move container to workspace 1
-bindsym $mod+shift+2   move container to workspace 2
-bindsym $mod+shift+3   move container to workspace 3
+bindsym $mod+shift+1   move container to workspace 1; workspace 1
+bindsym $mod+shift+2   move container to workspace 2; workspace 2
+bindsym $mod+shift+3   move container to workspace 3; workspace 3
 
 bindsym $mod+j          focus prev
 bindsym $mod+shift+j    move left
@@ -156,8 +156,8 @@ mode "$timer" {
 
 set $find <find> pdf | uni
 mode "$find" {
-  bindsym p exec xdg-open $(fd --extension pdf | rofi -dmenu -i -no-custom -p '  pdf'); mode "default"
-  bindsym u exec xdg-open $(fd --extension pdf . ~/Documents/uni/cs | rofi -dmenu -i -no-custom -p '  pdf'); mode "default"
+  bindsym p exec xdg-open "$(fd --extension pdf | rofi -dmenu -i -no-custom -p '  pdf')"; mode "default"
+  bindsym u exec xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | rofi -dmenu -i -no-custom -p '  pdf')"; mode "default"
   bindsym Escape mode "default"
 }
 

@@ -39,7 +39,7 @@ fd . ~/.config/bin -tf -x chmod +x {}
 
 ** Stupid xorg should be replaced (/uses it anyway/)
 #+begin_src sh
-sudo ln -s ~/.xprofile ~/.config/xprofile
+sudo ln -s ~/.config/xprofile ~/.xprofile
 #+end_src
 
 * Editor: doom emacs

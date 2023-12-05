@@ -186,11 +186,13 @@
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:2]]
 (defun z/quit ()
-  "Close the current window, current tab or frame."
+  "Close the current window, current tab or frame. (Does not close emacs daemon)"
   (interactive)
   (when (buffer-modified-p)
-    (evil-write nil nil))
-  (evil-window-delete))
+    (condition-case nil (evil-write nil nil) (error))
+    )
+  (evil-window-delete)
+  )
 ;; Global navigation scheme:2 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
@@ -311,6 +313,11 @@
 )
 ;; Dired:1 ends here
 
+;; [[file:config.org::*Minibuffer][Minibuffer:1]]
+(map! :map vertico-map
+      :nmi "M-d" #'consult-dir)
+;; Minibuffer:1 ends here
+
 ;; [[file:config.org::*Evil mode][Evil mode:1]]
 (after! evil
   (evil-surround-mode 1)
@@ -420,6 +427,7 @@
  org-blank-before-new-entry '((heading . t)
                               (plain-list-item . nil))
  org-use-property-inheritance t
+ org-reverse-note-order t
  org-startup-with-inline-images t
  org-startup-indented t
  org-list-allow-alphabetical t
@@ -488,11 +496,11 @@
                 ))
 ;; Ligatures:1 ends here
 
-;; [[file:config.org::*Todo states][Todo states:1]]
+;; [[file:config.org::*Task states][Task states:1]]
 (setq org-todo-keywords
       '((type
          "[#](#)"
-         "[ ](\s)"
+         "[ ](t)"
          "[?](?!)"
          "[>](>@)"
          "[=](=@)"
@@ -502,9 +510,9 @@
          "[\\](\\@)"
          "[x](x!)"
          ))) ;; HACK: cannot use"@"
-;; Todo states:1 ends here
+;; Task states:1 ends here
 
-;; [[file:config.org::*Todo states][Todo states:2]]
+;; [[file:config.org::*Task states][Task states:2]]
 (setq org-todo-keyword-faces
       '(("[#]"  . +org-todo-project)
         ("[ ]"  . +org-todo-cancel)
@@ -516,9 +524,9 @@
         ("[\\]" . org-done)
         ("[X]"  . org-done)
         ))
-;; Todo states:2 ends here
+;; Task states:2 ends here
 
-;; [[file:config.org::*Todo states][Todo states:3]]
+;; [[file:config.org::*Task states][Task states:3]]
 (setq
  org-log-done 'time
  org-log-repeat 'time
@@ -535,7 +543,7 @@
  '((?1  . 'all-the-icons-red)
    (?2 . 'all-the-icons-orange)
    (?3 . 'all-the-icons-yellow)))
-;; Todo states:3 ends here
+;; Task states:3 ends here
 
 ;; [[file:config.org::*Babel][Babel:1]]
 (setq
@@ -548,12 +556,12 @@
    (:hlines   . "no")
    (:tangle   . "no")
    (:mkdirp   . "yes")
-   (:comments . "no"))
+   (:comments . "link"))
  )
 ;; Babel:1 ends here
 
 ;; [[file:config.org::*Agenda][Agenda:1]]
-(after! org-agenda (org-super-agenda-mode))
+(add-hook! 'org-agenda-mode-hook #'org-super-agenda-mode)
 
 (setq
  org-agenda-files (directory-files-recursively org-directory ".*\.org" t)
@@ -639,11 +647,13 @@
 ;; [[file:config.org::*Personal tags (TODO: custmize)][Personal tags (TODO: custmize):1]]
 (setq org-tag-persistent-alist
       '(
-        ("ep "   . ?e)
-        ("la"   . ?l)
-        ("ad"    . ?a)
-        ("dm"    . ?d)
+        ("ep "      . ?e)
+        ("la"       . ?l)
+        ("ad"       . ?a)
+        ("dm"       . ?d)
+        ("cs"       . ?c)
         ("personal" . ?p)
+        ("config"   . ?C)
         ))
 ;; Personal tags (TODO: custmize):1 ends here
 
@@ -725,7 +735,7 @@ Jumps at tangled code from org src block."
      :children
      (("cs"       :keys "c" :file "cs/tasks.org")
       ("personal" :keys "p" :file "personal/tasks.org")
-      ("config"   :keys "C" :file "config/tasks.org")
+      ("config"   :keys "o" :file "config/tasks.org")
       )
      )
 
@@ -764,6 +774,7 @@ Jumps at tangled code from org src block."
      :children
      (("cs"       :keys "c" :file "cs/notes.org")
       ("personal" :keys "p" :file "personal/notes.org")
+      ("config"   :keys "o" :file "config/notes.org")
       )
      )
 

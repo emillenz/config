@@ -277,8 +277,8 @@ mode "$timer" {
 #+begin_src conf
 set $find <find> pdf | uni
 mode "$find" {
-  bindsym p exec xdg-open $(fd --extension pdf | rofi -dmenu -i -no-custom -p '  pdf'); mode "default"
-  bindsym u exec xdg-open $(fd --extension pdf . ~/Documents/uni/cs | rofi -dmenu -i -no-custom -p '  pdf'); mode "default"
+  bindsym p exec xdg-open "$(fd --extension pdf | rofi -dmenu -i -no-custom -p '  pdf')"; mode "default"
+  bindsym u exec xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | rofi -dmenu -i -no-custom -p '  pdf')"; mode "default"
   bindsym Escape mode "default"
 }
 #+end_src

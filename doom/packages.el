@@ -21,6 +21,7 @@
 (package! org-auto-tangle)
 (package! evil-cleverparens)
 (package! doct)
+(package! consult-dir)
 (package! org-pandoc-import
   :recipe (:host github
            :repo "tecosaur/org-pandoc-import"

@@ -60,10 +60,6 @@ $env.PROMPT_COMMAND_RIGHT = ""
 
 # The prompt indicators are environmental variables that represent
 # the state of the prompt
-# $env.PROMPT_INDICATOR = {|| $"(ansi blue_bold)│ " }
-# $env.PROMPT_INDICATOR_VI_INSERT = {|| $"(ansi blue_bold)│ " }
-# $env.PROMPT_INDICATOR_VI_NORMAL = {|| $"(ansi blue_bold)│ " }
-# $env.PROMPT_MULTILINE_INDICATOR = {|| $"(ansi blue_bold)│   " }
 $env.PROMPT_INDICATOR = {|| $"(ansi blue_bold)│ " }
 $env.PROMPT_INDICATOR_VI_INSERT = {|| $"(ansi blue_bold)│ " }
 $env.PROMPT_INDICATOR_VI_NORMAL = {|| $"(ansi blue_bold)│ " }

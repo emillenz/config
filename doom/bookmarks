@@ -2,34 +2,22 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("cs"
- (filename . "~/Documents/uni/cs/")
- (front-context-string)
- (rear-context-string . "0K Sep 22 14:14 ")
- (position . 420)
+(("cs" (filename . "~/Documents/uni/cs/") (front-context-string)
+ (rear-context-string . "0K Sep 22 14:14 ") (position . 420)
  (last-modified 25881 15041 53675 50000))
-("org-refile-last-stored"
- (filename . "~/Documents/org/cs_todo.org")
+("org-refile-last-stored" (filename . "~/Documents/org/cs_todo.org")
  (front-context-string . "**** [ ] peer-gr")
- (rear-context-string . "ulas / pointers\n")
- (position . 777)
+ (rear-context-string . "ulas / pointers\n") (position . 777)
  (last-modified 25924 37515 723831 699000))
-("org-capture-last-stored"
- (filename . "~/Documents/journal/2023-12-05.org")
+("org-capture-last-stored" (filename . "~/Documents/journal/2023-12-05.org")
  (front-context-string . "* start of day\n*")
- (rear-context-string . " December, 2023\n")
- (position . 203)
+ (rear-context-string . " December, 2023\n") (position . 203)
  (last-modified 25966 49359 44326 485000))
-("cs_todo.org"
- (filename . "~/Documents/org/cs_todo.org")
- (front-context-string . "#+title:    CS T")
- (rear-context-string)
- (position . 1)
- (last-modified 25870 60064 614301 850000))
-("config.org"
- (filename . "~/.config/doom/config.org")
+("cs_todo.org" (filename . "~/Documents/org/cs_todo.org")
+ (front-context-string . "#+title:    CS T") (rear-context-string)
+ (position . 1) (last-modified 25870 60064 614301 850000))
+("config.org" (filename . "~/.config/doom/config.org")
  (front-context-string . "  visual-fill-co")
- (rear-context-string . "n-center-text t\n")
- (position . 6907)
+ (rear-context-string . "n-center-text t\n") (position . 6907)
  (last-modified 25812 1530 895708 96000))
 )

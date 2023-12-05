@@ -181,10 +181,11 @@
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:2]]
 (defun z/quit ()
-  "Close the current window, current tab or frame. (Does not close emacs daemon)"
+  "Save & kill buffer -> close the current window, tab or frame. (Not killing emacs daemon.)"
   (interactive)
-  (when (buffer-modified-p) (condition-case nil (evil-write nil nil) (error)))
-  (kill-buffer-and-window)
+  (when (buffer-modified-p) (condition-case nil (evil-write nil nil) (error))) ;; ignore if it errors
+  (kill-buffer)
+  (evil-window-delete)
   )
 ;; Global navigation scheme:2 ends here
 
@@ -308,7 +309,7 @@
 
 ;; [[file:config.org::*Minibuffer][Minibuffer:1]]
 (map! :map vertico-map
-      :nmi "M-d" #'consult-dir)
+      :nmi "M-g" #'consult-dir)
 ;; Minibuffer:1 ends here
 
 ;; [[file:config.org::*Evil mode][Evil mode:1]]
@@ -702,76 +703,65 @@ Jumps at tangled code from org src block."
 (setq
  org-capture-templates
  (doct
-  '(("task" :keys "t"
-     :template
-     ("* [ ] %^{title} %^g"
-      "%?"
-      )
+  '((:group "default opts"
      :headline "inbox"
      :type entry
      :empty-lines-after 1
      :prepend t
      :clock-keep t
-     :children
-     (("cs"       :keys "c" :file "cs/tasks.org")
-      ("personal" :keys "p" :file "personal/tasks.org")
-      ("config"   :keys "o" :file "config/tasks.org")
-      )
-     )
 
-    ("event" :keys "e"
-     :template
-     ("* [#] %^{title} %^g"
-      "%^t"
-      "LOCATION: %^{location}"
-      "PRE: %^{pre}"
-      "%?"
-      )
-     :headline "inbox"
-     :type entry
-     :empty-lines-after 1
-     :prepend t
-     :clock-keep t
      :children
-     (("cs"       :keys "c" :file "cs/events.org")
-      ("personal" :keys "p" :file "personal/events.org")
-      )
-     )
+     (("task" :keys "t"
+       :template
+       ("* [ ] %^{title} %^g"
+        "%?"
+        )
+       :children
+       (("cs"       :keys "c" :file "cs/tasks.org")
+        ("personal" :keys "p" :file "personal/tasks.org")
+        ("config"   :keys "o" :file "config/tasks.org")
+        )
+       )
 
-    ("note" :keys "n"
-     :template
-     ("* %^{title} %^g"
-      ":PROPERTIES:"
-      ":CREATED: %U"
-      ":END:"
-      "%?"
-      )
-     :headline "inbox"
-     :type entry
-     :empty-lines-after 1
-     :prepend t
-     :clock-keep t
-     :children
-     (("cs"       :keys "c" :file "cs/notes.org")
-      ("personal" :keys "p" :file "personal/notes.org")
-      ("config"   :keys "o" :file "config/notes.org")
-      )
-     )
+      ("event" :keys "e"
+       :template
+       ("* [#] %^{title} %^g"
+        "%^t"
+        "LOCATION: %^{location}"
+        "PRE: %^{pre}"
+        "%?"
+        )
+       :children
+       (("cs"       :keys "c" :file "cs/events.org")
+        ("personal" :keys "p" :file "personal/events.org")
+        )
+       )
 
-    ("journal" :keys "j"
-     :template
-     ("* %^{title} %^g"
-      ":PROPERTIES:"
-      ":CREATED: %U"
-      ":END:"
-      "%?"
-      )
-     :type entry
-     :empty-lines-after 1
-     :prepend t
-     :clock-keep t
-     :children ("personal" :keys "p" :file "personal/journal.org")
-     ))))
+      ("note" :keys "n"
+       :template
+       ("* %^{title} %^g"
+        ":PROPERTIES:"
+        ":CREATED: %U"
+        ":END:"
+        "%?"
+        )
+       :children
+       (("cs"       :keys "c" :file "cs/notes.org")
+        ("personal" :keys "p" :file "personal/notes.org")
+        ("config"   :keys "o" :file "config/notes.org")
+        )
+       )
+
+      ("journal" :keys "j"
+       :template
+       ("* %^{title} %^g"
+        ":PROPERTIES:"
+        ":CREATED: %U"
+        ":END:"
+        "%?"
+        )
+       :children ("personal" :keys "p" :file "personal/journal.org")
+       ))))))
 ;; Capture templates:1 ends here
 
 ;; [[file:config.org::*Programming mode][Programming mode:1]]

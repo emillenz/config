@@ -42,7 +42,7 @@
   :prefix "nushell-"
   :link '(url-link :tag "GitHub" "https://github.com/mrkkrp/nushell-mode"))
 
-(defcustom nushell-indent-offset 4
+(defcustom nushell-indent-offset 2
   "Default indentation offset for Nushell."
   :group 'nushell
   :type 'integer
@@ -55,50 +55,50 @@ If the value of this variable is non-nil, whenever a word in
 
 (defconst nushell-builtins
   '("bit-and"
-     "bit-or"
-     "bit-shl"
-     "bit-shr"
-     "bit-xor"
-     "ends-with"
-     "fdiv"
-     "mod"
-     "not-in"
-     "starts-with"
-     "xor")
+    "bit-or"
+    "bit-shl"
+    "bit-shr"
+    "bit-xor"
+    "ends-with"
+    "fdiv"
+    "mod"
+    "not-in"
+    "starts-with"
+    "xor")
   "Nushell built-ins.")
 
 (defconst nushell-keywords
   '("alias"
-     "break"
-     "exit"
-     "const"
-     "continue"
-     "def"
-     "use"
-     "extern"
-     "for"
-     "hide"
-     "if"
-     "let"
-     "loop"
-     "match"
-     "module"
-     "mut"
-     "return"
-     "source"
-     "source"
-     "try"
-     "use"
-     "while"
-     "catch"
-     "and"
-     "def-env"
-     "else"
-     "let-env"
-     "not"
-     "or"
-     "do"
-     "in")
+    "break"
+    "exit"
+    "const"
+    "continue"
+    "def"
+    "use"
+    "extern"
+    "for"
+    "hide"
+    "if"
+    "let"
+    "loop"
+    "match"
+    "module"
+    "mut"
+    "return"
+    "source"
+    "source"
+    "try"
+    "use"
+    "while"
+    "catch"
+    "and"
+    "def-env"
+    "else"
+    "let-env"
+    "not"
+    "or"
+    "do"
+    "in")
   "Nushell keywords.
 
 It is difficult to tell whether a certain word should be
@@ -110,56 +110,56 @@ a keyword would result in visual noise.")
 
 (defconst nushell-types
   '("int"
-     "float"
-     "string"
-     "bool"
-     "date"
-     "duration"
-     "filesize"
-     "binary"
-     "list"
-     "record"
-     "table"
-     "closure"
-     "block"
-     )
+    "float"
+    "string"
+    "bool"
+    "date"
+    "duration"
+    "filesize"
+    "binary"
+    "list"
+    "record"
+    "table"
+    "closure"
+    "block"
+    )
   "Nushell types.")
 
 
 (defconst nushell-font-lock-keywords
   `(
 
-     ;; Builtins
-     (,(regexp-opt nushell-builtins 'symbols) . font-lock-builtin-face)
+    ;; Builtins
+    (,(regexp-opt nushell-builtins 'symbols) . font-lock-builtin-face)
 
-     ;; Keywords
-     (,(regexp-opt nushell-keywords 'symbols) . font-lock-keyword-face)
+    ;; Keywords
+    (,(regexp-opt nushell-keywords 'symbols) . font-lock-keyword-face)
 
-     ;; Types
-     (,(regexp-opt nushell-types 'symbols) . font-lock-type-face)
+    ;; Types
+    (,(regexp-opt nushell-types 'symbols) . font-lock-type-face)
 
-     ;; constants
-     ;; duration
-     ("[0-9]+\\(ns\\|us\\|ms\\|sec\\|hr\\|min\\|day\\|wk\\)" . 'font-lock-constant-face)
-     ;; bool
-     ("\\(true\\|false\\|null\\)" . 'font-lock-constant-face)
-     ;; filesizes
-     ("[0-0]+\\(b\\|kb\\|mb\\|gb\\|tb\\|pb\\|eb\\|kib\\|mib\\|gib\\|tib\\|pib\\|eib\\)" . 'font-lock-constant-face)
+    ;; constants
+    ;; duration
+    ("[0-9]+\\(ns\\|us\\|ms\\|sec\\|hr\\|min\\|day\\|wk\\)" . 'font-lock-constant-face)
+    ;; bool
+    ("\\(true\\|false\\|null\\)" . 'font-lock-constant-face)
+    ;; filesizes
+    ("[0-0]+\\(b\\|kb\\|mb\\|gb\\|tb\\|pb\\|eb\\|kib\\|mib\\|gib\\|tib\\|pib\\|eib\\)" . 'font-lock-constant-face)
 
-     ;; Variables
-     ("\\$[[:word:]_\\.-]+" . font-lock-variable-name-face)
+    ;; Variables
+    ("\\$[[:word:]_\\.-]+" . font-lock-variable-name-face)
 
-     ;; String interpolation (beginning of string)
-     ("\\$" . 'font-lock-string-face)
+    ;; String interpolation (beginning of string)
+    ("\\$" . 'font-lock-string-face)
 
-     ;; Redirections
-     ("\\(out\\|err\\|out\\+err\\|err\\+out\\)>" . 'font-lock-warning-face)
+    ;; Redirections
+    ("\\(out\\|err\\|out\\+err\\|err\\+out\\)>" . 'font-lock-warning-face)
 
-     ;; pipes
-     ("|" . 'font-lock-warning-face)
+    ;; pipes
+    ("|" . 'font-lock-warning-face)
 
-     ;; Using system binaries instead of Nushell built-ins
-     ("\\(\\^\\)\\(?:[[:word:]_-]+\\)" 1 'font-lock-warning-face)))
+    ;; Using system binaries instead of Nushell built-ins
+    ("\\(\\^\\)\\(?:[[:word:]_-]+\\)" 1 'font-lock-warning-face)))
 
 (defvar nushell-mode-syntax-table
   (let ((table (make-syntax-table text-mode-syntax-table)))

@@ -241,16 +241,16 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         ))
 #+end_src
 
-- Smart-quit function.
+- DWIM quit function.
 #+begin_src emacs-lisp
 (defun z/quit ()
-  "Close the current window, current tab or frame. (Does not close emacs daemon)"
+  "Save & kill buffer -> close the current window, tab or frame. (Not killing emacs daemon.)"
   (interactive)
-  (when (buffer-modified-p) (condition-case nil (evil-write nil nil) (error)))
-  (kill-buffer-and-window)
+  (when (buffer-modified-p) (condition-case nil (evil-write nil nil) (error))) ;; ignore if it errors
+  (kill-buffer)
+  (evil-window-delete)
   )
 #+end_src
-
 
 ** Evil-mode
 - Make vim's bindings even more mnemonic and improve consistency of implementation.
@@ -420,7 +420,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 ** Minibuffer
 #+begin_src emacs-lisp
 (map! :map vertico-map
-      :nmi "M-d" #'consult-dir)
+      :nmi "M-g" #'consult-dir)
 #+end_src
 
 * Evil mode
@@ -971,76 +971,65 @@ End the "(after! org" block
 (setq
  org-capture-templates
  (doct
-  '(("task" :keys "t"
-     :template
-     ("* [ ] %^{title} %^g"
-      "%?"
-      )
+  '((:group "default opts"
      :headline "inbox"
      :type entry
      :empty-lines-after 1
      :prepend t
      :clock-keep t
-     :children
-     (("cs"       :keys "c" :file "cs/tasks.org")
-      ("personal" :keys "p" :file "personal/tasks.org")
-      ("config"   :keys "o" :file "config/tasks.org")
-      )
-     )
 
-    ("event" :keys "e"
-     :template
-     ("* [#] %^{title} %^g"
-      "%^t"
-      "LOCATION: %^{location}"
-      "PRE: %^{pre}"
-      "%?"
-      )
-     :headline "inbox"
-     :type entry
-     :empty-lines-after 1
-     :prepend t
-     :clock-keep t
      :children
-     (("cs"       :keys "c" :file "cs/events.org")
-      ("personal" :keys "p" :file "personal/events.org")
-      )
-     )
+     (("task" :keys "t"
+       :template
+       ("* [ ] %^{title} %^g"
+        "%?"
+        )
+       :children
+       (("cs"       :keys "c" :file "cs/tasks.org")
+        ("personal" :keys "p" :file "personal/tasks.org")
+        ("config"   :keys "o" :file "config/tasks.org")
+        )
+       )
 
-    ("note" :keys "n"
-     :template
-     ("* %^{title} %^g"
-      ":PROPERTIES:"
-      ":CREATED: %U"
-      ":END:"
-      "%?"
-      )
-     :headline "inbox"
-     :type entry
-     :empty-lines-after 1
-     :prepend t
-     :clock-keep t
-     :children
-     (("cs"       :keys "c" :file "cs/notes.org")
-      ("personal" :keys "p" :file "personal/notes.org")
-      ("config"   :keys "o" :file "config/notes.org")
-      )
-     )
+      ("event" :keys "e"
+       :template
+       ("* [#] %^{title} %^g"
+        "%^t"
+        "LOCATION: %^{location}"
+        "PRE: %^{pre}"
+        "%?"
+        )
+       :children
+       (("cs"       :keys "c" :file "cs/events.org")
+        ("personal" :keys "p" :file "personal/events.org")
+        )
+       )
 
-    ("journal" :keys "j"
-     :template
-     ("* %^{title} %^g"
-      ":PROPERTIES:"
-      ":CREATED: %U"
-      ":END:"
-      "%?"
-      )
-     :type entry
-     :empty-lines-after 1
-     :prepend t
-     :clock-keep t
-     :children ("personal" :keys "p" :file "personal/journal.org")
-     ))))
+      ("note" :keys "n"
+       :template
+       ("* %^{title} %^g"
+        ":PROPERTIES:"
+        ":CREATED: %U"
+        ":END:"
+        "%?"
+        )
+       :children
+       (("cs"       :keys "c" :file "cs/notes.org")
+        ("personal" :keys "p" :file "personal/notes.org")
+        ("config"   :keys "o" :file "config/notes.org")
+        )
+       )
+
+      ("journal" :keys "j"
+       :template
+       ("* %^{title} %^g"
+        ":PROPERTIES:"
+        ":CREATED: %U"
+        ":END:"
+        "%?"
+        )
+       :children ("personal" :keys "p" :file "personal/journal.org")
+       ))))))
 #+end_src
 
 * Programming mode
@@ -1093,7 +1082,6 @@ End the "(after! org" block
 #+begin_src emacs-lisp
 (load! "user/nushell-mode.el")
 #+end_src
-
 
 * [?] Under review
 ** Personal tags

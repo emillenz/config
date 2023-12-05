@@ -44,7 +44,7 @@ bindsym $mod+equal            exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym $mod+minus            exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym $mod+shift+backslash  exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
-bindsym $mod+Next      move workspace to output next
+bindsym $mod+Return    move workspace to output next
 bindsym $mod+1         workspace 1
 bindsym $mod+2         workspace 2
 bindsym $mod+3         workspace 3

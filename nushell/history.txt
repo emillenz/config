@@ -1,6 +1,3 @@
-sudo dnf info | lines | first 200 | where {str contains "Name"} | split column " " | get column11
-sudo dnf info | lines | first 200 | where {str contains "Name"} | split column " " | get column11 | my cocoo
-sudo dnf info | lines | where {str contains "Name"} | split column " " | get column11 | length
 sudo dnf info | lines | where {str contains "Name"} 
 sudo dnf info | lines | where {str contains "Name"} | length
 sudo dnf install chromium
@@ -9998,3 +9995,6 @@ git push
 git push --set-upstream origin master
 sudo git push --set-upstream origin master
 emacs --daemon --execute '(doom/reload)'
+(fd -tf | fzf --preview='bat --theme Solarized (dark) {}' | str trim)
+git pull
+ls

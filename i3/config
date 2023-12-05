@@ -68,22 +68,22 @@ bindsym $mod+c exec i3-msg '[con_mark="c"] focus' || alacritty --class cmd -T cm
 
 # HACK: if multiple instances exist and the one with mark is closed, focus last instance of the program and mark it.
 for_window [class="(?i)zathura"] mark z
-bindsym $mod+z exec i3-msg '[con_mark="z"] focus' || wmctrl -xa zathura && i3-msg 'mark z' || xdg-open "$(fd --extension pdf | rofi -dmenu -i -no-custom -p '  pdf')" &
+bindsym $mod+z exec i3-msg '[con_mark="z"] focus' || i3-msg '[class=(?i)zathura]' && i3-msg 'mark z' || xdg-open "$(fd --extension pdf | rofi -dmenu -i -no-custom -p '  pdf')" &
 
 for_window [class="(?i)emacs"] mark e
-bindsym $mod+e exec i3-msg '[con_mark="e"] focus' || wmctrl -xa emacs && i3-msg 'mark e' || emacsclient --reuse-frame || emacs --daemon --execute '(doom/reload)' &
+bindsym $mod+e exec i3-msg '[con_mark="e"] focus' || i3-msg '[class=(?i)emacs]' && i3-msg 'mark e' || emacsclient --reuse-frame || emacs --daemon --execute '(doom/reload)' &
 bindsym $mod+shift+e exec emacsclient --eval '(emacs-everywhere)' &
 
 # HACK: if multiple instances exist and the one with mark is closed, focus last instance of the program and mark it.
 for_window [class="(?i)firefox"] mark b
-bindsym $mod+b exec i3-msg '[con_mark="b"] focus' || wmctrl -xa firefox && i3-msg 'mark b' || firefox &
+bindsym $mod+b exec i3-msg '[con_mark="b"] focus' || i3-msg '[class=(?i)firefox]' && i3-msg 'mark b' || firefox &
 
 for_window [class="(?i)ncmpcpp"] mark a
 bindsym $mod+a exec i3-msg '[con_mark="a"] focus' || alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp &
 
 for_window [class="(?i)mpv"] mark v
 for_window [class="(?i)nsxiv"] mark V
-bindsym $mod+v exec i3-msg '[con_mark="v"] focus' || wmctrl -xa mpv && i3-msg 'mark v' || mpv $(xclip -o) &
+bindsym $mod+v exec i3-msg '[con_mark="v"] focus' || i3-msg '[class=(?i)mpv]' && i3-msg 'mark v' || mpv $(xclip -o) &
 bindsym $mod+shift+v exec i3-msg '[con_mark="V"] focus' || nsxiv &
 
 bindsym $mod+s exec i3-msg '[con_mark="s"] focus' || keepassxc &

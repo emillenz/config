@@ -44,6 +44,9 @@ font pango: Terminus 8
 for_window [all] title_window_icon yes
 assign [all] output primary
 for_window [urgent="latest"] focus
+
+# used for finding files later (1:1 expanded during config parsing)
+set $rofi rofi -dmenu -i -no-custom -p ' '
 #+end_src
 
 * Workspace assignment
@@ -55,10 +58,6 @@ workspace 1 output primary
 * Keybindings
 Using Alt inside Applications to get the same behaviour, but in the app  in order to minimize conflict with existing shortcuts.
 eg. Emacs: Alt+f-> find-file, eg. Terminal: Alt+e->edit-command-in-editor
-
-| key | assignment |
-|-----+------------|
-|     |            |
 
 ** Modkey
 Using Super (Mod4)
@@ -154,26 +153,24 @@ bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto'
 ** Core programs
 Do not change these keybindings to other keys, you may want to use other programs (eg vim as editor), which is fine, but the binding-chars are universal and used in many apps so they should keep their function.
 
-- Using i3-input here, because if the mark is not set, then i want to launch the program.
+- Using ~i3-msg~ here, because we want to try other commands if one fails
+  + focus current mark -> remark other instance -> attach to server -> start server -> lanuch app
   + Better than focusing per-class, because marks can be reassigned and get automatically updated when a new instance of a program is opened (eg: multiple zathura windows)
-  + For programs that usually multiple instances exist (zathura, firefox...), we automatically update marks on opening new instance / closing old one (with wmctrl + i3-mark)
-  + Only when no instance exsists -> spawn one
+
 - emacs-everywhere: select content to edit, then hit keybind to invoke.
 #+begin_src conf
 for_window [class="(?i)cmd"] mark c
 bindsym $mod+c exec i3-msg '[con_mark="c"] focus' || alacritty --class cmd -T cmd -e tmux new-session -A -s cmd &
 
-# HACK: if multiple instances exist and the one with mark is closed, focus last instance of the program and mark it.
 for_window [class="(?i)zathura"] mark z
-bindsym $mod+z exec i3-msg '[con_mark="z"] focus' || wmctrl -xa zathura && i3-msg 'mark z' || xdg-open "$(fd --extension pdf | rofi -dmenu -i -no-custom -p '  pdf')" &
+bindsym $mod+z exec i3-msg '[con_mark="z"] focus' || i3-msg '[class=(?i)zathura] focus' && i3-msg 'mark z' || xdg-open "$(fd --extension pdf | $rofi)" &
 
 for_window [class="(?i)emacs"] mark e
-bindsym $mod+e exec i3-msg '[con_mark="e"] focus' || wmctrl -xa emacs && i3-msg 'mark e' || emacsclient --reuse-frame || emacs --daemon --execute '(doom/reload)' &
+bindsym $mod+e exec i3-msg '[con_mark="e"] focus' || i3-msg '[class=(?i)emacs] focus' && i3-msg 'mark e' || emacsclient --reuse-frame || emacs --daemon --execute '(doom/reload)' &
 bindsym $mod+shift+e exec emacsclient --eval '(emacs-everywhere)' &
 
-# HACK: if multiple instances exist and the one with mark is closed, focus last instance of the program and mark it.
 for_window [class="(?i)firefox"] mark b
-bindsym $mod+b exec i3-msg '[con_mark="b"] focus' || wmctrl -xa firefox && i3-msg 'mark b' || firefox &
+bindsym $mod+b exec i3-msg '[con_mark="b"] focus' || i3-msg '[class=(?i)firefox] focus' && i3-msg 'mark b' || firefox &
 #+end_src
 
 ** Extra programs
@@ -185,7 +182,7 @@ bindsym $mod+a exec i3-msg '[con_mark="a"] focus' || alacritty --class 'ncmpcpp'
 
 for_window [class="(?i)mpv"] mark v
 for_window [class="(?i)nsxiv"] mark V
-bindsym $mod+v exec i3-msg '[con_mark="v"] focus' || wmctrl -xa mpv && i3-msg 'mark v' || mpv $(xclip -o) &
+bindsym $mod+v exec i3-msg '[con_mark="v"] focus' || i3-msg '[class=(?i)mpv] focus' && i3-msg 'mark v' || mpv $(xclip -o) &
 bindsym $mod+shift+v exec i3-msg '[con_mark="V"] focus' || nsxiv &
 
 bindsym $mod+s exec i3-msg '[con_mark="s"] focus' || keepassxc &
@@ -277,8 +274,8 @@ mode "$timer" {
 #+begin_src conf
 set $find <find> pdf | uni
 mode "$find" {
-  bindsym p exec xdg-open "$(fd --extension pdf | rofi -dmenu -i -no-custom -p '  pdf')"; mode "default"
-  bindsym u exec xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | rofi -dmenu -i -no-custom -p '  pdf')"; mode "default"
+  bindsym p exec xdg-open "$(fd --extension pdf | $rofi)"; mode "default"
+  bindsym u exec xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)"; mode "default"
   bindsym Escape mode "default"
 }
 #+end_src

@@ -52,7 +52,7 @@ git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 
 * Gui apps & packages
 #+begin_src sh
-yay --noconfirm -S i3 i3lock zathura zathura-pdf-mupdf arandr mpv rofi light wmctrl sxiv unclutter firefox pavucontrol pasystray polybar playerctl blueman xorg-xprop wmctrl xremap-x11-bin polybar light thunar networkmanager network-manager-applet mpd dunst notify-send nsxiv xorg-xwininfo keepassxc maim pulsemixer
+yay --noconfirm -S i3 i3lock zathura zathura-pdf-mupdf arandr mpv rofi light sxiv unclutter firefox pavucontrol pasystray polybar playerctl blueman xorg-xprop xremap-x11-bin polybar light thunar networkmanager network-manager-applet mpd dunst notify-send nsxiv xorg-xwininfo keepassxc maim pulsemixer
 #+end_src
 
 ** Enable daemons

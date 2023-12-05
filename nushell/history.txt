@@ -1,12 +1,3 @@
-sudo dnf info | lines | where {str contains "Name"} 
-sudo dnf info | lines | where {str contains "Name"} | length
-sudo dnf install chromium
-sudo dnf search q torrent
-sudo dnf search qbittorrent
-sudo dnf instal qbittorrent
-sudo dnf install qbittorrent
-pulsemixer --change-volume +2 --max-volume 100
-pamix --change-volume +2 --max-volume 100
 pulsemixer
 pa
 pasystray
@@ -9998,3 +9989,12 @@ emacs --daemon --execute '(doom/reload)'
 (fd -tf | fzf --preview='bat --theme Solarized (dark) {}' | str trim)
 git pull
 ls
+i3-msg '[class=zathura] focus'
+i3-msg '[class=emacs] focus'
+i3-msg '[class=Emacs] focus'
+i3-msg '[class=(?i)zathura] focus; mark z'
+i3-msg '[class=(?i)zathura] focus; mark c'
+i3-msg '[class=(?i)zathura] focus & mark c'
+i3-msg '[class=(?i)zathura] focus, mark c'
+i3-msg '[class=(?i)Emacs] focus, mark c'
+i3-msg [class=(?i)Emacs] focus, mark c

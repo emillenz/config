@@ -1,6 +1,3 @@
-url encode -h | bat
-[[i]; [($input | str join ' ')]] | url encode
- [($input | str join ' ')] | url encode
 use -h | bat
 use  -h | bat
 use help
@@ -9998,3 +9995,6 @@ ls xprofile
 bat .xprofile
 e
 emacsclient -cr
+cd i3/
+ls-
+ls

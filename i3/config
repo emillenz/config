@@ -68,40 +68,50 @@ bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto'
 
 for_window [class="(?i)cmd"]     mark c
 for_window [class="(?i)zathura"] mark z
-for_window [class="(?i)firefox"] mark b
+for_window [class="(?i)firefox"] mark w
 for_window [class="(?i)emacs"]   mark e
 
-bindsym $mod+c exec i3-msg '[con_mark="c"] focus' \
-|| alacritty --class cmd -T cmd -e tmux new-session -A -s cmd &
+bindsym $mod+c exec \
+    i3-msg '[con_mark="c"] focus' \
+    || alacritty --class cmd -T cmd -e tmux new-session -A -s cmd &
 
-bindsym $mod+z exec i3-msg '[con_mark="z"] focus' \
-|| i3-msg '[class=(?i)zathura] focus' && i3-msg 'mark z' \
-|| xdg-open "$(fd --extension pdf | $rofi)" &
+bindsym $mod+z exec \
+    i3-msg '[con_mark="z"] focus' \
+    || i3-msg '[class=(?i)zathura] focus' && i3-msg 'mark z' \
+    || xdg-open "$(fd --extension pdf | $rofi)" &
 
-bindsym $mod+e exec i3-msg '[con_mark="e"] focus' \
-|| i3-msg '[class=(?i)emacs] focus' && i3-msg 'mark e' \
-|| emacsclient --reuse-frame || emacs --daemon --execute '(doom/reload)' &
 bindsym --release $mod+shift+e exec emacsclient --eval '(emacs-everywhere)' &
+bindsym $mod+e exec \
+    i3-msg '[con_mark="e"] focus' \
+    || i3-msg '[class=(?i)emacs] focus' && i3-msg 'mark e' \
+    || emacsclient --reuse-frame || emacs --daemon --execute '(doom/reload)' &
 
-bindsym $mod+b exec i3-msg '[con_mark="b"] focus' || i3-msg '[class=(?i)firefox] focus' && i3-msg 'mark b' || firefox &
+bindsym $mod+w exec \
+    i3-msg '[con_mark="w"] focus' \
+    || i3-msg '[class=(?i)firefox] focus' && i3-msg 'mark w' \
+    || firefox &
 
 for_window [class="(?i)ncmpcpp"]   mark a
 for_window [class="(?i)keepassxc"] mark s
 for_window [class="(?i)mpv"]       mark v
 for_window [class="(?i)nsxiv"]     mark V
 
-bindsym $mod+a exec i3-msg '[con_mark="a"] focus' \
-|| alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp &
+bindsym $mod+a exec \
+    i3-msg '[con_mark="a"] focus' \
+    || alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp &
 
-bindsym $mod+v exec i3-msg '[con_mark="v"] focus' \
-|| i3-msg '[class=(?i)mpv] focus' && i3-msg 'mark v'\
-|| mpv $(xclip -o) &
+bindsym $mod+v exec \
+    i3-msg '[con_mark="v"] focus' \
+    || i3-msg '[class=(?i)mpv] focus' && i3-msg 'mark v'\
+    || mpv $(xclip -o) &
 
-bindsym $mod+shift+v exec i3-msg '[con_mark="V"] focus'\
-|| nsxiv &
+bindsym $mod+shift+v exec \
+    i3-msg '[con_mark="V"] focus'\
+    || nsxiv &
 
-bindsym $mod+s exec i3-msg '[con_mark="s"] focus'\
-|| keepassxc &
+bindsym $mod+s exec\
+    i3-msg '[con_mark="s"] focus'\
+    || keepassxc &
 
 bindsym $mod+space mode "$leader"
 set $leader <leader> \

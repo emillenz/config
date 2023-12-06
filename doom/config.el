@@ -75,6 +75,8 @@
 
 (tab-bar-mode 1)
 (setq tab-bar-tab-hints t
+      tab-bar-new-button-show nil
+      tab-bar-new-tab-to 'rightmost
       tab-bar-close-button-show nil)
 ;; Misc Options:1 ends here
 

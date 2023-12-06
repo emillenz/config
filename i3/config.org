@@ -14,7 +14,7 @@
  - Accessing a program is as efficient as possible and always consistent, no matter where in your desktop you are (different monitor/workspace/app order) You will not Alt+tab through apps to get to the one you are thinking of. Instead the app is always bound to the same mnemonical keybind.
    + We do not use a per-app workspace workflow
      + No additional layering
-     + All apps in the same "container", // vs unneccessarily individually nested and layered.
+     + All apps in the same "container" and not unneccessarily individually nested, compartmentalized on different workspaces etc...
      + Better overview of what is where and currently opened and how to get to it (mark or select with mouse)
      + 1 Workspace per output
        + easy window sending to outputs
@@ -25,7 +25,7 @@
 
 * Startup automation
 [[file:~/.config/bin/startup][Startup]] Launches processes and daemons i need for my workflow.
-- Make sure that your user never get sudo prompted for commands, bc the script runs non-interactive sudo commands. (see: [[file:~/.config/commands.sh][Commands]] on how to never be sudoprompted)
+- Make sure that your user never get sudo prompted for commands, bc the script runs non-interactive sudo commands. (see: [[file:~/.config/setup.org][Setup]] on how to never be sudoprompted)
 #+begin_src conf
 exec_always --no-startup-id "~/.config/bin/startup"
 #+end_src
@@ -69,7 +69,7 @@ set $mod Mod4
 
 ** Mouse
 - Hold down the modkey to resize/move the window with M1 / M2.
-- Middle mouse button for killing the Window (consistent with other gui Apps like browser )
+- Middle mouse button for killing the Window (consistent with other gui Apps like webbrowser )
 - Unmap scrolling on titlebar // prevents accidental window switches
 #+begin_src conf
 floating_modifier $mod
@@ -161,7 +161,7 @@ Do not change these keybindings to other keys, you may want to use other program
 #+begin_src conf
 for_window [class="(?i)cmd"]     mark c
 for_window [class="(?i)zathura"] mark z
-for_window [class="(?i)firefox"] mark b
+for_window [class="(?i)firefox"] mark w
 for_window [class="(?i)emacs"]   mark e
 
 bindsym $mod+c exec \
@@ -179,16 +179,15 @@ bindsym $mod+e exec \
     || i3-msg '[class=(?i)emacs] focus' && i3-msg 'mark e' \
     || emacsclient --reuse-frame || emacs --daemon --execute '(doom/reload)' &
 
-
-bindsym $mod+b exec \
-    i3-msg '[con_mark="b"] focus' \
-    || i3-msg '[class=(?i)firefox] focus' && i3-msg 'mark b' \
+bindsym $mod+w exec \
+    i3-msg '[con_mark="w"] focus' \
+    || i3-msg '[class=(?i)firefox] focus' && i3-msg 'mark w' \
     || firefox &
 #+end_src
 
 ** Extra programs
 - NOTE: mpv will try to use clipboard url when started up.
-  + Copy a videolink (ex:in the browser) open with mpv (instead of browser) // mpv >> browser
+  + Copy a videolink (ex:in the webbrowser) open with mpv (instead of webbrowser) // mpv >> webbrowser
 #+begin_src conf
 for_window [class="(?i)ncmpcpp"]   mark a
 for_window [class="(?i)keepassxc"] mark s

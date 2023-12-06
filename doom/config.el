@@ -181,12 +181,19 @@
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:2]]
 (defun z/quit ()
-  "Save & kill buffer -> close the current window, tab or frame. (Not killing emacs daemon.)"
+  "Save & kill buffer -> close: {window -> tab -> frame}. (Do not kill emacs daemon.)"
   (interactive)
-  (when (buffer-modified-p) (condition-case nil (evil-write nil nil) (error))) ;; ignore if it errors
+  (when (buffer-modified-p)
+    (condition-case nil (evil-write nil nil)
+      (error)
+      ))
   (kill-buffer)
-  (evil-window-delete)
-  )
+  (condition-case nil (evil-window-delete)
+    (error
+       (condition-case nil (tab-bar-close-tab)
+         (error
+          (delete-frame)
+            )))))
 ;; Global navigation scheme:2 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
@@ -483,6 +490,7 @@
 ;; [[file:config.org::*Ligatures][Ligatures:1]]
 (setq-default prettify-symbols-alist
               '(("->" . "→")
+                ("|" . "│")
                 ("<-" . "←")
                 ("=>" . "⇒")
                 ("<=" . "⇐")
@@ -655,9 +663,13 @@
 (defun z/org-link-file ()
   "Insert a file link."
   (interactive)
-  (let ((file (org-link-complete-file)))
+  (let* ((file (org-link-complete-file))
+        (title (replace-regexp-in-string "file:" "" (capitalize (replace-regexp-in-string "[-_.]" " " (file-name-sans-extension (file-name-nondirectory file)))))))
     (insert
-     (format " [[%s][%s]]" file (replace-regexp-in-string "file:" "" (capitalize (replace-regexp-in-string "[-_.]" " " (file-name-sans-extension (file-name-nondirectory file)))))))))
+     (format " [[%s][%s]]"
+      file
+      title
+      ))))
 ;; Link file:1 ends here
 
 ;; [[file:config.org::*Jump to src file][Jump to src file:1]]
@@ -703,12 +715,11 @@ Jumps at tangled code from org src block."
 (setq
  org-capture-templates
  (doct
-  '((:group "default opts"
+  '((:group "default-opts"
      :headline "inbox"
-     :type entry
-     :empty-lines-after 1
      :prepend t
      :clock-keep t
+     :empty-lines-after 0
 
      :children
      (("task" :keys "t"
@@ -717,7 +728,13 @@ Jumps at tangled code from org src block."
         "%?"
         )
        :children
-       (("cs"       :keys "c" :file "cs/tasks.org")
+       (("cs"   :keys "c" :file "cs/tasks.org"
+         :children
+         (("la" :keys "l" :olp ("linear algebra" "inbox"))
+          ("ep" :keys "e" :olp ("einfuehrung programmierung" "inbox"))
+          ("dm" :keys "d" :olp ("discrete math" "inbox"))
+          ("ad" :keys "d" :olp ("algorithms & datastructures" "inbox"))
+          ))
         ("personal" :keys "p" :file "personal/tasks.org")
         ("config"   :keys "o" :file "config/tasks.org")
         )
@@ -745,6 +762,7 @@ Jumps at tangled code from org src block."
         ":END:"
         "%?"
         )
+       :empty-lines-after 1
        :children
        (("cs"       :keys "c" :file "cs/notes.org")
         ("personal" :keys "p" :file "personal/notes.org")
@@ -760,6 +778,7 @@ Jumps at tangled code from org src block."
         ":END:"
         "%?"
         )
+       :empty-lines-after 1
        :children ("personal" :keys "p" :file "personal/journal.org")
        ))))))
 ;; Capture templates:1 ends here

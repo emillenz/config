@@ -159,52 +159,93 @@ Do not change these keybindings to other keys, you may want to use other program
 
 - emacs-everywhere: select content to edit, then hit keybind to invoke.
 #+begin_src conf
-for_window [class="(?i)cmd"] mark c
-bindsym $mod+c exec i3-msg '[con_mark="c"] focus' || alacritty --class cmd -T cmd -e tmux new-session -A -s cmd &
-
+for_window [class="(?i)cmd"]     mark c
 for_window [class="(?i)zathura"] mark z
-bindsym $mod+z exec i3-msg '[con_mark="z"] focus' || i3-msg '[class=(?i)zathura] focus' && i3-msg 'mark z' || xdg-open "$(fd --extension pdf | $rofi)" &
-
-for_window [class="(?i)emacs"] mark e
-bindsym $mod+e exec i3-msg '[con_mark="e"] focus' || i3-msg '[class=(?i)emacs] focus' && i3-msg 'mark e' || emacsclient --reuse-frame || emacs --daemon --execute '(doom/reload)' &
-bindsym $mod+shift+e exec emacsclient --eval '(emacs-everywhere)' &
-
 for_window [class="(?i)firefox"] mark b
-bindsym $mod+b exec i3-msg '[con_mark="b"] focus' || i3-msg '[class=(?i)firefox] focus' && i3-msg 'mark b' || firefox &
+for_window [class="(?i)emacs"]   mark e
+
+bindsym $mod+c exec \
+    i3-msg '[con_mark="c"] focus' \
+    || alacritty --class cmd -T cmd -e tmux new-session -A -s cmd &
+
+bindsym $mod+z exec \
+    i3-msg '[con_mark="z"] focus' \
+    || i3-msg '[class=(?i)zathura] focus' && i3-msg 'mark z' \
+    || xdg-open "$(fd --extension pdf | $rofi)" &
+
+bindsym --release $mod+shift+e exec emacsclient --eval '(emacs-everywhere)' &
+bindsym $mod+e exec \
+    i3-msg '[con_mark="e"] focus' \
+    || i3-msg '[class=(?i)emacs] focus' && i3-msg 'mark e' \
+    || emacsclient --reuse-frame || emacs --daemon --execute '(doom/reload)' &
+
+
+bindsym $mod+b exec \
+    i3-msg '[con_mark="b"] focus' \
+    || i3-msg '[class=(?i)firefox] focus' && i3-msg 'mark b' \
+    || firefox &
 #+end_src
 
 ** Extra programs
 - NOTE: mpv will try to use clipboard url when started up.
   + Copy a videolink (ex:in the browser) open with mpv (instead of browser) // mpv >> browser
 #+begin_src conf
-for_window [class="(?i)ncmpcpp"] mark a
-bindsym $mod+a exec i3-msg '[con_mark="a"] focus' || alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp &
-
-for_window [class="(?i)mpv"] mark v
-for_window [class="(?i)nsxiv"] mark V
-bindsym $mod+v exec i3-msg '[con_mark="v"] focus' || i3-msg '[class=(?i)mpv] focus' && i3-msg 'mark v' || mpv $(xclip -o) &
-bindsym $mod+shift+v exec i3-msg '[con_mark="V"] focus' || nsxiv &
-
-bindsym $mod+s exec i3-msg '[con_mark="s"] focus' || keepassxc &
+for_window [class="(?i)ncmpcpp"]   mark a
 for_window [class="(?i)keepassxc"] mark s
+for_window [class="(?i)mpv"]       mark v
+for_window [class="(?i)nsxiv"]     mark V
+
+bindsym $mod+a exec \
+    i3-msg '[con_mark="a"] focus' \
+    || alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp &
+
+bindsym $mod+v exec \
+    i3-msg '[con_mark="v"] focus' \
+    || i3-msg '[class=(?i)mpv] focus' && i3-msg 'mark v'\
+    || mpv $(xclip -o) &
+
+bindsym $mod+shift+v exec \
+    i3-msg '[con_mark="V"] focus'\
+    || nsxiv &
+
+bindsym $mod+s exec\
+    i3-msg '[con_mark="s"] focus'\
+    || keepassxc &
 #+end_src
 
 ** Leader
 - For all system related apps and tasks.
 #+begin_src conf
 bindsym $mod+space mode "$leader"
-set $leader <leader> audios | ^audio | nmtui | outputs | [^o] layouts | btconnect | [p] killprocess | [^p] htop | find+ | keyboard+ | timer+ | sysact+ | ^screenshot+
+set $leader <leader> \
+│ audio \
+│ ^audio \
+│ nmtui \
+│ outputs \
+│ [^o] layouts \
+│ btconnect \
+│ [p] killprocess \
+│ [^p] htop \
+│ find+ \
+│ keyboard+ \
+│ timer+ \
+│ sysact+ \
+│ ^screenshot+
+
 
 mode "$leader" {
   bindsym a       exec ~/.config/bin/mini-audio; mode "default"
-  bindsym shift+a exec i3-msg '[con_mark="_a"] focus' || alacritty --class 'audio' -T 'audio' -e pulsemixer &; mode "default"
+  bindsym shift+a exec i3-msg '[con_mark="_a"] focus' \
+  || alacritty --class 'audio' -T 'audio' -e pulsemixer &; mode "default"
   bindsym o       exec ~/.config/bin/mini-output; mode "default"
   bindsym shift+o exec ~/.config/bin/mini-layout; mode "default"
   bindsym shift+s exec ~/.config/bin/mini-screenshot; mode "default"
   bindsym b       exec ~/.config/bin/mini-bluetooth; mode "default"
   bindsym p       exec ~/.config/bin/mini-killprocess; mode "default"
-  bindsym shift+p exec i3-msg '[con_mark="_h"] focus' || alacritty --class 'htop' -T 'htop' -e htop --tree &; mode "default"
-  bindsym n       exec i3-msg '[con_mark="_n"] focus' || alacritty --class 'nmtui' -T 'nmtui' -e nmtui &; mode "default"
+  bindsym shift+p exec i3-msg '[con_mark="_h"] focus'\
+  || alacritty --class 'htop' -T 'htop' -e htop --tree &; mode "default"
+  bindsym n       exec i3-msg '[con_mark="_n"] focus' \
+  || alacritty --class 'nmtui' -T 'nmtui' -e nmtui &; mode "default"
 
   bindsym f      mode "$find"
   bindsym k      mode "$keyboard"
@@ -221,7 +262,12 @@ for_window [class="(?i)audio"] mark _a
 *** Keyboard layout
 - Somtimes i use multiple different keyboard layouts -> switch between them.
 #+begin_src conf
-set $keyboard <keyboard> dvorak | ch | us | remaps
+set $keyboard <keyboard> \
+│ dvorak \
+│ ch \
+│ us \
+│ remaps
+
 mode "$keyboard" {
   bindsym d      exec setxkbmap us dvorak; mode "default"
   bindsym c      exec setxkbmap ch;        mode "default"
@@ -233,7 +279,16 @@ mode "$keyboard" {
 *** System Action
 - Always hibernate -> Preserves the state inbetween reboots keeps workflow #DRY.
 #+begin_src conf
-set $sysact <sysact> restart-i3 | ^reboot | lock | screen-off | poweroff | exit | hibernate | ^startup
+set $sysact <sysact> \
+│ restart-i3 \
+│ ^reboot \
+│ lock \
+│ screen-off \
+│ poweroff \
+│ exit \
+│ hibernate \
+│ ^startup
+
 mode "$sysact" {
   bindsym r       exec i3-msg restart;                                mode "default"
   bindsym e       exec i3-msg exit;                                   mode "default"
@@ -250,7 +305,15 @@ mode "$sysact" {
 *** Timer
 This is a simple timer that is displayed in Polybar and is useful to track time spent/to be more efficient and productive with time management.
 #+begin_src conf
-set $timer <timer> toggle | reset | stopwatch | interval: 60/5 | ^interval: 30/5 | prompt | [1-9] timer: *10m
+set $timer <timer> \
+│ toggle \
+│ reset \
+│ stopwatch \
+│ interval: 60/5 \
+│ ^interval: 30/5 \
+│ prompt \
+│ [1-9] timer: *10m
+
 mode "$timer" {
   bindsym t       exec ~/.config/bin/timer toggle;       mode "default"
   bindsym r       exec ~/.config/bin/timer reset;        mode "default"
@@ -272,7 +335,10 @@ mode "$timer" {
 
 *** Find
 #+begin_src conf
-set $find <find> pdf | uni
+set $find <find> \
+│ pdf \
+│ uni
+
 mode "$find" {
   bindsym p exec xdg-open "$(fd --extension pdf | $rofi)"; mode "default"
   bindsym u exec xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)"; mode "default"
@@ -330,7 +396,7 @@ This is not neccessary, since i am using polybar instead, but if polybar is not 
 bar {
   mode dock
   position bottom
-  separator_symbol " | "
+  separator_symbol " │ "
   status_command "i3blocks"
   tray_output primary
 colors {

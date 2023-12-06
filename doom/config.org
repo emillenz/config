@@ -244,12 +244,19 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - DWIM quit function.
 #+begin_src emacs-lisp
 (defun z/quit ()
-  "Save & kill buffer -> close the current window, tab or frame. (Not killing emacs daemon.)"
+  "Save & kill buffer -> close: {window -> tab -> frame}. (Do not kill emacs daemon.)"
   (interactive)
-  (when (buffer-modified-p) (condition-case nil (evil-write nil nil) (error))) ;; ignore if it errors
+  (when (buffer-modified-p)
+    (condition-case nil (evil-write nil nil)
+      (error)
+      ))
   (kill-buffer)
-  (evil-window-delete)
-  )
+  (condition-case nil (evil-window-delete)
+    (error
+       (condition-case nil (tab-bar-close-tab)
+         (error
+          (delete-frame)
+            )))))
 #+end_src
 
 ** Evil-mode
@@ -620,6 +627,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 #+begin_src emacs-lisp
 (setq-default prettify-symbols-alist
               '(("->" . "→")
+                ("|" . "│")
                 ("<-" . "←")
                 ("=>" . "⇒")
                 ("<=" . "⇐")
@@ -907,12 +915,16 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 
 More convenient, with a nice display.
 #+begin_src emacs-lisp
-  (defun z/org-link-file ()
-    "Insert a file link."
-    (interactive)
-    (let ((file (org-link-complete-file)))
-      (insert
-       (format " [[%s][%s]]" file (replace-regexp-in-string "file:" "" (capitalize (replace-regexp-in-string "[-_.]" " " (file-name-sans-extension (file-name-nondirectory file)))))))))
+(defun z/org-link-file ()
+  "Insert a file link."
+  (interactive)
+  (let* ((file (org-link-complete-file))
+        (title (replace-regexp-in-string "file:" "" (capitalize (replace-regexp-in-string "[-_.]" " " (file-name-sans-extension (file-name-nondirectory file)))))))
+    (insert
+     (format " [[%s][%s]]"
+      file
+      title
+      ))))
 #+end_src
 
 ** Jump to src file
@@ -971,12 +983,11 @@ End the "(after! org" block
 (setq
  org-capture-templates
  (doct
-  '((:group "default opts"
+  '((:group "default-opts"
      :headline "inbox"
-     :type entry
-     :empty-lines-after 1
      :prepend t
      :clock-keep t
+     :empty-lines-after 0
 
      :children
      (("task" :keys "t"
@@ -985,7 +996,13 @@ End the "(after! org" block
         "%?"
         )
        :children
-       (("cs"       :keys "c" :file "cs/tasks.org")
+       (("cs"   :keys "c" :file "cs/tasks.org"
+         :children
+         (("la" :keys "l" :olp ("linear algebra" "inbox"))
+          ("ep" :keys "e" :olp ("einfuehrung programmierung" "inbox"))
+          ("dm" :keys "d" :olp ("discrete math" "inbox"))
+          ("ad" :keys "d" :olp ("algorithms & datastructures" "inbox"))
+          ))
         ("personal" :keys "p" :file "personal/tasks.org")
         ("config"   :keys "o" :file "config/tasks.org")
         )
@@ -1013,6 +1030,7 @@ End the "(after! org" block
         ":END:"
         "%?"
         )
+       :empty-lines-after 1
        :children
        (("cs"       :keys "c" :file "cs/notes.org")
         ("personal" :keys "p" :file "personal/notes.org")
@@ -1028,6 +1046,7 @@ End the "(after! org" block
         ":END:"
         "%?"
         )
+       :empty-lines-after 1
        :children ("personal" :keys "p" :file "personal/journal.org")
        ))))))
 #+end_src
@@ -1088,8 +1107,7 @@ End the "(after! org" block
 - Not used currently
 #+begin_src emacs-lisp :tangle no
   (setq org-tag-persistent-alist
-        '(
-          ("ep "      . ?e)
+        '(("ep "      . ?e)
           ("la"       . ?l)
           ("ad"       . ?a)
           ("dm"       . ?d)

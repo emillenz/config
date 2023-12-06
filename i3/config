@@ -12,6 +12,9 @@ for_window [all] title_window_icon yes
 assign [all] output primary
 for_window [urgent="latest"] focus
 
+# used for finding files later (1:1 expanded during config parsing)
+set $rofi rofi -dmenu -i -no-custom -p ' '
+
 workspace 1 output primary
 
 set $mod Mod4
@@ -63,45 +66,73 @@ bindsym $mod+semicolon  exec rofi -show run
 bindsym $mod+m          exec i3-input -F 'mark %s' -l 1 -P 'Mark:'
 bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto'
 
-for_window [class="(?i)cmd"] mark c
-bindsym $mod+c exec i3-msg '[con_mark="c"] focus' || alacritty --class cmd -T cmd -e tmux new-session -A -s cmd &
-
-# HACK: if multiple instances exist and the one with mark is closed, focus last instance of the program and mark it.
+for_window [class="(?i)cmd"]     mark c
 for_window [class="(?i)zathura"] mark z
-bindsym $mod+z exec i3-msg '[con_mark="z"] focus' || i3-msg '[class=(?i)zathura]' && i3-msg 'mark z' || xdg-open "$(fd --extension pdf | rofi -dmenu -i -no-custom -p '  pdf')" &
-
-for_window [class="(?i)emacs"] mark e
-bindsym $mod+e exec i3-msg '[con_mark="e"] focus' || i3-msg '[class=(?i)emacs]' && i3-msg 'mark e' || emacsclient --reuse-frame || emacs --daemon --execute '(doom/reload)' &
-bindsym $mod+shift+e exec emacsclient --eval '(emacs-everywhere)' &
-
-# HACK: if multiple instances exist and the one with mark is closed, focus last instance of the program and mark it.
 for_window [class="(?i)firefox"] mark b
-bindsym $mod+b exec i3-msg '[con_mark="b"] focus' || i3-msg '[class=(?i)firefox]' && i3-msg 'mark b' || firefox &
+for_window [class="(?i)emacs"]   mark e
 
-for_window [class="(?i)ncmpcpp"] mark a
-bindsym $mod+a exec i3-msg '[con_mark="a"] focus' || alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp &
+bindsym $mod+c exec i3-msg '[con_mark="c"] focus' \
+|| alacritty --class cmd -T cmd -e tmux new-session -A -s cmd &
 
-for_window [class="(?i)mpv"] mark v
-for_window [class="(?i)nsxiv"] mark V
-bindsym $mod+v exec i3-msg '[con_mark="v"] focus' || i3-msg '[class=(?i)mpv]' && i3-msg 'mark v' || mpv $(xclip -o) &
-bindsym $mod+shift+v exec i3-msg '[con_mark="V"] focus' || nsxiv &
+bindsym $mod+z exec i3-msg '[con_mark="z"] focus' \
+|| i3-msg '[class=(?i)zathura] focus' && i3-msg 'mark z' \
+|| xdg-open "$(fd --extension pdf | $rofi)" &
 
-bindsym $mod+s exec i3-msg '[con_mark="s"] focus' || keepassxc &
+bindsym $mod+e exec i3-msg '[con_mark="e"] focus' \
+|| i3-msg '[class=(?i)emacs] focus' && i3-msg 'mark e' \
+|| emacsclient --reuse-frame || emacs --daemon --execute '(doom/reload)' &
+bindsym --release $mod+shift+e exec emacsclient --eval '(emacs-everywhere)' &
+
+bindsym $mod+b exec i3-msg '[con_mark="b"] focus' || i3-msg '[class=(?i)firefox] focus' && i3-msg 'mark b' || firefox &
+
+for_window [class="(?i)ncmpcpp"]   mark a
 for_window [class="(?i)keepassxc"] mark s
+for_window [class="(?i)mpv"]       mark v
+for_window [class="(?i)nsxiv"]     mark V
+
+bindsym $mod+a exec i3-msg '[con_mark="a"] focus' \
+|| alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp &
+
+bindsym $mod+v exec i3-msg '[con_mark="v"] focus' \
+|| i3-msg '[class=(?i)mpv] focus' && i3-msg 'mark v'\
+|| mpv $(xclip -o) &
+
+bindsym $mod+shift+v exec i3-msg '[con_mark="V"] focus'\
+|| nsxiv &
+
+bindsym $mod+s exec i3-msg '[con_mark="s"] focus'\
+|| keepassxc &
 
 bindsym $mod+space mode "$leader"
-set $leader <leader> audios | ^audio | nmtui | outputs | [^o] layouts | btconnect | [p] killprocess | [^p] htop | find+ | keyboard+ | timer+ | sysact+ | ^screenshot+
+set $leader <leader> \
+│ audio \
+│ ^audio \
+│ nmtui \
+│ outputs \
+│ [^o] layouts \
+│ btconnect \
+│ [p] killprocess \
+│ [^p] htop \
+│ find+ \
+│ keyboard+ \
+│ timer+ \
+│ sysact+ \
+│ ^screenshot+
+
 
 mode "$leader" {
   bindsym a       exec ~/.config/bin/mini-audio; mode "default"
-  bindsym shift+a exec i3-msg '[con_mark="_a"] focus' || alacritty --class 'audio' -T 'audio' -e pulsemixer &; mode "default"
+  bindsym shift+a exec i3-msg '[con_mark="_a"] focus' \
+  || alacritty --class 'audio' -T 'audio' -e pulsemixer &; mode "default"
   bindsym o       exec ~/.config/bin/mini-output; mode "default"
   bindsym shift+o exec ~/.config/bin/mini-layout; mode "default"
   bindsym shift+s exec ~/.config/bin/mini-screenshot; mode "default"
   bindsym b       exec ~/.config/bin/mini-bluetooth; mode "default"
   bindsym p       exec ~/.config/bin/mini-killprocess; mode "default"
-  bindsym shift+p exec i3-msg '[con_mark="_h"] focus' || alacritty --class 'htop' -T 'htop' -e htop --tree &; mode "default"
-  bindsym n       exec i3-msg '[con_mark="_n"] focus' || alacritty --class 'nmtui' -T 'nmtui' -e nmtui &; mode "default"
+  bindsym shift+p exec i3-msg '[con_mark="_h"] focus'\
+  || alacritty --class 'htop' -T 'htop' -e htop --tree &; mode "default"
+  bindsym n       exec i3-msg '[con_mark="_n"] focus' \
+  || alacritty --class 'nmtui' -T 'nmtui' -e nmtui &; mode "default"
 
   bindsym f      mode "$find"
   bindsym k      mode "$keyboard"
@@ -114,7 +145,12 @@ for_window [class="(?i)htop"]  mark _h
 for_window [class="(?i)nmtui"] mark _n
 for_window [class="(?i)audio"] mark _a
 
-set $keyboard <keyboard> dvorak | ch | us | remaps
+set $keyboard <keyboard> \
+│ dvorak \
+│ ch \
+│ us \
+│ remaps
+
 mode "$keyboard" {
   bindsym d      exec setxkbmap us dvorak; mode "default"
   bindsym c      exec setxkbmap ch;        mode "default"
@@ -122,7 +158,16 @@ mode "$keyboard" {
   bindsym Escape                           mode "default"
 }
 
-set $sysact <sysact> restart-i3 | ^reboot | lock | screen-off | poweroff | exit | hibernate | ^startup
+set $sysact <sysact> \
+│ restart-i3 \
+│ ^reboot \
+│ lock \
+│ screen-off \
+│ poweroff \
+│ exit \
+│ hibernate \
+│ ^startup
+
 mode "$sysact" {
   bindsym r       exec i3-msg restart;                                mode "default"
   bindsym e       exec i3-msg exit;                                   mode "default"
@@ -135,7 +180,15 @@ mode "$sysact" {
   bindsym Escape                                                      mode "default"
 }
 
-set $timer <timer> toggle | reset | stopwatch | interval: 60/5 | ^interval: 30/5 | prompt | [1-9] timer: *10m
+set $timer <timer> \
+│ toggle \
+│ reset \
+│ stopwatch \
+│ interval: 60/5 \
+│ ^interval: 30/5 \
+│ prompt \
+│ [1-9] timer: *10m
+
 mode "$timer" {
   bindsym t       exec ~/.config/bin/timer toggle;       mode "default"
   bindsym r       exec ~/.config/bin/timer reset;        mode "default"
@@ -154,10 +207,13 @@ mode "$timer" {
   bindsym Escape                                         mode "default"
 }
 
-set $find <find> pdf | uni
+set $find <find> \
+│ pdf \
+│ uni
+
 mode "$find" {
-  bindsym p exec xdg-open "$(fd --extension pdf | rofi -dmenu -i -no-custom -p '  pdf')"; mode "default"
-  bindsym u exec xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | rofi -dmenu -i -no-custom -p '  pdf')"; mode "default"
+  bindsym p exec xdg-open "$(fd --extension pdf | $rofi)"; mode "default"
+  bindsym u exec xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)"; mode "default"
   bindsym Escape mode "default"
 }
 

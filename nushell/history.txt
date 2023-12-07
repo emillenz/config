@@ -1,7 +1,3 @@
-wa 2000 * 12 / 365
-wa 2000 * 12 / 365 exact
-wa 2000 * 12 / 365 float
-wa 2000 * 12 / 365 not exact
 wa is my ass
 wa energy of living human
 zathura  -h | bat
@@ -9998,3 +9994,7 @@ fd  --help | bat --theme 'Solarized (dark)' --language man
 cd i3/
 ls
 av i3_marks_config.org
+xprop
+?class
+class
+xprop

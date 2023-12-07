@@ -14,14 +14,10 @@
  - Accessing a program is as efficient as possible and always consistent, no matter where in your desktop you are (different monitor/workspace/app order) You will not Alt+tab through apps to get to the one you are thinking of. Instead the app is always bound to the same mnemonical keybind.
    + We do not use a per-app workspace workflow
      + No additional layering
-     + All apps in the same "container" and not unneccessarily individually nested, compartmentalized on different workspaces etc...
-     + Better overview of what is where and currently opened and how to get to it (mark or select with mouse)
-     + 1 Workspace per output
-       + easy window sending to outputs
+     + All apps of the same class in the same "container", clear structure...
  - Minimal keystrokes to get from where you are to the app you want to be.
  - Keyboard driven workflow only. (Vi-mnemonic bindings)
- - Strictly avoid multitasking -> Always work in maximized-mode to never have to resize a window.
- - HACK: shell commands are unable to be changed to nushell and are bash
+ - Strictly avoid multitasking -> Always work in maximized-mode to never have to resize a window -> one workspace per window, to not get distracted by other open windows.
 
 * Startup automation
 [[file:~/.config/bin/startup][Startup]] Launches processes and daemons i need for my workflow.
@@ -41,7 +37,7 @@ default_border pixel 1
 hide_edge_borders smart
 title_align left
 font pango: Terminus 8
-for_window [all] title_window_icon yes, output primary
+for_window [all] title_window_icon yes
 for_window [urgent="latest"] focus
 
 # used for finding files later (1:1 expanded during config parsing)
@@ -113,7 +109,7 @@ bindsym XF86MonBrightnessDown exec sudo xbacklight -5
   + frees up ~hl~ for other bindings.
   + reduces mental overhead: the window focus will only move horizontally, and in my opinion splitting a window horizontally is useless on regular aspect monitors.
   + why not just ~hl~? => The keys are adjacent to each other on dvorak and qwerty.
-- Assign a custom mark if:
+- For_Window a custom mark if:
   + there are multiple different instances of the same program -> reassign-mark
   + program that is not assigned a hotkey because it is used so infrequent
 - using ~i3-back~ for hot-switching to previous window // i3-back sets mark: ~_back~ to previous window -> focus mark: ~_back~
@@ -134,36 +130,31 @@ bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto'
 #+end_src
 
 ** Workspaces Assignments
+- Statistically frequently used apps are assigne their own workspaces, all others are sent to the scratch workspace 1 (1-4 are for temporary assignments)
 #+begin_src conf
-set $ws_cmd   cmd
-set $ws_doc 󰈙  doc
-set $ws_web 󰖟  web
-set $ws_edit   edit
+set $ws_cmd     cmd
+set $ws_doc    󰈙 doc
+set $ws_web    󰖟 web
+set $ws_edit    edit
 
-set $ws_music   music
-set $ws_video   video
-set $ws_images 󰋩  images
-#  others
-set $ws_all 
+set $ws_video   video
+set $ws_images 󰋩 images
 
-assign [class="cmd"]     $ws_cmd
-assign [class="Zathura"] $ws_doc
-assign [class="firefox"] $ws_web
-assign [class="emacs|eclipse"]   $ws_edit
+for_window [class="(?i)cmd"] move container to workspace $ws_cmd
+for_window [class="(?i)zathura"] move container to workspace $ws_doc
+for_window [class="(?i)firefox"] move container to workspace $ws_web
+for_window [class="(?i)macs|(?i)Eclipse"] move container to workspace $ws_edit
 
-assign [class="ncmpcpp"] $ws_music
-assign [class="mpv"]     $ws_video
-assign [class="nsxiv"]   $ws_images
+for_window [class="(?i)mpv"] move container to workspace $ws_video
+for_window [class="(?i)nsxiv"] move container to workspace $ws_images
 
-assign [all]          $ws_all
+# all other's to unnamed ws -> 1
+assign [all] 1
 #+end_src
 
 
 ** App navigation bindings
 The idea is to bind to the abstract function of the program, and not to the specific instance itself -> if a different program is used, the functionality remains the same.
-
-- Using ~i3-msg~, because we want to try other commands if one fails
-  + focus app if on different workspace -> attach to server -> start server -> lanuch app
 
 #+begin_src conf
 bindsym $mod+Return    move workspace to output next
@@ -176,23 +167,25 @@ bindsym $mod+shift+2   move container to workspace 2; workspace 2
 bindsym $mod+shift+3   move container to workspace 3; workspace 3
 bindsym $mod+shift+4   move container to workspace 4; workspace 4
 bindsym $mod+c workspace $ws_cmd
-bindsym $mod+shift+c move container to workspace $ws_cmd;    workspace $ws_cmd
+bindsym $mod+shift+c move container to workspace $ws_cmd
 bindsym $mod+d workspace $ws_doc
-bindsym $mod+shift+d move container to workspace $ws_doc;    workspace $ws_doc
+bindsym $mod+shift+d move container to workspace $ws_doc
 bindsym $mod+w workspace $ws_web
-bindsym $mod+shift+w move container to workspace $ws_web;    workspace $ws_web
+bindsym $mod+shift+w move container to workspace $ws_web
 bindsym $mod+e workspace $ws_edit
-bindsym $mod+shift+e move container to workspace $ws_edit;   workspace $ws_edit
+bindsym $mod+shift+e move container to workspace $ws_edit
 bindsym $mod+v workspace $ws_video
-bindsym $mod+shift+v move container to workspace $ws_video;  workspace $ws_video
+bindsym $mod+shift+v move container to workspace $ws_video
 bindsym $mod+i workspace $ws_images
-bindsym $mod+shift+i move container to workspace $ws_images; workspace $ws_images
-bindsym $mod+a workspace $ws_all
-bindsym $mod+shift+a move container to workspace $ws_all;    workspace $ws_all
+bindsym $mod+shift+i move container to workspace $ws_images
+bindsym $mod+z restart
 #+end_src
 
 ** Open app keybindings
 - Mod-t for =newtab=
+- Using ~i3-msg~, because we want to try other commands if one fails
+  + focus app if on different workspace -> attach to server -> start server -> lanuch app
+
 #+begin_src  conf
 set $tab <tab> \
 │ editor \
@@ -335,15 +328,15 @@ set $sysact <sysact> \
 │ ^startup
 
 mode "$sysact" {
-  bindsym r       exec i3-msg restart;                                mode "default"
-  bindsym e       exec i3-msg exit;                                   mode "default"
-  bindsym shift+r exec systemctl reboot;                              mode "default"
-  bindsym h       exec systemctl hibernate;                           mode "default"
-  bindsym l       exec i3lock -e --color 002b36 && systemctl suspend; mode "default"
-  bindsym s       exec xset dpms force off;                           mode "default"
-  bindsym p       exec systemctl poweroff;                            mode "default"
-  bindsym shift+s exec ~/.config/bin/startup;                         mode "default"
-  bindsym Escape                                                      mode "default"
+  bindsym r       restart;                                              mode "default"
+  bindsym e       exit;                                                 mode "default"
+  bindsym shift+r exec syste                            mctl reboot;    mode "default"
+  bindsym h       exec syste                            mctl hibernate; mode "default"
+  bindsym l       exec i3lock -e --color 002b36 && systemctl suspend;   mode "default"
+  bindsym s       exec xset dp                          ms force off;   mode "default"
+  bindsym p       exec syste                            mctl poweroff;  mode "default"
+  bindsym shift+s exec ~/.config/bin/startup;                           mode "default"
+  bindsym Escape                                        mode "default"
 }
 #+end_src
 
@@ -428,7 +421,7 @@ This remains, just the colors variables must be defined by the theme.
 #+begin_src conf
 # class                 border  backg   text    indicator child_border
 client.focused          $main   $main   $backg  $foreg    $main
-client.focused_inactive $backg  $backg  $backg  $backg    $backg
+client.focused_inactive $backg  $foreg  $backg  $backg    $backg
 client.unfocused        $backg  $backg  $foreg  $backg    $backg
 client.urgent           $red    $red    $backg  $backg    $backg
 client.placeholder      $backg  $backg  $foreg  $backg    $backg

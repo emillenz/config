@@ -147,6 +147,7 @@
         :nvim "M-k"     #'tab-bar-switch-to-next-tab
         :nvim "M-K"     #'tab-bar-move-tab
         :nvim "M-t"     #'tab-bar-new-tab-to
+        :nvmi "M-z"     #'+popup/toggle
         :nvim "M-1"     (cmd! (tab-bar-select-tab 1))
         :nvim "M-2"     (cmd! (tab-bar-select-tab 2))
         :nvim "M-3"     (cmd! (tab-bar-select-tab 3))
@@ -187,20 +188,17 @@
   (interactive)
   (when (buffer-modified-p)
     (condition-case nil (evil-write nil nil)
-      (error)
-      ))
-  (kill-buffer)
-  (condition-case nil (evil-window-delete)
+      (error)))
+  (condition-case nil (kill-buffer-and-window)
     (error
        (condition-case nil (tab-bar-close-tab)
          (error
-          (delete-frame)
-            )))))
+          (delete-frame))))))
 ;; Global navigation scheme:2 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
 (after! evil
-  ;; HACK disable all default-maps (custom map below)
+  ;; HACK disable all default-maps (mappings used -> below)
   (add-hook 'evil-mode-hook #'evil-cleverparens-mode)
   (setq evil-cleverparens-use-s-and-S nil
         evil-cleverparens-use-additional-bindings nil
@@ -357,7 +355,7 @@
 (after! company
   (setq
    company-minimum-prefix-length 1
-   company-idle-delay 0.2 ;; BUG: never set to 0
+   company-idle-delay 0.2 ;; NOTE: impacts performance
    company-show-quick-access t
    company-global-modes
    '(not
@@ -371,6 +369,7 @@
 
 ;; [[file:config.org::*Templates & snippets][Templates & snippets:1]]
 (setq yas-triggers-in-field t)
+
 (set-file-templates!
  '(org-mode :trigger "header")
  '(prog-mode :trigger "header")
@@ -766,7 +765,13 @@ Jumps at tangled code from org src block."
         )
        :empty-lines-after 1
        :children
-       (("cs"       :keys "c" :file "cs/notes.org")
+       (("cs"       :keys "c"
+         :children
+         (("la" :keys "l" :file "cs/la/notes.org")
+          ("ep" :keys "e" :file "cs/ep/notes.org")
+          ("dm" :keys "d" :file "cs/dm/notes.org")
+          ("ad" :keys "d" :file "cs/ad/notes.org")
+          ))
         ("personal" :keys "p" :file "personal/notes.org")
         ("config"   :keys "o" :file "config/notes.org")
         )

@@ -1,34 +1,3 @@
-use -h | bat
-use  -h | bat
-use help
-help use
-wa helsinki switzerland distance
-url  -h | bat
-url  encode -h | bat
-["abc"] |str join
-["abc"] 
-wa helsinki switzerland distance
-curl -s 
-wa helsinki switzerland distance
-curl -s
-curl -si
-curl -h
-wa helsinki switzerland distance
-wa distance between helsinki and zurich
-wa what is the biggest known prime
-wa what is most popular developer language
-wa most popular developer language
-wa double integral of sine
-wa 800 * 900
-wa "(800 * 23)^2"
-wa 2000 per month, how many is that in a day
-wa 2000 per month => per day
-wa 2000 querys per mont
-wa 2000 querys per month
-wa 2000 querys per month into daily
-wa 2000/month = per day
-wa 2000/month => per day
-wa 2000/month =
 wa 2000 * 12 / 365
 wa 2000 * 12 / 365 exact
 wa 2000 * 12 / 365 float
@@ -9998,3 +9967,34 @@ emacsclient -cr
 cd i3/
 ls-
 ls
+install xfce
+yay xfce
+man firefox 
+firefox  --help | bat --theme 'Solarized (dark)' --language man
+man source 
+ls .xprofile
+bash .xprofile
+ls
+ls .xprofile
+bat .xprofile
+unclutter
+for l in (open .xprofile) {$"($l) &" | bash}
+open .xprofile
+open .xprofile
+open .xprofile | each 
+open .xprofile | each {}
+open .xprofile | lines
+open .xprofile | lines | each {bash -c $"($in) &"}
+man systemctl 
+xset s 0 0 0<\n>
+xset s 0 0 
+sudo xset s 0 0 
+man xset 
+xset  --help | bat --theme 'Solarized (dark)' --language man
+ls
+doom everywhere
+doom +everywhere
+fd  --help | bat --theme 'Solarized (dark)' --language man
+cd i3/
+ls
+av i3_marks_config.org

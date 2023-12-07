@@ -1,5 +1,8 @@
+# [[file:config.org::*Startup automation][Startup automation:1]]
 exec_always --no-startup-id "~/.config/bin/startup"
+# Startup automation:1 ends here
 
+# [[file:config.org::*Options][Options:1]]
 workspace_auto_back_and_forth no
 workspace_layout tabbed
 force_focus_wrapping no
@@ -8,23 +11,26 @@ default_border pixel 1
 hide_edge_borders smart
 title_align left
 font pango: Terminus 8
-for_window [all] title_window_icon yes
-assign [all] output primary
+for_window [all] title_window_icon yes, output primary
 for_window [urgent="latest"] focus
 
 # used for finding files later (1:1 expanded during config parsing)
 set $rofi rofi -dmenu -i -no-custom -p ' '
+# Options:1 ends here
 
-workspace 1 output primary
-
+# [[file:config.org::*Modkey][Modkey:1]]
 set $mod Mod4
+# Modkey:1 ends here
 
+# [[file:config.org::*Mouse][Mouse:1]]
 floating_modifier $mod
 bindsym --release button2 kill
 bindsym --whole-window $mod+button2 floating toggle
 bindsym button4 nop
 bindsym button5 nop
+# Mouse:1 ends here
 
+# [[file:config.org::*System controls][System controls:1]]
 bindsym XF86MonBrightnessDown exec sudo light -U 5
 bindsym XF86MonBrightnessUp   exec sudo light -A 5
 bindsym XF86Display           exec ~/.config/bin/output_select
@@ -38,7 +44,9 @@ bindsym XF86AudioPrev         exec playerctl previous
 bindsym XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute         exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+# System controls:1 ends here
 
+# [[file:config.org::*System controls][System controls:2]]
 bindsym Print                 exec ~/.config/bin/screenshot
 bindsym $mod+backslash        exec playerctl play-pause
 bindsym $mod+bracketright     exec playerctl next
@@ -46,15 +54,9 @@ bindsym $mod+bracketleft      exec playerctl previous
 bindsym $mod+equal            exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym $mod+minus            exec pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym $mod+shift+backslash  exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+# System controls:2 ends here
 
-bindsym $mod+Return    move workspace to output next
-bindsym $mod+1         workspace 1
-bindsym $mod+2         workspace 2
-bindsym $mod+3         workspace 3
-bindsym $mod+shift+1   move container to workspace 1; workspace 1
-bindsym $mod+shift+2   move container to workspace 2; workspace 2
-bindsym $mod+shift+3   move container to workspace 3; workspace 3
-
+# [[file:config.org::*Core navigation][Core navigation:1]]
 bindsym $mod+j          focus prev
 bindsym $mod+shift+j    move left
 bindsym $mod+k          focus next
@@ -63,66 +65,148 @@ bindsym $mod+q          kill
 bindsym $mod+f          exec rofi -show drun
 bindsym $mod+g          exec rofi -show window
 bindsym $mod+semicolon  exec rofi -show run
+bindsym $mod+Tab        layout toggle tabbed splith
 bindsym $mod+m          exec i3-input -F 'mark %s' -l 1 -P 'Mark:'
 bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto'
+# Core navigation:1 ends here
 
-for_window [class="(?i)cmd"]     mark c
-for_window [class="(?i)zathura"] mark z
-for_window [class="(?i)firefox"] mark w
-for_window [class="(?i)emacs"]   mark e
+# [[file:config.org::*Workspaces Assignments][Workspaces Assignments:1]]
+set $ws_cmd   cmd
+set $ws_doc 󰈙  doc
+set $ws_web 󰖟  web
+set $ws_edit   edit
 
-bindsym $mod+c exec \
-    i3-msg '[con_mark="c"] focus' \
-    || alacritty --class cmd -T cmd -e tmux new-session -A -s cmd &
+set $ws_music   music
+set $ws_video   video
+set $ws_images 󰋩  images
+#  others
+set $ws_all 
 
-bindsym $mod+z exec \
-    i3-msg '[con_mark="z"] focus' \
-    || i3-msg '[class=(?i)zathura] focus' && i3-msg 'mark z' \
-    || xdg-open "$(fd --extension pdf | $rofi)" &
+assign [class="cmd"]     $ws_cmd
+assign [class="Zathura"] $ws_doc
+assign [class="firefox"] $ws_web
+assign [class="emacs|eclipse"]   $ws_edit
 
-bindsym --release $mod+shift+e exec emacsclient --eval '(emacs-everywhere)' &
-bindsym $mod+e exec \
-    i3-msg '[con_mark="e"] focus' \
-    || i3-msg '[class=(?i)emacs] focus' && i3-msg 'mark e' \
-    || emacsclient --reuse-frame || emacs --daemon --execute '(doom/reload)' &
+assign [class="ncmpcpp"] $ws_music
+assign [class="mpv"]     $ws_video
+assign [class="nsxiv"]   $ws_images
 
-bindsym $mod+w exec \
-    i3-msg '[con_mark="w"] focus' \
-    || i3-msg '[class=(?i)firefox] focus' && i3-msg 'mark w' \
-    || firefox &
+assign [all]          $ws_all
+# Workspaces Assignments:1 ends here
 
-for_window [class="(?i)ncmpcpp"]   mark a
-for_window [class="(?i)keepassxc"] mark s
-for_window [class="(?i)mpv"]       mark v
-for_window [class="(?i)nsxiv"]     mark V
+# [[file:config.org::*App navigation bindings][App navigation bindings:1]]
+bindsym $mod+Return    move workspace to output next
+bindsym $mod+1         workspace 1
+bindsym $mod+2         workspace 2
+bindsym $mod+3         workspace 3
+bindsym $mod+4         workspace 4
+bindsym $mod+shift+1   move container to workspace 1; workspace 1
+bindsym $mod+shift+2   move container to workspace 2; workspace 2
+bindsym $mod+shift+3   move container to workspace 3; workspace 3
+bindsym $mod+shift+4   move container to workspace 4; workspace 4
+bindsym $mod+c workspace $ws_cmd
+bindsym $mod+shift+c move container to workspace $ws_cmd;    workspace $ws_cmd
+bindsym $mod+d workspace $ws_doc
+bindsym $mod+shift+d move container to workspace $ws_doc;    workspace $ws_doc
+bindsym $mod+w workspace $ws_web
+bindsym $mod+shift+w move container to workspace $ws_web;    workspace $ws_web
+bindsym $mod+e workspace $ws_edit
+bindsym $mod+shift+e move container to workspace $ws_edit;   workspace $ws_edit
+bindsym $mod+v workspace $ws_video
+bindsym $mod+shift+v move container to workspace $ws_video;  workspace $ws_video
+bindsym $mod+i workspace $ws_images
+bindsym $mod+shift+i move container to workspace $ws_images; workspace $ws_images
+bindsym $mod+a workspace $ws_all
+bindsym $mod+shift+a move container to workspace $ws_all;    workspace $ws_all
+# App navigation bindings:1 ends here
 
-bindsym $mod+a exec \
-    i3-msg '[con_mark="a"] focus' \
-    || alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp &
+# [[file:config.org::*Open app keybindings][Open app keybindings:1]]
+set $tab <tab> \
+│ editor \
+│ cmd \
+│ web \
+│ doc-reader \
+│ music-player \
+│ image-viewer \
+│ [s] passwds \
+│ processes \
+│ video-player \
+│ ^mixer \
+│ networks
 
-bindsym $mod+v exec \
-    i3-msg '[con_mark="v"] focus' \
-    || i3-msg '[class=(?i)mpv] focus' && i3-msg 'mark v'\
-    || mpv $(xclip -o) &
+bindsym $mod+t mode "$tab"
+mode "$tab" {
+  bindsym c exec \
+    i3-msg '[class="cmd"] focus' \
+    || alacritty --class cmd -T cmd -e tmux new-session -A -s cmd & \
+    ; mode "default"
 
-bindsym $mod+shift+v exec \
-    i3-msg '[con_mark="V"] focus'\
-    || nsxiv &
+  bindsym d exec \
+    xdg-open "$(fd --relative-path --extension pdf . ~/Documents/uni/cs | $rofi)" & \
+    ; mode "default"
 
-bindsym $mod+s exec\
-    i3-msg '[con_mark="s"] focus'\
-    || keepassxc &
+  bindsym --release shift+e exec \
+    doom +everywhere & \
+    ; mode "default"
 
+  bindsym e exec \
+    i3-msg '[class=emacs] focus' \
+    || emacsclient --reuse-frame \
+    || emacs --daemon --execute '(doom/reload)' & \
+    ; mode "default"
+
+  bindsym w exec \
+    i3-msg '[class=firefox] focus' \
+    || firefox & \
+    ; mode "default"
+
+  bindsym m exec \
+    i3-msg '[class="ncmpcpp"] focus' \
+    || alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp & \
+    ; mode "default"
+
+  bindsym v exec \
+    i3-msg '[class=mpv] focus' \
+    || mpv $(xclip -o) & \
+    ; mode "default"
+
+  bindsym i exec \
+    i3-msg '[class="nsxiv"] focus'\
+    || nsxiv & \
+    ; mode "default"
+
+  bindsym s exec\
+    i3-msg '[class="keepassxc"] focus"]' \
+    || keepassxc & \
+    ; mode "default"
+
+  bindsym shift+m exec \
+    i3-msg '[class="pulsemixer"] focus' \
+    || alacritty --class 'pulsemixer' -T 'audio' -e pulsemixer & \
+    ; mode "default"
+
+  bindsym p exec \
+    i3-msg '[class="htop"] focus'\
+    || alacritty --class 'htop' -T 'htop' -e htop --tree & \
+    ; mode "default"
+
+  bindsym n exec \
+    i3-msg '[class="nmtui"] focus' \
+    || alacritty --class 'nmtui' -T 'nmtui' -e nmtui & \
+    ; mode "default"
+
+  bindsym Escape mode "default"
+}
+# Open app keybindings:1 ends here
+
+# [[file:config.org::*Leader][Leader:1]]
 bindsym $mod+space mode "$leader"
 set $leader <leader> \
 │ audio \
-│ ^audio \
-│ nmtui \
 │ outputs \
 │ [^o] layouts \
 │ btconnect \
-│ [p] killprocess \
-│ [^p] htop \
+│ process-kill \
 │ find+ \
 │ keyboard+ \
 │ timer+ \
@@ -132,17 +216,11 @@ set $leader <leader> \
 
 mode "$leader" {
   bindsym a       exec ~/.config/bin/mini-audio; mode "default"
-  bindsym shift+a exec i3-msg '[con_mark="_a"] focus' \
-  || alacritty --class 'audio' -T 'audio' -e pulsemixer &; mode "default"
   bindsym o       exec ~/.config/bin/mini-output; mode "default"
   bindsym shift+o exec ~/.config/bin/mini-layout; mode "default"
   bindsym shift+s exec ~/.config/bin/mini-screenshot; mode "default"
   bindsym b       exec ~/.config/bin/mini-bluetooth; mode "default"
   bindsym p       exec ~/.config/bin/mini-killprocess; mode "default"
-  bindsym shift+p exec i3-msg '[con_mark="_h"] focus'\
-  || alacritty --class 'htop' -T 'htop' -e htop --tree &; mode "default"
-  bindsym n       exec i3-msg '[con_mark="_n"] focus' \
-  || alacritty --class 'nmtui' -T 'nmtui' -e nmtui &; mode "default"
 
   bindsym f      mode "$find"
   bindsym k      mode "$keyboard"
@@ -150,16 +228,13 @@ mode "$leader" {
   bindsym t      mode "$timer"
   bindsym Escape mode "default"
 }
+# Leader:1 ends here
 
-for_window [class="(?i)htop"]  mark _h
-for_window [class="(?i)nmtui"] mark _n
-for_window [class="(?i)audio"] mark _a
-
+# [[file:config.org::*Keyboard layout][Keyboard layout:1]]
 set $keyboard <keyboard> \
 │ dvorak \
 │ ch \
-│ us \
-│ remaps
+│ us
 
 mode "$keyboard" {
   bindsym d      exec setxkbmap us dvorak; mode "default"
@@ -167,7 +242,9 @@ mode "$keyboard" {
   bindsym u      exec setxkbmap us;        mode "default"
   bindsym Escape                           mode "default"
 }
+# Keyboard layout:1 ends here
 
+# [[file:config.org::*System Action][System Action:1]]
 set $sysact <sysact> \
 │ restart-i3 \
 │ ^reboot \
@@ -189,7 +266,9 @@ mode "$sysact" {
   bindsym shift+s exec ~/.config/bin/startup;                         mode "default"
   bindsym Escape                                                      mode "default"
 }
+# System Action:1 ends here
 
+# [[file:config.org::*Timer][Timer:1]]
 set $timer <timer> \
 │ toggle \
 │ reset \
@@ -216,17 +295,21 @@ mode "$timer" {
   bindsym 9       exec ~/.config/bin/timer start 90m;    mode "default"
   bindsym Escape                                         mode "default"
 }
+# Timer:1 ends here
 
+# [[file:config.org::*Find][Find:1]]
 set $find <find> \
 │ pdf \
 │ uni
 
 mode "$find" {
-  bindsym p exec xdg-open "$(fd --extension pdf | $rofi)"; mode "default"
-  bindsym u exec xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)"; mode "default"
+  bindsym p exec xdg-open "$(fd --relative-path --extension pdf | $rofi)"; mode "default"
+  bindsym u exec xdg-open "$(fd --relative-path --extension pdf . ~/Documents/uni/cs | $rofi)"; mode "default"
   bindsym Escape mode "default"
 }
+# Find:1 ends here
 
+# [[file:config.org::*Solarized dark][Solarized dark:1]]
 set $backg      #002b36
 set $foreg      #839496
 set $main       #268BD2
@@ -238,7 +321,9 @@ set $magenta    #d33682
 set $blue       #268BD2
 set $cyan       #2AA198
 set $green      #859900
+# Solarized dark:1 ends here
 
+# [[file:config.org::*Set theme][Set theme:1]]
 # class                 border  backg   text    indicator child_border
 client.focused          $main   $main   $backg  $foreg    $main
 client.focused_inactive $backg  $backg  $backg  $backg    $backg
@@ -246,3 +331,4 @@ client.unfocused        $backg  $backg  $foreg  $backg    $backg
 client.urgent           $red    $red    $backg  $backg    $backg
 client.placeholder      $backg  $backg  $foreg  $backg    $backg
 client.background       $backg
+# Set theme:1 ends here

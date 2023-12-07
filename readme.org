@@ -92,23 +92,25 @@ Imagine two kinds of grocery stores, one that just looks at what is the most pop
   + App: Mod = Alt
   + Alt+shift: stronger/alternate action eg:
     + quit-tab -> quit-session
-    + new-tab -> search-tabs
-    + open program -> open file
+    + open file cwd -> open file in root dir
 
-| Mod + | Action                           | Consistency                                   |
-|-------+----------------------------------+-----------------------------------------------|
-| J, K  | prev/next tab                    | Vim: / ergonomical homerow, adjacent position |
-| T     | new tab                          | Vim/Mnemonic/standard                         |
-| G     | search tabs/buffers              | vim: goto                                     |
-| Q     | Quit (program)                   | Mnemonic / standard                           |
-| 1-9   | Switch to tab by index           | Logic / stardard                              |
-| E     | edit file / editor               | Mnemonic                                      |
-| C     | Command-line (shell)             | Emacs/Mnemonic                                |
-| F     | Find (program/file)              | Mnemonic / Standard                           |
-| ;     | Execute command (in-app)         | Programming: statement                        |
-| H     | Help (in-context)                | Mnemonic / Standard                           |
-| SPC   | Leader-key system.               | Vim / ergonomic                               |
-| -, =  | decr/incr (font/number/vol)      | logic                                         |
+| Mod + | Action                      | Consistency                                   |
+|-------+-----------------------------+-----------------------------------------------|
+| J, K  | prev/next tab               | Vim: / ergonomical homerow, adjacent position |
+| T     | new tab                     | Vim/Mnemonic/standard                         |
+| Tab   | cyle windows                | Standard                                      |
+| G     | search tabs/buffers         | vim: goto                                     |
+| Q     | Quit (window->tab->program) | Mnemonic / standard                           |
+| 1-9   | Switch to tab by index      | Logic / stardard                              |
+| E     | edit file / editor          | Mnemonic                                      |
+| C     | Command-line (shell)        | Emacs/Mnemonic                                |
+| F     | Find (program/file)         | Mnemonic / Standard                           |
+| ;     | Execute command (in-app)    | Programming: statement                        |
+| SPC   | Leader-key system.          | Vim / ergonomic                               |
+| -, =  | decr/incr (font/number/vol) | logic                                         |
+| C     | command-line                | Standard                                      |
+| E     | Editor                      | Vim: e <- edit                                 |
+| W     | Web                         | WWW                                           |
 
 * Software
 The aim is to be able to run software for years without it breaking or bugging.

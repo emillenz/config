@@ -11,20 +11,22 @@ def main [] {
   ~/.config/bin/remaps
 
   let start_ps = [
-    "polybar",
-    "nm-applet",
-    "playerctld",
-    "keepassxc",
-    "syncthing",
+    "polybar"
+    "nm-applet"
+    "playerctld"
+    "keepassxc"
+    "syncthing"
     "tmux new-session -s 'cmd'"
-    "emacs --bg-daemon --execute '(doom/reload)'",
+    "emacs --bg-daemon --execute '(doom/reload)'"
+    "unclutter"
+    "xsetroot -solid '#002b36'" # solarized_dark: #002b36; solarized_light: #F2E6CE
+    "xset s 0 0"
   ]
 
   let pss = (ps | get name | each {split words | get 0})
 
   for p in $start_ps {
-    let exists = (($p | split words | get 0) in $pss)
-    if not $exists {
+    if not (($p | split words | get 0) in $pss) {
       $"($p) &>/dev/null &" | bash
     }
   }

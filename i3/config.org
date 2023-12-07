@@ -28,6 +28,7 @@ exec_always --no-startup-id "~/.config/bin/startup"
 
 * Options
 - Like in all config: consistent font and vsplits.
+- always focus a newwindow when it's created.
 #+begin_src conf
 workspace_auto_back_and_forth no
 workspace_layout tabbed
@@ -38,11 +39,15 @@ hide_edge_borders smart
 title_align left
 font pango: Terminus 8
 for_window [all] title_window_icon yes
+focus_on_window_activation focus
 for_window [urgent="latest"] focus
+#+end_src
 
-# used for finding files later (1:1 expanded during config parsing)
+Alias for rofi-opts (1:1 expanded during config parsing) (-> used later in config).
+#+begin_src conf
 set $rofi rofi -dmenu -i -no-custom -p ' '
 #+end_src
+
 
 * Keybindings
 Using Alt inside Applications to get the same behaviour, but in the app  in order to minimize conflict with existing shortcuts.
@@ -109,12 +114,8 @@ bindsym XF86MonBrightnessDown exec sudo xbacklight -5
   + frees up ~hl~ for other bindings.
   + reduces mental overhead: the window focus will only move horizontally, and in my opinion splitting a window horizontally is useless on regular aspect monitors.
   + why not just ~hl~? => The keys are adjacent to each other on dvorak and qwerty.
-- For_Window a custom mark if:
-  + there are multiple different instances of the same program -> reassign-mark
-  + program that is not assigned a hotkey because it is used so infrequent
-- using ~i3-back~ for hot-switching to previous window // i3-back sets mark: ~_back~ to previous window -> focus mark: ~_back~
-- If you absolutely need to use a split, pin a window to the side
-  + without splits we need no keybindings for resizing, for splitting and for layouts...
+- If you absolutely need to use a split toggle it.
+  + Without splits we need no keybindings for resizing, for splitting (less complexity and overhead)...
 #+begin_src conf
 bindsym $mod+j          focus prev
 bindsym $mod+shift+j    move left
@@ -125,6 +126,7 @@ bindsym $mod+f          exec rofi -show drun
 bindsym $mod+g          exec rofi -show window
 bindsym $mod+semicolon  exec rofi -show run
 bindsym $mod+Tab        layout toggle tabbed splith
+bindsym $mod+Return     move workspace to output next
 bindsym $mod+m          exec i3-input -F 'mark %s' -l 1 -P 'Mark:'
 bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto'
 #+end_src
@@ -132,13 +134,12 @@ bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto'
 ** Workspaces Assignments
 - Statistically frequently used apps are assigne their own workspaces, all others are sent to the scratch workspace 1 (1-4 are for temporary assignments)
 #+begin_src conf
-set $ws_cmd     cmd
-set $ws_doc    󰈙 doc
-set $ws_web    󰖟 web
-set $ws_edit    edit
-
-set $ws_video   video
-set $ws_images 󰋩 images
+set $ws_cmd    "  cmd   "
+set $ws_doc    "󰈙  doc   "
+set $ws_web    "󰖟  web   "
+set $ws_edit   "  edit  "
+set $ws_video  "  video "
+set $ws_images "󰋩  images"
 
 for_window [class="(?i)cmd"] move container to workspace $ws_cmd
 for_window [class="(?i)zathura"] move container to workspace $ws_doc
@@ -157,7 +158,6 @@ assign [all] 1
 The idea is to bind to the abstract function of the program, and not to the specific instance itself -> if a different program is used, the functionality remains the same.
 
 #+begin_src conf
-bindsym $mod+Return    move workspace to output next
 bindsym $mod+1         workspace 1
 bindsym $mod+2         workspace 2
 bindsym $mod+3         workspace 3

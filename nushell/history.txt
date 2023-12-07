@@ -1,4 +1,3 @@
-wa is my ass
 wa energy of living human
 zathura  -h | bat
 zathura ~/Books/cs/rust_programming_lang.pdf# i read every day, first thing i do on the computer, so i want the book to be there starting up<\n>
@@ -9998,3 +9997,4 @@ xprop
 ?class
 class
 xprop
+startup

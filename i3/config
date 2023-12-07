@@ -12,11 +12,13 @@ hide_edge_borders smart
 title_align left
 font pango: Terminus 8
 for_window [all] title_window_icon yes
+focus_on_window_activation focus
 for_window [urgent="latest"] focus
-
-# used for finding files later (1:1 expanded during config parsing)
-set $rofi rofi -dmenu -i -no-custom -p ' '
 # Options:1 ends here
+
+# [[file:config.org::*Options][Options:2]]
+set $rofi rofi -dmenu -i -no-custom -p ' '
+# Options:2 ends here
 
 # [[file:config.org::*Modkey][Modkey:1]]
 set $mod Mod4
@@ -66,18 +68,18 @@ bindsym $mod+f          exec rofi -show drun
 bindsym $mod+g          exec rofi -show window
 bindsym $mod+semicolon  exec rofi -show run
 bindsym $mod+Tab        layout toggle tabbed splith
+bindsym $mod+Return     move workspace to output next
 bindsym $mod+m          exec i3-input -F 'mark %s' -l 1 -P 'Mark:'
 bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto'
 # Core navigation:1 ends here
 
 # [[file:config.org::*Workspaces Assignments][Workspaces Assignments:1]]
-set $ws_cmd     cmd
-set $ws_doc    󰈙 doc
-set $ws_web    󰖟 web
-set $ws_edit    edit
-
-set $ws_video   video
-set $ws_images 󰋩 images
+set $ws_cmd    "  cmd   "
+set $ws_doc    "󰈙  doc   "
+set $ws_web    "󰖟  web   "
+set $ws_edit   "  edit  "
+set $ws_video  "  video "
+set $ws_images "󰋩  images"
 
 for_window [class="(?i)cmd"] move container to workspace $ws_cmd
 for_window [class="(?i)zathura"] move container to workspace $ws_doc
@@ -92,7 +94,6 @@ assign [all] 1
 # Workspaces Assignments:1 ends here
 
 # [[file:config.org::*App navigation bindings][App navigation bindings:1]]
-bindsym $mod+Return    move workspace to output next
 bindsym $mod+1         workspace 1
 bindsym $mod+2         workspace 2
 bindsym $mod+3         workspace 3

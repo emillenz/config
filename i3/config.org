@@ -143,7 +143,7 @@ set $ws_images 󰋩 images
 for_window [class="(?i)cmd"] move container to workspace $ws_cmd
 for_window [class="(?i)zathura"] move container to workspace $ws_doc
 for_window [class="(?i)firefox"] move container to workspace $ws_web
-for_window [class="(?i)macs|(?i)Eclipse"] move container to workspace $ws_edit
+for_window [class="(?i)macs|(?i)eclipse"] move container to workspace $ws_edit
 
 for_window [class="(?i)mpv"] move container to workspace $ws_video
 for_window [class="(?i)nsxiv"] move container to workspace $ws_images
@@ -178,7 +178,7 @@ bindsym $mod+v workspace $ws_video
 bindsym $mod+shift+v move container to workspace $ws_video
 bindsym $mod+i workspace $ws_images
 bindsym $mod+shift+i move container to workspace $ws_images
-bindsym $mod+z restart
+bindsym $mod+z exec i3-msg restart
 #+end_src
 
 ** Open app keybindings
@@ -202,62 +202,62 @@ set $tab <tab> \
 
 bindsym $mod+t mode "$tab"
 mode "$tab" {
-  bindsym c exec \
-    i3-msg '[class="cmd"] focus' \
+  bindsym $mod+c exec \
+    i3-msg '[class="(?i)cmd"] focus' \
     || alacritty --class cmd -T cmd -e tmux new-session -A -s cmd & \
     ; mode "default"
 
-  bindsym d exec \
+  bindsym $mod+d exec \
     xdg-open "$(fd --relative-path --extension pdf . ~/Documents/uni/cs | $rofi)" & \
     ; mode "default"
 
-  bindsym --release shift+e exec \
+  bindsym $mod+shift+e --release exec \
     doom +everywhere & \
     ; mode "default"
 
-  bindsym e exec \
-    i3-msg '[class=emacs] focus' \
+  bindsym $mod+e exec \
+    i3-msg '[class=(?i)emacs] focus' \
     || emacsclient --reuse-frame \
     || emacs --daemon --execute '(doom/reload)' & \
     ; mode "default"
 
-  bindsym w exec \
-    i3-msg '[class=firefox] focus' \
+  bindsym $mod+w exec \
+    i3-msg '[class=(?i)firefox] focus' \
     || firefox & \
     ; mode "default"
 
-  bindsym m exec \
-    i3-msg '[class="ncmpcpp"] focus' \
+  bindsym $mod+m exec \
+    i3-msg '[class="(?i)ncmpcpp"] focus' \
     || alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp & \
     ; mode "default"
 
-  bindsym v exec \
-    i3-msg '[class=mpv] focus' \
+  bindsym $mod+v exec \
+    i3-msg '[class=(?i)mpv] focus' \
     || mpv $(xclip -o) & \
     ; mode "default"
 
-  bindsym i exec \
-    i3-msg '[class="nsxiv"] focus'\
+  bindsym $mod+i exec \
+    i3-msg '[class="(?i)nsxiv"] focus'\
     || nsxiv & \
     ; mode "default"
 
-  bindsym s exec\
-    i3-msg '[class="keepassxc"] focus"]' \
+  bindsym $mod+s exec\
+    i3-msg '[class="(?i)keepassxc"] focus"]' \
     || keepassxc & \
     ; mode "default"
 
-  bindsym shift+m exec \
-    i3-msg '[class="pulsemixer"] focus' \
+  bindsym $mod+shift+m exec \
+    i3-msg '[class="(?i)pulsemixer"] focus' \
     || alacritty --class 'pulsemixer' -T 'audio' -e pulsemixer & \
     ; mode "default"
 
-  bindsym p exec \
-    i3-msg '[class="htop"] focus'\
+  bindsym $mod+p exec \
+    i3-msg '[class="(?i)htop"] focus'\
     || alacritty --class 'htop' -T 'htop' -e htop --tree & \
     ; mode "default"
 
-  bindsym n exec \
-    i3-msg '[class="nmtui"] focus' \
+  bindsym $mod+n exec \
+    i3-msg '[class="(?i)nmtui"] focus' \
     || alacritty --class 'nmtui' -T 'nmtui' -e nmtui & \
     ; mode "default"
 
@@ -267,6 +267,7 @@ mode "$tab" {
 
 ** Leader
 - For all system related apps and tasks.
+- Using mod bindings inside the leadermode aswell, because this is faster than having to release the modkeyfirst and then press the normal keys (+less mental overhead, additionally this is no problem if you have an ergonomic keyboard).
 #+begin_src conf
 bindsym $mod+space mode "$leader"
 set $leader <leader> \
@@ -283,17 +284,17 @@ set $leader <leader> \
 
 
 mode "$leader" {
-  bindsym a       exec ~/.config/bin/mini-audio; mode "default"
-  bindsym o       exec ~/.config/bin/mini-output; mode "default"
-  bindsym shift+o exec ~/.config/bin/mini-layout; mode "default"
-  bindsym shift+s exec ~/.config/bin/mini-screenshot; mode "default"
-  bindsym b       exec ~/.config/bin/mini-bluetooth; mode "default"
-  bindsym p       exec ~/.config/bin/mini-killprocess; mode "default"
+  bindsym $mod+a       exec ~/.config/bin/mini-audio;       mode "default"
+  bindsym $mod+o       exec ~/.config/bin/mini-output;      mode "default"
+  bindsym $mod+shift+o exec ~/.config/bin/mini-layout;      mode "default"
+  bindsym $mod+shift+s exec ~/.config/bin/mini-screenshot;  mode "default"
+  bindsym $mod+b       exec ~/.config/bin/mini-bluetooth;   mode "default"
+  bindsym $mod+p       exec ~/.config/bin/mini-killprocess; mode "default"
 
-  bindsym f      mode "$find"
-  bindsym k      mode "$keyboard"
-  bindsym s      mode "$sysact"
-  bindsym t      mode "$timer"
+  bindsym $mod+f mode "$find"
+  bindsym $mod+k mode "$keyboard"
+  bindsym $mod+s mode "$sysact"
+  bindsym $mod+t mode "$timer"
   bindsym Escape mode "default"
 }
 #+end_src
@@ -307,10 +308,10 @@ set $keyboard <keyboard> \
 │ us
 
 mode "$keyboard" {
-  bindsym d      exec setxkbmap us dvorak; mode "default"
-  bindsym c      exec setxkbmap ch;        mode "default"
-  bindsym u      exec setxkbmap us;        mode "default"
-  bindsym Escape                           mode "default"
+  bindsym $mod+d      exec setxkbmap us dvorak; mode "default"
+  bindsym $mod+c      exec setxkbmap ch;        mode "default"
+  bindsym $mod+u      exec setxkbmap us;        mode "default"
+  bindsym Escape mode "default"
 }
 #+end_src
 
@@ -328,15 +329,15 @@ set $sysact <sysact> \
 │ ^startup
 
 mode "$sysact" {
-  bindsym r       restart;                                              mode "default"
-  bindsym e       exit;                                                 mode "default"
-  bindsym shift+r exec syste                            mctl reboot;    mode "default"
-  bindsym h       exec syste                            mctl hibernate; mode "default"
-  bindsym l       exec i3lock -e --color 002b36 && systemctl suspend;   mode "default"
-  bindsym s       exec xset dp                          ms force off;   mode "default"
-  bindsym p       exec syste                            mctl poweroff;  mode "default"
-  bindsym shift+s exec ~/.config/bin/startup;                           mode "default"
-  bindsym Escape                                        mode "default"
+  bindsym $mod+r       exec i3-msg restart;                                            mode "default"
+  bindsym $mod+e       i3-msg exit;                                               mode "default"
+  bindsym $mod+shift+r exec systemctl reboot;                              mode "default"
+  bindsym $mod+h       exec systemctl hibernate;                           mode "default"
+  bindsym $mod+l       exec i3lock -e --color 002b36 && systemctl suspend; mode "default"
+  bindsym $mod+s       exec xset dpms force off;                           mode "default"
+  bindsym $mod+p       exec systemctl poweroff;                            mode "default"
+  bindsym $mod+shift+s exec ~/.config/bin/startup;                         mode "default"
+  bindsym Escape mode "default"
 }
 #+end_src
 
@@ -353,21 +354,21 @@ set $timer <timer> \
 │ [1-9] timer: *10m
 
 mode "$timer" {
-  bindsym t       exec ~/.config/bin/timer toggle;       mode "default"
-  bindsym r       exec ~/.config/bin/timer reset;        mode "default"
-  bindsym s       exec ~/.config/bin/timer start;        mode "default"
-  bindsym i       exec ~/.config/bin/timer start 60m 5m; mode "default"
-  bindsym shift+i exec ~/.config/bin/timer start 30m 5m; mode "default"
-  bindsym 1       exec ~/.config/bin/timer start 10m;    mode "default"
-  bindsym 2       exec ~/.config/bin/timer start 20m;    mode "default"
-  bindsym 3       exec ~/.config/bin/timer start 30m;    mode "default"
-  bindsym 4       exec ~/.config/bin/timer start 40m;    mode "default"
-  bindsym 5       exec ~/.config/bin/timer start 50m;    mode "default"
-  bindsym 6       exec ~/.config/bin/timer start 60m;    mode "default"
-  bindsym 7       exec ~/.config/bin/timer start 70m;    mode "default"
-  bindsym 8       exec ~/.config/bin/timer start 80m;    mode "default"
-  bindsym 9       exec ~/.config/bin/timer start 90m;    mode "default"
-  bindsym Escape                                         mode "default"
+  bindsym $mod+t       exec ~/.config/bin/timer toggle;       mode "default"
+  bindsym $mod+r       exec ~/.config/bin/timer reset;        mode "default"
+  bindsym $mod+s       exec ~/.config/bin/timer start;        mode "default"
+  bindsym $mod+i       exec ~/.config/bin/timer start 60m 5m; mode "default"
+  bindsym $mod+shift+i exec ~/.config/bin/timer start 30m 5m; mode "default"
+  bindsym $mod+1       exec ~/.config/bin/timer start 10m;    mode "default"
+  bindsym $mod+2       exec ~/.config/bin/timer start 20m;    mode "default"
+  bindsym $mod+3       exec ~/.config/bin/timer start 30m;    mode "default"
+  bindsym $mod+4       exec ~/.config/bin/timer start 40m;    mode "default"
+  bindsym $mod+5       exec ~/.config/bin/timer start 50m;    mode "default"
+  bindsym $mod+6       exec ~/.config/bin/timer start 60m;    mode "default"
+  bindsym $mod+7       exec ~/.config/bin/timer start 70m;    mode "default"
+  bindsym $mod+8       exec ~/.config/bin/timer start 80m;    mode "default"
+  bindsym $mod+9       exec ~/.config/bin/timer start 90m;    mode "default"
+  bindsym Escape mode "default"
 }
 #+end_src
 
@@ -378,8 +379,8 @@ set $find <find> \
 │ uni
 
 mode "$find" {
-  bindsym p exec xdg-open "$(fd --relative-path --extension pdf | $rofi)"; mode "default"
-  bindsym u exec xdg-open "$(fd --relative-path --extension pdf . ~/Documents/uni/cs | $rofi)"; mode "default"
+  bindsym $mod+p exec xdg-open "$(fd --relative-path --extension pdf | $rofi)";                      mode "default"
+  bindsym $mod+u exec xdg-open "$(fd --relative-path --extension pdf . ~/Documents/uni/cs | $rofi)"; mode "default"
   bindsym Escape mode "default"
 }
 #+end_src

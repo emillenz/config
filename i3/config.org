@@ -23,7 +23,7 @@
 [[file:~/.config/bin/startup][Startup]] Launches processes and daemons i need for my workflow.
 - Make sure that your user never get sudo prompted for commands, bc the script runs non-interactive sudo commands. (see: [[file:~/.config/setup.org][Setup]] on how to never be sudoprompted)
 #+begin_src conf
-exec_always --no-startup-id "~/.config/bin/startup"
+exec --no-startup-id "~/.config/bin/startup"
 #+end_src
 
 * Options
@@ -38,12 +38,10 @@ default_border pixel 1
 hide_edge_borders smart
 title_align left
 font pango: Terminus 8
-for_window [all] title_window_icon yes
 focus_on_window_activation focus
-for_window [urgent="latest"] focus
 #+end_src
 
-Alias for rofi-opts (1:1 expanded during config parsing) (-> used later in config).
+- Alias for rofi-opts (1:1 expanded during config parsing) (-> used later in config).
 #+begin_src conf
 set $rofi rofi -dmenu -i -no-custom -p ' '
 #+end_src
@@ -133,51 +131,58 @@ bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto'
 
 ** Workspaces Assignments
 - Statistically frequently used apps are assigne their own workspaces, all others are sent to the scratch workspace 1 (1-4 are for temporary assignments)
+- Upon opening new windows, automatically focus them (regardless of workspace. (sensible)
+- abbrev for too long command
 #+begin_src conf
+set $moveto move container to workspace
+
 set $ws_cmd    "  cmd  "
 set $ws_doc    "󰈙  doc  "
 set $ws_web    "󰖟  web  "
 set $ws_edit   "  edit "
-set $ws_video  "  vid  "
+set $ws_video  "  vid  "
 set $ws_image  "󰋩  img  "
 
-for_window [class="(?i)cmd"] move container to workspace $ws_cmd
-for_window [class="(?i)zathura"] move container to workspace $ws_doc
-for_window [class="(?i)firefox"] move container to workspace $ws_web
-for_window [class="(?i)emacs|(?i)eclipse"] move container to workspace $ws_edit
+# HACK: [all] must come before specific assignments (specific classes overwrite this setting).
+for_window [all] title_window_icon yes, $moveto 1, focus
+for_window [urgent="latest"] focus
 
-for_window [class="(?i)mpv"] move container to workspace $ws_video
-for_window [class="(?i)nsxiv"] move container to workspace $ws_image
+# specific assignments
+for_window [class="(?i)cmd"]               $moveto $ws_cmd,   focus
+for_window [class="(?i)zathura"]           $moveto $ws_doc,   focus
+for_window [class="(?i)firefox"]           $moveto $ws_web,   focus
+for_window [class="(?i)emacs|(?i)eclipse"] $moveto $ws_edit,  focus
 
-# all other's to unnamed ws -> 1
-assign [all] 1
+for_window [class="(?i)mpv"]               $moveto $ws_video, focus
+for_window [class="(?i)nsxiv"]             $moveto $ws_image, focus
 #+end_src
 
 
 ** App navigation bindings
-The idea is to bind to the abstract function of the program, and not to the specific instance itself -> if a different program is used, the functionality remains the same.
-
+- The idea is to bind to the abstract function of the program, and not to the specific instance itself -> if a different program is used, the functionality remains the same.
+- When sending a program to a ws, focus that workspace (sensible)
+- restart i3 to send all windows back to their assigned workspaces.
 #+begin_src conf
 bindsym $mod+1       workspace 1
 bindsym $mod+2       workspace 2
 bindsym $mod+3       workspace 3
 bindsym $mod+4       workspace 4
-bindsym $mod+shift+1 move container to workspace 1; workspace 1
-bindsym $mod+shift+2 move container to workspace 2; workspace 2
-bindsym $mod+shift+3 move container to workspace 3; workspace 3
-bindsym $mod+shift+4 move container to workspace 4; workspace 4
+bindsym $mod+shift+1 $moveto 1; workspace 1
+bindsym $mod+shift+2 $moveto 2; workspace 2
+bindsym $mod+shift+3 $moveto 3; workspace 3
+bindsym $mod+shift+4 $moveto 4; workspace 4
 bindsym $mod+c       workspace $ws_cmd
-bindsym $mod+shift+c move container to workspace $ws_cmd
+bindsym $mod+shift+c $moveto $ws_cmd; workspace $ws_cmd
 bindsym $mod+d       workspace $ws_doc
-bindsym $mod+shift+d move container to workspace $ws_doc
+bindsym $mod+shift+d $moveto $ws_doc; workspace $ws_doc
 bindsym $mod+w       workspace $ws_web
-bindsym $mod+shift+w move container to workspace $ws_web
+bindsym $mod+shift+w $moveto $ws_web; w $moveto $ws_web
 bindsym $mod+e       workspace $ws_edit
-bindsym $mod+shift+e move container to workspace $ws_edit
+bindsym $mod+shift+e $moveto $ws_edit; workspace $ws_edit
 bindsym $mod+v       workspace $ws_video
-bindsym $mod+shift+v move container to workspace $ws_video
+bindsym $mod+shift+v $moveto $ws_video; workspace $ws_video
 bindsym $mod+i       workspace $ws_image
-bindsym $mod+shift+i move container to workspace $ws_image
+bindsym $mod+shift+i $moveto $ws_image; workspace $ws_image
 bindsym $mod+z       exec i3-msg restart
 #+end_src
 
@@ -187,7 +192,7 @@ bindsym $mod+z       exec i3-msg restart
   + focus app if on different workspace -> attach to server -> start server -> lanuch app
 
 #+begin_src  conf
-set $tab <tab> \
+set $open <open> \
 │ editor \
 │ cmd \
 │ web \
@@ -200,77 +205,65 @@ set $tab <tab> \
 │ ^mixer \
 │ networks
 
-bindsym $mod+t mode "$tab"
-mode "$tab" {
+bindsym $mod+o mode "$open"
+mode "$open" {
   bindsym $mod+c exec \
     i3-msg '[class="(?i)cmd"] focus' \
     || alacritty --class cmd -T cmd -e tmux new-session -A -s cmd & \
-    ; workspace $ws_cmd \
     ; mode "default"
 
   bindsym $mod+d exec \
-    xdg-open "$(fd --relative-path --extension pdf . ~/Documents/uni/cs | $rofi)" & \
-    ; workspace $ws_doc \
+    xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)" & \
     ; mode "default"
 
   bindsym $mod+shift+e --release exec \
     doom +everywhere & \
-    ; workspace $ws_edit \
     ; mode "default"
 
   bindsym $mod+e exec \
     i3-msg '[class=(?i)emacs] focus' \
     || emacsclient --reuse-frame \
     || emacs --daemon --execute '(doom/reload)' & \
-    ; workspace $ws_edit \
     ; mode "default"
 
   bindsym $mod+w exec \
     i3-msg '[class=(?i)firefox] focus' \
     || firefox & \
-    ; workspace $ws_web \
     ; mode "default"
 
   bindsym $mod+m exec \
     i3-msg '[class="(?i)ncmpcpp"] focus' \
     || alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp & \
-    ; workspace $ws_1 \
     ; mode "default"
 
   bindsym $mod+v exec \
     i3-msg '[class=(?i)mpv] focus' \
     || mpv $(xclip -o) & \
-    ; workspace $ws_video \
     ; mode "default"
 
   bindsym $mod+i exec \
     i3-msg '[class="(?i)nsxiv"] focus'\
     || nsxiv & \
-    ; workspace $ws_image \
     ; mode "default"
 
   bindsym $mod+s exec\
     i3-msg '[class="(?i)keepassxc"] focus"]' \
     || keepassxc & \
-    ; workspace 1 \
     ; mode "default"
 
   bindsym $mod+shift+m exec \
     i3-msg '[class="(?i)pulsemixer"] focus' \
     || alacritty --class 'pulsemixer' -T 'audio' -e pulsemixer & \
-    ; workspace 1 \
     ; mode "default"
 
   bindsym $mod+p exec \
     i3-msg '[class="(?i)htop"] focus'\
     || alacritty --class 'htop' -T 'htop' -e htop --tree & \
-    ; workspace 1 \
     ; mode "default"
 
   bindsym $mod+n exec \
     i3-msg '[class="(?i)nmtui"] focus' \
     || alacritty --class 'nmtui' -T 'nmtui' -e nmtui & \
-    ; workspace 1 \
     ; mode "default"
 
   bindsym Escape mode "default"
@@ -283,33 +276,24 @@ mode "$tab" {
 #+begin_src conf
 bindsym $mod+space mode "$leader"
 set $leader <leader> \
-│ audio \
-│ outputs \
-│ [^o] layouts \
-│ btconnect \
-│ process-kill \
+| mini-menus+ \
 │ find+ \
 │ keyboard+ \
 │ timer+ \
-│ sysact+ \
+│ powermenu+ \
 │ ^screenshot+
 
 
 mode "$leader" {
-  bindsym $mod+a       exec ~/.config/bin/mini-audio;       mode "default"
-  bindsym $mod+o       exec ~/.config/bin/mini-output;      mode "default"
-  bindsym $mod+shift+o exec ~/.config/bin/mini-layout;      mode "default"
-  bindsym $mod+shift+s exec ~/.config/bin/mini-screenshot;  mode "default"
-  bindsym $mod+b       exec ~/.config/bin/mini-bluetooth;   mode "default"
-  bindsym $mod+p       exec ~/.config/bin/mini-killprocess; mode "default"
-
+  bindsym $mod+m mode "$mini"
   bindsym $mod+f mode "$find"
   bindsym $mod+k mode "$keyboard"
-  bindsym $mod+s mode "$sysact"
+  bindsym $mod+p mode "$powermenu"
   bindsym $mod+t mode "$timer"
   bindsym Escape mode "default"
 }
 #+end_src
+
 
 *** Keyboard layout
 - Somtimes i use multiple different keyboard layouts -> switch between them.
@@ -327,10 +311,10 @@ mode "$keyboard" {
 }
 #+end_src
 
-*** System Action
+*** Powermenu
 - Always hibernate -> Preserves the state inbetween reboots keeps workflow =DRY=.
 #+begin_src conf
-set $sysact <sysact> \
+set $powermenu <powermenu> \
 │ restart-i3 \
 │ ^reboot \
 │ lock \
@@ -340,9 +324,9 @@ set $sysact <sysact> \
 │ hibernate \
 │ ^startup
 
-mode "$sysact" {
-  bindsym $mod+r       exec i3-msg restart;                                            mode "default"
-  bindsym $mod+e       i3-msg exit;                                               mode "default"
+mode "$powermenu" {
+  bindsym $mod+r       exec i3-msg restart;                                mode "default"
+  bindsym $mod+e       i3-msg exit;                                        mode "default"
   bindsym $mod+shift+r exec systemctl reboot;                              mode "default"
   bindsym $mod+h       exec systemctl hibernate;                           mode "default"
   bindsym $mod+l       exec i3lock -e --color 002b36 && systemctl suspend; mode "default"
@@ -383,6 +367,27 @@ mode "$timer" {
   bindsym Escape mode "default"
 }
 #+end_src
+
+*** Mini-menus
+#+begin_src conf
+set $mini <mini-menus> \
+│ audio \
+│ outputs \
+│ [^o] layouts \
+│ btconnect \
+│ process-kill \
+
+mode "$mini" {
+  bindsym $mod+a       exec ~/.config/bin/mini-audio;       mode "default"
+  bindsym $mod+o       exec ~/.config/bin/mini-output;      mode "default"
+  bindsym $mod+shift+o exec ~/.config/bin/mini-layout;      mode "default"
+  bindsym $mod+shift+s exec ~/.config/bin/mini-screenshot;  mode "default"
+  bindsym $mod+b       exec ~/.config/bin/mini-bluetooth;   mode "default"
+  bindsym $mod+p       exec ~/.config/bin/mini-killprocess; mode "default"
+  bindsym Escape mode "default"
+}
+#+end_src
+
 
 * Theme
 - When locking the screen with command ~i3-lock~, solarized colorscheme is specified.

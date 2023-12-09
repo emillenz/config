@@ -98,6 +98,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  which-key-allow-multiple-replacements t
  hscroll-margin 0
  scroll-margin 10
+ enable-recursive-minibuffers nil
  highlight-indent-guides-responsive  t
  display-line-numbers-type 'visual)
 
@@ -254,9 +255,9 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
       (error)))
   (condition-case nil (kill-buffer-and-window)
     (error
-       (condition-case nil (tab-bar-close-tab)
-         (error
-          (delete-frame))))))
+     (condition-case nil (tab-bar-close-tab)
+       (error
+        (delete-frame))))))
 #+end_src
 
 ** Evil-mode
@@ -333,6 +334,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (after! evil
   (map!
    :inmv "C-s" #'evil-write
+   :inmv "C-q" #'kill-current-buffer
    :inmv "C-j" #'drag-stuff-down
    :inmv "C-k" #'drag-stuff-up
    ))
@@ -420,6 +422,10 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
         :nm "." #'dired-omit-mode
         :nm "e" #'dired-create-empty-file
         :nm "E" #'dired-create-directory
+        )
+  (map! :localleader
+        :map dired-mode-map
+        :nm "w" #'wdired-change-to-wdired-mode
         )
 )
 #+end_src
@@ -631,7 +637,6 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
                 ("|" . "│")
                 ("<-" . "←")
                 ("=>" . "⇒")
-                ("<=" . "⇐")
                 ("<=>" . "⇔")
                 ))
 #+end_src
@@ -663,9 +668,9 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 - Non-compulsory item
 - ~[?] Read supplemental article~
 
-*[>]*: In-progress
+*[-]*: In-progress / started
 - item being worked on
-- ~[>] Watch lecture [00:57h]~
+- ~[-] Watch lecture [00:57h]~
 
 *[=]*: On-hold // pause symbol
 - Unfinished item waiting for smthing, before can be finished / continued
@@ -693,7 +698,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
            "[#](#)"
            "[ ](t)"
            "[?](?!)"
-           "[>](>@)"
+           "[-](-@)"
            "[=](=@)"
            "[&](&@)"
            "|"
@@ -715,7 +720,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
   (setq org-todo-keyword-faces
         '(("[#]"  . +org-todo-project)
           ("[ ]"  . +org-todo-cancel)
-          ("[>]"  . +org-todo-onhold)
+          ("[-]"  . +org-todo-onhold)
           ("[?]"  . org-todo)
           ("[=]"  . org-todo)
           ("[&]"  . org-todo)
@@ -988,7 +993,6 @@ End the "(after! org" block
      :headline "inbox"
      :prepend t
      :clock-keep t
-     :empty-lines-after 0
 
      :children
      (("task" :keys "t"

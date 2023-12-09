@@ -15,11 +15,11 @@
  (position . 777)
  (last-modified 25924 37515 723831 699000))
 ("org-capture-last-stored"
- (filename . "~/Documents/org/cs/tasks.org")
- (front-context-string . "*** [ ] ex[11]:1")
- (rear-context-string . "oodlab\n** inbox\n")
- (position . 665)
- (last-modified 25969 58319 911677 247000))
+ (filename . "~/Documents/org/config/tasks.org")
+ (front-context-string . "** [ ] add go in")
+ (rear-context-string . " inbox :config:\n")
+ (position . 171)
+ (last-modified 25971 12159 893221 805000))
 ("cs_todo.org"
  (filename . "~/Documents/org/cs_todo.org")
  (front-context-string . "#+title:    CS T")

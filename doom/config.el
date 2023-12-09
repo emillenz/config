@@ -63,6 +63,7 @@
  which-key-allow-multiple-replacements t
  hscroll-margin 0
  scroll-margin 10
+ enable-recursive-minibuffers nil
  highlight-indent-guides-responsive  t
  display-line-numbers-type 'visual)
 
@@ -191,9 +192,9 @@
       (error)))
   (condition-case nil (kill-buffer-and-window)
     (error
-       (condition-case nil (tab-bar-close-tab)
-         (error
-          (delete-frame))))))
+     (condition-case nil (tab-bar-close-tab)
+       (error
+        (delete-frame))))))
 ;; Global navigation scheme:2 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
@@ -243,6 +244,7 @@
 (after! evil
   (map!
    :inmv "C-s" #'evil-write
+   :inmv "C-q" #'kill-current-buffer
    :inmv "C-j" #'drag-stuff-down
    :inmv "C-k" #'drag-stuff-up
    ))
@@ -310,6 +312,10 @@
         :nm "." #'dired-omit-mode
         :nm "e" #'dired-create-empty-file
         :nm "E" #'dired-create-directory
+        )
+  (map! :localleader
+        :map dired-mode-map
+        :nm "w" #'wdired-change-to-wdired-mode
         )
 )
 ;; Dired:1 ends here
@@ -494,7 +500,6 @@
                 ("|" . "│")
                 ("<-" . "←")
                 ("=>" . "⇒")
-                ("<=" . "⇐")
                 ("<=>" . "⇔")
                 ))
 ;; Ligatures:1 ends here
@@ -505,7 +510,7 @@
          "[#](#)"
          "[ ](t)"
          "[?](?!)"
-         "[>](>@)"
+         "[-](-@)"
          "[=](=@)"
          "[&](&@)"
          "|"
@@ -519,7 +524,7 @@
 (setq org-todo-keyword-faces
       '(("[#]"  . +org-todo-project)
         ("[ ]"  . +org-todo-cancel)
-        ("[>]"  . +org-todo-onhold)
+        ("[-]"  . +org-todo-onhold)
         ("[?]"  . org-todo)
         ("[=]"  . org-todo)
         ("[&]"  . org-todo)
@@ -720,7 +725,6 @@ Jumps at tangled code from org src block."
      :headline "inbox"
      :prepend t
      :clock-keep t
-     :empty-lines-after 0
 
      :children
      (("task" :keys "t"

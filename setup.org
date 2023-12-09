@@ -17,7 +17,7 @@ sudo pacman -Syyu
 * Core tools
 ** Terminal, Nushell
 #+begin_src sh
-yay --noconfirm -S alacritty curl libtool xorg-xset fzf fd ripgrep xclip xdg-utils cmake npm bat git gcc make xdotool tldr htop fish ttf-terminus-nerd terminus-font nushell tmux
+yay --noconfirm -S alacritty curl libtool fzf fd ripgrep xclip xdg-utils cmake npm bat git gcc make xdotool tldr htop fish ttf-terminus-nerd terminus-font nushell tmux
 #+end_src
 
 Set nushell to loginshell
@@ -52,7 +52,7 @@ git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 
 * Gui apps & packages
 #+begin_src sh
-yay --noconfirm -S i3 i3lock zathura zathura-pdf-mupdf arandr mpv rofi light sxiv unclutter firefox pavucontrol pasystray polybar playerctl blueman xorg-xprop xremap-x11-bin polybar light thunar networkmanager network-manager-applet mpd dunst notify-send nsxiv xorg-xwininfo keepassxc maim pulsemixer
+yay --noconfirm -S i3 i3lock zathura zathura-pdf-mupdf arandr mpv rofi light sxiv unclutter firefox pavucontrol pasystray polybar playerctl blueman xorg-xprop xremap-x11-bin polybar light thunar networkmanager network-manager-applet mpd dunst notify-send nsxiv xorg-xwininfo keepassxc maim pulsemixer xorg-xset xorg-xsetroot
 #+end_src
 
 ** Enable daemons
@@ -68,7 +68,7 @@ sudo systemctl enable bluetooth
 *** latex
 - For writing papers
 #+begin_src sh :tangle no
-yay --noconfirm -S texlive-basic latex-mk pandoc texlive-plaingeneric
+yay --noconfirm -S texlive-latexextra latex-mk pandoc
 #+end_src
 
 *** Rust

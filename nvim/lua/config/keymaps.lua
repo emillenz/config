@@ -1,6 +1,6 @@
 -- dont be a greedy fucking fuck, be efficient
-local greedy = require("lenz.greedy")
-greedy.greedy()
+-- local greedy = require("lenz.greedy")
+-- greedy.greedy()
 
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
@@ -20,11 +20,13 @@ map(
 	{ expr = true, noremap = true, silent = true }
 )
 
--- Stronger HJKL
-map("n", "J", "<cmd>m .+1<cr>==", opts)
-map("n", "K", "<cmd>m .-2<cr>==", opts)
-map("v", "J", ":m '>+1<cr>gv=gv", opts)
-map("v", "K", ":m '<-2<cr>gv=gv", opts)
+-- Move lines
+map("n", "<c-j>", "<cmd>m .+1<cr>==", opts)
+map("n", "<c-k>", "<cmd>m .-2<cr>==", opts)
+map("v", "<c-j>", ":m '>+1<cr>gv=gv", opts)
+map("v", "<c-k>", ":m '<-2<cr>gv=gv", opts)
+
+-- stronger, more ergonomic hl
 map({ "n", "v", "o" }, "H", "^", opts)
 map({ "n", "v", "o" }, "L", "$", opts)
 
@@ -46,17 +48,12 @@ map("i", ";", ";<c-g>u", opts)
 
 -- save file & normal mode
 map({ "i", "n" }, "<c-s>", "<cmd>w<cr><esc>")
+map({ "i", "n", "v" }, "<c-q>", "<cmd>bdelete<cr><esc>")
 
--- splits
-map({ "i", "n", "v" }, "<c-q>", "<cmd>bdelete<cr>")
-map({ "i", "n", "v" }, "<c-w>", "<cmd>wincmd w<cr>")
 
 -- better indenting
 map("v", "<", "<gv", opts)
 map("v", ">", ">gv", opts)
-
-map("n", "<leader>xl", "<cmd>lopen<cr>")
-map("n", "<leader>xq", "<cmd>copen<cr>")
 
 map("n", "[q", "<cmd>cprev<cr>")
 map("n", "]q", "<cmd>cnext<cr>")
@@ -91,6 +88,7 @@ map({ "n", "v" }, "g-", "g<c-x>", opts)
 map("v", "gn", ":'<,'>normal ", opts)
 
 -- global navigation
+map({ "i", "n", "v" }, "<M-TAB>", "<cmd>wincmd w<cr>")
 map({ "i", "n" }, "<a-q>", "<cmd>q<cr>")
 map({ "i", "n" }, "<a-S-q>", "<cmd>wqa<cr>")
 map({ "i", "n" }, "<a-e>", "<cmd>Telescope file_browser path=%:p:h<cr>")
@@ -100,11 +98,9 @@ map({ "i", "n" }, "<a-g>", "<cmd>Telescope oldfiles<cr>")
 map({ "i", "n" }, "<a-S-g>", "<cmd>Telescope buffers<cr>")
 -- create new tab at end: have fixed tand do not insert new one's inbetween (sane default behaviour), reordering not neccessary because we hotswitch  with 1-9
 map({ "i", "n" }, "<a-t>", "<cmd>$tabnew<cr>")
--- HACK: rerun command in tmux-cmd-window
-map({ "i", "n" }, "<a-S-c>", function()
-	vim.fn.system("tmux select-window -t cmd; tmux send-keys C-l Up Enter")
-end)
+
 -- HACK: new tmux window with the current buffer's working directory as path (name: cmd, os-consistent)
+-- TODO with lazygit
 map({ "i", "n" }, "<a-c>", function()
 	local path = vim.fn.expand("%:p:h")
 	vim.fn.system("tmux new-window -S -n cmd -c " .. path)

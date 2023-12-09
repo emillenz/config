@@ -1,26 +1,3 @@
-wa energy of living human
-zathura  -h | bat
-zathura ~/Books/cs/rust_programming_lang.pdf# i read every day, first thing i do on the computer, so i want the book to be there starting up<\n>
-zathura ~/Books/cs/rust_programming_lang.pdf # i read every day, first thing i do on the computer, so i want the book to be there starting up<\n>
-flameshot -h | bat
-flameshot -g
-flameshot
-^flameshot
-^flameshot --help
-flameshot gui
-xrandr --listactivemonitors 
-xrandr 
-xrandr
-xrandr  -h | bat
-xrandr  --help
-xrandr  --listmonitors
-xrandr
-xrandr --help
-xrandr -q
-xrandr -q | lines 
-xrandr -q | lines | where {str contains "connected"}
-xrandr -q | lines | where {str contains "connected"} | split column
-xrandr -q | lines | where {str contains "connected"} | split column " "
 xrandr -q | lines | where {str contains " connected"} | split column " " 
 xrandr -q | lines | where {str contains " connected"} | split column " " | get column1
 nvim
@@ -9998,3 +9975,26 @@ xprop
 class
 xprop
 startup
+yay dvi
+yay pdflatex
+yay mktex
+yay texlive-fell
+yay -Qs texlive
+yay texlive-full
+yay texlive-latex-extra
+yay texlive extra
+timer status
+e (fd -tf | fzf --preview='bat --theme Solarized (dark) {}' | str trim)
+nvim (fd -tf | fzf --preview='bat --theme Solarized (dark) {}' | str trim)
+nvim
+firefox  --help | bat --theme 'Solarized (dark)' --language man
+firefox --new-window
+xev
+nvim
+e
+xsetroot -solid '#002b36'<\n>
+xsetroot<\n>
+yay xsetroot
+xset
+xset  --help | bat --theme 'Solarized (dark)' --language man
+man xset

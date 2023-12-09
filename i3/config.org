@@ -125,14 +125,14 @@ bindsym $mod+g          exec rofi -show window
 bindsym $mod+semicolon  exec rofi -show run
 bindsym $mod+Tab        layout toggle tabbed splith
 bindsym $mod+Return     move workspace to output next
-bindsym $mod+m          exec i3-input -F 'mark %s' -l 1 -P 'Mark:'
-bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto'
+# bindsym $mod+m          exec i3-input -F 'mark %s' -l 1 -P 'Mark:'
+# bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto'
 #+end_src
 
 ** Workspaces Assignments
 - Statistically frequently used apps are assigne their own workspaces, all others are sent to the scratch workspace 1 (1-4 are for temporary assignments)
 - Upon opening new windows, automatically focus them (regardless of workspace. (sensible)
-- abbrev for too long command
+- Abbrev for too long command
 #+begin_src conf
 set $moveto move container to workspace
 
@@ -142,20 +142,41 @@ set $ws_web    "󰖟  web  "
 set $ws_edit   "  edit "
 set $ws_video  "  vid  "
 set $ws_image  "󰋩  img  "
+set $ws_ai     "󰧑  ai   "
+set $ws_music  "  music"
 
 # HACK: [all] must come before specific assignments (specific classes overwrite this setting).
 for_window [all] title_window_icon yes, $moveto 1, focus
 for_window [urgent="latest"] focus
 
 # specific assignments
-for_window [class="(?i)cmd"]               $moveto $ws_cmd,   focus
-for_window [class="(?i)zathura"]           $moveto $ws_doc,   focus
-for_window [class="(?i)firefox"]           $moveto $ws_web,   focus
-for_window [class="(?i)emacs|(?i)eclipse"] $moveto $ws_edit,  focus
+for_window [class="(?i)cmd"]                     $moveto $ws_cmd,   focus
+for_window [class="(?i)zathura"]                 $moveto $ws_doc,   focus
+for_window [class="(?i)emacs|(?i)eclipse"]       $moveto $ws_edit,  focus
+for_window [class="(?i)firefox"]                 $moveto $ws_web,   focus
 
-for_window [class="(?i)mpv"]               $moveto $ws_video, focus
-for_window [class="(?i)nsxiv"]             $moveto $ws_image, focus
+for_window [class="(?i)mpv"]                     $moveto $ws_video, focus
+for_window [class="(?i)nsxiv"]                   $moveto $ws_image, focus
+for_window [class="(?i)firefox" title="ChatGPT"] $moveto $ws_ai,    focus
+for_window [class="(?i)firefox" title="Spotify"] $moveto $ws_music, focus
 #+end_src
+
+** Using main
+#+begin_src conf
+workspace $ws_cmd   output primary
+workspace $ws_doc   output primary
+workspace $ws_web   output primary
+workspace $ws_edit  output primary
+workspace $ws_video output primary
+workspace $ws_image output primary
+workspace $ws_ai    output primary
+workspace $ws_music output primary
+workspace 1 output primary
+workspace 2 output primary
+workspace 3 output primary
+workspace 4 output primary
+#+end_src
+
 
 
 ** App navigation bindings
@@ -176,13 +197,18 @@ bindsym $mod+shift+c $moveto $ws_cmd; workspace $ws_cmd
 bindsym $mod+d       workspace $ws_doc
 bindsym $mod+shift+d $moveto $ws_doc; workspace $ws_doc
 bindsym $mod+w       workspace $ws_web
-bindsym $mod+shift+w $moveto $ws_web; w $moveto $ws_web
+bindsym $mod+shift+w $moveto $ws_web; workspace $ws_web
 bindsym $mod+e       workspace $ws_edit
 bindsym $mod+shift+e $moveto $ws_edit; workspace $ws_edit
 bindsym $mod+v       workspace $ws_video
 bindsym $mod+shift+v $moveto $ws_video; workspace $ws_video
 bindsym $mod+i       workspace $ws_image
 bindsym $mod+shift+i $moveto $ws_image; workspace $ws_image
+bindsym $mod+a       workspace $ws_ai
+bindsym $mod+shift+a $moveto $ws_ai; workspace $ws_ai
+bindsym $mod+m       workspace $ws_music
+bindsym $mod+shift+m $moveto $ws_music; workspace $ws_music
+
 bindsym $mod+z       exec i3-msg restart
 #+end_src
 
@@ -194,16 +220,18 @@ bindsym $mod+z       exec i3-msg restart
 #+begin_src  conf
 set $open <open> \
 │ editor \
+│ ^editor-everywhere \
 │ cmd \
 │ web \
-│ doc-reader \
-│ music-player \
-│ image-viewer \
+│ docs \
+│ music \
+│ images \
 │ [s] passwds \
 │ processes \
-│ video-player \
+│ videos \
 │ ^mixer \
-│ networks
+│ networks \
+│ ai
 
 bindsym $mod+o mode "$open"
 mode "$open" {
@@ -231,11 +259,6 @@ mode "$open" {
     || firefox & \
     ; mode "default"
 
-  bindsym $mod+m exec \
-    i3-msg '[class="(?i)ncmpcpp"] focus' \
-    || alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp & \
-    ; mode "default"
-
   bindsym $mod+v exec \
     i3-msg '[class=(?i)mpv] focus' \
     || mpv $(xclip -o) & \
@@ -251,9 +274,24 @@ mode "$open" {
     || keepassxc & \
     ; mode "default"
 
+  # bindsym $mod+m exec \
+  #   i3-msg '[class="(?i)ncmpcpp"] focus' \
+  #   || alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp & \
+  #   ; mode "default"
+
+    bindsym $mod+m exec \
+    i3-msg '[class="(?i)firefox" title="Spotify"] focus' \
+    || firefox --new-window https://open.spotify.com \
+    ; mode "default"
+
   bindsym $mod+shift+m exec \
     i3-msg '[class="(?i)pulsemixer"] focus' \
     || alacritty --class 'pulsemixer' -T 'audio' -e pulsemixer & \
+    ; mode "default"
+
+  bindsym $mod+a exec \
+    i3-msg '[class="(?i)firefox" title="ChatGPT"] focus' \
+    || firefox --new-window https://chat.openai.com \
     ; mode "default"
 
   bindsym $mod+p exec \
@@ -276,8 +314,7 @@ mode "$open" {
 #+begin_src conf
 bindsym $mod+space mode "$leader"
 set $leader <leader> \
-| mini-menus+ \
-│ find+ \
+| menus+ \
 │ keyboard+ \
 │ timer+ \
 │ powermenu+ \
@@ -285,8 +322,7 @@ set $leader <leader> \
 
 
 mode "$leader" {
-  bindsym $mod+m mode "$mini"
-  bindsym $mod+f mode "$find"
+  bindsym $mod+m mode "$menus"
   bindsym $mod+k mode "$keyboard"
   bindsym $mod+p mode "$powermenu"
   bindsym $mod+t mode "$timer"
@@ -368,22 +404,22 @@ mode "$timer" {
 }
 #+end_src
 
-*** Mini-menus
+*** Menus
 #+begin_src conf
-set $mini <mini-menus> \
+set $menus <menus> \
 │ audio \
 │ outputs \
 │ [^o] layouts \
 │ btconnect \
 │ process-kill \
 
-mode "$mini" {
-  bindsym $mod+a       exec ~/.config/bin/mini-audio;       mode "default"
-  bindsym $mod+o       exec ~/.config/bin/mini-output;      mode "default"
-  bindsym $mod+shift+o exec ~/.config/bin/mini-layout;      mode "default"
-  bindsym $mod+shift+s exec ~/.config/bin/mini-screenshot;  mode "default"
-  bindsym $mod+b       exec ~/.config/bin/mini-bluetooth;   mode "default"
-  bindsym $mod+p       exec ~/.config/bin/mini-killprocess; mode "default"
+mode "$menus" {
+  bindsym $mod+a       exec ~/.config/bin/audio-menu;       mode "default"
+  bindsym $mod+o       exec ~/.config/bin/output-menu;      mode "default"
+  bindsym $mod+shift+o exec ~/.config/bin/layout-menu;      mode "default"
+  bindsym $mod+shift+s exec ~/.config/bin/screenshot-menu;  mode "default"
+  bindsym $mod+b       exec ~/.config/bin/bluetooth-menu;   mode "default"
+  bindsym $mod+p       exec ~/.config/bin/killprocess-menu; mode "default"
   bindsym Escape mode "default"
 }
 #+end_src

@@ -25,19 +25,11 @@ alias cat = bat
 alias fzf = fzf --reverse --height=30 --color=dark --scheme=path
 alias gg = lazygit
 
-$env.PATH = (
-  $env.PATH |
-  append [
-    "~/.config/bin",
-    "~/.cargo/bin",
-    "~/.config/emacs/bin",
-  ] |
-  uniq
-)
+$env.PATH = ($env.PATH | append ["~/.config/bin", "~/.cargo/bin", "~/.config/emacs/bin",] | uniq)
 
 alias e = emacsclient --tty
 alias g = emacsclient --tty --eval "(magit-status)"
-alias x = emacsclient --tty --eval "(dired-jump)"
+alias d = emacsclient --tty --eval "(dired-jump)"
 $env.EDITOR = "emacsclient --tty --no-wait"
 $env.VISUAL = "emacsclient --reuse-frame --no-wait"
 $env.BROWSER = "firefox"
@@ -231,7 +223,7 @@ $env.config = {
     {
     name: help_menu
     modifier: control
-    keycode: char_k
+    keycode: char_h
     mode: [emacs vi_normal vi_insert]
     event: {send: menu name: help_menu}
     }
@@ -256,19 +248,9 @@ $env.config = {
     }
 
     {
-    name: change_dir
-    modifier: control
-    keycode: char_g
-    mode: [emacs, vi_normal, vi_insert]
-    event: [
-    {send: executehostcommand, cmd: "cd (fd -td --hidden | fzf --preview='ls {}' | str trim)"}
-    ]
-    }
-
-    {
-    name: help_documentation
+    name: quick_help
     modifier: shift
-    keycode: char_h
+    keycode: char_k
     mode: vi_normal
     event: [
       {edit: MoveToLineEnd}
@@ -278,15 +260,23 @@ $env.config = {
     }
 
     {
-    name: documentation
+    name: manpage
     modifier: shift
-    keycode: char_k
+    keycode: char_m
     mode: vi_normal
     event: [
       {edit: MoveToLineStart}
       {edit: InsertString, value: "man "}
       {send: Enter}
     ]
+    }
+
+    {
+    name: home_dir
+    modifier: control_shift
+    keycode: char_p
+    mode: [emacs, vi_normal, vi_insert]
+    event: {send: executehostcommand, cmd: "cd ~"}
     }
 
     {
@@ -298,11 +288,11 @@ $env.config = {
     }
 
     {
-    name: home_dir
-    modifier: control_shift
-    keycode: char_p
+    name: goto_dir
+    modifier: control
+    keycode: char_g
     mode: [emacs, vi_normal, vi_insert]
-    event: {send: executehostcommand, cmd: "cd ~"}
+    event: {send: executehostcommand, cmd: "cd (fd -td | fzf --preview='ls {}' | str trim)"}
     }
 
     {
@@ -338,6 +328,22 @@ $env.config = {
       keycode: char_u
       mode: vi_normal
       event: {edit: undo}
+    }
+
+    {
+      name: start_of_line
+      modifier: shift
+      keycode: char_h
+      mode: vi_normal
+      event: {edit: movetolinestart}
+    }
+
+    {
+      name: end_of_line
+      modifier: shift
+      keycode: char_l
+      mode: vi_normal
+      event: {edit: movetolineend}
     }
 
   ]

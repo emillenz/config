@@ -20,21 +20,20 @@ alias rm = rm -rvft
 alias cp = cp -rvp
 alias mv = mv -vf
 
-alias bat = bat --theme "Solarized (dark)"
-alias cat = bat
+alias bat = bat --theme='Solarized (dark)'
 alias fzf = fzf --reverse --height=30 --color=dark --scheme=path
-alias gg = lazygit
-
-$env.PATH = ($env.PATH | append ["~/.config/bin", "~/.cargo/bin", "~/.config/emacs/bin",] | uniq)
 
 alias e = emacsclient --tty
 alias g = emacsclient --tty --eval "(magit-status)"
 alias d = emacsclient --tty --eval "(dired-jump)"
+alias v = nvim
+
+$env.PATH = ($env.PATH | append ["~/.config/bin", "~/.cargo/bin", "~/.config/emacs/bin"] | uniq)
 $env.EDITOR = "emacsclient --tty --no-wait"
 $env.VISUAL = "emacsclient --reuse-frame --no-wait"
 $env.BROWSER = "firefox"
-$env.MANPAGER = "bat --theme 'Solarized (dark)' --language man"
-$env.PAGER = "bat --theme 'Solarized (dark)'"
+$env.MANPAGER = "bat --plain --language=man --theme='Solarized (dark)'"
+$env.PAGER = "bat --theme='Solarized (dark)'"
 
 let fish_completer = {|spans|
     fish --command $'complete "--do-complete=($spans | str join " ")"'
@@ -242,7 +241,7 @@ $env.config = {
     keycode: char_f
     mode: [emacs, vi_normal, vi_insert]
     event: [
-      {edit: InsertString, value: "(fd -tf | fzf --preview='bat --theme Solarized (dark) {}' | str trim)"},
+      {edit: InsertString, value: "(fd --type=file | fzf --preview='bat {}' | str trim)"},
       {send: enter}
     ]
     }
@@ -254,7 +253,7 @@ $env.config = {
     mode: vi_normal
     event: [
       {edit: MoveToLineEnd}
-      {edit: InsertString, value: " --help | bat --theme 'Solarized (dark)' --language man"}
+      {edit: InsertString, value: " --help | bat --language=man"}
       {send: Enter}
     ]
     }
@@ -266,7 +265,7 @@ $env.config = {
     mode: vi_normal
     event: [
       {edit: MoveToLineStart}
-      {edit: InsertString, value: "man "}
+      {edit: InsertString, value: " man "}
       {send: Enter}
     ]
     }
@@ -292,7 +291,7 @@ $env.config = {
     modifier: control
     keycode: char_g
     mode: [emacs, vi_normal, vi_insert]
-    event: {send: executehostcommand, cmd: "cd (fd -td | fzf --preview='ls {}' | str trim)"}
+    event: {send: executehostcommand, cmd: "cd (fd --type=directory | fzf --preview='ls {}' | str trim)"}
     }
 
     {
@@ -306,10 +305,11 @@ $env.config = {
     ]
     }
 
+    # note: clear is mapped to z in normal mode -> terminal mappings are old and outdated
     {
     name: listcontents
     modifier: control
-    keycode: char_v
+    keycode: char_l
     mode: [emacs, vi_normal, vi_insert]
     event: {send: executehostcommand, cmd: " ls"}
     }
@@ -320,14 +320,6 @@ $env.config = {
       keycode: char_u
       mode: vi_normal
       event: {edit: redo}
-    }
-
-    {
-      name: undo_change
-      modifier: none
-      keycode: char_u
-      mode: vi_normal
-      event: {edit: undo}
     }
 
     {
@@ -344,6 +336,17 @@ $env.config = {
       keycode: char_l
       mode: vi_normal
       event: {edit: movetolineend}
+    }
+
+
+    {
+      name: clear
+      modifier: none
+      keycode: char_z
+      mode: vi_normal
+      event: [
+        {send: clearscreen}
+      ]
     }
 
   ]

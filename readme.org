@@ -85,6 +85,9 @@ Imagine two kinds of grocery stores, one that just looks at what is the most pop
   + And with holding down it is quicker to access
 - No confusion or mental overhead, as to which if one is in leadermode or not.
 - Use keysequences for all actions that of a non-repeating type.
+- It is important that ~new-tab~ inserts the tab at the end of the tabline
+  + no rearraging of the numbers
+    + switch to the tabs without looking
 - Use mod+shift for a "stronger action" (eg. normal: (find-file <cwd>); shift: (find-file <home>))
 - Inside Applications: Alt -> in order to minimize conflict with existing shortcuts.
   + Alt acts as the navigational-layer above the applications normal keybindings (chars, ctrl, shift), it condenses down a minimal set of universal, efficient navigational commands.

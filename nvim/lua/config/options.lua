@@ -1,7 +1,4 @@
 -- This file is automatically loaded by plugins.core
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-
 -- Enable LazyVim auto format
 vim.g.autoformat = true
 
@@ -12,57 +9,60 @@ vim.g.autoformat = true
 -- * a function with signature `function(buf) -> string|string[]`
 vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 
+local opt = vim.opt
+
 vim.scriptencoding = "utf-8"
-vim.opt.encoding = "utf-8"
-vim.opt.fileencoding = "utf-8"
-vim.opt.magic = true -- Enable magic mode
-vim.opt.gdefault = true -- Always substitute all matches
-vim.opt.autowrite = true -- Enable auto write
-vim.opt.autochdir = true -- Enable dirswitching
-vim.opt.clipboard = "unnamedplus" -- Sync with system clipboard
-vim.opt.completeopt = "menu,menuone,noselect"
-vim.opt.conceallevel = 3 -- Hide * markup for bold and italic
-vim.opt.confirm = true -- Confirm to save changes before exiting modified buffer
-vim.opt.cursorline = true -- Enable highlighting of the current line
-vim.opt.formatoptions = "jcroqlnt" -- tcqj
-vim.opt.grepformat = "%f:%l:%c:%m"
-vim.opt.grepprg = "rg --vimgrep"
-vim.opt.ignorecase = true -- Ignore case
-vim.opt.inccommand = "nosplit" -- preview incremental substitute
-vim.opt.laststatus = 3 -- global statusline
-vim.opt.list = true -- Show some invisible characters (tabs...
-vim.opt.mouse = "a" -- Enable mouse mode
-vim.opt.number = true -- Print line number
-vim.opt.pumblend = 0 -- Popup transparency
-vim.opt.pumheight = 10 -- Maximum number of entries in a popup
-vim.opt.relativenumber = true -- Relative line numbers
-vim.opt.scrolloff = 10 -- Lines of context
-vim.opt.sessionoptions =
+opt.encoding = "utf-8"
+opt.fileencoding = "utf-8"
+opt.magic = true -- Enable very magic mode => less escaping quotes
+opt.gdefault = true -- Always substitute all matches
+opt.autowrite = true -- Enable auto write
+opt.autochdir = true -- Enable dirswitching
+opt.clipboard = "unnamedplus" -- Sync with system clipboard
+opt.completeopt = "menu,menuone,noselect"
+opt.conceallevel = 3 -- Hide * markup for bold and italic
+opt.confirm = true -- Confirm to save changes before exiting modified buffer
+opt.cursorline = true -- Enable highlighting of the current line
+opt.formatoptions = "jcroqlnt" -- tcqj
+opt.grepformat = "%f:%l:%c:%m"
+opt.grepprg = "rg --vimgrep"
+opt.ignorecase = true -- Ignore case
+opt.inccommand = "nosplit" -- preview incremental substitute
+opt.laststatus = 3 -- global statusline
+opt.list = true -- Show some invisible characters (tabs...
+opt.mouse = "a" -- Enable mouse mode
+opt.number = true -- Print line number
+opt.pumblend = 0 -- Popup transparency
+opt.pumheight = 10 -- Maximum number of entries in a popup
+opt.relativenumber = true -- Relative line numbers
+opt.scrolloff = 0 -- Lines of context
+opt.textwidth = 100
+opt.sessionoptions =
 	{ "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" }
-vim.opt.shiftround = true -- Round indent
-vim.opt.expandtab = true -- spaces instead of tabs?
-vim.opt.tabstop = 2 -- Number of spaces tabs count for
-vim.opt.shiftwidth = 2 -- Size of an indent
-vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
-vim.opt.showmode = false -- Dont show mode since we have a statusline
-vim.opt.sidescrolloff = 10 -- Columns of context
-vim.opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
-vim.opt.smartcase = true -- Don't ignore case with capitals
-vim.opt.smartindent = true -- Insert indents automatically
-vim.opt.spelllang = { "en" }
-vim.opt.splitbelow = true -- Put new windows below current
-vim.opt.splitkeep = "screen"
-vim.opt.splitright = true -- Put new windows right of current
-vim.opt.termguicolors = true -- True color support
-vim.opt.timeoutlen = 300
-vim.opt.undofile = true
-vim.opt.undolevels = 10000
-vim.opt.updatetime = 200 -- Save swap file and trigger CursorHold
-vim.opt.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
-vim.opt.wildmode = "longest:full,full"
-vim.opt.winminwidth = 5 -- Minimum window width
-vim.opt.wrap = false -- Disable line wrap
-vim.opt.fillchars = {
+opt.shiftround = true -- Round indent
+opt.expandtab = true -- spaces instead of tabs?
+opt.tabstop = 2 -- Number of spaces tabs count for
+opt.shiftwidth = 2 -- Size of an indent
+opt.shortmess:append({ W = true, I = true, c = true, C = true })
+opt.showmode = false -- Dont show mode since we have a statusline
+opt.sidescrolloff = 10 -- Columns of context
+opt.signcolumn = "yes" -- Always show the signcolumn, otherwise it would shift the text each time
+opt.smartcase = true -- Don't ignore case with capitals
+opt.smartindent = true -- Insert indents automatically
+opt.spelllang = { "en" }
+opt.splitbelow = true -- Put new windows below current
+opt.splitkeep = "screen"
+opt.splitright = true -- Put new windows right of current
+opt.termguicolors = true -- True color support
+opt.timeoutlen = 300
+opt.undofile = true
+opt.undolevels = 10000
+opt.updatetime = 200 -- Save swap file and trigger CursorHold
+opt.virtualedit = "block" -- Allow cursor to move where there is no text in visual block mode
+opt.wildmode = "longest:full,full"
+opt.winminwidth = 5 -- Minimum window width
+opt.wrap = false -- Disable line wrap
+opt.fillchars = {
 	foldopen = "",
 	foldclose = "",
 	fold = "⸱",
@@ -74,23 +74,23 @@ vim.opt.fillchars = {
 vim.o.formatexpr = "v:lua.require'lazyvim.util'.format.formatexpr()"
 
 if vim.fn.has("nvim-0.10") == 1 then
-	vim.opt.smoothscroll = true
+	opt.smoothscroll = true
 end
 
 -- Folding
-vim.opt.foldlevel = 99
-vim.opt.foldtext = "v:lua.require'lazyvim.util'.ui.foldtext()"
+opt.foldlevel = 99
+opt.foldtext = "v:lua.require'lazyvim.util'.ui.foldtext()"
 
 if vim.fn.has("nvim-0.9.0") == 1 then
-	vim.opt.statuscolumn = [[%!v:lua.require'lazyvim.util'.ui.statuscolumn()]]
+	opt.statuscolumn = [[%!v:lua.require'lazyvim.util'.ui.statuscolumn()]]
 end
 
 -- HACK: causes freezes on <= 0.9, so only enable on >= 0.10 for now
 if vim.fn.has("nvim-0.10") == 1 then
-	vim.opt.foldmethod = "expr"
-	vim.opt.foldexpr = "v:lua.require'lazyvim.util'.ui.foldexpr()"
+	opt.foldmethod = "expr"
+	opt.foldexpr = "v:lua.require'lazyvim.util'.ui.foldexpr()"
 else
-	vim.opt.foldmethod = "indent"
+	opt.foldmethod = "indent"
 end
 
 -- Undercurl

@@ -97,7 +97,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  which-key-idle-delay 1
  which-key-allow-multiple-replacements t
  hscroll-margin 0
- scroll-margin 10
+ scroll-margin 0
  enable-recursive-minibuffers nil
  highlight-indent-guides-responsive  t
  display-line-numbers-type 'visual)
@@ -107,7 +107,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (save-place-mode 1)
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
-(beacon-mode 1)
 
 (tab-bar-mode 1)
 (setq tab-bar-tab-hints t
@@ -147,7 +146,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   + Take math for example, its easier to read equations if they are on newline
   + Coding: typically one statement per line
 #+begin_src emacs-lisp
-;; NOTE: not prog mode
+;; NOTE: not prog mode -> breaks with
 (add-hook!
  '(text-mode-hook
    dired-mode-hook
@@ -160,8 +159,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (setq
  visual-fill-column-enable-sensible-window-split t
  visual-fill-column-center-text t
- visual-fill-column-width 100
- fill-column 100)
+ visual-fill-column-width 100)
+(setq-default fill-column 100)
 #+end_src
 
 * Keybindings
@@ -173,13 +172,15 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (setq
  doom-leader-key "SPC"
  doom-leader-alt-key "M-SPC"
- doom-localleader-key ","
- doom-leader-alt-key "M-,")
+ doom-localleader-key "SPC m"
+ doom-leader-alt-key "M-SPC m")
 
 (map! :leader
-      (:prefix ("t" . "toggle")
+      "t" nil
+      (:prefix-map ("u" . "ui")
                "V" 'visual-fill-column-mode
                "C" 'company-mode)
+      "u" doom-leader-toggle-map ;; HACK: remap toggle -> ui (more sensible)
       (:prefix ("c" . "code")
                "w" #'z/clean-whitespace
                (:prefix ("b" . "org-babel")
@@ -228,6 +229,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         :nvim "M-f"     #'consult-find
         :nvim "M-F"     (cmd! (consult-find "~"))
         :nvim "M-g"     #'consult-buffer
+        :nvim "M-r"     #'consult-recent-file
         :nvim "M-c"     #'shell-command
         :nvim "M-;"     #'execute-extended-command
         :nvim "M-'"     #'consult-bookmark
@@ -253,7 +255,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   (when (buffer-modified-p)
     (condition-case nil (evil-write nil nil)
       (error)))
-  (condition-case nil (kill-buffer-and-window)
+  (condition-case nil (evil-window-delete)
     (error
      (condition-case nil (tab-bar-close-tab)
        (error
@@ -275,6 +277,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - ~:w~ is the statistically most run vim-ex-command, but very unergonomic.
   + Map it to the os-consistent key
 - ~HL~ are useless (learn relative linejumps you ape!) and thus "stronger" versions of the regular ~hl~ motions in Vim. (~JK~ do not need stronger versions as you should use relative line jumps or ~C-u/d~ for larger motions (efficiency))
+- alias gs to quick-search-replace
 - ~()~ are useless
   + Remap to parens jumping
 
@@ -289,9 +292,10 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
    :nmvo "j"   #'evil-next-visual-line
    :nmvo "k"   #'evil-previous-visual-line
 
+   :nm   "TAB" #'+fold/toggle ;; taken from org-mode
+
    :nmv  "U"   #'evil-redo
    :nmv  "Q"   #'evil-execute-last-recorded-macro
-   :nmv  "RET" #'electric-newline-and-maybe-indent
 
    :nmv  "]e"  #'flycheck-next-error
    :nmv  "[e"  #'flycheck-previous-error
@@ -308,7 +312,14 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
    :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
 
    :nmv  "go"  #'consult-imenu
-   :nmv  "gs"  #'+default/search-buffer
+   :nmv  "g/"  #'+default/search-buffer
+
+   :nmv  "g."  #'evil-ex-repeat
+
+   :nm   "\\"  (cmd! (evil-ex "s/"))
+   :v    "\\"  (cmd! (evil-ex "'<,'>s/"))
+   :nm   "|"   (cmd! (evil-ex "g/"))
+   :v    "|"   (cmd! (evil-ex "'<,'>g/"))
    )
   )
 #+end_src
@@ -334,7 +345,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (after! evil
   (map!
    :inmv "C-s" #'evil-write
-   :inmv "C-q" #'kill-current-buffer
+   :inmv "C-q" (cmd! (when (buffer-modified-p) (condition-case nil (evil-write nil nil) (error))) (kill-current-buffer))
    :inmv "C-j" #'drag-stuff-down
    :inmv "C-k" #'drag-stuff-up
    ))
@@ -376,8 +387,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
         :nmv "[["     #'org-backward-heading-same-level
         :inmv "S-RET" #'org-meta-return
         :inmv "C-RET" #'+org/insert-item-below
-        :nmv  "RET"   #'org-return-maybe-indent
-        :nmvo "H"     #'evil-first-non-blank
+        :nmvo "H"     #'evil-org-beginning-of-line
         :nmvo "L"     #'evil-org-end-of-line
         :inmv "C-j"   #'org-metadown
         :inmv "C-k"   #'org-metaup
@@ -438,10 +448,10 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 
 * Evil mode
 - Add more functions to jumplist.
-- use better regex (very-magic)
 - always globally substitute
 - Enable evil mode in minibuffers & other modes (agenda...)
 - Improve ~f~ & ~t~ motions with ~evil-snipe~
+- use verymagic (easier regex)
 - Use evil-snipe
 #+begin_src emacs-lisp
 (after! evil
@@ -481,7 +491,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 (after! company
   (setq
    company-minimum-prefix-length 1
-   company-idle-delay 0.2 ;; NOTE: impacts performance
+   company-idle-delay 0.1 ;; NOTE: don't set to 0
    company-show-quick-access t
    company-global-modes
    '(not
@@ -616,7 +626,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 #+end_src
 
 ** Symbols
-- Use Icons to enhance ui readability.
+- Use Icons to enhance ui readability (has nothing to do with bloat, this is still editeable plaintext (utf8) but greatly improves readability at a glance)
 - Clean up keywords with sybols -> more concise, compact, easier to read, faster at a glance
 #+begin_src emacs-lisp
 (add-hook! 'org-mode-hook #'org-superstar-mode #'prettify-symbols-mode)
@@ -635,7 +645,6 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 (setq-default prettify-symbols-alist
               '(("->" . "→")
                 ("|" . "│")
-                ("<-" . "←")
                 ("=>" . "⇒")
                 ("<=>" . "⇔")
                 ))
@@ -799,8 +808,8 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 - Set more concise & informing ~deadline~ & ~scheduled~ strings
 #+begin_src emacs-lisp
   (setq
-   org-agenda-scheduled-leaders '("─────" "<-%2dd")
-   org-agenda-deadline-leaders '("━━━━━" "=>%2dd" "<=%2dd")
+   org-agenda-scheduled-leaders '("─────" "←%3dd")
+   org-agenda-deadline-leaders '("━━━━━" "⇒%3dd" "⇐%3dd")
    org-agenda-todo-keyword-format "%-3s"
    org-agenda-prefix-format
    '((agenda . "%-12c%-6s%-12t")
@@ -997,9 +1006,7 @@ End the "(after! org" block
      :children
      (("task" :keys "t"
        :template
-       ("* [ ] %^{title} %^g"
-        "%?"
-        )
+       ("* [ ] %^{title} %? %^g") ;; NOTE: not putting final insert on newline -> create no newlines for tasks if not specifically wanted
        :children
        (("cs"   :keys "c" :file "cs/tasks.org"
          :children
@@ -1009,6 +1016,7 @@ End the "(after! org" block
           ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox"))
           ))
         ("personal" :keys "p" :file "personal/tasks.org")
+        ("compass"  :keys "s" :file "compass/tasks.org")
         ("config"   :keys "o" :file "config/tasks.org")
         )
        )
@@ -1018,8 +1026,7 @@ End the "(after! org" block
        ("* [#] %^{title} %^g"
         "%^t"
         "LOCATION: %^{location}"
-        "PRE: %^{pre}"
-        "%?"
+        "PRE: %^{pre}%?"
         )
        :children
        (("cs"       :keys "c" :file "cs/events.org")
@@ -1045,6 +1052,7 @@ End the "(after! org" block
           ("ad" :keys "a" :file "cs/ad/notes.org")
           ))
         ("personal" :keys "p" :file "personal/notes.org")
+        ("compass"  :keys "s" :file "compass/notes.org")
         ("config"   :keys "o" :file "config/notes.org")
         )
        )
@@ -1080,10 +1088,12 @@ End the "(after! org" block
 - Having 8x or 4x indentations makes the code move too far to the right, and makes it really incoherent and spaced out on a 100-character terminal screen.
   + Scanning code horizontally is alot harder than reading it vertically. Especially when you’ve been looking at your screen for 20 straight hours, you’ll find it a lot easier to read your code if it is compacted and concise.
   + Keep in mind that if you need more than 3 levels of indentation, you’re screwed anyway and have nested your functions too deep and should fix your program.
+  + Tab never autocompletes, confirm the autocompletion with enter. (consistent with all other programs on the os (neovim, nushell, browser...))
 
 #+begin_src emacs-lisp
 (advice-add #'doom-highlight-non-default-indentation-h :override #'ignore) ;; turn off whitespace highlighting
 (setq
+ tab-always-indent t
  org-indent-indentation-per-level 2
  evil-shift-width 2
  standard-indent 2

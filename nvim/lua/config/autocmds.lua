@@ -2,17 +2,12 @@
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
 
--- Example
--- vim.api.nvim_create_autocmd({ "FileType" }, {
--- 	pattern = { "json", "jsonc" },
--- 	callback = function()
--- 		vim.wo.conceallevel = 0
--- 	end,
--- })
+local autocmd = vim.api.nvim_create_autocmd
 
--- Helper autocommand lasttab: save alternate tabnr in variable (switch between alternat tabs)
-vim.api.nvim_create_autocmd({ "TabLeave" }, {
+autocmd({ "WinNew" }, {
+	pattern = "",
 	callback = function()
-		vim.g.alt_tab = vim.fn.tabpagenr()
+		vim.cmd("wincmd L") -- vsplit
+		vim.cmd("vertical resize 80%") -- vsplit
 	end,
 })

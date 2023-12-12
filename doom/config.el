@@ -62,7 +62,7 @@
  which-key-idle-delay 1
  which-key-allow-multiple-replacements t
  hscroll-margin 0
- scroll-margin 10
+ scroll-margin 0
  enable-recursive-minibuffers nil
  highlight-indent-guides-responsive  t
  display-line-numbers-type 'visual)
@@ -72,7 +72,6 @@
 (save-place-mode 1)
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
-(beacon-mode 1)
 
 (tab-bar-mode 1)
 (setq tab-bar-tab-hints t
@@ -101,7 +100,7 @@
 ;; Window layout & behavior:2 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:3]]
-;; NOTE: not prog mode
+;; NOTE: not prog mode -> breaks with
 (add-hook!
  '(text-mode-hook
    dired-mode-hook
@@ -114,21 +113,23 @@
 (setq
  visual-fill-column-enable-sensible-window-split t
  visual-fill-column-center-text t
- visual-fill-column-width 100
- fill-column 100)
+ visual-fill-column-width 100)
+(setq-default fill-column 100)
 ;; Window layout & behavior:3 ends here
 
 ;; [[file:config.org::*Leader][Leader:1]]
 (setq
  doom-leader-key "SPC"
  doom-leader-alt-key "M-SPC"
- doom-localleader-key ","
- doom-leader-alt-key "M-,")
+ doom-localleader-key "SPC m"
+ doom-leader-alt-key "M-SPC m")
 
 (map! :leader
-      (:prefix ("t" . "toggle")
+      "t" nil
+      (:prefix-map ("u" . "ui")
                "V" 'visual-fill-column-mode
                "C" 'company-mode)
+      "u" doom-leader-toggle-map ;; HACK: remap toggle -> ui (more sensible)
       (:prefix ("c" . "code")
                "w" #'z/clean-whitespace
                (:prefix ("b" . "org-babel")
@@ -166,6 +167,7 @@
         :nvim "M-f"     #'consult-find
         :nvim "M-F"     (cmd! (consult-find "~"))
         :nvim "M-g"     #'consult-buffer
+        :nvim "M-r"     #'consult-recent-file
         :nvim "M-c"     #'shell-command
         :nvim "M-;"     #'execute-extended-command
         :nvim "M-'"     #'consult-bookmark
@@ -190,7 +192,7 @@
   (when (buffer-modified-p)
     (condition-case nil (evil-write nil nil)
       (error)))
-  (condition-case nil (kill-buffer-and-window)
+  (condition-case nil (evil-window-delete)
     (error
      (condition-case nil (tab-bar-close-tab)
        (error
@@ -208,9 +210,10 @@
    :nmvo "j"   #'evil-next-visual-line
    :nmvo "k"   #'evil-previous-visual-line
 
+   :nm   "TAB" #'+fold/toggle ;; taken from org-mode
+
    :nmv  "U"   #'evil-redo
    :nmv  "Q"   #'evil-execute-last-recorded-macro
-   :nmv  "RET" #'electric-newline-and-maybe-indent
 
    :nmv  "]e"  #'flycheck-next-error
    :nmv  "[e"  #'flycheck-previous-error
@@ -227,7 +230,14 @@
    :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
 
    :nmv  "go"  #'consult-imenu
-   :nmv  "gs"  #'+default/search-buffer
+   :nmv  "g/"  #'+default/search-buffer
+
+   :nmv  "g."  #'evil-ex-repeat
+
+   :nm   "\\"  (cmd! (evil-ex "s/"))
+   :v    "\\"  (cmd! (evil-ex "'<,'>s/"))
+   :nm   "|"   (cmd! (evil-ex "g/"))
+   :v    "|"   (cmd! (evil-ex "'<,'>g/"))
    )
   )
 ;; Evil-mode:1 ends here
@@ -244,7 +254,7 @@
 (after! evil
   (map!
    :inmv "C-s" #'evil-write
-   :inmv "C-q" #'kill-current-buffer
+   :inmv "C-q" (cmd! (when (buffer-modified-p) (condition-case nil (evil-write nil nil) (error))) (kill-current-buffer))
    :inmv "C-j" #'drag-stuff-down
    :inmv "C-k" #'drag-stuff-up
    ))
@@ -276,8 +286,7 @@
         :nmv "[["     #'org-backward-heading-same-level
         :inmv "S-RET" #'org-meta-return
         :inmv "C-RET" #'+org/insert-item-below
-        :nmv  "RET"   #'org-return-maybe-indent
-        :nmvo "H"     #'evil-first-non-blank
+        :nmvo "H"     #'evil-org-beginning-of-line
         :nmvo "L"     #'evil-org-end-of-line
         :inmv "C-j"   #'org-metadown
         :inmv "C-k"   #'org-metaup
@@ -361,7 +370,7 @@
 (after! company
   (setq
    company-minimum-prefix-length 1
-   company-idle-delay 0.2 ;; NOTE: impacts performance
+   company-idle-delay 0.1 ;; NOTE: don't set to 0
    company-show-quick-access t
    company-global-modes
    '(not
@@ -498,7 +507,6 @@
 (setq-default prettify-symbols-alist
               '(("->" . "→")
                 ("|" . "│")
-                ("<-" . "←")
                 ("=>" . "⇒")
                 ("<=>" . "⇔")
                 ))
@@ -595,8 +603,8 @@
 
 ;; [[file:config.org::*Agenda][Agenda:2]]
 (setq
- org-agenda-scheduled-leaders '("─────" "<-%2dd")
- org-agenda-deadline-leaders '("━━━━━" "=>%2dd" "<=%2dd")
+ org-agenda-scheduled-leaders '("─────" "←%3dd")
+ org-agenda-deadline-leaders '("━━━━━" "⇒%3dd" "⇐%3dd")
  org-agenda-todo-keyword-format "%-3s"
  org-agenda-prefix-format
  '((agenda . "%-12c%-6s%-12t")
@@ -729,9 +737,7 @@ Jumps at tangled code from org src block."
      :children
      (("task" :keys "t"
        :template
-       ("* [ ] %^{title} %^g"
-        "%?"
-        )
+       ("* [ ] %^{title} %? %^g") ;; NOTE: not putting final insert on newline -> create no newlines for tasks if not specifically wanted
        :children
        (("cs"   :keys "c" :file "cs/tasks.org"
          :children
@@ -741,6 +747,7 @@ Jumps at tangled code from org src block."
           ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox"))
           ))
         ("personal" :keys "p" :file "personal/tasks.org")
+        ("compass"  :keys "s" :file "compass/tasks.org")
         ("config"   :keys "o" :file "config/tasks.org")
         )
        )
@@ -750,8 +757,7 @@ Jumps at tangled code from org src block."
        ("* [#] %^{title} %^g"
         "%^t"
         "LOCATION: %^{location}"
-        "PRE: %^{pre}"
-        "%?"
+        "PRE: %^{pre}%?"
         )
        :children
        (("cs"       :keys "c" :file "cs/events.org")
@@ -777,6 +783,7 @@ Jumps at tangled code from org src block."
           ("ad" :keys "a" :file "cs/ad/notes.org")
           ))
         ("personal" :keys "p" :file "personal/notes.org")
+        ("compass"  :keys "s" :file "compass/notes.org")
         ("config"   :keys "o" :file "config/notes.org")
         )
        )
@@ -807,6 +814,7 @@ Jumps at tangled code from org src block."
 ;; [[file:config.org::*Indentation: 2 spaces][Indentation: 2 spaces:1]]
 (advice-add #'doom-highlight-non-default-indentation-h :override #'ignore) ;; turn off whitespace highlighting
 (setq
+ tab-always-indent t
  org-indent-indentation-per-level 2
  evil-shift-width 2
  standard-indent 2

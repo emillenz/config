@@ -48,12 +48,12 @@ bindsym XF86AudioMute         exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # [[file:config.org::*System controls][System controls:2]]
 bindsym Print                 exec ~/.config/bin/screenshot
-bindsym $mod+backslash        exec playerctl play-pause
+bindsym $mod+shift+equal      exec playerctl play-pause
 bindsym $mod+bracketright     exec playerctl next
 bindsym $mod+bracketleft      exec playerctl previous
+bindsym $mod+0                exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym $mod+equal            exec pactl set-sink-volume @DEFAULT_SINK@ +5%
 bindsym $mod+minus            exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym $mod+shift+backslash  exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 # System controls:2 ends here
 
 # [[file:config.org::*Core navigation][Core navigation:1]]
@@ -61,6 +61,7 @@ bindsym $mod+j          focus prev
 bindsym $mod+shift+j    move left
 bindsym $mod+k          focus next
 bindsym $mod+shift+k    move right
+
 bindsym $mod+q          kill
 bindsym $mod+f          exec rofi -show drun
 bindsym $mod+g          exec rofi -show window
@@ -80,7 +81,7 @@ set $ws_web    "󰖟  web  "
 set $ws_edit   "  edit "
 set $ws_video  "  vid  "
 set $ws_image  "󰋩  img  "
-set $ws_ai     "󰧑  ai   "
+set $ws_bot    "󰚩  bot  "
 set $ws_music  "  music"
 
 # HACK: [all] must come before specific assignments (specific classes overwrite this setting).
@@ -95,7 +96,7 @@ for_window [class="(?i)firefox"]                 $moveto $ws_web,   focus
 
 for_window [class="(?i)mpv"]                     $moveto $ws_video, focus
 for_window [class="(?i)nsxiv"]                   $moveto $ws_image, focus
-for_window [class="(?i)firefox" title="ChatGPT"] $moveto $ws_ai,    focus
+for_window [class="(?i)firefox" title="ChatGPT"] $moveto $ws_bot,    focus
 for_window [class="(?i)firefox" title="Spotify"] $moveto $ws_music, focus
 # Workspaces Assignments:1 ends here
 
@@ -106,7 +107,7 @@ workspace $ws_web   output primary
 workspace $ws_edit  output primary
 workspace $ws_video output primary
 workspace $ws_image output primary
-workspace $ws_ai    output primary
+workspace $ws_bot    output primary
 workspace $ws_music output primary
 workspace 1 output primary
 workspace 2 output primary
@@ -135,12 +136,10 @@ bindsym $mod+v       workspace $ws_video
 bindsym $mod+shift+v $moveto $ws_video; workspace $ws_video
 bindsym $mod+i       workspace $ws_image
 bindsym $mod+shift+i $moveto $ws_image; workspace $ws_image
-bindsym $mod+a       workspace $ws_ai
-bindsym $mod+shift+a $moveto $ws_ai; workspace $ws_ai
+bindsym $mod+b       workspace $ws_bot
+bindsym $mod+shift+b $moveto $ws_bot; workspace $ws_bot
 bindsym $mod+m       workspace $ws_music
 bindsym $mod+shift+m $moveto $ws_music; workspace $ws_music
-
-bindsym $mod+z       exec i3-msg restart
 # App navigation bindings:1 ends here
 
 # [[file:config.org::*Open app keybindings][Open app keybindings:1]]
@@ -157,7 +156,7 @@ set $open <open> \
 │ videos \
 │ ^mixer \
 │ networks \
-│ ai
+│ bot
 
 bindsym $mod+o mode "$open"
 mode "$open" {
@@ -171,7 +170,7 @@ mode "$open" {
     ; mode "default"
 
   bindsym $mod+shift+e --release exec \
-    doom +everywhere & \
+    emacsclient --eval '(emacs-everywhere)' & \
     ; mode "default"
 
   bindsym $mod+e exec \
@@ -215,7 +214,7 @@ mode "$open" {
     || alacritty --class 'pulsemixer' -T 'audio' -e pulsemixer & \
     ; mode "default"
 
-  bindsym $mod+a exec \
+  bindsym $mod+b exec \
     i3-msg '[class="(?i)firefox" title="ChatGPT"] focus' \
     || firefox --new-window https://chat.openai.com \
     ; mode "default"
@@ -237,18 +236,18 @@ mode "$open" {
 # [[file:config.org::*Leader][Leader:1]]
 bindsym $mod+space mode "$leader"
 set $leader <leader> \
-| menus+ \
 │ keyboard+ \
 │ timer+ \
 │ powermenu+ \
-│ ^screenshot+
-
+│ menus+ \
+│ startup
 
 mode "$leader" {
-  bindsym $mod+m mode "$menus"
   bindsym $mod+k mode "$keyboard"
   bindsym $mod+p mode "$powermenu"
   bindsym $mod+t mode "$timer"
+  bindsym $mod+m mode "$menus"
+  bindsym $mod+s exec ~/.config/bin/startup;          mode "default"
   bindsym Escape mode "default"
 }
 # Leader:1 ends here
@@ -276,7 +275,6 @@ set $powermenu <powermenu> \
 │ poweroff \
 │ exit \
 │ hibernate \
-│ ^startup
 
 mode "$powermenu" {
   bindsym $mod+r       exec i3-msg restart;                                mode "default"
@@ -286,7 +284,6 @@ mode "$powermenu" {
   bindsym $mod+l       exec i3lock -e --color 002b36 && systemctl suspend; mode "default"
   bindsym $mod+s       exec xset dpms force off;                           mode "default"
   bindsym $mod+p       exec systemctl poweroff;                            mode "default"
-  bindsym $mod+shift+s exec ~/.config/bin/startup;                         mode "default"
   bindsym Escape mode "default"
 }
 # Powermenu:1 ends here
@@ -327,12 +324,13 @@ set $menus <menus> \
 │ [^o] layouts \
 │ btconnect \
 │ process-kill \
+│ screenshot \
 
 mode "$menus" {
   bindsym $mod+a       exec ~/.config/bin/audio-menu;       mode "default"
   bindsym $mod+o       exec ~/.config/bin/output-menu;      mode "default"
   bindsym $mod+shift+o exec ~/.config/bin/layout-menu;      mode "default"
-  bindsym $mod+shift+s exec ~/.config/bin/screenshot-menu;  mode "default"
+  bindsym $mod+s       exec ~/.config/bin/screenshot-menu;  mode "default"
   bindsym $mod+b       exec ~/.config/bin/bluetooth-menu;   mode "default"
   bindsym $mod+p       exec ~/.config/bin/killprocess-menu; mode "default"
   bindsym Escape mode "default"

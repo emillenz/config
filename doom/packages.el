@@ -7,11 +7,10 @@
 (package! peep-dired)
 (package! rainbow-mode)
 (package! wc-mode)
-(package! beacon)
 (package! clippy)
 (package! org-appear)
 (package! org-roam)
-(package! doct) ;;TODO
+(package! doct)
 (package! all-the-icons-ivy)
 (package! org-super-agenda)
 (package! tldr)
@@ -20,7 +19,6 @@
 (package! evil-numbers)
 (package! org-auto-tangle)
 (package! evil-cleverparens)
-(package! doct)
 (package! consult-dir)
 (package! org-pandoc-import
   :recipe (:host github

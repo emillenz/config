@@ -83,7 +83,7 @@ hints:
       mods: None
     binding:
       key: O
-      mods: Alt
+      mods: Shift|Alt
 
 # solarized dark
 colors:

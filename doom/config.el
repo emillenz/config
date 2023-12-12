@@ -126,10 +126,10 @@
 
 (map! :leader
       "t" nil
-      (:prefix-map ("u" . "ui")
+      "u" doom-leader-toggle-map ;; HACK: remap toggle -> ui (more sensible)
+      (:prefix ("u" . "ui")
                "V" 'visual-fill-column-mode
                "C" 'company-mode)
-      "u" doom-leader-toggle-map ;; HACK: remap toggle -> ui (more sensible)
       (:prefix ("c" . "code")
                "w" #'z/clean-whitespace
                (:prefix ("b" . "org-babel")
@@ -233,11 +233,6 @@
    :nmv  "g/"  #'+default/search-buffer
 
    :nmv  "g."  #'evil-ex-repeat
-
-   :nm   "\\"  (cmd! (evil-ex "s/"))
-   :v    "\\"  (cmd! (evil-ex "'<,'>s/"))
-   :nm   "|"   (cmd! (evil-ex "g/"))
-   :v    "|"   (cmd! (evil-ex "'<,'>g/"))
    )
   )
 ;; Evil-mode:1 ends here
@@ -808,7 +803,7 @@ Jumps at tangled code from org src block."
 
 ;; NOTE: add hook AFTER entering prog-mode
 (add-hook! 'prog-mode-hook
-  (lambda () (add-hook! 'before-save-hook #'+format/region-or-buffer)))
+   (add-hook! 'before-save-hook #'+format/region-or-buffer))
 ;; Programming mode:1 ends here
 
 ;; [[file:config.org::*Indentation: 2 spaces][Indentation: 2 spaces:1]]

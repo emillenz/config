@@ -305,11 +305,10 @@ $env.config = {
     ]
     }
 
-    # note: clear is mapped to z in normal mode -> terminal mappings are old and outdated
     {
     name: listcontents
     modifier: control
-    keycode: char_l
+    keycode: char_v
     mode: [emacs, vi_normal, vi_insert]
     event: {send: executehostcommand, cmd: " ls"}
     }

@@ -195,10 +195,8 @@
   (when (buffer-modified-p)
     (condition-case nil (evil-write nil nil)
       (error)))
-  (condition-case nil (kill-buffer-and-window)
-    (error
-     (condition-case nil (tab-bar-close-tab)
-       (error (delete-frame))))))
+  (condition-case nil (evil-window-delete)
+       (error (delete-frame))))
 ;; Global navigation scheme:2 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
@@ -249,7 +247,7 @@
 (after! evil
   (map!
    :inmv "C-s" #'evil-write
-   :inmv "C-q" (cmd! (when (buffer-modified-p) (condition-case nil (evil-write nil nil) (error))) (kill-current-buffer))
+   :inmv "C-q" (cmd! (when (buffer-modified-p) (condition-case nil (evil-write nil nil) (error))) (kill-buffer-and-window))
    :inmv "C-j" #'drag-stuff-down
    :inmv "C-k" #'drag-stuff-up
    ))

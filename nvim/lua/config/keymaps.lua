@@ -44,8 +44,8 @@ map("i", ".", ".<c-g>u", opts)
 map("i", ";", ";<c-g>u", opts)
 
 -- buffer save / quit (frequent commands -> remap sensibly)
-map({ "i", "n" }, "<c-s>", "<cmd>w!<cr><esc>")
-map({ "i", "n", "v" }, "<c-q>", "<cmd>bdelete<cr><esc>")
+map({ "i", "n" }, "<c-s>", "<cmd>w!<cr>")
+map({ "i", "n", "v" }, "<c-q>", "<cmd>bdelete<cr>")
 
 -- better indenting
 map("v", "<", "<gv", opts)
@@ -70,15 +70,15 @@ map({ "n", "v" }, "g+", "g<c-a>", opts)
 map({ "n", "v" }, "g-", "g<c-x>", opts)
 
 -- global navigation
-map("n", "<M-TAB>", "<cmd>wincmd w<cr>")
-map("n", "<M-q>", "<cmd>q<cr>")
-map("n", "<M-S-q>", "<cmd>wqa<cr>")
-map("n", "<M-o>", "<cmd>Telescope file_browser path=%:p:h<cr>")
-map("n", "<M-f>", "<cmd>Telescope find_files<cr>")
-map("n", "<M-S-f>", "<cmd>Telescope find_files cwd=~/<cr>")
-map("n", "<M-g>", "<cmd>Telescope buffers<cr>")
-map("n", "<M-r>", "<cmd>Telescope oldfiles<cr>")
-map("n", "<M-t>", "<cmd>$tabnew<cr>")
+map({ "n", "i" }, "<M-TAB>", "<cmd>wincmd w<cr>", opts)
+map({ "n", "i" }, "<M-q>", "<cmd>exit<cr>", opts)
+map({ "n", "i" }, "<M-S-q>", "<cmd>wqa<cr>", opts)
+map({ "n", "i" }, "<M-o>", "<cmd>Telescope file_browser path=%:p:h select_buffer=true<cr>", opts)
+map({ "n", "i" }, "<M-f>", "<cmd>Telescope find_files<cr>", opts)
+map({ "n", "i" }, "<M-S-f>", "<cmd>Telescope find_files cwd=~/<cr>", opts)
+map({ "n", "i" }, "<M-g>", "<cmd>Telescope buffers<cr>", opts)
+map({ "n", "i" }, "<M-r>", "<cmd>Telescope oldfiles<cr>", opts)
+map({ "n", "i" }, "<M-t>", "<cmd>$tabnew<cr>", opts) -- NOTE: create tab at end
 
 -- HACK: new tmux window with the current buffer's working directory as path (name: cmd, os-consistent)
 -- NOTE: never emulate a terminal inside vim.

@@ -4,7 +4,6 @@ local autocmd = vim.api.nvim_create_autocmd
 
 autocmd({ "WinNew" }, {
 	desc = "Vsplit helppages",
-	pattern = "help",
 	callback = function()
 		vim.cmd("wincmd L")
 	end,

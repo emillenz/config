@@ -1,20 +1,3 @@
-ls -la
-ls -h
-java Main
-javac Main.java
-java Main
-javac Main.java
-java Main
-javac Main.java
-java Main
-javac Main.java
-ps 
-ps | get name | $in ~= xremaps
-ps | get name | where str contains xremaps
-ps | get name | where (str contains xremaps)
-ps | get name 
-startup
-ps | get name | where (str contains xremap) 
 true in (ps | get name | str contains xremap)
 ps | get name | str contains xremap
  git status
@@ -9998,3 +9981,20 @@ cd .config
 ls
 ls **/*sync-conflict* 
 ls **/*sync-conflict* | each {|x| rm $x.name}
+v
+v 
+v
+xset dpms force off
+ls
+v
+nu
+nu
+ls
+v
+ls
+v
+tmux kill-server
+v
+v
+e
+v

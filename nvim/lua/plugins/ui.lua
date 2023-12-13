@@ -1,18 +1,10 @@
 return {
-	-- {
-	-- 	"craftzdog/solarized-osaka.nvim",
-	-- 	lazy = false,
-	-- 	priority = 1000,
-	-- 	opts = {},
-	-- 	config = function()
-	-- 		vim.cmd([[colorscheme solarized-osaka]])
-	-- 	end,
-	-- },
-
 	{
-		"EdenEast/nightfox.nvim",
+		"craftzdog/solarized-osaka.nvim",
+		lazy = false,
+		priority = 1000,
 		config = function()
-			vim.cmd([[colorscheme nordfox]])
+			vim.cmd([[colorscheme solarized-osaka]])
 		end,
 	},
 

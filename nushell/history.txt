@@ -1,17 +1,3 @@
-dns wine
-dnfs wine
-dnfi wine
-startu
-startup
-bat packages
-dnfs xautolock
-dnfi xautolock
-startup
-dnfs pipewire
-startup
-sudo fdisk -l
-lsblk
-tldr lsblk
 lsblk -a
 sudo fdisk -l
 sudo fdisk -l | find /dev
@@ -9998,3 +9984,17 @@ ls
 tmux kill-server
 nu
 ls
+v
+yay tux
+yay tmux
+ls
+v
+ls
+ls -la
+man  --help | bat --language=man
+bat --list-themes
+bat  --help | bat --language=man
+ls-
+ls
+timer start --frequency=1m 60m 0m
+timer --frequency=1m start 60m 0m

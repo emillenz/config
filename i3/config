@@ -293,26 +293,26 @@ set $timer <timer> \
 │ toggle \
 │ reset \
 │ stopwatch \
-│ interval: 60/5 \
-│ ^interval: 30/5 \
+│ interval: 60m \
+│ ^interval: 60/5m \
 │ prompt \
 │ [1-9] timer: *10m
 
 mode "$timer" {
-  bindsym $mod+t       exec ~/.config/bin/timer toggle;       mode "default"
-  bindsym $mod+r       exec ~/.config/bin/timer reset;        mode "default"
-  bindsym $mod+s       exec ~/.config/bin/timer start;        mode "default"
-  bindsym $mod+i       exec ~/.config/bin/timer start 60m 5m; mode "default"
-  bindsym $mod+shift+i exec ~/.config/bin/timer start 30m 5m; mode "default"
-  bindsym $mod+1       exec ~/.config/bin/timer start 10m;    mode "default"
-  bindsym $mod+2       exec ~/.config/bin/timer start 20m;    mode "default"
-  bindsym $mod+3       exec ~/.config/bin/timer start 30m;    mode "default"
-  bindsym $mod+4       exec ~/.config/bin/timer start 40m;    mode "default"
-  bindsym $mod+5       exec ~/.config/bin/timer start 50m;    mode "default"
-  bindsym $mod+6       exec ~/.config/bin/timer start 60m;    mode "default"
-  bindsym $mod+7       exec ~/.config/bin/timer start 70m;    mode "default"
-  bindsym $mod+8       exec ~/.config/bin/timer start 80m;    mode "default"
-  bindsym $mod+9       exec ~/.config/bin/timer start 90m;    mode "default"
+  bindsym $mod+t       exec ~/.config/bin/timer toggle;                      mode "default"
+  bindsym $mod+r       exec ~/.config/bin/timer reset;                       mode "default"
+  bindsym $mod+s       exec ~/.config/bin/timer start;                       mode "default"
+  bindsym $mod+i       exec ~/.config/bin/timer --frequency=1m start 60m 0m; mode "default"
+  bindsym $mod+shift+i exec ~/.config/bin/timer start 60m 5m;                mode "default"
+  bindsym $mod+1       exec ~/.config/bin/timer start 10m;                   mode "default"
+  bindsym $mod+2       exec ~/.config/bin/timer start 20m;                   mode "default"
+  bindsym $mod+3       exec ~/.config/bin/timer start 30m;                   mode "default"
+  bindsym $mod+4       exec ~/.config/bin/timer start 40m;                   mode "default"
+  bindsym $mod+5       exec ~/.config/bin/timer start 50m;                   mode "default"
+  bindsym $mod+6       exec ~/.config/bin/timer start 60m;                   mode "default"
+  bindsym $mod+7       exec ~/.config/bin/timer start 70m;                   mode "default"
+  bindsym $mod+8       exec ~/.config/bin/timer start 80m;                   mode "default"
+  bindsym $mod+9       exec ~/.config/bin/timer start 90m;                   mode "default"
   bindsym Escape mode "default"
 }
 # Timer:1 ends here

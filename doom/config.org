@@ -37,7 +37,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+begin_src emacs-lisp
 (setq
  doom-themes-enable-bold t
- doom-theme 'doom-nord-aurora
+ doom-theme 'doom-solarized-dark
 
  doom-themes-enable-italic nil)
 

@@ -91,57 +91,58 @@ hints:
 # solarized dark
 colors:
   primary:
-    background: '#002b36' # base03
-    foreground: '#839496' # base0
+    background: "#002b36" # base03
+    foreground: "#839496" # base0
   cursor:
-    text:   '#002b36' # base03
-    cursor: '#839496' # base0
+    text: "#002b36" # base03
+    cursor: "#839496" # base0
   normal:
-    black:   '#073642' # base02
-    red:     '#dc322f' # red
-    green:   '#859900' # green
-    yellow:  '#b58900' # yellow
-    blue:    '#268bd2' # blue
-    magenta: '#c678dd' # magenta
-    cyan:    '#2aa198' # cyan
-    white:   '#839496' # base2
+    black: "#073642" # base02
+    red: "#dc322f" # red
+    green: "#859900" # green
+    yellow: "#b58900" # yellow
+    blue: "#268bd2" # blue
+    magenta: "#c678dd" # magenta
+    cyan: "#2aa198" # cyan
+    white: "#839496" # base2
+    gray: "#657b83" # base3
   bright:
-    black:   '#03282F' # base03
-    red:     '#ff6655' # orange
-    green:   '#99bb66' # base01
-    yellow:  '#ecbe7b' # base00
-    blue:    '#51afef' # base0
-    magenta: '#a9a1e1' # violet
-    cyan:    '#46d9ff' # base1
-    white:   '#657b83' # base3
+    black: "#03282F" # base03
+    red: "#ff6655" # orange
+    green: "#99bb66" # base01
+    yellow: "#ecbe7b" # base00
+    blue: "#51afef" # base0
+    magenta: "#a9a1e1" # violet
+    cyan: "#46d9ff" # base1
+    white: "#657b83" # base3
+    gray: "#657b83" # base3
   vi_mode_cursor:
-    text:   '#002b36' # base03
-    cursor: '#839496' # base0
+    text: "#002b36" # base03
+    cursor: "#839496" # base0
   search:
     matches:
-     foreground: '#002b36'
-     background: '#839496'
+      foreground: "#002b36"
+      background: "#839496"
     focused_match:
-     foreground: '#002b36'
-     background: '#839496'
+      foreground: "#002b36"
+      background: "#839496"
   hints:
     start:
-     foreground: '#002b36'
-     background: '#b58900'
+      foreground: "#002b36"
+      background: "#b58900"
     end:
-     foreground: '#b58900'
-     background: '#002b36'
+      foreground: "#b58900"
+      background: "#002b36"
   line_indicator:
-   foreground: none
-   background: none
+    foreground: none
+    background: none
   footer_bar:
-    background: '#839496'
-    foreground: '#002b36'
+    background: "#839496"
+    foreground: "#002b36"
   selection:
-   text: CellBackground
-   background: CellForeground
+    text: CellBackground
+    background: CellForeground
   transparent_background_colors: false
-
 # # solarized light
 # colors:
 #   primary:
@@ -159,6 +160,7 @@ colors:
 #     magenta: '#c678dd' # magenta
 #     cyan:    '#2aa198' # cyan
 #     white:   '#eee8d5' # base2
+#     gray: "#657b83" # base3
 #   bright:
 #     black:   '#03282F' # base03
 #     red:     '#ff6655' # orange
@@ -168,6 +170,7 @@ colors:
 #     magenta: '#a9a1e1' # violet
 #     cyan:    '#46d9ff' # base1
 #     white:   '#eee8d5' # base3
+#     gray: "#657b83" # base3
 # vi_mode_cursor:
 #     text:   '#F2E6CE' # base3
 #     cursor: '#586E75' # base00

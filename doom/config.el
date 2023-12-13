@@ -7,7 +7,7 @@
 ;; [[file:config.org::*Theme][Theme:1]]
 (setq
  doom-themes-enable-bold t
- doom-theme 'doom-nord-aurora
+ doom-theme 'doom-solarized-dark
 
  doom-themes-enable-italic nil)
 

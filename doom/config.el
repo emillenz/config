@@ -121,23 +121,27 @@
 (setq
  doom-leader-key "SPC"
  doom-leader-alt-key "M-SPC"
- doom-localleader-key "SPC m"
- doom-leader-alt-key "M-SPC m")
+ doom-localleader-key ","
+ doom-leader-alt-key "M-,")
 
 (map! :leader
       "t" nil
       "u" doom-leader-toggle-map ;; HACK: remap toggle -> ui (more sensible)
-      (:prefix ("u" . "ui")
-               "V" 'visual-fill-column-mode
-               "C" 'company-mode)
-      (:prefix ("c" . "code")
-               "w" #'z/clean-whitespace
-               (:prefix ("b" . "org-babel")
-                        "d" #'org-babel-detangle
-                        "J" #'org-babel-tangle-jump-to-org
-                        "j" #'z/jump-src
-                        "t" #'org-babel-tangle
-                        "e" #'org-edit-special)))
+      (:prefix "u"
+               "V" #'visual-fill-column-mode
+               "C" #'company-mode)
+      (:prefix "c"
+               "w" #'z/clean-whitespace))
+
+(after! evil-org
+  (map! :localleader
+        :map evil-org-mode-map
+        (:prefix "C"
+                 "d" #'org-babel-detangle
+                 "J" #'org-babel-tangle-jump-to-org
+                 "j" #'z/jump-src
+                 "t" #'org-babel-tangle
+                 "e" #'org-edit-special)))
 ;; Leader:1 ends here
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:1]]
@@ -174,12 +178,10 @@
 
         :nvim "C--"     #'doom/decrease-font-size
         :nvim "C-="     #'doom/increase-font-size
-        :nvim "C-0"     #'doom/reset-font-size
-        )
-  )
+        :nvim "C-0"     #'doom/reset-font-size))
 
 (after! evil-org
-  (map! :map evil-org-agenda-mode-map
+  (map! :map 'override
         :nvim "M-j" #'evil-tab-previous
         :nvim "M-k" #'evil-tab-next
         ))
@@ -187,16 +189,16 @@
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:2]]
 (defun z/quit ()
-  "Save & kill buffer -> close: {window -> tab -> frame}. (Do not kill emacs daemon.)"
+  "Save buffer -> quit (window -> tab -> frame)
+(Doesn't kill emacs daemon.)"
   (interactive)
   (when (buffer-modified-p)
     (condition-case nil (evil-write nil nil)
       (error)))
-  (condition-case nil (evil-window-delete)
+  (condition-case nil (kill-buffer-and-window)
     (error
      (condition-case nil (tab-bar-close-tab)
-       (error
-        (delete-frame))))))
+       (error (delete-frame))))))
 ;; Global navigation scheme:2 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
@@ -231,8 +233,6 @@
 
    :nmv  "go"  #'consult-imenu
    :nmv  "g/"  #'+default/search-buffer
-
-   :nmv  "g."  #'evil-ex-repeat
    )
   )
 ;; Evil-mode:1 ends here
@@ -286,14 +286,11 @@
         :inmv "C-j"   #'org-metadown
         :inmv "C-k"   #'org-metaup
         :inmv "C-h"   #'org-metaleft
-        :inmv "C-l"   #'org-metaright
-        )
+        :inmv "C-l"   #'org-metaright))
+
+(after! org-mode
   (map! :localleader
-        :map evil-org-mode-map
-        "~"    #'z/org-convert-keywords-downcase
-        "l f"  #'z/org-link-file
-        )
-  )
+        "l f"  #'z/org-link-file))
 ;; Org mode:1 ends here
 
 ;; [[file:config.org::*Dired][Dired:1]]
@@ -630,31 +627,6 @@
              ))))
 ;; Roam:1 ends here
 
-;; [[file:config.org::*Faces][Faces:1]]
-(custom-set-faces!
-  '(org-todo               :weight bold   :height 1.0)
-  '(org-checkbox           :weight bold   :height 1.0)
-  '(org-priority           :weight bold   :height 1.0)
-  '(org-document-title     :weight bold   :height 1.2)
-  '(outline-1              :weight bold   :height 1.3)
-  '(outline-2              :weight bold   :height 1.2)
-  '(outline-3              :weight bold   :height 1.1)
-  '(outline-4              :weight normal :height 1.0)
-  '(outline-5              :weight normal :height 1.0)
-  '(outline-6              :weight normal :height 1.0)
-  '(outline-8              :weight normal :height 1.0)
-  '(org-special-keyword    :weight normal :height 1.0)
-  '(org-tag                :weight bold)
-  '(markdown-header-face-1 :inherit outline-1)
-  '(markdown-header-face-2 :inherit outline-2)
-  '(markdown-header-face-3 :inherit outline-3)
-  '(markdown-header-face-4 :inherit outline-4)
-  '(markdown-header-face-5 :inherit outline-5)
-  '(markdown-header-face-6 :inherit outline-6)
-  '(markdown-header-face-7 :inherit outline-7)
-  '(markdown-header-face-8 :inherit outline-8))
-;; Faces:1 ends here
-
 ;; [[file:config.org::*Keywords to downcase][Keywords to downcase:1]]
 (defun z/org-convert-keywords-downcase ()
   "Convert all #+KEYWORDS => #+keywords && :keyword: => :keyword:"
@@ -800,10 +772,6 @@ Jumps at tangled code from org src block."
 (add-hook! 'prog-mode-hook
            #'rainbow-mode
            #'rainbow-delimiters-mode)
-
-;; NOTE: add hook AFTER entering prog-mode
-(add-hook! 'prog-mode-hook
-   (add-hook! 'before-save-hook #'+format/region-or-buffer))
 ;; Programming mode:1 ends here
 
 ;; [[file:config.org::*Indentation: 2 spaces][Indentation: 2 spaces:1]]

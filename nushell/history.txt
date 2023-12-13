@@ -1,52 +1,3 @@
- cargo install xremap --features x11   # X11
-sudo xremap config.yml
-cd .cargo/
-./xremap
-xremap config.yml
-sudo xremap config.yml
-sudo ~/.cargo/bin/xremap config.yml
-md xremap
-touch config.yml
-xremap config.yml
-setxkbmap us dvorak
-xremap config.yml
-sudo xremap config.yml
-sudo ~/.cargo/bin/xremap config.yml
-remaps
-syncthing
-"xremap ~/.config/xremap/config.yml &" | bash
-xremap ~/.config/xremap/config.yml
-sudo xremap ~/.config/xremap/config.yml
-sudo ~/.cargo/bin/xremap ~/.config/xremap/config.yml
-startup
-nvim
-sudo dnf search java
-sudo dnf search javac
-sudo dnf search java com
-sudo dnf search openjdk
-git statu
-git status
-git add xremap
-git commit -am 'sync'; git push
-dnfs java development
-dnfs openjdk
-dnfs java-latest
-dnfs java-latest-openjdk
-dnfi java-latest-openjdk
-sudo dnf search jdtls
-dnfs java language server
-dnfs java language
-dnfs eclips jd
-dnfs eclips 
-dnfs eclipse 
-dnfs openjdk
-dnfs java-latest-openjdk-devel
-dnfi java-latest-openjdk-devel
-sudo dnf search jdtls
-dnfs jdt lang
-javac hello_world.java
-cd enums_test/
-javac Main.java
 ls -la
 ls -h
 java Main
@@ -9998,3 +9949,52 @@ yay iosevkja
 yay iosevka
 e
 ls
+emacsclient  --help | bat --language=man
+ls
+e
+g
+d
+v
+xset dpms force off
+v
+xset dpms force off
+v
+e
+egrep -h
+grep -h
+grep  --help | bat --language=man
+rg  --help | bat --language=man
+ls
+rg '(snippets|word-wrap)' init.el
+bat init.el
+v
+v
+(fd --type=file | fzf --preview='bat {}' | str trim)
+ls
+yay jdtls
+cd (fd --type=directory ~ | fzf --preview='ls {}' | str trim)
+cd (fd --type=directory . ~ | fzf --preview='ls {}' | str trim)
+(fd --type=file | fzf --preview='bat {}' | str trim)
+fd . ~
+fd . ~ -td
+yay z
+ls
+cd .config
+yay iosevka
+cd nvim
+ls
+cd lua
+(fd --type=file | fzf --preview='bat {}' | str trim)
+ls
+av lenz
+ls
+yay nvim
+yay neovim
+nu
+nu
+v
+ls
+cd .config
+ls
+ls **/*sync-conflict* 
+ls **/*sync-conflict* | each {|x| rm $x.name}

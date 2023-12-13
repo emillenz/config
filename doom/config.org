@@ -167,28 +167,33 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - ~helpful-key~ and ~which-key-show-full-keymap~ are crucial to understanding what your tools can do for you (ex: magit, dired, org-mode)
   + Always keep on exploring, learning new, efficient keybindings and break your old routines for newer, more effcient one's after evaluating wether they are faster or not.
 
+- ~,~ is useless (instead just be precise when using ~;~)
 ** Leader
 #+begin_src emacs-lisp
 (setq
  doom-leader-key "SPC"
  doom-leader-alt-key "M-SPC"
- doom-localleader-key "SPC m"
- doom-leader-alt-key "M-SPC m")
+ doom-localleader-key ","
+ doom-leader-alt-key "M-,")
 
 (map! :leader
       "t" nil
       "u" doom-leader-toggle-map ;; HACK: remap toggle -> ui (more sensible)
-      (:prefix ("u" . "ui")
-               "V" 'visual-fill-column-mode
-               "C" 'company-mode)
-      (:prefix ("c" . "code")
-               "w" #'z/clean-whitespace
-               (:prefix ("b" . "org-babel")
-                        "d" #'org-babel-detangle
-                        "J" #'org-babel-tangle-jump-to-org
-                        "j" #'z/jump-src
-                        "t" #'org-babel-tangle
-                        "e" #'org-edit-special)))
+      (:prefix "u"
+               "V" #'visual-fill-column-mode
+               "C" #'company-mode)
+      (:prefix "c"
+               "w" #'z/clean-whitespace))
+
+(after! evil-org
+  (map! :localleader
+        :map evil-org-mode-map
+        (:prefix "C"
+                 "d" #'org-babel-detangle
+                 "J" #'org-babel-tangle-jump-to-org
+                 "j" #'z/jump-src
+                 "t" #'org-babel-tangle
+                 "e" #'org-edit-special)))
 #+end_src
 
 ** Global navigation scheme
@@ -236,12 +241,10 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
         :nvim "C--"     #'doom/decrease-font-size
         :nvim "C-="     #'doom/increase-font-size
-        :nvim "C-0"     #'doom/reset-font-size
-        )
-  )
+        :nvim "C-0"     #'doom/reset-font-size))
 
 (after! evil-org
-  (map! :map evil-org-agenda-mode-map
+  (map! :map 'override
         :nvim "M-j" #'evil-tab-previous
         :nvim "M-k" #'evil-tab-next
         ))
@@ -250,16 +253,16 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - DWIM quit function.
 #+begin_src emacs-lisp
 (defun z/quit ()
-  "Save & kill buffer -> close: {window -> tab -> frame}. (Do not kill emacs daemon.)"
+  "Save buffer -> quit (window -> tab -> frame)
+(Doesn't kill emacs daemon.)"
   (interactive)
   (when (buffer-modified-p)
     (condition-case nil (evil-write nil nil)
       (error)))
-  (condition-case nil (evil-window-delete)
+  (condition-case nil (kill-buffer-and-window)
     (error
      (condition-case nil (tab-bar-close-tab)
-       (error
-        (delete-frame))))))
+       (error (delete-frame))))))
 #+end_src
 
 ** Evil-mode
@@ -277,7 +280,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - ~:w~ is the statistically most run vim-ex-command, but very unergonomic.
   + Map it to the os-consistent key
 - ~HL~ are useless (learn relative linejumps you ape!) and thus "stronger" versions of the regular ~hl~ motions in Vim. (~JK~ do not need stronger versions as you should use relative line jumps or ~C-u/d~ for larger motions (efficiency))
-- alias gs to quick-search-replace
+- Shorcut to ex buffer search & replace with ~\|~
 - ~()~ are useless
   + Remap to parens jumping
 
@@ -313,8 +316,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
    :nmv  "go"  #'consult-imenu
    :nmv  "g/"  #'+default/search-buffer
-
-   :nmv  "g."  #'evil-ex-repeat
    )
   )
 #+end_src
@@ -387,14 +388,11 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
         :inmv "C-j"   #'org-metadown
         :inmv "C-k"   #'org-metaup
         :inmv "C-h"   #'org-metaleft
-        :inmv "C-l"   #'org-metaright
-        )
+        :inmv "C-l"   #'org-metaright))
+
+(after! org-mode
   (map! :localleader
-        :map evil-org-mode-map
-        "~"    #'z/org-convert-keywords-downcase
-        "l f"  #'z/org-link-file
-        )
-  )
+        "l f"  #'z/org-link-file))
 #+end_src
 
 ** Dired
@@ -868,7 +866,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 - Use org-clock to track the time spent on tasks / projects.
 
 ** Faces
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
   (custom-set-faces!
     '(org-todo               :weight bold   :height 1.0)
     '(org-checkbox           :weight bold   :height 1.0)
@@ -1066,15 +1064,10 @@ End the "(after! org" block
 #+end_src
 
 * Programming mode
-- Format on save
 #+begin_src emacs-lisp
 (add-hook! 'prog-mode-hook
            #'rainbow-mode
            #'rainbow-delimiters-mode)
-
-;; NOTE: add hook AFTER entering prog-mode
-(add-hook! 'prog-mode-hook
-   (add-hook! 'before-save-hook #'+format/region-or-buffer))
 #+end_src
 
 ** Indentation: 2 spaces

@@ -1,15 +1,10 @@
--- dont be a greedy fucking fuck, be efficient
--- local greedy = require("lenz.greedy")
--- greedy.greedy()
-
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true } -- defaults
 
 vim.g.mapleader = " "
--- vim.g.maplocalleader = "m"
+vim.g.maplocalleader = ","
 
--- always relative lines
--- add relative line-number jumps to the jumplist (hop back quickly)
+-- relative-line-number-jumps
 map(
 	{ "n", "v", "o" },
 	"j",
@@ -59,7 +54,7 @@ map("v", ">", ">gv", opts)
 -- better defaults
 map("n", "x", '"_x', opts)
 map("n", "U", "<c-r>", opts)
-map({ "n", "v" }, "Q", "@@", opts)
+map({ "n", "v" }, "Q", "@q", opts) -- record and execute macro
 map("n", "<TAB>", "za", opts)
 
 -- search for line in buffer (very helpful)
@@ -67,12 +62,6 @@ map({ "n", "v" }, "g/", "<cmd>Telescope current_buffer_fuzzy_find<cr>", opts)
 
 -- git interface
 map("n", "<leader>gg", "<cmd>Neogit<cr>")
-
--- statistically often used commands + very-magic-mode: makes regex faster and more consistent.
-map("n", "\\", ":%s/\\v")
-map("v", "\\", ":'<,'>s/\\v")
-map("n", "|", ":g/\\v")
-map("n", "|", ":'<,'>g/\\v")
 
 -- more sensible assignments of +/-
 map({ "n", "v" }, "+", "<c-a>", opts)

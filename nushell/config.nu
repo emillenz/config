@@ -29,8 +29,8 @@ alias d = emacsclient --tty --eval "(dired-jump)"
 alias v = nvim
 
 $env.PATH = ($env.PATH | append ["~/.config/bin", "~/.cargo/bin", "~/.config/emacs/bin"] | uniq)
-$env.EDITOR = "emacsclient --tty --no-wait"
-$env.VISUAL = "emacsclient --reuse-frame --no-wait"
+$env.EDITOR = "emacsclient --tty --alternate-editor=nvim"
+$env.VISUAL = "emacsclient --reuse-frame --alternate-editor=nvim"
 $env.BROWSER = "firefox"
 $env.MANPAGER = "bat --plain --language=man --theme='Solarized (dark)'"
 $env.PAGER = "bat --theme='Solarized (dark)'"

@@ -454,7 +454,7 @@ set $cyan       #2AA198
 set $green      #859900
 #+end_src
 
-** Set theme
+** Variables
 This remains, just the colors variables must be defined by the theme.
 #+begin_src conf
 # class                 border  backg   text    indicator child_border

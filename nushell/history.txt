@@ -1,48 +1,3 @@
-true in (ps | get name | str contains xremap)
-ps | get name | str contains xremap
- git status
-git commit -am 'sync'; git push
-syncthing
-killall syncthing
-syncthing
-javac Main.java
-rg . 'leader_layout'
-rg 'leader_layout' .
-rg 'leader_layout'
-git status
-git add zellij
-git commit -am 'sync'; git push
-javac Main.java
-bat packages
-./packages
-xremap ~/.config/xremap/config.yml
-./packages
-xremap
-$env.PAT
-$env.PATH
-bat commands
-bat packages
-cargo install xremap --features x11
-ls
-dnfi tmux
-lf
-ls
-tree
-lf
-thsi 
-tmux
-tmux 
-tree
-this is greatness
-ls
-xremap
-startup
-bat ./scripts/startup
-ps | get name | str contains xremap
-sudo xremap ~/.config/xremap/config.yml
-sudo su
-startup
-dnfi wine
 dns wine
 dnfs wine
 dnfi wine
@@ -9998,3 +9953,48 @@ v
 v
 e
 v
+tmux
+ls
+ls -la
+ls
+fd 
+ls
+bat --list-themes
+ls
+ls  --help | bat --language=man
+ls
+tldr tmux
+bat --list-themes
+fzf  --help | bat --language=man
+startup
+ls
+v
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+startup
+tmux
+tmux new-session foo
+tmux attach-session foo
+tmux attach-session -t foo
+tmux new-session -t foo
+tmux kill-server
+ls-
+ls
+(fd --type=file | fzf --preview='bat {}' | str trim)
+bat  --help | bat --language=man
+man  --help | bat --language=man
+ls
+lss
+ls
+tmux kill-server
+nu
+ls

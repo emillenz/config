@@ -7,7 +7,7 @@
 ;; [[file:config.org::*Theme][Theme:1]]
 (setq
  doom-themes-enable-bold t
- doom-theme 'doom-solarized-dark
+ doom-theme 'doom-nord-aurora
 
  doom-themes-enable-italic nil)
 
@@ -127,16 +127,16 @@
 (map! :leader
       "t" nil
       "u" doom-leader-toggle-map ;; HACK: remap toggle -> ui (more sensible)
-      (:prefix "u"
+      (:prefix ("u" . "ui")
                "V" #'visual-fill-column-mode
                "C" #'company-mode)
-      (:prefix "c"
+      (:prefix ("c" . "code")
                "w" #'z/clean-whitespace))
 
 (after! evil-org
   (map! :localleader
-        :map evil-org-mode-map
-        (:prefix "C"
+        :map org-mode-map
+        (:prefix ("C" . "code")
                  "d" #'org-babel-detangle
                  "J" #'org-babel-tangle-jump-to-org
                  "j" #'z/jump-src

@@ -351,7 +351,7 @@ set $cyan       #2AA198
 set $green      #859900
 # Solarized dark:1 ends here
 
-# [[file:config.org::*Set theme][Set theme:1]]
+# [[file:config.org::*Variables][Variables:1]]
 # class                 border  backg   text    indicator child_border
 client.focused          $main   $main   $backg  $foreg    $main
 client.focused_inactive $backg  $foreg  $backg  $backg    $backg
@@ -359,4 +359,4 @@ client.unfocused        $backg  $backg  $foreg  $backg    $backg
 client.urgent           $red    $red    $backg  $backg    $backg
 client.placeholder      $backg  $backg  $foreg  $backg    $backg
 client.background       $backg
-# Set theme:1 ends here
+# Variables:1 ends here

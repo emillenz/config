@@ -6,11 +6,8 @@
 # info:	 Nushell conifg with safer defaults, and efficient custom keybindings.
 # -----
 
-use md.nu
-use av.nu
-use extract.nu
-use solarized_light.nu
-use solarized_dark.nu
+use commands.nu ['extract', 'av', 'md']
+use theme.nu ['solarized_dark', 'solarized_light']
 
 alias exe = chmod +x
 alias ip = ip -color=auto
@@ -20,7 +17,7 @@ alias rm = rm -rvft
 alias cp = cp -rvp
 alias mv = mv -vf
 
-alias bat = bat --theme='Solarized (dark)'
+alias bat = bat --theme='Solarized (Dark)'
 alias fzf = fzf --reverse --height=30 --color=dark --scheme=path
 
 alias e = emacsclient --tty
@@ -32,8 +29,8 @@ $env.PATH = ($env.PATH | append ["~/.config/bin", "~/.cargo/bin", "~/.config/ema
 $env.EDITOR = "emacsclient --tty --alternate-editor=nvim"
 $env.VISUAL = "emacsclient --reuse-frame --alternate-editor=nvim"
 $env.BROWSER = "firefox"
-$env.MANPAGER = "bat --plain --language=man --theme='Solarized (dark)'"
-$env.PAGER = "bat --theme='Solarized (dark)'"
+$env.MANPAGER = "bat --plain --language=man --theme='Solarized (Dark)'"
+$env.PAGER = "bat --theme='Solarized (Dark)'"
 
 let fish_completer = {|spans|
     fish --command $'complete "--do-complete=($spans | str join " ")"'

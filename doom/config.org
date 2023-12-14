@@ -416,7 +416,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
         :nm "d" #'dired-do-delete
         :nm "x" #'dired-do-chmod
         :nm "s" #'dired-sort-toggle-or-edit
-        :nm "o" #'dired-do-chown
+        :nm "o" #'find-file
         :nm "p" #'dired-do-print
         :nm "y" #'dired-copy-filename-as-kill
         :nm "z" #'dired-do-compress

@@ -179,6 +179,8 @@ I am of the strong opinion that you should minimize things you do repeatedly. Th
 *** Workflow with emacs
 - The terminal is used to run their own terminal-based programs and commands: htop, nmtui, git, metasploit, transmission-cli, ssh. (and ofc as the system commandline).
 - I consider running something like vim inside a terminal to add another layer of complexity (tmux: control sessions, windows, panes => vim control cwd, bufferdir and buffers).
+- Extend emacs by writing custom functions for things that you do repetitivly (moving files, manipulating text...)
+  + Write shell-scripts mostly for launching programs & processes.
 - All coding, writing, fileopening, viewing, navigating is done inside emacs (do not leave it), because this makes for a consistent and coherent workflow.
   + Never open a terminal-emulator inside emacs (no layering!), if you need, use M-c for single shellcommands (make executeable, etc...). (Things like: compiling...  etc should be done using hotkeys and displaying the output in a buffer)
   + Use inbuilt programs like magit & diff for more speed than doing it on the cmd-line.

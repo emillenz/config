@@ -8,7 +8,6 @@
 
 # NOTE: When programming in nushell non-interactively, use the full command-names and long style options in order to make the code scaleable and readeable.
 
-source commands.nu
 source theme.nu
 
 alias exe = chmod +x
@@ -289,7 +288,7 @@ $env.config = {
     modifier: control
     keycode: char_g
     mode: [emacs, vi_normal, vi_insert]
-    event: {send: executehostcommand, cmd: "cd (fd --type=directory | fzf --preview='eza --oneline --icons --color=always {}' | str trim)"}
+    event: {send: executehostcommand, cmd: "cd (fd --type=directory | fzf --preview='^ls --color=always {}' | str trim)"}
     }
 
     {

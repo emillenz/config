@@ -1,24 +1,3 @@
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | parse '{dev} {start} {end} {sectors} {size} {end}'
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | parse -r '\s\s*'
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device 
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | into binary 
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | into string 
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str collect -h | bat
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join  -h | bat
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join 
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join ' \n '
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join '\n' | ^echo
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join '\n' | echo
-echo (sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join '\n')
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join '\n'
-['asoeuh' 'sathoeu' aseotuh] 
-['asoeuh' 'sathoeu' aseotuh] | str join '\n'
-['asoeuh' 'sathoeu' aseotuh] | str join  -h | bat
-['asoeuh' 'sathoeu' aseotuh] | str join  "\n"
-sudo fdisk -l | lines | skip until {|x| $x =~ Device} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join \n
-sudo fdisk -l | lines | skip until {|x| $x =~ Device} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join "\n"
-sudo fdisk -l | lines | skip until {|x| $x =~ "Device"} | take until {|x| $x == ""} | split column -r "\s\s*" | headers | get Device | str join "\n"
-sudo fdisk -l | lines | skip until {|x| $x =~ "Device"} | take until {|x| $x == ""} | split column -r \s\s* | headers | get Device | str join "\n"
 sudo fdisk -l | lines | skip until {|x| $x =~ "Device"} | take until {|x| $x == ""} | split column -r \s\s* | headers | get Device | str join \n
 sudo fdisk -l | lines | skip until {|x| $x =~ "Device"} | take until {|x| $x == ""} | split column -r \s\s* | headers | get Device | str join "\n"
 sudo fdisk -l | lines | skip until {|x| $x =~ "Device"} | take until {|x| $x == ""} | split column -r \s\s* | headers | get Device | str join '\n'
@@ -9998,3 +9977,24 @@ nu -c "$env.NU_LIB_DIRS"
 nu -c "av"
 nu -c "themes.nu"
 nu -c "themes"
+yay rust-analyzer
+rustup component add rust-analyzer
+nu
+nu
+v
+nvim
+yay ezay
+yay eza
+ls
+cd .config/
+ls
+ls -h
+ls
+ls | to text
+ls | get name
+rm timer_src
+ls
+nvim main.rs
+yay semgrep 
+yay -Syyu semgrep
+semgrep  --help | bat --language=man

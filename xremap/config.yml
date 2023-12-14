@@ -28,27 +28,27 @@ modmap:
 keymap:
   - name: global
     remap:
-      capslock-c: down                            # j
-      capslock-v: up                              # k
-      capslock-j: left                            # h
-      capslock-p: right                           # l
-      capslock-f: pageup                          # u
-      capslock-h: pagedown                        # d
+      capslock-j: down                            # j
+      capslock-k: up                              # k
+      capslock-h: left                            # h
+      capslock-l: right                           # l
+      capslock-u: pageup                          # u
+      capslock-d: pagedown                        # d
       capslock-a: end                             # a
-      capslock-g: home                            # i
-      capslock-b: delete                          # x
-      capslock-d: c-right                         # e
-      capslock-n: c-left                          # b
-      capslock-r: c-v                             # p
-      capslock-t: c-c                             # y
-      capslock-u: c-home                          # g
-      capslock-shift-u: c-end                     # g
-      capslock-comma: [c-right, c-right, c-left]  # w
-      capslock-i: [c-backspace]                   # c
-      capslock-shift-i: [home, shift-end, delete] # C
-      capslock-s: [end, enter]                    # o
-      capslock-shift-s: [up, end, enter]          # shift+o
-      capslock-t: [c-a, c-c]                      # y
+      capslock-i: home                            # i
+      capslock-x: delete                          # x
+      capslock-e: c-right                         # e
+      capslock-b: c-left                          # b
+      capslock-p: c-v                             # p
+      capslock-y: c-c                             # y
+      capslock-g: c-home                          # g
+      capslock-shift-g: c-end                     # g
+      capslock-w: [c-right, c-right, c-left]  # w
+      capslock-c: [c-backspace]                   # c
+      capslock-shift-c: [home, shift-end, delete] # C
+      capslock-o: [end, enter]                    # o
+      capslock-shift-o: [up, end, enter]          # shift+o
+      capslock-y: [c-a, c-c]                      # y
       # relative line jumping
       capslock-1: [down]
       capslock-2: [down, down]

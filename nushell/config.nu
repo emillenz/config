@@ -8,8 +8,8 @@
 
 # NOTE: When programming in nushell non-interactively, use the full command-names and long style options in order to make the code scaleable and readeable.
 
-use commands.nu ['extract', 'av', 'md']
-use theme.nu ['solarized_dark', 'solarized_light']
+source commands.nu
+source theme.nu
 
 alias exe = chmod +x
 alias ip = ip -color=auto
@@ -25,7 +25,6 @@ alias fzf = fzf --reverse --height=30 --color=dark --scheme=path
 alias e = emacsclient --tty
 alias g = emacsclient --tty --eval "(magit-status)"
 alias d = emacsclient --tty --eval "(dired-jump)"
-alias v = nvim
 
 $env.PATH = ($env.PATH | append ["~/.config/bin", "~/.cargo/bin", "~/.config/emacs/bin"] | uniq)
 $env.EDITOR = "emacsclient --tty --alternate-editor=nvim"

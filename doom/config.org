@@ -426,7 +426,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
         )
   (map! :localleader
         :map dired-mode-map
-        :nm "w" #'wdired-change-to-wdired-mode
+        :nm "A" #'z/dired-archive
         )
 )
 #+end_src
@@ -540,6 +540,17 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
    dired-kill-when-opening-new-dired-buffer t
    )
   )
+#+end_src
+
+** Archive file
+- Archive all things that were once written or created by you (instead of deleting them) -> digital content cost's little to no space. And you will be grateful later in life to have recorded data (that can be analyzed & crunched) what you were thinking and how you configured your tools etc...
+- Moves the file under Archive with its original path.
+#+begin_src emacs-lisp
+(defun z/dired-archive ()
+  (interactive)
+  (let* ((file (dired-get-filename))
+         (dest (concat "~/Archive/" (file-relative-name file "~/"))))
+    (rename-file file dest 1)))
 #+end_src
 
 * Org Mode
@@ -1102,11 +1113,21 @@ End the "(after! org" block
       (replace-match "\n\n"))))
 #+end_src
 
-* Nushell
+* Command-line: nushell
 - Nushell: screw that old POSIX-standard crap and use a user friendly shell
 - Major-mode: nushell files/scripts => syntax highlighting
+
 #+begin_src emacs-lisp
 (load! "user/nushell-mode.el")
+#+end_src
+
+- Run nushell commands using the environtment:: use ~--execute~ instead of ~--commands~
+  + Runs it as if interactive (all settings, scripts loaded)
+- display =cwd= in shell-prompt.
+#+begin_src emacs-lisp
+(setq
+ shell-command-prompt-show-cwd t
+ )
 #+end_src
 
 * [?] Under review

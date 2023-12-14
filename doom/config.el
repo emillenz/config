@@ -314,7 +314,7 @@
         )
   (map! :localleader
         :map dired-mode-map
-        :nm "w" #'wdired-change-to-wdired-mode
+        :nm "A" #'z/dired-archive
         )
 )
 ;; Dired:1 ends here
@@ -415,6 +415,14 @@
    )
   )
 ;; Dired Mode:1 ends here
+
+;; [[file:config.org::*Archive file][Archive file:1]]
+(defun z/dired-archive ()
+  (interactive)
+  (let* ((file (dired-get-filename))
+         (dest (concat "~/Archive/" (file-relative-name file "~/"))))
+    (rename-file file dest 1)))
+;; Archive file:1 ends here
 
 ;; [[file:config.org::*Org Mode][Org Mode:1]]
 (after! org
@@ -796,6 +804,12 @@ Jumps at tangled code from org src block."
       (replace-match "\n\n"))))
 ;; Format buffer:1 ends here
 
-;; [[file:config.org::*Nushell][Nushell:1]]
+;; [[file:config.org::*Command-line: nushell][Command-line: nushell:1]]
 (load! "user/nushell-mode.el")
-;; Nushell:1 ends here
+;; Command-line: nushell:1 ends here
+
+;; [[file:config.org::*Command-line: nushell][Command-line: nushell:2]]
+(setq
+ shell-command-prompt-show-cwd t
+ )
+;; Command-line: nushell:2 ends here

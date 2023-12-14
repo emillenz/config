@@ -1,53 +1,3 @@
-sudo fdisk -l | lines | skip until (str contains 'Device')
-sudo fdisk -l | lines | skip until {true}
-sudo fdisk -l | lines | skip until {str starts-with 'D'}
-sudo fdisk -l | lines | skip until {|x| $x | str starts-with 'D'}
-sudo fdisk -l | lines | skip until {str starts-with 'D'}
-sudo fdisk -l | lines | skip until {$in str starts-with 'D'}
-sudo fdisk -l | lines | skip until {$in | str starts-with 'D'}
-sudo fdisk -l | lines | find  -mr "^/dev"
-sudo fdisk -l | lines | find  -mr "^Device"
-find -h | bat
-sudo fdisk -l | lines | skip until {|x| $x | str starts-with 'D'}
-sudo fdisk -l | lines | skip until {|x| $x | str starts-with '^D'}
-sudo fdisk -l | lines | skip until {|x| $x | str starts-with 'D'}
-sudo fdisk -l | lines | skip until {|x| str starts-with 'D'}
-sudo fdisk -l | lines | skip until {|x| $x starts-with 'D'}
-str  -h | bat
-str starts-with  -h | bat
-[1 2 3 4] | skip until {|x| $x >= 3}
-['a' 'b' 'c'] | skip until {|x| $x == 'a'}
-['a' 'b' 'c'] | skip until {|x| $x == 'b'}
-['a' 'b' 'c'] | skip until {|x| $x =~ 'b'}
-['accc' 'aoeu' 'cooaobaoeu' 'aoeub'] | skip until {|x| $x =~ 'b'}
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'}
-sudo fdisk -l | lines | skip until {|x| $x }
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'}
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until -h | bat
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == '^$'}
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == '^\s*$'}
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == '\s*'}
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''}
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | header
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | headers
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers |into string
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | str join '\n'
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | str join ''
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | each {str join '\'}
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | each {str join ' '}
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | into string
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join '\n'
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | str join -h | bat
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | into string
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | into string | echo
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | echo
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device | print
-parse
-parse -h | bat
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | parse 
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | parse '{dev start end sectors size end}'
-sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | parse '{dev} {start} {end} {sectors} {size} {end}}'
 sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | parse '{dev} {start} {end} {sectors} {size} {end}'
 sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | parse -r '\s\s*'
 sudo fdisk -l | lines | skip until {|x| $x =~ 'Device'} | take until {|x| $x == ''} | split column -r \s\s* | headers | get Device 
@@ -9998,3 +9948,53 @@ ls | find nvim
 l-s
 ls | find nvim
 ls | find zo
+ls
+help nu 
+nu --help | bat --language=man
+ls
+ls tmp
+bat tmp
+nu  --help | bat --language=man
+nu -c 'av tmp'
+shells
+help shells
+show
+help enter 
+enter
+shells
+nu -c $"($env)"
+help source-env 
+ls
+help av
+help solarized_dark
+ls
+av tmp
+cd Archive ls
+ls
+mv tmp ../
+nu --help
+table
+table --help
+table --list
+nu -i "av"
+nu -c "av"
+nu -i "av"
+nu -m basic "av"
+nu -m basic "ls"
+nu -m basic ls
+ls
+nu -m=basic -c ls
+nu -m basic -c ls
+nu -m none -c ls
+nu -m dots -c ls
+nu -m ascii_rounded -c ls
+nu -m markdown -c ls
+nu -i av
+nu -ic av
+nu -ic "av"
+nu --help
+nu --include-path ~/.config/nushell/user -c av
+nu -c "$env.NU_LIB_DIRS"
+nu -c "av"
+nu -c "themes.nu"
+nu -c "themes"

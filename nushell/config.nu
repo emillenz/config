@@ -6,6 +6,8 @@
 # info:	 Nushell conifg with safer defaults, and efficient custom keybindings.
 # -----
 
+# NOTE: When programming in nushell non-interactively, use the full command-names and long style options in order to make the code scaleable and readeable.
+
 use commands.nu ['extract', 'av', 'md']
 use theme.nu ['solarized_dark', 'solarized_light']
 
@@ -13,9 +15,9 @@ alias exe = chmod +x
 alias ip = ip -color=auto
 alias yay = yay --noconfirm
 
-alias rm = rm -rvft
-alias cp = cp -rvp
-alias mv = mv -vf
+alias rm = rm --recursive --verbose --force --trash
+alias cp = cp --recursive --verbose --progress
+alias mv = mv --verbose --force
 
 alias bat = bat --theme='Solarized (dark)'
 alias fzf = fzf --reverse --height=30 --color=dark --scheme=path
@@ -52,7 +54,7 @@ $env.config = {
     trim: {
       methodology: wrapping
       wrapping_try_keep_words: true
-      truncating_suffix: "..."
+      truncating_suffix: "…"
     }
   }
 
@@ -238,7 +240,7 @@ $env.config = {
     keycode: char_f
     mode: [emacs, vi_normal, vi_insert]
     event: [
-      {edit: InsertString, value: "(fd --type=file | fzf --preview='bat {}' | str trim)"},
+      {edit: InsertString, value: "(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)"},
       {send: enter}
     ]
     }
@@ -288,7 +290,7 @@ $env.config = {
     modifier: control
     keycode: char_g
     mode: [emacs, vi_normal, vi_insert]
-    event: {send: executehostcommand, cmd: "cd (fd --type=directory | fzf --preview='ls {}' | str trim)"}
+    event: {send: executehostcommand, cmd: "cd (fd --type=directory | fzf --preview='eza --oneline --icons --color=always {}' | str trim)"}
     }
 
     {

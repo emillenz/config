@@ -17,7 +17,7 @@ def main [] {
   let ans = (
     [s a w]
     | to text
-    | rofi -dmenu -no-custom -auto-select -p $"$icon [s] screen | [a] area | [w] window"
+    | rofi -dmenu -no-custom -auto-select -p $"($icon) [s] screen | [a] area | [w] window"
     | str trim
     | if $in == "" {exit 1} else {$in}
   )

@@ -178,10 +178,18 @@
         :nvim "C-="     #'doom/increase-font-size
         :nvim "C-0"     #'doom/reset-font-size))
 
+;; HACK: sverride defaults
 (after! evil-org
   (map! :map 'override
         :nvim "M-j" #'tab-bar-switch-to-prev-tab
         :nvim "M-k" #'tab-bar-switch-to-next-tab))
+
+;; HACK: override defauts
+(after! magit
+  (map! :map 'override
+        :nvim "M-j" #'tab-bar-switch-to-prev-tab
+        :nvim "M-k" #'tab-bar-switch-to-next-tab)
+  )
 ;; Global navigation scheme:1 ends here
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:2]]
@@ -211,6 +219,7 @@
 
    :nmv  "U"   #'evil-redo
    :nmv  "Q"   #'evil-execute-last-recorded-macro
+   :nmv  "&"   #'evil-ex-repeat
 
    :nmv  "]e"  #'flycheck-next-error
    :nmv  "[e"  #'flycheck-previous-error
@@ -256,10 +265,10 @@
 ;; [[file:config.org::*Evil surround operator][Evil surround operator:1]]
 (after! evil
   (map! :map evil-operator-state-map
-        "'" #'evil-surround-edit)
+        "`" #'evil-surround-edit)
   (map!
-   :nmv "'" #'evil-surround-region
-   :nmv "'" #'evil-surround-region))
+   :nmv "`" #'evil-surround-region
+   :nmv "`" #'evil-surround-region))
 ;; Evil surround operator:1 ends here
 
 ;; [[file:config.org::*Org mode][Org mode:1]]

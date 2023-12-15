@@ -241,10 +241,18 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         :nvim "C-="     #'doom/increase-font-size
         :nvim "C-0"     #'doom/reset-font-size))
 
+;; HACK: sverride defaults
 (after! evil-org
   (map! :map 'override
         :nvim "M-j" #'tab-bar-switch-to-prev-tab
         :nvim "M-k" #'tab-bar-switch-to-next-tab))
+
+;; HACK: override defauts
+(after! magit
+  (map! :map 'override
+        :nvim "M-j" #'tab-bar-switch-to-prev-tab
+        :nvim "M-k" #'tab-bar-switch-to-next-tab)
+  )
 #+end_src
 
 - DWIM quit function.
@@ -278,6 +286,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - Shorcut to ex buffer search & replace with ~\|~
 - ~()~ are useless
   + Remap to parens jumping
+- ~&~: Allows for samd usage as normal ~&~, but allows repeating any last command.
 
 #+begin_src emacs-lisp
 (after! evil
@@ -294,6 +303,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
    :nmv  "U"   #'evil-redo
    :nmv  "Q"   #'evil-execute-last-recorded-macro
+   :nmv  "&"   #'evil-ex-repeat
 
    :nmv  "]e"  #'flycheck-next-error
    :nmv  "[e"  #'flycheck-previous-error
@@ -352,14 +362,14 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 For adding delimiters around objects.
 Very useful and thus getting a first-level-mapping.
 Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~{~
-(always use ~`~ over ~'~)
+(of you prefer ~'~ for marking, remap ~'~ -> ~`~)
 #+begin_src emacs-lisp
 (after! evil
   (map! :map evil-operator-state-map
-        "'" #'evil-surround-edit)
+        "`" #'evil-surround-edit)
   (map!
-   :nmv "'" #'evil-surround-region
-   :nmv "'" #'evil-surround-region))
+   :nmv "`" #'evil-surround-region
+   :nmv "`" #'evil-surround-region))
 #+end_src
 
 ** Org mode

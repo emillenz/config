@@ -122,8 +122,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  even-window-sizes 'width-only
  window-combination-resize t
  split-height-threshold nil
- split-width-threshold 0
- )
+ split-width-threshold 0)
 #+end_src
 
 - Constrain popup buffers to consistently, and always ~vsplit~, and have a reasonable size.
@@ -151,8 +150,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  '(text-mode-hook
    dired-mode-hook
    org-agenda-mode-hook
-   magit-mode-hook
-   )
+   magit-mode-hook)
  #'visual-fill-column-mode)
 
 (global-display-fill-column-indicator-mode -1) ;; distracting
@@ -245,9 +243,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 (after! evil-org
   (map! :map 'override
-        :nvim "M-j" #'evil-tab-previous
-        :nvim "M-k" #'evil-tab-next
-        ))
+        :nvim "M-j" #'tab-bar-switch-to-prev-tab
+        :nvim "M-k" #'tab-bar-switch-to-next-tab))
 #+end_src
 
 - DWIM quit function.
@@ -313,9 +310,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
    :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
 
    :nmv  "go"  #'consult-imenu
-   :nmv  "g/"  #'+default/search-buffer
-   )
-  )
+   :nmv  "g/"  #'+default/search-buffer))
 #+end_src
 
 ** Alignment
@@ -325,8 +320,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (after! evil
   (map!
    :nmv "g<" #'evil-lion-left
-   :nmv "g>" #'evil-lion-right
-   ))
+   :nmv "g>" #'evil-lion-right))
 #+end_src
 
 ** Control-bindings
@@ -341,8 +335,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
    :inmv "C-s" #'evil-write
    :inmv "C-q" (cmd! (when (buffer-modified-p) (condition-case nil (evil-write nil nil) (error))) (kill-buffer-and-window))
    :inmv "C-j" #'drag-stuff-down
-   :inmv "C-k" #'drag-stuff-up
-   ))
+   :inmv "C-k" #'drag-stuff-up))
 #+end_src
 
 *** Instant jumping
@@ -418,13 +411,11 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
         :nm "z" #'dired-do-compress
         :nm "." #'dired-omit-mode
         :nm "e" #'dired-create-empty-file
-        :nm "E" #'dired-create-directory
-        )
+        :nm "E" #'dired-create-directory)
+
   (map! :localleader
         :map dired-mode-map
-        :nm "A" #'z/dired-archive
-        )
-)
+        :nm "A" #'z/dired-archive))
 #+end_src
 
 ** Minibuffer
@@ -452,23 +443,20 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
    evil-move-beyond-eol nil
    evil-kill-on-visual-paste nil
    evil-want-C-i-jump t
-   evil-want-minibuffer t
-   )
+   evil-want-minibuffer t)
 
   (setq
    evil-snipe-scope 'visible
    evil-snipe-repeat-keys t
    evil-snipe-override-evil-repeat-keys t
-   evil-snipe-auto-scroll nil
-   )
+   evil-snipe-auto-scroll nil)
 
   (dolist (cmd
            '(flycheck-next-error
              flycheck-previous-error
              +lookup/definition
              +lookup/references
-             +lookup/implementations
-             ))
+             +lookup/implementations))
     (evil-add-command-properties cmd :jump t)))
 #+end_src
 
@@ -486,8 +474,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
      message-mode
      help-mode
      gud-mode
-     vterm-mode))
-  )
+     vterm-mode)))
 #+end_src
 
 * Templates & snippets
@@ -497,8 +484,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 
 (set-file-templates!
  '(org-mode :trigger "header")
- '(prog-mode :trigger "header")
- )
+ '(prog-mode :trigger "header"))
 #+end_src
 
 * Dired Mode
@@ -524,8 +510,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
           ("odt"  . "libreoffice")
           ("odf"  . "libreoffice")
           ("epub" . "zathura")
-          ("pdf"  . "zathura")
-          ))
+          ("pdf"  . "zathura")))
 
   (add-hook! 'dired-mode-hook #'dired-hide-details-mode)
 
@@ -533,9 +518,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
    dired-recursive-copies 'always
    dired-recursive-deletes 'top
    global-auto-revert-non-file-buffers t
-   dired-kill-when-opening-new-dired-buffer t
-   )
-  )
+   dired-kill-when-opening-new-dired-buffer t))
 #+end_src
 
 ** Archive file
@@ -544,9 +527,10 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 #+begin_src emacs-lisp
 (defun z/dired-archive ()
   (interactive)
-  (let* ((file (dired-get-filename))
+  (dolist (file (dired-get-marked-files))
+      (let* ((file (dired-get-filename))
          (dest (concat "~/Archive/" (file-relative-name file "~/"))))
-    (rename-file file dest 1)))
+    (rename-file file dest 1))))
 #+end_src
 
 * Org Mode
@@ -565,8 +549,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
            #'visual-line-mode
            #'org-num-mode
            #'org-appear-mode
-           #'org-auto-tangle-mode
-           )
+           #'org-auto-tangle-mode)
 
 (setq
  org-directory "~/Documents/org"
@@ -644,8 +627,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
               '(("->" . "→")
                 ("|" . "│")
                 ("=>" . "⇒")
-                ("<=>" . "⇔")
-                ))
+                ("<=>" . "⇔")))
 #+end_src
 
 ** Task states
@@ -711,8 +693,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
            "|"
            "[@](d@)"
            "[\\](\\@)"
-           "[x](x!)"
-           ))) ;; HACK: cannot use"@"
+           "[x](x!)"))) ;; HACK: cannot use"@"
 #+end_src
 
 - Color coding is done to give sense of importance: Red > orange > green > grey // purple: misc
@@ -733,8 +714,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
           ("[&]"  . org-todo)
           ("[@]"  . +org-todo-active)
           ("[\\]" . org-done)
-          ("[X]"  . org-done)
-          ))
+          ("[X]"  . org-done)))
 #+end_src
 
 - Log to drawer: ~LOG~ // shorter & more sensible than default: ~LOGBOOK~
@@ -746,8 +726,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
    org-todo-repeat-to-state t
    org-log-redeadline 'note
    org-log-reschedule 'time
-   org-log-into-drawer "LOG"
-   )
+   org-log-into-drawer "LOG")
 
   (setq
    org-priority-highest 1
@@ -770,8 +749,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
    (:hlines   . "no")
    (:tangle   . "no")
    (:mkdirp   . "yes")
-   (:comments . "link"))
- )
+   (:comments . "link")))
 #+end_src
 
 ** Agenda
@@ -798,8 +776,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
      (0.5 . org-upcoming-deadline)
      (0.0 . org-upcoming-distant-deadline))
    org-agenda-time-grid nil
-   org-capture-use-agenda-date t
-   )
+   org-capture-use-agenda-date t)
 #+end_src
 
 Org-agenda by default is a clusterfuck. This will clean it up: cleanly align everything into columns & group items.
@@ -936,8 +913,7 @@ More convenient, with a nice display.
     (insert
      (format " [[%s][%s]]"
       file
-      title
-      ))))
+      title))))
 #+end_src
 
 ** Jump to src file
@@ -1011,13 +987,10 @@ End the "(after! org" block
          (("la" :keys "l" :olp ("linear algebra" "inbox"))
           ("ep" :keys "e" :olp ("einfuehrung programmierung" "inbox"))
           ("dm" :keys "d" :olp ("discrete math" "inbox"))
-          ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox"))
-          ))
+          ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox"))))
         ("personal" :keys "p" :file "personal/tasks.org")
         ("compass"  :keys "s" :file "compass/tasks.org")
-        ("config"   :keys "o" :file "config/tasks.org")
-        )
-       )
+        ("config"   :keys "o" :file "config/tasks.org")))
 
       ("event" :keys "e"
        :template
@@ -1028,9 +1001,7 @@ End the "(after! org" block
         )
        :children
        (("cs"       :keys "c" :file "cs/events.org")
-        ("personal" :keys "p" :file "personal/events.org")
-        )
-       )
+        ("personal" :keys "p" :file "personal/events.org")))
 
       ("note" :keys "n"
        :template
@@ -1038,8 +1009,7 @@ End the "(after! org" block
         ":PROPERTIES:"
         ":CREATED: %U"
         ":END:"
-        "%?"
-        )
+        "%?")
        :empty-lines-after 1
        :children
        (("cs"       :keys "c"
@@ -1047,13 +1017,10 @@ End the "(after! org" block
          (("la" :keys "l" :file "cs/la/notes.org")
           ("ep" :keys "e" :file "cs/ep/notes.org")
           ("dm" :keys "d" :file "cs/dm/notes.org")
-          ("ad" :keys "a" :file "cs/ad/notes.org")
-          ))
+          ("ad" :keys "a" :file "cs/ad/notes.org")))
         ("personal" :keys "p" :file "personal/notes.org")
         ("compass"  :keys "s" :file "compass/notes.org")
-        ("config"   :keys "o" :file "config/notes.org")
-        )
-       )
+        ("config"   :keys "o" :file "config/notes.org")))
 
       ("journal" :keys "j"
        :template
@@ -1061,11 +1028,9 @@ End the "(after! org" block
         ":PROPERTIES:"
         ":CREATED: %U"
         ":END:"
-        "%?"
-        )
+        "%?")
        :empty-lines-after 1
-       :children ("personal" :keys "p" :file "personal/journal.org")
-       ))))))
+       :children ("personal" :keys "p" :file "personal/journal.org")))))))
 #+end_src
 
 * Programming mode

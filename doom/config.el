@@ -86,8 +86,7 @@
  even-window-sizes 'width-only
  window-combination-resize t
  split-height-threshold nil
- split-width-threshold 0
- )
+ split-width-threshold 0)
 ;; Window layout & behavior:1 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:2]]
@@ -105,8 +104,7 @@
  '(text-mode-hook
    dired-mode-hook
    org-agenda-mode-hook
-   magit-mode-hook
-   )
+   magit-mode-hook)
  #'visual-fill-column-mode)
 
 (global-display-fill-column-indicator-mode -1) ;; distracting
@@ -182,9 +180,8 @@
 
 (after! evil-org
   (map! :map 'override
-        :nvim "M-j" #'evil-tab-previous
-        :nvim "M-k" #'evil-tab-next
-        ))
+        :nvim "M-j" #'tab-bar-switch-to-prev-tab
+        :nvim "M-k" #'tab-bar-switch-to-next-tab))
 ;; Global navigation scheme:1 ends here
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:2]]
@@ -230,17 +227,14 @@
    :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
 
    :nmv  "go"  #'consult-imenu
-   :nmv  "g/"  #'+default/search-buffer
-   )
-  )
+   :nmv  "g/"  #'+default/search-buffer))
 ;; Evil-mode:1 ends here
 
 ;; [[file:config.org::*Alignment][Alignment:1]]
 (after! evil
   (map!
    :nmv "g<" #'evil-lion-left
-   :nmv "g>" #'evil-lion-right
-   ))
+   :nmv "g>" #'evil-lion-right))
 ;; Alignment:1 ends here
 
 ;; [[file:config.org::*Control-bindings][Control-bindings:1]]
@@ -249,8 +243,7 @@
    :inmv "C-s" #'evil-write
    :inmv "C-q" (cmd! (when (buffer-modified-p) (condition-case nil (evil-write nil nil) (error))) (kill-buffer-and-window))
    :inmv "C-j" #'drag-stuff-down
-   :inmv "C-k" #'drag-stuff-up
-   ))
+   :inmv "C-k" #'drag-stuff-up))
 ;; Control-bindings:1 ends here
 
 ;; [[file:config.org::*Instant jumping][Instant jumping:1]]
@@ -307,13 +300,11 @@
         :nm "z" #'dired-do-compress
         :nm "." #'dired-omit-mode
         :nm "e" #'dired-create-empty-file
-        :nm "E" #'dired-create-directory
-        )
+        :nm "E" #'dired-create-directory)
+
   (map! :localleader
         :map dired-mode-map
-        :nm "A" #'z/dired-archive
-        )
-)
+        :nm "A" #'z/dired-archive))
 ;; Dired:1 ends here
 
 ;; [[file:config.org::*Minibuffer][Minibuffer:1]]
@@ -333,23 +324,20 @@
    evil-move-beyond-eol nil
    evil-kill-on-visual-paste nil
    evil-want-C-i-jump t
-   evil-want-minibuffer t
-   )
+   evil-want-minibuffer t)
 
   (setq
    evil-snipe-scope 'visible
    evil-snipe-repeat-keys t
    evil-snipe-override-evil-repeat-keys t
-   evil-snipe-auto-scroll nil
-   )
+   evil-snipe-auto-scroll nil)
 
   (dolist (cmd
            '(flycheck-next-error
              flycheck-previous-error
              +lookup/definition
              +lookup/references
-             +lookup/implementations
-             ))
+             +lookup/implementations))
     (evil-add-command-properties cmd :jump t)))
 ;; Evil mode:1 ends here
 
@@ -365,8 +353,7 @@
      message-mode
      help-mode
      gud-mode
-     vterm-mode))
-  )
+     vterm-mode)))
 ;; Lsp & completion:1 ends here
 
 ;; [[file:config.org::*Templates & snippets][Templates & snippets:1]]
@@ -374,8 +361,7 @@
 
 (set-file-templates!
  '(org-mode :trigger "header")
- '(prog-mode :trigger "header")
- )
+ '(prog-mode :trigger "header"))
 ;; Templates & snippets:1 ends here
 
 ;; [[file:config.org::*Dired Mode][Dired Mode:1]]
@@ -399,8 +385,7 @@
           ("odt"  . "libreoffice")
           ("odf"  . "libreoffice")
           ("epub" . "zathura")
-          ("pdf"  . "zathura")
-          ))
+          ("pdf"  . "zathura")))
 
   (add-hook! 'dired-mode-hook #'dired-hide-details-mode)
 
@@ -408,17 +393,16 @@
    dired-recursive-copies 'always
    dired-recursive-deletes 'top
    global-auto-revert-non-file-buffers t
-   dired-kill-when-opening-new-dired-buffer t
-   )
-  )
+   dired-kill-when-opening-new-dired-buffer t))
 ;; Dired Mode:1 ends here
 
 ;; [[file:config.org::*Archive file][Archive file:1]]
 (defun z/dired-archive ()
   (interactive)
-  (let* ((file (dired-get-filename))
+  (dolist (file (dired-get-marked-files))
+      (let* ((file (dired-get-filename))
          (dest (concat "~/Archive/" (file-relative-name file "~/"))))
-    (rename-file file dest 1)))
+    (rename-file file dest 1))))
 ;; Archive file:1 ends here
 
 ;; [[file:config.org::*Org Mode][Org Mode:1]]
@@ -430,8 +414,7 @@
            #'visual-line-mode
            #'org-num-mode
            #'org-appear-mode
-           #'org-auto-tangle-mode
-           )
+           #'org-auto-tangle-mode)
 
 (setq
  org-directory "~/Documents/org"
@@ -503,8 +486,7 @@
               '(("->" . "→")
                 ("|" . "│")
                 ("=>" . "⇒")
-                ("<=>" . "⇔")
-                ))
+                ("<=>" . "⇔")))
 ;; Ligatures:1 ends here
 
 ;; [[file:config.org::*Task states][Task states:1]]
@@ -519,8 +501,7 @@
          "|"
          "[@](d@)"
          "[\\](\\@)"
-         "[x](x!)"
-         ))) ;; HACK: cannot use"@"
+         "[x](x!)"))) ;; HACK: cannot use"@"
 ;; Task states:1 ends here
 
 ;; [[file:config.org::*Task states][Task states:2]]
@@ -533,8 +514,7 @@
         ("[&]"  . org-todo)
         ("[@]"  . +org-todo-active)
         ("[\\]" . org-done)
-        ("[X]"  . org-done)
-        ))
+        ("[X]"  . org-done)))
 ;; Task states:2 ends here
 
 ;; [[file:config.org::*Task states][Task states:3]]
@@ -544,8 +524,7 @@
  org-todo-repeat-to-state t
  org-log-redeadline 'note
  org-log-reschedule 'time
- org-log-into-drawer "LOG"
- )
+ org-log-into-drawer "LOG")
 
 (setq
  org-priority-highest 1
@@ -567,8 +546,7 @@
    (:hlines   . "no")
    (:tangle   . "no")
    (:mkdirp   . "yes")
-   (:comments . "link"))
- )
+   (:comments . "link")))
 ;; Babel:1 ends here
 
 ;; [[file:config.org::*Agenda][Agenda:1]]
@@ -592,8 +570,7 @@
    (0.5 . org-upcoming-deadline)
    (0.0 . org-upcoming-distant-deadline))
  org-agenda-time-grid nil
- org-capture-use-agenda-date t
- )
+ org-capture-use-agenda-date t)
 ;; Agenda:1 ends here
 
 ;; [[file:config.org::*Agenda][Agenda:2]]
@@ -652,8 +629,7 @@
     (insert
      (format " [[%s][%s]]"
       file
-      title
-      ))))
+      title))))
 ;; Link file:1 ends here
 
 ;; [[file:config.org::*Jump to src file][Jump to src file:1]]
@@ -714,13 +690,10 @@ Jumps at tangled code from org src block."
          (("la" :keys "l" :olp ("linear algebra" "inbox"))
           ("ep" :keys "e" :olp ("einfuehrung programmierung" "inbox"))
           ("dm" :keys "d" :olp ("discrete math" "inbox"))
-          ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox"))
-          ))
+          ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox"))))
         ("personal" :keys "p" :file "personal/tasks.org")
         ("compass"  :keys "s" :file "compass/tasks.org")
-        ("config"   :keys "o" :file "config/tasks.org")
-        )
-       )
+        ("config"   :keys "o" :file "config/tasks.org")))
 
       ("event" :keys "e"
        :template
@@ -731,9 +704,7 @@ Jumps at tangled code from org src block."
         )
        :children
        (("cs"       :keys "c" :file "cs/events.org")
-        ("personal" :keys "p" :file "personal/events.org")
-        )
-       )
+        ("personal" :keys "p" :file "personal/events.org")))
 
       ("note" :keys "n"
        :template
@@ -741,8 +712,7 @@ Jumps at tangled code from org src block."
         ":PROPERTIES:"
         ":CREATED: %U"
         ":END:"
-        "%?"
-        )
+        "%?")
        :empty-lines-after 1
        :children
        (("cs"       :keys "c"
@@ -750,13 +720,10 @@ Jumps at tangled code from org src block."
          (("la" :keys "l" :file "cs/la/notes.org")
           ("ep" :keys "e" :file "cs/ep/notes.org")
           ("dm" :keys "d" :file "cs/dm/notes.org")
-          ("ad" :keys "a" :file "cs/ad/notes.org")
-          ))
+          ("ad" :keys "a" :file "cs/ad/notes.org")))
         ("personal" :keys "p" :file "personal/notes.org")
         ("compass"  :keys "s" :file "compass/notes.org")
-        ("config"   :keys "o" :file "config/notes.org")
-        )
-       )
+        ("config"   :keys "o" :file "config/notes.org")))
 
       ("journal" :keys "j"
        :template
@@ -764,11 +731,9 @@ Jumps at tangled code from org src block."
         ":PROPERTIES:"
         ":CREATED: %U"
         ":END:"
-        "%?"
-        )
+        "%?")
        :empty-lines-after 1
-       :children ("personal" :keys "p" :file "personal/journal.org")
-       ))))))
+       :children ("personal" :keys "p" :file "personal/journal.org")))))))
 ;; Capture templates:1 ends here
 
 ;; [[file:config.org::*Programming mode][Programming mode:1]]

@@ -129,11 +129,10 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   + Never mix vertical with horizontal splitting -> creates mental overhead navigating the windows (+requires another set of totally unneccessary keybindings)
 #+begin_src emacs-lisp
 (after! doom
-  (set-popup-rule! "\\*.*\\*"
-    :side 'right
-    :width 0.5
-    :modeline t
-    :quit nil))
+  (setq-default +popup-defaults ;; HACK: needs setq-default to work
+        '(:side right
+          :width 0.5
+          :modeline t)))
 #+end_src
 
 - Centered windows for better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).

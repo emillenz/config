@@ -115,19 +115,20 @@ bindsym XF86MonBrightnessDown exec sudo xbacklight -5
 - If you absolutely need to use a split toggle it.
   + Without splits we need no keybindings for resizing, for splitting (less complexity and overhead)...
 #+begin_src conf
-bindsym $mod+j          focus prev
-bindsym $mod+shift+j    move left
-bindsym $mod+k          focus next
-bindsym $mod+shift+k    move right
-
+bindsym $mod+Tab        focus next
+bindsym $mod+k          focus prev
 bindsym $mod+q          kill
 bindsym $mod+f          exec rofi -show drun
 bindsym $mod+g          exec rofi -show window
 bindsym $mod+semicolon  exec rofi -show run
-bindsym $mod+Tab        layout toggle tabbed splith
+bindsym $mod+t          layout toggle tabbed splith
 bindsym $mod+Return     move workspace to output next
-# bindsym $mod+m          exec i3-input -F 'mark %s' -l 1 -P 'Mark:'
-# bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto'
+#+end_src
+
+- [?]
+#+begin_src conf :tangle no
+bindsym $mod+m          exec i3-input -F 'mark %s' -l 1 -P 'Mark:'
+bindsym $mod+apostrophe exec i3-input -F '[con_mark="%s"] focus' -l 1 -P 'Goto'
 #+end_src
 
 ** Workspaces Assignments
@@ -212,10 +213,8 @@ bindsym $mod+shift+m $moveto $ws_music; workspace $ws_music
 #+end_src
 
 ** Open app keybindings
-- Mod-t for =newtab=
 - Using ~i3-msg~, because we want to try other commands if one fails
   + focus app if on different workspace -> attach to server -> start server -> lanuch app
-
 #+begin_src  conf
 set $open <open> \
 │ editor \

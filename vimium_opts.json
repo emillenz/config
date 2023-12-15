@@ -4,7 +4,7 @@
   "filterLinkHints": false,
   "waitForEnterForFilteredHints": true,
   "hideHud": false,
-  "keyMappings": "map <a-q> removeTab\nmap <a-Q> restoreTab\nmap <a-t> createTab\nmap <a-g> Vomnibar.activateTabSelection\nmap <a-j> previousTab\nmap <a-k> nextTab\nmap <a-J> moveTabLeft\nmap <a-K> moveTabRight\nmap h goBack\nmap l goForward\nmap s LinkHints.activateMode\nmap S LinkHints.activateModeToOpenInNewTab\nmap i focusInput\nmap ' Marks.activateGotoMode",
+  "keyMappings": "map <a-q> removeTab\nmap <a-Q> restoreTab\nmap <a-t> createTab\nmap <a-g> Vomnibar.activateTabSelection\nmap <a-Tab> nextTab\nmap h goBack\nmap l goForward\nmap s LinkHints.activateMode\nmap S LinkHints.activateModeToOpenInNewTab\nmap i focusInput\nmap ' Marks.activateGotoMode",
   "linkHintCharacters": "aoeuidhtnspyfgcrlqjkxbmwvz",
   "linkHintNumbers": "0123456789",
   "newTabUrl": "duckduckgo.com",

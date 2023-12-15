@@ -144,10 +144,6 @@
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:1]]
 (after! doom
   (map! :map  'override
-        :nvim "M-j"     #'tab-bar-switch-to-prev-tab
-        :nvim "M-J"     #'tab-bar-move-tab-backward
-        :nvim "M-k"     #'tab-bar-switch-to-next-tab
-        :nvim "M-K"     #'tab-bar-move-tab
         :nvim "M-t"     #'tab-bar-new-tab-to
         :nvmi "M-z"     #'+popup/toggle
         :nvim "M-1"     (cmd! (tab-bar-select-tab 1))
@@ -263,11 +259,7 @@
         :inmv "S-RET" #'org-meta-return
         :inmv "C-RET" #'+org/insert-item-below
         :nmvo "H"     #'evil-org-beginning-of-line
-        :nmvo "L"     #'evil-org-end-of-line
-        :inmv "C-j"   #'org-metadown
-        :inmv "C-k"   #'org-metaup
-        :inmv "C-h"   #'org-metaleft
-        :inmv "C-l"   #'org-metaright))
+        :nmvo "L"     #'evil-org-end-of-line)
 
 (after! org-mode
   (map! :localleader

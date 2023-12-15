@@ -254,12 +254,10 @@
 ;; Control-bindings:1 ends here
 
 ;; [[file:config.org::*Instant jumping][Instant jumping:1]]
-(after! avy (setq avy-keys '(?a ?o ?e ?u ?i ?d ?h ?t ?n ?s ?p ?y ?f ?g ?c ?r ?l ?q ?j ?k ?x ?b ?m ?w ?v ?z)))
 (after! evil
   (map! :map evil-snipe-local-mode-map ;; need to override evil-snipe
         :nmvo "s" #'evil-avy-goto-char-2-below
-        :nmvo "S" #'evil-avy-goto-char-2-above
-        ))
+        :nmvo "S" #'evil-avy-goto-char-2-above))
 ;; Instant jumping:1 ends here
 
 ;; [[file:config.org::*Evil surround operator][Evil surround operator:1]]
@@ -268,8 +266,7 @@
         "'" #'evil-surround-edit)
   (map!
    :nmv "'" #'evil-surround-region
-   :nmv "'" #'evil-surround-region
-   ))
+   :nmv "'" #'evil-surround-region))
 ;; Evil surround operator:1 ends here
 
 ;; [[file:config.org::*Org mode][Org mode:1]]

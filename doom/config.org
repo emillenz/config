@@ -116,6 +116,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 * Window layout & behavior
+- Constrain popup buffers (inevitable) to consistently, and always ~vsplit~, and have a reasonable size.
+  + Never mix vertical with horizontal splitting -> creates mental overhead navigating the windows (+requires another set of totally unneccessary keybindings)
 #+begin_src emacs-lisp
 (setq
  evil-vsplit-window-right t
@@ -123,23 +125,18 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  window-combination-resize t
  split-height-threshold nil
  split-width-threshold 0)
-#+end_src
-
-- Constrain popup buffers to consistently, and always ~vsplit~, and have a reasonable size.
-  + Never mix vertical with horizontal splitting -> creates mental overhead navigating the windows (+requires another set of totally unneccessary keybindings)
-#+begin_src emacs-lisp
-(plist-put! +popup-defaults :modeline t)
 
 (after! org
   (setq org-src-window-setup 'current-window)
-  (set-popup-rule! "^\\*Org Src" :ignore t))
+  (set-popup-rule! "^\\*Org Src" :ignore t)) ;; HACK: fullscreen window
 
-(set-popup-rule! "\\*.*\\*"
-  :side 'right
-  :width 0.33
-  :modeline t
-  :quit nil
-  :select nil)
+(plist-put! +popup-defaults :modeline t)
+
+(after! helpful
+  (set-popup-rule! ".*help.*" :side 'right :width 0.33 :select nil :quit 'current))
+
+(after! lsp-mode
+  (set-popup-rule! ".*help.*" :side 'right :width 0.33 :select nil :quit 'current))
 #+end_src
 
 - Centered windows for better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).
@@ -321,6 +318,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (after! evil
   (map!
    :inmv "C-s" #'evil-write
+   :inmv "C-q" #'evil-delete-buffer
    :inmv "C-j" #'drag-stuff-down
    :inmv "C-k" #'drag-stuff-up))
 #+end_src

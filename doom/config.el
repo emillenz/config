@@ -87,24 +87,21 @@
  window-combination-resize t
  split-height-threshold nil
  split-width-threshold 0)
-;; Window layout & behavior:1 ends here
-
-;; [[file:config.org::*Window layout & behavior][Window layout & behavior:2]]
-(plist-put! +popup-defaults :modeline t)
 
 (after! org
   (setq org-src-window-setup 'current-window)
-  (set-popup-rule! "^\\*Org Src" :ignore t))
+  (set-popup-rule! "^\\*Org Src" :ignore t)) ;; HACK: fullscreen window
 
-(set-popup-rule! "\\*.*\\*"
-  :side 'right
-  :width 0.33
-  :modeline t
-  :quit nil
-  :select nil)
-;; Window layout & behavior:2 ends here
+(plist-put! +popup-defaults :modeline t)
 
-;; [[file:config.org::*Window layout & behavior][Window layout & behavior:3]]
+(after! helpful
+  (set-popup-rule! ".*help.*" :side 'right :width 0.33 :select nil :quit 'current))
+
+(after! lsp-mode
+  (set-popup-rule! ".*help.*" :side 'right :width 0.33 :select nil :quit 'current))
+;; Window layout & behavior:1 ends here
+
+;; [[file:config.org::*Window layout & behavior][Window layout & behavior:2]]
 ;; NOTE: not prog mode -> breaks with
 (add-hook!
  '(text-mode-hook
@@ -119,7 +116,7 @@
  visual-fill-column-center-text t
  visual-fill-column-width 100)
 (setq-default fill-column 100)
-;; Window layout & behavior:3 ends here
+;; Window layout & behavior:2 ends here
 
 ;; [[file:config.org::*Leader][Leader:1]]
 (setq
@@ -231,6 +228,7 @@
 (after! evil
   (map!
    :inmv "C-s" #'evil-write
+   :inmv "C-q" #'evil-delete-buffer
    :inmv "C-j" #'drag-stuff-down
    :inmv "C-k" #'drag-stuff-up))
 ;; Control-bindings:1 ends here

@@ -1,4 +1,3 @@
-mount
     let disks = (    sudo fdisk -l     | lines     | skip until {|x| $x =~ 'Device'}     | take until {|x| $x == ''}     | split column -r \s\s*     | headers    ) # contains disk data in table
 $disks
 sudo fdisk 
@@ -9998,3 +9997,4 @@ emacsclient
 emacsclient  --help | bat --language=man
 emacsclient -r
 emacs --daemon
+emacs --daemon --execute '(doom/reload)'

@@ -90,11 +90,11 @@
 ;; Window layout & behavior:1 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:2]]
-(after! doom
-  (setq-default +popup-defaults ;; HACK: needs setq-default to work
-        '(:side right
-          :width 0.5
-          :modeline t)))
+(set-popup-rule! "\\*.*\\*"
+  :side 'right
+  :width 0.5
+  :modeline t
+  :quit nil)
 ;; Window layout & behavior:2 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:3]]

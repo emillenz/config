@@ -181,8 +181,8 @@
 (defun z/quit ()
   "Save & kill buffer -> quit: window -> tab"
   (interactive)
-  (unless buffer-read-only
-    (basic-save-buffer))
+  (if (buffer-modified-p)
+    (ignore-errors (evil-write nil nil)))
   (condition-case nil
       (kill-buffer-and-window)
     (error

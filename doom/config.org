@@ -128,12 +128,12 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - Constrain popup buffers to consistently, and always ~vsplit~, and have a reasonable size.
   + Never mix vertical with horizontal splitting -> creates mental overhead navigating the windows (+requires another set of totally unneccessary keybindings)
 #+begin_src emacs-lisp
-(setq-default +popup-defaults
-              '(:side right
-                :width 0.33
-                :select nil
-                :quit nil
-                :modeline t))
+(after! doom
+  (set-popup-rule! "\\*.*\\*"
+    :side 'right
+    :width 0.5
+    :modeline t
+    :quit nil))
 #+end_src
 
 - Centered windows for better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).
@@ -186,7 +186,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (after! evil-org
   (map! :localleader
         :map org-mode-map
-        (:prefix ("C" . "code")
+        (:prefix ("c" . "code")
                  "d" #'org-babel-detangle
                  "J" #'org-babel-tangle-jump-to-org
                  "j" #'z/jump-src
@@ -206,8 +206,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   + Instead if needed we can execute oneliners with ~(shell-command)~
 
 #+begin_src emacs-lisp
-;; HACK: ~:inmvorem~ binds globally no matter where you are
-(after! evil
+(after! doom
   (map! :map  'override
         :nvim "M-j"     #'tab-bar-switch-to-prev-tab
         :nvim "M-J"     #'tab-bar-move-tab-backward
@@ -224,8 +223,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         :nvim "M-7"     (cmd! (tab-bar-select-tab 7))
         :nvim "M-8"     (cmd! (tab-bar-select-tab 8))
         :nvim "M-9"     (cmd! (tab-bar-select-tab 9))
-        :nvim "M-TAB"   #'next-window-any-frame
-        :nvim "M-S-TAB" #'previous-window-any-frame
+        :nvim "M-<tab>"   #'next-window-any-frame
+        :nvim "M-S-<tab>" #'previous-window-any-frame
         :nvim "M-q"     #'z/quit
         :nvim "M-Q"     #'save-buffers-kill-terminal
         :nvim "M-o"     #'find-file
@@ -240,32 +239,19 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         :nvim "C--"     #'doom/decrease-font-size
         :nvim "C-="     #'doom/increase-font-size
         :nvim "C-0"     #'doom/reset-font-size))
-
-;; HACK: sverride defaults
-(after! evil-org
-  (map! :map 'override
-        :nvim "M-j" #'tab-bar-switch-to-prev-tab
-        :nvim "M-k" #'tab-bar-switch-to-next-tab))
-
-;; HACK: override defauts
-(after! magit
-  (map! :map 'override
-        :nvim "M-j" #'tab-bar-switch-to-prev-tab
-        :nvim "M-k" #'tab-bar-switch-to-next-tab)
-  )
 #+end_src
 
 - DWIM quit function.
 #+begin_src emacs-lisp
 (defun z/quit ()
-  "Save buffer -> quit (window -> tab -> frame)
-(Doesn't kill emacs daemon.)"
+  "Save & kill buffer -> quit: window -> tab"
   (interactive)
-  (when (buffer-modified-p)
-    (condition-case nil (evil-write nil nil)
-      (error)))
-  (condition-case nil (evil-window-delete)
-       (error (delete-frame))))
+  (unless buffer-read-only
+    (basic-save-buffer))
+  (condition-case nil
+      (kill-buffer-and-window)
+    (error
+     (tab-bar-close-tab))))
 #+end_src
 
 ** Evil-mode
@@ -299,7 +285,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
    :nmvo "j"   #'evil-next-visual-line
    :nmvo "k"   #'evil-previous-visual-line
 
-   :nm   "TAB" #'+fold/toggle ;; taken from org-mode
+   :nm   "TAB" #'+fold/toggle ;; inspired bby org-modes folding
 
    :nmv  "U"   #'evil-redo
    :nmv  "Q"   #'evil-execute-last-recorded-macro
@@ -323,16 +309,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
    :nmv  "g/"  #'+default/search-buffer))
 #+end_src
 
-** Alignment
-- Implement aliging keywords in multiple lines as one vertical column via either a char or regex (press ~/~ char).
-- "Stronger indentation" => ~g</>~
-#+begin_src emacs-lisp
-(after! evil
-  (map!
-   :nmv "g<" #'evil-lion-left
-   :nmv "g>" #'evil-lion-right))
-#+end_src
-
 ** Control-bindings
 - Ctrl-bindings are for: Screen movements
   + jumplist-jumps
@@ -343,7 +319,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (after! evil
   (map!
    :inmv "C-s" #'evil-write
-   :inmv "C-q" (cmd! (when (buffer-modified-p) (condition-case nil (evil-write nil nil) (error))) (kill-buffer-and-window))
    :inmv "C-j" #'drag-stuff-down
    :inmv "C-k" #'drag-stuff-up))
 #+end_src
@@ -370,6 +345,16 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
   (map!
    :nmv "`" #'evil-surround-region
    :nmv "`" #'evil-surround-region))
+#+end_src
+
+** Alignment
+- Implement aliging keywords in multiple lines as one vertical column via either a char or regex (press ~/~ char).
+- "Stronger indentation" => ~g</>~
+#+begin_src emacs-lisp
+(after! evil
+  (map!
+   :nmv "g<" #'evil-lion-left
+   :nmv "g>" #'evil-lion-right))
 #+end_src
 
 ** Org mode
@@ -858,7 +843,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 - Use org-clock to track the time spent on tasks / projects.
 
 ** Faces
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle no :tangle no
   (custom-set-faces!
     '(org-todo               :weight bold   :height 1.0)
     '(org-checkbox           :weight bold   :height 1.0)
@@ -1096,9 +1081,7 @@ End the "(after! org" block
   + Runs it as if interactive (all settings, scripts loaded)
 - display =cwd= in shell-prompt.
 #+begin_src emacs-lisp
-(setq
- shell-command-prompt-show-cwd t
- )
+(setq shell-command-prompt-show-cwd t)
 #+end_src
 
 * [?] Under review

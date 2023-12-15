@@ -90,12 +90,12 @@
 ;; Window layout & behavior:1 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:2]]
-(setq-default +popup-defaults
-              '(:side right
-                :width 0.33
-                :select nil
-                :quit nil
-                :modeline t))
+(after! doom
+  (set-popup-rule! "\\*.*\\*"
+    :side 'right
+    :width 0.5
+    :modeline t
+    :quit nil))
 ;; Window layout & behavior:2 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:3]]
@@ -134,7 +134,7 @@
 (after! evil-org
   (map! :localleader
         :map org-mode-map
-        (:prefix ("C" . "code")
+        (:prefix ("c" . "code")
                  "d" #'org-babel-detangle
                  "J" #'org-babel-tangle-jump-to-org
                  "j" #'z/jump-src
@@ -143,8 +143,7 @@
 ;; Leader:1 ends here
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:1]]
-;; HACK: ~:inmvorem~ binds globally no matter where you are
-(after! evil
+(after! doom
   (map! :map  'override
         :nvim "M-j"     #'tab-bar-switch-to-prev-tab
         :nvim "M-J"     #'tab-bar-move-tab-backward
@@ -161,8 +160,8 @@
         :nvim "M-7"     (cmd! (tab-bar-select-tab 7))
         :nvim "M-8"     (cmd! (tab-bar-select-tab 8))
         :nvim "M-9"     (cmd! (tab-bar-select-tab 9))
-        :nvim "M-TAB"   #'next-window-any-frame
-        :nvim "M-S-TAB" #'previous-window-any-frame
+        :nvim "M-<tab>"   #'next-window-any-frame
+        :nvim "M-S-<tab>" #'previous-window-any-frame
         :nvim "M-q"     #'z/quit
         :nvim "M-Q"     #'save-buffers-kill-terminal
         :nvim "M-o"     #'find-file
@@ -177,31 +176,18 @@
         :nvim "C--"     #'doom/decrease-font-size
         :nvim "C-="     #'doom/increase-font-size
         :nvim "C-0"     #'doom/reset-font-size))
-
-;; HACK: sverride defaults
-(after! evil-org
-  (map! :map 'override
-        :nvim "M-j" #'tab-bar-switch-to-prev-tab
-        :nvim "M-k" #'tab-bar-switch-to-next-tab))
-
-;; HACK: override defauts
-(after! magit
-  (map! :map 'override
-        :nvim "M-j" #'tab-bar-switch-to-prev-tab
-        :nvim "M-k" #'tab-bar-switch-to-next-tab)
-  )
 ;; Global navigation scheme:1 ends here
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:2]]
 (defun z/quit ()
-  "Save buffer -> quit (window -> tab -> frame)
-(Doesn't kill emacs daemon.)"
+  "Save & kill buffer -> quit: window -> tab"
   (interactive)
-  (when (buffer-modified-p)
-    (condition-case nil (evil-write nil nil)
-      (error)))
-  (condition-case nil (evil-window-delete)
-       (error (delete-frame))))
+  (unless buffer-read-only
+    (basic-save-buffer))
+  (condition-case nil
+      (kill-buffer-and-window)
+    (error
+     (tab-bar-close-tab))))
 ;; Global navigation scheme:2 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
@@ -215,7 +201,7 @@
    :nmvo "j"   #'evil-next-visual-line
    :nmvo "k"   #'evil-previous-visual-line
 
-   :nm   "TAB" #'+fold/toggle ;; taken from org-mode
+   :nm   "TAB" #'+fold/toggle ;; inspired bby org-modes folding
 
    :nmv  "U"   #'evil-redo
    :nmv  "Q"   #'evil-execute-last-recorded-macro
@@ -239,18 +225,10 @@
    :nmv  "g/"  #'+default/search-buffer))
 ;; Evil-mode:1 ends here
 
-;; [[file:config.org::*Alignment][Alignment:1]]
-(after! evil
-  (map!
-   :nmv "g<" #'evil-lion-left
-   :nmv "g>" #'evil-lion-right))
-;; Alignment:1 ends here
-
 ;; [[file:config.org::*Control-bindings][Control-bindings:1]]
 (after! evil
   (map!
    :inmv "C-s" #'evil-write
-   :inmv "C-q" (cmd! (when (buffer-modified-p) (condition-case nil (evil-write nil nil) (error))) (kill-buffer-and-window))
    :inmv "C-j" #'drag-stuff-down
    :inmv "C-k" #'drag-stuff-up))
 ;; Control-bindings:1 ends here
@@ -270,6 +248,13 @@
    :nmv "`" #'evil-surround-region
    :nmv "`" #'evil-surround-region))
 ;; Evil surround operator:1 ends here
+
+;; [[file:config.org::*Alignment][Alignment:1]]
+(after! evil
+  (map!
+   :nmv "g<" #'evil-lion-left
+   :nmv "g>" #'evil-lion-right))
+;; Alignment:1 ends here
 
 ;; [[file:config.org::*Org mode][Org mode:1]]
 (after! evil-org
@@ -780,7 +765,5 @@ Jumps at tangled code from org src block."
 ;; Command-line: nushell:1 ends here
 
 ;; [[file:config.org::*Command-line: nushell][Command-line: nushell:2]]
-(setq
- shell-command-prompt-show-cwd t
- )
+(setq shell-command-prompt-show-cwd t)
 ;; Command-line: nushell:2 ends here

@@ -197,7 +197,7 @@ Today, many aspects of daily computer usage are split between different applicat
 - Compressing the stages of a project — a more centralised workflow can progress with greater ease
 - Integration between tasks previously relegated to different applications, but with a common subject — e.g. linking to an email in a to-do list etc
 - Emacs can be thought of as a platform within which various elements of your workflow may settle, while being able to interlink them interactively.
-- Reduced context-switching, many tools in one connected, coherent, interwoven keyboard-driven (everywhere the same bindings) interface, EX:
+- Reduced context-switching, many tools in one connected, coherent, interwoven keyboard-driven interface. This integration is very efficient and consistent, since now any function can be reused in all tools (eg. fuzzy finding, and doesn't have to be implemented in each separate program itself). It greatly reduces the mental overhead needed to customize and extend the tools, since the context and language is always the same. Since these tools are text-centric, they align withthe single focus, no multitasking buffer wokflow philosophy.
   + editor:
     + technical Documents
     + academic papers
@@ -212,9 +212,8 @@ Today, many aspects of daily computer usage are split between different applicat
   + Agenda
   + Emailclient
   + Todolist
-  + Filemanager
+  + Filemanager (very efficient and extensible to keep the workflow dry)
   + Manpager
-  + email
   + file/dir navigation & management: Find-file, fuzzy-find, (book)marks, dired
     + the most efficient workflow for finding, opening and editing files on the os that i have ever developed.
 

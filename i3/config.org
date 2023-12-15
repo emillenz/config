@@ -91,7 +91,7 @@ bindsym XF86AudioMute         exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 #+begin_src conf
 bindsym Print                 exec ~/.config/bin/screenshot
-bindsym $mod+shift+equal      exec playerctl play-pause
+bindsym $mod+backslash        exec playerctl play-pause
 bindsym $mod+bracketright     exec playerctl next
 bindsym $mod+bracketleft      exec playerctl previous
 bindsym $mod+0                exec pactl set-sink-mute @DEFAULT_SINK@ toggle
@@ -244,13 +244,13 @@ mode "$open" {
     ; mode "default"
 
   bindsym $mod+shift+e --release exec \
-    emacsclient --eval '(emacs-everywhere)' & \
+    emacsclient --execute--eval '(emacs-everywhere)' & \
     ; mode "default"
 
   bindsym $mod+e exec \
     i3-msg '[class=(?i)emacs] focus' \
     || emacsclient --reuse-frame \
-    || emacs --daemon --execute '(doom/reload)' & \
+    || emacs --daemon & \
     ; mode "default"
 
   bindsym $mod+w exec \

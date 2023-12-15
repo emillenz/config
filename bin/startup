@@ -17,7 +17,7 @@ def main [] {
     "keepassxc"
     "syncthing"
     "tmux new-session -s 'cmd'"
-    "emacs --bg-daemon --execute '(doom/reload)'"
+    "emacs --bg-daemon"
     "unclutter"
     "xsetroot -solid '#002b36'" # solarized_dark: #002b36; solarized_light: #F2E6CE
     "xset dpms 0 0 0"

@@ -90,11 +90,18 @@
 ;; Window layout & behavior:1 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:2]]
+(plist-put! +popup-defaults :modeline t)
+
+(after! org
+  (setq org-src-window-setup 'current-window)
+  (set-popup-rule! "^\\*Org Src" :ignore t))
+
 (set-popup-rule! "\\*.*\\*"
   :side 'right
-  :width 0.5
+  :width 0.33
   :modeline t
-  :quit nil)
+  :quit nil
+  :select nil)
 ;; Window layout & behavior:2 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:3]]
@@ -144,7 +151,11 @@
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:1]]
 (after! doom
   (map! :map  'override
+        :nvim "M-j"     #'previous-window-any-frame
+        :nvim "M-k"     #'next-window-any-frame
         :nvim "M-t"     #'tab-bar-new-tab-to
+        :nvim "M-q"     #'z/quit
+        :nvim "M-Q"     #'save-buffers-kill-terminal
         :nvmi "M-z"     #'+popup/toggle
         :nvim "M-1"     (cmd! (tab-bar-select-tab 1))
         :nvim "M-2"     (cmd! (tab-bar-select-tab 2))
@@ -155,10 +166,6 @@
         :nvim "M-7"     (cmd! (tab-bar-select-tab 7))
         :nvim "M-8"     (cmd! (tab-bar-select-tab 8))
         :nvim "M-9"     (cmd! (tab-bar-select-tab 9))
-        :nvim "M-<tab>"   #'next-window-any-frame
-        :nvim "M-S-<tab>" #'previous-window-any-frame
-        :nvim "M-q"     #'z/quit
-        :nvim "M-Q"     #'save-buffers-kill-terminal
         :nvim "M-o"     #'find-file
         :nvim "M-f"     #'consult-find
         :nvim "M-F"     (cmd! (consult-find "~"))
@@ -259,7 +266,11 @@
         :inmv "S-RET" #'org-meta-return
         :inmv "C-RET" #'+org/insert-item-below
         :nmvo "H"     #'evil-org-beginning-of-line
-        :nmvo "L"     #'evil-org-end-of-line)
+        :nmvo "L"     #'evil-org-end-of-line
+        :inmv "C-j"   #'org-metadown
+        :inmv "C-k"   #'org-metaup
+        :inmv "C-h"   #'org-metaleft
+        :inmv "C-l"   #'org-metaright))
 
 (after! org-mode
   (map! :localleader

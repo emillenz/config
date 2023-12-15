@@ -115,8 +115,10 @@ bindsym XF86MonBrightnessDown exec sudo xbacklight -5
 - If you absolutely need to use a split toggle it.
   + Without splits we need no keybindings for resizing, for splitting (less complexity and overhead)...
 #+begin_src conf
-bindsym $mod+Tab        focus next
-bindsym $mod+k          focus prev
+bindsym $mod+j          focus prev
+bindsym $mod+shift+j    move left
+bindsym $mod+k          focus next
+bindsym $mod+shift+k    move right
 bindsym $mod+q          kill
 bindsym $mod+f          exec rofi -show drun
 bindsym $mod+g          exec rofi -show window

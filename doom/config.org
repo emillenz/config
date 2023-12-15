@@ -128,11 +128,18 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - Constrain popup buffers to consistently, and always ~vsplit~, and have a reasonable size.
   + Never mix vertical with horizontal splitting -> creates mental overhead navigating the windows (+requires another set of totally unneccessary keybindings)
 #+begin_src emacs-lisp
+(plist-put! +popup-defaults :modeline t)
+
+(after! org
+  (setq org-src-window-setup 'current-window)
+  (set-popup-rule! "^\\*Org Src" :ignore t))
+
 (set-popup-rule! "\\*.*\\*"
   :side 'right
-  :width 0.5
+  :width 0.33
   :modeline t
-  :quit nil)
+  :quit nil
+  :select nil)
 #+end_src
 
 - Centered windows for better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).
@@ -207,7 +214,11 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+begin_src emacs-lisp
 (after! doom
   (map! :map  'override
+        :nvim "M-j"     #'previous-window-any-frame
+        :nvim "M-k"     #'next-window-any-frame
         :nvim "M-t"     #'tab-bar-new-tab-to
+        :nvim "M-q"     #'z/quit
+        :nvim "M-Q"     #'save-buffers-kill-terminal
         :nvmi "M-z"     #'+popup/toggle
         :nvim "M-1"     (cmd! (tab-bar-select-tab 1))
         :nvim "M-2"     (cmd! (tab-bar-select-tab 2))
@@ -218,10 +229,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         :nvim "M-7"     (cmd! (tab-bar-select-tab 7))
         :nvim "M-8"     (cmd! (tab-bar-select-tab 8))
         :nvim "M-9"     (cmd! (tab-bar-select-tab 9))
-        :nvim "M-<tab>"   #'next-window-any-frame
-        :nvim "M-S-<tab>" #'previous-window-any-frame
-        :nvim "M-q"     #'z/quit
-        :nvim "M-Q"     #'save-buffers-kill-terminal
         :nvim "M-o"     #'find-file
         :nvim "M-f"     #'consult-find
         :nvim "M-F"     (cmd! (consult-find "~"))
@@ -361,7 +368,11 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
         :inmv "S-RET" #'org-meta-return
         :inmv "C-RET" #'+org/insert-item-below
         :nmvo "H"     #'evil-org-beginning-of-line
-        :nmvo "L"     #'evil-org-end-of-line)
+        :nmvo "L"     #'evil-org-end-of-line
+        :inmv "C-j"   #'org-metadown
+        :inmv "C-k"   #'org-metaup
+        :inmv "C-h"   #'org-metaleft
+        :inmv "C-l"   #'org-metaright))
 
 (after! org-mode
   (map! :localleader

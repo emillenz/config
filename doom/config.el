@@ -107,7 +107,7 @@
 ;; Window layout & behavior:1 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:2]]
-;; NOTE: not prog mode -> breaks with
+;; NOTE: not prog mode -> breaks with flychecking
 (add-hook!
  '(text-mode-hook
    dired-mode-hook
@@ -184,7 +184,8 @@
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:2]]
 (defun z/quit ()
-  "Save & kill buffer -> quit: window -> tab"
+  "Tabs-workflow DWIM quitting.
+Save & kill buffer -> quit: window -> tab"
   (interactive)
   (if (buffer-modified-p)
       (ignore-errors (evil-write nil nil)))
@@ -196,6 +197,13 @@
        (error
         (delete-frame))))))
 ;; Global navigation scheme:2 ends here
+
+;; [[file:config.org::*Global navigation scheme][Global navigation scheme:3]]
+(defadvice! z/newtab (fn &rest args)
+  "Open new file-buffers in a new tab when ( for maximized-tabs-workflow)."
+  :before #'find-file
+  (tab-bar-new-tab-to))
+;; Global navigation scheme:3 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
 (after! evil
@@ -478,7 +486,7 @@
  org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
  org-superstar-item-bullet-alist
  '((?-  . "─")
-   (?* . "─") ;; NOTE: bullets always made with dashes
+   (?* . "─") ;; NOTE: never use these, asteriks are for headings only => no unambigiuity
    (?+ . "→")))
 ;; Symbols:1 ends here
 
@@ -576,7 +584,7 @@
 
 ;; [[file:config.org::*Agenda][Agenda:2]]
 (setq
- org-agenda-scheduled-leaders '("─────" "←%3dd")
+ org-agenda-scheduled-leaders '("─────" "→%3dd")
  org-agenda-deadline-leaders '("━━━━━" "⇒%3dd" "⇐%3dd")
  org-agenda-todo-keyword-format "%-3s"
  org-agenda-prefix-format
@@ -673,68 +681,70 @@ Jumps at tangled code from org src block."
 ;; Jump to src file:2 ends here
 
 ;; [[file:config.org::*Capture templates][Capture templates:1]]
-(setq
- org-capture-templates
- (doct
-  '((:group "default-opts"
-     :headline "inbox"
-     :prepend t
-     :clock-keep t
+(after! org
+  (setq
+   org-capture-templates
+   (doct
+    '((:group "default-opts"
+       :headline "inbox"
+       :prepend t
+       :clock-keep t
 
-     :children
-     (("task" :keys "t"
-       :template
-       ("* [ ] %^{title} %? %^g") ;; NOTE: not putting final insert on newline -> create no newlines for tasks if not specifically wanted
        :children
-       (("cs"   :keys "c" :file "cs/tasks.org"
+       (("task" :keys "t"
+         :template
+         ("* [ ] %^{title} %? %^g") ;; NOTE: not putting final insert on newline => tasks are a list and not paragraph
          :children
-         (("la" :keys "l" :olp ("linear algebra" "inbox"))
-          ("ep" :keys "e" :olp ("einfuehrung programmierung" "inbox"))
-          ("dm" :keys "d" :olp ("discrete math" "inbox"))
-          ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox"))))
-        ("personal" :keys "p" :file "personal/tasks.org")
-        ("compass"  :keys "s" :file "compass/tasks.org")
-        ("config"   :keys "o" :file "config/tasks.org")))
+         (("cs"   :keys "c" :file "cs/tasks.org"
+           :children
+           (("la" :keys "l" :olp ("linear algebra" "inbox"))
+            ("ep" :keys "e" :olp ("einfuehrung programmierung" "inbox"))
+            ("dm" :keys "d" :olp ("discrete math" "inbox"))
+            ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox"))))
+          ("personal" :keys "p" :file "personal/tasks.org")
+          ("compass"  :keys "s" :file "compass/tasks.org")
+          ("config"   :keys "o" :file "config/tasks.org")))
 
-      ("event" :keys "e"
-       :template
-       ("* [#] %^{title} %^g"
-        "%^t"
-        "LOCATION: %^{location}"
-        "PRE: %^{pre}%?"
-        )
-       :children
-       (("cs"       :keys "c" :file "cs/events.org")
-        ("personal" :keys "p" :file "personal/events.org")))
-
-      ("note" :keys "n"
-       :template
-       ("* %^{title} %^g"
-        ":PROPERTIES:"
-        ":CREATED: %U"
-        ":END:"
-        "%?")
-       :empty-lines-after 1
-       :children
-       (("cs"       :keys "c"
+        ("event" :keys "e"
+         :template
+         ("* [#] %^{title} %^g"
+          "%^t"
+          "LOCATION: %^{location}"
+          "PRE: %^{pre}%?"
+          )
          :children
-         (("la" :keys "l" :file "cs/la/notes.org")
-          ("ep" :keys "e" :file "cs/ep/notes.org")
-          ("dm" :keys "d" :file "cs/dm/notes.org")
-          ("ad" :keys "a" :file "cs/ad/notes.org")))
-        ("personal" :keys "p" :file "personal/notes.org")
-        ("compass"  :keys "s" :file "compass/notes.org")
-        ("config"   :keys "o" :file "config/notes.org")))
+         (("cs"       :keys "c" :file "cs/events.org")
+          ("personal" :keys "p" :file "personal/events.org")))
 
-      ("journal" :keys "j"
-       :template
-       ("* %^{title} %^g"
-        ":PROPERTIES:"
-        ":CREATED: %U"
-        ":END:"
-        "%?")
-       :empty-lines-after 1
-       :children ("personal" :keys "p" :file "personal/journal.org")))))))
+        ("note" :keys "n"
+         :template
+         ("* %^{title} %^g"
+          ":PROPERTIES:"
+          ":CREATED: %U"
+          ":END:"
+          "%?")
+         :empty-lines-after 1
+         :children
+         (("cs"       :keys "c"
+           :children
+           (("la" :keys "l" :file "cs/la/notes.org")
+            ("ep" :keys "e" :file "cs/ep/notes.org")
+            ("dm" :keys "d" :file "cs/dm/notes.org")
+            ("ad" :keys "a" :file "cs/ad/notes.org")))
+          ("personal" :keys "p" :file "personal/notes.org")
+          ("compass"  :keys "s" :file "compass/notes.org")
+          ("config"   :keys "o" :file "config/notes.org")))
+
+        ("journal" :keys "j"
+         :template
+         ("* %^{title} %^g"
+          ":PROPERTIES:"
+          ":CREATED: %U"
+          ":END:"
+          "%?")
+         :empty-lines-after 1
+         :children ("personal" :keys "p" :file "personal/journal.org")))))))
+  )
 ;; Capture templates:1 ends here
 
 ;; [[file:config.org::*Programming mode][Programming mode:1]]

@@ -153,7 +153,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   + Take math for example, its easier to read equations if they are on newline
   + Coding: typically one statement per line
 #+begin_src emacs-lisp
-;; NOTE: not prog mode -> breaks with
+;; NOTE: not prog mode -> breaks with flychecking
 (add-hook!
  '(text-mode-hook
    dired-mode-hook
@@ -245,10 +245,10 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         :nvim "C-0"     #'doom/reset-font-size))
 #+end_src
 
-- DWIM quit function.
 #+begin_src emacs-lisp
 (defun z/quit ()
-  "Save & kill buffer -> quit: window -> tab"
+  "Tabs-workflow DWIM quitting.
+Save & kill buffer -> quit: window -> tab"
   (interactive)
   (if (buffer-modified-p)
       (ignore-errors (evil-write nil nil)))
@@ -259,6 +259,13 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
          (tab-bar-close-tab)
        (error
         (delete-frame))))))
+#+end_src
+
+#+begin_src emacs-lisp
+(defadvice! z/newtab (fn &rest args)
+  "Open new file-buffers in a new tab when ( for maximized-tabs-workflow)."
+  :before #'find-file
+  (tab-bar-new-tab-to))
 #+end_src
 
 ** Evil-mode
@@ -617,13 +624,12 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
  org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
  org-superstar-item-bullet-alist
  '((?-  . "─")
-   (?* . "─") ;; NOTE: bullets always made with dashes
+   (?* . "─") ;; NOTE: never use these, asteriks are for headings only => no unambigiuity
    (?+ . "→")))
-
 #+end_src
 
 ** Ligatures
-- I use concise notation -> make it look coherent and take up less space.
+- I use concise, functional notation alot -> make it look coherent.
 #+begin_src emacs-lisp
 (setq-default prettify-symbols-alist
               '(("->" . "→")
@@ -785,7 +791,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 - Set more concise & informing ~deadline~ & ~scheduled~ strings
 #+begin_src emacs-lisp
   (setq
-   org-agenda-scheduled-leaders '("─────" "←%3dd")
+   org-agenda-scheduled-leaders '("─────" "→%3dd")
    org-agenda-deadline-leaders '("━━━━━" "⇒%3dd" "⇐%3dd")
    org-agenda-todo-keyword-format "%-3s"
    org-agenda-prefix-format
@@ -965,74 +971,76 @@ End the "(after! org" block
 - Capture templates are used to collect & capture notes, events, tasks and your daily reflection journal structured, tagged, sorted into a specific file.
 - This is very customizeable allows you to setup complex templates. (ex: insert into table)
 - Use the heading: ~Inbox~ for collecting the captured items -> might want to review/refile these items later.
-- For each project there is a separate folder (relative to org-dir) with:
+- For each project there is a separate folder (relative to org-dir) with files:
   + tasks
-  + events
   + notes
+  + (events) (can be defined in more general events file)
 
 #+begin_src emacs-lisp
-(setq
- org-capture-templates
- (doct
-  '((:group "default-opts"
-     :headline "inbox"
-     :prepend t
-     :clock-keep t
+(after! org
+  (setq
+   org-capture-templates
+   (doct
+    '((:group "default-opts"
+       :headline "inbox"
+       :prepend t
+       :clock-keep t
 
-     :children
-     (("task" :keys "t"
-       :template
-       ("* [ ] %^{title} %? %^g") ;; NOTE: not putting final insert on newline -> create no newlines for tasks if not specifically wanted
        :children
-       (("cs"   :keys "c" :file "cs/tasks.org"
+       (("task" :keys "t"
+         :template
+         ("* [ ] %^{title} %? %^g") ;; NOTE: not putting final insert on newline => tasks are a list and not paragraph
          :children
-         (("la" :keys "l" :olp ("linear algebra" "inbox"))
-          ("ep" :keys "e" :olp ("einfuehrung programmierung" "inbox"))
-          ("dm" :keys "d" :olp ("discrete math" "inbox"))
-          ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox"))))
-        ("personal" :keys "p" :file "personal/tasks.org")
-        ("compass"  :keys "s" :file "compass/tasks.org")
-        ("config"   :keys "o" :file "config/tasks.org")))
+         (("cs"   :keys "c" :file "cs/tasks.org"
+           :children
+           (("la" :keys "l" :olp ("linear algebra" "inbox"))
+            ("ep" :keys "e" :olp ("einfuehrung programmierung" "inbox"))
+            ("dm" :keys "d" :olp ("discrete math" "inbox"))
+            ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox"))))
+          ("personal" :keys "p" :file "personal/tasks.org")
+          ("compass"  :keys "s" :file "compass/tasks.org")
+          ("config"   :keys "o" :file "config/tasks.org")))
 
-      ("event" :keys "e"
-       :template
-       ("* [#] %^{title} %^g"
-        "%^t"
-        "LOCATION: %^{location}"
-        "PRE: %^{pre}%?"
-        )
-       :children
-       (("cs"       :keys "c" :file "cs/events.org")
-        ("personal" :keys "p" :file "personal/events.org")))
-
-      ("note" :keys "n"
-       :template
-       ("* %^{title} %^g"
-        ":PROPERTIES:"
-        ":CREATED: %U"
-        ":END:"
-        "%?")
-       :empty-lines-after 1
-       :children
-       (("cs"       :keys "c"
+        ("event" :keys "e"
+         :template
+         ("* [#] %^{title} %^g"
+          "%^t"
+          "LOCATION: %^{location}"
+          "PRE: %^{pre}%?"
+          )
          :children
-         (("la" :keys "l" :file "cs/la/notes.org")
-          ("ep" :keys "e" :file "cs/ep/notes.org")
-          ("dm" :keys "d" :file "cs/dm/notes.org")
-          ("ad" :keys "a" :file "cs/ad/notes.org")))
-        ("personal" :keys "p" :file "personal/notes.org")
-        ("compass"  :keys "s" :file "compass/notes.org")
-        ("config"   :keys "o" :file "config/notes.org")))
+         (("cs"       :keys "c" :file "cs/events.org")
+          ("personal" :keys "p" :file "personal/events.org")))
 
-      ("journal" :keys "j"
-       :template
-       ("* %^{title} %^g"
-        ":PROPERTIES:"
-        ":CREATED: %U"
-        ":END:"
-        "%?")
-       :empty-lines-after 1
-       :children ("personal" :keys "p" :file "personal/journal.org")))))))
+        ("note" :keys "n"
+         :template
+         ("* %^{title} %^g"
+          ":PROPERTIES:"
+          ":CREATED: %U"
+          ":END:"
+          "%?")
+         :empty-lines-after 1
+         :children
+         (("cs"       :keys "c"
+           :children
+           (("la" :keys "l" :file "cs/la/notes.org")
+            ("ep" :keys "e" :file "cs/ep/notes.org")
+            ("dm" :keys "d" :file "cs/dm/notes.org")
+            ("ad" :keys "a" :file "cs/ad/notes.org")))
+          ("personal" :keys "p" :file "personal/notes.org")
+          ("compass"  :keys "s" :file "compass/notes.org")
+          ("config"   :keys "o" :file "config/notes.org")))
+
+        ("journal" :keys "j"
+         :template
+         ("* %^{title} %^g"
+          ":PROPERTIES:"
+          ":CREATED: %U"
+          ":END:"
+          "%?")
+         :empty-lines-after 1
+         :children ("personal" :keys "p" :file "personal/journal.org")))))))
+  )
 #+end_src
 
 * Programming mode

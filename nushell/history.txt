@@ -1,48 +1,3 @@
-    let disks = (    sudo fdisk -l     | lines     | skip until {|x| $x =~ 'Device'}     | take until {|x| $x == ''}     | split column -r \s\s*     | headers    ) # contains disk data in table
-$disks
-sudo fdisk 
-sudo fdisk -l
-$disks
-$disks.Device
-$disks.Device | str join "\n" | rofi -dmenu -p "Choose disk to mount: "
-$disks.Type | str join "\n" | rofi -dmenu -p "Choose disk to mount: "
-$disks | str join "\n" | rofi -dmenu -p "Choose disk to mount: "
-read -h | bat
-read  -h | bat
-read --help
-input  -h | bat
-Choose Disk \(1..($disks |length)\): 
-print "Choose Disk \(1..($disks |length)\): "
-print $"Choose Disk \(1..($disks |length)\): "
-$disks
-mount 
-    let disks = (    sudo fdisk -l     | lines     | skip until {|x| $x =~ 'Device'}     | take until {|x| $x == ''}     | split column -r \s\s*     | headers    ) # contains disk data in table    print $disks
-    let disks = (<\n>    sudo fdisk -l <\n>    | lines <\n>    | skip until {|x| $x =~ 'Device'} <\n>    | take until {|x| $x == ''} <\n>    | split column -r \s\s* <\n>    | headers<\n>    ) # contains disk data in table<\n>    print $disks
-mnt  -h | bat
-mnt
-mounter
-$disks.1
-mounter
-$disks.1
-$disks | get 1
-mounter
-sudo umount /dev/nvme0n1p4
-sudo umount tmp
-nvim
-e
-dnfs red
-dnfs redshift
-dnfi redshift-gtk
-redshift
-lf
-git status
-git add nushell
-git commit -am 'sync'; git push
-tree \
-tree /
-tree /
-syncthing
-git statu
 git status
 htop
 def tester [inp: string] {<\n>    if $inp == null {<\n>        print "null"<\n>    } else {<\n>        $inp<\n>    }<\n>}
@@ -9998,3 +9953,48 @@ emacsclient  --help | bat --language=man
 emacsclient -r
 emacs --daemon
 emacs --daemon --execute '(doom/reload)'
+ls
+xset dpms force off
+this
+cd /etc/default/
+ls
+nvim keyboard
+setxkbmap  --help | bat --language=man
+man setxkbmap
+sudo nvim keyboard
+cat /usr/share/X11/xkb/rules/base.lst
+cat /usr/share/X11/xkb/rules/base.lst | rg us
+sudo nvim /etc/default/keyboard
+sudo nvim /etc/X11/xorg.conf.d/00-keyboard.conf
+cd ~
+ls
+uptime
+yay
+yay aa
+cd ~
+yay lazygit
+yay fuck
+aa 
+thefuck
+fuck
+thefuck  --help | bat --language=man
+$env 
+$$
+$env | find last
+bat ~/.config/nushell/history.txt
+open ~/.config/nushell/history.txt
+open ~/.config/nushell/history.txt | last 1
+open ~/.config/nushell/history.txt | last 
+open ~/.config/nushell/history.txt | last 1..1
+last  --help | bat --language=man
+open  --help | bat --language=man
+open ~/.config/nushell/history
+open ~/.config/nushell/history | lines | last 1
+open ~/.config/nushell/history.txt | lines | last 1
+open ~/.config/nushell/history.txt | lines
+open ~/.config/nushell/history.txt | lines | last 10
+open ~/.config/nushell/history.txt | lines | last 1
+thefuck asd;lfkj
+thefuvk sd
+thefuck sd
+yay -R thefuck

@@ -145,7 +145,7 @@ $env.config = {
     }
     # viewing in vertical orinentation with transpose
     display_output: {|| if (term size).columns >= 100 {table -e} else {table -e}}
-    command_not_found: {|| null} # replace with source code to return an error message when a command is not found
+    command_not_found: {||} # replace with source code to return an error message when a command is not found
   }
 
   menus: [

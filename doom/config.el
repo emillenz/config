@@ -92,13 +92,18 @@
   (setq org-src-window-setup 'current-window)
   (set-popup-rule! "^\\*Org Src" :ignore t)) ;; HACK: fullscreen window
 
-(plist-put! +popup-defaults :modeline t)
+(setq-default +popup-defaults
+              '(:side right
+                :width 0.33
+                :select nil
+                :quit nil
+                :modeline t))
 
 (after! helpful
-  (set-popup-rule! ".*help.*" :side 'right :width 0.33 :select nil :quit 'current))
+  (set-popup-rule! ".*help.*" :ignore t)) ;; HACK: use defautls
 
 (after! lsp-mode
-  (set-popup-rule! ".*help.*" :side 'right :width 0.33 :select nil :quit 'current))
+  (set-popup-rule! ".*help.*" :ignore t)) ;; HACK: use defautls
 ;; Window layout & behavior:1 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:2]]
@@ -228,14 +233,13 @@
 (after! evil
   (map!
    :inmv "C-s" #'evil-write
-   :inmv "C-q" #'evil-delete-buffer
    :inmv "C-j" #'drag-stuff-down
    :inmv "C-k" #'drag-stuff-up))
 ;; Control-bindings:1 ends here
 
 ;; [[file:config.org::*Instant jumping][Instant jumping:1]]
 (after! evil
-  (map! :map evil-snipe-local-mode-map ;; need to override evil-snipe
+  (map! :map evil-snipe-local-mode-map ;; HACK: need to override evil-snipe
         :nmvo "s" #'evil-avy-goto-char-2-below
         :nmvo "S" #'evil-avy-goto-char-2-above))
 ;; Instant jumping:1 ends here
@@ -472,7 +476,7 @@
  org-superstar-item-bullet-alist
  '((?-  . "─")
    (?* . "─") ;; NOTE: bullets always made with dashes
-   (?+ . "→")))
+   (?+ . "⇒")))
 ;; Symbols:1 ends here
 
 ;; [[file:config.org::*Ligatures][Ligatures:1]]

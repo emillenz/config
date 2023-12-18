@@ -130,13 +130,18 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   (setq org-src-window-setup 'current-window)
   (set-popup-rule! "^\\*Org Src" :ignore t)) ;; HACK: fullscreen window
 
-(plist-put! +popup-defaults :modeline t)
+(setq-default +popup-defaults
+              '(:side right
+                :width 0.33
+                :select nil
+                :quit nil
+                :modeline t))
 
 (after! helpful
-  (set-popup-rule! ".*help.*" :side 'right :width 0.33 :select nil :quit 'current))
+  (set-popup-rule! ".*help.*" :ignore t)) ;; HACK: use defautls
 
 (after! lsp-mode
-  (set-popup-rule! ".*help.*" :side 'right :width 0.33 :select nil :quit 'current))
+  (set-popup-rule! ".*help.*" :ignore t)) ;; HACK: use defautls
 #+end_src
 
 - Centered windows for better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).
@@ -318,17 +323,16 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (after! evil
   (map!
    :inmv "C-s" #'evil-write
-   :inmv "C-q" #'evil-delete-buffer
    :inmv "C-j" #'drag-stuff-down
    :inmv "C-k" #'drag-stuff-up))
 #+end_src
 
 *** Instant jumping
 - Emacs's answer to the mouse (even more efficient)
-- Override the otherwise useless ~s~ key with a precise char jump. No more relative line jumping and then ~f~ or ~t~ jumping inline. Instead just jump to the exact position you need to get to immediately without the mental overhead (of doing both steps).
+- Override the otherwise useless ~s~ key with a precise char jump. No more relative line jumping and then ~f~ or ~t~ jumping inline, or spamming ~ewbhl~. Instead just jump to the exact position you need to get to immediately without the mental overhead (of doing both steps).
 #+begin_src emacs-lisp
 (after! evil
-  (map! :map evil-snipe-local-mode-map ;; need to override evil-snipe
+  (map! :map evil-snipe-local-mode-map ;; HACK: need to override evil-snipe
         :nmvo "s" #'evil-avy-goto-char-2-below
         :nmvo "S" #'evil-avy-goto-char-2-above))
 #+end_src
@@ -611,7 +615,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
  org-superstar-item-bullet-alist
  '((?-  . "─")
    (?* . "─") ;; NOTE: bullets always made with dashes
-   (?+ . "→")))
+   (?+ . "⇒")))
 
 #+end_src
 

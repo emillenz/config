@@ -1,4 +1,4 @@
-#+title:    Doom emacsn config
+#+title:    Doom Emacs Config
 #+author:   Emil Lenz
 #+email:    emillenz@protonmail.com
 #+date:     Tuesday, November 1, 2022
@@ -212,7 +212,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
     + includes minimal bindings for switching and closing splits
 - We never use an integrated terminal (introduces additional complex layers, is slow, bad keybindings, etc...)
   + Instead if needed we can execute oneliners with ~(shell-command)~
-
 #+begin_src emacs-lisp
 (after! doom
   (map! :map  'override
@@ -261,9 +260,11 @@ Save & kill buffer -> quit: window -> tab"
         (delete-frame))))))
 #+end_src
 
+For maximized-tabs-workflow.
+Keep the workflow DRY and automate what you repeatingly do."
 #+begin_src emacs-lisp
 (defadvice! z/newtab (fn &rest args)
-  "Open new file-buffers in a new tab when ( for maximized-tabs-workflow)."
+  "Open new file-buffers in a new tab."
   :before #'find-file
   (tab-bar-new-tab-to))
 #+end_src
@@ -328,7 +329,6 @@ Save & kill buffer -> quit: window -> tab"
   + jumplist-jumps
   + page scrolling
   + screen-scrolling:  ~C-y~ & ~C-e~.
-
 #+begin_src emacs-lisp
 (after! evil
   (map!
@@ -470,7 +470,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 #+end_src
 
 * Lsp & completion
-- Lsp yak-shaves time visibly, so we want it fast and always.
+- Lsp yak-shaves time, hence we want it fast, and enabled most places.
 #+begin_src emacs-lisp
 (after! company
   (setq
@@ -539,7 +539,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
   (dolist (file (dired-get-marked-files))
       (let* ((file (dired-get-filename))
          (dest (concat "~/Archive/" (file-relative-name file "~/"))))
-    (rename-file file dest 1))))
+    (rename-file file dest 1)))) ;; NOTE: "1": propt before overwrite
 #+end_src
 
 * Org Mode
@@ -562,7 +562,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 
 (setq
  org-directory "~/Documents/org"
- org-archive-location "~/Archive/org/%s::" ;; archive based on file path
+ org-archive-location "~/Archive/org/%s::" ;; NOTE: archive based on file path
  org-blank-before-new-entry '((heading . t)
                               (plain-list-item . nil))
  org-use-property-inheritance t
@@ -624,7 +624,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
  org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
  org-superstar-item-bullet-alist
  '((?-  . "─")
-   (?* . "─") ;; NOTE: never use these, asteriks are for headings only => no unambigiuity
+   (?* . "─") ;; NOTE: never use these, asteriks are for headings only -> no unambigiuity
    (?+ . "→")))
 #+end_src
 
@@ -693,15 +693,15 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
   (setq org-todo-keywords
         '((type
            "[#](#)"
-           "[ ](t)"
+           "[ ](t)" ;; HACK: cannot use " " -> [T]odo
            "[?](?!)"
            "[-](-@)"
            "[=](=@)"
            "[&](&@)"
            "|"
-           "[@](d@)"
+           "[@](d@)" ;; HACK: cannot use"@" -> [D]elegated
            "[\\](\\@)"
-           "[x](x!)"))) ;; HACK: cannot use"@"
+           "[x](x!)")))
 #+end_src
 
 - Color coding is done to give sense of importance: Red > orange > green > grey // purple: misc
@@ -725,8 +725,10 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
           ("[X]"  . org-done)))
 #+end_src
 
-- Log to drawer: ~LOG~ // shorter & more sensible than default: ~LOGBOOK~
-- Explain myself if i can't meet a deadline. // take responsibility
+- Log to drawer: ~LOG~
+  + shorter & more sensible than default: ~LOGBOOK~
+- Explain myself if i can't meet a deadline.
+  + take responsibility
 #+begin_src emacs-lisp
   (setq
    org-log-done 'time
@@ -788,7 +790,9 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 #+end_src
 
 Org-agenda by default is a clusterfuck. This will clean it up: cleanly align everything into columns & group items.
-- Set more concise & informing ~deadline~ & ~scheduled~ strings
++ achieve a nce and consistent readeable data-orinetated view
++ all task-states have the same length, otherwise there is no task-keyword alignment.
++ Set more concise & informing ~deadline~ & ~scheduled~ strings
 #+begin_src emacs-lisp
   (setq
    org-agenda-scheduled-leaders '("─────" "→%3dd")
@@ -855,8 +859,9 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 *** Timetracking
 - Use org-clock to track the time spent on tasks / projects.
 
-** Faces
-#+begin_src emacs-lisp :tangle no :tangle no
+** [?] Faces
+- experimental: don't know yet wether enlargin headings is good or bad
+#+begin_src emacs-lisp :tangle no
   (custom-set-faces!
     '(org-todo               :weight bold   :height 1.0)
     '(org-checkbox           :weight bold   :height 1.0)

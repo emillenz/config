@@ -200,7 +200,7 @@ Save & kill buffer -> quit: window -> tab"
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:3]]
 (defadvice! z/newtab (fn &rest args)
-  "Open new file-buffers in a new tab when ( for maximized-tabs-workflow)."
+  "Open new file-buffers in a new tab."
   :before #'find-file
   (tab-bar-new-tab-to))
 ;; Global navigation scheme:3 ends here
@@ -411,7 +411,7 @@ Save & kill buffer -> quit: window -> tab"
   (dolist (file (dired-get-marked-files))
       (let* ((file (dired-get-filename))
          (dest (concat "~/Archive/" (file-relative-name file "~/"))))
-    (rename-file file dest 1))))
+    (rename-file file dest 1)))) ;; NOTE: "1": propt before overwrite
 ;; Archive file:1 ends here
 
 ;; [[file:config.org::*Org Mode][Org Mode:1]]
@@ -427,7 +427,7 @@ Save & kill buffer -> quit: window -> tab"
 
 (setq
  org-directory "~/Documents/org"
- org-archive-location "~/Archive/org/%s::" ;; archive based on file path
+ org-archive-location "~/Archive/org/%s::" ;; NOTE: archive based on file path
  org-blank-before-new-entry '((heading . t)
                               (plain-list-item . nil))
  org-use-property-inheritance t
@@ -486,7 +486,7 @@ Save & kill buffer -> quit: window -> tab"
  org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
  org-superstar-item-bullet-alist
  '((?-  . "─")
-   (?* . "─") ;; NOTE: never use these, asteriks are for headings only => no unambigiuity
+   (?* . "─") ;; NOTE: never use these, asteriks are for headings only -> no unambigiuity
    (?+ . "→")))
 ;; Symbols:1 ends here
 
@@ -502,15 +502,15 @@ Save & kill buffer -> quit: window -> tab"
 (setq org-todo-keywords
       '((type
          "[#](#)"
-         "[ ](t)"
+         "[ ](t)" ;; HACK: cannot use " " -> [T]odo
          "[?](?!)"
          "[-](-@)"
          "[=](=@)"
          "[&](&@)"
          "|"
-         "[@](d@)"
+         "[@](d@)" ;; HACK: cannot use"@" -> [D]elegated
          "[\\](\\@)"
-         "[x](x!)"))) ;; HACK: cannot use"@"
+         "[x](x!)")))
 ;; Task states:1 ends here
 
 ;; [[file:config.org::*Task states][Task states:2]]

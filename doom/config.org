@@ -251,11 +251,14 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   "Save & kill buffer -> quit: window -> tab"
   (interactive)
   (if (buffer-modified-p)
-    (ignore-errors (evil-write nil nil)))
+      (ignore-errors (evil-write nil nil)))
   (condition-case nil
       (kill-buffer-and-window)
     (error
-     (tab-bar-close-tab))))
+     (condition-case nil
+         (tab-bar-close-tab)
+       (error
+        (delete-frame))))))
 #+end_src
 
 ** Evil-mode
@@ -615,7 +618,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
  org-superstar-item-bullet-alist
  '((?-  . "─")
    (?* . "─") ;; NOTE: bullets always made with dashes
-   (?+ . "⇒")))
+   (?+ . "→")))
 
 #+end_src
 

@@ -2,8 +2,8 @@
 # title:	Nushell Config
 # author: Emil Lenz
 # email:	emillenz@protonmail.com
-# date:	 Wednesday, 23 April, 2023
-# info:	 Nushell conifg with safer defaults, and efficient custom keybindings.
+# date:	  Wednesday, 23 April, 2023
+# info:	  Nushell conifg with safer defaults, and efficient custom keybindings.
 # -----
 
 # NOTE: When programming in nushell non-interactively, use the full command-names and long style options in order to make the code scaleable and readeable.

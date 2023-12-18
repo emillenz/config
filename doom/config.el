@@ -187,11 +187,14 @@
   "Save & kill buffer -> quit: window -> tab"
   (interactive)
   (if (buffer-modified-p)
-    (ignore-errors (evil-write nil nil)))
+      (ignore-errors (evil-write nil nil)))
   (condition-case nil
       (kill-buffer-and-window)
     (error
-     (tab-bar-close-tab))))
+     (condition-case nil
+         (tab-bar-close-tab)
+       (error
+        (delete-frame))))))
 ;; Global navigation scheme:2 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
@@ -476,7 +479,7 @@
  org-superstar-item-bullet-alist
  '((?-  . "─")
    (?* . "─") ;; NOTE: bullets always made with dashes
-   (?+ . "⇒")))
+   (?+ . "→")))
 ;; Symbols:1 ends here
 
 ;; [[file:config.org::*Ligatures][Ligatures:1]]

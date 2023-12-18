@@ -38,7 +38,7 @@ def create_left_prompt [] {
   let time = (
     [
     (ansi magenta),
-    (date now | format date '%x %X'),
+    (date now | format date '%F %a %R'),
     (ansi reset),
     ] | str join)
 

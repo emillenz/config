@@ -141,11 +141,11 @@ $env.config = {
     pre_prompt: [ {|| null} ] # replace with source code to run before the prompt is shown
     pre_execution: [ {|| null} ]
     env_change: {
-      PWD: [ {|before, after| null} ] # replace with source code to run if the PWD environment is different since the last repl input
+      PWD: [ {|before, after| ls | get name } ] # replace with source code to run if the PWD environment is different since the last repl input
     }
     # viewing in vertical orinentation with transpose
     display_output: {|| if (term size).columns >= 100 {table -e} else {table -e}}
-    command_not_found: {||} # replace with source code to return an error message when a command is not found
+    command_not_found: {||}
   }
 
   menus: [

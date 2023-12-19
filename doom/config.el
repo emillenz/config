@@ -159,6 +159,7 @@
         :nvim "M-k"     #'next-window-any-frame
         :nvim "M-t"     #'tab-bar-new-tab-to
         :nvim "M-q"     #'z/quit
+        :nvim "C-q"     #'tab-bar-close-tab ;; HACK: needed sometimes
         :nvim "M-Q"     #'save-buffers-kill-terminal
         :nvmi "M-z"     #'+popup/toggle
         :nvim "M-1"     (cmd! (tab-bar-select-tab 1))

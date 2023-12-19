@@ -948,12 +948,12 @@ More convenient, with a nice display.
      :headline "inbox"
      :prepend t
      :clock-keep t
-     :empty-lines-after 1
 
      :children
      (("task" :keys "t"
        :template
-       ("* [ ] %^{title} %? %^g") ;; NOTE: not putting final insert on newline => tasks are a list and not paragraph
+       ("* [ ] %^{title} %^g"
+        "%?") ;; NOTE: not putting final insert on newline => tasks are a list and not paragraph
        :children
        (("cs"   :keys "c" :file "cs/tasks.org"
          :children
@@ -970,7 +970,8 @@ More convenient, with a nice display.
        ("* [#] %^{title} %^g"
         "%^t"
         "LOCATION: %^{location}"
-        "PRE: %^{pre}%?")
+        "PRE: %^{pre}"
+        "%?")
        :children
        (("cs"       :keys "c" :file "cs/events.org")
         ("personal" :keys "p" :file "personal/events.org")))

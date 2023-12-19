@@ -220,8 +220,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         :nvim "M-j"     #'previous-window-any-frame
         :nvim "M-k"     #'next-window-any-frame
         :nvim "M-t"     #'tab-bar-new-tab-to
-        :nvim "M-q"     #'z/quit
-        :nvim "C-q"     #'evil-window-delete ;; HACK: needed sometimes
+        :nvim "M-q"     (cmd! (if (buffer-modified-p) (ignore-errors (evil-write nil nil))) (kill-current-buffer) (tab-bar-close-tab))
+        :nvim "C-q"     #'evil-window-delete
         :nvim "M-Q"     #'save-buffers-kill-terminal
         :nvmi "M-z"     #'+popup/toggle
         :nvim "M-1"     (cmd! (tab-bar-select-tab 1))
@@ -245,22 +245,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         :nvim "C--"     #'doom/decrease-font-size
         :nvim "C-="     #'doom/increase-font-size
         :nvim "C-0"     #'doom/reset-font-size))
-#+end_src
-
-#+begin_src emacs-lisp
-(defun z/quit ()
-  "Tabs-workflow DWIM quitting.
-Save & kill buffer -> quit: window -> tab"
-  (interactive)
-  (if (buffer-modified-p)
-      (ignore-errors (evil-write nil nil)))
-  (condition-case nil
-      (kill-buffer-and-window)
-    (error
-     (condition-case nil
-         (tab-bar-close-tab)
-       (error
-        (delete-frame))))))
 #+end_src
 
 - For maximized-tabs-workflow, open files in new tab to hotswitch immedidately to.
@@ -372,6 +356,21 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
   (map!
    :nmv "g<" #'evil-lion-left
    :nmv "g>" #'evil-lion-right))
+#+end_src
+
+** Org mode
+#+begin_src emacs-lisp
+(after! evil-org
+  (map! :map evil-org-mode-map
+        :nmv "]]"     #'org-forward-heading-same-level
+        :nmv "[["     #'org-backward-heading-same-level
+        :inmv "S-RET" #'org-meta-return
+        :inmv "C-RET" #'+org/insert-item-below
+        :nmvo "^"     #'evil-org-beginning-of-line))
+
+(after! org-mode
+  (map! :localleader
+        "l f"  #'z/org-link-file))
 #+end_src
 
 ** Dired

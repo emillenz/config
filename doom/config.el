@@ -158,8 +158,8 @@
         :nvim "M-j"     #'previous-window-any-frame
         :nvim "M-k"     #'next-window-any-frame
         :nvim "M-t"     #'tab-bar-new-tab-to
-        :nvim "M-q"     #'z/quit
-        :nvim "C-q"     #'evil-window-delete ;; HACK: needed sometimes
+        :nvim "M-q"     (cmd! (if (buffer-modified-p) (ignore-errors (evil-write nil nil))) (kill-current-buffer) (tab-bar-close-tab))
+        :nvim "C-q"     #'evil-window-delete
         :nvim "M-Q"     #'save-buffers-kill-terminal
         :nvmi "M-z"     #'+popup/toggle
         :nvim "M-1"     (cmd! (tab-bar-select-tab 1))
@@ -186,27 +186,11 @@
 ;; Global navigation scheme:1 ends here
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:2]]
-(defun z/quit ()
-  "Tabs-workflow DWIM quitting.
-Save & kill buffer -> quit: window -> tab"
-  (interactive)
-  (if (buffer-modified-p)
-      (ignore-errors (evil-write nil nil)))
-  (condition-case nil
-      (kill-buffer-and-window)
-    (error
-     (condition-case nil
-         (tab-bar-close-tab)
-       (error
-        (delete-frame))))))
-;; Global navigation scheme:2 ends here
-
-;; [[file:config.org::*Global navigation scheme][Global navigation scheme:3]]
 (defadvice! z/newtab (fn &rest args)
   "Open new file-buffers in a new tab."
   :before '(find-file bookmark-jump magit-status)
   (tab-bar-new-tab-to))
-;; Global navigation scheme:3 ends here
+;; Global navigation scheme:2 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
 (after! evil
@@ -270,6 +254,20 @@ Save & kill buffer -> quit: window -> tab"
    :nmv "g<" #'evil-lion-left
    :nmv "g>" #'evil-lion-right))
 ;; Alignment:1 ends here
+
+;; [[file:config.org::*Org mode][Org mode:1]]
+(after! evil-org
+  (map! :map evil-org-mode-map
+        :nmv "]]"     #'org-forward-heading-same-level
+        :nmv "[["     #'org-backward-heading-same-level
+        :inmv "S-RET" #'org-meta-return
+        :inmv "C-RET" #'+org/insert-item-below
+        :nmvo "^"     #'evil-org-beginning-of-line))
+
+(after! org-mode
+  (map! :localleader
+        "l f"  #'z/org-link-file))
+;; Org mode:1 ends here
 
 ;; [[file:config.org::*Dired][Dired:1]]
 (after! dired

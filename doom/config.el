@@ -92,12 +92,14 @@
   (setq org-src-window-setup 'current-window)
   (set-popup-rule! "^\\*Org Src" :ignore t)) ;; HACK: fullscreen window
 
-(setq-default +popup-defaults
-              '(:side right
-                :width 0.33
-                :select nil
-                :quit nil
-                :modeline t))
+(after! doom
+  (setq-default
+   +popup-defaults
+   '(:side right
+     :width 0.33
+     :select nil
+     :quit nil
+     :modeline t)))
 
 (after! helpful
   (set-popup-rule! ".*help.*" :ignore t)) ;; HACK: use defautls
@@ -269,22 +271,7 @@ Save & kill buffer -> quit: window -> tab"
 ;; Alignment:1 ends here
 
 ;; [[file:config.org::*Org mode][Org mode:1]]
-(after! evil-org
-  (map! :map evil-org-mode-map
-        :nmv "]]"     #'org-forward-heading-same-level
-        :nmv "[["     #'org-backward-heading-same-level
-        :inmv "S-RET" #'org-meta-return
-        :inmv "C-RET" #'+org/insert-item-below
-        :nmvo "H"     #'evil-org-beginning-of-line
-        :nmvo "L"     #'evil-org-end-of-line
-        :inmv "C-j"   #'org-metadown
-        :inmv "C-k"   #'org-metaup
-        :inmv "C-h"   #'org-metaleft
-        :inmv "C-l"   #'org-metaright))
-
-(after! org-mode
-  (map! :localleader
-        "l f"  #'z/org-link-file))
+(after! org
 ;; Org mode:1 ends here
 
 ;; [[file:config.org::*Dired][Dired:1]]
@@ -406,9 +393,9 @@ Save & kill buffer -> quit: window -> tab"
 (defun z/dired-archive ()
   (interactive)
   (dolist (file (dired-get-marked-files))
-      (let* ((file (dired-get-filename))
-         (dest (concat "~/Archive/" (file-relative-name file "~/"))))
-    (rename-file file dest 1)))) ;; NOTE: "1": propt before overwrite
+    (let* ((file (dired-get-filename))
+           (dest (concat "~/Archive/" (file-relative-name file "~/"))))
+      (rename-file file dest 1)))) ;; NOTE: "1": propt before overwrite
 ;; Archive file:1 ends here
 
 ;; [[file:config.org::*Org Mode][Org Mode:1]]
@@ -707,8 +694,7 @@ Jumps at tangled code from org src block."
          ("* [#] %^{title} %^g"
           "%^t"
           "LOCATION: %^{location}"
-          "PRE: %^{pre}%?"
-          )
+          "PRE: %^{pre}%?")
          :children
          (("cs"       :keys "c" :file "cs/events.org")
           ("personal" :keys "p" :file "personal/events.org")))
@@ -740,8 +726,7 @@ Jumps at tangled code from org src block."
           ":END:"
           "%?")
          :empty-lines-after 1
-         :children ("personal" :keys "p" :file "personal/journal.org")))))))
-  )
+         :children ("personal" :keys "p" :file "personal/journal.org"))))))))
 ;; Capture templates:1 ends here
 
 ;; [[file:config.org::*Programming mode][Programming mode:1]]
@@ -759,8 +744,7 @@ Jumps at tangled code from org src block."
  standard-indent 2
  tab-width 2
  evil-indent-convert-tabs t
- indent-tabs-mode nil
- )
+ indent-tabs-mode nil)
 ;; Indentation: 2 spaces:1 ends here
 
 ;; [[file:config.org::*Format buffer][Format buffer:1]]

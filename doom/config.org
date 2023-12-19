@@ -130,12 +130,14 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   (setq org-src-window-setup 'current-window)
   (set-popup-rule! "^\\*Org Src" :ignore t)) ;; HACK: fullscreen window
 
-(setq-default +popup-defaults
-              '(:side right
-                :width 0.33
-                :select nil
-                :quit nil
-                :modeline t))
+(after! doom
+  (setq-default
+   +popup-defaults
+   '(:side right
+     :width 0.33
+     :select nil
+     :quit nil
+     :modeline t)))
 
 (after! helpful
   (set-popup-rule! ".*help.*" :ignore t)) ;; HACK: use defautls
@@ -200,6 +202,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
                  "j" #'z/jump-src
                  "t" #'org-babel-tangle
                  "e" #'org-edit-special)))
+
 #+end_src
 
 ** Global navigation scheme
@@ -373,22 +376,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 
 ** Org mode
 #+begin_src emacs-lisp
-(after! evil-org
-  (map! :map evil-org-mode-map
-        :nmv "]]"     #'org-forward-heading-same-level
-        :nmv "[["     #'org-backward-heading-same-level
-        :inmv "S-RET" #'org-meta-return
-        :inmv "C-RET" #'+org/insert-item-below
-        :nmvo "H"     #'evil-org-beginning-of-line
-        :nmvo "L"     #'evil-org-end-of-line
-        :inmv "C-j"   #'org-metadown
-        :inmv "C-k"   #'org-metaup
-        :inmv "C-h"   #'org-metaleft
-        :inmv "C-l"   #'org-metaright))
-
-(after! org-mode
-  (map! :localleader
-        "l f"  #'z/org-link-file))
+(after! org
 #+end_src
 
 ** Dired
@@ -537,9 +525,9 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 (defun z/dired-archive ()
   (interactive)
   (dolist (file (dired-get-marked-files))
-      (let* ((file (dired-get-filename))
-         (dest (concat "~/Archive/" (file-relative-name file "~/"))))
-    (rename-file file dest 1)))) ;; NOTE: "1": propt before overwrite
+    (let* ((file (dired-get-filename))
+           (dest (concat "~/Archive/" (file-relative-name file "~/"))))
+      (rename-file file dest 1)))) ;; NOTE: "1": propt before overwrite
 #+end_src
 
 * Org Mode
@@ -554,88 +542,88 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 - Each file gets its own entry in ~~/Archive/org~
 - Auto-tangle a file after saving (efficient default behavior)
 #+begin_src emacs-lisp
-(add-hook! 'org-mode-hook
-           #'visual-line-mode
-           #'org-num-mode
-           #'org-appear-mode
-           #'org-auto-tangle-mode)
+  (add-hook! 'org-mode-hook
+             #'visual-line-mode
+             #'org-num-mode
+             #'org-appear-mode
+             #'org-auto-tangle-mode)
 
-(setq
- org-directory "~/Documents/org"
- org-archive-location "~/Archive/org/%s::" ;; NOTE: archive based on file path
- org-blank-before-new-entry '((heading . t)
-                              (plain-list-item . nil))
- org-use-property-inheritance t
- org-reverse-note-order t
- org-startup-with-inline-images t
- org-startup-indented t
- org-list-allow-alphabetical t
- org-tags-column 0
- org-fold-catch-invisible-edits 'smart
- org-export-headline-levels 5
- org-refile-use-outline-path 'file
- org-refile-allow-creating-parent-nodes 'confirm
- org-use-sub-superscripts 't
- org-startup-with-inline-images t
- org-fontify-quote-and-verse-blocks t
- org-fontify-whole-block-delimiter-line t
- org-export-with-sub-superscripts '{}
- doom-themes-org-fontify-special-tags t
- org-startup-with-latex-preview nil
- org-insert-heading-respect-content t
- org-M-RET-may-split-line t
- org-ellipsis "…"
- org-num-max-level 3
- org-table-convert-region-max-lines 20000)
+  (setq
+   org-directory "~/Documents/org"
+   org-archive-location "~/Archive/org/%s::" ;; NOTE: archive based on file path
+   org-blank-before-new-entry '((heading . t)
+                                (plain-list-item . nil))
+   org-use-property-inheritance t
+   org-reverse-note-order t
+   org-startup-with-inline-images t
+   org-startup-indented t
+   org-list-allow-alphabetical t
+   org-tags-column 0
+   org-fold-catch-invisible-edits 'smart
+   org-export-headline-levels 5
+   org-refile-use-outline-path 'file
+   org-refile-allow-creating-parent-nodes 'confirm
+   org-use-sub-superscripts 't
+   org-startup-with-inline-images t
+   org-fontify-quote-and-verse-blocks t
+   org-fontify-whole-block-delimiter-line t
+   org-export-with-sub-superscripts '{}
+   doom-themes-org-fontify-special-tags t
+   org-startup-with-latex-preview nil
+   org-insert-heading-respect-content t
+   org-M-RET-may-split-line t
+   org-ellipsis "…"
+   org-num-max-level 3
+   org-table-convert-region-max-lines 20000)
 
-(setq
- org-hide-leading-stars t
- org-appear-autoemphasis t
- org-appear-autosubmarkers t
- org-appear-autolinks t
- org-appear-autoentities t
- org-hide-emphasis-markers t)
+  (setq
+   org-hide-leading-stars t
+   org-appear-autoemphasis t
+   org-appear-autosubmarkers t
+   org-appear-autolinks t
+   org-appear-autoentities t
+   org-hide-emphasis-markers t)
 
-(+org-pretty-mode 1)
+  (+org-pretty-mode 1)
 
-(setq
- org-pretty-entities t
- org-pretty-entities-include-sub-superscripts t)
+  (setq
+   org-pretty-entities t
+   org-pretty-entities-include-sub-superscripts t)
 
-(setq
- org-list-demote-modify-bullet
- '( ("-"  . "+")
-    ("+"  . "+")
-    ("*"  . "+")
-    ("1."  . "a.")
-    ("1)" . "a)")))
+  (setq
+   org-list-demote-modify-bullet
+   '( ("-"  . "+")
+      ("+"  . "+")
+      ("*"  . "+")
+      ("1."  . "a.")
+      ("1)" . "a)")))
 
-(setf org-blank-before-new-entry
-      '((heading          . t)
-        (plain-list-item . nil)))
+  (setf org-blank-before-new-entry
+        '((heading          . t)
+          (plain-list-item . nil)))
 #+end_src
 
 ** Symbols
 - Use Icons to enhance ui readability (has nothing to do with bloat, this is still editeable plaintext (utf8) but greatly improves readability at a glance)
 - Clean up keywords with sybols -> more concise, compact, easier to read, faster at a glance
 #+begin_src emacs-lisp
-(add-hook! 'org-mode-hook #'org-superstar-mode #'prettify-symbols-mode)
-(setq
- org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
- org-superstar-item-bullet-alist
- '((?-  . "─")
-   (?* . "─") ;; NOTE: never use these, asteriks are for headings only -> no unambigiuity
-   (?+ . "→")))
+  (add-hook! 'org-mode-hook #'org-superstar-mode #'prettify-symbols-mode)
+  (setq
+   org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
+   org-superstar-item-bullet-alist
+   '((?-  . "─")
+     (?* . "─") ;; NOTE: never use these, asteriks are for headings only -> no unambigiuity
+     (?+ . "→")))
 #+end_src
 
 ** Ligatures
 - I use concise, functional notation alot -> make it look coherent.
 #+begin_src emacs-lisp
-(setq-default prettify-symbols-alist
-              '(("->" . "→")
-                ("|" . "│")
-                ("=>" . "⇒")
-                ("<=>" . "⇔")))
+  (setq-default prettify-symbols-alist
+                '(("->" . "→")
+                  ("|" . "│")
+                  ("=>" . "⇒")
+                  ("<=>" . "⇔")))
 #+end_src
 
 ** Task states
@@ -749,17 +737,17 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 
 ** Babel
 #+begin_src emacs-lisp
-(setq
- org-babel-default-header-args
- '((:session  . "none")
-   (:results  . "replace")
-   (:exports  . "code")
-   (:cache    . "no")
-   (:noweb    . "no")
-   (:hlines   . "no")
-   (:tangle   . "no")
-   (:mkdirp   . "yes")
-   (:comments . "link")))
+  (setq
+   org-babel-default-header-args
+   '((:session  . "none")
+     (:results  . "replace")
+     (:exports  . "code")
+     (:cache    . "no")
+     (:noweb    . "no")
+     (:hlines   . "no")
+     (:tangle   . "no")
+     (:mkdirp   . "yes")
+     (:comments . "link")))
 #+end_src
 
 ** Agenda
@@ -990,8 +978,7 @@ End the "(after! org" block
          ("* [#] %^{title} %^g"
           "%^t"
           "LOCATION: %^{location}"
-          "PRE: %^{pre}%?"
-          )
+          "PRE: %^{pre}%?")
          :children
          (("cs"       :keys "c" :file "cs/events.org")
           ("personal" :keys "p" :file "personal/events.org")))
@@ -1023,8 +1010,7 @@ End the "(after! org" block
           ":END:"
           "%?")
          :empty-lines-after 1
-         :children ("personal" :keys "p" :file "personal/journal.org")))))))
-  )
+         :children ("personal" :keys "p" :file "personal/journal.org"))))))))
 #+end_src
 
 * Programming mode
@@ -1051,8 +1037,7 @@ End the "(after! org" block
  standard-indent 2
  tab-width 2
  evil-indent-convert-tabs t
- indent-tabs-mode nil
- )
+ indent-tabs-mode nil)
 #+end_src
 
 ** Format buffer
@@ -1108,8 +1093,7 @@ End the "(after! org" block
   standard-indent 2
   tab-width 2
   evil-indent-convert-tabs t
-  indent-tabs-mode nil
-  )
+  indent-tabs-mode nil)
 
 (setq-hook! 'python-mode-hook
   python-indent 2

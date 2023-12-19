@@ -42,8 +42,10 @@ focus_on_window_activation focus
 #+end_src
 
 - Alias for rofi-opts (1:1 expanded during config parsing) (-> used later in config).
+- Alias returning to default mode (shorter)
 #+begin_src conf
 set $rofi rofi -dmenu -i -no-custom -p ' '
+set $esc $esc
 #+end_src
 
 
@@ -161,24 +163,24 @@ for_window [class="(?i)firefox"]                 $moveto $ws_web,   focus
 
 for_window [class="(?i)mpv"]                     $moveto $ws_video, focus
 for_window [class="(?i)nsxiv"]                   $moveto $ws_image, focus
-for_window [class="(?i)firefox" title="ChatGPT"] $moveto $ws_bot,    focus
+for_window [class="(?i)firefox" title="ChatGPT"] $moveto $ws_bot,   focus
 for_window [class="(?i)firefox" title="Spotify"] $moveto $ws_music, focus
 #+end_src
 
 ** Using main
 #+begin_src conf
-workspace $ws_cmd   output primary
-workspace $ws_doc   output primary
-workspace $ws_web   output primary
-workspace $ws_edit  output primary
-workspace $ws_video output primary
-workspace $ws_image output primary
+workspace $ws_cmd   output  primary
+workspace $ws_doc   output  primary
+workspace $ws_web   output  primary
+workspace $ws_edit  output  primary
+workspace $ws_video output  primary
+workspace $ws_image output  primary
 workspace $ws_bot    output primary
-workspace $ws_music output primary
-workspace 1 output primary
-workspace 2 output primary
-workspace 3 output primary
-workspace 4 output primary
+workspace $ws_music output  primary
+workspace 1 output          primary
+workspace 2 output          primary
+workspace 3 output          primary
+workspace 4 output          primary
 #+end_src
 
 
@@ -238,73 +240,73 @@ mode "$open" {
   bindsym $mod+c exec \
     i3-msg '[class="(?i)cmd"] focus' \
     || alacritty --class cmd -T cmd -e tmux new-session -A -s cmd & \
-    ; mode "default"
+    ; $esc
 
   bindsym $mod+d exec \
     xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)" & \
-    ; mode "default"
+    ; $esc
 
   bindsym $mod+shift+e --release exec \
     emacsclient --execute--eval '(emacs-everywhere)' & \
-    ; mode "default"
+    ; $esc
 
   bindsym $mod+e exec \
     i3-msg '[class=(?i)emacs] focus' \
     || emacsclient --reuse-frame \
     || emacs --daemon & \
-    ; mode "default"
+    ; $esc
 
   bindsym $mod+w exec \
     i3-msg '[class=(?i)firefox] focus' \
     || firefox & \
-    ; mode "default"
+    ; $esc
 
   bindsym $mod+v exec \
     i3-msg '[class=(?i)mpv] focus' \
     || mpv $(xclip -o) & \
-    ; mode "default"
+    ; $esc
 
   bindsym $mod+i exec \
     i3-msg '[class="(?i)nsxiv"] focus'\
     || nsxiv & \
-    ; mode "default"
+    ; $esc
 
   bindsym $mod+s exec\
     i3-msg '[class="(?i)keepassxc"] focus"]' \
     || keepassxc & \
-    ; mode "default"
+    ; $esc
 
   # bindsym $mod+m exec \
   #   i3-msg '[class="(?i)ncmpcpp"] focus' \
   #   || alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp & \
-  #   ; mode "default"
+  #   ; $esc
 
     bindsym $mod+m exec \
     i3-msg '[class="(?i)firefox" title="Spotify"] focus' \
     || firefox --new-window https://open.spotify.com \
-    ; mode "default"
+    ; $esc
 
   bindsym $mod+shift+m exec \
     i3-msg '[class="(?i)pulsemixer"] focus' \
     || alacritty --class 'pulsemixer' -T 'audio' -e pulsemixer & \
-    ; mode "default"
+    ; $esc
 
   bindsym $mod+b exec \
     i3-msg '[class="(?i)firefox" title="ChatGPT"] focus' \
     || firefox --new-window https://chat.openai.com \
-    ; mode "default"
+    ; $esc
 
   bindsym $mod+p exec \
     i3-msg '[class="(?i)htop"] focus'\
     || alacritty --class 'htop' -T 'htop' -e htop --tree & \
-    ; mode "default"
+    ; $esc
 
   bindsym $mod+n exec \
     i3-msg '[class="(?i)nmtui"] focus' \
     || alacritty --class 'nmtui' -T 'nmtui' -e nmtui & \
-    ; mode "default"
+    ; $esc
 
-  bindsym Escape mode "default"
+  bindsym Escape $esc
 }
 #+end_src
 
@@ -325,24 +327,24 @@ mode "$leader" {
   bindsym $mod+p mode "$powermenu"
   bindsym $mod+t mode "$timer"
   bindsym $mod+m mode "$menus"
-  bindsym $mod+s exec ~/.config/bin/startup;          mode "default"
-  bindsym Escape mode "default"
+  bindsym $mod+s exec ~/.config/bin/startup; $esc
+  bindsym Escape $esc
 }
 #+end_src
 
 *** Keyboard layout
 - Somtimes i use multiple different keyboard layouts -> switch between them.
-#+begin_src conf
+#+begin_src conf :tangle no
 set $keyboard <keyboard> \
 │ dvorak \
 │ ch \
 │ us
 
 mode "$keyboard" {
-  bindsym $mod+d      exec setxkbmap us dvorak; mode "default"
-  bindsym $mod+c      exec setxkbmap ch;        mode "default"
-  bindsym $mod+u      exec setxkbmap us;        mode "default"
-  bindsym Escape mode "default"
+  bindsym $mod+d      exec setxkbmap us dvorak; $esc
+  bindsym $mod+c      exec setxkbmap ch;        $esc
+  bindsym $mod+u      exec setxkbmap us;        $esc
+  bindsym Escape $esc
 }
 #+end_src
 
@@ -359,20 +361,23 @@ set $powermenu <powermenu> \
 │ hibernate \
 
 mode "$powermenu" {
-  bindsym $mod+r       exec i3-msg restart;                                mode "default"
-  bindsym $mod+e       i3-msg exit;                                        mode "default"
-  bindsym $mod+shift+r exec systemctl reboot;                              mode "default"
-  bindsym $mod+h       exec systemctl hibernate;                           mode "default"
-  bindsym $mod+l       exec i3lock -e --color 002b36 && systemctl suspend; mode "default"
-  bindsym $mod+s       exec xset dpms force off;                           mode "default"
-  bindsym $mod+p       exec systemctl poweroff;                            mode "default"
-  bindsym Escape mode "default"
+  bindsym $mod+r       exec i3-msg restart;                                $esc
+  bindsym $mod+e       i3-msg exit;                                        $esc
+  bindsym $mod+shift+r exec systemctl reboot;                              $esc
+  bindsym $mod+h       exec systemctl hibernate;                           $esc
+  bindsym $mod+l       exec i3lock -e --color 002b36 && systemctl suspend; $esc
+  bindsym $mod+s       exec xset dpms force off;                           $esc
+  bindsym $mod+p       exec systemctl poweroff;                            $esc
+  bindsym Escape $esc
 }
 #+end_src
 
 *** Timer
 This is a simple timer that is displayed in Polybar and is useful to track time spent/to be more efficient and productive with time management.
+- Lower frequency -> less visually distractiong as not ticking down in statusbar
 #+begin_src conf
+set $timer_cmd ~/.config/bin/timer --frequency=1m
+
 set $timer <timer> \
 │ toggle \
 │ reset \
@@ -383,21 +388,21 @@ set $timer <timer> \
 │ [1-9] timer: *10m
 
 mode "$timer" {
-  bindsym $mod+t       exec ~/.config/bin/timer toggle;                      mode "default"
-  bindsym $mod+r       exec ~/.config/bin/timer reset;                       mode "default"
-  bindsym $mod+s       exec ~/.config/bin/timer start;                       mode "default"
-  bindsym $mod+i       exec ~/.config/bin/timer --frequency=1m start 60m 0m; mode "default"
-  bindsym $mod+shift+i exec ~/.config/bin/timer start 60m 5m;                mode "default"
-  bindsym $mod+1       exec ~/.config/bin/timer start 10m;                   mode "default"
-  bindsym $mod+2       exec ~/.config/bin/timer start 20m;                   mode "default"
-  bindsym $mod+3       exec ~/.config/bin/timer start 30m;                   mode "default"
-  bindsym $mod+4       exec ~/.config/bin/timer start 40m;                   mode "default"
-  bindsym $mod+5       exec ~/.config/bin/timer start 50m;                   mode "default"
-  bindsym $mod+6       exec ~/.config/bin/timer start 60m;                   mode "default"
-  bindsym $mod+7       exec ~/.config/bin/timer start 70m;                   mode "default"
-  bindsym $mod+8       exec ~/.config/bin/timer start 80m;                   mode "default"
-  bindsym $mod+9       exec ~/.config/bin/timer start 90m;                   mode "default"
-  bindsym Escape mode "default"
+  bindsym $mod+t       exec $timer_cmd toggle;       $esc
+  bindsym $mod+r       exec $timer_cmd reset;        $esc
+  bindsym $mod+s       exec $timer_cmd start;        $esc
+  bindsym $mod+i       exec $timer_cmd start 60m 0m; $esc
+  bindsym $mod+shift+i exec $timer_cmd start 60m 5m; $esc
+  bindsym $mod+1       exec $timer_cmd start 10m;    $esc
+  bindsym $mod+2       exec $timer_cmd start 20m;    $esc
+  bindsym $mod+3       exec $timer_cmd start 30m;    $esc
+  bindsym $mod+4       exec $timer_cmd start 40m;    $esc
+  bindsym $mod+5       exec $timer_cmd start 50m;    $esc
+  bindsym $mod+6       exec $timer_cmd start 60m;    $esc
+  bindsym $mod+7       exec $timer_cmd start 70m;    $esc
+  bindsym $mod+8       exec $timer_cmd start 80m;    $esc
+  bindsym $mod+9       exec $timer_cmd start 90m;    $esc
+  bindsym Escape $esc
 }
 #+end_src
 
@@ -412,13 +417,13 @@ set $menus <menus> \
 │ screenshot \
 
 mode "$menus" {
-  bindsym $mod+a       exec ~/.config/bin/audio-menu;       mode "default"
-  bindsym $mod+o       exec ~/.config/bin/output-menu;      mode "default"
-  bindsym $mod+shift+o exec ~/.config/bin/layout-menu;      mode "default"
-  bindsym $mod+s       exec ~/.config/bin/screenshot-menu;  mode "default"
-  bindsym $mod+b       exec ~/.config/bin/bluetooth-menu;   mode "default"
-  bindsym $mod+p       exec ~/.config/bin/killprocess-menu; mode "default"
-  bindsym Escape mode "default"
+  bindsym $mod+a       exec ~/.config/bin/audio-menu;       $esc
+  bindsym $mod+o       exec ~/.config/bin/output-menu;      $esc
+  bindsym $mod+shift+o exec ~/.config/bin/layout-menu;      $esc
+  bindsym $mod+s       exec ~/.config/bin/screenshot-menu;  $esc
+  bindsym $mod+b       exec ~/.config/bin/bluetooth-menu;   $esc
+  bindsym $mod+p       exec ~/.config/bin/killprocess-menu; $esc
+  bindsym Escape $esc
 }
 #+end_src
 

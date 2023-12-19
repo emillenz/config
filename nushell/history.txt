@@ -1,26 +1,3 @@
-wa derivative of log(a)
-wa "derivative of log(a)"
-wa "derivative of log(a^b)"
-wa "derivative of log(a**b)"
-wa "derivative of log(a**4)"
-wa "derivative of log(2a**4)"
-population switzerland
-wa "population switzerland"
-wa "population switzerland town ammerswil"
-wa "population switzerland town lenzburg"
-wa "number of students ethz"
-wa "number of computer science students ethz"
-wa "number of students ethz"
-wa "number of students mit"
-wa "number of students caltec"
-wa "when invention of money"
-wa "when was money first used"
-wa "s"
-wa "umlaut"
-wa "sharp s"
-wa "sharp S"
-wa "zathura"
-wa "zathura software"
 wa "software zathura"
 wa "linux"
 wa "gnu"
@@ -9998,3 +9975,26 @@ man spotifyd
 help man
 ps
 sys
+./(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
+(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
+./apps/eclipse/java-2023-092/eclipse/eclipse
+xset dpms force off
+yay --noconfirm -S spotifyd spotify-tui<\n>
+spt
+yay nc
+yay -Qs nc
+yay -Qs ncspot
+yay -Qs thf
+yay -Qs thef
+yay -Qs fuck
+p;
+ls
+this is really gredt
+dunst
+yay -Qs xfce
+yay -Rs xfce-powermanager xfce4-notifyd
+yay -Rs xfce-power-manager xfce4-notifyd
+yay -Rs xfce4-power-manager xfce4-notifyd
+dunst
+sudo killall xfce4-notifyd
+dunst

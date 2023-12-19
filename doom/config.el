@@ -201,7 +201,7 @@ Save & kill buffer -> quit: window -> tab"
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:3]]
 (defadvice! z/newtab (fn &rest args)
   "Open new file-buffers in a new tab."
-  :before #'find-file
+  :before '(find-file bookmark-jump magit-status)
   (tab-bar-new-tab-to))
 ;; Global navigation scheme:3 ends here
 
@@ -224,9 +224,6 @@ Save & kill buffer -> quit: window -> tab"
 
    :nmv  "]e"  #'flycheck-next-error
    :nmv  "[e"  #'flycheck-previous-error
-
-   :nmv  "H"   #'evil-first-non-blank
-   :nmv  "L"   #'evil-end-of-visual-line
 
    :nmv  "("   #'evil-cp-backward-up-sexp
    :nmv  ")"   #'evil-cp-up-sexp

@@ -7,11 +7,9 @@ frame_width = 1
 origin = top-right
 # offset = 15x15
 horizontal_padding = 5
-vertical_padding = 5
 transparency = 0
 font = Terminus 8
 format = "<b>%s %p</b>\n%b"
-indicate-hidden = yes
 
 # Solarized Dark
 [urgency_low]

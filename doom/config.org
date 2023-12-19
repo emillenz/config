@@ -266,13 +266,14 @@ Save & kill buffer -> quit: window -> tab"
 #+begin_src emacs-lisp
 (defadvice! z/newtab (fn &rest args)
   "Open new file-buffers in a new tab."
-  :before #'find-file
+  :before '(find-file bookmark-jump magit-status)
   (tab-bar-new-tab-to))
 #+end_src
 
 ** Evil-mode
 - Make vim's bindings even more mnemonic and improve consistency of implementation.
 - Make defaults more sane/efficient/sensible.
+- Emacs alredy by default implements it that out of screen jumps center the screen which is sensible
 - Replace redundant/unuseful/unused keys with statistically often called commands / make better use of them.
 - Unmap ambigous / keys with double usages (no bad habits).
 - Always use relative line numbers instead of absolute
@@ -284,7 +285,8 @@ Save & kill buffer -> quit: window -> tab"
   + Avoid splits at all costs and use tabs instead
 - ~:w~ is the statistically most run vim-ex-command, but very unergonomic.
   + Map it to the os-consistent key
-- ~HL~ are useless (learn relative linejumps you ape!) and thus "stronger" versions of the regular ~hl~ motions in Vim. (~JK~ do not need stronger versions as you should use relative line jumps or ~C-u/d~ for larger motions (efficiency))
+- -~HL~ are useless (learn relative linejumps you ape!)
+  + but must maintain consistency with all other programs running vim bindings
 - Shorcut to ex buffer search & replace with ~\|~
 - ~()~ are useless
   + Remap to parens jumping
@@ -309,9 +311,6 @@ Save & kill buffer -> quit: window -> tab"
 
    :nmv  "]e"  #'flycheck-next-error
    :nmv  "[e"  #'flycheck-previous-error
-
-   :nmv  "H"   #'evil-first-non-blank
-   :nmv  "L"   #'evil-end-of-visual-line
 
    :nmv  "("   #'evil-cp-backward-up-sexp
    :nmv  ")"   #'evil-cp-up-sexp

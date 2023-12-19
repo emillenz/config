@@ -34,18 +34,18 @@ Imagine two kinds of grocery stores, one that just looks at what is the most pop
     + Get rid of the large set of now redundant maps for manual split management.
 - completion menus, bookmarks (bindings to hotswitch) and fuzzy finding are exponentially more efficient than navigating and selecting the destinations manually.
 - UI: Think of the ui as a  hud
-  + Remove all distractions
-  + Statusbars always at the bottom
-  + window/tabbars at the top // for having an overview
+  + Remove all distractions and think critically if this feature is implemented just because it is possible/showoff/"cool" or because it is a detrimental part of the workflow that enhances the ergongomics/efficiency/possibilities/workflow of the tool.
+  + Window/tabbars at the top, statusbars generally on the bottom.
   + Completion-menu's are an extensions of the statusbar => do not block view, consistently on the same spot across all apps (terminal, emacs, rofi)
 - *Thinking fast & slow:* Rely on fast, instinctive thinking for non repeating tasks and for repeating patterns / actions on the slow, precise, analytical thinking.
   + this is the definition of DRY, or not repeating yourself / taking the minimal required no. of actions to get to the disired output/position.
   + ex: use vims search replace with patterns instead of manually going through and changing each instance
   + ex: relative line jumping >> spamming =j=
   + ex: tab switching => thinking fast & instinctive, develop muscle memory // when there are too many -> use analytical brain by searching through the list
-- Using thin/lightweight/sharp over thick/heavy/rounded (box drawings / terminal characters)
-  + 1px lines and borders with jagged corners have their own beautiful, highly functional aestetic (vs the thick, rounded corners)
-  + thin and sharp will create less obstruction.
+- Using thin/lightweight/sharp over thick/heavy/rounded (box drawings / terminal characters / symbols)
+  + 1px lines, borders with hard corners & sharp edges have their own beautiful, highly functional aestetic.
+  + thin and sharp will create less obstruction (having more complex and voluminous symbols/ui than actually neccessary for visual distinction is bloat and visual sugar)
+  + minimal and thin feels more soulless and is more ergonomic with screenspace
 
 ** Colorscheme: Solarized (light/dark).
 - It was carfully and deliberately designed by hand and intensively tested to achieve the best visibilty while maintaining low eye strain.

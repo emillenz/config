@@ -508,9 +508,9 @@ Save & kill buffer -> quit: window -> tab"
          "[=](=@)"
          "[&](&@)"
          "|"
+         "[x](x!)"
          "[@](d@)" ;; HACK: cannot use"@" -> [D]elegated
-         "[\\](\\@)"
-         "[x](x!)")))
+         "[\\](\\@)")))
 ;; Task states:1 ends here
 
 ;; [[file:config.org::*Task states][Task states:2]]
@@ -584,7 +584,7 @@ Save & kill buffer -> quit: window -> tab"
 
 ;; [[file:config.org::*Agenda][Agenda:2]]
 (setq
- org-agenda-scheduled-leaders '("─────" "→%3dd")
+ org-agenda-scheduled-leaders '("─────" "←%3dd")
  org-agenda-deadline-leaders '("━━━━━" "⇒%3dd" "⇐%3dd")
  org-agenda-todo-keyword-format "%-3s"
  org-agenda-prefix-format

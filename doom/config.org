@@ -260,8 +260,9 @@ Save & kill buffer -> quit: window -> tab"
         (delete-frame))))))
 #+end_src
 
-For maximized-tabs-workflow.
-Keep the workflow DRY and automate what you repeatingly do."
+- For maximized-tabs-workflow, open files in new tab to hotswitch immedidately to.
+  + Keep the workflow DRY and automate what you repeatingly do.
+- This works for forall file opening functions (fzf finding, dired..)
 #+begin_src emacs-lisp
 (defadvice! z/newtab (fn &rest args)
   "Open new file-buffers in a new tab."
@@ -699,9 +700,9 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
            "[=](=@)"
            "[&](&@)"
            "|"
+           "[x](x!)"
            "[@](d@)" ;; HACK: cannot use"@" -> [D]elegated
-           "[\\](\\@)"
-           "[x](x!)")))
+           "[\\](\\@)")))
 #+end_src
 
 - Color coding is done to give sense of importance: Red > orange > green > grey // purple: misc
@@ -795,7 +796,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 + Set more concise & informing ~deadline~ & ~scheduled~ strings
 #+begin_src emacs-lisp
   (setq
-   org-agenda-scheduled-leaders '("─────" "→%3dd")
+   org-agenda-scheduled-leaders '("─────" "←%3dd")
    org-agenda-deadline-leaders '("━━━━━" "⇒%3dd" "⇐%3dd")
    org-agenda-todo-keyword-format "%-3s"
    org-agenda-prefix-format
@@ -859,32 +860,11 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 *** Timetracking
 - Use org-clock to track the time spent on tasks / projects.
 
-** [?] Faces
-- experimental: don't know yet wether enlargin headings is good or bad
-#+begin_src emacs-lisp :tangle no
-  (custom-set-faces!
-    '(org-todo               :weight bold   :height 1.0)
-    '(org-checkbox           :weight bold   :height 1.0)
-    '(org-priority           :weight bold   :height 1.0)
-    '(org-document-title     :weight bold   :height 1.2)
-    '(outline-1              :weight bold   :height 1.3)
-    '(outline-2              :weight bold   :height 1.2)
-    '(outline-3              :weight bold   :height 1.1)
-    '(outline-4              :weight normal :height 1.0)
-    '(outline-5              :weight normal :height 1.0)
-    '(outline-6              :weight normal :height 1.0)
-    '(outline-8              :weight normal :height 1.0)
-    '(org-special-keyword    :weight normal :height 1.0)
-    '(org-tag                :weight bold)
-    '(markdown-header-face-1 :inherit outline-1)
-    '(markdown-header-face-2 :inherit outline-2)
-    '(markdown-header-face-3 :inherit outline-3)
-    '(markdown-header-face-4 :inherit outline-4)
-    '(markdown-header-face-5 :inherit outline-5)
-    '(markdown-header-face-6 :inherit outline-6)
-    '(markdown-header-face-7 :inherit outline-7)
-    '(markdown-header-face-8 :inherit outline-8))
-#+end_src
+** UI - notes
+- Ensure all headings and faces have the same heigth -> better overview & less overhead
+  + Visually distinctualize headings & keywods from the rest of the text with coloring and bold
+- Like in code, everything is code/data -> also org mode / latex documents.
+  + Its not about some fancy looking thing, its about the internals, the quality of the data, not the presentation.
 
 ** Tags
 - always use tags to specify what a todo-item belongs to & never write it in the todo-name // not: ~TODO uni math assignment [2]~ => instead: ~TODO assignment [2] :uni:math:assignments:~

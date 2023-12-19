@@ -271,10 +271,6 @@ Save & kill buffer -> quit: window -> tab"
    :nmv "g>" #'evil-lion-right))
 ;; Alignment:1 ends here
 
-;; [[file:config.org::*Org mode][Org mode:1]]
-(after! org
-;; Org mode:1 ends here
-
 ;; [[file:config.org::*Dired][Dired:1]]
 (after! dired
   (map! :map dired-mode-map
@@ -399,9 +395,9 @@ Save & kill buffer -> quit: window -> tab"
       (rename-file file dest 1)))) ;; NOTE: "1": propt before overwrite
 ;; Archive file:1 ends here
 
-;; [[file:config.org::*Org Mode][Org Mode:1]]
+;; [[file:config.org::*\[begin\]][[begin]:1]]
 (after! org
-;; Org Mode:1 ends here
+;; [begin]:1 ends here
 
 ;; [[file:config.org::*Options][Options:1]]
 (add-hook! 'org-mode-hook
@@ -661,74 +657,73 @@ Jumps at tangled code from org src block."
      (message "Cannot jump to tangled file because point is not at org src block.")))
 ;; Jump to src file:1 ends here
 
-;; [[file:config.org::*Jump to src file][Jump to src file:2]]
-)
-;; Jump to src file:2 ends here
-
 ;; [[file:config.org::*Capture templates][Capture templates:1]]
-(after! org
-  (setq
-   org-capture-templates
-   (doct
-    '((:group "default-opts"
-       :headline "inbox"
-       :prepend t
-       :clock-keep t
+(setq
+ org-capture-templates
+ (doct
+  '((:group "default-opts"
+     :headline "inbox"
+     :prepend t
+     :clock-keep t
 
+     :children
+     (("task" :keys "t"
+       :template
+       ("* [ ] %^{title} %? %^g") ;; NOTE: not putting final insert on newline => tasks are a list and not paragraph
        :children
-       (("task" :keys "t"
-         :template
-         ("* [ ] %^{title} %? %^g") ;; NOTE: not putting final insert on newline => tasks are a list and not paragraph
+       (("cs"   :keys "c" :file "cs/tasks.org"
          :children
-         (("cs"   :keys "c" :file "cs/tasks.org"
-           :children
-           (("la" :keys "l" :olp ("linear algebra" "inbox"))
-            ("ep" :keys "e" :olp ("einfuehrung programmierung" "inbox"))
-            ("dm" :keys "d" :olp ("discrete math" "inbox"))
-            ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox"))))
-          ("personal" :keys "p" :file "personal/tasks.org")
-          ("compass"  :keys "s" :file "compass/tasks.org")
-          ("config"   :keys "o" :file "config/tasks.org")))
+         (("la" :keys "l" :olp ("linear algebra" "inbox"))
+          ("ep" :keys "e" :olp ("einfuehrung programmierung" "inbox"))
+          ("dm" :keys "d" :olp ("discrete math" "inbox"))
+          ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox"))))
+        ("personal" :keys "p" :file "personal/tasks.org")
+        ("compass"  :keys "s" :file "compass/tasks.org")
+        ("config"   :keys "o" :file "config/tasks.org")))
 
-        ("event" :keys "e"
-         :template
-         ("* [#] %^{title} %^g"
-          "%^t"
-          "LOCATION: %^{location}"
-          "PRE: %^{pre}%?")
+      ("event" :keys "e"
+       :template
+       ("* [#] %^{title} %^g"
+        "%^t"
+        "LOCATION: %^{location}"
+        "PRE: %^{pre}%?")
+       :children
+       (("cs"       :keys "c" :file "cs/events.org")
+        ("personal" :keys "p" :file "personal/events.org")))
+
+      ("note" :keys "n"
+       :template
+       ("* %^{title} %^g"
+        ":PROPERTIES:"
+        ":CREATED: %U"
+        ":END:"
+        "%?")
+       :empty-lines-after 1
+       :children
+       (("cs"       :keys "c"
          :children
-         (("cs"       :keys "c" :file "cs/events.org")
-          ("personal" :keys "p" :file "personal/events.org")))
+         (("la" :keys "l" :file "cs/la/notes.org")
+          ("ep" :keys "e" :file "cs/ep/notes.org")
+          ("dm" :keys "d" :file "cs/dm/notes.org")
+          ("ad" :keys "a" :file "cs/ad/notes.org")))
+        ("personal" :keys "p" :file "personal/notes.org")
+        ("compass"  :keys "s" :file "compass/notes.org")
+        ("config"   :keys "o" :file "config/notes.org")))
 
-        ("note" :keys "n"
-         :template
-         ("* %^{title} %^g"
-          ":PROPERTIES:"
-          ":CREATED: %U"
-          ":END:"
-          "%?")
-         :empty-lines-after 1
-         :children
-         (("cs"       :keys "c"
-           :children
-           (("la" :keys "l" :file "cs/la/notes.org")
-            ("ep" :keys "e" :file "cs/ep/notes.org")
-            ("dm" :keys "d" :file "cs/dm/notes.org")
-            ("ad" :keys "a" :file "cs/ad/notes.org")))
-          ("personal" :keys "p" :file "personal/notes.org")
-          ("compass"  :keys "s" :file "compass/notes.org")
-          ("config"   :keys "o" :file "config/notes.org")))
-
-        ("journal" :keys "j"
-         :template
-         ("* %^{title} %^g"
-          ":PROPERTIES:"
-          ":CREATED: %U"
-          ":END:"
-          "%?")
-         :empty-lines-after 1
-         :children ("personal" :keys "p" :file "personal/journal.org"))))))))
+      ("journal" :keys "j"
+       :template
+       ("* %^{title} %^g"
+        ":PROPERTIES:"
+        ":CREATED: %U"
+        ":END:"
+        "%?")
+       :empty-lines-after 1
+       :children ("personal" :keys "p" :file "personal/journal.org")))))))
 ;; Capture templates:1 ends here
+
+;; [[file:config.org::*\[End\]][[End]:1]]
+)
+;; [End]:1 ends here
 
 ;; [[file:config.org::*Programming mode][Programming mode:1]]
 (add-hook! 'prog-mode-hook

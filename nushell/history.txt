@@ -1,7 +1,3 @@
-Java Card
-Java Card.class
-java Card.class
-java Card.java
 javac Card.java 
 java Card.java
 javac Card.java; java Card.java
@@ -9998,3 +9994,7 @@ rg =asdf
 rg -asdf
 gre
 grew
+ls
+cargo build -h
+tldr cargo
+cargo build --release --target-dir=~/.config/bin

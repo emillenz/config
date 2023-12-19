@@ -2,24 +2,30 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("cs"
+(("cs:ad:code"
+ (filename . "~/Documents/uni/cs/ep/code/")
+ (front-context-string)
+ (rear-context-string . "0K Dec 14 09:17 ")
+ (position . 1757)
+ (last-modified 25985 24748 844005 612000))
+("cs"
  (filename . "~/Documents/uni/cs/")
  (front-context-string)
  (rear-context-string . "0K Sep 22 14:14 ")
  (position . 420)
  (last-modified 25881 15041 53675 50000))
 ("org-refile-last-stored"
- (filename . "~/Documents/org/cs_todo.org")
- (front-context-string . "**** [ ] peer-gr")
- (rear-context-string . "ulas / pointers\n")
- (position . 777)
- (last-modified 25924 37515 723831 699000))
+ (filename . "~/Documents/org/compass/notes.org")
+ (front-context-string . "** degrade the v")
+ (rear-context-string . "led.\n\n\n\n* inbox\n")
+ (position . 174)
+ (last-modified 25985 23093 800863 949000))
 ("org-capture-last-stored"
- (filename . "~/Documents/org/cs/tasks.org")
- (front-context-string . "*** [ ] script[5")
- (rear-context-string . ":END:\n\n** inbox\n")
- (position . 14110)
- (last-modified 25984 21430 652617 631000))
+ (filename . "~/Documents/org/config/tasks.org")
+ (front-context-string . "** [ ] foobar gr")
+ (rear-context-string . " inbox :config:\n")
+ (position . 225)
+ (last-modified 25985 22967 856704 165000))
 ("cs_todo.org"
  (filename . "~/Documents/org/cs_todo.org")
  (front-context-string . "#+title:    CS T")

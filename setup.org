@@ -119,8 +119,3 @@ yay --noconfirm -Syu
 yay --noconfirm -S obs-studio
 yay --noconfirm -S nvidia nvidia-utils lib32-nvidia-utils nvidia-settings
 #+end_src
-
-** Spotify
-#+begin_src sh :tangle no
-yay --noconfirm -S spotifyd spotify-tui
-#+end_src

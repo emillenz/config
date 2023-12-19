@@ -1,7 +1,3 @@
-javac Card.java 
-java Card.java
-javac Card.java; java Card.java
-java -h | bat
 javac Card.java; java Card.java
 mv card_ex/ caret_ex
 javac Caret; java Caret.java
@@ -9998,3 +9994,7 @@ ls
 cargo build -h
 tldr cargo
 cargo build --release --target-dir=~/.config/bin
+pt
+spotifyd 
+spt
+yay -R spotifyd spotify-tui

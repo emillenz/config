@@ -159,7 +159,7 @@
         :nvim "M-k"     #'next-window-any-frame
         :nvim "M-t"     #'tab-bar-new-tab-to
         :nvim "M-q"     #'z/quit
-        :nvim "C-q"     #'tab-bar-close-tab ;; HACK: needed sometimes
+        :nvim "C-q"     #'evil-window-delete ;; HACK: needed sometimes
         :nvim "M-Q"     #'save-buffers-kill-terminal
         :nvmi "M-z"     #'+popup/toggle
         :nvim "M-1"     (cmd! (tab-bar-select-tab 1))
@@ -665,6 +665,7 @@ Jumps at tangled code from org src block."
      :headline "inbox"
      :prepend t
      :clock-keep t
+     :empty-lines-after 1
 
      :children
      (("task" :keys "t"
@@ -698,7 +699,6 @@ Jumps at tangled code from org src block."
         ":CREATED: %U"
         ":END:"
         "%?")
-       :empty-lines-after 1
        :children
        (("cs"       :keys "c"
          :children
@@ -717,7 +717,6 @@ Jumps at tangled code from org src block."
         ":CREATED: %U"
         ":END:"
         "%?")
-       :empty-lines-after 1
        :children ("personal" :keys "p" :file "personal/journal.org")))))))
 ;; Capture templates:1 ends here
 

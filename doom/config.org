@@ -202,7 +202,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
                  "j" #'z/jump-src
                  "t" #'org-babel-tangle
                  "e" #'org-edit-special)))
-
 #+end_src
 
 ** Global navigation scheme
@@ -222,7 +221,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         :nvim "M-k"     #'next-window-any-frame
         :nvim "M-t"     #'tab-bar-new-tab-to
         :nvim "M-q"     #'z/quit
-        :nvim "C-q"     #'tab-bar-close-tab ;; HACK: needed sometimes
+        :nvim "C-q"     #'evil-window-delete ;; HACK: needed sometimes
         :nvim "M-Q"     #'save-buffers-kill-terminal
         :nvmi "M-z"     #'+popup/toggle
         :nvim "M-1"     (cmd! (tab-bar-select-tab 1))
@@ -947,6 +946,7 @@ More convenient, with a nice display.
      :headline "inbox"
      :prepend t
      :clock-keep t
+     :empty-lines-after 1
 
      :children
      (("task" :keys "t"
@@ -980,7 +980,6 @@ More convenient, with a nice display.
         ":CREATED: %U"
         ":END:"
         "%?")
-       :empty-lines-after 1
        :children
        (("cs"       :keys "c"
          :children
@@ -999,7 +998,6 @@ More convenient, with a nice display.
         ":CREATED: %U"
         ":END:"
         "%?")
-       :empty-lines-after 1
        :children ("personal" :keys "p" :file "personal/journal.org")))))))
 #+end_src
 ** [End]

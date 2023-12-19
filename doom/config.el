@@ -262,7 +262,10 @@
         :nmv "[["     #'org-backward-heading-same-level
         :inmv "S-RET" #'org-meta-return
         :inmv "C-RET" #'+org/insert-item-below
-        :nmvo "^"     #'evil-org-beginning-of-line))
+        :inmv "C-j"   #'org-metadown
+        :inmv "C-k"   #'org-metaup
+        :inmv "C-h"   #'org-metaleft
+        :inmv "C-l"   #'org-metaright))
 
 (after! org-mode
   (map! :localleader

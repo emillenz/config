@@ -1,4 +1,3 @@
-killall xautolock
  syncthing 
 killall xautolock
 man xset
@@ -9998,3 +9997,4 @@ setxkbmap  us
 Snt
 ls
 polybar
+ls

@@ -4,7 +4,7 @@ sudo pacman -Syyu
 # Setup:1 ends here
 
 # [[file:setup.org::*Terminal, Nushell][Terminal, Nushell:1]]
-yay --noconfirm -S alacritty curl libtool fzf fd ripgrep xclip xdg-utils cmake npm bat git gcc make xdotool tldr htop fish ttf-terminus-nerd terminus-font nushell tmux
+yay --noconfirm -S alacritty curl libtool fzf fd ripgrep xclip xdg-utils cmake npm bat git gcc make xdotool tldr htop fish ttf-iosevka-nerd nushell tmux
 # Terminal, Nushell:1 ends here
 
 # [[file:setup.org::*Terminal, Nushell][Terminal, Nushell:2]]

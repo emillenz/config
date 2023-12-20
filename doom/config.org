@@ -238,6 +238,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         :nvim "M-g"     #'consult-buffer
         :nvim "M-r"     #'consult-recent-file
         :nvim "M-c"     #'shell-command
+        :nvim "M-w"     #'+lookup/online
         :nvim "M-;"     #'execute-extended-command
         :nvim "M-'"     #'consult-bookmark
 

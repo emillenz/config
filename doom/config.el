@@ -176,6 +176,7 @@
         :nvim "M-g"     #'consult-buffer
         :nvim "M-r"     #'consult-recent-file
         :nvim "M-c"     #'shell-command
+        :nvim "M-w"     #'+lookup/online
         :nvim "M-;"     #'execute-extended-command
         :nvim "M-'"     #'consult-bookmark
 

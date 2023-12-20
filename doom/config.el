@@ -159,7 +159,6 @@
         :nvim "M-k"     #'next-window-any-frame
         :nvim "M-t"     #'tab-bar-new-tab-to
         :nvim "M-q"     (cmd! (if (buffer-modified-p) (ignore-errors (evil-write nil nil))) (kill-current-buffer) (tab-bar-close-tab))
-        :nvim "C-q"     #'evil-window-delete
         :nvim "M-Q"     #'save-buffers-kill-terminal
         :nvmi "M-z"     #'+popup/toggle
         :nvim "M-1"     (cmd! (tab-bar-select-tab 1))

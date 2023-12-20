@@ -1,5 +1,9 @@
 # [[file:config.org::*Startup automation][Startup automation:1]]
 exec --no-startup-id "~/.config/bin/startup"
+# exec --no-startup-id export PATH="~/.config/bin:$PATH"
+set $BIN ~/.config/bin
+exec bluetooth-menu
+bindsym $mod+y exec $bin/bluetooth-menu
 # Startup automation:1 ends here
 
 # [[file:config.org::*Options][Options:1]]
@@ -16,7 +20,7 @@ focus_on_window_activation focus
 
 # [[file:config.org::*Options][Options:2]]
 set $rofi rofi -dmenu -i -no-custom -p ' '
-set $esc $esc
+set $esc mode "default"
 # Options:2 ends here
 
 # [[file:config.org::*Modkey][Modkey:1]]

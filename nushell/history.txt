@@ -1,17 +1,3 @@
-javac Card.java; java Card.java
-mv card_ex/ caret_ex
-javac Caret; java Caret.java
-javac Caret.java; java Caret.java
-mv Card.java Caret.java
-javac Caret.java; java Caret.java
-javac Caret.java
-java Caret.java
-javac Caret.java; java Caret.java
-javac Caret.java; java Caret.java=
-javac Caret.java; java Caret.java
-javac Caret.java
-java Caret.java
-javac Caret.java; java Caret.java
 rm Card.class
 rm Caret.class
 rm Card.java
@@ -9998,3 +9984,17 @@ pt
 spotifyd 
 spt
 yay -R spotifyd spotify-tui
+i3-sensible-pager 
+i3-sensible-editor  
+i3-msg restart
+i3-sensible-editor  --help | bat --language=man
+which i3-sensible-editor
+timer reset
+timer start 
+cd ./.config/
+ls timer_src/
+rm timer_src/
+cargo build --release --out-dir=~/.config/bin
+cargo build --release
+xset dpms force off
+i3-msg restart

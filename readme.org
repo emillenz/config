@@ -97,22 +97,21 @@ Imagine two kinds of grocery stores, one that just looks at what is the most pop
     + quit-tab -> quit-session
     + open file cwd -> open file in root dir
 
-| Mod + | Action                      | Consistency            |
-|-------+-----------------------------+------------------------|
-| T     | new tab                     | Vim/Mnemonic/standard  |
-| J,K   | cyle windows                | Vim, ergonomic         |
-| G     | search tabs/buffers         | vim: goto              |
-| Q     | Quit (window->tab->program) | Mnemonic / standard    |
-| 1-9   | Switch to tab by index      | Logic / stardard       |
-| E     | edit file / editor          | Mnemonic               |
-| C     | Command-line (shell)        | Emacs/Mnemonic         |
-| F     | Find (program/file)         | Mnemonic / Standard    |
-| ;     | Execute command (in-app)    | Programming: statement |
-| SPC   | Leader-key system.          | Vim / ergonomic        |
-| -, =  | decr/incr (font/number/vol) | logic                  |
-| C     | command-line                | Standard               |
-| E     | Editor                      | Vim: e <- edit         |
-| W     | Web                         | WWW                    |
+| Mod + | Action                       | Consistency            |
+|-------+------------------------------+------------------------|
+| T     | new tab                      | Vim/Mnemonic/standard  |
+| J,K   | prev/next window (!not tabs) | Vim, ergonomic         |
+| 1-9   | Switch to tab by index       | Logic / stardard       |
+| G     | search tabs/buffers          | vim: goto              |
+| Q     | Quit (window->tab->program)  | Mnemonic / standard    |
+| E     | edit file / editor           | Mnemonic               |
+| C     | Command-line (shell)         | Emacs/Mnemonic         |
+| F     | Find (program/file)          | Mnemonic / Standard    |
+| ;     | Execute command (in-app)     | Programming: statement |
+| SPC   | Leader-key system.           | Vim / ergonomic        |
+| C     | command-line                 | Standard               |
+| E     | Editor                       | Vim: e <- edit         |
+| W     | Web (browser)                | WWW                    |
 
 * Software
 The aim is to be able to run software for years without it breaking or bugging.

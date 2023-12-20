@@ -109,7 +109,7 @@
 ;; Window layout & behavior:1 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:2]]
-;; NOTE: not prog mode -> breaks with flychecking
+;; NOTE: not prog mode => breaks with flychecking
 (add-hook!
  '(text-mode-hook
    dired-mode-hook
@@ -134,7 +134,7 @@
 
 (map! :leader
       "t" nil
-      "u" doom-leader-toggle-map ;; HACK: remap toggle -> ui (more sensible)
+      "u" doom-leader-toggle-map ;; HACK: remap toggle => ui (more sensible)
       (:prefix ("u" . "ui")
                "V" #'visual-fill-column-mode
                "C" #'company-mode)
@@ -193,7 +193,7 @@
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
 (after! evil
-  ;; HACK disable all default-maps (mappings used -> below)
+  ;; HACK disable all default-maps (mappings used are below)
   (add-hook 'evil-mode-hook #'evil-cleverparens-mode)
   (setq evil-cleverparens-use-s-and-S nil
         evil-cleverparens-use-additional-bindings nil
@@ -467,8 +467,8 @@
  org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
  org-superstar-item-bullet-alist
  '((?-  . "─")
-   (?* . "─") ;; NOTE: never use these, asteriks are for headings only -> no unambigiuity
-   (?+ . "→")))
+   (?* . "─") ;; NOTE: never use these, asteriks are for headings only => no unambigiuity
+   (?+ . "⇒")))
 ;; Symbols:1 ends here
 
 ;; [[file:config.org::*Ligatures][Ligatures:1]]
@@ -483,14 +483,14 @@
 (setq org-todo-keywords
       '((type
          "[#](#)"
-         "[ ](t)" ;; HACK: cannot use " " -> [T]odo
+         "[ ](t)" ;; HACK: cannot use " " => [T]odo
          "[?](?!)"
          "[-](-@)"
          "[=](=@)"
          "[&](&@)"
          "|"
          "[x](x!)"
-         "[@](d@)" ;; HACK: cannot use"@" -> [D]elegated
+         "[@](d@)" ;; HACK: cannot use"@" => [D]elegated
          "[\\](\\@)")))
 ;; Task states:1 ends here
 

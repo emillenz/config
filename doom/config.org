@@ -22,7 +22,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - Valid comments should describe the why, the philosophy, the principle, the reason, and never explain what something does.
 - Emacs is self documenting, instead of explaining what a function does with a comment, you should just read the ALREADY EXISTING writtten documentation for it (function doc).
 - This is a principle which is elegant, extensible, structured for the following reasons:
-  + If code is changed, comment isn't updated automatically -> can & will be forgotter (redundant/confusing comments)
+  + If code is changed, comment isn't updated automatically => can & will be forgotter (redundant/confusing comments)
   + Code is data (rewrite code flow such that it is more understandeable)
 
 * User
@@ -33,7 +33,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 * Theme
-- Disable italics -> better readability (use bold if you want something to stand out.)
+- Disable italics => better readability (use bold if you want something to stand out.)
 #+begin_src emacs-lisp
 (setq
  doom-themes-enable-bold t
@@ -117,7 +117,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 * Window layout & behavior
 - Constrain popup buffers (inevitable) to consistently, and always ~vsplit~, and have a reasonable size.
-  + Never mix vertical with horizontal splitting -> creates mental overhead navigating the windows (+requires another set of totally unneccessary keybindings)
+  + Never mix vertical with horizontal splitting => creates mental overhead navigating the windows (+requires another set of totally unneccessary keybindings)
 #+begin_src emacs-lisp
 (setq
  evil-vsplit-window-right t
@@ -155,7 +155,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   + Take math for example, its easier to read equations if they are on newline
   + Coding: typically one statement per line
 #+begin_src emacs-lisp
-;; NOTE: not prog mode -> breaks with flychecking
+;; NOTE: not prog mode => breaks with flychecking
 (add-hook!
  '(text-mode-hook
    dired-mode-hook
@@ -186,7 +186,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 (map! :leader
       "t" nil
-      "u" doom-leader-toggle-map ;; HACK: remap toggle -> ui (more sensible)
+      "u" doom-leader-toggle-map ;; HACK: remap toggle => ui (more sensible)
       (:prefix ("u" . "ui")
                "V" #'visual-fill-column-mode
                "C" #'company-mode)
@@ -205,7 +205,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 ** Global navigation scheme
-- NOTE: Follows the os-consistent keymap, using alt for the only & essential navigational commands (there may better ones for what you want to achive -> inside leadermode)
+- NOTE: Follows the os-consistent keymap, using alt for the only & essential navigational commands (there may better ones for what you want to achive => inside leadermode)
 - When you are working in a project with multiple different files, open each file in a new tab. This-way you can hotkey to that exact file instantly.
   + Only do this for buffers you know you want to come back to later. // doesnt become cluttered with all other buffers
 - They are the most efficient way of navigating between multiple different files/buffer at the same time (most efficient way i have found to introduce little overhead when context-switching and remaining distractionfree)
@@ -280,7 +280,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 #+begin_src emacs-lisp
 (after! evil
-  ;; HACK disable all default-maps (mappings used -> below)
+  ;; HACK disable all default-maps (mappings used are below)
   (add-hook 'evil-mode-hook #'evil-cleverparens-mode)
   (setq evil-cleverparens-use-s-and-S nil
         evil-cleverparens-use-additional-bindings nil
@@ -515,7 +515,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 #+end_src
 
 ** Archive file
-- Archive all things that were once written or created by you (instead of deleting them) -> digital content cost's little to no space. And you will be grateful later in life to have recorded data (that can be analyzed & crunched) what you were thinking and how you configured your tools etc...
+- Archive all things that were once written or created by you (instead of deleting them) => digital content cost's little to no space. And you will be grateful later in life to have recorded data (that can be analyzed & crunched) what you were thinking and how you configured your tools etc...
 - Moves the file under Archive with its original path.
 #+begin_src emacs-lisp
 (defun z/dired-archive ()
@@ -533,8 +533,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 #+end_src
 
 ** Options
-- Archive all things that were once written or created by you (instead of deleting them) -> digital content cost's little to no space. And you will be grateful later in life to have recorded data (that can be analyzed & crunched) what you were thinking and how you configured your tools etc...
-  + Archive all done tasks in current file/headings with org-agenda bulk action.
+- Archive all done tasks in current file/headings with org-agenda bulk action.
 - Each file gets its own entry in ~~/Archive/org~
 - Auto-tangle a file after saving (efficient default behavior)
 #+begin_src emacs-lisp
@@ -601,19 +600,19 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 
 ** Symbols
 - Use Icons to enhance ui readability (has nothing to do with bloat, this is still editeable plaintext (utf8) but greatly improves readability at a glance)
-- Clean up keywords with sybols -> more concise, compact, easier to read, faster at a glance
+- Clean up keywords with sybols => more concise, compact, easier to read, faster at a glance
 #+begin_src emacs-lisp
   (add-hook! 'org-mode-hook #'org-superstar-mode #'prettify-symbols-mode)
   (setq
    org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
    org-superstar-item-bullet-alist
    '((?-  . "─")
-     (?* . "─") ;; NOTE: never use these, asteriks are for headings only -> no unambigiuity
-     (?+ . "→")))
+     (?* . "─") ;; NOTE: never use these, asteriks are for headings only => no unambigiuity
+     (?+ . "⇒")))
 #+end_src
 
 ** Ligatures
-- I use concise, functional notation alot -> make it look coherent.
+- I use concise, functional notation alo.
 #+begin_src emacs-lisp
   (setq-default prettify-symbols-alist
                 '(("->" . "→")
@@ -624,7 +623,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 
 ** Task states
 - These are task states are used for personal daily organization & studying at university (keeping track of lectures, assignments, events, exercise sheets.)
-- Using symbols instead of words to represent states -> less clutter, more concise, readeable & structured
+- Using symbols instead of words to represent states => less clutter, more concise, readeable & structured
 - Order them with priorities to assign order of execution if there are many tasks
 - States with ~@~ prompt for note // if want to do manually: ~org-add-note~
   + Reflecting
@@ -677,14 +676,14 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
   (setq org-todo-keywords
         '((type
            "[#](#)"
-           "[ ](t)" ;; HACK: cannot use " " -> [T]odo
+           "[ ](t)" ;; HACK: cannot use " " => [T]odo
            "[?](?!)"
            "[-](-@)"
            "[=](=@)"
            "[&](&@)"
            "|"
            "[x](x!)"
-           "[@](d@)" ;; HACK: cannot use"@" -> [D]elegated
+           "[@](d@)" ;; HACK: cannot use"@" => [D]elegated
            "[\\](\\@)")))
 #+end_src
 
@@ -747,8 +746,8 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 #+end_src
 
 ** Agenda
-- Multi-day-todo-events: add multiple timestamps on the same line -> same task shows scheduled on different days. Ex:
-  + Track which university lectures you have watched & reviewed. -> even if they are spread out onto multiple days -> log all completions / review-notes under the same task.
+- Multi-day-todo-events: add multiple timestamps on the same line => same task shows scheduled on different days. Ex:
+  + Track which university lectures you have watched & reviewed. => even if they are spread out onto multiple days => log all completions / review-notes under the same task.
 #+begin_src emacs-lisp
   (add-hook! 'org-agenda-mode-hook #'org-super-agenda-mode)
 
@@ -836,7 +835,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 - 2 files per project, (ex: ~uni~, ~personal~)
   + Todo (todo items, tasks)
   + Agenda: all events (meetings, appointments,...)
-- 1 Folder/file for notes -> multiple different subjects -> maybe more notes needed ex:
+- 1 Folder/file for notes => multiple different subjects => maybe more notes needed ex:
   + lecture notes
   + exercise notes
   + ideas
@@ -844,9 +843,9 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 - Use org-clock to track the time spent on tasks / projects.
 
 ** UI - notes
-- Ensure all headings and faces have the same heigth -> better overview & less overhead
+- Ensure all headings and faces have the same heigth => better overview & less overhead
   + Visually distinctualize headings & keywods from the rest of the text with coloring and bold
-- Like in code, everything is code/data -> also org mode / latex documents.
+- Like in code, everything is code/data => also org mode / latex documents.
   + Its not about some fancy looking thing, its about the internals, the quality of the data, not the presentation.
 
 ** Tags
@@ -858,6 +857,9 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
   + ex: ~:personal:youtube:video~
   + ex: ~:personal:book:fiction~
   + ex: ~- [ ] Change keybindings :config:emacs:~
+- Never mention the location/project of the task, instead specify it as a task hierarchy (scope resolution, flexible querying) (same as in programming var-names should never include the typee / functions don't have module-name in their name, instead the location is specified via module)
+  + ~[ ] fix bugs in emacs config for the org mode module~ => ~[ ] fix bugs :config:emacs:org:~
+  + this is a clear and highly structured, data orientated approach. (all the benefits of data follow: querying, extensibility...)
 - org-agenda: filter for all headings with that specific tag across all files (eg. sort class specific todos w tags)
 
 ** Keywords to downcase
@@ -933,7 +935,7 @@ More convenient, with a nice display.
 - Create capture-templates for each of your frequently used projects, ex: university, personal, work ...
 - Capture templates are used to collect & capture notes, events, tasks and your daily reflection journal structured, tagged, sorted into a specific file.
 - This is very customizeable allows you to setup complex templates. (ex: insert into table)
-- Use the heading: ~Inbox~ for collecting the captured items -> might want to review/refile these items later.
+- Use the heading: ~Inbox~ for collecting the captured items => might want to review/refile these items later.
 - For each project there is a separate folder (relative to org-dir) with files:
   + tasks
   + notes
@@ -1073,13 +1075,12 @@ More convenient, with a nice display.
           ("dm"       . ?d)
           ("cs"       . ?c)
           ("personal" . ?p)
-          ("config"   . ?C)
-          ))
+          ("config"   . ?C)))
 #+end_src
 
 ** org-ql
 ** Override language indentation
--  not consistent -> disabled
+-  not consistent => disabled
 #+begin_src emacs-lisp :tangle no
 (setq-hook! 'prog-mode-hook
   org-indent-indentation-per-level 2

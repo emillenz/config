@@ -57,15 +57,15 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (setq
  doom-font-increment 1
  doom-big-font-increment 1
- doom-font                (font-spec :family "Terminus" :size 12)
- doom-variable-pitch-font (font-spec :family "Terminus" :size 12)
- doom-serif-font          (font-spec :family "Terminus" :size 12)
- doom-big-font            (font-spec :family "Terminus" :size 24))
+ doom-font                (font-spec :family "Iosevka Nerd Font" :size 14)
+ doom-variable-pitch-font (font-spec :family "Iosevka Nerd Font" :size 14)
+ doom-serif-font          (font-spec :family "Iosevka Nerd Font" :size 14)
+ doom-big-font            (font-spec :family "Iosevka Nerd Font" :size 24))
 
 (custom-set-faces!
   '(font-lock-keyword-face :slant normal :weight bold)
   '(font-lock-type-face    :slant normal :weight normal)
-  '(font-lock-comment-face :slant normal :weight normal))
+  '(font-lock-comment-face :slant italic :weight normal))
 #+end_src
 
 * Modeline
@@ -778,8 +778,8 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 + Set more concise & informing ~deadline~ & ~scheduled~ strings
 #+begin_src emacs-lisp
   (setq
-   org-agenda-scheduled-leaders '("─────" "←%3dd")
-   org-agenda-deadline-leaders '("━━━━━" "⇒%3dd" "⇐%3dd")
+   org-agenda-scheduled-leaders '("─────" "←%3dd") ;; ←
+   org-agenda-deadline-leaders '("━━━━━" "⇒%3dd" "⇐%3dd") ;; ⇐ ⇒
    org-agenda-todo-keyword-format "%-3s"
    org-agenda-prefix-format
    '((agenda . "%-12c%-6s%-12t")

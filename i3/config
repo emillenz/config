@@ -1,9 +1,11 @@
+# [[file:config.org::*Aliases][Aliases:1]]
+set $rofi rofi -dmenu -i -no-custom -p ' '
+set $esc mode "default"
+set $bin ~/.config/bin
+# Aliases:1 ends here
+
 # [[file:config.org::*Startup automation][Startup automation:1]]
-exec --no-startup-id "~/.config/bin/startup"
-# exec --no-startup-id export PATH="~/.config/bin:$PATH"
-set $BIN ~/.config/bin
-exec bluetooth-menu
-bindsym $mod+y exec $bin/bluetooth-menu
+exec --no-startup-id $bin/startup
 # Startup automation:1 ends here
 
 # [[file:config.org::*Options][Options:1]]
@@ -14,14 +16,9 @@ default_orientation horizontal
 default_border pixel 1
 hide_edge_borders smart
 title_align left
-font pango: Terminus 8
+font pango: Iosevka Nerd Font 10
 focus_on_window_activation focus
 # Options:1 ends here
-
-# [[file:config.org::*Options][Options:2]]
-set $rofi rofi -dmenu -i -no-custom -p ' '
-set $esc mode "default"
-# Options:2 ends here
 
 # [[file:config.org::*Modkey][Modkey:1]]
 set $mod Mod4
@@ -38,7 +35,7 @@ bindsym button5 nop
 # [[file:config.org::*System controls][System controls:1]]
 bindsym XF86MonBrightnessDown exec sudo light -U 5
 bindsym XF86MonBrightnessUp   exec sudo light -A 5
-bindsym XF86Display           exec ~/.config/bin/output_select
+bindsym XF86Display           exec $bin/output_select
 bindsym XF86ScreenSaver       exec xset dpms force off
 bindsym XF86Sleep             exec i3lock -e --color 002b36 && systemctl suspend
 
@@ -52,7 +49,7 @@ bindsym XF86AudioMute         exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 # System controls:1 ends here
 
 # [[file:config.org::*System controls][System controls:2]]
-bindsym Print                 exec ~/.config/bin/screenshot
+bindsym Print                 exec $bin/screenshot
 bindsym $mod+backslash        exec playerctl play-pause
 bindsym $mod+bracketright     exec playerctl next
 bindsym $mod+bracketleft      exec playerctl previous
@@ -249,7 +246,7 @@ mode "$leader" {
   bindsym $mod+p mode "$powermenu"
   bindsym $mod+t mode "$timer"
   bindsym $mod+m mode "$menus"
-  bindsym $mod+s exec ~/.config/bin/startup; $esc
+  bindsym $mod+s exec $bin/startup; $esc
   bindsym Escape $esc
 }
 # Leader:1 ends here
@@ -266,7 +263,7 @@ set $powermenu <powermenu> \
 
 mode "$powermenu" {
   bindsym $mod+r       exec i3-msg restart;                                $esc
-  bindsym $mod+e       i3-msg exit;                                        $esc
+  bindsym $mod+e       exec i3-msg exit;                                        $esc
   bindsym $mod+shift+r exec systemctl reboot;                              $esc
   bindsym $mod+h       exec systemctl hibernate;                           $esc
   bindsym $mod+l       exec i3lock -e --color 002b36 && systemctl suspend; $esc
@@ -317,12 +314,12 @@ set $menus <menus> \
 │ screenshot \
 
 mode "$menus" {
-  bindsym $mod+a       exec ~/.config/bin/audio-menu;       $esc
-  bindsym $mod+o       exec ~/.config/bin/output-menu;      $esc
-  bindsym $mod+shift+o exec ~/.config/bin/layout-menu;      $esc
-  bindsym $mod+s       exec ~/.config/bin/screenshot-menu;  $esc
-  bindsym $mod+b       exec ~/.config/bin/bluetooth-menu;   $esc
-  bindsym $mod+p       exec ~/.config/bin/killprocess-menu; $esc
+  bindsym $mod+a       exec $bin/audio-menu;       $esc
+  bindsym $mod+o       exec $bin/output-menu;      $esc
+  bindsym $mod+shift+o exec $bin/layout-menu;      $esc
+  bindsym $mod+s       exec $bin/screenshot-menu;  $esc
+  bindsym $mod+b       exec $bin/bluetooth-menu;   $esc
+  bindsym $mod+p       exec $bin/killprocess-menu; $esc
   bindsym Escape $esc
 }
 # Menus:1 ends here

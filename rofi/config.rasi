@@ -6,7 +6,7 @@ configuration {
   matching: "glob"; // normal, regex, glob, fuzzy, prefix
 
   terminal : "alacritty";
-  font     : "Terminus 8";
+  font     : "Iosevka Nerd Font 10";
 
   modi: "drun,run,window,windowcd,ssh,filebrowser,keys";
 

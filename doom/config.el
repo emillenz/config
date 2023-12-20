@@ -26,15 +26,15 @@
 (setq
  doom-font-increment 1
  doom-big-font-increment 1
- doom-font                (font-spec :family "Terminus" :size 12)
- doom-variable-pitch-font (font-spec :family "Terminus" :size 12)
- doom-serif-font          (font-spec :family "Terminus" :size 12)
- doom-big-font            (font-spec :family "Terminus" :size 24))
+ doom-font                (font-spec :family "Iosevka Nerd Font" :size 14)
+ doom-variable-pitch-font (font-spec :family "Iosevka Nerd Font" :size 14)
+ doom-serif-font          (font-spec :family "Iosevka Nerd Font" :size 14)
+ doom-big-font            (font-spec :family "Iosevka Nerd Font" :size 24))
 
 (custom-set-faces!
   '(font-lock-keyword-face :slant normal :weight bold)
   '(font-lock-type-face    :slant normal :weight normal)
-  '(font-lock-comment-face :slant normal :weight normal))
+  '(font-lock-comment-face :slant italic :weight normal))
 ;; Font:1 ends here
 
 ;; [[file:config.org::*Modeline][Modeline:1]]
@@ -565,8 +565,8 @@
 
 ;; [[file:config.org::*Agenda][Agenda:2]]
 (setq
- org-agenda-scheduled-leaders '("─────" "←%3dd")
- org-agenda-deadline-leaders '("━━━━━" "⇒%3dd" "⇐%3dd")
+ org-agenda-scheduled-leaders '("─────" "←%3dd") ;; ←
+ org-agenda-deadline-leaders '("━━━━━" "⇒%3dd" "⇐%3dd") ;; ⇐ ⇒
  org-agenda-todo-keyword-format "%-3s"
  org-agenda-prefix-format
  '((agenda . "%-12c%-6s%-12t")

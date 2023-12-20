@@ -57,14 +57,13 @@ Imagine two kinds of grocery stores, one that just looks at what is the most pop
 - Am very opinionated and have high standards regarding design process
   + solarized fits those critera and thus aligns with philosophy
 
-* Font: Terminus (8pt)
+* Font: Iosevka
 - It is relatively compact in width to allow a lot of code on screen, especially when viewing content side by side.
 - It was specifically designed for long terminal / editor sessions (8+ hours). it aims to reduce eye strain and help readability in the long term.
 - Keep the fontsize small and don't be a neaderthal, working with huge fontsizes, making eyesight and neckposture worse.
   + makes you faster & less disorientated
 - It is a minimal and suckless font, it keeps everything thin, sharp and fast. This allows it to be used for every interface and work well.
 - When programming the code looks cold, dead and robotic. And every keystroke reminds of the fact that the commands of the mind are running on hardware that is made up of and powered by what humanity has ripped straight from mother nature's guts. A truly soulless experience.
-- Bitmapped font: Pixel-perfect rendering => No blurry characters ever. The font is optimized down to every single pixel.
   + Normal fonts appear blurry and cause nausea looking at them when they are at smaller sizes (8-12px) due to overlapping pixels.
 - Does not get fatty when enlarged.
 - Economical use of screen space and clarity at small sizes.

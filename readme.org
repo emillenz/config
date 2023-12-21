@@ -147,13 +147,14 @@ The software is chosen based on the criterion:
    + Coding: typically one statement per line
  - Forces you to use the focused, one buffer only workflow.
 
-*** Statusbar: None
-- For full immersion and focus disable it and work fullscreen.
-  + No overlapping functionality: you are wearing a watch -> don't need time & date.
+** Statusbar: None
+- A WM statusbar unneccessarily take up screen real-estate and usually just causes a distraction rather than actually being useful.
+- For full immersion, reduced distraction and enhanced focus, disable it and work fullscreen.
+  + No overlapping functionality. Ex:: you are wearing a watch -> don't need time & date displayed.
   + You always know what window you are looking at by its contents.
-  + You don't need visual indication of how to navigate to tabs, nor interact with the statusbar (ex: click something) => keyboard only workflow.
+  + You don't need visual indication of how to navigate to tabs, nor interact with the statusbar (ex: click something) => each specific tab is always on the same keybind.
 
-*** Completion menu: Rofi
+** Completion menu: Rofi
 - It's configured to look and Function consistent with emacs and the terminals completion frameworks. (fzf)
 - Purely text-based
 

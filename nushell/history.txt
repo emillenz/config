@@ -1,7 +1,3 @@
-git status
-git git commit -am 'sync'; git push
-git commit -am 'sync'; git push
-flatpak remove flathub md.obsidian.Obsidian
 nvim ~/Notes
 zellij kill-server
 nvim
@@ -9998,3 +9994,7 @@ man dunst
 playerctl metadata
 playerctl metadata --help | bat --language=man
 playerctl metadata
+bash
+ls
+ls -la
+ls

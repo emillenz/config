@@ -7,7 +7,7 @@
 * Info
 - These packages are for arch based distributions, using yay to also install packages which are found in the AUR.
 - If you use a different packagemanager you must ensure to install these programs on your own in order to get my workflow to work.
-- Run this script as root -> get no prompts // ~sudo su~
+- Run this script as root -> get no prompts
 
 * Setup
 #+begin_src sh
@@ -17,7 +17,7 @@ sudo pacman -Syyu
 * Core tools
 ** Terminal, Nushell
 #+begin_src sh
-yay --noconfirm -S alacritty curl libtool fzf fd ripgrep xclip xdg-utils cmake npm bat git gcc make xdotool tldr htop fish ttf-iosevka-nerd nushell tmux
+yay --noconfirm -S alacritty curl libtool fzf fd ripgrep xclip xdg-utils cmake npm bat git gcc make xdotool tldr htop fish ttf-iosevka-nerd ttf-iosevka-comfy nushell tmux
 #+end_src
 
 Set nushell to loginshell
@@ -35,11 +35,6 @@ echo "$USER ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/$USER"
 ** Make system-scripts executeable
 #+begin_src sh
 fd . ~/.config/bin -tf -x chmod +x {}
-#+end_src
-
-** Stupid xorg should be replaced (/uses it anyway/)
-#+begin_src sh
-sudo ln -s ~/.config/xprofile ~/.xprofile
 #+end_src
 
 * Editor: doom emacs
@@ -75,8 +70,7 @@ yay --noconfirm -S texlive-latexextra latex-mk pandoc
 - The main language for anything that is a program and not a script.
 #+begin_src sh :tangle no
 yay --noconfirm -S rustup
-rustup component add rust-analyzer-preview
-cargo install rustfmt rust-analyzer
+rustup component add rustfmt
 #+end_src
 
 *** C

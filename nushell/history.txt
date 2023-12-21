@@ -1,31 +1,3 @@
-date now | date to-table
-take -h | bat
-date now | date to-record
-date now | date to-record | take 3
-date now | date to-record | first 3
-date format -h | bat
-date format -l
-date now | date format "%Y_%m_%d.md"
-let d = "~/Notes"
-let n = daily_template.md
-path join  -h | bat
-$d | path join $n
-if !true
-if not true
-if not (true)
-if not (2  == 2) { print h}
-if (2  == 2) { print h}
-if !(2  == 2) { print h}
-if true or false {print a}
-if false or false {print a}
-nvim ~/Notes/
-nvim ~/Notes
-file  -h | bat
-cp  -h | bat
-mv  -h | bat
-cp -h | bat
-cp  -h | bat
-touch test.txt
 mv test.txt Notes/taste.txt
 cd .config/
 x(fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf --reverse)
@@ -9997,4 +9969,32 @@ ls
 ls -la
 polybar
 nvim
+ls
+cd ~
+ls
+ls 
+ls
+this
+ls
+this
+ls
+ls -la
+ls
+great
+ls
+git status
+ls -la
+this
+ls
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+ls
+ls -la
 ls

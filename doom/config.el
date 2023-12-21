@@ -450,11 +450,12 @@
 
 (setq
  org-list-demote-modify-bullet
- '( ("-"  . "+")
-    ("+"  . "+")
-    ("*"  . "+")
-    ("1."  . "a.")
-    ("1)" . "a)")))
+ '(("-"  . "-")
+   ("+"  . "+")
+   ("*"  . "-")
+   ("a."  . "a)")
+   ("1."  . "1)")
+   ("1)" . "a)")))
 
 (setf org-blank-before-new-entry
       '((heading          . t)
@@ -474,7 +475,7 @@
 ;; [[file:config.org::*Ligatures][Ligatures:1]]
 (setq-default prettify-symbols-alist
               '(("->" . "→")
-                ("|" . "│")
+                ("<-" . "←")
                 ("=>" . "⇒")
                 ("<=>" . "⇔")))
 ;; Ligatures:1 ends here

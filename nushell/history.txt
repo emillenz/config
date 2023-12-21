@@ -1,6 +1,3 @@
-dailynote 
-alacritty -e nvim ~/.config/
-git st
 git status
 git git commit -am 'sync'; git push
 git commit -am 'sync'; git push
@@ -9998,3 +9995,6 @@ light
 xbacklight -get
 notify-send --replace 
 man dunst
+playerctl metadata
+playerctl metadata --help | bat --language=man
+playerctl metadata

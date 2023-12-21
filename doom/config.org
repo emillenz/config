@@ -33,7 +33,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 * Theme
-- Disable italics => better readability (use bold if you want something to stand out.)
 #+begin_src emacs-lisp
 (setq
  doom-themes-enable-bold t
@@ -134,6 +133,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   (setq-default
    +popup-defaults
    '(:side right
+     :width 0.33
      :select nil
      :quit nil
      :modeline t)))

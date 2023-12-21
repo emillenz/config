@@ -1,9 +1,3 @@
-nvim ~/Notes
-zellij kill-server
-nvim
-e
-ls
-cd daily_notes/
 ls | get name | split list '-'
 ls | get name 
 ls | get name | each {|x| split list '-'}
@@ -9998,3 +9992,9 @@ bash
 ls
 ls -la
 ls
+xset dpms force off
+xset dpms 0 0 0
+ls -la
+polybar
+yay volumeicon 
+volumeicon  --help | bat --language=man

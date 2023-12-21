@@ -39,22 +39,22 @@ bindsym XF86Display           exec $bin/output_select
 bindsym XF86ScreenSaver       exec xset dpms force off
 bindsym XF86Sleep             exec i3lock -e --color 002b36 && systemctl suspend
 
-bindsym XF86AudioPlay         exec playerctl play && "󰐎 Play"
-bindsym XF86AudioPause        exec playerctl pause && notify-send "󰐎 Pause"
-bindsym XF86AudioNext         exec playerctl next && notify-send "󰒭 Next"
-bindsym XF86AudioPrev         exec playerctl previous && notify-send "󰒮 Prev"
-bindsym XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%')"
-bindsym XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%')"
+bindsym XF86AudioPlay         exec playerctl play
+bindsym XF86AudioPause        exec playerctl pause
+bindsym XF86AudioNext         exec playerctl next
+bindsym XF86AudioPrev         exec playerctl previous
+bindsym XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
+bindsym XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
 bindsym XF86AudioMute         exec pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)"
 # System & Media controls:1 ends here
 
 # [[file:config.org::*System & Media controls][System & Media controls:2]]
 bindsym Print             exec $bin/screenshot
-bindsym $mod+backslash    exec playerctl play-pause && notify-send "󰐎 Play-Pause"
-bindsym $mod+bracketright exec playerctl next && notify-send "󰒭 Next"
-bindsym $mod+bracketleft  exec playerctl previous && notify-send "󰒮 Prev"
-bindsym $mod+equal        exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%')"
-bindsym $mod+minus        exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%')"
+bindsym $mod+backslash    exec playerctl play-pause
+bindsym $mod+bracketright exec playerctl next
+bindsym $mod+bracketleft  exec playerctl previous
+bindsym $mod+equal        exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
+bindsym $mod+minus        exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
 bindsym $mod+0            exec pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)"
 # System & Media controls:2 ends here
 

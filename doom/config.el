@@ -96,6 +96,7 @@
   (setq-default
    +popup-defaults
    '(:side right
+     :width 0.33
      :select nil
      :quit nil
      :modeline t)))

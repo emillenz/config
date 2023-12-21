@@ -24,7 +24,7 @@ Imagine two kinds of grocery stores, one that just looks at what is the most pop
   + Uses colorcoding whenever possible since this enhances readability.
   + Use Icons to enhance ui readability. [[https://www.nerdfonts.com/cheat-sheet][icons ressource]] // but never in editing environments such as writing / coding.
   + This system puts emphasis on a text & data driven evironment wherever possible This will reduce complexity and increase extensibility and interchangeablilty. You will also benefit from a more unified and consistent interface across applications.
-- Consistency: This config aims to be globally consistent in its design, behaviour and control.
+- Consistency :: This config aims to be globally consistent in its design, behaviour and control.
   + Which means things like [colorscheme, font, navigation, maps] were once carefully analyzed, choosen and designed and then implemented across the tools (terminal, editor, webbrowser, wm, docreader...)
   + Avoid using splits in your programs and prefer the full tab/buffer only workflow. (exception: need to actively monitor two different positions)
     + Splits are useless 80% of the time, hence take up screenspace, cluttering it with information you do not need, and that will distract your focus.
@@ -33,11 +33,11 @@ Imagine two kinds of grocery stores, one that just looks at what is the most pop
     + Enforcing this causes less overhead and more consistency.
     + Get rid of the large set of now redundant maps for manual split management.
 - completion menus, bookmarks (bindings to hotswitch) and fuzzy finding are exponentially more efficient than navigating and selecting the destinations manually.
-- UI: Think of the ui as a  hud
+- UI :: Think of the ui as a  hud
   + Remove all distractions and think critically if this feature is implemented just because it is possible/showoff/"cool" or because it is a detrimental part of the workflow that enhances the ergongomics/efficiency/possibilities/workflow of the tool.
   + Window/tabbars at the top, statusbars generally on the bottom.
   + Completion-menu's are an extensions of the statusbar => do not block view, consistently on the same spot across all apps (terminal, emacs, rofi)
-- *Thinking fast & slow:* Rely on fast, instinctive thinking for non repeating tasks and for repeating patterns / actions on the slow, precise, analytical thinking.
+- Thinking fast & slow :: Rely on fast, instinctive thinking for non repeating tasks and for repeating patterns / actions on the slow, precise, analytical thinking.
   + this is the definition of DRY, or not repeating yourself / taking the minimal required no. of actions to get to the disired output/position.
   + ex: use vims search replace with patterns instead of manually going through and changing each instance
   + ex: relative line jumping >> spamming =j=
@@ -57,20 +57,23 @@ Imagine two kinds of grocery stores, one that just looks at what is the most pop
 - Am very opinionated and have high standards regarding design process
   + solarized fits those critera and thus aligns with philosophy
 
-* Font: Iosevka
-- It is relatively compact in width to allow a lot of code on screen, especially when viewing content side by side.
-- It was specifically designed for long terminal / editor sessions (8+ hours). it aims to reduce eye strain and help readability in the long term.
-- Keep the fontsize small and don't be a neaderthal, working with huge fontsizes, making eyesight and neckposture worse.
+* Font: Iosevka Comyf (Custom iosevka build)
+- It is incredibly compact in width to allow a lot of code on screen, especially when viewing content side by side.
+- Designed for writing code, using in terminals, and preparing technical documents.
+  + The intent is to make everything feel part of the same aesthetic, hence setting the font system-wide.
+- It was specifically designed for long terminal / editor sessions (8+ hours). it aims to reduce eye strain and help readability in the long term. (Try using terminus with a ligth theme in a dark room for 8h)
+- Keep the fontsize small and don't be a neaderthal. Working with huge fontsizes, making eyesight and neckposture worse.
   + makes you faster & less disorientated
-- It is a minimal and suckless font, it keeps everything thin, sharp and fast. This allows it to be used for every interface and work well.
+- It is a minimal, thin, sharp and fast. This allows it to be used in all context and interfaces.
 - When programming the code looks cold, dead and robotic. And every keystroke reminds of the fact that the commands of the mind are running on hardware that is made up of and powered by what humanity has ripped straight from mother nature's guts. A truly soulless experience.
-  + Normal fonts appear blurry and cause nausea looking at them when they are at smaller sizes (8-12px) due to overlapping pixels.
-- Does not get fatty when enlarged.
 - Economical use of screen space and clarity at small sizes.
+#+begin_quote
+Iosevka Comfy optimises for inter-glyph and inter-style consistency within the overarching constraint of usability at small point sizes. The shapes are round and are designed in concert to both impose a predictable rhythm and keep characters distinct from each other.
+#+end_quote
+[[https://github.com/protesilaos/iosevka-comfy][Full Spec]]
 
 * Dependencies
-- All the packages and programs needed for this os: [[file:packages.org][Packages]]
-- additional setup commands inside [[file:setup.org][Setup]]
+- All packages & other commadns found under: [[file:setup.org][Setup]].
 
 * Keymaps
 - Consistency is important because they make the keys easier to remember.

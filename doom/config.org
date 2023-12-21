@@ -57,10 +57,10 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (setq
  doom-font-increment 1
  doom-big-font-increment 1
- doom-font                (font-spec :family "Iosevka Nerd Font" :size 14)
- doom-variable-pitch-font (font-spec :family "Iosevka Nerd Font" :size 14)
- doom-serif-font          (font-spec :family "Iosevka Nerd Font" :size 14)
- doom-big-font            (font-spec :family "Iosevka Nerd Font" :size 24))
+ doom-font                (font-spec :family "Iosevka Comfy" :size 14)
+ doom-variable-pitch-font (font-spec :family "Iosevka Comfy" :size 14)
+ doom-serif-font          (font-spec :family "Iosevka Comfy" :size 14)
+ doom-big-font            (font-spec :family "Iosevka Comfy" :size 24))
 
 (custom-set-faces!
   '(font-lock-keyword-face :slant normal :weight bold)
@@ -207,7 +207,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 ** Global navigation scheme
 - Follows the os-consistent keymap, using alt for the only & essential navigational commands (there may better ones for what you want to achive => inside leadermode)
 - When you are working in a project with multiple different files, open each file in a new tab. This-way you can hotkey to that exact file instantly.
-  + Only do this for buffers you know you want to come back to later. // doesnt become cluttered with all other buffers
+  + Only do this for buffers you know you want to come back to later. | doesnt become cluttered with all other buffers
 - They are the most efficient way of navigating between multiple different files/buffer at the same time (most efficient way i have found to introduce little overhead when context-switching and remaining distractionfree)
 - Never create splits for buffers, prefer the full screen, full focus, no distractions - workflow. (no multitasking, no clutter)
   + When emacs creates splits we must handle them:
@@ -779,8 +779,8 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 + Set more concise & informing ~deadline~ & ~scheduled~ strings
 #+begin_src emacs-lisp
   (setq
-   org-agenda-scheduled-leaders '("─────" "←%3dd") ;; ←
-   org-agenda-deadline-leaders '("━━━━━" "⇒%3dd" "⇐%3dd") ;; ⇐ ⇒
+   org-agenda-scheduled-leaders '("─────" "<%3dd") ;; ←
+   org-agenda-deadline-leaders '("━━━━━" ">>%3dd" "<<%3dd") ;; ⇐ ⇒
    org-agenda-todo-keyword-format "%-3s"
    org-agenda-prefix-format
    '((agenda . "%-12c%-6s%-12t")

@@ -48,7 +48,7 @@ default_orientation horizontal
 default_border pixel 1
 hide_edge_borders smart
 title_align left
-font pango: Iosevka Nerd Font 10
+font pango: Iosevka Comfy 10
 focus_on_window_activation focus
 #+end_src
 

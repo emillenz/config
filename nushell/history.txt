@@ -1,37 +1,3 @@
- syncthing 
-killall xautolock
-man xset
-tldr xset
-ps | get name | str contains xset
-tldr xset
-xset r  -h | bat
-xset s off # no screensaver either on or locked with xautolock after 30min
-bash -c	grep -qP -m1 '[^un]bind.+\/[^:]+\(usb\)' <(udevadm monitor -u -t seat -s input -s usb)
-udevadm monitor -u -t seat -s input -s usb
-sudo xset s off
-xset s off
-bc -l
-syncthing
-startup
-tldr zathura
-pip install calcure
-dnfi pi
-dnfi pip
-pip install calcure
-calcure
- calcure
-sudo dnfi calcurse
-dnfi calcurse
-pip  -h | bat 
-pip  uninstall calcure
-calcurse 
-cal
-cal  -h | bat
-date
-date now
-date format
-date humanize
-date now | date to-record
 date now | date humanize
 date now | date to-record
 date now | date to-table
@@ -9998,3 +9964,37 @@ Snt
 ls
 polybar
 ls
+yay iosevka
+ls
+xset dpms force off
+ls
+cd .config/
+ls
+bat setup.org
+yay iosevka
+ls
+sudo vim /etc/mkinitcpio.conf
+sudo nvim /etc/mkinitcpio.conf
+ch /etc
+cd /etc
+ls
+nvim .
+sudo nvim .
+cd ~/.local/share
+ls
+cd /
+cd usr/
+ls
+rg dvorak
+rg --files dvorak
+rg -l dvorak
+cd share/X11
+rg -l dvorak
+nvim .
+cd /etc/default
+sudo nvim keyboard
+bat keyboard
+nvim .
+ls
+ls -la
+polybar

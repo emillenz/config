@@ -236,7 +236,6 @@ mode "$open" {
 bindsym $mod+space mode "$leader"
 set $leader <leader> \
 │ keyboard+ \
-│ timer+ \
 │ powermenu+ \
 │ menus+ \
 │ startup
@@ -244,7 +243,6 @@ set $leader <leader> \
 mode "$leader" {
   bindsym $mod+k mode "$keyboard"
   bindsym $mod+p mode "$powermenu"
-  bindsym $mod+t mode "$timer"
   bindsym $mod+m mode "$menus"
   bindsym $mod+s exec $bin/startup; $esc
   bindsym Escape $esc
@@ -272,37 +270,6 @@ mode "$powermenu" {
   bindsym Escape $esc
 }
 # Powermenu:1 ends here
-
-# [[file:config.org::*Timer][Timer:1]]
-set $timer_cmd ~/.config/bin/timer --frequency=1m
-
-set $timer <timer> \
-│ toggle \
-│ reset \
-│ stopwatch \
-│ interval: 60m \
-│ ^interval: 60/5m \
-│ prompt \
-│ [1-9] timer: *10m
-
-mode "$timer" {
-  bindsym $mod+t       exec $timer_cmd toggle;       $esc
-  bindsym $mod+r       exec $timer_cmd reset;        $esc
-  bindsym $mod+s       exec $timer_cmd start;        $esc
-  bindsym $mod+i       exec $timer_cmd start 60m 0m; $esc
-  bindsym $mod+shift+i exec $timer_cmd start 60m 5m; $esc
-  bindsym $mod+1       exec $timer_cmd start 10m;    $esc
-  bindsym $mod+2       exec $timer_cmd start 20m;    $esc
-  bindsym $mod+3       exec $timer_cmd start 30m;    $esc
-  bindsym $mod+4       exec $timer_cmd start 40m;    $esc
-  bindsym $mod+5       exec $timer_cmd start 50m;    $esc
-  bindsym $mod+6       exec $timer_cmd start 60m;    $esc
-  bindsym $mod+7       exec $timer_cmd start 70m;    $esc
-  bindsym $mod+8       exec $timer_cmd start 80m;    $esc
-  bindsym $mod+9       exec $timer_cmd start 90m;    $esc
-  bindsym Escape $esc
-}
-# Timer:1 ends here
 
 # [[file:config.org::*Menus][Menus:1]]
 set $menus <menus> \

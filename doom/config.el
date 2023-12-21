@@ -566,8 +566,8 @@
 
 ;; [[file:config.org::*Agenda][Agenda:2]]
 (setq
- org-agenda-scheduled-leaders '("─────" "<%3dd") ;; ←
- org-agenda-deadline-leaders '("━━━━━" ">>%3dd" "<<%3dd") ;; ⇐ ⇒
+ org-agenda-scheduled-leaders '("─────" "<-%3dd") ;; NOTE :: unicode is not fixed width => breaks formatting => cannot use it.
+ org-agenda-deadline-leaders '("━━━━━" "=>%3dd" "<=%3dd") ;; ⇐ ⇒
  org-agenda-todo-keyword-format "%-3s"
  org-agenda-prefix-format
  '((agenda . "%-12c%-6s%-12t")

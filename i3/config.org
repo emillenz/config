@@ -29,7 +29,6 @@ set $esc mode "default"
 set $bin ~/.config/bin
 #+end_src
 
-
 * Startup automation
 [[file:$bin/startup][Startup]] Launches processes and daemons i need for my workflow.
 - Make sure that your user never get sudo prompted for commands, bc the script runs non-interactive sudo commands. (see: [[file:~/.config/setup.org][Setup]] on how to never be sudoprompted)
@@ -52,7 +51,6 @@ font pango: Iosevka Comfy 10
 focus_on_window_activation focus
 #+end_src
 
-
 * Keybindings
 Using Alt inside Applications to get the same behaviour, but in the app  in order to minimize conflict with existing shortcuts.
 eg. Emacs: Alt+f-> find-file, eg. Terminal: Alt+e->edit-command-in-editor
@@ -66,9 +64,8 @@ set $mod Mod4
 #+end_src
 
 ** Mouse
-- Hold down the modkey to resize/move the window with M1 / M2.
 - Middle mouse button for killing the Window (consistent with other gui Apps like webbrowser )
-- Unmap scrolling on titlebar // prevents accidental window switches
+- Unmap scrolling on titlebar => prevents accidental window switches
 #+begin_src conf
 floating_modifier $mod
 bindsym --release button2 kill
@@ -186,8 +183,6 @@ workspace 2 output          primary
 workspace 3 output          primary
 workspace 4 output          primary
 #+end_src
-
-
 
 ** App navigation bindings
 - The idea is to bind to the abstract function of the program, and not to the specific instance itself -> if a different program is used, the functionality remains the same.
@@ -321,7 +316,6 @@ mode "$open" {
 bindsym $mod+space mode "$leader"
 set $leader <leader> \
 │ keyboard+ \
-│ timer+ \
 │ powermenu+ \
 │ menus+ \
 │ startup
@@ -329,7 +323,6 @@ set $leader <leader> \
 mode "$leader" {
   bindsym $mod+k mode "$keyboard"
   bindsym $mod+p mode "$powermenu"
-  bindsym $mod+t mode "$timer"
   bindsym $mod+m mode "$menus"
   bindsym $mod+s exec $bin/startup; $esc
   bindsym Escape $esc
@@ -372,40 +365,6 @@ mode "$powermenu" {
   bindsym $mod+l       exec i3lock -e --color 002b36 && systemctl suspend; $esc
   bindsym $mod+s       exec xset dpms force off;                           $esc
   bindsym $mod+p       exec systemctl poweroff;                            $esc
-  bindsym Escape $esc
-}
-#+end_src
-
-*** Timer
-This is a simple timer that is displayed in Polybar and is useful to track time spent/to be more efficient and productive with time management.
-- Lower frequency -> less visually distractiong as not ticking down in statusbar
-#+begin_src conf
-set $timer_cmd ~/.config/bin/timer --frequency=1m
-
-set $timer <timer> \
-│ toggle \
-│ reset \
-│ stopwatch \
-│ interval: 60m \
-│ ^interval: 60/5m \
-│ prompt \
-│ [1-9] timer: *10m
-
-mode "$timer" {
-  bindsym $mod+t       exec $timer_cmd toggle;       $esc
-  bindsym $mod+r       exec $timer_cmd reset;        $esc
-  bindsym $mod+s       exec $timer_cmd start;        $esc
-  bindsym $mod+i       exec $timer_cmd start 60m 0m; $esc
-  bindsym $mod+shift+i exec $timer_cmd start 60m 5m; $esc
-  bindsym $mod+1       exec $timer_cmd start 10m;    $esc
-  bindsym $mod+2       exec $timer_cmd start 20m;    $esc
-  bindsym $mod+3       exec $timer_cmd start 30m;    $esc
-  bindsym $mod+4       exec $timer_cmd start 40m;    $esc
-  bindsym $mod+5       exec $timer_cmd start 50m;    $esc
-  bindsym $mod+6       exec $timer_cmd start 60m;    $esc
-  bindsym $mod+7       exec $timer_cmd start 70m;    $esc
-  bindsym $mod+8       exec $timer_cmd start 80m;    $esc
-  bindsym $mod+9       exec $timer_cmd start 90m;    $esc
   bindsym Escape $esc
 }
 #+end_src

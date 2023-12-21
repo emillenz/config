@@ -90,7 +90,7 @@
 
 (after! org
   (setq org-src-window-setup 'current-window)
-  (set-popup-rule! "^\\*Org Src" :ignore t)) ;; HACK: fullscreen window
+  (set-popup-rule! "^\\*Org Src" :ignore t)) ;; HACK :: fullscreen window
 
 (after! doom
   (setq-default
@@ -102,14 +102,14 @@
      :modeline t)))
 
 (after! helpful
-  (set-popup-rule! ".*help.*" :ignore t)) ;; HACK: use defautls
+  (set-popup-rule! ".*help.*" :ignore t)) ;; HACK :: use defautls
 
 (after! lsp-mode
-  (set-popup-rule! ".*help.*" :ignore t)) ;; HACK: use defautls
+  (set-popup-rule! ".*help.*" :ignore t)) ;; HACK :: use defautls
 ;; Window layout & behavior:1 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:2]]
-;; NOTE: not prog mode => breaks with flychecking
+;; NOTE :: not prog mode => breaks with flychecking
 (add-hook!
  '(text-mode-hook
    dired-mode-hook
@@ -134,7 +134,7 @@
 
 (map! :leader
       "t" nil
-      "u" doom-leader-toggle-map ;; HACK: remap toggle => ui (more sensible)
+      "u" doom-leader-toggle-map ;; HACK :: remap toggle => ui (more sensible)
       (:prefix ("u" . "ui")
                "V" #'visual-fill-column-mode
                "C" #'company-mode)
@@ -194,7 +194,7 @@
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
 (after! evil
-  ;; HACK disable all default-maps (mappings used are below)
+  ;; HACK :: disable all default-maps (mappings used are below)
   (add-hook 'evil-mode-hook #'evil-cleverparens-mode)
   (setq evil-cleverparens-use-s-and-S nil
         evil-cleverparens-use-additional-bindings nil
@@ -234,7 +234,7 @@
 
 ;; [[file:config.org::*Instant jumping][Instant jumping:1]]
 (after! evil
-  (map! :map evil-snipe-local-mode-map ;; HACK: need to override evil-snipe
+  (map! :map evil-snipe-local-mode-map ;; HACK :: need to override evil-snipe
         :nmvo "s" #'evil-avy-goto-char-2-below
         :nmvo "S" #'evil-avy-goto-char-2-above))
 ;; Instant jumping:1 ends here
@@ -336,7 +336,7 @@
 (after! company
   (setq
    company-minimum-prefix-length 1
-   company-idle-delay 0.1 ;; NOTE: don't set to 0
+   company-idle-delay 0.1 ;; NOTE :: don't set to 0
    company-show-quick-access t
    company-global-modes
    '(not
@@ -393,7 +393,7 @@
   (dolist (file (dired-get-marked-files))
     (let* ((file (dired-get-filename))
            (dest (concat "~/Archive/" (file-relative-name file "~/"))))
-      (rename-file file dest 1)))) ;; NOTE: "1": propt before overwrite
+      (rename-file file dest 1)))) ;; NOTE :: "1": propt before overwrite
 ;; Archive file:1 ends here
 
 ;; [[file:config.org::*\[begin\]][[begin]:1]]
@@ -409,7 +409,7 @@
 
 (setq
  org-directory "~/Documents/org"
- org-archive-location "~/Archive/org/%s::" ;; NOTE: archive based on file path
+ org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
  org-blank-before-new-entry '((heading . t)
                               (plain-list-item . nil))
  org-use-property-inheritance t
@@ -468,7 +468,7 @@
  org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
  org-superstar-item-bullet-alist
  '((?-  . "─")
-   (?* . "─") ;; NOTE: never use these, asteriks are for headings only => no unambigiuity
+   (?* . "─") ;; NOTE :: never use these, asteriks are for headings only => no unambigiuity
    (?+ . "⇒")))
 ;; Symbols:1 ends here
 
@@ -484,14 +484,14 @@
 (setq org-todo-keywords
       '((type
          "[#](#)"
-         "[ ](t)" ;; HACK: cannot use " " => [T]odo
+         "[ ](t)" ;; HACK :: cannot use " " => [T]odo
          "[?](?!)"
          "[-](-@)"
          "[=](=@)"
          "[&](&@)"
          "|"
          "[x](x!)"
-         "[@](d@)" ;; HACK: cannot use"@" => [D]elegated
+         "[@](d@)" ;; HACK :: cannot use"@" => [D]elegated
          "[\\](\\@)")))
 ;; Task states:1 ends here
 
@@ -593,7 +593,7 @@
  '(("d" "default" entry
     (file "~/Documents/templates/journal_template.org")
     :target (file+head
-             "%<%Y-%m-%d>.org" ;; NOTE: needs this exact format as filename to show up in org-agenda
+             "%<%Y-%m-%d>.org" ;; NOTE :: needs this exact format as filename to show up in org-agenda
              "#+title:\tDaily Journal: %<%Y-%m-%d>\n#+author:\tEmil Lenz\n#+email:\temillenz@protonmail.com\n#+date:\t\t%<%A, %e %B, %Y>\n"
              ))))
 ;; Roam:1 ends here
@@ -671,7 +671,7 @@ Jumps at tangled code from org src block."
      (("task" :keys "t"
        :template
        ("* [ ] %^{title} %^g"
-        "%?") ;; NOTE: not putting final insert on newline => tasks are a list and not paragraph
+        "%?") ;; NOTE :: not putting final insert on newline => tasks are a list and not paragraph
        :children
        (("cs"   :keys "c" :file "cs/tasks.org"
          :children

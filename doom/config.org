@@ -9,9 +9,9 @@ Professional, minimalist tools like Emacs have a high learning curve and require
 
 The saying, "give 'em enough rope, and they'll likely hang themselves," holds true. Emacs provides the rope if you are not careful.
 
-- Note: This config has some settings that will only go into effect after the config has been reloaded. Do this using ~doom/reload~ after you connect the first time to the emacs daemon.
-- Note: If getting an error using ~doom/reload~, just run ~doom sync~ from terminal.
-- NOTE: after installing use the ~doom~ command to fix errors, update, etc...
+- This config has some settings that will only go into effect after the config has been reloaded. Do this using ~doom/reload~ after you connect the first time to the emacs daemon.
+- If getting an error using ~doom/reload~, just run ~doom sync~ from terminal.
+- After installing use the ~doom~ command to fix errors, update, etc...
 - It is advised to only copy snippets of this config that are understood, and to build from there.
 - if you decide to use parts (or the entire config) *ensure* that you have *at least* every doom/module and package installed / enabled as i do, otherwise emacs will throw errors left and right.
   + modules: [[file:init.el]]
@@ -128,7 +128,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 (after! org
   (setq org-src-window-setup 'current-window)
-  (set-popup-rule! "^\\*Org Src" :ignore t)) ;; HACK: fullscreen window
+  (set-popup-rule! "^\\*Org Src" :ignore t)) ;; HACK :: fullscreen window
 
 (after! doom
   (setq-default
@@ -140,10 +140,10 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
      :modeline t)))
 
 (after! helpful
-  (set-popup-rule! ".*help.*" :ignore t)) ;; HACK: use defautls
+  (set-popup-rule! ".*help.*" :ignore t)) ;; HACK :: use defautls
 
 (after! lsp-mode
-  (set-popup-rule! ".*help.*" :ignore t)) ;; HACK: use defautls
+  (set-popup-rule! ".*help.*" :ignore t)) ;; HACK :: use defautls
 #+end_src
 
 - Centered windows for better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).
@@ -155,7 +155,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   + Take math for example, its easier to read equations if they are on newline
   + Coding: typically one statement per line
 #+begin_src emacs-lisp
-;; NOTE: not prog mode => breaks with flychecking
+;; NOTE :: not prog mode => breaks with flychecking
 (add-hook!
  '(text-mode-hook
    dired-mode-hook
@@ -186,7 +186,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 (map! :leader
       "t" nil
-      "u" doom-leader-toggle-map ;; HACK: remap toggle => ui (more sensible)
+      "u" doom-leader-toggle-map ;; HACK :: remap toggle => ui (more sensible)
       (:prefix ("u" . "ui")
                "V" #'visual-fill-column-mode
                "C" #'company-mode)
@@ -205,7 +205,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 ** Global navigation scheme
-- NOTE: Follows the os-consistent keymap, using alt for the only & essential navigational commands (there may better ones for what you want to achive => inside leadermode)
+- Follows the os-consistent keymap, using alt for the only & essential navigational commands (there may better ones for what you want to achive => inside leadermode)
 - When you are working in a project with multiple different files, open each file in a new tab. This-way you can hotkey to that exact file instantly.
   + Only do this for buffers you know you want to come back to later. // doesnt become cluttered with all other buffers
 - They are the most efficient way of navigating between multiple different files/buffer at the same time (most efficient way i have found to introduce little overhead when context-switching and remaining distractionfree)
@@ -281,7 +281,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 #+begin_src emacs-lisp
 (after! evil
-  ;; HACK disable all default-maps (mappings used are below)
+  ;; HACK :: disable all default-maps (mappings used are below)
   (add-hook 'evil-mode-hook #'evil-cleverparens-mode)
   (setq evil-cleverparens-use-s-and-S nil
         evil-cleverparens-use-additional-bindings nil
@@ -329,7 +329,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - Override the otherwise useless ~s~ key with a precise char jump. No more relative line jumping and then ~f~ or ~t~ jumping inline, or spamming ~ewbhl~. Instead just jump to the exact position you need to get to immediately without the mental overhead (of doing both steps).
 #+begin_src emacs-lisp
 (after! evil
-  (map! :map evil-snipe-local-mode-map ;; HACK: need to override evil-snipe
+  (map! :map evil-snipe-local-mode-map ;; HACK :: need to override evil-snipe
         :nmvo "s" #'evil-avy-goto-char-2-below
         :nmvo "S" #'evil-avy-goto-char-2-above))
 #+end_src
@@ -460,7 +460,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 (after! company
   (setq
    company-minimum-prefix-length 1
-   company-idle-delay 0.1 ;; NOTE: don't set to 0
+   company-idle-delay 0.1 ;; NOTE :: don't set to 0
    company-show-quick-access t
    company-global-modes
    '(not
@@ -524,7 +524,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
   (dolist (file (dired-get-marked-files))
     (let* ((file (dired-get-filename))
            (dest (concat "~/Archive/" (file-relative-name file "~/"))))
-      (rename-file file dest 1)))) ;; NOTE: "1": propt before overwrite
+      (rename-file file dest 1)))) ;; NOTE :: "1": propt before overwrite
 #+end_src
 
 * Org Mode
@@ -546,7 +546,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 
   (setq
    org-directory "~/Documents/org"
-   org-archive-location "~/Archive/org/%s::" ;; NOTE: archive based on file path
+   org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
    org-blank-before-new-entry '((heading . t)
                                 (plain-list-item . nil))
    org-use-property-inheritance t
@@ -608,7 +608,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
    org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
    org-superstar-item-bullet-alist
    '((?-  . "─")
-     (?* . "─") ;; NOTE: never use these, asteriks are for headings only => no unambigiuity
+     (?* . "─") ;; NOTE :: never use these, asteriks are for headings only => no unambigiuity
      (?+ . "⇒")))
 #+end_src
 
@@ -626,9 +626,9 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 - These are task states are used for personal daily organization & studying at university (keeping track of lectures, assignments, events, exercise sheets.)
 - Using symbols instead of words to represent states => less clutter, more concise, readeable & structured
 - Order them with priorities to assign order of execution if there are many tasks
-- States with ~@~ prompt for note // if want to do manually: ~org-add-note~
+- States with ~@~ prompt for note | if want to do manually: ~org-add-note~
   + Reflecting
-  + Log/track:
+  + Log/track
     + Progress
     + Time
     + Performance
@@ -636,59 +636,59 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
     + Steps taken to complete task
   + Reason: Why task was moved to that state
   + Seamlessly pick up work at a later time
-  + ~[ ] watch lecture~ -> ~[~] watch lecture~ // annotate time: where the task was last left off: "@25min"
+  + ~[ ] watch lecture~ -> ~[~] watch lecture~ | annotate time: where the task was last left off: "@25min"
 
-*[#]*: Event // Calendar icon
+~[#]~: Event | Calendar icon
 - Useful if you have to take steps after the event
 - ~[#] Attend lecture~
 
-*[ ]*: Outstanding item // checkbox
+~[ ]~: Outstanding item | checkbox
 - ~[ ] Assignment~
 
-*[?]*: Optional
+~[?]~: Optional
 - Non-compulsory item
 - ~[?] Read supplemental article~
 
-*[-]*: In-progress / started
+~[-]~: In-progress / started
 - item being worked on
 - ~[-] Watch lecture [00:57h]~
 
-*[=]*: On-hold // pause symbol
+~[=]~: On-hold | pause symbol
 - Unfinished item waiting for smthing, before can be finished / continued
 - ~[=] Correct Assignment~
 
-*[&]*: Review
+~[&]~: Review
 - Review item (ex: correct assignment, revise meeting notes).
 - Post completion: review performance, asess effort...
 - ~[&] Assingnment~
 
-*[\]*: Cancelled // math:settheory: excluding operator; math: negation, crossing the =op=
+~[\]~: Cancelled | math:settheory: excluding operator; math: negation, crossing the =op=
 - No longer neccessary
 - ~[\] Assignment~
 
-*[@]*: Delegated
-- Delegated to someone (needs follow-up) // addressing-operator
+~[@]~: Delegated
+- Delegated to someone (needs follow-up) | addressing-operator
 - ~[@] Create powerpoint @johndoe~
 
-*[x]*: Completed // cross-out sign
+~[x]~: Completed | cross-out sign
 - ~[x] Assignment~
 
 #+begin_src emacs-lisp
   (setq org-todo-keywords
         '((type
            "[#](#)"
-           "[ ](t)" ;; HACK: cannot use " " => [T]odo
+           "[ ](t)" ;; HACK :: cannot use " " => [T]odo
            "[?](?!)"
            "[-](-@)"
            "[=](=@)"
            "[&](&@)"
            "|"
            "[x](x!)"
-           "[@](d@)" ;; HACK: cannot use"@" => [D]elegated
+           "[@](d@)" ;; HACK :: cannot use"@" => [D]elegated
            "[\\](\\@)")))
 #+end_src
 
-- Color coding is done to give sense of importance: Red > orange > green > grey // purple: misc
+- Color coding is done to give sense of importance: Red -> orange -> green -> grey | purple: misc
 | Color       | Assignment  |
 |-------------+-------------|
 | Red         | Outstanding |
@@ -809,7 +809,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
    '(("d" "default" entry
       (file "~/Documents/templates/journal_template.org")
       :target (file+head
-               "%<%Y-%m-%d>.org" ;; NOTE: needs this exact format as filename to show up in org-agenda
+               "%<%Y-%m-%d>.org" ;; NOTE :: needs this exact format as filename to show up in org-agenda
                "#+title:\tDaily Journal: %<%Y-%m-%d>\n#+author:\tEmil Lenz\n#+email:\temillenz@protonmail.com\n#+date:\t\t%<%A, %e %B, %Y>\n"
                ))))
 #+end_src
@@ -832,6 +832,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 5. Allocate a precise timeframe for each item, not vaguely. if not important & not urgent, dont assign a timestamp
 6. Write out details on how to achive that task if neccessary.
 7. Refile each item into the respective file in the ~org-directory~ under the headline ~Inbox~ // use one file per project ex: ~personal~, ~uni~, ~work~
+
 *** Org directory
 - 2 files per project, (ex: ~uni~, ~personal~)
   + Todo (todo items, tasks)
@@ -840,6 +841,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
   + lecture notes
   + exercise notes
   + ideas
+
 *** Timetracking
 - Use org-clock to track the time spent on tasks / projects.
 
@@ -850,7 +852,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
   + Its not about some fancy looking thing, its about the internals, the quality of the data, not the presentation.
 
 ** Tags
-- always use tags to specify what a todo-item belongs to & never write it in the todo-name // not: ~TODO uni math assignment [2]~ => instead: ~TODO assignment [2] :uni:math:assignments:~
+- always use tags to specify what a todo-item belongs to & never write it in the todo-name | not: ~TODO uni math assignment [2]~ => instead: ~TODO assignment [2] :uni:math:assignments:~
 - use tags with path hierarchy & inheritance to signal to which project / topic / subject the task belongs to have a clear overview in the agenda.
   + mark top level subject with tag
   + ex: ~:cs:math:statisticts:exercise~ => filter: outstanding ~exercises~ of math.
@@ -861,7 +863,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 - Never mention the location/project of the task, instead specify it as a task hierarchy (scope resolution, flexible querying) (same as in programming var-names should never include the typee / functions don't have module-name in their name, instead the location is specified via module)
   + ~[ ] fix bugs in emacs config for the org mode module~ => ~[ ] fix bugs :config:emacs:org:~
   + this is a clear and highly structured, data orientated approach. (all the benefits of data follow: querying, extensibility...)
-- org-agenda: filter for all headings with that specific tag across all files (eg. sort class specific todos w tags)
+- org-agenda :: filter for all headings with that specific tag across all files (eg. sort class specific todos w tags)
 
 ** Keywords to downcase
 - By default emacs has these as uppercase (the poor man's bold), however times change and the lowercase standard should be used globally.
@@ -880,7 +882,6 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 #+end_src
 
 ** Link file
-
 More convenient, with a nice display.
 #+begin_src emacs-lisp
 (defun z/org-link-file ()
@@ -955,7 +956,7 @@ More convenient, with a nice display.
      (("task" :keys "t"
        :template
        ("* [ ] %^{title} %^g"
-        "%?") ;; NOTE: not putting final insert on newline => tasks are a list and not paragraph
+        "%?") ;; NOTE :: not putting final insert on newline => tasks are a list and not paragraph
        :children
        (("cs"   :keys "c" :file "cs/tasks.org"
          :children
@@ -1060,52 +1061,11 @@ More convenient, with a nice display.
 
 - Run nushell commands using the environtment:: use ~--execute~ instead of ~--commands~
   + Runs it as if interactive (all settings, scripts loaded)
-- display =cwd= in shell-prompt.
+- Display =cwd= in shell-prompt.
 #+begin_src emacs-lisp
 (setq shell-command-prompt-show-cwd t)
 #+end_src
 
 * [?] Under review
-** Personal tags
-- Not used currently
-#+begin_src emacs-lisp :tangle no
-  (setq org-tag-persistent-alist
-        '(("ep "      . ?e)
-          ("la"       . ?l)
-          ("ad"       . ?a)
-          ("dm"       . ?d)
-          ("cs"       . ?c)
-          ("personal" . ?p)
-          ("config"   . ?C)))
-#+end_src
-
 ** org-ql
-** Override language indentation
--  not consistent => disabled
-#+begin_src emacs-lisp :tangle no
-(setq-hook! 'prog-mode-hook
-  org-indent-indentation-per-level 2
-  evil-shift-width 2
-  standard-indent 2
-  tab-width 2
-  evil-indent-convert-tabs t
-  indent-tabs-mode nil)
-
-(setq-hook! 'python-mode-hook
-  python-indent 2
-  python-indent-offset 2)
-
-(setq-hook! 'rustic-mode-hook
-  rustic-indent 2
-  rustic-indent-offset 2)
-
-(setq-hook! 'nushell-mode-hook
-  nushell-indent-offset 2)
-
-(setq-hook! 'c-mode-hook
-  c-basic-offset 2)
-
-(setq-hook! 'lisp-mode-hook
-  lisp-body-indent 2
-  lisp-indent-offset 2)
-#+end_src
+** prot: denote

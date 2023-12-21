@@ -1,5 +1,6 @@
 [global]
 monitor = 0
+history_length = 2
 follow = keyboard
 width = 370
 height = 350

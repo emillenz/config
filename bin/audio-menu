@@ -18,5 +18,5 @@ def main [] {
   for s in $sink_inputs {
     pactl move-sink-input $s.index $sink.name.0
   }
-  notify-send "󱀞 Audioselect" $"Changed output\n($choice)"
+  notify-send " Audioselect" $"Changed output\n($choice)"
 }

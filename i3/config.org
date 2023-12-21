@@ -76,37 +76,38 @@ bindsym button5 nop
 
 ** System controls
 - Enable controlling the system via inbuillt laptop keys.
+- HACK :: cannot overwrite prev ~notify-send~ notification => setting ~--expire-time=500~ ms.
 #+begin_src conf
-bindsym XF86MonBrightnessDown exec sudo light -U 5
-bindsym XF86MonBrightnessUp   exec sudo light -A 5
+bindsym XF86MonBrightnessDown exec sudo light -U 5 && notify-send --expire-time=500 "󰃟 Light" "$(light)%"
+bindsym XF86MonBrightnessUp   exec sudo light -A 5 && notify-send --expire-time=500 "󰃟 Light" "$(light)%"
 bindsym XF86Display           exec $bin/output_select
 bindsym XF86ScreenSaver       exec xset dpms force off
 bindsym XF86Sleep             exec i3lock -e --color 002b36 && systemctl suspend
 
-bindsym XF86AudioPlay         exec playerctl play
-bindsym XF86AudioPause        exec playerctl pause
-bindsym XF86AudioNext         exec playerctl next
-bindsym XF86AudioPrev         exec playerctl previous
-bindsym XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-bindsym XF86AudioMute         exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioPlay         exec playerctl play && "󰐎 Play" "$(playerctl metadata)"
+bindsym XF86AudioPause        exec playerctl pause && notify-send "󰐎 Pause" "$(playerctl metadata)"
+bindsym XF86AudioNext         exec playerctl next && notify-send --expire-time=500 "󰒭 Next" "$(playerctl metadata)"
+bindsym XF86AudioPrev         exec playerctl previous && notify-send --expire-time=500 "󰒮 Prev" "$(playerctl metadata)"
+bindsym XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send --expire-time=500 " Vol" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%')"
+bindsym XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send --expire-time=500 " Vol" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%')"
+bindsym XF86AudioMute         exec pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)"
 #+end_src
 
 #+begin_src conf
-bindsym Print                 exec $bin/screenshot
-bindsym $mod+backslash        exec playerctl play-pause
-bindsym $mod+bracketright     exec playerctl next
-bindsym $mod+bracketleft      exec playerctl previous
-bindsym $mod+0                exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym $mod+equal            exec pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym $mod+minus            exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym Print             exec $bin/screenshot
+bindsym $mod+backslash    exec playerctl play-pause && notify-send "󰐎 Play-Pause" "$(playerctl metadata)"
+bindsym $mod+bracketright exec playerctl next && notify-send --expire-time=500 "󰒭 Next" "$(playerctl metadata)"
+bindsym $mod+bracketleft  exec playerctl previous && notify-send --expire-time=500 "󰒮 Prev" "$(playerctl metadata)"
+bindsym $mod+equal        exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send --expire-time=500 " Vol" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%')"
+bindsym $mod+minus        exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send --expire-time=500 " Vol" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%')"
+bindsym $mod+0            exec pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)"
 #+end_src
 
 Xbacklight doesnt work for my hardware -> using light instead.
 Incase you use xbacklight, substitute the bindings with the following:
 #+begin_src conf :tangle no
-bindsym XF86MonBrightnessUp   exec sudo xbacklight +5
-bindsym XF86MonBrightnessDown exec sudo xbacklight -5
+bindsym XF86MonBrightnessUp   exec sudo xbacklight +5 && notify-send --expire-time=500 "󰃟 Light" "$(light)%"
+bindsym XF86MonBrightnessDown exec sudo xbacklight -5 && notify-send --expire-time=500 "󰃟 Light" "$(light)%"
 #+end_src
 
 ** Core navigation

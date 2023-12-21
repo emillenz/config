@@ -1,5 +1,3 @@
-date now | date humanize
-date now | date to-record
 date now | date to-table
 take -h | bat
 date now | date to-record
@@ -9998,3 +9996,5 @@ nvim .
 ls
 ls -la
 polybar
+nvim
+ls

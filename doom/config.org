@@ -134,7 +134,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   (setq-default
    +popup-defaults
    '(:side right
-     :width 0.33
      :select nil
      :quit nil
      :modeline t)))

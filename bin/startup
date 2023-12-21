@@ -11,7 +11,7 @@ def main [] {
   ~/.config/bin/remaps
 
   let start_ps = [
-    "polybar"
+    # "polybar" # [?] user preference
     "nm-applet"
     "playerctld"
     "keepassxc"

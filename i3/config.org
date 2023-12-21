@@ -87,8 +87,8 @@ bindsym XF86AudioPlay         exec playerctl play && "󰐎 Play"
 bindsym XF86AudioPause        exec playerctl pause && notify-send "󰐎 Pause"
 bindsym XF86AudioNext         exec playerctl next && notify-send "󰒭 Next"
 bindsym XF86AudioPrev         exec playerctl previous && notify-send "󰒮 Prev"
-bindsym XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%')"
-bindsym XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%')"
+bindsym XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%')"
+bindsym XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%')"
 bindsym XF86AudioMute         exec pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)"
 #+end_src
 
@@ -98,8 +98,8 @@ bindsym Print             exec $bin/screenshot
 bindsym $mod+backslash    exec playerctl play-pause && notify-send "󰐎 Play-Pause"
 bindsym $mod+bracketright exec playerctl next && notify-send "󰒭 Next"
 bindsym $mod+bracketleft  exec playerctl previous && notify-send "󰒮 Prev"
-bindsym $mod+equal        exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%')"
-bindsym $mod+minus        exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%')"
+bindsym $mod+equal        exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%')"
+bindsym $mod+minus        exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%')"
 bindsym $mod+0            exec pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)"
 #+end_src
 

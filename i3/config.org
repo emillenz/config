@@ -476,8 +476,7 @@ client.placeholder      $backg  $backg  $foreg  $backg    $backg
 client.background       $backg
 #+end_src
 
-* Statusbar
-This is not neccessary, since i am using polybar instead, but if polybar is not wanted this can be used instead as a more lightweight dependency free alternative:
+* Statusbar: None
 #+begin_src conf :tangle no
 bar {
   mode dock

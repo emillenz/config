@@ -147,8 +147,7 @@ The software is chosen based on the criterion:
    + Coding: typically one statement per line
  - Forces you to use the focused, one buffer only workflow.
 
-*** Statusbar: Polybar
-- Used in order to display system info and integrate custom commands into the statusbar such as a timer and media.
+*** Statusbar: None
 - For full immersion and focus disable it and work fullscreen.
   + No overlapping functionality: you are wearing a watch -> don't need time & date.
   + You always know what window you are looking at by its contents.

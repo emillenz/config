@@ -1,8 +1,10 @@
-# [[file:config.org::*Aliases][Aliases:1]]
+# [[file:config.org::*Abbreviations of long commands][Abbreviations of long commands:1]]
 set $rofi rofi -dmenu -i -no-custom -p ' '
 set $esc mode "default"
 set $bin ~/.config/bin
-# Aliases:1 ends here
+set $mv move container to workspace
+set $map bindsym
+# Abbreviations of long commands:1 ends here
 
 # [[file:config.org::*Startup automation][Startup automation:1]]
 exec --no-startup-id $bin/startup
@@ -26,119 +28,114 @@ set $mod Mod4
 
 # [[file:config.org::*Mouse][Mouse:1]]
 floating_modifier $mod
-bindsym --release button2 kill
-bindsym --whole-window $mod+button2 floating toggle
-bindsym button4 nop
-bindsym button5 nop
+$map --release button2 kill
+$map --whole-window $mod+button2 floating toggle
 # Mouse:1 ends here
 
 # [[file:config.org::*System & Media controls][System & Media controls:1]]
-bindsym XF86MonBrightnessDown exec sudo light -U 5 && notify-send "󰃟 Light" "$(light)%"
-bindsym XF86MonBrightnessUp   exec sudo light -A 5 && notify-send "󰃟 Light" "$(light)%"
-bindsym XF86Display           exec $bin/output_select
-bindsym XF86ScreenSaver       exec xset dpms force off
-bindsym XF86Sleep             exec i3lock -e --color 002b36 && systemctl suspend
+$map XF86MonBrightnessDown exec sudo light -U 5 && notify-send "󰃟 Light" "$(light)%"
+$map XF86MonBrightnessUp   exec sudo light -A 5 && notify-send "󰃟 Light" "$(light)%"
+$map XF86Display           exec $bin/output_select
+$map XF86ScreenSaver       exec xset dpms force off
+$map XF86Sleep             exec i3lock -e --color 002b36 && systemctl suspend
 
-bindsym XF86AudioPlay         exec playerctl play
-bindsym XF86AudioPause        exec playerctl pause
-bindsym XF86AudioNext         exec playerctl next
-bindsym XF86AudioPrev         exec playerctl previous
-bindsym XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
-bindsym XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
-bindsym XF86AudioMute         exec pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)"
+$map XF86AudioPlay         exec playerctl play
+$map XF86AudioPause        exec playerctl pause
+$map XF86AudioNext         exec playerctl next
+$map XF86AudioPrev         exec playerctl previous
+$map XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
+$map XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
+$map XF86AudioMute         exec pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)"
 # System & Media controls:1 ends here
 
 # [[file:config.org::*System & Media controls][System & Media controls:2]]
-bindsym Print             exec $bin/screenshot
-bindsym $mod+backslash    exec playerctl play-pause
-bindsym $mod+bracketright exec playerctl next
-bindsym $mod+bracketleft  exec playerctl previous
-bindsym $mod+equal        exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
-bindsym $mod+minus        exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
-bindsym $mod+0            exec pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)"
+$map Print             exec $bin/screenshot
+$map $mod+backslash    exec playerctl play-pause
+$map $mod+bracketright exec playerctl next
+$map $mod+bracketleft  exec playerctl previous
+$map $mod+equal        exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
+$map $mod+minus        exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
+$map $mod+0            exec pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)"
 # System & Media controls:2 ends here
 
 # [[file:config.org::*Core navigation][Core navigation:1]]
-bindsym $mod+j          focus prev
-bindsym $mod+shift+j    move left
-bindsym $mod+k          focus next
-bindsym $mod+shift+k    move right
-bindsym $mod+q          kill
-bindsym $mod+f          exec rofi -show drun
-bindsym $mod+g          exec rofi -show window
-bindsym $mod+semicolon  exec rofi -show run
-bindsym $mod+t          layout toggle tabbed splith
-bindsym $mod+Return     move workspace to output next
+$map $mod+j          focus prev
+$map $mod+shift+j    move left
+$map $mod+k          focus next
+$map $mod+shift+k    move right
+$map $mod+q          kill
+$map $mod+f          exec rofi -show drun
+$map $mod+g          exec rofi -show window
+$map $mod+semicolon  exec rofi -show run
+$map $mod+t          layout toggle tabbed splith
+$map $mod+Return     move workspace to output next
 # Core navigation:1 ends here
 
 # [[file:config.org::*Workspaces Assignments][Workspaces Assignments:1]]
-set $moveto move container to workspace
-
 set $ws_cmd    "  cmd  "
 set $ws_doc    "󰈙  doc  "
 set $ws_web    "󰖟  web  "
 set $ws_edit   "  edit "
-set $ws_video  "  vid  "
-set $ws_image  "󰋩  img  "
+set $ws_vid    "  vid  "
+set ws_img     "󰋩  img  "
 set $ws_bot    "󰚩  bot  "
 set $ws_music  "  music"
 
-# HACK: [all] must come before specific assignments (specific classes overwrite this setting).
-for_window [all] title_window_icon yes, $moveto 1, focus
+# HACK :: order of these assingments are relevant: abstract -> detail.
+for_window [all] title_window_icon yes, $mv 1, focus
 for_window [urgent="latest"] focus
 
-# specific assignments
-for_window [class="(?i)cmd"]                     $moveto $ws_cmd,   focus
-for_window [class="(?i)zathura"]                 $moveto $ws_doc,   focus
-for_window [class="(?i)emacs|(?i)eclipse"]       $moveto $ws_edit,  focus
-for_window [class="(?i)firefox"]                 $moveto $ws_web,   focus
-
-for_window [class="(?i)mpv"]                     $moveto $ws_video, focus
-for_window [class="(?i)nsxiv"]                   $moveto $ws_image, focus
-for_window [class="(?i)firefox" title="ChatGPT"] $moveto $ws_bot,   focus
-for_window [class="(?i)firefox" title="Spotify"] $moveto $ws_music, focus
+for_window [class="(?i)cmd"]                         $mv $ws_cmd,   focus
+for_window [class="(?i)zathura"]                     $mv $ws_doc,   focus
+for_window [class="(?i)emacs|(?i)eclipse"]           $mv $ws_edit,  focus
+for_window [class="(?i)firefox"]                     $mv $ws_web,   focus
+for_window [class="(?i)mpv"]                         $mv $ws_vid, focus
+for_window [class="(?i)nsxiv"]                       $mv ws_img, focus
+for_window [class="(?i)firefox" title="(?i)ChatGPT"] $mv $ws_bot,   focus
+for_window [class="(?i)firefox" title="(?i)Spotify"] $mv $ws_music, focus
 # Workspaces Assignments:1 ends here
 
 # [[file:config.org::*Using main][Using main:1]]
-workspace $ws_cmd   output  primary
-workspace $ws_doc   output  primary
-workspace $ws_web   output  primary
-workspace $ws_edit  output  primary
-workspace $ws_video output  primary
-workspace $ws_image output  primary
-workspace $ws_bot    output primary
-workspace $ws_music output  primary
-workspace 1 output          primary
-workspace 2 output          primary
-workspace 3 output          primary
-workspace 4 output          primary
+workspace $ws_cmd   output primary
+workspace $ws_doc   output primary
+workspace $ws_web   output primary
+workspace $ws_edit  output primary
+workspace $ws_vid   output primary
+workspace ws_img    output primary
+workspace $ws_bot   output primary
+workspace $ws_music output primary
+workspace 1         output primary
+workspace 2         output primary
+workspace 3         output primary
+workspace 4         output primary
 # Using main:1 ends here
 
 # [[file:config.org::*App navigation bindings][App navigation bindings:1]]
-bindsym $mod+1       workspace 1
-bindsym $mod+2       workspace 2
-bindsym $mod+3       workspace 3
-bindsym $mod+4       workspace 4
-bindsym $mod+shift+1 $moveto 1; workspace 1
-bindsym $mod+shift+2 $moveto 2; workspace 2
-bindsym $mod+shift+3 $moveto 3; workspace 3
-bindsym $mod+shift+4 $moveto 4; workspace 4
-bindsym $mod+c       workspace $ws_cmd
-bindsym $mod+shift+c $moveto $ws_cmd; workspace $ws_cmd
-bindsym $mod+d       workspace $ws_doc
-bindsym $mod+shift+d $moveto $ws_doc; workspace $ws_doc
-bindsym $mod+w       workspace $ws_web
-bindsym $mod+shift+w $moveto $ws_web; workspace $ws_web
-bindsym $mod+e       workspace $ws_edit
-bindsym $mod+shift+e $moveto $ws_edit; workspace $ws_edit
-bindsym $mod+v       workspace $ws_video
-bindsym $mod+shift+v $moveto $ws_video; workspace $ws_video
-bindsym $mod+i       workspace $ws_image
-bindsym $mod+shift+i $moveto $ws_image; workspace $ws_image
-bindsym $mod+b       workspace $ws_bot
-bindsym $mod+shift+b $moveto $ws_bot; workspace $ws_bot
-bindsym $mod+m       workspace $ws_music
-bindsym $mod+shift+m $moveto $ws_music; workspace $ws_music
+$map $mod+1       workspace 1
+$map $mod+shift+1 $mv 1; workspace 1
+$map $mod+2       workspace 2
+$map $mod+shift+2 $mv 2; workspace 2
+$map $mod+3       workspace 3
+$map $mod+shift+3 $mv 3; workspace 3
+$map $mod+4       workspace 4
+$map $mod+shift+4 $mv 4; workspace 4
+
+$map $mod+c       workspace $ws_cmd
+$map $mod+shift+c $mv $ws_cmd; workspace $ws_cmd
+$map $mod+d       workspace $ws_doc
+$map $mod+shift+d $mv $ws_doc; workspace $ws_doc
+$map $mod+w       workspace $ws_web
+$map $mod+shift+w $mv $ws_web; workspace $ws_web
+$map $mod+e       workspace $ws_edit
+$map $mod+shift+e $mv $ws_edit; workspace $ws_edit
+$map $mod+v       workspace $ws_vid
+$map $mod+shift+v $mv $ws_vid; workspace $ws_vid
+$map $mod+i       workspace ws_img
+$map $mod+shift+i $mv ws_img; workspace ws_img
+$map $mod+b       workspace $ws_bot
+$map $mod+shift+b $mv $ws_bot; workspace $ws_bot
+$map $mod+m       workspace $ws_music
+$map $mod+shift+m $mv $ws_music; workspace $ws_music
 # App navigation bindings:1 ends here
 
 # [[file:config.org::*Open app keybindings][Open app keybindings:1]]
@@ -157,27 +154,27 @@ set $open <open> \
 │ networks \
 │ bot
 
-bindsym $mod+o mode "$open"
+$map $mod+o mode "$open"
 mode "$open" {
-  bindsym $mod+c                 exec alacritty --class cmd -T cmd -e tmux new-session -A -s cmd; $esc
-  bindsym $mod+d                 exec xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)"; $esc
-  bindsym $mod+shift+e --release exec emacsclient --execute--eval '(emacs-everywhere)'; $esc
-  bindsym $mod+e                 exec emacsclient --reuse-frame || emacs --daemon; $esc
-  bindsym $mod+w                 exec firefox; $esc
-  bindsym $mod+v                 exec mpv $(xclip -o); $esc
-  bindsym $mod+i                 exec nsxiv; $esc
-  bindsym $mod+s                 exec keepassxc; $esc
-  bindsym $mod+m                 exec firefox --new-window https://open.spotify.com; $esc
-  bindsym $mod+shift+m           exec alacritty --class 'pulsemixer' -T 'audio' -e pulsemixer; $esc
-  bindsym $mod+b                 exec firefox --new-window https://chat.openai.com; $esc
-  bindsym $mod+p                 exec alacritty --class 'htop' -T 'htop' -e htop --tree; $esc
-  bindsym $mod+n                 exec alacritty --class 'nmtui' -T 'nmtui' -e nmtui; $esc
-  bindsym Escape $esc
+  $map $mod+c                 exec alacritty --class cmd -T cmd -e tmux new-session -A -s cmd; $esc
+  $map $mod+d                 exec xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)"; $esc
+  $map $mod+shift+e --release exec emacsclient --execute--eval '(emacs-everywhere)'; $esc
+  $map $mod+e                 exec emacsclient --reuse-frame || emacs --daemon; $esc
+  $map $mod+w                 exec firefox; $esc
+  $map $mod+v                 exec mpv $(xclip -o); $esc
+  $map $mod+i                 exec nsxiv; $esc
+  $map $mod+s                 exec keepassxc; $esc
+  $map $mod+m                 exec firefox --new-window https://open.spotify.com; $esc
+  $map $mod+shift+m           exec alacritty --class 'pulsemixer' -T 'audio' -e pulsemixer; $esc
+  $map $mod+b                 exec firefox --new-window https://chat.openai.com; $esc
+  $map $mod+p                 exec alacritty --class 'htop' -T 'htop' -e htop --tree; $esc
+  $map $mod+n                 exec alacritty --class 'nmtui' -T 'nmtui' -e nmtui; $esc
+  $map Escape $esc
 }
 # Open app keybindings:1 ends here
 
 # [[file:config.org::*Leader][Leader:1]]
-bindsym $mod+space mode "$leader"
+$map $mod+space mode "$leader"
 set $leader <leader> \
 │ keyboard+ \
 │ powermenu+ \
@@ -185,11 +182,11 @@ set $leader <leader> \
 │ startup
 
 mode "$leader" {
-  bindsym $mod+k mode "$keyboard"
-  bindsym $mod+p mode "$powermenu"
-  bindsym $mod+m mode "$menus"
-  bindsym $mod+s exec $bin/startup; $esc
-  bindsym Escape $esc
+  $map $mod+k mode "$keyboard"
+  $map $mod+p mode "$powermenu"
+  $map $mod+m mode "$menus"
+  $map $mod+s exec $bin/startup; $esc
+  $map Escape $esc
 }
 # Leader:1 ends here
 
@@ -204,14 +201,14 @@ set $powermenu <powermenu> \
 │ hibernate \
 
 mode "$powermenu" {
-  bindsym $mod+r       exec i3-msg restart;                                $esc
-  bindsym $mod+e       exec i3-msg exit;                                        $esc
-  bindsym $mod+shift+r exec systemctl reboot;                              $esc
-  bindsym $mod+h       exec systemctl hibernate;                           $esc
-  bindsym $mod+l       exec i3lock -e --color 002b36 && systemctl suspend; $esc
-  bindsym $mod+s       exec xset dpms force off;                           $esc
-  bindsym $mod+p       exec systemctl poweroff;                            $esc
-  bindsym Escape $esc
+  $map $mod+r       exec i3-msg restart;                                $esc
+  $map $mod+e       exec i3-msg exit;                                   $esc
+  $map $mod+shift+r exec systemctl reboot;                              $esc
+  $map $mod+h       exec systemctl hibernate;                           $esc
+  $map $mod+l       exec i3lock -e --color 002b36 && systemctl suspend; $esc
+  $map $mod+s       exec xset dpms force off;                           $esc
+  $map $mod+p       exec systemctl poweroff;                            $esc
+  $map Escape $esc
 }
 # Powermenu:1 ends here
 
@@ -225,13 +222,13 @@ set $menus <menus> \
 │ screenshot \
 
 mode "$menus" {
-  bindsym $mod+a       exec $bin/audio-menu;       $esc
-  bindsym $mod+o       exec $bin/output-menu;      $esc
-  bindsym $mod+shift+o exec $bin/layout-menu;      $esc
-  bindsym $mod+s       exec $bin/screenshot-menu;  $esc
-  bindsym $mod+b       exec $bin/bluetooth-menu;   $esc
-  bindsym $mod+p       exec $bin/killprocess-menu; $esc
-  bindsym Escape $esc
+  $map $mod+a       exec $bin/audio-menu;       $esc
+  $map $mod+o       exec $bin/output-menu;      $esc
+  $map $mod+shift+o exec $bin/layout-menu;      $esc
+  $map $mod+s       exec $bin/screenshot-menu;  $esc
+  $map $mod+b       exec $bin/bluetooth-menu;   $esc
+  $map $mod+p       exec $bin/killprocess-menu; $esc
+  $map Escape $esc
 }
 # Menus:1 ends here
 

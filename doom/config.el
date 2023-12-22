@@ -158,8 +158,8 @@
         :nvim "M-j"     #'previous-window-any-frame
         :nvim "M-k"     #'next-window-any-frame
         :nvim "M-t"     #'tab-bar-new-tab-to
-        :nvim "M-q"     (cmd! (if (buffer-modified-p) (ignore-errors (evil-write nil nil))) (kill-current-buffer) (evil-window-delete))
-        :nvim "M-Q"     #'save-buffers-kill-terminal
+        :nvim "M-q"     (cmd! (if (buffer-modified-p) (ignore-errors (evil-write nil nil))) (kill-buffer-and-window))
+        :nvim "M-Q"     (cmd! (if (buffer-modified-p) (ignore-errors (evil-write nil nil))) (kill-current-buffer) (evil-window-delete))
         :nvmi "M-z"     #'+popup/toggle
         :nvim "M-1"     (cmd! (tab-bar-select-tab 1))
         :nvim "M-2"     (cmd! (tab-bar-select-tab 2))
@@ -184,13 +184,6 @@
         :nvim "C-="     #'doom/increase-font-size
         :nvim "C-0"     #'doom/reset-font-size))
 ;; Global navigation scheme:1 ends here
-
-;; [[file:config.org::*Global navigation scheme][Global navigation scheme:2]]
-(defadvice! z/newtab (fn &rest args)
-  "Open new file-buffers in a new tab."
-  :before '(find-file bookmark-jump magit-status)
-  (tab-bar-new-tab-to))
-;; Global navigation scheme:2 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
 (after! evil

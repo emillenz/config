@@ -30,7 +30,7 @@ set $bin ~/.config/bin
 #+end_src
 
 * Startup automation
-[[file:$bin/startup][Startup]] Launches processes and daemons i need for my workflow.
+[[file:~/.config/bin/startup][Startup]] Launches processes and daemons i need for my workflow.
 - Make sure that your user never get sudo prompted for commands, bc the script runs non-interactive sudo commands. (see: [[file:~/.config/setup.org][Setup]] on how to never be sudoprompted)
 #+begin_src conf
 exec --no-startup-id $bin/startup

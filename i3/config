@@ -184,8 +184,7 @@ mode "$open" {
     ; $esc
 
   bindsym $mod+v exec \
-    i3-msg '[class=(?i)mpv] focus' \
-    || mpv $(xclip -o) & \
+    mpv $(xclip -o) & \
     ; $esc
 
   bindsym $mod+i exec \

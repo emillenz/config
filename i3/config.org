@@ -218,7 +218,8 @@ bindsym $mod+shift+m $moveto $ws_music; workspace $ws_music
 
 ** Open app keybindings
 - Using ~i3-msg~, because we want to try other commands if one fails
-  + focus app if on different workspace -> attach to server -> start server -> lanuch app
+- Focus app if already exists on different workspace -> attach to server -> start server -> lanuch app
+- for apps that usually have multiple instances, don't focus existing one, insted launch new (zathura).
 #+begin_src  conf
 set $open <open> \
 │ editor \
@@ -262,8 +263,7 @@ mode "$open" {
     ; $esc
 
   bindsym $mod+v exec \
-    i3-msg '[class=(?i)mpv] focus' \
-    || mpv $(xclip -o) & \
+    mpv $(xclip -o) & \
     ; $esc
 
   bindsym $mod+i exec \

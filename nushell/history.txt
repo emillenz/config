@@ -1,6 +1,3 @@
-ls | get name | each {|x| split column }
-ls | get name | each {|x| split column '-'}
-ls | get name | split column '-'
 ls
 cd .
 cd..
@@ -9998,3 +9995,6 @@ bash
 ls
 ls
 xset dpms force off
+doom lync
+doom sync
+ls

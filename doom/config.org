@@ -577,7 +577,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 
 (setq
  org-list-demote-modify-bullet
- '(("-"  . "-")
+ '(("-"  . "+")
    ("+"  . "+")
    ("*"  . "-")
    ("a."  . "a)")

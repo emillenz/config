@@ -7,6 +7,7 @@
 * About
 - All the packages (and more) required for the full setup are found under:
   + [[setup][file:~/.config/setup.org]]
+- As always, i don't document what things do, use AI and read: [[https://i3wm.org/docs/userguide.html][I3-Userguide]].
 
 * Preface
  - Eliminate mental overhead and reduce computational steps to get to where you need to be.
@@ -217,9 +218,6 @@ bindsym $mod+shift+m $moveto $ws_music; workspace $ws_music
 #+end_src
 
 ** Open app keybindings
-- Using ~i3-msg~, because we want to try other commands if one fails
-- Focus app if already exists on different workspace -> attach to server -> start server -> lanuch app
-- for apps that usually have multiple instances, don't focus existing one, insted launch new (zathura).
 #+begin_src  conf
 set $open <open> \
 │ editor \
@@ -238,74 +236,19 @@ set $open <open> \
 
 bindsym $mod+o mode "$open"
 mode "$open" {
-  bindsym $mod+c exec \
-    i3-msg '[class="(?i)cmd"] focus' \
-    || alacritty --class cmd -T cmd -e tmux new-session -A -s cmd & \
-    ; $esc
-
-  bindsym $mod+d exec \
-    xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)" & \
-    ; $esc
-
-  bindsym $mod+shift+e --release exec \
-    emacsclient --execute--eval '(emacs-everywhere)' & \
-    ; $esc
-
-  bindsym $mod+e exec \
-    i3-msg '[class=(?i)emacs] focus' \
-    || emacsclient --reuse-frame \
-    || emacs --daemon & \
-    ; $esc
-
-  bindsym $mod+w exec \
-    i3-msg '[class=(?i)firefox] focus' \
-    || firefox & \
-    ; $esc
-
-  bindsym $mod+v exec \
-    mpv $(xclip -o) & \
-    ; $esc
-
-  bindsym $mod+i exec \
-    i3-msg '[class="(?i)nsxiv"] focus'\
-    || nsxiv & \
-    ; $esc
-
-  bindsym $mod+s exec\
-    i3-msg '[class="(?i)keepassxc"] focus"]' \
-    || keepassxc & \
-    ; $esc
-
-  # bindsym $mod+m exec \
-  #   i3-msg '[class="(?i)ncmpcpp"] focus' \
-  #   || alacritty --class 'ncmpcpp' -T ncmpcpp -e ncmpcpp & \
-  #   ; $esc
-
-    bindsym $mod+m exec \
-    i3-msg '[class="(?i)firefox" title="Spotify"] focus' \
-    || firefox --new-window https://open.spotify.com \
-    ; $esc
-
-  bindsym $mod+shift+m exec \
-    i3-msg '[class="(?i)pulsemixer"] focus' \
-    || alacritty --class 'pulsemixer' -T 'audio' -e pulsemixer & \
-    ; $esc
-
-  bindsym $mod+b exec \
-    i3-msg '[class="(?i)firefox" title="ChatGPT"] focus' \
-    || firefox --new-window https://chat.openai.com \
-    ; $esc
-
-  bindsym $mod+p exec \
-    i3-msg '[class="(?i)htop"] focus'\
-    || alacritty --class 'htop' -T 'htop' -e htop --tree & \
-    ; $esc
-
-  bindsym $mod+n exec \
-    i3-msg '[class="(?i)nmtui"] focus' \
-    || alacritty --class 'nmtui' -T 'nmtui' -e nmtui & \
-    ; $esc
-
+  bindsym $mod+c                 exec alacritty --class cmd -T cmd -e tmux new-session -A -s cmd; $esc
+  bindsym $mod+d                 exec xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)"; $esc
+  bindsym $mod+shift+e --release exec emacsclient --execute--eval '(emacs-everywhere)'; $esc
+  bindsym $mod+e                 exec emacsclient --reuse-frame || emacs --daemon; $esc
+  bindsym $mod+w                 exec firefox; $esc
+  bindsym $mod+v                 exec mpv $(xclip -o); $esc
+  bindsym $mod+i                 exec nsxiv; $esc
+  bindsym $mod+s                 exec keepassxc; $esc
+  bindsym $mod+m                 exec firefox --new-window https://open.spotify.com; $esc
+  bindsym $mod+shift+m           exec alacritty --class 'pulsemixer' -T 'audio' -e pulsemixer; $esc
+  bindsym $mod+b                 exec firefox --new-window https://chat.openai.com; $esc
+  bindsym $mod+p                 exec alacritty --class 'htop' -T 'htop' -e htop --tree; $esc
+  bindsym $mod+n                 exec alacritty --class 'nmtui' -T 'nmtui' -e nmtui; $esc
   bindsym Escape $esc
 }
 #+end_src

@@ -1,8 +1,3 @@
-ls | skip 1 | get name | each {|x| mv $x (["0", $x] | str join '')} 
-ls
-ls | get name | split column '-' 
-ls | get name | split column '-' | get column 2
-ls | get name | split column '-' | get column2
 ls | get name 
 ls | get name | each {|x| print $x ("../2023" | path join ($x | split column '-' | get column2 ) | path join $x)}
 ls | get name | each {|x| print $x ("../2023" | path join ($x | split list '-' | get 2 ) | path join $x)}
@@ -9998,3 +9993,8 @@ ls -la
 ls
 bash
 i3lock  --help | bat --language=man
+ls
+ansi reset
+help ansi
+ansi  --help | bat --language=man
+ls

@@ -603,8 +603,6 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 #+begin_src emacs-lisp
   (setq-default prettify-symbols-alist
                 '(("->" . "→")
-                  ("<-" . "←")
-                  ("-" . "—")
                   ("=>" . "⇒")
                   ("<=>" . "⇔")))
 #+end_src

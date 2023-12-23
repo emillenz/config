@@ -468,8 +468,6 @@
 ;; [[file:config.org::*Ligatures][Ligatures:1]]
 (setq-default prettify-symbols-alist
               '(("->" . "→")
-                ("<-" . "←")
-                ("-" . "—")
                 ("=>" . "⇒")
                 ("<=>" . "⇔")))
 ;; Ligatures:1 ends here

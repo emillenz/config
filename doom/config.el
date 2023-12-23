@@ -133,18 +133,16 @@
  doom-leader-alt-key "M-,")
 
 (map! :leader
-      "t" nil
-      "u" doom-leader-toggle-map ;; HACK :: remap toggle => ui (more sensible)
-      (:prefix ("u" . "ui")
+      (:prefix "t"
                "V" #'visual-fill-column-mode
                "C" #'company-mode)
-      (:prefix ("c" . "code")
+      (:prefix "c"
                "w" #'z/clean-whitespace))
 
 (after! evil-org
   (map! :localleader
         :map org-mode-map
-        (:prefix ("c" . "code")
+        (:prefix-map ("c" . "code")
                  "d" #'org-babel-detangle
                  "J" #'org-babel-tangle-jump-to-org
                  "j" #'z/jump-src
@@ -461,7 +459,7 @@
  org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
  org-superstar-item-bullet-alist
  '((?-  . "─")
-   (?* . "─") ;; NOTE :: never use these, asteriks are for headings only => no unambigiuity
+   (?* . "─") ;; NOTE :: asteriks are reserved for headings only (don't use in lists) => no unambigiuity
    (?+ . "⇒")))
 ;; Symbols:1 ends here
 
@@ -469,6 +467,7 @@
 (setq-default prettify-symbols-alist
               '(("->" . "→")
                 ("<-" . "←")
+                ("-" . "—")
                 ("=>" . "⇒")
                 ("<=>" . "⇔")))
 ;; Ligatures:1 ends here
@@ -663,8 +662,7 @@ Jumps at tangled code from org src block."
      :children
      (("task" :keys "t"
        :template
-       ("* [ ] %^{title} %^g"
-        "%?") ;; NOTE :: not putting final insert on newline => tasks are a list and not paragraph
+       ("* [ ] %^{title} %? %^g") ;; NOTE :: not putting final insert on newline => tasks are a list and not paragraph
        :children
        (("cs"   :keys "c" :file "cs/tasks.org"
          :children

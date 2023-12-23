@@ -3,8 +3,8 @@ window:
     columns: 0
     lines: 0
   padding:
-    x: 0
-    y: 0
+    x: 1
+    y: 1
   dynamic_padding: true
   decorations: full
   opacity: 1.0

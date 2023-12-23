@@ -138,7 +138,7 @@ set $ws_doc    "󰈙  doc  "
 set $ws_web    "󰖟  web  "
 set $ws_edit   "  edit "
 set $ws_vid    "  vid  "
-set ws_img     "󰋩  img  "
+set $ws_img    "󰋩  img  "
 set $ws_bot    "󰚩  bot  "
 set $ws_music  "  music"
 
@@ -150,8 +150,8 @@ for_window [class="(?i)cmd"]                         $mv $ws_cmd,   focus
 for_window [class="(?i)zathura"]                     $mv $ws_doc,   focus
 for_window [class="(?i)emacs|(?i)eclipse"]           $mv $ws_edit,  focus
 for_window [class="(?i)firefox"]                     $mv $ws_web,   focus
-for_window [class="(?i)mpv"]                         $mv $ws_vid, focus
-for_window [class="(?i)nsxiv"]                       $mv ws_img, focus
+for_window [class="(?i)mpv"]                         $mv $ws_vid,   focus
+for_window [class="(?i)nsxiv"]                       $mv $ws_img,   focus
 for_window [class="(?i)firefox" title="(?i)ChatGPT"] $mv $ws_bot,   focus
 for_window [class="(?i)firefox" title="(?i)Spotify"] $mv $ws_music, focus
 #+end_src
@@ -163,7 +163,7 @@ workspace $ws_doc   output primary
 workspace $ws_web   output primary
 workspace $ws_edit  output primary
 workspace $ws_vid   output primary
-workspace ws_img    output primary
+workspace $ws_img   output primary
 workspace $ws_bot   output primary
 workspace $ws_music output primary
 workspace 1         output primary
@@ -196,8 +196,8 @@ $map $mod+e       workspace $ws_edit
 $map $mod+shift+e $mv $ws_edit; workspace $ws_edit
 $map $mod+v       workspace $ws_vid
 $map $mod+shift+v $mv $ws_vid; workspace $ws_vid
-$map $mod+i       workspace ws_img
-$map $mod+shift+i $mv ws_img; workspace ws_img
+$map $mod+i       workspace $ws_img
+$map $mod+shift+i $mv $ws_img; workspace $ws_img
 $map $mod+b       workspace $ws_bot
 $map $mod+shift+b $mv $ws_bot; workspace $ws_bot
 $map $mod+m       workspace $ws_music

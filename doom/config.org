@@ -173,7 +173,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 * Keybindings
 - ~helpful-key~ and ~which-key-show-full-keymap~ are crucial to understanding what your tools can do for you (ex: magit, dired, org-mode)
   + Always keep on exploring, learning new, efficient keybindings and break your old routines for newer, more effcient one's after evaluating wether they are faster or not.
-
 - ~,~ is useless (instead just be precise when using ~;~)
 ** Leader
 #+begin_src emacs-lisp
@@ -184,18 +183,16 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  doom-leader-alt-key "M-,")
 
 (map! :leader
-      "t" nil
-      "u" doom-leader-toggle-map ;; HACK :: remap toggle => ui (more sensible)
-      (:prefix ("u" . "ui")
+      (:prefix "t"
                "V" #'visual-fill-column-mode
                "C" #'company-mode)
-      (:prefix ("c" . "code")
+      (:prefix "c"
                "w" #'z/clean-whitespace))
 
 (after! evil-org
   (map! :localleader
         :map org-mode-map
-        (:prefix ("c" . "code")
+        (:prefix-map ("c" . "code")
                  "d" #'org-babel-detangle
                  "J" #'org-babel-tangle-jump-to-org
                  "j" #'z/jump-src
@@ -598,16 +595,17 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
    org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
    org-superstar-item-bullet-alist
    '((?-  . "─")
-     (?* . "─") ;; NOTE :: never use these, asteriks are for headings only => no unambigiuity
+     (?* . "─") ;; NOTE :: asteriks are reserved for headings only (don't use in lists) => no unambigiuity
      (?+ . "⇒")))
 #+end_src
 
 ** Ligatures
-- I use concise, functional notation alo.
+- I use concise, functional notation, hence the unicode to make things look more coherent.
 #+begin_src emacs-lisp
   (setq-default prettify-symbols-alist
                 '(("->" . "→")
                   ("<-" . "←")
+                  ("-" . "—")
                   ("=>" . "⇒")
                   ("<=>" . "⇔")))
 #+end_src
@@ -945,8 +943,7 @@ More convenient, with a nice display.
      :children
      (("task" :keys "t"
        :template
-       ("* [ ] %^{title} %^g"
-        "%?") ;; NOTE :: not putting final insert on newline => tasks are a list and not paragraph
+       ("* [ ] %^{title} %? %^g") ;; NOTE :: not putting final insert on newline => tasks are a list and not paragraph
        :children
        (("cs"   :keys "c" :file "cs/tasks.org"
          :children

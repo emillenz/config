@@ -10,7 +10,7 @@ $env.NU_PLUGIN_DIRS = [
 	($nu.default-config-dir | path join 'plugins')
 ]
 
-# Using starship is bloat if you can define your own prompt inside nushell: super transparent and extensible.
+# NOTE :: Using somethinng as starship is bloat if you can define your own prompt inside nushell (way more understandeable and extensible).
 def create_left_prompt [] {
   let dir = (
     if ($env.PWD | path split | zip ($nu.home-path | path split) | all { $in.0 == $in.1 }) {
@@ -27,31 +27,35 @@ def create_left_prompt [] {
       _ => $"(ansi red)[err] (ansi reset)"
   }
 
-  let dur = (
-    [
+  let dur_mod = ([
     (ansi yellow),
     ($"($env.CMD_DURATION_MS)ms" | into duration | format duration sec),
-    (ansi reset)
+    (ansi reset),
     ] | str join
   )
 
-  let time = (
-    [
+  let time_mod = ([
     (ansi magenta),
     (date now | format date '%F %a %R'),
     (ansi reset),
-    ] | str join)
+    ] | str join
+  )
 
-  let modules = [$dur, $time]
-  let status = $"[ ($modules | str join ' │ ') ]"
+  let mod_sep =  ' │ '
+  let modules = ([
+    "[",
+    ([$dur_mod, $time_mod] | str join $mod_sep),
+    "]",
+    ] | str join " ")
 
-  let fill_len = ((term size | get columns) - ($status | ansi strip | str length))
-  let fill = [
-    (ansi white)
-    ('─' | std repeat $fill_len | str join)
-  ] | str join
+  let fill_len = ((term size | get columns) - ($modules | ansi strip | str length))
+  let fill = ([
+    (' '),
+    ('─' | std repeat $fill_len | str join),
+    ] | str join
+  )
 
-  return ([$fill, $status "\n", $path, $last_exit_code] | str join " ")
+  return ([$fill, $modules, "\n", $path, $last_exit_code] | str join " ")
 }
 
 # Use nushell functions to define your right and left prompt
@@ -63,7 +67,7 @@ $env.PROMPT_COMMAND_RIGHT = ""
 $env.PROMPT_INDICATOR = {|| $"(ansi blue_bold)::  " }
 $env.PROMPT_INDICATOR_VI_INSERT = {|| $"(ansi blue_bold)::  " }
 $env.PROMPT_INDICATOR_VI_NORMAL = {|| $"(ansi green_bold)::  " }
-$env.PROMPT_MULTILINE_INDICATOR = {|| $"(ansi blue_bold)>  " }
+$env.PROMPT_MULTILINE_INDICATOR = {|| $"(ansi blue_bold)=>  " }
 
 # If you want previously entered commands to have a different prompt from the usual one,
 # you can uncomment one or more of the following lines.

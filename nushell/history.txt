@@ -1,17 +1,4 @@
 ls
-cd .
-cd..
-ls
-cd ..
-ls
-cd 2023
-for i in (seq 3 6) {mkdir $i}
-for i in (seq 3 6| into string ) {mkdir $i}
-rm -r 3
-rm -r 4 5
-rm -r 6
-for i in (seq 3 6 | into string) {mkdir $i}
-ls
 ls | skip 1
 ls | skip 1 | get name
 ls | skip 1 | get name | each {|x| mv $x (["0", $x] | str join '')} 
@@ -9998,3 +9985,16 @@ xset dpms force off
 doom lync
 doom sync
 ls
+la -la
+ls -la
+ls
+nvim
+ls
+"({["
+(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
+xset dpms  --help | bat --language=man
+xset -dpms
+yay batsignal
+ls
+(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
+ls -la

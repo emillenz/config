@@ -275,7 +275,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
    :nmv  "U"   #'evil-redo
    :nmv  "Q"   #'evil-execute-last-recorded-macro
    :nmv  "&"   #'evil-ex-repeat
-   :nmv  "M"   (cmd! (evil-goto-mark-line "m"))
+   :nmv  "M"   (cmd! (evil-goto-mark-line ?m))
 
    :nmv  "]e"  #'flycheck-next-error
    :nmv  "[e"  #'flycheck-previous-error

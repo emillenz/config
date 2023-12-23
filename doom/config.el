@@ -193,11 +193,12 @@
    :nmvo "j"   #'evil-next-visual-line
    :nmvo "k"   #'evil-previous-visual-line
 
-   :nm   "TAB" #'+fold/toggle ;; inspired bby org-modes folding
+   :nm   "TAB" #'+fold/toggle
 
    :nmv  "U"   #'evil-redo
    :nmv  "Q"   #'evil-execute-last-recorded-macro
    :nmv  "&"   #'evil-ex-repeat
+   :nmv  "M"   (cmd! (evil-goto-mark-line "m"))
 
    :nmv  "]e"  #'flycheck-next-error
    :nmv  "[e"  #'flycheck-previous-error

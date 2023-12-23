@@ -208,9 +208,9 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - Never create splits for buffers, prefer the full screen, full focus, no distractions - workflow. (no multitasking, no clutter)
   + When emacs creates splits we must handle them:
     + includes minimal bindings for switching and closing splits
-- We never use an integrated terminal (introduces additional complex layers, is slow, bad keybindings, etc...)
+- We never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...)
   + Instead if needed we can execute oneliners with ~(shell-command)~
-- kill buffer's on window closing -> don't accumulate too maly open buffers.
+- kill buffer's on window closing -> don't accumulate buffers in tha background.
 #+begin_src emacs-lisp
 (after! doom
   (map! :map  'override
@@ -244,26 +244,20 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 ** Evil-mode
-- Make vim's bindings even more mnemonic and improve consistency of implementation.
-- Make defaults more sane/efficient/sensible.
-- Emacs alredy by default implements it that out of screen jumps center the screen which is sensible
-- Replace redundant/unuseful/unused keys with statistically often called commands / make better use of them.
-- Unmap ambigous / keys with double usages (no bad habits).
-- Always use relative line numbers instead of absolute
+- Make vim's bindings even more mnemonic/sane/sensible/efficient and improve consistency of implementation. Maximize the keyboard real-estate usage.
+- relative line jumping :: always
   + minimizes mental overhead (and spamming of ~gj~ / ~gk~)
-- Statistically often called commands mapped to useless keys (more sensible).
-- Simplified split management
+- Splits :: simplified
   + At most have 2 splits => toggle between windows with single key (instead of mental overhead for directional navigation ex: C-hjkl)
   + This is for navigating and controlling some inevitable popup-buffers.
   + Avoid splits at all costs and use tabs instead
-- ~:w~ is the statistically most run vim-ex-command, but very unergonomic.
-  + Map it to the os-consistent key
-- ~HLM~ are useless
-  + instead don't be an caveman and learn relative linejumps.
-- Shorcut to ex buffer search & replace with ~\|~
-- ~()~ are useless
-  + Remap to parens jumping
-- ~&~: Allows for samd usage as normal ~&~, but allows repeating any last command.
+- Useless default mappings :: remap sensibly to statistically frequently used commands (shortcut)
+  + use ~Q~ for shortcut to ~@@~ (def macro with ~qq~, execute with ~@q~ in 99% of cases)
+  + ~M~ usecase: scratch mark: ~m~ (hook pos with ~mm~ -> do edits -> jump back to hooked pos: ~M~)
+  + ~()~: Remapped to parens jumping
+  + ~&~: Allows for same usage as normal: ~&~, but allows repeating any last command.
+  + ~TAB~: folding | inspired bby org-modes folding (simple one-stop folding)
+- (Emacs already by default implements it that out of screen jumps center the screen which is sensible )
 
 #+begin_src emacs-lisp
 (after! evil
@@ -276,11 +270,12 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
    :nmvo "j"   #'evil-next-visual-line
    :nmvo "k"   #'evil-previous-visual-line
 
-   :nm   "TAB" #'+fold/toggle ;; inspired bby org-modes folding
+   :nm   "TAB" #'+fold/toggle
 
    :nmv  "U"   #'evil-redo
    :nmv  "Q"   #'evil-execute-last-recorded-macro
    :nmv  "&"   #'evil-ex-repeat
+   :nmv  "M"   (cmd! (evil-goto-mark-line "m"))
 
    :nmv  "]e"  #'flycheck-next-error
    :nmv  "[e"  #'flycheck-previous-error
@@ -298,11 +293,13 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 ** Control-bindings
-- Ctrl-bindings are for: Screen movements
+- used for: Screen movements
   + jumplist-jumps
   + page scrolling
   + screen-scrolling:  ~C-y~ & ~C-e~.
 - ~C-q, C-s~ mapped sensibly to statistically frequently executed commands.
+  + ~:w~ is the statistically most run vim-ex-command, but not very unergonomic.
+  + Map it to the os-consistent key
 #+begin_src emacs-lisp
 (after! evil
   (map!
@@ -365,7 +362,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 #+end_src
 
 ** Dired
-- Avoid using integrated filemanagers (such as dired / ranger / lf) whenever possible replace them with shell commands and direct jumping (fzf).
+- Avoid using integrated filemanagers (such as dired / ranger / lf) whenever possible replace them with shell commands and finding (fzf: recent-files, root, current dir..)
 - In most cases it is more extensible and faster using tools such as emac's find-file in combination with fuzzy finding and using global bookmarks for frequently used projects/files.
   + ~:e~ & ~:w~ for creating and opening files in the same dir from the vim-cmd-line
   + ~:%!~ & ~:'<,'>!~ for processing the buffer with external shell-tools.

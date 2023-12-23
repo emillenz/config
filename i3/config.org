@@ -223,19 +223,19 @@ set $open <open> \
 
 $map $mod+o mode "$open"
 mode "$open" {
-  $map $mod+c                 exec alacritty --class cmd -T cmd -e tmux new-session -A -s cmd; $esc
-  $map $mod+d                 exec xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)"; $esc
-  $map $mod+shift+e --release exec emacsclient --execute--eval '(emacs-everywhere)'; $esc
-  $map $mod+e                 exec emacsclient --reuse-frame || emacs --daemon; $esc
-  $map $mod+w                 exec firefox; $esc
-  $map $mod+v                 exec mpv $(xclip -o); $esc
-  $map $mod+i                 exec nsxiv; $esc
-  $map $mod+s                 exec keepassxc; $esc
-  $map $mod+m                 exec firefox --new-window https://open.spotify.com; $esc
-  $map $mod+shift+m           exec alacritty --class 'pulsemixer' -T 'audio' -e pulsemixer; $esc
-  $map $mod+b                 exec firefox --new-window https://chat.openai.com; $esc
-  $map $mod+p                 exec alacritty --class 'htop' -T 'htop' -e htop --tree; $esc
-  $map $mod+n                 exec alacritty --class 'nmtui' -T 'nmtui' -e nmtui; $esc
+  $map $mod+c       exec alacritty --class cmd -T cmd -e tmux new-session -A -s cmd; $esc
+  $map $mod+d       exec xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)"; $esc
+  $map $mod+shift+e exec emacsclient --execute--eval '(emacs-everywhere)'; $esc
+  $map $mod+e       exec emacsclient --reuse-frame || emacs --daemon; $esc
+  $map $mod+w       exec firefox; $esc
+  $map $mod+v       exec mpv $(xclip -o); $esc
+  $map $mod+i       exec nsxiv; $esc
+  $map $mod+s       exec keepassxc; $esc
+  $map $mod+m       exec firefox --new-window https://open.spotify.com; $esc
+  $map $mod+shift+m exec alacritty --class 'pulsemixer' -T 'audio' -e pulsemixer; $esc
+  $map $mod+b       exec firefox --new-window https://chat.openai.com; $esc
+  $map $mod+p       exec alacritty --class 'htop' -T 'htop' -e htop --tree; $esc
+  $map $mod+n       exec alacritty --class 'nmtui' -T 'nmtui' -e nmtui; $esc
   $map Escape $esc
 }
 #+end_src
@@ -277,7 +277,7 @@ mode "$keyboard" {
 #+end_src
 
 *** Powermenu
-- Always hibernate -> Preserves the state inbetween reboots keeps workflow =DRY=.
+- Always hibernate -> Preserves the state inbetween reboots => keeps workflow DRY.
 #+begin_src conf
 set $powermenu <powermenu> \
 │ restart-i3 \
@@ -323,7 +323,7 @@ mode "$menus" {
 
 
 * Theme
-- When locking the screen with command ~i3-lock~, solarized colorscheme is specified.
+- NOTE :: When changing colorscheme, change bg-color for i3-lock command too.
 ** Solarized light
 #+begin_src conf :tangle no
 set $backg      #F2E6CE

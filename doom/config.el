@@ -218,6 +218,7 @@
 (after! evil
   (map!
    :inmv "C-s" #'evil-write
+   :inmv "C-q" #'kill-current-buffer
    :inmv "C-j" #'drag-stuff-down
    :inmv "C-k" #'drag-stuff-up))
 ;; Control-bindings:1 ends here

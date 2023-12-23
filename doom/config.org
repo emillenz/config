@@ -302,10 +302,12 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   + jumplist-jumps
   + page scrolling
   + screen-scrolling:  ~C-y~ & ~C-e~.
+- ~C-q, C-s~ mapped sensibly to statistically frequently executed commands.
 #+begin_src emacs-lisp
 (after! evil
   (map!
    :inmv "C-s" #'evil-write
+   :inmv "C-q" #'kill-current-buffer
    :inmv "C-j" #'drag-stuff-down
    :inmv "C-k" #'drag-stuff-up))
 #+end_src

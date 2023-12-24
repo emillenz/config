@@ -4,10 +4,11 @@ set $esc mode "default"
 set $bin ~/.config/bin
 set $mv move container to workspace
 set $map bindsym
+set $cmd exec --no-startup-id
 # Abbreviations of long commands:1 ends here
 
 # [[file:config.org::*Startup automation][Startup automation:1]]
-exec --no-startup-id $bin/startup
+$cmd $bin/startup
 # Startup automation:1 ends here
 
 # [[file:config.org::*Options][Options:1]]
@@ -33,29 +34,29 @@ $map --whole-window $mod+button2 floating toggle
 # Mouse:1 ends here
 
 # [[file:config.org::*System & Media controls][System & Media controls:1]]
-$map XF86MonBrightnessDown exec sudo light -U 5 && notify-send "󰃟 Light" "$(light)%"
-$map XF86MonBrightnessUp   exec sudo light -A 5 && notify-send "󰃟 Light" "$(light)%"
-$map XF86Display           exec $bin/output_select
-$map XF86ScreenSaver       exec xset dpms force off
-$map XF86Sleep             exec i3lock -e --color 002b36 && systemctl suspend
+$map XF86MonBrightnessDown $cmd sudo light -U 5 && notify-send "󰃟 Light" "$(light)%"
+$map XF86MonBrightnessUp   $cmd sudo light -A 5 && notify-send "󰃟 Light" "$(light)%"
+$map XF86Display           $cmd $bin/output_select
+$map XF86ScreenSaver       $cmd xset dpms force off
+$map XF86Sleep             $cmd i3lock -e --color 002b36 && systemctl suspend
 
-$map XF86AudioPlay         exec playerctl play
-$map XF86AudioPause        exec playerctl pause
-$map XF86AudioNext         exec playerctl next
-$map XF86AudioPrev         exec playerctl previous
-$map XF86AudioRaiseVolume  exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
-$map XF86AudioLowerVolume  exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
-$map XF86AudioMute         exec pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)"
+$map XF86AudioPlay         $cmd playerctl play
+$map XF86AudioPause        $cmd playerctl pause
+$map XF86AudioNext         $cmd playerctl next
+$map XF86AudioPrev         $cmd playerctl previous
+$map XF86AudioRaiseVolume  $cmd pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
+$map XF86AudioLowerVolume  $cmd pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
+$map XF86AudioMute         $cmd pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)"
 # System & Media controls:1 ends here
 
 # [[file:config.org::*System & Media controls][System & Media controls:2]]
-$map Print             exec $bin/screenshot
-$map $mod+backslash    exec playerctl play-pause
-$map $mod+bracketright exec playerctl next
-$map $mod+bracketleft  exec playerctl previous
-$map $mod+equal        exec pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
-$map $mod+minus        exec pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
-$map $mod+0            exec pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)"
+$map Print             $cmd $bin/screenshot
+$map $mod+backslash    $cmd playerctl play-pause
+$map $mod+bracketright $cmd playerctl next
+$map $mod+bracketleft  $cmd playerctl previous
+$map $mod+equal        $cmd pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
+$map $mod+minus        $cmd pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
+$map $mod+0            $cmd pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)"
 # System & Media controls:2 ends here
 
 # [[file:config.org::*Core navigation][Core navigation:1]]
@@ -64,22 +65,22 @@ $map $mod+shift+j    move left
 $map $mod+k          focus next
 $map $mod+shift+k    move right
 $map $mod+q          kill
-$map $mod+f          exec rofi -show drun
-$map $mod+g          exec rofi -show window
-$map $mod+semicolon  exec rofi -show run
+$map $mod+f          $cmd rofi -show drun
+$map $mod+g          $cmd rofi -show window
+$map $mod+semicolon  $cmd rofi -show run
 $map $mod+t          layout toggle tabbed splith
 $map $mod+Return     move workspace to output next
 # Core navigation:1 ends here
 
 # [[file:config.org::*Workspaces Assignments][Workspaces Assignments:1]]
-set $ws_cmd    "  cmd  "
-set $ws_doc    "󰈙  doc  "
-set $ws_web    "󰖟  web  "
-set $ws_edit   "  edit "
-set $ws_vid    "  vid  "
-set $ws_img    "󰋩  img  "
-set $ws_bot    "󰚩  bot  "
-set $ws_music  "  music"
+set $ws_cmd    "cmd"
+set $ws_doc    "doc"
+set $ws_web    "web"
+set $ws_edit   "edit"
+set $ws_vid    "vid"
+set $ws_img    "img"
+set $ws_bot    "bot"
+set $ws_music  "music"
 
 # HACK :: order of these assingments are relevant: abstract -> detail.
 for_window [all] title_window_icon yes, $mv 1, focus
@@ -139,46 +140,28 @@ $map $mod+shift+m $mv $ws_music; workspace $ws_music
 # App navigation bindings:1 ends here
 
 # [[file:config.org::*Open app keybindings][Open app keybindings:1]]
-set $open <open> \
-| editor \
-| ^editor-everywhere \
-| cmd \
-| web \
-| docs \
-| music \
-| images \
-| [s] passwds \
-| processes \
-| videos \
-| ^mixer \
-| networks \
-| bot
-
 $map $mod+o mode "$open"
+
 mode "$open" {
-  $map $mod+c       exec alacritty --class cmd -T cmd -e tmux new-session -A -s cmd; $esc
-  $map $mod+d       exec xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)"; $esc
-  $map $mod+shift+e exec emacsclient --execute--eval '(emacs-everywhere)'; $esc
-  $map $mod+e       exec emacsclient --reuse-frame || emacs --daemon; $esc
-  $map $mod+w       exec firefox; $esc
-  $map $mod+v       exec mpv $(xclip -o); $esc
-  $map $mod+i       exec nsxiv; $esc
-  $map $mod+s       exec keepassxc; $esc
-  $map $mod+m       exec firefox --new-window https://open.spotify.com; $esc
-  $map $mod+shift+m exec alacritty --class 'pulsemixer' -T 'audio' -e pulsemixer; $esc
-  $map $mod+b       exec firefox --new-window https://chat.openai.com; $esc
-  $map $mod+p       exec alacritty --class 'htop' -T 'htop' -e htop --tree; $esc
-  $map $mod+n       exec alacritty --class 'nmtui' -T 'nmtui' -e nmtui; $esc
+  $map $mod+c       $cmd alacritty --class cmd -T cmd -e tmux new-session -A -s cmd; $esc
+  $map $mod+d       $cmd xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)"; $esc
+  $map $mod+shift+e $cmd emacsclient --$cmdute--eval '(emacs-everywhere)'; $esc
+  $map $mod+e       $cmd emacsclient --reuse-frame || emacs --daemon; $esc
+  $map $mod+w       $cmd firefox; $esc
+  $map $mod+v       $cmd mpv $(xclip -o); $esc
+  $map $mod+i       $cmd nsxiv; $esc
+  $map $mod+s       $cmd keepassxc; $esc
+  $map $mod+m       $cmd firefox --new-window https://open.spotify.com; $esc
+  $map $mod+shift+m $cmd alacritty --class 'pulsemixer' -T 'audio' -e pulsemixer; $esc
+  $map $mod+b       $cmd firefox --new-window https://chat.openai.com; $esc
+  $map $mod+p       $cmd alacritty --class 'htop' -T 'htop' -e htop --tree; $esc
+  $map $mod+n       $cmd alacritty --class 'nmtui' -T 'nmtui' -e nmtui; $esc
   $map Escape $esc
 }
 # Open app keybindings:1 ends here
 
 # [[file:config.org::*Leader][Leader:1]]
 $map $mod+space mode "$leader"
-set $leader <leader> \
-| keyboard+ \
-| powermenu+ \
-| menus+
 
 mode "$leader" {
   $map $mod+k mode "$keyboard"
@@ -189,46 +172,27 @@ mode "$leader" {
 # Leader:1 ends here
 
 # [[file:config.org::*Powermenu][Powermenu:1]]
-set $powermenu <powermenu> \
-| restart-i3 \
-| ^reboot \
-| lock \
-| screen-off \
-| poweroff \
-| exit \
-| hibernate \
-| ^startup
-
-
 mode "$powermenu" {
-  $map $mod+r       exec i3-msg restart; $esc
-  $map $mod+shift+s exec $bin/startup; $esc
-  $map $mod+e       exec i3-msg exit; $esc
-  $map $mod+shift+r exec systemctl reboot; $esc
-  $map $mod+h       exec systemctl hibernate; $esc
-  $map $mod+l       exec i3lock -e --color 002b36 && systemctl suspend; $esc
-  $map $mod+s       exec sleep 1 && xset dpms force off; $esc
-  $map $mod+p       exec systemctl poweroff; $esc
+  $map $mod+r       $cmd i3-msg restart; $esc
+  $map $mod+shift+s $cmd $bin/startup; $esc
+  $map $mod+e       $cmd i3-msg exit; $esc
+  $map $mod+shift+r $cmd systemctl reboot; $esc
+  $map $mod+h       $cmd systemctl hibernate; $esc
+  $map $mod+l       $cmd i3lock -e --color 002b36 && systemctl suspend; $esc
+  $map $mod+s       $cmd sleep 1 && xset dpms force off; $esc
+  $map $mod+p       $cmd systemctl poweroff; $esc
   $map Escape $esc
 }
 # Powermenu:1 ends here
 
 # [[file:config.org::*Menus][Menus:1]]
-set $menus <menus> \
-│ audio \
-│ outputs \
-│ [^o] layouts \
-│ btconnect \
-│ process-kill \
-│ screenshot \
-
 mode "$menus" {
-  $map $mod+a       exec $bin/audio-menu; $esc
-  $map $mod+o       exec $bin/output-menu; $esc
-  $map $mod+shift+o exec $bin/layout-menu; $esc
-  $map $mod+s       exec $bin/screenshot-menu; $esc
-  $map $mod+b       exec $bin/bluetooth-menu; $esc
-  $map $mod+p       exec $bin/killprocess-menu; $esc
+  $map $mod+a       $cmd $bin/audio-menu; $esc
+  $map $mod+o       $cmd $bin/output-menu; $esc
+  $map $mod+shift+o $cmd $bin/layout-menu; $esc
+  $map $mod+s       $cmd $bin/screenshot-menu; $esc
+  $map $mod+b       $cmd $bin/bluetooth-menu; $esc
+  $map $mod+p       $cmd $bin/killprocess-menu; $esc
   $map Escape $esc
 }
 # Menus:1 ends here

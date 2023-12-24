@@ -140,35 +140,35 @@ $map $mod+shift+m $mv $ws_music; workspace $ws_music
 
 # [[file:config.org::*Open app keybindings][Open app keybindings:1]]
 set $open <open> \
-│ editor \
-│ ^editor-everywhere \
-│ cmd \
-│ web \
-│ docs \
-│ music \
-│ images \
-│ [s] passwds \
-│ processes \
-│ videos \
-│ ^mixer \
-│ networks \
-│ bot
+| editor \
+| ^editor-everywhere \
+| cmd \
+| web \
+| docs \
+| music \
+| images \
+| [s] passwds \
+| processes \
+| videos \
+| ^mixer \
+| networks \
+| bot
 
 $map $mod+o mode "$open"
 mode "$open" {
-  $map $mod+c                 exec alacritty --class cmd -T cmd -e tmux new-session -A -s cmd; $esc
-  $map $mod+d                 exec xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)"; $esc
-  $map $mod+shift+e --release exec emacsclient --execute--eval '(emacs-everywhere)'; $esc
-  $map $mod+e                 exec emacsclient --reuse-frame || emacs --daemon; $esc
-  $map $mod+w                 exec firefox; $esc
-  $map $mod+v                 exec mpv $(xclip -o); $esc
-  $map $mod+i                 exec nsxiv; $esc
-  $map $mod+s                 exec keepassxc; $esc
-  $map $mod+m                 exec firefox --new-window https://open.spotify.com; $esc
-  $map $mod+shift+m           exec alacritty --class 'pulsemixer' -T 'audio' -e pulsemixer; $esc
-  $map $mod+b                 exec firefox --new-window https://chat.openai.com; $esc
-  $map $mod+p                 exec alacritty --class 'htop' -T 'htop' -e htop --tree; $esc
-  $map $mod+n                 exec alacritty --class 'nmtui' -T 'nmtui' -e nmtui; $esc
+  $map $mod+c       exec alacritty --class cmd -T cmd -e tmux new-session -A -s cmd; $esc
+  $map $mod+d       exec xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)"; $esc
+  $map $mod+shift+e exec emacsclient --execute--eval '(emacs-everywhere)'; $esc
+  $map $mod+e       exec emacsclient --reuse-frame || emacs --daemon; $esc
+  $map $mod+w       exec firefox; $esc
+  $map $mod+v       exec mpv $(xclip -o); $esc
+  $map $mod+i       exec nsxiv; $esc
+  $map $mod+s       exec keepassxc; $esc
+  $map $mod+m       exec firefox --new-window https://open.spotify.com; $esc
+  $map $mod+shift+m exec alacritty --class 'pulsemixer' -T 'audio' -e pulsemixer; $esc
+  $map $mod+b       exec firefox --new-window https://chat.openai.com; $esc
+  $map $mod+p       exec alacritty --class 'htop' -T 'htop' -e htop --tree; $esc
+  $map $mod+n       exec alacritty --class 'nmtui' -T 'nmtui' -e nmtui; $esc
   $map Escape $esc
 }
 # Open app keybindings:1 ends here
@@ -176,38 +176,39 @@ mode "$open" {
 # [[file:config.org::*Leader][Leader:1]]
 $map $mod+space mode "$leader"
 set $leader <leader> \
-│ keyboard+ \
-│ powermenu+ \
-│ menus+ \
-│ startup
+| keyboard+ \
+| powermenu+ \
+| menus+
 
 mode "$leader" {
   $map $mod+k mode "$keyboard"
   $map $mod+p mode "$powermenu"
   $map $mod+m mode "$menus"
-  $map $mod+s exec $bin/startup; $esc
   $map Escape $esc
 }
 # Leader:1 ends here
 
 # [[file:config.org::*Powermenu][Powermenu:1]]
 set $powermenu <powermenu> \
-│ restart-i3 \
-│ ^reboot \
-│ lock \
-│ screen-off \
-│ poweroff \
-│ exit \
-│ hibernate \
+| restart-i3 \
+| ^reboot \
+| lock \
+| screen-off \
+| poweroff \
+| exit \
+| hibernate \
+| ^startup
+
 
 mode "$powermenu" {
-  $map $mod+r       exec i3-msg restart;                                $esc
-  $map $mod+e       exec i3-msg exit;                                   $esc
-  $map $mod+shift+r exec systemctl reboot;                              $esc
-  $map $mod+h       exec systemctl hibernate;                           $esc
+  $map $mod+r       exec i3-msg restart; $esc
+  $map $mod+shift+s exec $bin/startup; $esc
+  $map $mod+e       exec i3-msg exit; $esc
+  $map $mod+shift+r exec systemctl reboot; $esc
+  $map $mod+h       exec systemctl hibernate; $esc
   $map $mod+l       exec i3lock -e --color 002b36 && systemctl suspend; $esc
-  $map $mod+s       exec xset dpms force off;                           $esc
-  $map $mod+p       exec systemctl poweroff;                            $esc
+  $map $mod+s       exec sleep 1 && xset dpms force off; $esc
+  $map $mod+p       exec systemctl poweroff; $esc
   $map Escape $esc
 }
 # Powermenu:1 ends here
@@ -222,11 +223,11 @@ set $menus <menus> \
 │ screenshot \
 
 mode "$menus" {
-  $map $mod+a       exec $bin/audio-menu;       $esc
-  $map $mod+o       exec $bin/output-menu;      $esc
-  $map $mod+shift+o exec $bin/layout-menu;      $esc
-  $map $mod+s       exec $bin/screenshot-menu;  $esc
-  $map $mod+b       exec $bin/bluetooth-menu;   $esc
+  $map $mod+a       exec $bin/audio-menu; $esc
+  $map $mod+o       exec $bin/output-menu; $esc
+  $map $mod+shift+o exec $bin/layout-menu; $esc
+  $map $mod+s       exec $bin/screenshot-menu; $esc
+  $map $mod+b       exec $bin/bluetooth-menu; $esc
   $map $mod+p       exec $bin/killprocess-menu; $esc
   $map Escape $esc
 }

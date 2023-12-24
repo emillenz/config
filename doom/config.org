@@ -940,7 +940,8 @@ More convenient, with a nice display.
      :children
      (("task" :keys "t"
        :template
-       ("* [ ] %^{title} %? %^g") ;; NOTE :: not putting final insert on newline => tasks are a list and not paragraph
+       ("* [ ] %^{title} %^g"
+        "%?")
        :children
        (("cs"   :keys "c" :file "cs/tasks.org"
          :children

@@ -1,6 +1,6 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
-;; NOTE ensure that the language server package is installed on the os for each language under the :lang: section
+;; NOTE :: ensure that the language server package is installed on the os for each language under the :lang: section
 
 (doom! :input
        ;;bidi              ; (tfel ot) thgir etirw uoy gnipleh
@@ -23,7 +23,7 @@
        :ui
        ;;deft              ; notational velocity for Emacs
        doom              ; what makes DOOM look the way it does
-       ;; doom-dashboard    ; a nifty splash screen for Emacs
+       ;; doom-dashboard    ; a nifty splash screen for Emacs => bloat
        ;; doom-quit         ; DOOM quit-message prompts when you quit Emacs
        ;; (emoji
        ;;  +unicode
@@ -33,12 +33,10 @@
        indent-guides     ; highlighted indent columns
        (ligatures         ; ligatures and symbols
         +extra
-        )
-
+        +iosevka)
        ;; minimap           ; show a map of the code on the side
        (modeline)  ;; light => no icons
-
-       nav-flash         ; blink cursor line after big motions
+       ;; nav-flash         ; blink cursor line after big motions
        ;; neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
        (popup               ; tame sudden yet inevitable temporary windows
@@ -73,7 +71,6 @@
        :emacs
        (dired             ; making dired pretty [functional]
         +icons)
-
        electric          ; smarter, keyword-based electric-indent
        (ibuffer +icons) ; interactive buffer management
        (undo +tree)       ; persistent, smarter undo for your inevitable mistakes
@@ -88,9 +85,9 @@
        :checkers
        (syntax
         +childframe)              ; tasing you for every semicolon you forget
-       ;; (spell
-       ;;  +everywhere
-       ;;  +flyspell)
+       (spell
+        +everywhere
+        +flyspell)
                                         ; tasing you for misspelling mispelling
        grammar           ; tasing grammar mistake every you make
 
@@ -113,8 +110,8 @@
         +peek)               ; M-x vscode
        (magit             ; a git porcelain for Emacs
         +forge)
-       make              ; run make tasks from Emacs
-       (pass +auth)       ; password manager for nerds
+       ;; make              ; run make tasks from Emacs
+       ;; (pass +auth)       ; password manager for nerds
        pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
        ;;rgb               ; creating color strings
@@ -170,7 +167,7 @@
         +fold)
        ;;lean              ; for folks with too much to prove
        ;;ledger            ; be audit you can be
-       (lua +lsp)          ; one-based indices? one-based indices
+       ;; (lua +lsp)          ; one-based indices? one-based indices
        markdown          ; writing docs for people to ignore
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
@@ -184,7 +181,7 @@
         ;; +gnuplot                    ; who doesn't like pretty pictures
         ;;+pomodoro                 ; be fruitful with the tomato technique
         +pretty
-        ;; +present                    ; using org-mode for presentations
+        +present                    ; using org-mode for presentations
         +roam2)                     ; wander around notes
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
@@ -197,15 +194,15 @@
        ;;raku              ; the artist formerly known as perl6
        ;;rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
-       (ruby
-        +lsp)
+       ;; (ruby
+       ;;  +lsp)
        ;; +rails
                                         ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        (rust
         +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;(scheme +guile)   ; a fully conniving family of lisps
-       sh                ; she sells {ba,z,fi}sh shells on the C xor
+       ;; sh                ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
        ;; (swift +lsp)             ; who asked for emoji variables?

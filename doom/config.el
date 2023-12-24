@@ -662,7 +662,8 @@ Jumps at tangled code from org src block."
      :children
      (("task" :keys "t"
        :template
-       ("* [ ] %^{title} %? %^g") ;; NOTE :: not putting final insert on newline => tasks are a list and not paragraph
+       ("* [ ] %^{title} %^g"
+        "%?")
        :children
        (("cs"   :keys "c" :file "cs/tasks.org"
          :children

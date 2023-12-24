@@ -39,7 +39,7 @@ exec --no-startup-id $bin/startup
 
 * Options
 - Like in all config: consistent font and vsplits.
-- always focus a newwindow when it's created.
+- always focus a new window when it's created.
 #+begin_src conf
 workspace_auto_back_and_forth no
 workspace_layout tabbed
@@ -207,19 +207,19 @@ $map $mod+shift+m $mv $ws_music; workspace $ws_music
 ** Open app keybindings
 #+begin_src  conf
 set $open <open> \
-│ editor \
-│ ^editor-everywhere \
-│ cmd \
-│ web \
-│ docs \
-│ music \
-│ images \
-│ [s] passwds \
-│ processes \
-│ videos \
-│ ^mixer \
-│ networks \
-│ bot
+| editor \
+| ^editor-everywhere \
+| cmd \
+| web \
+| docs \
+| music \
+| images \
+| [s] passwds \
+| processes \
+| videos \
+| ^mixer \
+| networks \
+| bot
 
 $map $mod+o mode "$open"
 mode "$open" {
@@ -246,16 +246,14 @@ mode "$open" {
 #+begin_src conf
 $map $mod+space mode "$leader"
 set $leader <leader> \
-│ keyboard+ \
-│ powermenu+ \
-│ menus+ \
-│ startup
+| keyboard+ \
+| powermenu+ \
+| menus+
 
 mode "$leader" {
   $map $mod+k mode "$keyboard"
   $map $mod+p mode "$powermenu"
   $map $mod+m mode "$menus"
-  $map $mod+s exec $bin/startup; $esc
   $map Escape $esc
 }
 #+end_src
@@ -264,14 +262,14 @@ mode "$leader" {
 - Somtimes i use multiple different keyboard layouts -> switch between them.
 #+begin_src conf :tangle no
 set $keyboard <keyboard> \
-│ dvorak \
-│ ch \
-│ us
+| dvorak \
+| ch \
+| us
 
 mode "$keyboard" {
   $map $mod+d exec setxkbmap us dvorak; $esc
-  $map $mod+c exec setxkbmap ch;        $esc
-  $map $mod+u exec setxkbmap us;        $esc
+  $map $mod+c exec setxkbmap ch; $esc
+  $map $mod+u exec setxkbmap us; $esc
   $map Escape $esc
 }
 #+end_src
@@ -280,22 +278,25 @@ mode "$keyboard" {
 - Always hibernate -> Preserves the state inbetween reboots => keeps workflow DRY.
 #+begin_src conf
 set $powermenu <powermenu> \
-│ restart-i3 \
-│ ^reboot \
-│ lock \
-│ screen-off \
-│ poweroff \
-│ exit \
-│ hibernate \
+| restart-i3 \
+| ^reboot \
+| lock \
+| screen-off \
+| poweroff \
+| exit \
+| hibernate \
+| ^startup
+
 
 mode "$powermenu" {
-  $map $mod+r       exec i3-msg restart;                                $esc
-  $map $mod+e       exec i3-msg exit;                                   $esc
-  $map $mod+shift+r exec systemctl reboot;                              $esc
-  $map $mod+h       exec systemctl hibernate;                           $esc
+  $map $mod+r       exec i3-msg restart; $esc
+  $map $mod+shift+s exec $bin/startup; $esc
+  $map $mod+e       exec i3-msg exit; $esc
+  $map $mod+shift+r exec systemctl reboot; $esc
+  $map $mod+h       exec systemctl hibernate; $esc
   $map $mod+l       exec i3lock -e --color 002b36 && systemctl suspend; $esc
-  $map $mod+s       exec xset dpms force off;                           $esc
-  $map $mod+p       exec systemctl poweroff;                            $esc
+  $map $mod+s       exec sleep 1 && xset dpms force off; $esc
+  $map $mod+p       exec systemctl poweroff; $esc
   $map Escape $esc
 }
 #+end_src
@@ -311,11 +312,11 @@ set $menus <menus> \
 │ screenshot \
 
 mode "$menus" {
-  $map $mod+a       exec $bin/audio-menu;       $esc
-  $map $mod+o       exec $bin/output-menu;      $esc
-  $map $mod+shift+o exec $bin/layout-menu;      $esc
-  $map $mod+s       exec $bin/screenshot-menu;  $esc
-  $map $mod+b       exec $bin/bluetooth-menu;   $esc
+  $map $mod+a       exec $bin/audio-menu; $esc
+  $map $mod+o       exec $bin/output-menu; $esc
+  $map $mod+shift+o exec $bin/layout-menu; $esc
+  $map $mod+s       exec $bin/screenshot-menu; $esc
+  $map $mod+b       exec $bin/bluetooth-menu; $esc
   $map $mod+p       exec $bin/killprocess-menu; $esc
   $map Escape $esc
 }

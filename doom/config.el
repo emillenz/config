@@ -354,7 +354,7 @@
           ("docx" . "libreoffice")
           ("odt"  . "libreoffice")
           ("odf"  . "libreoffice")
-          ;; ("epub" . "zathura")
+          ("epub" . "zathura")
           ("pdf"  . "zathura")))
 
   (add-hook! 'dired-mode-hook #'dired-hide-details-mode)

@@ -709,21 +709,8 @@ Jumps at tangled code from org src block."
       ("literature" :keys "l"
        :file (lambda () (read-file-name "File: " z/literature-dir))
        :children
-       (("highlight" :keys "h"
-         :headline "Highlights"
-         :template
-         ("**  %^{title} [[p: %^{reference}]]"
-          "#+begin_quote"
-          "%?"
-          "#+end_quote"))
-        ("new-entry" :keys "N"
-         :file (lambda ()
-                 (replace-regexp-in-string
-                  "\s+" "-"
-                  (concat
-                   z/literature-dir
-                   (read-string "title: ")
-                   ".org")))
+       (("new-source" :keys "s"
+         :file (lambda () (replace-regexp-in-string "\s+" "-" (concat z/literature-dir (read-string "title: ") ".org")))
          :type plain
          :author (lambda () user-full-name)
          :email (lambda () user-mail-address)
@@ -743,17 +730,24 @@ Jumps at tangled code from org src block."
           ":length: %^{pages/minutes}"
           ":END:"
           ""
-          "* Highlights"
+          "** Highlights"
           "%?"
-          "* Literature Notes"
-          "* Transient Notes"
-          "* Summary"
-          )
-         )
+          "** Literature Notes"
+          "** Transient Notes"
+          "** Summary"))
+
+        ("highlight" :keys "h"
+         :headline "Highlights"
+         :template
+         ("* %^{title} [[p: %^{reference}]]"
+          "#+begin_quote"
+          "%?"
+          "#+end_quote"))
+
         ("note" :keys "n"
          :healine "Literature Notes"
          :template
-         ("** %^{title} [[p: %^{reference}]]"
+         ("* %^{title} [[p: %^{reference}]]"
           "%?")))))))))
 ;; Capture templates:1 ends here
 

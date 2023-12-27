@@ -1,10 +1,8 @@
 ;; -*- no-byte-compile: t; -*-
 
-(package! flycheck-aspell)
+(package! evil-escape :disable t)
+
 (package! dired-open)
-(package! dired-subtree)
-(package! elfeed-goodies)
-(package! peep-dired)
 (package! rainbow-mode)
 (package! wc-mode)
 (package! clippy)
@@ -13,7 +11,6 @@
 (package! doct)
 (package! all-the-icons-ivy)
 (package! org-super-agenda)
-(package! tldr)
 (package! org-superstar)
 (package! org-tidy)
 (package! evil-numbers)

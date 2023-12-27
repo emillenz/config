@@ -1,15 +1,3 @@
-split chars  -h | bat
-ls | get name | each {|x| split column '-'}
-ls | get name | split column '-'
-ls | get name | split column '-' | each {|x| echo $x }
-ls | get name | split column '-' | each {|x| echo $x ("../2023" | path join $x.column2)}
-ls | get name | each {|x| echo $x ("../2023" | path join $x.column2)}
-ls | get name | each {|x| echo $x ("../2023" | path join ($x | split column '-' | get column2)}
-ls | get name | each {|x| echo $x ("../2023" | path join ($x | split column '-' | get column2) }
-ls | get name | each {|x| echo $x ("../2023" | path join ($x | split column '-' | get column2)) }
-ls | get name | each {|x| echo $x ("../2023" | path join ($x | split column '-' | get column2 | flatten)) }
-ls | get name | each {|x| echo ($x | split column '-' | get column2 )) }
-ls | get name | each {|x| echo ($x | split column '-' | get column2 ) }
 ls | get name | each {|x| echo ($x | split column '-' | get column2.0 ) }
 ls | get name | each {|x| echo ($x | split column '-' ) }
 ls | get name | each {|x| echo $x ("../2023" | path join ($x | split column '-' | get column2.0 )) }
@@ -9998,3 +9986,15 @@ udiskie
 udiskie  --help | bat --language=man
 ls
 tldr pdflatex 
+nmtui
+yay calibre
+batsignal 
+upower 
+acpi
+fc-list font 
+fc-list
+yay computer modern
+yay cmu
+fc-list | find motion
+fc-list | find motion duo
+fc-list | find DejaVu Serif

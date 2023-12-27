@@ -1,7 +1,7 @@
-  Doom Emacs Config
-#+author:   Emil Lenz
-#+email:    emillenz@protonmail.com
-#+date:     Tuesday, November 1, 2022
+#+title:  Doom Emacs Config
+#+author: Emil Lenz
+#+email:  emillenz@protonmail.com
+#+date:   Tuesday, November 1, 2022
 #+property: header-args:emacs-lisp tangle config.el :comments link
 
 * Preface
@@ -55,8 +55,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  doom-font-increment 1
  doom-big-font-increment 1
  doom-font                (font-spec :family "Iosevka Comfy" :size 14)
- doom-variable-pitch-font (font-spec :family "Iosevka Comfy" :size 14)
- doom-serif-font          (font-spec :family "Iosevka Comfy" :size 14)
+ doom-variable-pitch-font (font-spec :family "Iosevka Comfy Duo" :size 14)
+ doom-serif-font          (font-spec :family "Iosevka Comfy Motion Duo" :size 14)
  doom-big-font            (font-spec :family "Iosevka Comfy" :size 24))
 
 (custom-set-faces!
@@ -85,11 +85,9 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  delete-by-moving-to-trash t
  truncate-string-ellipsis "…"
  auto-save-default t
-
  confirm-kill-emacs nil
  undo-limit 80000000
  history-length 1000
-
  consult-async-min-input 0
  which-key-idle-delay 1
  which-key-allow-multiple-replacements t
@@ -150,7 +148,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  '(text-mode-hook
    dired-mode-hook
    org-agenda-mode-hook
-   magit-mode-hook)
+   magit-mode-hook
+   nov-mode-hook)
  #'visual-fill-column-mode)
 
 (global-display-fill-column-indicator-mode -1) ;; distracting
@@ -262,6 +261,9 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
    :nm   "TAB" #'+fold/toggle
 
+   :nmv "C-j" #'drag-stuff-down
+   :nmv "C-k" #'drag-stuff-up
+
    :nmv  "U"   #'evil-redo
    :nmv  "Q"   #'evil-execute-last-recorded-macro
    :nmv  "&"   #'evil-ex-repeat
@@ -287,16 +289,14 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   - jumplist-jumps
   - page scrolling
   - screen-scrolling:  ~C-y~ & ~C-e~.
-- ~C-q, C-s~ mapped sensibly to statistically frequently executed commands.
+- ~C-q, C-s~, ~C-w~ mapped sensibly to statistically frequently executed commands.
   - ~:w~ is the statistically most run vim-ex-command, but not very unergonomic.
   - Map it to the os-consistent key
 #+begin_src emacs-lisp
 (after! evil
   (map!
    :inmv "C-s" #'evil-write
-   :inmv "C-q" #'kill-current-buffer
-   :inmv "C-j" #'drag-stuff-down
-   :inmv "C-k" #'drag-stuff-up))
+   :inmv "C-q" #'kill-current-buffer))
 #+end_src
 
 *** Instant jumping
@@ -450,10 +450,6 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 - Nested snippets ared good
 #+begin_src emacs-lisp
 (setq yas-triggers-in-field t)
-
-(set-file-templates!
- '(org-mode :trigger "header")
- '(prog-mode :trigger "header"))
 #+end_src
 
 * Dired Mode
@@ -478,7 +474,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
           ("docx" . "libreoffice")
           ("odt"  . "libreoffice")
           ("odf"  . "libreoffice")
-          ("epub" . "zathura")
+          ;; ("epub" . "zathura")
           ("pdf"  . "zathura")))
 
   (add-hook! 'dired-mode-hook #'dired-hide-details-mode)
@@ -531,14 +527,13 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
  org-fold-catch-invisible-edits 'smart
  org-export-headline-levels 5
  ;; org-refile-use-outline-path 'file ;; [&]
+ ;; org-insert-heading-respect-content t ;; [&]
  org-refile-allow-creating-parent-nodes 'confirm
  org-use-sub-superscripts '{}
  org-fontify-quote-and-verse-blocks t
  org-fontify-whole-block-delimiter-line t
  org-export-with-sub-superscripts '{}
  doom-themes-org-fontify-special-tags t
- org-startup-with-latex-preview t
- ;; org-insert-heading-respect-content t ;; [&]
  org-ellipsis "…"
  org-num-max-level 3
  org-hide-leading-stars t
@@ -561,12 +556,12 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
  '(("-"  . "-")
    ("+"  . "+")
    ("*"  . "-")
-   ("a."  . "a)")
-   ("1."  . "1)")
+   ("a." . "a)")
+   ("1." . "1)")
    ("1)" . "a)")))
 
 (setq org-blank-before-new-entry
-      '((heading          . t)
+      '((heading         . t)
         (plain-list-item . nil)))
 #+end_src
 
@@ -578,9 +573,18 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
   (setq
    org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
    org-superstar-item-bullet-alist
-   '((?-  . "─")
+   '((?- . "─")
      (?* . "─") ;; NOTE :: asteriks are reserved for headings only (don't use in lists) => no unambigiuity
      (?+ . "⇒")))
+
+(appendq! +ligatures-extra-symbols
+          (list :list_property "∷"
+                :em_dash       "—"
+                :ellipses      "…"
+                :arrow_right   "→"
+                :arrow_left    "←"
+                :arrow_lr      "↔"
+                :properties    "⚙"))
 #+end_src
 
 ** Ligatures
@@ -898,6 +902,8 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
   - (events) (can be defined in more general events file)
 
 #+begin_src emacs-lisp
+(setf (alist-get 'height +org-capture-frame-parameters) 15)
+
 (defvar z/literature-dir "~/Documents/literature/notes/"
   "Directory for all files associated with my literature-information-system.")
 
@@ -1085,5 +1091,12 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 (setq shell-command-prompt-show-cwd t)
 #+end_src
 
-* [?] Under review
-** org-ql
+* Calc (RPN)
+#+begin_src emacs-lisp
+(setq calc-angle-mode 'rad  ; radians are rad
+      calc-symbolic-mode t)
+#+end_src
+* Latex
+#+begin_src emacs-lisp
+(setq +latex-viewers '(pdf-tools zathura))
+#+end_src

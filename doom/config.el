@@ -25,8 +25,8 @@
  doom-font-increment 1
  doom-big-font-increment 1
  doom-font                (font-spec :family "Iosevka Comfy" :size 14)
- doom-variable-pitch-font (font-spec :family "Iosevka Comfy" :size 14)
- doom-serif-font          (font-spec :family "Iosevka Comfy" :size 14)
+ doom-variable-pitch-font (font-spec :family "Iosevka Comfy Duo" :size 14)
+ doom-serif-font          (font-spec :family "Iosevka Comfy Motion Duo" :size 14)
  doom-big-font            (font-spec :family "Iosevka Comfy" :size 24))
 
 (custom-set-faces!
@@ -51,11 +51,9 @@
  delete-by-moving-to-trash t
  truncate-string-ellipsis "…"
  auto-save-default t
-
  confirm-kill-emacs nil
  undo-limit 80000000
  history-length 1000
-
  consult-async-min-input 0
  which-key-idle-delay 1
  which-key-allow-multiple-replacements t
@@ -105,7 +103,8 @@
  '(text-mode-hook
    dired-mode-hook
    org-agenda-mode-hook
-   magit-mode-hook)
+   magit-mode-hook
+   nov-mode-hook)
  #'visual-fill-column-mode)
 
 (global-display-fill-column-indicator-mode -1) ;; distracting
@@ -186,6 +185,9 @@
 
    :nm   "TAB" #'+fold/toggle
 
+   :nmv "C-j" #'drag-stuff-down
+   :nmv "C-k" #'drag-stuff-up
+
    :nmv  "U"   #'evil-redo
    :nmv  "Q"   #'evil-execute-last-recorded-macro
    :nmv  "&"   #'evil-ex-repeat
@@ -210,9 +212,7 @@
 (after! evil
   (map!
    :inmv "C-s" #'evil-write
-   :inmv "C-q" #'kill-current-buffer
-   :inmv "C-j" #'drag-stuff-down
-   :inmv "C-k" #'drag-stuff-up))
+   :inmv "C-q" #'kill-current-buffer))
 ;; Control-bindings:1 ends here
 
 ;; [[file:config.org::*Instant jumping][Instant jumping:1]]
@@ -332,10 +332,6 @@
 
 ;; [[file:config.org::*Templates & snippets][Templates & snippets:1]]
 (setq yas-triggers-in-field t)
-
-(set-file-templates!
- '(org-mode :trigger "header")
- '(prog-mode :trigger "header"))
 ;; Templates & snippets:1 ends here
 
 ;; [[file:config.org::*Dired Mode][Dired Mode:1]]
@@ -358,7 +354,7 @@
           ("docx" . "libreoffice")
           ("odt"  . "libreoffice")
           ("odf"  . "libreoffice")
-          ("epub" . "zathura")
+          ;; ("epub" . "zathura")
           ("pdf"  . "zathura")))
 
   (add-hook! 'dired-mode-hook #'dired-hide-details-mode)
@@ -402,14 +398,13 @@
  org-fold-catch-invisible-edits 'smart
  org-export-headline-levels 5
  ;; org-refile-use-outline-path 'file ;; [&]
+ ;; org-insert-heading-respect-content t ;; [&]
  org-refile-allow-creating-parent-nodes 'confirm
  org-use-sub-superscripts '{}
  org-fontify-quote-and-verse-blocks t
  org-fontify-whole-block-delimiter-line t
  org-export-with-sub-superscripts '{}
  doom-themes-org-fontify-special-tags t
- org-startup-with-latex-preview t
- ;; org-insert-heading-respect-content t ;; [&]
  org-ellipsis "…"
  org-num-max-level 3
  org-hide-leading-stars t
@@ -432,23 +427,32 @@
  '(("-"  . "-")
    ("+"  . "+")
    ("*"  . "-")
-   ("a."  . "a)")
-   ("1."  . "1)")
+   ("a." . "a)")
+   ("1." . "1)")
    ("1)" . "a)")))
 
 (setq org-blank-before-new-entry
-      '((heading          . t)
+      '((heading         . t)
         (plain-list-item . nil)))
 ;; Options:1 ends here
 
 ;; [[file:config.org::*Symbols][Symbols:1]]
 (add-hook! 'org-mode-hook #'org-superstar-mode #'prettify-symbols-mode)
-(setq
- org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
- org-superstar-item-bullet-alist
- '((?-  . "─")
-   (?* . "─") ;; NOTE :: asteriks are reserved for headings only (don't use in lists) => no unambigiuity
-   (?+ . "⇒")))
+  (setq
+   org-superstar-headline-bullets-list '("◉" "◯" "◈" "◇" "▣" "□")
+   org-superstar-item-bullet-alist
+   '((?- . "─")
+     (?* . "─") ;; NOTE :: asteriks are reserved for headings only (don't use in lists) => no unambigiuity
+     (?+ . "⇒")))
+
+(appendq! +ligatures-extra-symbols
+          (list :list_property "∷"
+                :em_dash       "—"
+                :ellipses      "…"
+                :arrow_right   "→"
+                :arrow_left    "←"
+                :arrow_lr      "↔"
+                :properties    "⚙"))
 ;; Symbols:1 ends here
 
 ;; [[file:config.org::*Ligatures][Ligatures:1]]
@@ -623,6 +627,8 @@ Jumps at tangled code from org src block."
 ;; Jump to src file:1 ends here
 
 ;; [[file:config.org::*Capture templates][Capture templates:1]]
+(setf (alist-get 'height +org-capture-frame-parameters) 15)
+
 (defvar z/literature-dir "~/Documents/literature/notes/"
   "Directory for all files associated with my literature-information-system.")
 
@@ -791,3 +797,12 @@ Jumps at tangled code from org src block."
 ;; [[file:config.org::*Command-line: nushell][Command-line: nushell:2]]
 (setq shell-command-prompt-show-cwd t)
 ;; Command-line: nushell:2 ends here
+
+;; [[file:config.org::*Calc (RPN)][Calc (RPN):1]]
+(setq calc-angle-mode 'rad  ; radians are rad
+      calc-symbolic-mode t)
+;; Calc (RPN):1 ends here
+
+;; [[file:config.org::*Latex][Latex:1]]
+(setq +latex-viewers '(pdf-tools zathura))
+;; Latex:1 ends here

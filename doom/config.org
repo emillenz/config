@@ -29,7 +29,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 * User
 #+begin_src emacs-lisp
 (setq
- user-full-name "Emil Lenz"
+ user-full-name "emil lenz"
  user-mail-address "emillenz@protonmail.com")
 #+end_src
 
@@ -900,7 +900,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
   + (events) (can be defined in more general events file)
 
 #+begin_src emacs-lisp
-(defvar z/li-dir "~/Documents/literature/notes/"
+(defvar z/literature-dir "~/Documents/literature/notes/"
   "Directory for all files associated with my literature-information-system.")
 
 (defvar z/journal-dir "~/Documents/journal/"
@@ -962,32 +962,69 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
         ("compass"  :keys "s" :file "compass/notes.org")
         ("config"   :keys "o" :file "config/notes.org")))
 
-      ("journal" :keys "j"
-       :file (lambda () (concat z/journal-dir "journal-W" (format-time-string "%V") ".org")) ;; NOTE:: weekly journal file
-       :datetree t
+      ("daily-journal" :keys "j"
+       :file (lambda () (concat z/journal-dir (format-time-string "%F") "-" "journal"  ".org"))
+       :type plain
+       :title (lambda () (concat "Daily Note: " (format-time-string "%F")))
+       :author (lambda () user-full-name)
+       :email (lambda () user-mail-address)
+       :date (lambda () (format-time-string "%F"))
        :template
-       ("* Goals"
-        "- %?"
+       ("#+title:  %{title}"
+        "#+author: %{author}"
+        "#+date:   %{date}"
         ""
-        "* Tasks ?"
+        "* Goals"
+        "- %?"
+        "* Tasks"
+        "** [ ] "
         "* Gratitude"
         "- "
-        ""
         "* Reflection & Review"
         "- "))
 
-      ("Literature" :keys "l"
+      ("literature" :keys "l"
        :file (lambda () (read-file-name "File: " z/literature-dir))
        :children
-       (("Highlight" :keys "h"
+       (("highlight" :keys "h"
          :headline "Highlights"
          :template
          ("**  %^{title} [[p: %^{reference}]]"
           "#+begin_quote"
           "%?"
           "#+end_quote"))
-
-        ("Note" :keys "n"
+        ("new-entry" :keys "N"
+         :file (lambda ()
+                 (replace-regexp-in-string
+                  "\s+" "-"
+                  (concat
+                   z/literature-dir
+                   (read-string "title: ")
+                   ".org")))
+         :type plain
+         :author (lambda () user-full-name)
+         :email (lambda () user-mail-address)
+         :date (lambda () (format-time-string "%F"))
+         :template
+         ("#+title:  %^{title}"
+          "#+author: %{author}"
+          "#+date:   %{date}"
+          ""
+          "#+property: title %{title}"
+          "#+property: author %^{author}"
+          "#+property: year %^{year of publication}"
+          "#+property: tags %^{tags}"
+          "#+property: type %^{type}"
+          "#+property: length %^{pages/minutes}"
+          ""
+          "* Highlights"
+          "%?"
+          "* Literature Notes"
+          "* Transient Notes"
+          "* Summary"
+          )
+         )
+        ("note" :keys "n"
          :healine "Literature Notes"
          :template
          ("** %^{title} [[p: %^{reference}]]"

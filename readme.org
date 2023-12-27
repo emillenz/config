@@ -20,54 +20,54 @@ Imagine two kinds of grocery stores, one that just looks at what is the most pop
 - This system is 100% centered at keyboard usage and aims to unify all navigational commands across the terminal, editor, webbrowser, window manager and other possible applications using Vim-bindings in combination with a custom global navigation keybinding-scheme which is used & consistent cross-application.
 - Using the mouse for non creative, non graphical usages is inefficient and creates mental overhead. Having to take the focus off the project just in order to click some ui takes way more mental capacity and computational steps than neccessary and can be negated by using the keyboard and having the same actions always on the same keys.
 - This system is designed to be a workstation. It is the opposite of a beautiful GUI experience that aims to be visually pleasing.
-  + No effects, no fancy animations.
-  + Uses colorcoding whenever possible since this enhances readability.
-  + Use Icons to enhance intuitive recognition (faster than analytical, precise thinking on text). [[https://www.nerdfonts.com/cheat-sheet][icons ressource]].
-  + This system puts emphasis on a text & data driven evironment wherever possible This will reduce complexity and increase extensibility and interchangeablilty. You will also benefit from a more unified and consistent interface across applications.
+  - No effects, no fancy animations.
+  - Uses colorcoding whenever possible since this enhances readability.
+  - Use Icons to enhance intuitive recognition (faster than analytical, precise thinking on text). [[https://www.nerdfonts.com/cheat-sheet][icons ressource]].
+  - This system puts emphasis on a text & data driven evironment wherever possible This will reduce complexity and increase extensibility and interchangeablilty. You will also benefit from a more unified and consistent interface across applications.
 - Consistency :: This config aims to be globally consistent in its design, behaviour and control.
-  + Which means things like (colorscheme, font, workflow, keybindings, ui..) were once carefully analyzed, choosen and designed and then implemented as consistent as possible across tools (terminal, editor, webbrowser, wm, docreader..)
+  - Which means things like (colorscheme, font, workflow, keybindings, ui..) were once carefully analyzed, choosen and designed and then implemented as consistent as possible across tools (terminal, editor, webbrowser, wm, docreader..)
 - Maximized focus ui :: Avoid using splits in your programs and prefer the maximized buffer tabs-only workflow. (exception: need to actively monitor two different positions)
-  + humans are not designed adn not good at multitasking, they excel at linear singular focus processing.
-  + Splits are useless 80% of the time, hence take up screenspace, cluttering it with information you do not need, and that will distract your focus.
-  + When you need the buffer/file, it is better to pull it into focus instantly and from muscle memory, instead of letting it occupy your working area. (it is there when needed instantly but otherwise hidden)
-  + Enforcing this causes less overhead and more consistency.
-  + Get rid of the large set of now redundant maps for split management.
+  - humans are not designed adn not good at multitasking, they excel at linear singular focus processing.
+  - Splits are useless 80% of the time, hence take up screenspace, cluttering it with information you do not need, and that will distract your focus.
+  - When you need the buffer/file, it is better to pull it into focus instantly and from muscle memory, instead of letting it occupy your working area. (it is there when needed instantly but otherwise hidden)
+  - Enforcing this causes less overhead and more consistency.
+  - Get rid of the large set of now redundant maps for split management.
 - Using finders :: completion menus, bookmarks (bindings to hotswitch) and fuzzy finding are exponentially more efficient than navigating and selecting the destinations manually (through something as a gui filemanager)
-  + Filemanager's have their place only if the file is in proximity / you need an overview.
+  - Filemanager's have their place only if the file is in proximity / you need an overview.
 - UI :: Think of the ui as a  hud
-  + Remove all distractions and think critically if this feature is implemented just because it is possible/showoff/"cool" or because it is a detrimental part of the workflow that enhances the ergongomics/efficiency/possibilities/workflow of the tool.
-  + Window/tabbars at the top, statusbars generally on the bottom. (if neccessary)
-  + Completion-menu's / promts are an extensions of the statusbar
-    + do not block view
-    + consistently on the same spot across all apps (terminal, emacs, rofi)
-  + use thin/lightweight/sharp over thick/heavy/rounded (box drawings / terminal characters / symbols)
-    + 1px lines, borders with hard corners & sharp edges have their own beautiful, highly functional aestetic.
-    + thin and sharp will create less obstruction (having more complex and voluminous symbols/ui than actually neccessary for visual distinction is bloat and visual sugar)
-    + minimal and thin feels more soulless and is more ergonomic with screenspace
+  - Remove all distractions and think critically if this feature is implemented just because it is possible/showoff/"cool" or because it is a detrimental part of the workflow that enhances the ergongomics/efficiency/possibilities/workflow of the tool.
+  - Window/tabbars at the top, statusbars generally on the bottom. (if neccessary)
+  - Completion-menu's / promts are an extensions of the statusbar
+    - do not block view
+    - consistently on the same spot across all apps (terminal, emacs, rofi)
+  - use thin/lightweight/sharp over thick/heavy/rounded (box drawings / terminal characters / symbols)
+    - 1px lines, borders with hard corners & sharp edges have their own beautiful, highly functional aestetic.
+    - thin and sharp will create less obstruction (having more complex and voluminous symbols/ui than actually neccessary for visual distinction is bloat and visual sugar)
+    - minimal and thin feels more soulless and is more ergonomic with screenspace
 - Thinking fast & slow :: Rely on fast, instinctive thinking for non repeating tasks and for repeating patterns / actions on the slow, precise, analytical thinking.
-  + this is the definition of DRY, or not repeating yourself / taking the minimal required no. of actions to get to the disired output/position.
-  + ex: use vims search replace with patterns instead of manually going through and changing each instance
-  + ex: relative line jumping over spamming =j=
-  + ex: tab switching => thinking fast & instinctive, develop muscle memory (when there are too many => use analytical brain by searching through the list)
+  - this is the definition of DRY, or not repeating yourself / taking the minimal required no. of actions to get to the disired output/position.
+  - ex: use vims search replace with patterns instead of manually going through and changing each instance
+  - ex: relative line jumping over spamming =j=
+  - ex: tab switching => thinking fast & instinctive, develop muscle memory (when there are too many => use analytical brain by searching through the list)
 
 ** Colorscheme: Solarized (light/dark).
 - It was carfully and deliberately designed by hand and intensively tested to achieve the best visibilty while maintaining low eye strain.
 - What makes it so unique is that the colours were chosen based on researched measures and backtested over 6 months until they were "1000% perfect".
 - The colors are incredibly contrast rich in light and dark mode which improves readability. and they are matched, so they work with dark and light theme interchangeably
 - It's functionality and colorchoices it brings is unmatched by any other colorscheme.
-- The light theme looks like as if someone left a sheet of paper out in the sun for far too long and now it is all yellowed. It reminds me of an old worn and torn document, that you can spend 20+ hours looking at on without getting tired.
+- The light theme looks like as if someone left a sheet of paper out in the sun for far too long and now it is all yellowed. It reminds me of an old worn and torn document, that you can spend 20- hours looking at on without getting tired.
 - The background color of the dark variant is what i imagine one would see if they were drowning in the middle of the ocean. To me it represents the color you see when dying. Both light/dark are good for long time terminal and coding sessions.
 
 * Font: Iosevka Comfy (Custom iosevka build)
 - It is incredibly compact in width to allow a lot of code on screen, especially when viewing content side by side.
 - Designed for writing code, using in terminals, and preparing technical documents.
-  + The intent is to make everything feel part of the same aesthetic, hence setting the font system-wide.
-- It was specifically designed for long terminal / editor sessions (8+ hours). it aims to reduce eye strain and help readability in the long term. (Try using terminus with a ligth theme in a dark room for 8h and observe what kind of strain it wil put on you.)
+  - The intent is to make everything feel part of the same aesthetic, hence setting the font system-wide.
+- It was specifically designed for long terminal / editor sessions (8- hours). it aims to reduce eye strain and help readability in the long term. (Try a light theme with a bitmap font like Terminus for 8 hours. It will be a tormenting experience! To maximamise the difficulty, do it in a dark room with the monitor’s brightness set to its maximum value.)
 - Keep the fontsize as small as you can manage (and the font is sharp).
-  + Working with big fontsizes, encourages bad eyesight and neckposture.
-  + makes you faster
-  + less disorientatation in the buffers
-  + less context switching
+  - Working with big fontsizes, encourages bad eyesight and neckposture.
+  - makes you faster
+  - less disorientatation in the buffers
+  - less context switching
 - It is lean, thin and sharp. This allows it to be used in all context and interfaces.
 - Economical use of screen space and clarity/legibility at small sizes.
 #+begin_quote
@@ -75,8 +75,6 @@ Iosevka Comfy optimises for inter-glyph and inter-style consistency within the o
 #+end_quote
 [[https://github.com/protesilaos/iosevka-comfy][Full Spec]]
 
-** Notes
-Try a light theme with a bitmap font like Terminus for 8 hours. It will be a tormenting experience! To maximamise the difficulty, do it in a dark room with the monitor’s brightness set to its maximum value.
 * Dependencies
 - All packages & other commadns found under: [[file:setup.org][Setup]].
 
@@ -84,18 +82,18 @@ Try a light theme with a bitmap font like Terminus for 8 hours. It will be a tor
 - Consistency is important because they make the keys easier to remember and you will not have to learn multiple paradigms of keymaps.
 - In the WM, the set of program-names during runtime is known and consistent (unlike the set of buffers in applications, where tab-names are either unnamed, arbitrary or change during runtime), we use specific-chars for switching to the tabs instead of 1-9 (more ergonomic, better mnemonics, more consistent).
 - Abstain from using "alt-tab" (switching back to recent tab)
-  + Enforce the habit of direct buffer switching (instead of spamming alt-tab to get back to the tab that is desired, which is what happens if you use it)
+  - Enforce the habit of direct buffer switching (instead of spamming alt-tab to get back to the tab that is desired, which is what happens if you use it)
 - Using keychords over modal bindings ::
   - Fast-repeat commands: page up/down, switch to prev/next tab, undo, redo, increase/decrease font size, zoom in/out, close tab.
-    + Thus we need to be able to hold down the key to repeat the action multiple times.
-    + And with holding down it is quicker to access
+    - Thus we need to be able to hold down the key to repeat the action multiple times.
+    - And with holding down it is quicker to access
 - It is important that ~new-tab~ inserts the tab at the end of the tabline
-  + no rearraging of the numbers => able to memorize tab numbers by muscle-memory intiutive
+  - no rearraging of the numbers => able to memorize tab numbers by muscle-memory intiutive
 - Inside Applications: Alt => in order to minimize conflict with existing shortcuts.
-  + Alt acts as the navigational-layer above the applications normal keybindings (chars, ctrl, shift), it condenses down a minimal set of universal, efficient navigational commands.
-  + Alt is available in (almost) every program, leadermode is not.
+  - Alt acts as the navigational-layer above the applications normal keybindings (chars, ctrl, shift), it condenses down a minimal set of universal, efficient navigational commands.
+  - Alt is available in (almost) every program, leadermode is not.
 
-| Mod + | Action                       | Consistency            |
+| Mod - | Action                       | Consistency            |
 |-------+------------------------------+------------------------|
 | T     | new tab                      | Vim/Mnemonic/standard  |
 | J,K   | prev/next window (!not tabs) | Vim, ergonomic         |
@@ -121,23 +119,23 @@ I'm very opinionated and have high standards regarding design process and the ph
 - The windowmanager follows the philosopy of eliminating mental overhead and the neccessety to arrange windows or layouts.
 
 ** Constrain text width & center text
- - Center text windows for better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).
- - Narrowed fov yields improved readability & focus of textparagraphs, especially if you stare at the computer for 8h+ a day.
+ - Center text windows for better ergonomics & less eye travel (distance - switching from left to middle from eg: terminal to webpage).
+ - Narrowed fov yields improved readability & focus of textparagraphs, especially if you stare at the computer for 8h- a day.
  - the data is compact and coherent
  - allows the user to keep the entire window in the fov
  - Vertical navigation is easier than horizontal
  - Reading code/data/formulas is easiest sequentially = top to bottom // vs horizontally
-   + Take math as example, its easier to read equations if they are short and concise on newline, rather than in one big equation
-   + Coding: typically one statement per line
+   - Take math as example, its easier to read equations if they are short and concise on newline, rather than in one big equation
+   - Coding: typically one statement per line
 
 ** Statusbar: None
 - A WM statusbar unneccessarily take up screen real-estate and usually just causes a distraction rather than actually being useful.
-  + No need for context about the current tab (uniqe per app & navigation is static (fixed bindings))
-  + Statusbars/tabbars make sense for tmux/browser/emacs, because we need the information as in which mode/context we are in.
+  - No need for context about the current tab (uniqe per app & navigation is static (fixed bindings))
+  - Statusbars/tabbars make sense for tmux/browser/emacs, because we need the information as in which mode/context we are in.
 - For full immersion, reduced distraction and enhanced focus, disable it and work fullscreen.
-  + No overlapping functionality. Ex:: you wear a watch (if not, you should) => don't need time & date displayed, and have timer's at hand.
-  + You always know what window you are looking at by its contents.
-  + You don't need visual indication of how to navigate to tabs, nor interact with the statusbar (ex: click something) => each specific tab is always on the same keybind.
+  - No overlapping functionality. Ex:: you wear a watch (if not, you should) => don't need time & date displayed, and have timer's at hand.
+  - You always know what window you are looking at by its contents.
+  - You don't need visual indication of how to navigate to tabs, nor interact with the statusbar (ex: click something) => each specific tab is always on the same keybind.
 - The aestetic and efficiency of a decluttered and maximized screen is (imo) unmatched.
 
 ** Shell: Nushell
@@ -146,7 +144,7 @@ These are some of the things i hate about bash (and stream utils such as find et
 - Syntax soup. E.g. For printing version, you have these variations: ~-v~ ~-V~ ~-version~ ~--version~. Sometimes options can be combined, sometimes not. Some option takes a argument, with many different syntax, some arg separated by space, some require equal sign. Order of options may or may not matter. Many options effect other options in complex way. These tools should all adhere to the GNU standard.
 - Semantic noodle. E.g. Some command has recursive option ~-r~, others requires calling ~find~ ~xargs~
 - Randomish and cryptic command names and syntax. Part of which are juvenile humor. ~tac~, ~head~, ~tail~, ~esac~ ~fi~.
-  + unneccessary verbose syntax in other places: ~do~, ~done~
+  - unneccessary verbose syntax in other places: ~do~, ~done~
 - Some command are part of the shell as function, some are independent tools. E.g. ~ls~, ~kill~, ~ps~. Try to find if they are part of bash. And if so, is bash calling it or the independent command.
 - 40 years of baggage with ~.bashrc~, ~.bash_profile~ which are not put into ~.config~ (yes, ik what symlinks are, but still)
 - Sea of islands. Each command or tool is written on its own. No coherence and hacks needed to make them work with each other, ex: ~find~,  ~xargs~
@@ -168,10 +166,10 @@ I am of the strong opinion that you should minimize things you do repeatedly. Th
 *** Workflow with emacs
 - The terminal is used to run their own terminal-based programs and commands: htop, nmtui, git, metasploit, transmission-cli, ssh. (and ofc as the system commandline).
 - Extend emacs by writing custom functions for things that you do repetitivly (moving files, manipulating text...)
-  + Write shell-scripts mostly for launching programs & processes.
+  - Write shell-scripts mostly for launching programs & processes.
 - All coding, writing, fileopening, viewing, navigating is done inside emacs (do not leaving the environment), because this makes for a consistent and coherent workflow.
-  + Never open a terminal-emulator inside emacs (no layering!), if you need, use single shellcommands (make executeable, etc...). (Things like: compiling...  etc should be done using hotkeys and displaying the output in a buffer)
-  + Use inbuilt programs like magit & diff for more speed interactivity and ergonomics than doing it with git command aliases on the command-line.
+  - Never open a terminal-emulator inside emacs (no layering!), if you need, use single shellcommands (make executeable, etc...). (Things like: compiling...  etc should be done using hotkeys and displaying the output in a buffer)
+  - Use inbuilt programs like magit & diff for more speed interactivity and ergonomics than doing it with git command aliases on the command-line.
 
 ** Editor: (Doom) Emacs
 #+begin_quote
@@ -186,24 +184,24 @@ Today, many aspects of daily computer usage are split between different applicat
 - Integration between tasks previously relegated to different applications, but with a common subject - e.g. linking to an email in a to-do list etc
 - Emacs can be thought of as a platform within which various elements of your workflow may settle, while being able to interlink them interactively.
 - Reduced context-switching, many tools in one connected, coherent, interwoven keyboard-driven interface. This integration is very efficient and consistent, since now any function can be reused in all tools (eg. fuzzy finding, and doesn't have to be implemented in each separate program itself). It greatly reduces the mental overhead needed to customize and extend the tools, since the context and language is always the same. Since these tools are text-centric, they align withthe single focus, no multitasking buffer wokflow philosophy.
-  + editor:
-    + technical Documents
-    + academic papers
-    + code
-    + notes
-    + journaling
-  + coding tools:
-    + git interface
-    + manpages
-    + diff
-    + debugger
-  + Agenda
-  + Emailclient
-  + Todolist
-  + Filemanager (very efficient and extensible to keep the workflow dry)
-  + Manpager
-  + file/dir navigation & management: Find-file, fuzzy-find, (book)marks, dired
-    + the most efficient workflow for finding, opening and editing files on the os that i have ever developed.
+  - editor:
+    - technical Documents
+    - academic papers
+    - code
+    - notes
+    - journaling
+  - coding tools:
+    - git interface
+    - manpages
+    - diff
+    - debugger
+  - Agenda
+  - Emailclient
+  - Todolist
+  - Filemanager (very efficient and extensible to keep the workflow dry)
+  - Manpager
+  - file/dir navigation & management: Find-file, fuzzy-find, (book)marks, dired
+    - the most efficient workflow for finding, opening and editing files on the os that i have ever developed.
 
 *** Org mode
 - In my opinion the most elegant markup language, all the while keeping the syntax opinionated and simple with only one way to do it (=> looking at you: Markdown).
@@ -232,18 +230,18 @@ What this means to me is that emacs is the environment that grows with your fore
 - Set Font: terminus [+no custom fonts allowed]
 - Open files: set! all files => system default
 - Bookmarks: name them hierarchically w keywords [= org-mode tags], EX: =cs:math:exercises=
-  + quickly open website using vimium's bookmark find
-  + structured, easy to patternmatch & find bookmarks
+  - quickly open website using vimium's bookmark find
+  - structured, easy to patternmatch & find bookmarks
 
 ** Filexplorer
 - Avoid using integrated filemanagers (such as dired / ranger / lf / thunar) whenever possible (and dont even dare to suggest a gui file manager...).
-  + Only use a fileexplorer for getting an overview of a directory.
-  + It's more efficient, faster and extensible using search & completion tools, such as find-file, fuzzy finding and using global (book)marks for switching to other directories and files.
-    + Ditch spamming hjkl to navigate nested directories fore directly jumping to the file you are looking for.
+  - Only use a fileexplorer for getting an overview of a directory.
+  - It's more efficient, faster and extensible using search & completion tools, such as find-file, fuzzy finding and using global (book)marks for switching to other directories and files.
+    - Ditch spamming hjkl to navigate nested directories fore directly jumping to the file you are looking for.
 
 ** Other programs
 - Wherever possible tui programs were choosen over gui's.
-  + eg: pulsemixer, nmtui, ncmpcpp
+  - eg: pulsemixer, nmtui, ncmpcpp
 - Using custom rofi-scripts/i3-leadermenu for small, onetime tasks such as switching things such as devices, outputs, kblayouts...
 
 * Principles
@@ -259,11 +257,7 @@ When you find yourself doing the same things repetitively or you get annoyed it 
 - Have undo - redo in software: use terminal sessionizers (zellij) => when accidentally closing => reattach to the session, to restore
 
 ** The MIT-approach
-Simplicity:
-+ The design must be simple, both in implementation and interface. It is more important for the interface to be simple than the implementation.
-Correctness:
-+ The design must be correct in all observable aspects. Incorrectness is simply not allowed.
-Consistency:
-+ The design must be consistent. A design is allowed to be slightly less simple and less complete to avoid inconsistency. Consistency is as important as correctness.
-Completeness:
-+ The design must cover as many important situations as is practical. All reasonably expected cases must be covered. Simplicity is not allowed to overly reduce completeness.
+- Simplicity :: The design must be simple, both in implementation and interface. It is more important for the interface to be simple than the implementation.
+- Correctness :: The design must be correct in all observable aspects. Incorrectness is simply not allowed.
+- Consistency :: The design must be consistent. A design is allowed to be slightly less simple and less complete to avoid inconsistency. Consistency is as important as correctness.
+- Completeness :: The design must cover as many important situations as is practical. All reasonably expected cases must be covered. Simplicity is not allowed to overly reduce completeness.

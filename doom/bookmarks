@@ -10,9 +10,11 @@
 ("org-refile-last-stored" (filename . "~/Documents/org/personal/events.org")
  (front-context-string . "** [ ] return bo") (rear-context-string . "nbox :personal:\n")
  (position . 138) (last-modified 25990 30619 100000 987000))
-("org-capture-last-stored" (filename . "~/Documents/journal/journal-W52.org")
- (front-context-string . "**** Goals\n- nea") (rear-context-string . "12-27 Wednesday\n")
- (position . 57) (last-modified 25995 34539 856839 28000))
+("org-capture-last-stored"
+ (filename .
+           "~/Documents/literature/notes/The-Precipice:-Existential-Risk-and-the-Future-of-Humanity.org")
+ (front-context-string . "#+title:  The Pr") (rear-context-string) (position . 1)
+ (last-modified 25996 38299 425276 601000))
 ("cs_todo.org" (filename . "~/Documents/org/cs_todo.org")
  (front-context-string . "#+title:    CS T") (rear-context-string) (position . 1)
  (last-modified 25870 60064 614301 850000))

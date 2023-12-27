@@ -1,6 +1,6 @@
 ;; [[file:config.org::*User][User:1]]
 (setq
- user-full-name "emil lenz"
+ user-full-name "Emil Lenz"
  user-mail-address "emillenz@protonmail.com")
 ;; User:1 ends here
 
@@ -127,7 +127,7 @@
                "V" #'visual-fill-column-mode
                "C" #'company-mode)
       (:prefix "c"
-               "w" #'z/clean-whitespace))
+               "w" #'z-clean-whitespace))
 
 (after! evil-org
   (map! :localleader
@@ -135,7 +135,7 @@
         (:prefix-map ("c" . "code")
                  "d" #'org-babel-detangle
                  "J" #'org-babel-tangle-jump-to-org
-                 "j" #'z/jump-src
+                 "j" #'z-jump-src
                  "t" #'org-babel-tangle
                  "e" #'org-edit-special)))
 ;; Leader:1 ends here
@@ -252,7 +252,7 @@
 
 (after! org-mode
   (map! :localleader
-        "l f"  #'z/org-link-file))
+        "l f"  #'z-org-link-file))
 ;; Org mode:1 ends here
 
 ;; [[file:config.org::*Dired][Dired:1]]
@@ -278,7 +278,7 @@
 
   (map! :localleader
         :map dired-mode-map
-        :nm "A" #'z/dired-archive))
+        :nm "A" #'z-dired-archive))
 ;; Dired:1 ends here
 
 ;; [[file:config.org::*Minibuffer][Minibuffer:1]]
@@ -367,7 +367,7 @@
 ;; Dired Mode:1 ends here
 
 ;; [[file:config.org::*Archive file][Archive file:1]]
-(defun z/dired-archive ()
+(defun z-dired-archive ()
   (interactive)
   (dolist (file (dired-get-marked-files))
     (let* ((file (dired-get-filename))
@@ -579,7 +579,7 @@
 ;; Clock:1 ends here
 
 ;; [[file:config.org::*Keywords to downcase][Keywords to downcase:1]]
-(defun z/org-convert-keywords-downcase ()
+(defun z-org-convert-keywords-downcase ()
   "Convert all #+KEYWORDS => #+keywords && :keyword: => :keyword:"
   (interactive)
   (save-excursion
@@ -592,7 +592,7 @@
 ;; Keywords to downcase:1 ends here
 
 ;; [[file:config.org::*Jump to src file][Jump to src file:1]]
-(defun z/jump-src ()
+(defun z-jump-src ()
    "The opposite of `org-babel-tangle-jump-to-org'.
 Jumps at tangled code from org src block."
    (interactive)
@@ -627,12 +627,10 @@ Jumps at tangled code from org src block."
 ;; Jump to src file:1 ends here
 
 ;; [[file:config.org::*Capture templates][Capture templates:1]]
-(setf (alist-get 'height +org-capture-frame-parameters) 15)
-
-(defvar z/literature-dir "~/Documents/literature/notes/"
+(defvar z-literature-dir "~/Documents/literature/notes/"
   "Directory for all files associated with my literature-information-system.")
 
-(defvar z/journal-dir "~/Documents/journal/"
+(defvar z-journal-dir "~/Documents/journal/"
   "Directory for all personal journal files.")
 
 ;; NOTE:: filepaths are relative to org-dir
@@ -692,7 +690,7 @@ Jumps at tangled code from org src block."
         ("config"   :keys "o" :file "config/notes.org")))
 
       ("daily-journal" :keys "j"
-       :file (lambda () (concat z/journal-dir (format-time-string "%F") "-" "journal"  ".org"))
+       :file (lambda () (concat z-journal-dir (format-time-string "%F") "-" "journal"  ".org"))
        :type plain
        :title (lambda () (concat "Daily Note: " (format-time-string "%F")))
        :author (lambda () user-full-name)
@@ -713,23 +711,27 @@ Jumps at tangled code from org src block."
         "- "))
 
       ("literature" :keys "l"
-       :file (lambda () (read-file-name "File: " z/literature-dir))
+       :file (lambda () (read-file-name "File: " z-literature-dir))
        :children
        (("new-source" :keys "s"
-         :file (lambda () (replace-regexp-in-string "\s+" "-" (concat z/literature-dir (read-string "title: ") ".org")))
+         :file (lambda () (replace-regexp-in-string "\s+" "-" (concat z-literature-dir (downcase (read-string "filename: ")) ".org")))
          :type plain
+         :date (lambda () (format-time-string "%F"))
          :author (lambda () user-full-name)
          :email (lambda () user-mail-address)
-         :date (lambda () (format-time-string "%F"))
+         :title (lambda () (setq z-doct-title (s-titleized-words (read-string "full title: ")))) ;; HACK :: store in var for later reuse of the input. (instead of reprompt)
+         :get-title (lambda () z-doct-title)
+         :book-author (lambda () (s-titleized-words (read-string "author: ")))
          :template
-         ("#+title:  %^{title}"
+         ("#+title:  %{title}"
           "#+author: %{author}"
+          "#+email:  %{email}"
           "#+date:   %{date}"
           ""
-          "* %{title}"
+          "* %{get-title}"
           ":PROPERTIES:"
-          ":title:  %{title}"
-          ":author: %^{author}"
+          ":title:  %{get-title}"
+          ":author: %{book-author}"
           ":year:   %^{year of publication}"
           ":tags:   %^{tags}"
           ":type:   %^{type}"
@@ -780,7 +782,7 @@ Jumps at tangled code from org src block."
 ;; Indentation: 2 spaces:1 ends here
 
 ;; [[file:config.org::*Format buffer][Format buffer:1]]
-(defun z/clean-whitespace ()
+(defun z-clean-whitespace ()
   "Deletes consecutive empty lines if > 1."
   (interactive)
   (delete-trailing-whitespace)

@@ -3,8 +3,7 @@
 #+email:    emillenz@protonmail.com
 #+date:     Tuesday, November 1, 2022
 #+property: header-args:emacs-lisp tangle config.el :comments link
-*  [[ref: ]]
-great
+
 * Preface
 Professional, minimalist tools like Emacs have a high learning curve and require thought and time to initially set up. But once things are working and customized they will work for years at a stretch without needing to fiddle with the nobs. And once mastered you can eliminate the "modern" GUI bits -- tool bars, menus, scrollbars and fancy animations and the like and what is left is about as clean an interface as you can get stripping everything down to the bare metal where it gets out of your way and provides the most streamlined workflow. The difference is that something like emacs is a longterm investment, it requires you to get over the high entry barrier but then never annoys you with a more elongated, bloated workflow that in other, more beginner friendly applications is the norm and cannot be changed away from.
 
@@ -15,16 +14,16 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - After installing use the ~doom~ command to fix errors, update, etc...
 - It is advised to only copy snippets of this config that are understood, and to build from there.
 - if you decide to use parts (or the entire config) *ensure* that you have *at least* every doom/module and package installed / enabled as i do, otherwise emacs will throw errors left and right.
-  + modules: [[file:init.el]]
-  + packages:[[file:packages.el]]
+  - modules: [[file:init.el]]
+  - packages:[[file:packages.el]]
 - Use the same completer for all menus: consult+vertico // fastest, and most consistent
 
 ** On comments
 - Valid comments should describe the why, the philosophy, the principle, the reason, and never explain what something does.
 - Emacs is self documenting, instead of explaining what a function does with a comment, you should just read the ALREADY EXISTING writtten documentation for it (function doc).
 - This is a principle which is elegant, extensible, structured for the following reasons:
-  + If code is changed, comment isn't updated automatically => can & will be forgotter (redundant/confusing comments)
-  + Code is data (rewrite code flow such that it is more understandeable)
+  - If code is changed, comment isn't updated automatically => can & will be forgotter (redundant/confusing comments)
+  - Code is data (rewrite code flow such that it is more understandeable)
 
 * User
 #+begin_src emacs-lisp
@@ -115,7 +114,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 * Window layout & behavior
 - Constrain popup buffers (inevitable) to consistently, and always ~vsplit~, and have a reasonable size.
-  + Never mix vertical with horizontal splitting => creates mental overhead navigating the windows (+requires another set of totally unneccessary keybindings)
+  - Never mix vertical with horizontal splitting => creates mental overhead navigating the windows (+requires another set of totally unneccessary keybindings)
 #+begin_src emacs-lisp
 (setq
  evil-vsplit-window-right t
@@ -143,8 +142,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - allows the user to keep the entire window in the fov
 - Vertical navigation is easier than horizontal
 - Reading code/data/formulas is easiest sequentially = top to bottom // vs horizontally
-  + Take math for example, its easier to read equations if they are on newline
-  + Coding: typically one statement per line
+  - Take math for example, its easier to read equations if they are on newline
+  - Coding: typically one statement per line
 #+begin_src emacs-lisp
 ;; NOTE :: not prog mode => breaks with flychecking
 (add-hook!
@@ -164,7 +163,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 * Keybindings
 - ~helpful-key~ and ~which-key-show-full-keymap~ are crucial to understanding what your tools can do for you (ex: magit, dired, org-mode)
-  + Always keep on exploring, learning new, efficient keybindings and break your old routines for newer, more effcient one's after evaluating wether they are faster or not.
+  - Always keep on exploring, learning new, efficient keybindings and break your old routines for newer, more effcient one's after evaluating wether they are faster or not.
 - ~,~ is useless (instead just be precise when using ~;~)
 ** Leader
 #+begin_src emacs-lisp
@@ -195,13 +194,12 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 ** Global navigation scheme
 - Follows the os-consistent keymap, using alt for the only & essential navigational commands (there may better ones for what you want to achive => inside leadermode)
 - When you are working in a project with multiple different files, open each file in a new tab. This-way you can hotkey to that exact file instantly.
-  + Only do this for buffers you know you want to come back to later. | doesnt become cluttered with all other buffers
+  - Only do this for buffers you know you want to come back to later. | doesnt become cluttered with all other buffers
 - They are the most efficient way of navigating between multiple different files/buffer at the same time (most efficient way i have found to introduce little overhead when context-switching and remaining distractionfree)
 - Never create splits for buffers, prefer the full screen, full focus, no distractions - workflow. (no multitasking, no clutter)
-  + When emacs creates splits we must handle them:
-    + includes minimal bindings for switching and closing splits
+  - When emacs creates splits we must handle them (includes minimal bindings for switching and closing splits)
 - We never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...)
-  + Instead if needed we can execute oneliners with ~(shell-command)~
+  - Instead if needed we can execute oneliners with ~(shell-command)~
 - kill buffer's on window closing -> don't accumulate buffers in tha background.
 #+begin_src emacs-lisp
 (after! doom
@@ -238,17 +236,17 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 ** Evil-mode
 - Make vim's bindings even more mnemonic/sane/sensible/efficient and improve consistency of implementation. Maximize the keyboard real-estate usage.
 - relative line jumping :: always
-  + minimizes mental overhead (and spamming of ~gj~ / ~gk~)
+  - minimizes mental overhead (and spamming of ~gj~ / ~gk~)
 - Splits :: simplified
-  + At most have 2 splits => toggle between windows with single key (instead of mental overhead for directional navigation ex: C-hjkl)
-  + This is for navigating and controlling some inevitable popup-buffers.
-  + Avoid splits at all costs and use tabs instead
+  - At most have 2 splits => toggle between windows with single key (instead of mental overhead for directional navigation ex: C-hjkl)
+  - This is for navigating and controlling some inevitable popup-buffers.
+  - Avoid splits at all costs and use tabs instead
 - Useless default mappings :: remap sensibly to statistically frequently used commands (shortcut)
-  + use ~Q~ for shortcut to ~@@~ (def macro with ~qq~, execute with ~@q~ in 99% of cases)
-  + ~M~ usecase: scratch mark: ~m~ (hook pos with ~mm~ -> do edits -> jump back to hooked pos: ~M~)
-  + ~()~: Remapped to parens jumping
-  + ~&~: Allows for same usage as normal: ~&~, but allows repeating any last command.
-  + ~TAB~: folding | inspired bby org-modes folding (simple one-stop folding)
+  - use ~Q~ for shortcut to ~@@~ (def macro with ~qq~, execute with ~@q~ in 99% of cases)
+  - ~M~ usecase: scratch mark: ~m~ (hook pos with ~mm~ -> do edits -> jump back to hooked pos: ~M~)
+  - ~()~: Remapped to parens jumping
+  - ~&~: Allows for same usage as normal: ~&~, but allows repeating any last command.
+  - ~TAB~: folding | inspired bby org-modes folding (simple one-stop folding)
 - (Emacs already by default implements it that out of screen jumps center the screen which is sensible )
 
 #+begin_src emacs-lisp
@@ -286,12 +284,12 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 ** Control-bindings
 - used for: Screen movements
-  + jumplist-jumps
-  + page scrolling
-  + screen-scrolling:  ~C-y~ & ~C-e~.
+  - jumplist-jumps
+  - page scrolling
+  - screen-scrolling:  ~C-y~ & ~C-e~.
 - ~C-q, C-s~ mapped sensibly to statistically frequently executed commands.
-  + ~:w~ is the statistically most run vim-ex-command, but not very unergonomic.
-  + Map it to the os-consistent key
+  - ~:w~ is the statistically most run vim-ex-command, but not very unergonomic.
+  - Map it to the os-consistent key
 #+begin_src emacs-lisp
 (after! evil
   (map!
@@ -356,12 +354,12 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 ** Dired
 - Avoid using integrated filemanagers (such as dired / ranger / lf) whenever possible replace them with shell commands and finding (fzf: recent-files, root, current dir..)
 - In most cases it is more extensible and faster using tools such as emac's find-file in combination with fuzzy finding and using global bookmarks for frequently used projects/files.
-  + ~:e~ & ~:w~ for creating and opening files in the same dir from the vim-cmd-line
-  + ~:%!~ & ~:'<,'>!~ for processing the buffer with external shell-tools.
-  + ~:!~ for all other commands such as ~cp~, ~mv~, ~rm~, ~chmod~...
-  + use fuzzyfinding of files that exist
-    + create files/directories in other directories
-    + cd into different dir
+  - ~:e~ & ~:w~ for creating and opening files in the same dir from the vim-cmd-line
+  - ~:%!~ & ~:'<,'>!~ for processing the buffer with external shell-tools.
+  - ~:!~ for all other commands such as ~cp~, ~mv~, ~rm~, ~chmod~...
+  - use fuzzyfinding of files that exist
+    - create files/directories in other directories
+    - cd into different dir
 - Remap some mappings for convenience:
 #+begin_src emacs-lisp
 (after! dired
@@ -599,16 +597,16 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 - Using symbols instead of words to represent states => less clutter, more concise, readeable & structured
 - Order them with priorities to assign order of execution if there are many tasks
 - States with ~@~ prompt for note | if want to do manually: ~org-add-note~
-  + Reflecting
-  + Log/track
-    + Progress
-    + Time
-    + Performance
-    + Stats
-    + Steps taken to complete task
-  + Reason: Why task was moved to that state
-  + Seamlessly pick up work at a later time
-  + ~[ ] watch lecture~ -> ~[~] watch lecture~ | annotate time: where the task was last left off: "@25min"
+  - Reflecting
+  - Log/track
+  - Progress
+  - Time
+  - Performance
+  - Stats
+  - Steps taken to complete task
+  - Reason: Why task was moved to that state
+  - Seamlessly pick up work at a later time
+  - ~[ ] watch lecture~ -> ~[~] watch lecture~ | annotate time: where the task was last left off: "@25min"
 
 ~[#]~: Event | Calendar icon
 - Useful if you have to take steps after the event
@@ -682,9 +680,9 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 #+end_src
 
 - Log to drawer: ~LOG~
-  + shorter & more sensible than default: ~LOGBOOK~
+  - shorter & more sensible than default: ~LOGBOOK~
 - Explain myself if i can't meet a deadline.
-  + take responsibility
+  - take responsibility
 - Make org-log messages more data orientated and concise
 #+begin_src emacs-lisp
 (setq
@@ -734,7 +732,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 
 ** Agenda
 - Multi-day-todo-events: add multiple timestamps on the same line => same task shows scheduled on different days. Ex:
-  + Track which university lectures you have watched & reviewed. => even if they are spread out onto multiple days => log all completions / review-notes under the same task.
+  - Track which university lectures you have watched & reviewed. => even if they are spread out onto multiple days => log all completions / review-notes under the same task.
 #+begin_src emacs-lisp
   (add-hook! 'org-agenda-mode-hook #'org-super-agenda-mode)
 
@@ -804,39 +802,39 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 
 *** Org directory
 - 2 files per project, (ex: ~uni~, ~personal~)
-  + Todo (todo items, tasks)
-  + Agenda: all events (meetings, appointments,...)
+  - Todo (todo items, tasks)
+  - Agenda: all events (meetings, appointments,...)
 - 1 Folder/file for notes => multiple different subjects => maybe more notes needed ex:
-  + lecture notes
-  + exercise notes
-  + ideas
+  - lecture notes
+  - exercise notes
+  - ideas
 
 *** Timetracking
 - Use org-clock to track the time spent on tasks / projects.
 
 ** UI - notes
 - Ensure all headings and faces have the same heigth => better overview & less overhead
-  + Visually distinctualize headings & keywods from the rest of the text with coloring and bold
+  - Visually distinctualize headings & keywods from the rest of the text with coloring and bold
 - Like in code, everything is code/data => also org mode / latex documents.
-  + Its not about some fancy looking thing, its about the internals, the quality of the data, not the presentation.
+  - Its not about some fancy looking thing, its about the internals, the quality of the data, not the presentation.
 
 ** Tags
 - always use tags to specify what a todo-item belongs to & never write it in the todo-name | not: ~TODO uni math assignment [2]~ => instead: ~TODO assignment [2] :uni:math:assignments:~
 - use tags with path hierarchy & inheritance to signal to which project / topic / subject the task belongs to have a clear overview in the agenda.
-  + mark top level subject with tag
-  + ex: ~:cs:math:statisticts:exercise~ => filter: outstanding ~exercises~ of math.
-  + ex: ~:cs:math:statisticts:question:~ => filter: outstanding ~questions~
-  + ex: ~:personal:youtube:video~
-  + ex: ~:personal:book:fiction~
-  + ex: ~- [ ] Change keybindings :config:emacs:~
+  - mark top level subject with tag
+  - ex: ~:cs:math:statisticts:exercise~ => filter: outstanding ~exercises~ of math.
+  - ex: ~:cs:math:statisticts:question:~ => filter: outstanding ~questions~
+  - ex: ~:personal:youtube:video~
+  - ex: ~:personal:book:fiction~
+  - ex: ~- [ ] Change keybindings :config:emacs:~
 - Never mention the location/project of the task, instead specify it as a task hierarchy (scope resolution, flexible querying) (same as in programming var-names should never include the typee / functions don't have module-name in their name, instead the location is specified via module)
-  + ~[ ] fix bugs in emacs config for the org mode module~ => ~[ ] fix bugs :config:emacs:org:~
-  + this is a clear and highly structured, data orientated approach. (all the benefits of data follow: querying, extensibility...)
+  - ~[ ] fix bugs in emacs config for the org mode module~ => ~[ ] fix bugs :config:emacs:org:~
+  - this is a clear and highly structured, data orientated approach. (all the benefits of data follow: querying, extensibility...)
 - org-agenda :: filter for all headings with that specific tag across all files (eg. sort class specific todos w tags)
 
 ** Keywords to downcase
 - By default emacs has these as uppercase (the poor man's bold), however times change and the lowercase standard should be used globally.
-  + thus convert mostly everything with this function, when you happened to get a file where it is uppercase.
+  - thus convert mostly everything with this function, when you happened to get a file where it is uppercase.
 #+begin_src emacs-lisp
   (defun z/org-convert-keywords-downcase ()
     "Convert all #+KEYWORDS => #+keywords && :keyword: => :keyword:"
@@ -895,9 +893,9 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 - Use the heading: ~Inbox~ for collecting the captured items => might want to review/refile these items later.
 - Journal is very much personal, like a diary.
 - For each project there is a separate folder (relative to org-dir) with files:
-  + tasks
-  + notes
-  + (events) (can be defined in more general events file)
+  - tasks
+  - notes
+  - (events) (can be defined in more general events file)
 
 #+begin_src emacs-lisp
 (defvar z/literature-dir "~/Documents/literature/notes/"
@@ -1041,11 +1039,11 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 
 ** Indentation: 2 spaces
 - The only reliable, repeatable, transportable way to ensure that indentation remains consistent across viewing environments is to indent you code using only spaces.
-  + With tabs you will always get some cases where there is spaces where there should be a tab and vice versa, this needs then to be fixed manually. (eg: evil shift, or evil-align)
+  - With tabs you will always get some cases where there is spaces where there should be a tab and vice versa, this needs then to be fixed manually. (eg: evil shift, or evil-align)
 - Having 8x or 4x indentations makes the code move too far to the right, and makes it really incoherent and spaced out on a 100-character terminal screen.
-  + Scanning code horizontally is alot harder than reading it vertically. Especially when you’ve been looking at your screen for 20 straight hours, you’ll find it a lot easier to read your code if it is compacted and concise.
-  + Keep in mind that if you need more than 3 levels of indentation, you’re screwed anyway and have nested your functions too deep and should fix your program.
-  + Tab never autocompletes, confirm the autocompletion with enter. (consistent with all other programs on the os (neovim, nushell, browser...))
+  - Scanning code horizontally is alot harder than reading it vertically. Especially when you’ve been looking at your screen for 20 straight hours, you’ll find it a lot easier to read your code if it is compacted and concise.
+  - Keep in mind that if you need more than 3 levels of indentation, you’re screwed anyway and have nested your functions too deep and should fix your program.
+  - Tab never autocompletes, confirm the autocompletion with enter. (consistent with all other programs on the os (neovim, nushell, browser...))
 
 #+begin_src emacs-lisp
 (advice-add #'doom-highlight-non-default-indentation-h :override #'ignore) ;; turn off whitespace highlighting
@@ -1081,7 +1079,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 #+end_src
 
 - Run nushell commands using the environtment:: use ~--execute~ instead of ~--commands~
-  + Runs it as if interactive (all settings, scripts loaded)
+  - Runs it as if interactive (all settings, scripts loaded)
 - Display =cwd= in shell-prompt.
 #+begin_src emacs-lisp
 (setq shell-command-prompt-show-cwd t)

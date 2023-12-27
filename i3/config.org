@@ -20,8 +20,7 @@
  - Keyboard driven workflow only. (Vi-mnemonic bindings)
  - Strictly avoid multitasking => Always work in maximized-mode to never have to resize a window => one workspace per window, to not get distracted by other open windows.
 
-* Abbreviations of long commands
-- HACK :: aliasing bin directory (i3:bash doesn't have it in ~$PATH~ and i use nushell)
+* Abbreviations of (freq. used) long commands
 #+begin_src conf
 set $rofi rofi -dmenu -i -no-custom -p ' '
 set $esc mode "default"
@@ -130,7 +129,7 @@ $map $mod+Return     move workspace to output next
 #+end_src
 
 ** Workspaces Assignments
-- Statistically frequently used apps are assigne their own workspaces, all others are sent to the scratch workspace 1 (1-4 are for temporary assignments)
+- Statistically frequently used apps => assigned their own workspaces; all others => sent to the scratch workspace 1 (1-4 are for temporary assignments: scratchpads)
 - Upon opening new windows, automatically focus them (regardless of workspace. (sensible)
 - Abbrev for too long command
 #+begin_src conf

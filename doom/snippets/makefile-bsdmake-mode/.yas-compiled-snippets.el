@@ -3,24 +3,16 @@
 ;;;
 (yas-define-snippets 'makefile-bsdmake-mode
                      '(("$" "$(${1:VAR})$0" "var" nil nil nil
-                        "/home/lenz/.config/doom/snippets/makefile-bsdmake-mode/var"
-                        nil "$")
-                       ("if" "@if [ ${1:cond} ]\n    then $0\nfi\n" "if" nil nil
-                        nil
-                        "/home/lenz/.config/doom/snippets/makefile-bsdmake-mode/if"
-                        nil "if")
-                       ("gen"
-                        "all: ${1:targets}\n\n$0\n\nclean:\n        ${2:clean actions}\n"
+                        "/home/lenz/.config/doom/snippets/makefile-bsdmake-mode/var" nil "$")
+                       ("if" "@if [ ${1:cond} ]\n    then $0\nfi\n" "if" nil nil nil
+                        "/home/lenz/.config/doom/snippets/makefile-bsdmake-mode/if" nil "if")
+                       ("gen" "all: ${1:targets}\n\n$0\n\nclean:\n        ${2:clean actions}\n"
                         "gen" nil nil nil
-                        "/home/lenz/.config/doom/snippets/makefile-bsdmake-mode/gen"
-                        nil "gen")
-                       ("echo" "@echo ${1:\"message to output\"}\n" "echo" nil
-                        nil nil
-                        "/home/lenz/.config/doom/snippets/makefile-bsdmake-mode/echo"
-                        nil "echo")
+                        "/home/lenz/.config/doom/snippets/makefile-bsdmake-mode/gen" nil "gen")
+                       ("echo" "@echo ${1:\"message to output\"}\n" "echo" nil nil nil
+                        "/home/lenz/.config/doom/snippets/makefile-bsdmake-mode/echo" nil "echo")
                        ("phony" ".PHONY: $0" "PHONY" nil nil nil
-                        "/home/lenz/.config/doom/snippets/makefile-bsdmake-mode/PHONY"
-                        nil "phony")))
+                        "/home/lenz/.config/doom/snippets/makefile-bsdmake-mode/PHONY" nil "phony")))
 
 
-;;; Do not edit! File generated at Thu Nov 23 12:56:44 2023
+;;; Do not edit! File generated at Wed Dec 27 03:16:54 2023

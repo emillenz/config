@@ -1,9 +1,10 @@
-#+title:    Doom Emacs Config
+  Doom Emacs Config
 #+author:   Emil Lenz
 #+email:    emillenz@protonmail.com
 #+date:     Tuesday, November 1, 2022
 #+property: header-args:emacs-lisp tangle config.el :comments link
-
+*  [[ref: ]]
+great
 * Preface
 Professional, minimalist tools like Emacs have a high learning curve and require thought and time to initially set up. But once things are working and customized they will work for years at a stretch without needing to fiddle with the nobs. And once mastered you can eliminate the "modern" GUI bits -- tool bars, menus, scrollbars and fancy animations and the like and what is left is about as clean an interface as you can get stripping everything down to the bare metal where it gets out of your way and provides the most streamlined workflow. The difference is that something like emacs is a longterm investment, it requires you to get over the high entry barrier but then never annoys you with a more elongated, bloated workflow that in other, more beginner friendly applications is the norm and cannot be changed away from.
 
@@ -36,9 +37,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+begin_src emacs-lisp
 (setq
  doom-themes-enable-bold t
- doom-theme 'doom-solarized-dark
-
- doom-themes-enable-italic nil)
+ doom-theme 'doom-solarized-dark)
 
 (after! evil
   (setq
@@ -129,20 +128,13 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   (setq org-src-window-setup 'current-window)
   (set-popup-rule! "^\\*Org Src" :ignore t)) ;; HACK :: fullscreen window
 
-(after! doom
-  (setq-default
-   +popup-defaults
-   '(:side right
-     :width 0.33
-     :select nil
-     :quit nil
-     :modeline t)))
-
-(after! helpful
-  (set-popup-rule! ".*help.*" :ignore t)) ;; HACK :: use defautls
-
-(after! lsp-mode
-  (set-popup-rule! ".*help.*" :ignore t)) ;; HACK :: use defautls
+(setq-default
+ +popup-defaults
+ '(:side right
+   :width 0.33
+   :select nil
+   :quit nil
+   :modeline t))
 #+end_src
 
 - Centered windows for better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).
@@ -233,7 +225,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         :nvim "M-F"     (cmd! (consult-find "~"))
         :nvim "M-g"     #'consult-buffer
         :nvim "M-r"     #'consult-recent-file
-        :nvim "M-c"     #'shell-command
+        :nvim "M-c"     #'async-shell-command
         :nvim "M-w"     #'+lookup/online
         :nvim "M-;"     #'execute-extended-command
         :nvim "M-'"     #'consult-bookmark
@@ -322,7 +314,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 *** Evil surround operator
 For adding delimiters around objects.
 Very useful and thus getting a first-level-mapping.
-Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~{~
+Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~~
 (of you prefer ~'~ for marking, remap ~'~ -> ~`~)
 #+begin_src emacs-lisp
 (after! evil
@@ -532,8 +524,6 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 (setq
  org-directory "~/Documents/org"
  org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
- org-blank-before-new-entry '((heading . t)
-                              (plain-list-item . nil))
  org-use-property-inheritance t
  org-reverse-note-order t
  org-startup-with-inline-images t
@@ -542,27 +532,24 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
  org-tags-column 0
  org-fold-catch-invisible-edits 'smart
  org-export-headline-levels 5
- org-refile-use-outline-path 'file
+ ;; org-refile-use-outline-path 'file ;; [&]
  org-refile-allow-creating-parent-nodes 'confirm
- org-use-sub-superscripts 't
- org-startup-with-inline-images t
+ org-use-sub-superscripts '{}
  org-fontify-quote-and-verse-blocks t
  org-fontify-whole-block-delimiter-line t
  org-export-with-sub-superscripts '{}
  doom-themes-org-fontify-special-tags t
- org-startup-with-latex-preview nil
- org-insert-heading-respect-content t
- org-M-RET-may-split-line t
+ org-startup-with-latex-preview t
+ ;; org-insert-heading-respect-content t ;; [&]
  org-ellipsis "…"
  org-num-max-level 3
- org-table-convert-region-max-lines 20000)
-
-(setq
  org-hide-leading-stars t
  org-appear-autoemphasis t
  org-appear-autosubmarkers t
  org-appear-autolinks t
  org-appear-autoentities t
+ org-appear-autokeywords t
+ org-appear-inside-latex t
  org-hide-emphasis-markers t)
 
 (+org-pretty-mode 1)
@@ -573,14 +560,14 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 
 (setq
  org-list-demote-modify-bullet
- '(("-"  . "+")
+ '(("-"  . "-")
    ("+"  . "+")
    ("*"  . "-")
    ("a."  . "a)")
    ("1."  . "1)")
    ("1)" . "a)")))
 
-(setf org-blank-before-new-entry
+(setq org-blank-before-new-entry
       '((heading          . t)
         (plain-list-item . nil)))
 #+end_src
@@ -698,22 +685,36 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
   + shorter & more sensible than default: ~LOGBOOK~
 - Explain myself if i can't meet a deadline.
   + take responsibility
+- Make org-log messages more data orientated and concise
 #+begin_src emacs-lisp
-  (setq
-   org-log-done 'time
-   org-log-repeat 'time
-   org-todo-repeat-to-state t
-   org-log-redeadline 'note
-   org-log-reschedule 'time
-   org-log-into-drawer "LOG")
+(setq
+ org-log-done 'time
+ org-log-repeat 'time
+ org-todo-repeat-to-state t
+ org-log-redeadline 'time
+ org-log-reschedule 'time
+ org-log-into-drawer "LOG")
 
-  (setq
-   org-priority-highest 1
-   org-priority-lowest 3
-   org-priority-faces
-   '((?1  . 'all-the-icons-red)
-     (?2 . 'all-the-icons-orange)
-     (?3 . 'all-the-icons-yellow)))
+(setq
+ org-priority-highest 1
+ org-priority-lowest 3
+ org-priority-faces
+ '((?1  . 'all-the-icons-red)
+   (?2 . 'all-the-icons-orange)
+   (?3 . 'all-the-icons-yellow)))
+
+(setq
+ org-log-note-headings
+ '((done . "done note: %t")
+   (state . "state: %-3S -> %-6s %t") ;; NOTE :: DON'T change this?; my task-statuses are all 3x wide -> formatting needs adjustment if not used like that
+   (note . "note: %t")
+   (reschedule . "reschedule: %S, %t")
+   (delschedule . "del-scheduled: %S, %t")
+   (redeadline . "re-deadline: %S, %t")
+   (deldeadline . "del-deadline: %S, %t")
+   (refile . "refile: %t")
+   (clock-out . ""))
+ )
 #+end_src
 
 ** Babel
@@ -780,23 +781,6 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
    org-clock-out-when-done t
    org-clock-persist t
    org-clock-into-drawer t)
-#+end_src
-
-** Roam
-- Using a Template + auto inserting header // manually change the email-addr and name here (auto-expansion not supported)
-#+begin_src emacs-lisp
-  (setq
-   org-roam-directory "~/Documents/"
-   org-roam-dailies-directory "~/Documents/journal/"
-   org-roam-completion-everywhere t
-   org-auto-align-tags t
-   org-roam-dailies-capture-templates
-   '(("d" "default" entry
-      (file "~/Documents/templates/journal_template.org")
-      :target (file+head
-               "%<%Y-%m-%d>.org" ;; NOTE :: needs this exact format as filename to show up in org-agenda
-               "#+title:\tDaily Journal: %<%Y-%m-%d>\n#+author:\tEmil Lenz\n#+email:\temillenz@protonmail.com\n#+date:\t\t%<%A, %e %B, %Y>\n"
-               ))))
 #+end_src
 
 ** Org workflow
@@ -866,20 +850,6 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
            (downcase (match-string 0)) t)))))
 #+end_src
 
-** Link file
-More convenient, with a nice display.
-#+begin_src emacs-lisp
-(defun z/org-link-file ()
-  "Insert a file link."
-  (interactive)
-  (let* ((file (org-link-complete-file))
-        (title (replace-regexp-in-string "file:" "" (capitalize (replace-regexp-in-string "[-_.]" " " (file-name-sans-extension (file-name-nondirectory file)))))))
-    (insert
-     (format " [[%s][%s]]"
-      file
-      title))))
-#+end_src
-
 ** Jump to src file
 - When done with the edits: ~org-bable-detangle~.
 #+begin_src emacs-lisp
@@ -923,42 +893,52 @@ More convenient, with a nice display.
 - Capture templates are used to collect & capture notes, events, tasks and your daily reflection journal structured, tagged, sorted into a specific file.
 - This is very customizeable allows you to setup complex templates. (ex: insert into table)
 - Use the heading: ~Inbox~ for collecting the captured items => might want to review/refile these items later.
+- Journal is very much personal, like a diary.
 - For each project there is a separate folder (relative to org-dir) with files:
   + tasks
   + notes
   + (events) (can be defined in more general events file)
 
 #+begin_src emacs-lisp
+(defvar z/li-dir "~/Documents/literature/notes/"
+  "Directory for all files associated with my literature-information-system.")
+
+(defvar z/journal-dir "~/Documents/journal/"
+  "Directory for all personal journal files.")
+
+;; NOTE:: filepaths are relative to org-dir
 (setq
  org-capture-templates
  (doct
   '((:group "default-opts"
-     :headline "inbox"
      :prepend t
      :clock-keep t
 
      :children
      (("task" :keys "t"
+       :headline "inbox"
        :template
-       ("* [ ] %^{title} %^g"
-        "%?")
+       ("* [ ] %^{title} %^g" "%?")
        :children
        (("cs"   :keys "c" :file "cs/tasks.org"
          :children
          (("la" :keys "l" :olp ("linear algebra" "inbox"))
           ("ep" :keys "e" :olp ("einfuehrung programmierung" "inbox"))
           ("dm" :keys "d" :olp ("discrete math" "inbox"))
-          ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox"))))
+          ("cs" :keys "c")
+          ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox")))
+         )
         ("personal" :keys "p" :file "personal/tasks.org")
         ("compass"  :keys "s" :file "compass/tasks.org")
         ("config"   :keys "o" :file "config/tasks.org")))
 
       ("event" :keys "e"
+       :headline "inbox"
        :template
        ("* [#] %^{title} %^g"
         "%^t"
         "LOCATION: %^{location}"
-        "PRE: %^{pre}"
+        "PREP: %^{prep}"
         "%?")
        :children
        (("cs"       :keys "c" :file "cs/events.org")
@@ -968,7 +948,7 @@ More convenient, with a nice display.
        :template
        ("* %^{title} %^g"
         ":PROPERTIES:"
-        ":CREATED: %U"
+        ":created: %U"
         ":END:"
         "%?")
        :children
@@ -983,13 +963,35 @@ More convenient, with a nice display.
         ("config"   :keys "o" :file "config/notes.org")))
 
       ("journal" :keys "j"
+       :file (lambda () (concat z/journal-dir "journal-W" (format-time-string "%V") ".org")) ;; NOTE:: weekly journal file
+       :datetree t
        :template
-       ("* %^{title} %^g"
-        ":PROPERTIES:"
-        ":CREATED: %U"
-        ":END:"
-        "%?")
-       :children ("personal" :keys "p" :file "personal/journal.org")))))))
+       ("* Goals"
+        "- %?"
+        ""
+        "* Tasks ?"
+        "* Gratitude"
+        "- "
+        ""
+        "* Reflection & Review"
+        "- "))
+
+      ("Literature" :keys "l"
+       :file (lambda () (read-file-name "File: " z/literature-dir))
+       :children
+       (("Highlight" :keys "h"
+         :headline "Highlights"
+         :template
+         ("**  %^{title} [[p: %^{reference}]]"
+          "#+begin_quote"
+          "%?"
+          "#+end_quote"))
+
+        ("Note" :keys "n"
+         :healine "Literature Notes"
+         :template
+         ("** %^{title} [[p: %^{reference}]]"
+          "%?")))))))))
 #+end_src
 ** [End]
 #+begin_src emacs-lisp
@@ -1053,4 +1055,3 @@ More convenient, with a nice display.
 
 * [?] Under review
 ** org-ql
-** prot: denote

@@ -85,9 +85,9 @@
        :checkers
        (syntax
         +childframe)              ; tasing you for every semicolon you forget
-       (spell
-        +everywhere
-        +flyspell)
+       ;; (spell
+       ;;  +everywhere
+       ;;  +flyspell)
                                         ; tasing you for misspelling mispelling
        grammar           ; tasing grammar mistake every you make
 

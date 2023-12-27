@@ -1,27 +1,3 @@
-ls | get name | split list
-ls | get name | split list '-'
-ls | get name | split row
-ls | get name | split row '-'
-ls | get name | split column '-'-
-ls | get name | split column '-'
-ls | get name | each {|x| print $x ("../2023" | path join ($x | split column '-' | get column2 | into string ) | path join $x)}
-ls | get name | each {|x| print $x ("../2023" | path join ($x | split column '-' | get column2 )}
-ls | get name | each {|x| print $x ("../2023" | path join ($x | split column '-' | get column2 ))}
-ls | get name | each {|x| print $x ("../2023" |  ($x | split column '-' | get column2 ))}
-ls | get name | each {|x| print $x |split column '-'}
-ls | get name | each {|x| $x |split column '-'}
-ls | get name | each {|x| $x |split column '-' |get column 2}
-ls | get name | each {|x| $x |split column '-' |get column2}
-ls | get name |split column '-' |get column2 }
-ls | get name | split column '-' |get column2 }
-ls | get name | split column '-' |get column2 
-ls | get name | {|x| split column '-' | get column2 }
-ls | get name | {|x| split column '-' | get column2 |print $x }
-ls | get name | each{|x| split column '-' | get column2 }
-ls | get name | each {|x| split column '-' | get column2 }
-ls | get name | each {|x| split-by}
-ls | get name | each {|x| split-by head}
-split words -h | bat
 split chars  -h | bat
 ls | get name | each {|x| split column '-'}
 ls | get name | split column '-'
@@ -9998,3 +9974,27 @@ pg  --help | bat --language=man
 pg .bashrc
 bat .bashrc
 yay exo
+jshell
+hp-setup
+lpr
+lpr  --help | bat --language=man
+lpr
+ls /dev
+lsblk
+sudo killall dd
+ls
+dd if=/dev/zero of=/dev/sda bs=512 count=1
+sudo dd if=/dev/zero of=/dev/sda bs=512 count=1 status=progress
+sudo mkfs.fat -F32 /dev/sda1
+sudo fdisk /dev/sda
+ls
+sudo dd if=/dev/zero of=/dev/sda bs=512 count=1 status=progress
+sudo fdisk /dev/sda
+sudo mkfs.fat -F32 /dev/sda1
+yay mount
+yay udisk
+udiskie
+"udiskie &" | bash
+udiskie  --help | bat --language=man
+ls
+tldr pdflatex 

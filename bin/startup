@@ -12,6 +12,7 @@ def main [] {
 
   let start_ps = [
     "batsignal -b -w 50 -c 20 -d 5", # NOTE :: batterylevel's to notify at
+    "udiskie"
     "nm-applet",
     "playerctld",
     "keepassxc",

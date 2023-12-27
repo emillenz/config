@@ -2,9 +2,8 @@
 ;;; Snippet definitions:
 ;;;
 (yas-define-snippets 'm4-mode
-                     '(("def" "define(\\`${1:macro}',\\`${2:subst}').\n$0" "def"
-                        nil nil nil
+                     '(("def" "define(\\`${1:macro}',\\`${2:subst}').\n$0" "def" nil nil nil
                         "/home/lenz/.config/doom/snippets/m4-mode/def" nil "def")))
 
 
-;;; Do not edit! File generated at Thu Nov 23 12:56:44 2023
+;;; Do not edit! File generated at Wed Dec 27 03:16:54 2023

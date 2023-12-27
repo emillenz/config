@@ -20,6 +20,7 @@
 (package! org-auto-tangle)
 (package! evil-cleverparens)
 (package! consult-dir)
+(package! chatgpt-shell)
 (package! org-pandoc-import
   :recipe (:host github
            :repo "tecosaur/org-pandoc-import"

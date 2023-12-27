@@ -7,9 +7,7 @@
 ;; [[file:config.org::*Theme][Theme:1]]
 (setq
  doom-themes-enable-bold t
- doom-theme 'doom-solarized-dark
-
- doom-themes-enable-italic nil)
+ doom-theme 'doom-solarized-dark)
 
 (after! evil
   (setq
@@ -92,20 +90,13 @@
   (setq org-src-window-setup 'current-window)
   (set-popup-rule! "^\\*Org Src" :ignore t)) ;; HACK :: fullscreen window
 
-(after! doom
-  (setq-default
-   +popup-defaults
-   '(:side right
-     :width 0.33
-     :select nil
-     :quit nil
-     :modeline t)))
-
-(after! helpful
-  (set-popup-rule! ".*help.*" :ignore t)) ;; HACK :: use defautls
-
-(after! lsp-mode
-  (set-popup-rule! ".*help.*" :ignore t)) ;; HACK :: use defautls
+(setq-default
+ +popup-defaults
+ '(:side right
+   :width 0.33
+   :select nil
+   :quit nil
+   :modeline t))
 ;; Window layout & behavior:1 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:2]]
@@ -172,7 +163,7 @@
         :nvim "M-F"     (cmd! (consult-find "~"))
         :nvim "M-g"     #'consult-buffer
         :nvim "M-r"     #'consult-recent-file
-        :nvim "M-c"     #'shell-command
+        :nvim "M-c"     #'async-shell-command
         :nvim "M-w"     #'+lookup/online
         :nvim "M-;"     #'execute-extended-command
         :nvim "M-'"     #'consult-bookmark
@@ -402,8 +393,6 @@
 (setq
  org-directory "~/Documents/org"
  org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
- org-blank-before-new-entry '((heading . t)
-                              (plain-list-item . nil))
  org-use-property-inheritance t
  org-reverse-note-order t
  org-startup-with-inline-images t
@@ -412,27 +401,24 @@
  org-tags-column 0
  org-fold-catch-invisible-edits 'smart
  org-export-headline-levels 5
- org-refile-use-outline-path 'file
+ ;; org-refile-use-outline-path 'file ;; [&]
  org-refile-allow-creating-parent-nodes 'confirm
- org-use-sub-superscripts 't
- org-startup-with-inline-images t
+ org-use-sub-superscripts '{}
  org-fontify-quote-and-verse-blocks t
  org-fontify-whole-block-delimiter-line t
  org-export-with-sub-superscripts '{}
  doom-themes-org-fontify-special-tags t
- org-startup-with-latex-preview nil
- org-insert-heading-respect-content t
- org-M-RET-may-split-line t
+ org-startup-with-latex-preview t
+ ;; org-insert-heading-respect-content t ;; [&]
  org-ellipsis "…"
  org-num-max-level 3
- org-table-convert-region-max-lines 20000)
-
-(setq
  org-hide-leading-stars t
  org-appear-autoemphasis t
  org-appear-autosubmarkers t
  org-appear-autolinks t
  org-appear-autoentities t
+ org-appear-autokeywords t
+ org-appear-inside-latex t
  org-hide-emphasis-markers t)
 
 (+org-pretty-mode 1)
@@ -443,14 +429,14 @@
 
 (setq
  org-list-demote-modify-bullet
- '(("-"  . "+")
+ '(("-"  . "-")
    ("+"  . "+")
    ("*"  . "-")
    ("a."  . "a)")
    ("1."  . "1)")
    ("1)" . "a)")))
 
-(setf org-blank-before-new-entry
+(setq org-blank-before-new-entry
       '((heading          . t)
         (plain-list-item . nil)))
 ;; Options:1 ends here
@@ -505,7 +491,7 @@
  org-log-done 'time
  org-log-repeat 'time
  org-todo-repeat-to-state t
- org-log-redeadline 'note
+ org-log-redeadline 'time
  org-log-reschedule 'time
  org-log-into-drawer "LOG")
 
@@ -516,6 +502,19 @@
  '((?1  . 'all-the-icons-red)
    (?2 . 'all-the-icons-orange)
    (?3 . 'all-the-icons-yellow)))
+
+(setq
+ org-log-note-headings
+ '((done . "done note: %t")
+   (state . "state: %-3S -> %-6s %t") ;; NOTE :: DON'T change this?; my task-statuses are all 3x wide -> formatting needs adjustment if not used like that
+   (note . "note: %t")
+   (reschedule . "reschedule: %S, %t")
+   (delschedule . "del-scheduled: %S, %t")
+   (redeadline . "re-deadline: %S, %t")
+   (deldeadline . "del-deadline: %S, %t")
+   (refile . "refile: %t")
+   (clock-out . ""))
+ )
 ;; Task states:3 ends here
 
 ;; [[file:config.org::*Babel][Babel:1]]
@@ -575,21 +574,6 @@
  org-clock-into-drawer t)
 ;; Clock:1 ends here
 
-;; [[file:config.org::*Roam][Roam:1]]
-(setq
- org-roam-directory "~/Documents/"
- org-roam-dailies-directory "~/Documents/journal/"
- org-roam-completion-everywhere t
- org-auto-align-tags t
- org-roam-dailies-capture-templates
- '(("d" "default" entry
-    (file "~/Documents/templates/journal_template.org")
-    :target (file+head
-             "%<%Y-%m-%d>.org" ;; NOTE :: needs this exact format as filename to show up in org-agenda
-             "#+title:\tDaily Journal: %<%Y-%m-%d>\n#+author:\tEmil Lenz\n#+email:\temillenz@protonmail.com\n#+date:\t\t%<%A, %e %B, %Y>\n"
-             ))))
-;; Roam:1 ends here
-
 ;; [[file:config.org::*Keywords to downcase][Keywords to downcase:1]]
 (defun z/org-convert-keywords-downcase ()
   "Convert all #+KEYWORDS => #+keywords && :keyword: => :keyword:"
@@ -602,18 +586,6 @@
         (replace-match
          (downcase (match-string 0)) t)))))
 ;; Keywords to downcase:1 ends here
-
-;; [[file:config.org::*Link file][Link file:1]]
-(defun z/org-link-file ()
-  "Insert a file link."
-  (interactive)
-  (let* ((file (org-link-complete-file))
-        (title (replace-regexp-in-string "file:" "" (capitalize (replace-regexp-in-string "[-_.]" " " (file-name-sans-extension (file-name-nondirectory file)))))))
-    (insert
-     (format " [[%s][%s]]"
-      file
-      title))))
-;; Link file:1 ends here
 
 ;; [[file:config.org::*Jump to src file][Jump to src file:1]]
 (defun z/jump-src ()
@@ -651,36 +623,45 @@ Jumps at tangled code from org src block."
 ;; Jump to src file:1 ends here
 
 ;; [[file:config.org::*Capture templates][Capture templates:1]]
+(defvar z/li-dir "~/Documents/literature/notes/"
+  "Directory for all files associated with my literature-information-system.")
+
+(defvar z/journal-dir "~/Documents/journal/"
+  "Directory for all personal journal files.")
+
+;; NOTE:: filepaths are relative to org-dir
 (setq
  org-capture-templates
  (doct
   '((:group "default-opts"
-     :headline "inbox"
      :prepend t
      :clock-keep t
 
      :children
      (("task" :keys "t"
+       :headline "inbox"
        :template
-       ("* [ ] %^{title} %^g"
-        "%?")
+       ("* [ ] %^{title} %^g" "%?")
        :children
        (("cs"   :keys "c" :file "cs/tasks.org"
          :children
          (("la" :keys "l" :olp ("linear algebra" "inbox"))
           ("ep" :keys "e" :olp ("einfuehrung programmierung" "inbox"))
           ("dm" :keys "d" :olp ("discrete math" "inbox"))
-          ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox"))))
+          ("cs" :keys "c")
+          ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox")))
+         )
         ("personal" :keys "p" :file "personal/tasks.org")
         ("compass"  :keys "s" :file "compass/tasks.org")
         ("config"   :keys "o" :file "config/tasks.org")))
 
       ("event" :keys "e"
+       :headline "inbox"
        :template
        ("* [#] %^{title} %^g"
         "%^t"
         "LOCATION: %^{location}"
-        "PRE: %^{pre}"
+        "PREP: %^{prep}"
         "%?")
        :children
        (("cs"       :keys "c" :file "cs/events.org")
@@ -690,7 +671,7 @@ Jumps at tangled code from org src block."
        :template
        ("* %^{title} %^g"
         ":PROPERTIES:"
-        ":CREATED: %U"
+        ":created: %U"
         ":END:"
         "%?")
        :children
@@ -705,13 +686,35 @@ Jumps at tangled code from org src block."
         ("config"   :keys "o" :file "config/notes.org")))
 
       ("journal" :keys "j"
+       :file (lambda () (concat z/journal-dir "journal-W" (format-time-string "%V") ".org")) ;; NOTE:: weekly journal file
+       :datetree t
        :template
-       ("* %^{title} %^g"
-        ":PROPERTIES:"
-        ":CREATED: %U"
-        ":END:"
-        "%?")
-       :children ("personal" :keys "p" :file "personal/journal.org")))))))
+       ("* Goals"
+        "- %?"
+        ""
+        "* Tasks ?"
+        "* Gratitude"
+        "- "
+        ""
+        "* Reflection & Review"
+        "- "))
+
+      ("Literature" :keys "l"
+       :file (lambda () (read-file-name "File: " z/literature-dir))
+       :children
+       (("Highlight" :keys "h"
+         :headline "Highlights"
+         :template
+         ("**  %^{title} [[p: %^{reference}]]"
+          "#+begin_quote"
+          "%?"
+          "#+end_quote"))
+
+        ("Note" :keys "n"
+         :healine "Literature Notes"
+         :template
+         ("** %^{title} [[p: %^{reference}]]"
+          "%?")))))))))
 ;; Capture templates:1 ends here
 
 ;; [[file:config.org::*\[End\]][[End]:1]]

@@ -1,12 +1,12 @@
 # -*- mode: snippet -*-
-# name: org-file header
-# key: head
-# uuid: head
+# name: org-file-header
+# key: org-file-header
+# uuid: org-file-header
 # --
-#+title:    `(capitalize (replace-regexp-in-string "[-_.]" " " (file-name-sans-extension (file-name-nondirectory (buffer-file-name (current-buffer))))))`
-#+author:   `user-full-name`
-#+email:    `user-mail-address`
-#+date:     `(format-time-string "%A, %e %B, %Y")`
-#+info:     ${0:Short description of document.}
+#+title:  `(capitalize (replace-regexp-in-string "[-_.]" " " (file-name-sans-extension (file-name-nondirectory buffer-file-name))))`
+#+author: `user-full-name`
+#+email:  `user-mail-address`
+#+date:   `(format-time-string "%F")`
+#+info:   ${1:Short description of document.}
 
-$1
+$0

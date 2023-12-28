@@ -1007,9 +1007,9 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
          :file
          (lambda ()
            (concat
-            z-literature-dir
+            z-literature-notes-dir
             (replace-regexp-in-string
-             " " "_"
+             " " "-"
              (downcase (read-from-minibuffer "filename: " _title)))
             ".org"))
          :template
@@ -1025,7 +1025,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
           ":year:   %^{year of publication}"
           ":tags:   %^{tags}"
           ":type:   %^{type}"
-          ":length: %^{pages/minutes}"
+          ":pages: %^{pages}"
           ":END:"
           "%?"
           "** Excerpts"
@@ -1038,7 +1038,8 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
          :headline "Excerpts"
          :content (lambda () (current-kill 0))
          :template
-         ("* %^{title} [[p: %^{reference}]]"
+         ("* %^{title}"
+          "[%^{pos-ref}]]"
           "#+begin_quote"
           "%{content}%?"
           "#+end_quote"))

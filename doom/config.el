@@ -734,9 +734,9 @@ Jumps at tangled code from org src block."
          :file
          (lambda ()
            (concat
-            z-literature-dir
+            z-literature-notes-dir
             (replace-regexp-in-string
-             " " "_"
+             " " "-"
              (downcase (read-from-minibuffer "filename: " _title)))
             ".org"))
          :template
@@ -752,7 +752,7 @@ Jumps at tangled code from org src block."
           ":year:   %^{year of publication}"
           ":tags:   %^{tags}"
           ":type:   %^{type}"
-          ":length: %^{pages/minutes}"
+          ":pages: %^{pages}"
           ":END:"
           "%?"
           "** Excerpts"
@@ -765,7 +765,8 @@ Jumps at tangled code from org src block."
          :headline "Excerpts"
          :content (lambda () (current-kill 0))
          :template
-         ("* %^{title} [[p: %^{reference}]]"
+         ("* %^{title}"
+          "[%^{pos-ref}]]"
           "#+begin_quote"
           "%{content}%?"
           "#+end_quote"))

@@ -456,10 +456,14 @@
 ;; Symbols:1 ends here
 
 ;; [[file:config.org::*Ligatures][Ligatures:1]]
-(setq-default prettify-symbols-alist
-              '(("->" . "→")
-                ("=>" . "⇒")
-                ("<=>" . "⇔")))
+(add-hook! 'org-mode-hook
+  (defun z-org-add-symbols ()
+    "Add more sybols to be displayed (for functional notation)"
+    (appendq!
+     prettify-symbols-alist
+     '(("->" . "→")
+       ("=>" . "⇒")
+       ("<=>" . "⇔")))))
 ;; Ligatures:1 ends here
 
 ;; [[file:config.org::*Task states][Task states:1]]

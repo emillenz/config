@@ -1,6 +1,6 @@
 ;; -*- no-byte-compile: t; -*-
 
-(package! evil-escape :disable t)
+(package! evil-escape :disable t) ;; NOTE ::: Bloat, remap an ergo key os-wide
 
 (package! dired-open)
 (package! rainbow-mode)

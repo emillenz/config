@@ -1,7 +1,7 @@
 #+title:  Doom Emacs Config
 #+author: Emil Lenz
 #+email:  emillenz@protonmail.com
-#+date:   Tuesday, November 1, 2022
+#+date:   2022-11-1
 #+property: header-args:emacs-lisp tangle config.el :comments link
 
 * Preface
@@ -590,15 +590,19 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
 ** Ligatures
 - I use concise, functional notation, hence the unicode to make things look more coherent.
 #+begin_src emacs-lisp
-  (setq-default prettify-symbols-alist
-                '(("->" . "→")
-                  ("=>" . "⇒")
-                  ("<=>" . "⇔")))
+(add-hook! 'org-mode-hook
+  (defun z-org-add-symbols ()
+    "Add more sybols to be displayed (for functional notation)"
+    (appendq!
+     prettify-symbols-alist
+     '(("->" . "→")
+       ("=>" . "⇒")
+       ("<=>" . "⇔")))))
 #+end_src
 
 ** Task states
 - These are task states are used for personal daily organization & studying at university (keeping track of lectures, assignments, events, exercise sheets.)
-- Using symbols instead of words to represent states => less clutter, more concise, readeable & structured
+- Using symbols instead of words to represent states => less clutter, more concise, readeable & structured.
 - Order them with priorities to assign order of execution if there are many tasks
 - States with ~@~ prompt for note | if want to do manually: ~org-add-note~
   - Reflecting

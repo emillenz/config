@@ -1,37 +1,3 @@
-ls | get name | each {|x| echo $x ("~/journal/2023" | path join ($x | split column '-' | get column2.0 ) | path join $x) }
-cd 20200
-open `2022-00-00.md`
-for i in (open `2022-00-00.md`) {print $i}
-open `2022-00-00.md` | lines
-open `2022-00-00.md` | lines | find -h | bat
-open `2022-00-00.md` | lines | find '###'
-open `2022-00-00.md` | lines | find -r '^### \d'
-for line in (open `2022-00-00.md`) {if ($line =~ "^### \d") {print $line}}
-for line in (open `2022-00-00.md`) {if ($line =~ "^### ") {print $line}}
-for line in (open `2022-00-00.md`) {if ($line =~ "### ") {print $line}}
-open `2022-00-00.md` | lines | find -r '^### \d'
-for line in (open `2022-00-00.md`) {<\n>    if ($line | str starts-with '### ') {<\n>        print $line<\n>    }<\n>}
-for line in (open `2022-00-00.md`) {<\n>    if ($line | str starts-with '###') {<\n>        print $line<\n>    }<\n>}
-for line in (open `2022-00-00.md`) {if ($line =~ "### ") {print $line}}
-for line in (open `2022-00-00.md`) {if ($line | str starts-with "### " ) {print $line}}
-for line in (open `2022-00-00.md`) {if ($line | str starts-with '### ' ) {print $line}}
-open `2022-00-00.md` | lines 
-open `2022-00-00.md` | lines | split column "\n" 
-open `2022-00-00.md` | lines | split column \n
-open `2022-00-00.md` | lines | each {split column \n}
-open `2022-00-00.md` | lines | each {split list "\n"}
-open `2022-00-00.md` | lines | each {split row "\n"}
-open `2022-00-00.md` | lines | each {split row "\n"} | flatten 
-open `2022-00-00.md` | lines | each {split row "\n"} | flatten -h
-open `2022-00-00.md` | lines | each {split row "\n"} | split list ''
-open `2022-00-00.md` | lines | each {split row "\n"} | split list null
-open `2022-00-00.md` | lines | each {split row "\n"} | range -h | bat
-open `2022-00-00.md` | lines | each {split row "\n"} 
-takke -h | bat
-take -h | bat
-open `2022-00-00.md` | lines | each {split row "\n"} | take until null
-open `2022-00-00.md` | lines | each {split row "\n"} | take while not null
-open `2022-00-00.md` | lines | each {split row "\n"} | take while (not null)
 take until  -h | bat
 open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| == null}
 open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| == ''}
@@ -9998,3 +9964,37 @@ fd --help | bat --language=man
 fd -e=pdf epub . ~/Documents/literature 
 fd -e=pdf  . ~/Documents/literature 
 cd Code/
+yay wn
+yay wordnet
+yay wordnut
+yay -S wordnet-cli
+emacs --daemon
+cd .config/
+nvim (fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
+emacs --daemon; emacsclient -c --no-wait
+emacsclient -c --no-wait
+ls
+yay -S emacs-nativecomp
+emacs
+nvim .config/setup.org
+bat .config/setup.org
+open .config/setup.org
+nvim .config/
+rm .config/emacs
+bash
+ls
+doom sync
+ls
+doom doctor
+doom sync
+emacsclient -c --no-wait
+doom sync
+emacsclient -c --no-wait
+emacs --daemon; emacsclient -c --no-wait
+killall emacs; emacs --daemon; emacsclient -c --no-wait
+emacs --daemon; emacsclient -c --no-wait
+killall emacs; emacs --daemon; emacsclient -c --no-wait
+ls
+rm *readwise
+ls
+ls *readwise

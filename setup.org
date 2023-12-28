@@ -40,6 +40,7 @@ fd . ~/.config/bin -tf -x chmod +x {}
 * Editor: doom emacs
 #+begin_src sh
 yay --noconfirm -S emacs-nativecomp
+yay --noconfirm -S wordnet-cli # NOTE :: dictionary dependency
 
 git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 ~/.config/emacs/bin/doom install

@@ -1,11 +1,11 @@
-# [[file:config.org::*Abbreviations of long commands][Abbreviations of long commands:1]]
+# [[file:config.org::*Abbreviations of (freq. used) long commands][Abbreviations of (freq. used) long commands:1]]
 set $rofi rofi -dmenu -i -no-custom -p ' '
 set $esc mode "default"
 set $bin ~/.config/bin
 set $mv move container to workspace
 set $map bindsym
 set $cmd exec --no-startup-id
-# Abbreviations of long commands:1 ends here
+# Abbreviations of (freq. used) long commands:1 ends here
 
 # [[file:config.org::*Startup automation][Startup automation:1]]
 $cmd $bin/startup
@@ -65,9 +65,8 @@ $map $mod+shift+j    move left
 $map $mod+k          focus next
 $map $mod+shift+k    move right
 $map $mod+q          kill
-$map $mod+f          $cmd rofi -show drun
 $map $mod+g          $cmd rofi -show window
-$map $mod+semicolon  $cmd rofi -show run
+$map $mod+semicolon  $cmd rofi -show drun
 $map $mod+t          layout toggle tabbed splith
 $map $mod+Return     move workspace to output next
 # Core navigation:1 ends here
@@ -144,8 +143,8 @@ $map $mod+o mode "$open"
 
 mode "$open" {
   $map $mod+c       $cmd alacritty --class cmd -T cmd -e tmux new-session -A -s cmd; $esc
-  $map $mod+d       $cmd xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)"; $esc
   $map $mod+shift+e $cmd emacsclient --$cmdute--eval '(emacs-everywhere)'; $esc
+  $map $mod+d       $cmd xdg-open "$(fd -e=pdf . ~ | $rofi)"; $esc
   $map $mod+e       $cmd emacsclient --reuse-frame || emacs --daemon; $esc
   $map $mod+w       $cmd firefox; $esc
   $map $mod+v       $cmd mpv $(xclip -o); $esc
@@ -159,6 +158,17 @@ mode "$open" {
   $map Escape $esc
 }
 # Open app keybindings:1 ends here
+
+# [[file:config.org::*Find file][Find file:1]]
+$map $mod+f mode "$find"
+
+mode "$find" {
+  $map $mod+u $cmd xdg-open "$(fd -e=pdf . ~/Documents/uni/cs | $rofi)"; $esc
+  $map $mod+l $cmd xdg-open "$(fd -e=pdf -e=epub . ~/Documents/literature | $rofi)"; $esc
+  $map $mod+f $cmd xdg-open "$(fd . ~ | $rofi)"; $esc
+  $map Escape $esc
+}
+# Find file:1 ends here
 
 # [[file:config.org::*Leader][Leader:1]]
 $map $mod+space mode "$leader"

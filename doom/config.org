@@ -1012,9 +1012,8 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
           ":type:   %^{type}"
           ":length: %^{pages/minutes}"
           ":END:"
-          ""
-          "** Highlights"
           "%?"
+          "** Highlights"
           "** Literature Notes"
           "** Transient Notes"
           "** Summary"))

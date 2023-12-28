@@ -121,9 +121,8 @@ $map $mod+shift+j    move left
 $map $mod+k          focus next
 $map $mod+shift+k    move right
 $map $mod+q          kill
-$map $mod+f          $cmd rofi -show drun
 $map $mod+g          $cmd rofi -show window
-$map $mod+semicolon  $cmd rofi -show run
+$map $mod+semicolon  $cmd rofi -show drun
 $map $mod+t          layout toggle tabbed splith
 $map $mod+Return     move workspace to output next
 #+end_src
@@ -210,8 +209,8 @@ $map $mod+o mode "$open"
 
 mode "$open" {
   $map $mod+c       $cmd alacritty --class cmd -T cmd -e tmux new-session -A -s cmd; $esc
-  $map $mod+d       $cmd xdg-open "$(fd --extension pdf . ~/Documents/uni/cs | $rofi)"; $esc
   $map $mod+shift+e $cmd emacsclient --$cmdute--eval '(emacs-everywhere)'; $esc
+  $map $mod+d       $cmd xdg-open "$(fd -e=pdf . ~ | $rofi)"; $esc
   $map $mod+e       $cmd emacsclient --reuse-frame || emacs --daemon; $esc
   $map $mod+w       $cmd firefox; $esc
   $map $mod+v       $cmd mpv $(xclip -o); $esc
@@ -225,6 +224,19 @@ mode "$open" {
   $map Escape $esc
 }
 #+end_src
+
+** Find file
+#+begin_src conf
+$map $mod+f mode "$find"
+
+mode "$find" {
+  $map $mod+u $cmd xdg-open "$(fd -e=pdf . ~/Documents/uni/cs | $rofi)"; $esc
+  $map $mod+l $cmd xdg-open "$(fd -e=pdf -e=epub . ~/Documents/literature | $rofi)"; $esc
+  $map $mod+f $cmd xdg-open "$(fd . ~ | $rofi)"; $esc
+  $map Escape $esc
+}
+#+end_src
+
 
 ** Leader
 - For all system related apps and tasks.

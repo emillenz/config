@@ -627,17 +627,21 @@ Jumps at tangled code from org src block."
 ;; Jump to src file:1 ends here
 
 ;; [[file:config.org::*Capture templates][Capture templates:1]]
-(defvar z-literature-dir "~/Documents/literature/notes/"
-  "Directory for all files associated with my literature-information-system.")
+(defvar z-literature-notes-dir "~/Documents/literature/notes/"
+  "Directory for all note files associated with my literature-information-system.")
+
+(defvar z-literature-source-dir "~/Documents/literature/source/"
+  "Directory for all source files associated with my literature-information-system.")
 
 (defvar z-journal-dir "~/Documents/journal/"
   "Directory for all personal journal files.")
 
-;; NOTE:: filepaths are relative to org-dir
+;; NOTE :: filepaths are relative to org-dir.
 (setq
  org-capture-templates
  (doct
   '((:group "default-opts"
+     :type entry
      :prepend t
      :clock-keep t
 
@@ -711,17 +715,33 @@ Jumps at tangled code from org src block."
         "- "))
 
       ("literature" :keys "l"
-       :file (lambda () (read-file-name "File: " z-literature-dir))
+       :file (lambda () (read-file-name "file: " z-literature-notes-dir))
        :children
        (("new-source" :keys "s"
-         :file (lambda () (replace-regexp-in-string "\s+" "-" (concat z-literature-dir (downcase (read-string "filename: ")) ".org")))
-         :type plain
          :date (lambda () (format-time-string "%F"))
          :author (lambda () user-full-name)
          :email (lambda () user-mail-address)
-         :title (lambda () (setq z-doct-title (s-titleized-words (read-string "full title: ")))) ;; HACK :: store in var for later reuse of the input. (instead of reprompt)
-         :get-title (lambda () z-doct-title)
-         :book-author (lambda () (s-titleized-words (read-string "author: ")))
+         :title
+         (lambda ()
+           (setq
+            _title
+            (s-titleized-words
+             (read-from-minibuffer
+              "full title: "
+              (replace-regexp-in-string
+               "[-_]" " "
+               (file-name-base (read-file-name "file: " z-literature-source-dir) )))))) ;; HACK :: store in var for later reuse of the input. (instead of reprompt)
+         :get-title (lambda () _title)
+         :book-author (lambda () (s-titleized-words (read-from-minibuffer "author: " )))
+         :file
+         (lambda ()
+           (concat
+            z-literature-notes-dir
+            (read-from-minibuffer
+             "filename: "
+             (downcase (replace-regexp-in-string " " "-" _title)))
+            ".org")) ;; NOTE :: gets evaluated after custom var's, hence can use var
+         :type plain
          :template
          ("#+title:  %{title}"
           "#+author: %{author}"

@@ -993,30 +993,21 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
        :file (lambda () (read-file-name "file: " z-literature-notes-dir))
        :children
        (("new-source" :keys "s"
+         :type plain
          :date (lambda () (format-time-string "%F"))
          :author (lambda () user-full-name)
          :email (lambda () user-mail-address)
-         :title
-         (lambda ()
-           (setq
-            _title
-            (s-titleized-words
-             (read-from-minibuffer
-              "full title: "
-              (replace-regexp-in-string
-               "[-_]" " "
-               (file-name-base (read-file-name "file: " z-literature-source-dir) )))))) ;; HACK :: store in var for later reuse of the input. (instead of reprompt)
+         :title (lambda () (setq _title (s-titleized-words (read-from-minibuffer "full title: ")))) ;; HACK :: store in var for later reuse of the input. (instead of reprompt)
          :get-title (lambda () _title)
-         :book-author (lambda () (s-titleized-words (read-from-minibuffer "author: " )))
+         :book-author (lambda () (s-titleized-words (read-from-minibuffer "author: ")))
          :file
          (lambda ()
            (concat
-            z-literature-notes-dir
-            (read-from-minibuffer
-             "filename: "
-             (downcase (replace-regexp-in-string " " "-" _title)))
-            ".org")) ;; NOTE :: gets evaluated after custom var's, hence can use var
-         :type plain
+            z-literature-dir
+            (replace-regexp-in-string
+             " " "-"
+             (downcase (read-from-minibuffer "filename: " _title)))
+            ".org"))
          :template
          ("#+title:  %{title}"
           "#+author: %{author}"

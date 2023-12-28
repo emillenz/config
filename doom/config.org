@@ -1009,7 +1009,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
            (concat
             z-literature-dir
             (replace-regexp-in-string
-             " " "-"
+             " " "_"
              (downcase (read-from-minibuffer "filename: " _title)))
             ".org"))
          :template

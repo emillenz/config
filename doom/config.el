@@ -734,7 +734,7 @@ Jumps at tangled code from org src block."
            (concat
             z-literature-dir
             (replace-regexp-in-string
-             " " "-"
+             " " "_"
              (downcase (read-from-minibuffer "filename: " _title)))
             ".org"))
          :template

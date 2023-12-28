@@ -1,7 +1,3 @@
-take until  -h | bat
-open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| == null}
-open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| == ''}
-open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| = []}
 open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| $x == []}
 open `2022-00-00.md` | lines | each {split row "\n"} 
 open `2022-00-00.md` | lines | each {split row "\n"} | get 0 
@@ -9998,3 +9994,7 @@ ls
 rm *readwise
 ls
 ls *readwise
+ls
+acpi 
+ch Documents/
+cd Documents/

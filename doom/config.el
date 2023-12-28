@@ -387,7 +387,7 @@
            #'org-auto-tangle-mode)
 
 (setq
- org-directory "~/Documents/org"
+ org-directory "~/Documents/org/"
  org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
  org-use-property-inheritance t
  org-reverse-note-order t
@@ -632,15 +632,15 @@ Jumps at tangled code from org src block."
 
 ;; [[file:config.org::*Capture templates][Capture templates:1]]
 (defvar z-literature-notes-dir "~/Documents/literature/notes/"
-  "Directory for all note files associated with my literature-information-system.")
+  "Directory for note-files associated with the literature-information-system.")
 
 (defvar z-literature-source-dir "~/Documents/literature/source/"
-  "Directory for all source files associated with my literature-information-system.")
+  "Directory for source-files associated with the literature-information-system.")
 
 (defvar z-journal-dir "~/Documents/journal/"
-  "Directory for all personal journal files.")
+  "Directory for journal-files.")
 
-;; NOTE :: filepaths are relative to org-dir.
+;; NOTE :: filepaths are relative to org-dir
 (setq
  org-capture-templates
  (doct
@@ -653,33 +653,36 @@ Jumps at tangled code from org src block."
      (("task" :keys "t"
        :headline "inbox"
        :template
-       ("* [ ] %^{title} %^g" "%?")
+       ("* [ ] %^{title} %^g"
+        "%?")
        :children
-       (("cs"   :keys "c" :file "cs/tasks.org"
+       (("cs"   :keys "c"
          :children
-         (("la" :keys "l" :olp ("linear algebra" "inbox"))
-          ("ep" :keys "e" :olp ("einfuehrung programmierung" "inbox"))
-          ("dm" :keys "d" :olp ("discrete math" "inbox"))
-          ("cs" :keys "c")
-          ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox")))
-         )
+         (("cs" :keys "c" :file "cs/tasks.org")
+          ("la" :keys "l" :file "cs/la/tasks.org")
+          ("ep" :keys "e" :file "cs/ep/tasks.org")
+          ("dm" :keys "d" :file "cs/dm/tasks.org")
+          ("ad" :keys "a" :file "cs/ad/tasks.org")))
         ("personal" :keys "p" :file "personal/tasks.org")
         ("compass"  :keys "s" :file "compass/tasks.org")
         ("config"   :keys "o" :file "config/tasks.org")))
 
       ("event" :keys "e"
-       :headline "inbox"
+       :headline "events"
        :template
        ("* [#] %^{title} %^g"
         "%^t"
-        "LOCATION: %^{location}"
-        "PREP: %^{prep}"
+        ":PROPERTIES:"
+        ":location: %^{location}"
+        ":prep: %^{prep}"
+        ":END:"
         "%?")
        :children
-       (("cs"       :keys "c" :file "cs/events.org")
-        ("personal" :keys "p" :file "personal/events.org")))
+       (("cs"       :keys "c" :file "cs/tasks.org")
+        ("personal" :keys "p" :file "personal/tasks.org")))
 
       ("note" :keys "n"
+       :headline "inbox"
        :template
        ("* %^{title} %^g"
         ":PROPERTIES:"
@@ -719,14 +722,13 @@ Jumps at tangled code from org src block."
         "- "))
 
       ("literature" :keys "l"
-       :file (lambda () (read-file-name "file: " z-literature-notes-dir))
        :children
-       (("new-source" :keys "s"
+       (("new" :keys "n"
          :type plain
          :date (lambda () (format-time-string "%F"))
-         :author (lambda () user-full-name)
          :email (lambda () user-mail-address)
          :title (lambda () (setq _title (s-titleized-words (read-from-minibuffer "full title: ")))) ;; HACK :: store in var for later reuse of the input. (instead of reprompt)
+         :author (lambda () user-full-name)
          :get-title (lambda () _title)
          :book-author (lambda () (s-titleized-words (read-from-minibuffer "author: ")))
          :file
@@ -753,20 +755,23 @@ Jumps at tangled code from org src block."
           ":length: %^{pages/minutes}"
           ":END:"
           "%?"
-          "** Highlights"
+          "** Excerpts"
           "** Literature Notes"
           "** Transient Notes"
           "** Summary"))
 
-        ("highlight" :keys "h"
-         :headline "Highlights"
+        ("excerpt" :keys "e"
+         :file (lambda () (read-file-name "file: " z-literature-notes-dir))
+         :headline "Excerpts"
+         :content (lambda () (current-kill 0))
          :template
          ("* %^{title} [[p: %^{reference}]]"
           "#+begin_quote"
-          "%?"
+          "%{content}%?"
           "#+end_quote"))
 
         ("note" :keys "n"
+         :file (lambda () (read-file-name "file: " z-literature-notes-dir))
          :healine "Literature Notes"
          :template
          ("* %^{title} [[p: %^{reference}]]"

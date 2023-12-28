@@ -516,7 +516,7 @@ Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~
            #'org-auto-tangle-mode)
 
 (setq
- org-directory "~/Documents/org"
+ org-directory "~/Documents/org/"
  org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
  org-use-property-inheritance t
  org-reverse-note-order t
@@ -895,27 +895,25 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 #+end_src
 
 ** Capture templates
-- Create capture-templates for each of your frequently used projects, ex: university, personal, work ...
-- Capture templates are used to collect & capture notes, events, tasks and your daily reflection journal structured, tagged, sorted into a specific file.
-- This is very customizeable allows you to setup complex templates. (ex: insert into table)
-- Use the heading: ~Inbox~ for collecting the captured items => might want to review/refile these items later.
-- Journal is very much personal, like a diary.
+- Create capture-templates for organization on a per project basis, ex: university, personal, work..
+- Capture templates are used to collect & capture notes, events, tasks and your daily reflection journal structured, tagged, sorted into a specific files.
+- This is very customizeable allows you to setup complex templates and should be used whenever you want to log data / repeatatively track things, or want to capture structured data with different entries consistently (eg: literature-system to track reading process).
+- Use the heading: ~inbox~ for collecting the captured tasks => can get messy, and can be refactored out of inbox into more structure if neccessary.
 - For each project there is a separate folder (relative to org-dir) with files:
-  - tasks
-  - notes
-  - (events) (can be defined in more general events file)
+  - tasks :: all tasks (todos, completed etc) and events (physical appointments)
+  - notes :: Thoughts, exploration -> to study, to remember, to refactor
 
 #+begin_src emacs-lisp
 (defvar z-literature-notes-dir "~/Documents/literature/notes/"
-  "Directory for all note files associated with my literature-information-system.")
+  "Directory for note-files associated with the literature-information-system.")
 
 (defvar z-literature-source-dir "~/Documents/literature/source/"
-  "Directory for all source files associated with my literature-information-system.")
+  "Directory for source-files associated with the literature-information-system.")
 
 (defvar z-journal-dir "~/Documents/journal/"
-  "Directory for all personal journal files.")
+  "Directory for journal-files.")
 
-;; NOTE :: filepaths are relative to org-dir.
+;; NOTE :: filepaths are relative to org-dir
 (setq
  org-capture-templates
  (doct
@@ -928,33 +926,36 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
      (("task" :keys "t"
        :headline "inbox"
        :template
-       ("* [ ] %^{title} %^g" "%?")
+       ("* [ ] %^{title} %^g"
+        "%?")
        :children
-       (("cs"   :keys "c" :file "cs/tasks.org"
+       (("cs"   :keys "c"
          :children
-         (("la" :keys "l" :olp ("linear algebra" "inbox"))
-          ("ep" :keys "e" :olp ("einfuehrung programmierung" "inbox"))
-          ("dm" :keys "d" :olp ("discrete math" "inbox"))
-          ("cs" :keys "c")
-          ("ad" :keys "a" :olp ("algorithms & datastructures" "inbox")))
-         )
+         (("cs" :keys "c" :file "cs/tasks.org")
+          ("la" :keys "l" :file "cs/la/tasks.org")
+          ("ep" :keys "e" :file "cs/ep/tasks.org")
+          ("dm" :keys "d" :file "cs/dm/tasks.org")
+          ("ad" :keys "a" :file "cs/ad/tasks.org")))
         ("personal" :keys "p" :file "personal/tasks.org")
         ("compass"  :keys "s" :file "compass/tasks.org")
         ("config"   :keys "o" :file "config/tasks.org")))
 
       ("event" :keys "e"
-       :headline "inbox"
+       :headline "events"
        :template
        ("* [#] %^{title} %^g"
         "%^t"
-        "LOCATION: %^{location}"
-        "PREP: %^{prep}"
+        ":PROPERTIES:"
+        ":location: %^{location}"
+        ":prep: %^{prep}"
+        ":END:"
         "%?")
        :children
-       (("cs"       :keys "c" :file "cs/events.org")
-        ("personal" :keys "p" :file "personal/events.org")))
+       (("cs"       :keys "c" :file "cs/tasks.org")
+        ("personal" :keys "p" :file "personal/tasks.org")))
 
       ("note" :keys "n"
+       :headline "inbox"
        :template
        ("* %^{title} %^g"
         ":PROPERTIES:"
@@ -994,14 +995,13 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
         "- "))
 
       ("literature" :keys "l"
-       :file (lambda () (read-file-name "file: " z-literature-notes-dir))
        :children
-       (("new-source" :keys "s"
+       (("new" :keys "n"
          :type plain
          :date (lambda () (format-time-string "%F"))
-         :author (lambda () user-full-name)
          :email (lambda () user-mail-address)
          :title (lambda () (setq _title (s-titleized-words (read-from-minibuffer "full title: ")))) ;; HACK :: store in var for later reuse of the input. (instead of reprompt)
+         :author (lambda () user-full-name)
          :get-title (lambda () _title)
          :book-author (lambda () (s-titleized-words (read-from-minibuffer "author: ")))
          :file
@@ -1028,20 +1028,23 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
           ":length: %^{pages/minutes}"
           ":END:"
           "%?"
-          "** Highlights"
+          "** Excerpts"
           "** Literature Notes"
           "** Transient Notes"
           "** Summary"))
 
-        ("highlight" :keys "h"
-         :headline "Highlights"
+        ("excerpt" :keys "e"
+         :file (lambda () (read-file-name "file: " z-literature-notes-dir))
+         :headline "Excerpts"
+         :content (lambda () (current-kill 0))
          :template
          ("* %^{title} [[p: %^{reference}]]"
           "#+begin_quote"
-          "%?"
+          "%{content}%?"
           "#+end_quote"))
 
         ("note" :keys "n"
+         :file (lambda () (read-file-name "file: " z-literature-notes-dir))
          :healine "Literature Notes"
          :template
          ("* %^{title} [[p: %^{reference}]]"

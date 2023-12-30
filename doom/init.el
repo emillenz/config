@@ -103,7 +103,7 @@
         +overlay)     ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
        (lookup              ; navigate your code and its documentation
-        +dictionary
+        +dictionary ;; incredibly handy when reading prose
         +docsets
         +offline)
        (lsp

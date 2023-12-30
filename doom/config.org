@@ -32,11 +32,9 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  user-mail-address "emillenz@protonmail.com")
 #+end_src
 
-* Theme
-#+begin_src emacs-lisp
-(setq
- doom-themes-enable-bold t
- doom-theme 'doom-solarized-dark)
+* Theme: Solarized
+#+begin_src emacs-lisp 
+(setq doom-theme 'doom-solarized-dark)
 
 (after! evil
   (setq
@@ -312,7 +310,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 *** Evil surround operator
 For adding delimiters around objects.
 Very useful and thus getting a first-level-mapping.
-Also works after entering change/delete operator state // EX: ~c'({~ => ~)~ -> ~~
+Also works after entering change/delete operator state // EX: ~c'(~ => ~)~ -> ~~
 (of you prefer ~'~ for marking, remap ~'~ -> ~`~)
 #+begin_src emacs-lisp
 (after! evil
@@ -976,13 +974,14 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
       ("daily-journal" :keys "j"
        :file (lambda () (concat z-journal-dir (format-time-string "%F") "-" "journal"  ".org"))
        :type plain
-       :title (lambda () (concat "Daily Note: " (format-time-string "%F")))
+       :title (lambda () (concat "Daily Journal: " (format-time-string "%A %e %B, %Y")))
        :author (lambda () user-full-name)
        :email (lambda () user-mail-address)
        :date (lambda () (format-time-string "%F"))
        :template
        ("#+title:  %{title}"
         "#+author: %{author}"
+        "#+email:  %{email}"
         "#+date:   %{date}"
         ""
         "* Goals"
@@ -1039,10 +1038,10 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
          :content (lambda () (current-kill 0))
          :template
          ("* %^{title}"
-          "[%^{pos-ref}]]"
-          "#+begin_quote"
-          "%{content}%?"
-          "#+end_quote"))
+          "#+begin_quote [[%^{pos-ref}]]"
+          "%{content}"
+          "#+end_quote"
+          "%?"))
 
         ("note" :keys "n"
          :file (lambda () (read-file-name "file: " z-literature-notes-dir))

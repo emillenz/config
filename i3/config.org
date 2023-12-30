@@ -1,7 +1,7 @@
 #+title:    I3-wm config
 #+author:   Emil Lenz
 #+email:    emillenz@protonmail.com
-#+date:     Thursday, June 15, 2023
+#+date:     2023-05-15
 #+property: header-args:conf :tangle config :comments link
 
 * About
@@ -65,10 +65,13 @@ set $mod Mod4
 
 ** Mouse
 - Middle mouse button for killing the Window (consistent with other gui Apps like webbrowser )
+- Unmap scrolling on titlebar (prevents pain of accidentally scrolling)
 #+begin_src conf
 floating_modifier $mod
 $map --release button2 kill
 $map --whole-window $mod+button2 floating toggle
+$map button4 nop
+$map button5 nop
 #+end_src
 
 ** System & Media controls
@@ -130,7 +133,6 @@ $map $mod+Return     move workspace to output next
 ** Workspaces Assignments
 - Statistically frequently used apps => assigned their own workspaces; all others => sent to the scratch workspace 1 (1-4 are for temporary assignments: scratchpads)
 - Upon opening new windows, automatically focus them (regardless of workspace. (sensible)
-- Abbrev for too long command
 #+begin_src conf
 set $ws_cmd    "cmd"
 set $ws_doc    "doc"

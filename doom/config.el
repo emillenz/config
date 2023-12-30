@@ -4,10 +4,8 @@
  user-mail-address "emillenz@protonmail.com")
 ;; User:1 ends here
 
-;; [[file:config.org::*Theme][Theme:1]]
-(setq
- doom-themes-enable-bold t
- doom-theme 'doom-solarized-dark)
+;; [[file:config.org::*Theme: Solarized][Theme: Solarized:1]]
+(setq doom-theme 'doom-solarized-dark)
 
 (after! evil
   (setq
@@ -18,7 +16,7 @@
    evil-motion-state-cursor   '("#cb4b16" box)
    evil-operator-state-cursor '("#cb4b16" box)
    evil-replace-state-cursor  '("#268BD2" hbar)))
-;; Theme:1 ends here
+;; Theme: Solarized:1 ends here
 
 ;; [[file:config.org::*Font][Font:1]]
 (setq
@@ -703,13 +701,14 @@ Jumps at tangled code from org src block."
       ("daily-journal" :keys "j"
        :file (lambda () (concat z-journal-dir (format-time-string "%F") "-" "journal"  ".org"))
        :type plain
-       :title (lambda () (concat "Daily Note: " (format-time-string "%F")))
+       :title (lambda () (concat "Daily Journal: " (format-time-string "%A %e %B, %Y")))
        :author (lambda () user-full-name)
        :email (lambda () user-mail-address)
        :date (lambda () (format-time-string "%F"))
        :template
        ("#+title:  %{title}"
         "#+author: %{author}"
+        "#+email:  %{email}"
         "#+date:   %{date}"
         ""
         "* Goals"
@@ -766,10 +765,10 @@ Jumps at tangled code from org src block."
          :content (lambda () (current-kill 0))
          :template
          ("* %^{title}"
-          "[%^{pos-ref}]]"
-          "#+begin_quote"
-          "%{content}%?"
-          "#+end_quote"))
+          "#+begin_quote [[%^{pos-ref}]]"
+          "%{content}"
+          "#+end_quote"
+          "%?"))
 
         ("note" :keys "n"
          :file (lambda () (read-file-name "file: " z-literature-notes-dir))

@@ -31,6 +31,8 @@ set $mod Mod4
 floating_modifier $mod
 $map --release button2 kill
 $map --whole-window $mod+button2 floating toggle
+$map button4 nop
+$map button5 nop
 # Mouse:1 ends here
 
 # [[file:config.org::*System & Media controls][System & Media controls:1]]

@@ -7,7 +7,7 @@
 * About
 - All the packages (and more) required for the full setup are found under:
   + [[setup][file:~/.config/setup.org]]
-- As always, i don't document what things do, use AI and read: [[https://i3wm.org/docs/userguide.html][I3-Userguide]].
+- As always, i never comment on what something does, instead only give the motivation/meaning behind it, use a chatbot and thuroughly read: [[https://i3wm.org/docs/userguide.html][I3-Userguide]].
 
 * Preface
  - Eliminate mental overhead and reduce computational steps to get to where you need to be.
@@ -239,7 +239,6 @@ mode "$find" {
 }
 #+end_src
 
-
 ** Leader
 - For all system related apps and tasks.
 - Using mod bindings inside the leadermode aswell, because this is faster than having to release the modkeyfirst and then press the normal keys (+less mental overhead, additionally this is no problem if you have an ergonomic keyboard).
@@ -293,7 +292,6 @@ mode "$menus" {
   $map Escape $esc
 }
 #+end_src
-
 
 * Theme
 - NOTE :: When changing colorscheme, change bg-color for i3-lock command too.

@@ -247,8 +247,8 @@
 ;; [[file:config.org::*Org mode][Org mode:1]]
 (after! evil-org
   (map! :map evil-org-mode-map
-        :nmv "]]"     #'org-forward-element
-        :nmv "[["     #'org-backward-element))
+        :nmv "C-j"     #'org-forward-element
+        :nmv "C-k"     #'org-backward-element))
 
 (after! org-mode
   (map! :localleader
@@ -396,16 +396,16 @@
  indent-tabs-mode nil)
 ;; Indentation: 2 spaces:1 ends here
 
-;; [[file:config.org::*Format buffer][Format buffer:1]]
+;; [[file:config.org::*Clean Whitespace][Clean Whitespace:1]]
 (defun z-clean-whitespace ()
-  "Deletes consecutive empty lines if > 1."
+  "Deletes consecutive empty lines if > 1, and strip trailing whitespace."
   (interactive)
   (delete-trailing-whitespace)
   (save-excursion
     (goto-char (point-min))
     (while (re-search-forward "\n\n+" nil t)
       (replace-match "\n\n"))))
-;; Format buffer:1 ends here
+;; Clean Whitespace:1 ends here
 
 ;; [[file:config.org::*\[begin\]][[begin]:1]]
 (after! org
@@ -663,8 +663,8 @@ Jumps at tangled code from org src block."
 
 ;; [[file:config.org::*Capture templates][Capture templates:1]]
 (defun z-doct-tmpl (type &rest proj)
-  "Generic templates for projects.
-PROJ :: project subprojects.."
+  "Generic doct-templates generator for projects.
+PROJ :: hierarchical procject structure => create filepath"
   (let ((headline "")
         (key "" )
         (template ""))
@@ -700,7 +700,7 @@ PROJ :: project subprojects.."
       :file ,(file-name-concat
               org-directory
               (apply #'file-name-concat proj)
-              (concat type "s.org"))
+              (format "%ss.org" type))
       :headline ,headline
       :type entry
       :prepend t
@@ -728,13 +728,13 @@ PROJ :: project subprojects.."
                               ,(z-doct-tmpl "note" proj sub))))))
 
     ("journal" :keys "j"
-     :file (lambda () (concat "~/Documents/journal/" (format-time-string "%F") "_journal.org"))
+     :file (lambda () (format "~/Documents/journal/%s_journal.org}" (format-time-string "%F")))
      :type plain
      :template
-     (,(concat "#+title:  Daily Journal: " (format-time-string "%A, %E %B %Y"))
-      ,(concat "#+author: " user-full-name)
-      ,(concat "#+email:  " user-mail-address)
-      ,(concat "#+date:   " (format-time-string "%F"))
+     (,(format "#+title:  Daily Journal: %s" (format-time-string "%A, %E %B %Y"))
+      ,(format "#+author: %s" user-full-name)
+      ,(format "#+email:  %s" user-mail-address)
+      ,(format "#+date:   %s" (format-time-string "%F"))
       ""
       "* Goals"
       "- %?"
@@ -745,7 +745,7 @@ PROJ :: project subprojects.."
       "* Reflection & Review"
       "- "))
 
-    ,(let* ((notes-dir (file-name-concat "~/Documents/literature/notes/")))
+    ,(let* ((notes-dir "~/Documents/literature/notes/"))
        `("literature" :keys "l"
          :children
          (("new" :keys "N"
@@ -760,9 +760,9 @@ PROJ :: project subprojects.."
               ".org"))
            :template
            ("#+title:  %{title}"
-            ,(concat "#+author: " user-full-name)
-            ,(concat "#+email:  %{email}" user-mail-address)
-            ,(concat "#+date:   " (format-time-string "%F"))
+            ,(format "#+author: %s" user-full-name)
+            ,(format "#+email:  %s" user-mail-address)
+            ,(format "#+date:   %s" (format-time-string "%F"))
             ""
             "* %{get-title}"
             ":PROPERTIES:"

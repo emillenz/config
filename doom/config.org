@@ -254,6 +254,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   - ~&~: Allows for same usage as normal: ~&~, but allows repeating any last command.
   - ~TAB~: folding | inspired bby org-modes folding (simple one-stop folding)
 - (Emacs already by default implements it that out of screen jumps center the screen which is sensible )
+- ~C-j~ & ~C-k~ mapped sensible and consistent with other modes (~info~, ~magit~..
 
 #+begin_src emacs-lisp
 (after! evil
@@ -338,8 +339,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+begin_src emacs-lisp
 (after! evil-org
   (map! :map evil-org-mode-map
-        :nmv "]]"     #'org-forward-element
-        :nmv "[["     #'org-backward-element))
+        :nmv "C-j"     #'org-forward-element
+        :nmv "C-k"     #'org-backward-element))
 
 (after! org-mode
   (map! :localleader
@@ -519,11 +520,11 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  indent-tabs-mode nil)
 #+end_src
 
-** Format buffer
+** Clean Whitespace
 - More than 1 empty line is inconsistent and makes things unneccessary hard to read.
 #+begin_src emacs-lisp
 (defun z-clean-whitespace ()
-  "Deletes consecutive empty lines if > 1."
+  "Deletes consecutive empty lines if > 1, and strip trailing whitespace."
   (interactive)
   (delete-trailing-whitespace)
   (save-excursion
@@ -940,8 +941,8 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 - Note :: this is a bit of an unorthodox solution for org capture templates, but in order to be consistent the tree structure is hierarchical by project and then follow the generic templates.
 #+begin_src emacs-lisp
 (defun z-doct-tmpl (type &rest proj)
-  "Generic templates for projects.
-PROJ :: project subprojects.."
+  "Generic doct-templates generator for projects.
+PROJ :: hierarchical procject structure => create filepath"
   (let ((headline "")
         (key "" )
         (template ""))
@@ -977,7 +978,7 @@ PROJ :: project subprojects.."
       :file ,(file-name-concat
               org-directory
               (apply #'file-name-concat proj)
-              (concat type "s.org"))
+              (format "%ss.org" type))
       :headline ,headline
       :type entry
       :prepend t
@@ -1005,13 +1006,13 @@ PROJ :: project subprojects.."
                               ,(z-doct-tmpl "note" proj sub))))))
 
     ("journal" :keys "j"
-     :file (lambda () (concat "~/Documents/journal/" (format-time-string "%F") "_journal.org"))
+     :file (lambda () (format "~/Documents/journal/%s_journal.org}" (format-time-string "%F")))
      :type plain
      :template
-     (,(concat "#+title:  Daily Journal: " (format-time-string "%A, %E %B %Y"))
-      ,(concat "#+author: " user-full-name)
-      ,(concat "#+email:  " user-mail-address)
-      ,(concat "#+date:   " (format-time-string "%F"))
+     (,(format "#+title:  Daily Journal: %s" (format-time-string "%A, %E %B %Y"))
+      ,(format "#+author: %s" user-full-name)
+      ,(format "#+email:  %s" user-mail-address)
+      ,(format "#+date:   %s" (format-time-string "%F"))
       ""
       "* Goals"
       "- %?"
@@ -1022,7 +1023,7 @@ PROJ :: project subprojects.."
       "* Reflection & Review"
       "- "))
 
-    ,(let* ((notes-dir (file-name-concat "~/Documents/literature/notes/")))
+    ,(let* ((notes-dir "~/Documents/literature/notes/"))
        `("literature" :keys "l"
          :children
          (("new" :keys "N"
@@ -1037,9 +1038,9 @@ PROJ :: project subprojects.."
               ".org"))
            :template
            ("#+title:  %{title}"
-            ,(concat "#+author: " user-full-name)
-            ,(concat "#+email:  %{email}" user-mail-address)
-            ,(concat "#+date:   " (format-time-string "%F"))
+            ,(format "#+author: %s" user-full-name)
+            ,(format "#+email:  %s" user-mail-address)
+            ,(format "#+date:   %s" (format-time-string "%F"))
             ""
             "* %{get-title}"
             ":PROPERTIES:"

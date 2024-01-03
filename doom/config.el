@@ -790,6 +790,7 @@ PROJ :: project subprojects.."
           ("excerpt" :keys "e"
            :file (lambda () (read-file-name "file: " ,notes-dir))
            :headline "Excerpts"
+           :type entry
            :content (lambda () (current-kill 0))
            :template
            ("* %^{title}"
@@ -801,6 +802,7 @@ PROJ :: project subprojects.."
           ("note" :keys "n"
            :file (lambda () (read-file-name "file: " ,notes-dir))
            :headline "Literature Notes"
+           :type entry
            :template
            ("* %^{title} [[p: %^{reference}]]"
             "%?"))))))))

@@ -194,16 +194,13 @@
 
    :nm   "TAB" #'+fold/toggle
 
-   :nmv "C-j" #'drag-stuff-down
-   :nmv "C-k" #'drag-stuff-up
+   :nmv "C-j" #'evil-forward-section-begin
+   :nmv "C-k" #'evil-backward-section-begin
 
    :nmv  "U"   #'evil-redo
    :nmv  "Q"   #'evil-execute-last-recorded-macro
    :nmv  "&"   #'evil-ex-repeat
    :nmv  "M"   (cmd! (evil-goto-mark-line ?m))
-
-   ;; :nmv  "]e"  #'flycheck-next-error
-   ;; :nmv  "[e"  #'flycheck-previous-error
 
    :nmv  "("   #'evil-cp-backward-up-sexp
    :nmv  ")"   #'evil-cp-up-sexp
@@ -250,14 +247,8 @@
 ;; [[file:config.org::*Org mode][Org mode:1]]
 (after! evil-org
   (map! :map evil-org-mode-map
-        :nmv "]]"     #'org-forward-heading-same-level
-        :nmv "[["     #'org-backward-heading-same-level
-        :inmv "S-RET" #'org-meta-return
-        :inmv "C-RET" #'+org/insert-item-below
-        :inmv "C-j"   #'org-metadown
-        :inmv "C-k"   #'org-metaup
-        :inmv "C-h"   #'org-metaleft
-        :inmv "C-l"   #'org-metaright))
+        :nmv "]]"     #'org-forward-element
+        :nmv "[["     #'org-backward-element))
 
 (after! org-mode
   (map! :localleader
@@ -671,7 +662,7 @@ Jumps at tangled code from org src block."
 ;; Jump to src file:1 ends here
 
 ;; [[file:config.org::*Capture templates][Capture templates:1]]
-(defun z-doct-templates (type &rest proj)
+(defun z-doct-tmpl (type &rest proj)
   "Generic templates for projects.
 PROJ :: project subprojects.."
   (let ((headline "")
@@ -703,6 +694,7 @@ PROJ :: project subprojects.."
                   ":END:"
                   "%?")
        headline "Inbox")))
+
     `(,type
       :keys ,key
       :file ,(file-name-concat
@@ -722,9 +714,9 @@ PROJ :: project subprojects.."
                                    ("compass" "o")
                                    ("cs" "c"))
                collect `(,proj :keys ,key :children
-                         (,(z-doct-templates "task" proj)
-                          ,(z-doct-templates "event" proj)
-                          ,(z-doct-templates "note" proj))))
+                         (,(z-doct-tmpl "task" proj)
+                          ,(z-doct-tmpl "event" proj)
+                          ,(z-doct-tmpl "note" proj))))
     ,(let ((proj "cs"))
        `(,proj :keys "c" :children
          ,(cl-loop for (sub key) in '(("la" "l")
@@ -732,8 +724,8 @@ PROJ :: project subprojects.."
                                       ("ep" "e")
                                       ("ad" "a"))
                    collect `(,sub :keys ,key :children
-                             (,(z-doct-templates "task" proj sub)
-                              ,(z-doct-templates "note" proj sub))))))
+                             (,(z-doct-tmpl "task" proj sub)
+                              ,(z-doct-tmpl "note" proj sub))))))
 
     ("journal" :keys "j"
      :file (lambda () (concat "~/Documents/journal/" (format-time-string "%F") "_journal.org"))

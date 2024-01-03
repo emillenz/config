@@ -40,39 +40,9 @@
  doom-modeline-height 15
  doom-modeline-bar-width 5
  doom-modeline-enable-word-count t
- doom-modeline-persp-name t)
+ doom-modeline-persp-name t
+ doom-modeline-major-mode-icon t)
 ;; Modeline:1 ends here
-
-;; [[file:config.org::*Misc Options][Misc Options:1]]
-(setq
- bookmark-default-file "~/.config/doom/bookmarks"
- delete-by-moving-to-trash t
- truncate-string-ellipsis "…"
- auto-save-default t
- confirm-kill-emacs nil
- undo-limit 80000000
- history-length 1000
- consult-async-min-input 0
- which-key-idle-delay 1
- which-key-allow-multiple-replacements t
- hscroll-margin 0
- scroll-margin 0
- enable-recursive-minibuffers nil
- highlight-indent-guides-responsive  t
- display-line-numbers-type 'visual)
-
-(setq-default major-mode 'org-mode)
-
-(save-place-mode 1)
-(+global-word-wrap-mode 1)
-(global-subword-mode 1)
-
-(tab-bar-mode 1)
-(setq tab-bar-tab-hints t
-      tab-bar-new-button-show nil
-      tab-bar-new-tab-to 'rightmost
-      tab-bar-close-button-show nil)
-;; Misc Options:1 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:1]]
 (setq
@@ -86,6 +56,7 @@
   (setq org-src-window-setup 'current-window)
   (set-popup-rule! "^\\*Org Src" :ignore t)) ;; HACK :: fullscreen window
 
+;; HACK :: will only take effect after the config has been reloaded (weird..)
 (setq-default
  +popup-defaults
  '(:side right
@@ -113,6 +84,41 @@
 (setq-default fill-column 100)
 ;; Window layout & behavior:2 ends here
 
+;; [[file:config.org::*Misc Options][Misc Options:1]]
+(setq
+ bookmark-default-file "~/.config/doom/bookmarks"
+ delete-by-moving-to-trash t
+ truncate-string-ellipsis "…"
+ auto-save-default t
+ confirm-kill-emacs nil
+ undo-limit 80000000
+ history-length 1000
+ consult-async-min-input 0
+ which-key-idle-delay 1
+ which-key-allow-multiple-replacements t
+ hscroll-margin 0
+ scroll-margin 0
+ enable-recursive-minibuffers nil
+ highlight-indent-guides-responsive  t
+ display-line-numbers-type 'visual
+ shell-command-prompt-show-cwd t)
+
+(setq-default major-mode 'org-mode)
+
+(save-place-mode 1)
+(+global-word-wrap-mode 1)
+(global-subword-mode 1)
+
+(tab-bar-mode 1)
+(setq tab-bar-tab-hints t
+      tab-bar-new-button-show nil
+      tab-bar-new-tab-to 'rightmost
+      tab-bar-close-button-show nil)
+
+(setq calc-angle-mode 'rad
+      calc-symbolic-mode t)
+;; Misc Options:1 ends here
+
 ;; [[file:config.org::*Leader][Leader:1]]
 (setq
  doom-leader-key "SPC"
@@ -125,7 +131,12 @@
                "V" #'visual-fill-column-mode
                "C" #'company-mode)
       (:prefix "c"
-               "w" #'z-clean-whitespace))
+               "w" #'z-clean-whitespace)
+      (:prefix "s"
+               (:prefix-map ("t" . "dictionary")
+               "d" #'+lookup/dictionary-definition
+               "s" #'+lookup/synonyms
+               "t" #'dictionary-search)))
 
 (after! evil-org
   (map! :localleader
@@ -191,8 +202,8 @@
    :nmv  "&"   #'evil-ex-repeat
    :nmv  "M"   (cmd! (evil-goto-mark-line ?m))
 
-   :nmv  "]e"  #'flycheck-next-error
-   :nmv  "[e"  #'flycheck-previous-error
+   ;; :nmv  "]e"  #'flycheck-next-error
+   ;; :nmv  "[e"  #'flycheck-previous-error
 
    :nmv  "("   #'evil-cp-backward-up-sexp
    :nmv  ")"   #'evil-cp-up-sexp
@@ -284,7 +295,7 @@
       :nmi "M-g" #'consult-dir)
 ;; Minibuffer:1 ends here
 
-;; [[file:config.org::*Evil mode][Evil mode:1]]
+;; [[file:config.org::*Editor][Editor:1]]
 (after! evil
   (evil-surround-mode 1)
 
@@ -311,13 +322,13 @@
              +lookup/references
              +lookup/implementations))
     (evil-add-command-properties cmd :jump t)))
-;; Evil mode:1 ends here
+;; Editor:1 ends here
 
 ;; [[file:config.org::*Lsp & completion][Lsp & completion:1]]
 (after! company
   (setq
    company-minimum-prefix-length 1
-   company-idle-delay 0.1 ;; NOTE :: don't set to 0
+   company-idle-delay 0.1 ;; NOTE :: setting to 0 => huge lags
    company-show-quick-access t
    company-global-modes
    '(not
@@ -332,7 +343,7 @@
 (setq yas-triggers-in-field t)
 ;; Templates & snippets:1 ends here
 
-;; [[file:config.org::*Dired Mode][Dired Mode:1]]
+;; [[file:config.org::*Dired][Dired:1]]
 (after! dired
   (setq dired-omit-files
         (rx (or
@@ -362,16 +373,48 @@
    dired-recursive-deletes 'top
    global-auto-revert-non-file-buffers t
    dired-kill-when-opening-new-dired-buffer t))
-;; Dired Mode:1 ends here
+;; Dired:1 ends here
 
 ;; [[file:config.org::*Archive file][Archive file:1]]
+(defvar z-archive-dir "~/Archive"
+  "User's archive (for fieles).")
 (defun z-dired-archive ()
   (interactive)
   (dolist (file (dired-get-marked-files))
     (let* ((file (dired-get-filename))
-           (dest (concat "~/Archive/" (file-relative-name file "~/"))))
+           (dest (file-name-concat z-archive-dir (file-relative-name file "~/"))))
       (rename-file file dest 1)))) ;; NOTE :: "1": propt before overwrite
 ;; Archive file:1 ends here
+
+;; [[file:config.org::*Programming][Programming:1]]
+(add-hook! 'prog-mode-hook
+           #'rainbow-mode
+           #'rainbow-delimiters-mode)
+;; Programming:1 ends here
+
+;; [[file:config.org::*Indentation: 2 spaces][Indentation: 2 spaces:1]]
+(advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
+
+(setq
+ tab-always-indent t
+ org-indent-indentation-per-level 2
+ evil-shift-width 2
+ standard-indent 2
+ tab-width 2
+ evil-indent-convert-tabs t
+ indent-tabs-mode nil)
+;; Indentation: 2 spaces:1 ends here
+
+;; [[file:config.org::*Format buffer][Format buffer:1]]
+(defun z-clean-whitespace ()
+  "Deletes consecutive empty lines if > 1."
+  (interactive)
+  (delete-trailing-whitespace)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "\n\n+" nil t)
+      (replace-match "\n\n"))))
+;; Format buffer:1 ends here
 
 ;; [[file:config.org::*\[begin\]][[begin]:1]]
 (after! org
@@ -396,7 +439,6 @@
  org-fold-catch-invisible-edits 'smart
  org-export-headline-levels 5
  ;; org-refile-use-outline-path 'file ;; [&]
- ;; org-insert-heading-respect-content t ;; [&]
  org-refile-allow-creating-parent-nodes 'confirm
  org-use-sub-superscripts '{}
  org-fontify-quote-and-verse-blocks t
@@ -629,200 +671,152 @@ Jumps at tangled code from org src block."
 ;; Jump to src file:1 ends here
 
 ;; [[file:config.org::*Capture templates][Capture templates:1]]
-(defvar z-literature-notes-dir "~/Documents/literature/notes/"
-  "Directory for note-files associated with the literature-information-system.")
+(defun z-doct-templates (type &rest proj)
+  "Generic templates for projects.
+PROJ :: project subprojects.."
+  (let ((headline "")
+        (key "" )
+        (template ""))
+    (cond
+     ((string-equal type "task")
+      (setq
+       key "t"
+       template '("* [ ] %?")
+       headline "Inbox"))
+     ((string-equal type "event")
+      (setq
+       key "e"
+       template '("* [#] %^{title} %^g"
+                  "%^t"
+                  ":PROPERTIES:"
+                  ":location: %^{location}"
+                  ":prep: %^{prep}"
+                  ":END:"
+                  "%?")
+       headline "Events"))
+     ((string-equal type "note")
+      (setq
+       key "n"
+       template '("* %^{title} %^g"
+                  ":PROPERTIES:"
+                  ":created: %U"
+                  ":END:"
+                  "%?")
+       headline "Inbox")))
+    `(,type
+      :keys ,key
+      :file ,(file-name-concat
+              org-directory
+              (apply #'file-name-concat proj)
+              (concat type "s.org"))
+      :headline ,headline
+      :type entry
+      :prepend t
+      :template ,template)))
 
-(defvar z-literature-source-dir "~/Documents/literature/source/"
-  "Directory for source-files associated with the literature-information-system.")
-
-(defvar z-journal-dir "~/Documents/journal/"
-  "Directory for journal-files.")
-
-;; NOTE :: filepaths are relative to org-dir
 (setq
  org-capture-templates
  (doct
-  '((:group "default-opts"
-     :type entry
-     :prepend t
-     :clock-keep t
+  `(,@(cl-loop for (proj key) in '(("personal" "p")
+                                   ("config" "f")
+                                   ("compass" "o")
+                                   ("cs" "c"))
+               collect `(,proj :keys ,key :children
+                         (,(z-doct-templates "task" proj)
+                          ,(z-doct-templates "event" proj)
+                          ,(z-doct-templates "note" proj))))
+    ,(let ((proj "cs"))
+       `(,proj :keys "c" :children
+         ,(cl-loop for (sub key) in '(("la" "l")
+                                      ("dm" "d")
+                                      ("ep" "e")
+                                      ("ad" "a"))
+                   collect `(,sub :keys ,key :children
+                             (,(z-doct-templates "task" proj sub)
+                              ,(z-doct-templates "note" proj sub))))))
 
-     :children
-     (("task" :keys "t"
-       :headline "inbox"
-       :template
-       ("* [ ] %^{title} %^g"
-        "%?")
-       :children
-       (("cs"   :keys "c"
+    ("journal" :keys "j"
+     :file (lambda () (concat "~/Documents/journal/" (format-time-string "%F") "_journal.org"))
+     :type plain
+     :template
+     (,(concat "#+title:  Daily Journal: " (format-time-string "%A, %E %B %Y"))
+      ,(concat "#+author: " user-full-name)
+      ,(concat "#+email:  " user-mail-address)
+      ,(concat "#+date:   " (format-time-string "%F"))
+      ""
+      "* Goals"
+      "- %?"
+      "* Tasks"
+      "** [ ] "
+      "* Gratitude"
+      "- "
+      "* Reflection & Review"
+      "- "))
+
+    ,(let* ((notes-dir (file-name-concat "~/Documents/literature/notes/")))
+       `("literature" :keys "l"
          :children
-         (("cs" :keys "c" :file "cs/tasks.org")
-          ("la" :keys "l" :file "cs/la/tasks.org")
-          ("ep" :keys "e" :file "cs/ep/tasks.org")
-          ("dm" :keys "d" :file "cs/dm/tasks.org")
-          ("ad" :keys "a" :file "cs/ad/tasks.org")))
-        ("personal" :keys "p" :file "personal/tasks.org")
-        ("compass"  :keys "s" :file "compass/tasks.org")
-        ("config"   :keys "o" :file "config/tasks.org")))
+         (("new" :keys "N"
+           :type plain
+           :title (lambda () (setq doct--title (s-titleized-words (read-from-minibuffer "full title: ")))) ;; HACK :: store in var for later reuse of the input. (instead of reprompt)
+           :get-title (lambda () doct--title)
+           :file
+           (lambda ()
+             (concat
+              ,notes-dir
+              (read-from-minibuffer "filename: " (downcase (replace-regexp-in-string " " "-" doct--title)))
+              ".org"))
+           :template
+           ("#+title:  %{title}"
+            ,(concat "#+author: " user-full-name)
+            ,(concat "#+email:  %{email}" user-mail-address)
+            ,(concat "#+date:   " (format-time-string "%F"))
+            ""
+            "* %{get-title}"
+            ":PROPERTIES:"
+            ":title:  %{get-title}"
+            ":author: %^{book-author}"
+            ":year:   %^{year of publication}"
+            ":tags:   %^{tags}"
+            ":type:   %^{type}"
+            ":pages: %^{pages}"
+            ":END:"
+            "%?"
+            "** Excerpts"
+            "** Literature Notes"
+            "** Transient Notes"
+            "** Summary"))
 
-      ("event" :keys "e"
-       :headline "events"
-       :template
-       ("* [#] %^{title} %^g"
-        "%^t"
-        ":PROPERTIES:"
-        ":location: %^{location}"
-        ":prep: %^{prep}"
-        ":END:"
-        "%?")
-       :children
-       (("cs"       :keys "c" :file "cs/tasks.org")
-        ("personal" :keys "p" :file "personal/tasks.org")))
+          ("excerpt" :keys "e"
+           :file (lambda () (read-file-name "file: " ,notes-dir))
+           :headline "Excerpts"
+           :content (lambda () (current-kill 0))
+           :template
+           ("* %^{title}"
+            "#+begin_quote [[p: %^{pos-ref}]]"
+            "%{content}"
+            "#+end_quote"
+            "%?"))
 
-      ("note" :keys "n"
-       :headline "inbox"
-       :template
-       ("* %^{title} %^g"
-        ":PROPERTIES:"
-        ":created: %U"
-        ":END:"
-        "%?")
-       :children
-       (("cs"       :keys "c"
-         :children
-         (("la" :keys "l" :file "cs/la/notes.org")
-          ("ep" :keys "e" :file "cs/ep/notes.org")
-          ("dm" :keys "d" :file "cs/dm/notes.org")
-          ("ad" :keys "a" :file "cs/ad/notes.org")))
-        ("personal" :keys "p" :file "personal/notes.org")
-        ("compass"  :keys "s" :file "compass/notes.org")
-        ("config"   :keys "o" :file "config/notes.org")))
-
-      ("daily-journal" :keys "j"
-       :file (lambda () (concat z-journal-dir (format-time-string "%F") "-" "journal"  ".org"))
-       :type plain
-       :title (lambda () (concat "Daily Journal: " (format-time-string "%A %e %B, %Y")))
-       :author (lambda () user-full-name)
-       :email (lambda () user-mail-address)
-       :date (lambda () (format-time-string "%F"))
-       :template
-       ("#+title:  %{title}"
-        "#+author: %{author}"
-        "#+email:  %{email}"
-        "#+date:   %{date}"
-        ""
-        "* Goals"
-        "- %?"
-        "* Tasks"
-        "** [ ] "
-        "* Gratitude"
-        "- "
-        "* Reflection & Review"
-        "- "))
-
-      ("literature" :keys "l"
-       :children
-       (("new" :keys "n"
-         :type plain
-         :date (lambda () (format-time-string "%F"))
-         :email (lambda () user-mail-address)
-         :title (lambda () (setq _title (s-titleized-words (read-from-minibuffer "full title: ")))) ;; HACK :: store in var for later reuse of the input. (instead of reprompt)
-         :author (lambda () user-full-name)
-         :get-title (lambda () _title)
-         :book-author (lambda () (s-titleized-words (read-from-minibuffer "author: ")))
-         :file
-         (lambda ()
-           (concat
-            z-literature-notes-dir
-            (replace-regexp-in-string
-             " " "-"
-             (downcase (read-from-minibuffer "filename: " _title)))
-            ".org"))
-         :template
-         ("#+title:  %{title}"
-          "#+author: %{author}"
-          "#+email:  %{email}"
-          "#+date:   %{date}"
-          ""
-          "* %{get-title}"
-          ":PROPERTIES:"
-          ":title:  %{get-title}"
-          ":author: %{book-author}"
-          ":year:   %^{year of publication}"
-          ":tags:   %^{tags}"
-          ":type:   %^{type}"
-          ":pages: %^{pages}"
-          ":END:"
-          "%?"
-          "** Excerpts"
-          "** Literature Notes"
-          "** Transient Notes"
-          "** Summary"))
-
-        ("excerpt" :keys "e"
-         :file (lambda () (read-file-name "file: " z-literature-notes-dir))
-         :headline "Excerpts"
-         :content (lambda () (current-kill 0))
-         :template
-         ("* %^{title}"
-          "#+begin_quote [[%^{pos-ref}]]"
-          "%{content}"
-          "#+end_quote"
-          "%?"))
-
-        ("note" :keys "n"
-         :file (lambda () (read-file-name "file: " z-literature-notes-dir))
-         :healine "Literature Notes"
-         :template
-         ("* %^{title} [[p: %^{reference}]]"
-          "%?")))))))))
+          ("note" :keys "n"
+           :file (lambda () (read-file-name "file: " ,notes-dir))
+           :headline "Literature Notes"
+           :template
+           ("* %^{title} [[p: %^{reference}]]"
+            "%?"))))))))
 ;; Capture templates:1 ends here
 
 ;; [[file:config.org::*\[End\]][[End]:1]]
 )
 ;; [End]:1 ends here
 
-;; [[file:config.org::*Programming mode][Programming mode:1]]
-(add-hook! 'prog-mode-hook
-           #'rainbow-mode
-           #'rainbow-delimiters-mode)
-;; Programming mode:1 ends here
-
-;; [[file:config.org::*Indentation: 2 spaces][Indentation: 2 spaces:1]]
-(advice-add #'doom-highlight-non-default-indentation-h :override #'ignore) ;; turn off whitespace highlighting
-(setq
- tab-always-indent t
- org-indent-indentation-per-level 2
- evil-shift-width 2
- standard-indent 2
- tab-width 2
- evil-indent-convert-tabs t
- indent-tabs-mode nil)
-;; Indentation: 2 spaces:1 ends here
-
-;; [[file:config.org::*Format buffer][Format buffer:1]]
-(defun z-clean-whitespace ()
-  "Deletes consecutive empty lines if > 1."
-  (interactive)
-  (delete-trailing-whitespace)
-  (save-excursion
-    (goto-char (point-min))
-    (while (re-search-forward "\n\n+" nil t)
-      (replace-match "\n\n"))))
-;; Format buffer:1 ends here
-
-;; [[file:config.org::*Command-line: nushell][Command-line: nushell:1]]
+;; [[file:config.org::*Nushell][Nushell:1]]
 (load! "user/nushell-mode.el")
-;; Command-line: nushell:1 ends here
+;; Nushell:1 ends here
 
-;; [[file:config.org::*Command-line: nushell][Command-line: nushell:2]]
-(setq shell-command-prompt-show-cwd t)
-;; Command-line: nushell:2 ends here
-
-;; [[file:config.org::*Calc (RPN)][Calc (RPN):1]]
-(setq calc-angle-mode 'rad  ; radians are rad
-      calc-symbolic-mode t)
-;; Calc (RPN):1 ends here
+;; [[file:config.org::*Elisp][Elisp:1]]
+(add-hook! 'emacs-lisp-mode-hook (highlight-indent-guides-mode 0))
+;; Elisp:1 ends here
 
 ;; [[file:config.org::*Latex][Latex:1]]
 (setq +latex-viewers '(pdf-tools zathura))

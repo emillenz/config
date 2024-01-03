@@ -55,7 +55,7 @@
        :editor
        (evil
         +everywhere); come to the dark side, we have cookies
-       file-templates    ; auto-snippets for empty files
+       ;; file-templates    ; auto-snippets for empty files - TODO:: do myself
        fold              ; (nigh) universal code folding
        (format
         +onsave)  ; automated prettiness
@@ -72,7 +72,7 @@
        (dired             ; making dired pretty [functional]
         +icons)
        electric          ; smarter, keyword-based electric-indent
-       (ibuffer +icons) ; interactive buffer management
+       ;; (ibuffer +icons) ; interactive buffer management
        (undo +tree)       ; persistent, smarter undo for your inevitable mistakes
        vc                ; version-control and Emacs, sitting in a tree
 

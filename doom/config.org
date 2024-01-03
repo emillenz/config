@@ -9,14 +9,10 @@ Professional, minimalist tools like Emacs have a high learning curve and require
 
 The saying, "give 'em enough rope, and they'll likely hang themselves," holds true. Emacs provides the rope if you are not careful.
 
-- This config has some settings that will only go into effect after the config has been reloaded. Do this using ~doom/reload~ after you connect the first time to the emacs daemon.
-- If getting an error using ~doom/reload~, just run ~doom sync~ from terminal.
-- After installing use the ~doom~ command to fix errors, update, etc...
-- It is advised to only copy snippets of this config that are understood, and to build from there.
+- It is advised to only copy snippets of this config that are understood.
 - if you decide to use parts (or the entire config) *ensure* that you have *at least* every doom/module and package installed / enabled as i do, otherwise emacs will throw errors left and right.
   - modules: [[file:init.el]]
   - packages:[[file:packages.el]]
-- Use the same completer for all menus: consult+vertico // fastest, and most consistent
 
 ** On comments
 - Valid comments should describe the why, the philosophy, the principle, the reason, and never explain what something does.
@@ -24,6 +20,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - This is a principle which is elegant, extensible, structured for the following reasons:
   - If code is changed, comment isn't updated automatically => can & will be forgotter (redundant/confusing comments)
   - Code is data (rewrite code flow such that it is more understandeable)
+[[file:~/Documents/compass/software/coding_principles.org][Coding Principles]]
 
 * User
 #+begin_src emacs-lisp
@@ -32,7 +29,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  user-mail-address "emillenz@protonmail.com")
 #+end_src
 
-* Theme: Solarized
+* UI
+** Theme: Solarized
 #+begin_src emacs-lisp 
 (setq doom-theme 'doom-solarized-dark)
 
@@ -47,7 +45,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
    evil-replace-state-cursor  '("#268BD2" hbar)))
 #+end_src
 
-* Font
+** Font
 #+begin_src emacs-lisp
 (setq
  doom-font-increment 1
@@ -63,8 +61,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   '(font-lock-comment-face :slant italic :weight normal))
 #+end_src
 
-* Modeline
-- No functionality that is already handled by my os's statusbar. (Time and battery)
+** Modeline
+- No overlapping funcionality (time & date).
 #+begin_src emacs-lisp
 (setq
  display-battery-mode nil
@@ -72,44 +70,12 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  doom-modeline-height 15
  doom-modeline-bar-width 5
  doom-modeline-enable-word-count t
- doom-modeline-persp-name t)
+ doom-modeline-persp-name t
+ doom-modeline-major-mode-icon t)
 #+end_src
 
-* Misc Options
-- Save bookmarks in config dir => do not loose on reinstall
-#+begin_src emacs-lisp
-(setq
- bookmark-default-file "~/.config/doom/bookmarks"
- delete-by-moving-to-trash t
- truncate-string-ellipsis "…"
- auto-save-default t
- confirm-kill-emacs nil
- undo-limit 80000000
- history-length 1000
- consult-async-min-input 0
- which-key-idle-delay 1
- which-key-allow-multiple-replacements t
- hscroll-margin 0
- scroll-margin 0
- enable-recursive-minibuffers nil
- highlight-indent-guides-responsive  t
- display-line-numbers-type 'visual)
-
-(setq-default major-mode 'org-mode)
-
-(save-place-mode 1)
-(+global-word-wrap-mode 1)
-(global-subword-mode 1)
-
-(tab-bar-mode 1)
-(setq tab-bar-tab-hints t
-      tab-bar-new-button-show nil
-      tab-bar-new-tab-to 'rightmost
-      tab-bar-close-button-show nil)
-#+end_src
-
-* Window layout & behavior
-- Constrain popup buffers (inevitable) to consistently, and always ~vsplit~, and have a reasonable size.
+** Window layout & behavior
+- vsplit :: Constrain popup buffers (inevitable) to consistently, and always ~vsplit~, and have a reasonable size.
   - Never mix vertical with horizontal splitting => creates mental overhead navigating the windows (+requires another set of totally unneccessary keybindings)
 #+begin_src emacs-lisp
 (setq
@@ -123,6 +89,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   (setq org-src-window-setup 'current-window)
   (set-popup-rule! "^\\*Org Src" :ignore t)) ;; HACK :: fullscreen window
 
+;; HACK :: will only take effect after the config has been reloaded (weird..)
 (setq-default
  +popup-defaults
  '(:side right
@@ -132,14 +99,14 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
    :modeline t))
 #+end_src
 
-- Centered windows for better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).
-- Narrowed fov yields improved readability & focus of textparagraphs, especially if you stare at the computer for 8h+ a day.
-- the data is compact and coherent
-- allows the user to keep the entire window in the fov
-- Vertical navigation is easier than horizontal
-- Reading code/data/formulas is easiest sequentially = top to bottom // vs horizontally
-  - Take math for example, its easier to read equations if they are on newline
-  - Coding: typically one statement per line
+- Centered windows :: better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).
+  - Narrowed FOV yields improved readability & focus of textparagraphs, especially if you stare at the computer for 8h+ a day.
+  - compact and coherent data
+  - allows the user to keep the entire window in the fov
+  - Vertical navigation is easier than horizontal
+  - Reading code/data/formulas is easiest sequentially = top to bottom // vs horizontally
+    - Take math for example, its easier to read equations if they are on newline
+    - Coding: typically one statement per line
 #+begin_src emacs-lisp
 ;; NOTE :: not prog mode => breaks with flychecking
 (add-hook!
@@ -156,6 +123,43 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  visual-fill-column-center-text t
  visual-fill-column-width 100)
 (setq-default fill-column 100)
+#+end_src
+
+* Misc Options
+- Save bookmarks in config dir => preserve between reinstalls
+#+begin_src emacs-lisp
+(setq
+ bookmark-default-file "~/.config/doom/bookmarks"
+ delete-by-moving-to-trash t
+ truncate-string-ellipsis "…"
+ auto-save-default t
+ confirm-kill-emacs nil
+ undo-limit 80000000
+ history-length 1000
+ consult-async-min-input 0
+ which-key-idle-delay 1
+ which-key-allow-multiple-replacements t
+ hscroll-margin 0
+ scroll-margin 0
+ enable-recursive-minibuffers nil
+ highlight-indent-guides-responsive  t
+ display-line-numbers-type 'visual
+ shell-command-prompt-show-cwd t)
+
+(setq-default major-mode 'org-mode)
+
+(save-place-mode 1)
+(+global-word-wrap-mode 1)
+(global-subword-mode 1)
+
+(tab-bar-mode 1)
+(setq tab-bar-tab-hints t
+      tab-bar-new-button-show nil
+      tab-bar-new-tab-to 'rightmost
+      tab-bar-close-button-show nil)
+
+(setq calc-angle-mode 'rad
+      calc-symbolic-mode t)
 #+end_src
 
 * Keybindings
@@ -175,7 +179,12 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
                "V" #'visual-fill-column-mode
                "C" #'company-mode)
       (:prefix "c"
-               "w" #'z-clean-whitespace))
+               "w" #'z-clean-whitespace)
+      (:prefix "s"
+               (:prefix-map ("t" . "dictionary")
+               "d" #'+lookup/dictionary-definition
+               "s" #'+lookup/synonyms
+               "t" #'dictionary-search)))
 
 (after! evil-org
   (map! :localleader
@@ -190,14 +199,14 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 ** Global navigation scheme
 - Follows the os-consistent keymap, using alt for the only & essential navigational commands (there may better ones for what you want to achive => inside leadermode)
-- When you are working in a project with multiple different files, open each file in a new tab. This-way you can hotkey to that exact file instantly.
-  - Only do this for buffers you know you want to come back to later. | doesnt become cluttered with all other buffers
-- They are the most efficient way of navigating between multiple different files/buffer at the same time (most efficient way i have found to introduce little overhead when context-switching and remaining distractionfree)
-- Never create splits for buffers, prefer the full screen, full focus, no distractions - workflow. (no multitasking, no clutter)
+- Projects :: When you are working in a project with multiple different files, open each file in a new tab. This-way you can hotkey to that exact file instantly.
+  - Only do this for buffers you know you want to come back to later.  (doesn't become cluttered with all other buffers)
+- efficiency :: They are the most efficient way of navigating between multiple different files/buffer at the same time (most efficient way i have found to introduce little overhead when context-switching and remaining distractionfree)
+- splits :: Never create splits for buffers, prefer the full screen, full focus, no distractions - workflow. (no multitasking, no clutter)
   - When emacs creates splits we must handle them (includes minimal bindings for switching and closing splits)
-- We never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...)
-  - Instead if needed we can execute oneliners with ~(shell-command)~
-- kill buffer's on window closing -> don't accumulate buffers in tha background.
+- terminal :: We never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...)
+  - Instead if needed we can execute oneliners with ~(async-shell-command)~
+- buffers :: kill buffers when done (don't accumulate buffers in tha background)
 #+begin_src emacs-lisp
 (after! doom
   (map! :map  'override
@@ -267,8 +276,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
    :nmv  "&"   #'evil-ex-repeat
    :nmv  "M"   (cmd! (evil-goto-mark-line ?m))
 
-   :nmv  "]e"  #'flycheck-next-error
-   :nmv  "[e"  #'flycheck-previous-error
+   ;; :nmv  "]e"  #'flycheck-next-error
+   ;; :nmv  "[e"  #'flycheck-previous-error
 
    :nmv  "("   #'evil-cp-backward-up-sexp
    :nmv  ")"   #'evil-cp-up-sexp
@@ -283,7 +292,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 ** Control-bindings
-- used for: Screen movements
+- Screen movements ::
   - jumplist-jumps
   - page scrolling
   - screen-scrolling:  ~C-y~ & ~C-e~.
@@ -308,10 +317,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 *** Evil surround operator
-For adding delimiters around objects.
-Very useful and thus getting a first-level-mapping.
-Also works after entering change/delete operator state // EX: ~c'(~ => ~)~ -> ~~
-(of you prefer ~'~ for marking, remap ~'~ -> ~`~)
+- For adding delimiters around objects.
+- Very frequently used => gets a first-level-mapping.
 #+begin_src emacs-lisp
 (after! evil
   (map! :map evil-operator-state-map
@@ -322,7 +329,6 @@ Also works after entering change/delete operator state // EX: ~c'(~ => ~)~ -> ~~
 #+end_src
 
 ** Alignment
-- Implement aliging keywords in multiple lines as one vertical column via either a char or regex (press ~/~ char).
 - "Stronger indentation" => ~g</>~
 #+begin_src emacs-lisp
 (after! evil
@@ -350,15 +356,14 @@ Also works after entering change/delete operator state // EX: ~c'(~ => ~)~ -> ~~
 #+end_src
 
 ** Dired
-- Avoid using integrated filemanagers (such as dired / ranger / lf) whenever possible replace them with shell commands and finding (fzf: recent-files, root, current dir..)
-- In most cases it is more extensible and faster using tools such as emac's find-file in combination with fuzzy finding and using global bookmarks for frequently used projects/files.
+- Filemanagers :: Avoid using integrated filemanagers (such as dired / ranger / lf) whenever possible replace them with shell commands and finding (fzf: recent-files, root, current dir..)
+  - In most cases it is more extensible and faster using tools such as emac's find-file in combination with fuzzy finding and using global bookmarks for frequently used projects/files.
   - ~:e~ & ~:w~ for creating and opening files in the same dir from the vim-cmd-line
   - ~:%!~ & ~:'<,'>!~ for processing the buffer with external shell-tools.
   - ~:!~ for all other commands such as ~cp~, ~mv~, ~rm~, ~chmod~...
   - use fuzzyfinding of files that exist
     - create files/directories in other directories
     - cd into different dir
-- Remap some mappings for convenience:
 #+begin_src emacs-lisp
 (after! dired
   (map! :map dired-mode-map
@@ -391,13 +396,10 @@ Also works after entering change/delete operator state // EX: ~c'(~ => ~)~ -> ~~
       :nmi "M-g" #'consult-dir)
 #+end_src
 
-* Evil mode
-- Add more functions to jumplist.
-- always globally substitute
-- Enable evil mode in minibuffers & other modes (agenda...)
+* Editor
+- evil-mode :: need it everywhere => enable evil mode in minibuffers
 - Improve ~f~ & ~t~ motions with ~evil-snipe~
-- use verymagic (easier regex)
-- Use evil-snipe
+- use verymagic (easier regex, more consistency with other tools & syntax)
 #+begin_src emacs-lisp
 (after! evil
   (evil-surround-mode 1)
@@ -427,13 +429,13 @@ Also works after entering change/delete operator state // EX: ~c'(~ => ~)~ -> ~~
     (evil-add-command-properties cmd :jump t)))
 #+end_src
 
-* Lsp & completion
-- Lsp yak-shaves time, hence we want it fast, and enabled most places.
+** Lsp & completion
+- Lsp saves *lots* of time, hence we want it fast, and enabled (almost) everywhere.
 #+begin_src emacs-lisp
 (after! company
   (setq
    company-minimum-prefix-length 1
-   company-idle-delay 0.1 ;; NOTE :: don't set to 0
+   company-idle-delay 0.1 ;; NOTE :: setting to 0 => huge lags
    company-show-quick-access t
    company-global-modes
    '(not
@@ -444,13 +446,13 @@ Also works after entering change/delete operator state // EX: ~c'(~ => ~)~ -> ~~
      vterm-mode)))
 #+end_src
 
-* Templates & snippets
+** Templates & snippets
 - Nested snippets ared good
 #+begin_src emacs-lisp
 (setq yas-triggers-in-field t)
 #+end_src
 
-* Dired Mode
+* Dired
 - Always open media files externally (emacs bad at graphical stuff)
 #+begin_src emacs-lisp
 (after! dired
@@ -486,17 +488,60 @@ Also works after entering change/delete operator state // EX: ~c'(~ => ~)~ -> ~~
 
 ** Archive file
 - Archive all things that were once written or created by you (instead of deleting them) => digital content cost's little to no space. And you will be grateful later in life to have recorded data (that can be analyzed & crunched) what you were thinking and how you configured your tools etc...
-- Moves the file under Archive with its original path.
+- This is a consistent archiving scheme (archive to original path under Archive)
 #+begin_src emacs-lisp
+(defvar z-archive-dir "~/Archive"
+  "User's archive (for fieles).")
 (defun z-dired-archive ()
   (interactive)
   (dolist (file (dired-get-marked-files))
     (let* ((file (dired-get-filename))
-           (dest (concat "~/Archive/" (file-relative-name file "~/"))))
+           (dest (file-name-concat z-archive-dir (file-relative-name file "~/"))))
       (rename-file file dest 1)))) ;; NOTE :: "1": propt before overwrite
 #+end_src
 
-* Org Mode
+* Programming
+#+begin_src emacs-lisp
+(add-hook! 'prog-mode-hook
+           #'rainbow-mode
+           #'rainbow-delimiters-mode)
+#+end_src
+
+** Indentation: 2 spaces
+- consistency :: The only reliable, repeatable, transportable way to ensure that indentation remains consistent across viewing environments is to indent you code using only spaces.
+  - With tabs you will always get some cases where there is spaces where there should be a tab and vice versa, this needs then to be fixed manually. (eg: evil shift, or evil-align)
+- Having 8x or 4x indentations makes the code move too far to the right, and makes it really incoherent and spaced out on a 100-character terminal screen.
+  - Scanning code horizontally is alot harder than reading it vertically. Especially when you’ve been looking at your screen for 20 straight hours, you’ll find it a lot easier to read your code if it is compacted and concise.
+- nesting :: if you need more than 3 levels of indentation, you’re screwed anyway and have nested your functions too deep and should fix your program.
+- completion :: ~<TAB>~ never autocompletes, confirm the autocompletion with ~<RET>~. (consistent with all other programs on the os (neovim, nushell, browser...))
+
+#+begin_src emacs-lisp
+(advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
+
+(setq
+ tab-always-indent t
+ org-indent-indentation-per-level 2
+ evil-shift-width 2
+ standard-indent 2
+ tab-width 2
+ evil-indent-convert-tabs t
+ indent-tabs-mode nil)
+#+end_src
+
+** Format buffer
+- More than 1 empty line is inconsistent and makes things unneccessary hard to read.
+#+begin_src emacs-lisp
+(defun z-clean-whitespace ()
+  "Deletes consecutive empty lines if > 1."
+  (interactive)
+  (delete-trailing-whitespace)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "\n\n+" nil t)
+      (replace-match "\n\n"))))
+#+end_src
+
+* Org
 ** [begin]
 #+begin_src emacs-lisp
 (after! org
@@ -525,7 +570,6 @@ Also works after entering change/delete operator state // EX: ~c'(~ => ~)~ -> ~~
  org-fold-catch-invisible-edits 'smart
  org-export-headline-levels 5
  ;; org-refile-use-outline-path 'file ;; [&]
- ;; org-insert-heading-respect-content t ;; [&]
  org-refile-allow-creating-parent-nodes 'confirm
  org-use-sub-superscripts '{}
  org-fontify-quote-and-verse-blocks t
@@ -901,220 +945,160 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
   - tasks :: all tasks (todos, completed etc) and events (physical appointments)
   - notes :: Thoughts, exploration -> to study, to remember, to refactor
 
+- Note :: pay attention as to which expressions are (and should) evaluated on config parsing vs the ~:keywords~, which are evaluated upon calling the capture template.
 #+begin_src emacs-lisp
-(defvar z-literature-notes-dir "~/Documents/literature/notes/"
-  "Directory for note-files associated with the literature-information-system.")
+(defun z-doct-templates (type &rest proj)
+  "Generic templates for projects.
+PROJ :: project subprojects.."
+  (let ((headline "")
+        (key "" )
+        (template ""))
+    (cond
+     ((string-equal type "task")
+      (setq
+       key "t"
+       template '("* [ ] %?")
+       headline "Inbox"))
+     ((string-equal type "event")
+      (setq
+       key "e"
+       template '("* [#] %^{title} %^g"
+                  "%^t"
+                  ":PROPERTIES:"
+                  ":location: %^{location}"
+                  ":prep: %^{prep}"
+                  ":END:"
+                  "%?")
+       headline "Events"))
+     ((string-equal type "note")
+      (setq
+       key "n"
+       template '("* %^{title} %^g"
+                  ":PROPERTIES:"
+                  ":created: %U"
+                  ":END:"
+                  "%?")
+       headline "Inbox")))
+    `(,type
+      :keys ,key
+      :file ,(file-name-concat
+              org-directory
+              (apply #'file-name-concat proj)
+              (concat type "s.org"))
+      :headline ,headline
+      :type entry
+      :prepend t
+      :template ,template)))
 
-(defvar z-literature-source-dir "~/Documents/literature/source/"
-  "Directory for source-files associated with the literature-information-system.")
-
-(defvar z-journal-dir "~/Documents/journal/"
-  "Directory for journal-files.")
-
-;; NOTE :: filepaths are relative to org-dir
 (setq
  org-capture-templates
  (doct
-  '((:group "default-opts"
-     :type entry
-     :prepend t
-     :clock-keep t
+  `(,@(cl-loop for (proj key) in '(("personal" "p")
+                                   ("config" "f")
+                                   ("compass" "o")
+                                   ("cs" "c"))
+               collect `(,proj :keys ,key :children
+                         (,(z-doct-templates "task" proj)
+                          ,(z-doct-templates "event" proj)
+                          ,(z-doct-templates "note" proj))))
+    ,(let ((proj "cs"))
+       `(,proj :keys "c" :children
+         ,(cl-loop for (sub key) in '(("la" "l")
+                                      ("dm" "d")
+                                      ("ep" "e")
+                                      ("ad" "a"))
+                   collect `(,sub :keys ,key :children
+                             (,(z-doct-templates "task" proj sub)
+                              ,(z-doct-templates "note" proj sub))))))
 
-     :children
-     (("task" :keys "t"
-       :headline "inbox"
-       :template
-       ("* [ ] %^{title} %^g"
-        "%?")
-       :children
-       (("cs"   :keys "c"
+    ("journal" :keys "j"
+     :file (lambda () (concat "~/Documents/journal/" (format-time-string "%F") "_journal.org"))
+     :type plain
+     :template
+     (,(concat "#+title:  Daily Journal: " (format-time-string "%A, %E %B %Y"))
+      ,(concat "#+author: " user-full-name)
+      ,(concat "#+email:  " user-mail-address)
+      ,(concat "#+date:   " (format-time-string "%F"))
+      ""
+      "* Goals"
+      "- %?"
+      "* Tasks"
+      "** [ ] "
+      "* Gratitude"
+      "- "
+      "* Reflection & Review"
+      "- "))
+
+    ,(let* ((notes-dir (file-name-concat "~/Documents/literature/notes/")))
+       `("literature" :keys "l"
          :children
-         (("cs" :keys "c" :file "cs/tasks.org")
-          ("la" :keys "l" :file "cs/la/tasks.org")
-          ("ep" :keys "e" :file "cs/ep/tasks.org")
-          ("dm" :keys "d" :file "cs/dm/tasks.org")
-          ("ad" :keys "a" :file "cs/ad/tasks.org")))
-        ("personal" :keys "p" :file "personal/tasks.org")
-        ("compass"  :keys "s" :file "compass/tasks.org")
-        ("config"   :keys "o" :file "config/tasks.org")))
+         (("new" :keys "N"
+           :type plain
+           :title (lambda () (setq doct--title (s-titleized-words (read-from-minibuffer "full title: ")))) ;; HACK :: store in var for later reuse of the input. (instead of reprompt)
+           :get-title (lambda () doct--title)
+           :file
+           (lambda ()
+             (concat
+              ,notes-dir
+              (read-from-minibuffer "filename: " (downcase (replace-regexp-in-string " " "-" doct--title)))
+              ".org"))
+           :template
+           ("#+title:  %{title}"
+            ,(concat "#+author: " user-full-name)
+            ,(concat "#+email:  %{email}" user-mail-address)
+            ,(concat "#+date:   " (format-time-string "%F"))
+            ""
+            "* %{get-title}"
+            ":PROPERTIES:"
+            ":title:  %{get-title}"
+            ":author: %^{book-author}"
+            ":year:   %^{year of publication}"
+            ":tags:   %^{tags}"
+            ":type:   %^{type}"
+            ":pages: %^{pages}"
+            ":END:"
+            "%?"
+            "** Excerpts"
+            "** Literature Notes"
+            "** Transient Notes"
+            "** Summary"))
 
-      ("event" :keys "e"
-       :headline "events"
-       :template
-       ("* [#] %^{title} %^g"
-        "%^t"
-        ":PROPERTIES:"
-        ":location: %^{location}"
-        ":prep: %^{prep}"
-        ":END:"
-        "%?")
-       :children
-       (("cs"       :keys "c" :file "cs/tasks.org")
-        ("personal" :keys "p" :file "personal/tasks.org")))
+          ("excerpt" :keys "e"
+           :file (lambda () (read-file-name "file: " ,notes-dir))
+           :headline "Excerpts"
+           :content (lambda () (current-kill 0))
+           :template
+           ("* %^{title}"
+            "#+begin_quote [[p: %^{pos-ref}]]"
+            "%{content}"
+            "#+end_quote"
+            "%?"))
 
-      ("note" :keys "n"
-       :headline "inbox"
-       :template
-       ("* %^{title} %^g"
-        ":PROPERTIES:"
-        ":created: %U"
-        ":END:"
-        "%?")
-       :children
-       (("cs"       :keys "c"
-         :children
-         (("la" :keys "l" :file "cs/la/notes.org")
-          ("ep" :keys "e" :file "cs/ep/notes.org")
-          ("dm" :keys "d" :file "cs/dm/notes.org")
-          ("ad" :keys "a" :file "cs/ad/notes.org")))
-        ("personal" :keys "p" :file "personal/notes.org")
-        ("compass"  :keys "s" :file "compass/notes.org")
-        ("config"   :keys "o" :file "config/notes.org")))
-
-      ("daily-journal" :keys "j"
-       :file (lambda () (concat z-journal-dir (format-time-string "%F") "-" "journal"  ".org"))
-       :type plain
-       :title (lambda () (concat "Daily Journal: " (format-time-string "%A %e %B, %Y")))
-       :author (lambda () user-full-name)
-       :email (lambda () user-mail-address)
-       :date (lambda () (format-time-string "%F"))
-       :template
-       ("#+title:  %{title}"
-        "#+author: %{author}"
-        "#+email:  %{email}"
-        "#+date:   %{date}"
-        ""
-        "* Goals"
-        "- %?"
-        "* Tasks"
-        "** [ ] "
-        "* Gratitude"
-        "- "
-        "* Reflection & Review"
-        "- "))
-
-      ("literature" :keys "l"
-       :children
-       (("new" :keys "n"
-         :type plain
-         :date (lambda () (format-time-string "%F"))
-         :email (lambda () user-mail-address)
-         :title (lambda () (setq _title (s-titleized-words (read-from-minibuffer "full title: ")))) ;; HACK :: store in var for later reuse of the input. (instead of reprompt)
-         :author (lambda () user-full-name)
-         :get-title (lambda () _title)
-         :book-author (lambda () (s-titleized-words (read-from-minibuffer "author: ")))
-         :file
-         (lambda ()
-           (concat
-            z-literature-notes-dir
-            (replace-regexp-in-string
-             " " "-"
-             (downcase (read-from-minibuffer "filename: " _title)))
-            ".org"))
-         :template
-         ("#+title:  %{title}"
-          "#+author: %{author}"
-          "#+email:  %{email}"
-          "#+date:   %{date}"
-          ""
-          "* %{get-title}"
-          ":PROPERTIES:"
-          ":title:  %{get-title}"
-          ":author: %{book-author}"
-          ":year:   %^{year of publication}"
-          ":tags:   %^{tags}"
-          ":type:   %^{type}"
-          ":pages: %^{pages}"
-          ":END:"
-          "%?"
-          "** Excerpts"
-          "** Literature Notes"
-          "** Transient Notes"
-          "** Summary"))
-
-        ("excerpt" :keys "e"
-         :file (lambda () (read-file-name "file: " z-literature-notes-dir))
-         :headline "Excerpts"
-         :content (lambda () (current-kill 0))
-         :template
-         ("* %^{title}"
-          "#+begin_quote [[%^{pos-ref}]]"
-          "%{content}"
-          "#+end_quote"
-          "%?"))
-
-        ("note" :keys "n"
-         :file (lambda () (read-file-name "file: " z-literature-notes-dir))
-         :healine "Literature Notes"
-         :template
-         ("* %^{title} [[p: %^{reference}]]"
-          "%?")))))))))
+          ("note" :keys "n"
+           :file (lambda () (read-file-name "file: " ,notes-dir))
+           :headline "Literature Notes"
+           :template
+           ("* %^{title} [[p: %^{reference}]]"
+            "%?"))))))))
 #+end_src
+
 ** [End]
 #+begin_src emacs-lisp
   )
 #+end_src
 
-* Programming mode
-#+begin_src emacs-lisp
-(add-hook! 'prog-mode-hook
-           #'rainbow-mode
-           #'rainbow-delimiters-mode)
-#+end_src
-
-** Indentation: 2 spaces
-- The only reliable, repeatable, transportable way to ensure that indentation remains consistent across viewing environments is to indent you code using only spaces.
-  - With tabs you will always get some cases where there is spaces where there should be a tab and vice versa, this needs then to be fixed manually. (eg: evil shift, or evil-align)
-- Having 8x or 4x indentations makes the code move too far to the right, and makes it really incoherent and spaced out on a 100-character terminal screen.
-  - Scanning code horizontally is alot harder than reading it vertically. Especially when you’ve been looking at your screen for 20 straight hours, you’ll find it a lot easier to read your code if it is compacted and concise.
-  - Keep in mind that if you need more than 3 levels of indentation, you’re screwed anyway and have nested your functions too deep and should fix your program.
-  - Tab never autocompletes, confirm the autocompletion with enter. (consistent with all other programs on the os (neovim, nushell, browser...))
-
-#+begin_src emacs-lisp
-(advice-add #'doom-highlight-non-default-indentation-h :override #'ignore) ;; turn off whitespace highlighting
-(setq
- tab-always-indent t
- org-indent-indentation-per-level 2
- evil-shift-width 2
- standard-indent 2
- tab-width 2
- evil-indent-convert-tabs t
- indent-tabs-mode nil)
-#+end_src
-
-** Format buffer
-- More than 1 empty line is inconsistent and makes things unneccessary hard to read.
-#+begin_src emacs-lisp
-(defun z-clean-whitespace ()
-  "Deletes consecutive empty lines if > 1."
-  (interactive)
-  (delete-trailing-whitespace)
-  (save-excursion
-    (goto-char (point-min))
-    (while (re-search-forward "\n\n+" nil t)
-      (replace-match "\n\n"))))
-#+end_src
-
-* Command-line: nushell
-- Nushell: screw that old POSIX-standard crap and use a user friendly shell
-- Major-mode: nushell files/scripts => syntax highlighting
+* Nushell
+- Screw that old POSIX-standard crap and use a user friendly shell
+- Adds :: Syntax highlighting
 
 #+begin_src emacs-lisp
 (load! "user/nushell-mode.el")
 #+end_src
-
-- Run nushell commands using the environtment:: use ~--execute~ instead of ~--commands~
-  - Runs it as if interactive (all settings, scripts loaded)
-- Display =cwd= in shell-prompt.
+* Elisp
 #+begin_src emacs-lisp
-(setq shell-command-prompt-show-cwd t)
+(add-hook! 'emacs-lisp-mode-hook (highlight-indent-guides-mode 0))
 #+end_src
 
-* Calc (RPN)
-#+begin_src emacs-lisp
-(setq calc-angle-mode 'rad  ; radians are rad
-      calc-symbolic-mode t)
-#+end_src
 * Latex
 #+begin_src emacs-lisp
 (setq +latex-viewers '(pdf-tools zathura))

@@ -343,6 +343,27 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
     - cd into different dir
 #+begin_src emacs-lisp
 (after! dired
+  (map! :map dired-mode-map
+        :nm "h" #'dired-up-directory
+        :nm "l" #'dired-open-file
+        :nm "f" #'dired-goto-file
+        :nm "c" #'dired-do-copy
+        :nm "C" #'dired-do-compress
+        :nm "r" #'dired-do-rename
+        :nm "R" #'dired-do-redisplay
+        :nm "d" #'dired-do-delete
+        :nm "x" #'dired-do-chmod
+        :nm "s" #'dired-sort-toggle-or-edit
+        :nm "o" #'find-file
+        :nm "p" #'dired-do-print
+        :nm "y" #'dired-copy-filename-as-kill
+        :nm "z" #'dired-do-compress
+        :nm "." #'dired-omit-mode
+        :nm "e" #'dired-create-empty-file
+        :nm "E" #'dired-create-directory)
+ (map! :localleader
+       :map dired-mode-map
+       :nm "A" #'z-dired-archive)
   (setq dired-omit-files (rx (or
                               (seq bol (? ".") "#")
                               (seq bol "." (not (any ".")))
@@ -902,143 +923,133 @@ Jumps at tangled code from org src block."
 - Note :: pay attention as to which expressions are (and should) evaluated on config parsing vs the ~:keywords~, which are evaluated upon calling the capture template.
 - Note :: this is a bit of an unorthodox solution for org capture templates, but in order to be consistent the tree structure is hierarchical by project and then follow the generic templates.
 #+begin_src emacs-lisp
-  (defun z-z-doct-tmpl (type &rest proj)
-    "Generic z-doct-templates generator for projects.
+(defun z-z-doct-tmpl (type &rest proj)
+  "Generic z-doct-templates generator for projects.
 PROJ :: hierarchical procject structure => create filepath"
-    (let ((headline "")
-          (key "" )
-          (template ""))
-      (cond
-       ((string-equal type "task")
-        (setq key "t"
-              template '("* [ ] %?")
-              headline "Inbox"))
-       ((string-equal type "event")
-        (setq key "e"
-              template '("* [#] %^{title} %^g"
-                         "%^t"
-                         ":PROPERTIES:"
-                         ":location: %^{location}"
-                         ":prep: %^{prep}"
-                         ":END:"
-                         "%?")
-              headline "Events"))
-       ((string-equal type "note")
-        (setq key "n"
-              template '("* %^{title} %^g"
-                         ":PROPERTIES:"
-                         ":created: %U"
-                         ":END:"
-                         "%?")
-              headline "Inbox")))
+  (let ((headline "")
+        (key "" )
+        (template ""))
+    (cond
+     ((string-equal type "task")
+      (setq key "t"
+            template '("* [ ] %?")
+            headline "Inbox"))
+     ((string-equal type "event")
+      (setq key "e"
+            template '("* [#] %^{title} %^g"
+                       "%^t"
+                       ":PROPERTIES:"
+                       ":location: %^{location}"
+                       ":prep: %^{prep}"
+                       ":END:"
+                       "%?")
+            headline "Events"))
+     ((string-equal type "note")
+      (setq key "n"
+            template '("* %^{title} %^g"
+                       ":PROPERTIES:"
+                       ":created: %U"
+                       ":END:"
+                       "%?")
+            headline "Inbox")))
 
-      `(,type
-        :keys ,key
-        :file ,(file-name-concat org-directory
-                                 (apply #'file-name-concat proj)
-                                 (format "%ss.org" type))
-        :headline ,headline
-        :type entry
-        :prepend t
-        :template ,template)))
+    `(,type
+      :keys ,key
+      :file ,(file-name-concat org-directory
+                               (apply #'file-name-concat proj)
+                               (format "%ss.org" type))
+      :headline ,headline
+      :type entry
+      :prepend t
+      :template ,template)))
 
-  (setq
-   org-capture-templates
-   (doct
-    `(,@(cl-loop for (proj key) in '(("personal" "p")
-                                     ("config" "f")
-                                     ("compass" "o")
-                                     ("cs" "c"))
-                 collect `(,proj :keys ,key :children
-                           (,(z-z-doct-tmpl "task" proj)
-                            ,(z-z-doct-tmpl "event" proj)
-                            ,(z-z-doct-tmpl "note" proj))))
-      ,(let ((proj "cs"))
-         `(,proj :keys "c" :children
-           ,(cl-loop for (sub key) in '(("la" "l")
-                                        ("dm" "d")
-                                        ("ep" "e")
-                                        ("ad" "a"))
-                     collect `(,sub :keys ,key :children
-                               (,(z-z-doct-tmpl "task" proj sub)
-                                ,(z-z-doct-tmpl "note" proj sub))))))
+(setq
+ org-capture-templates
+ (doct
+  `(,@(cl-loop for (proj key) in '(("personal" "p")
+                                   ("config" "f")
+                                   ("compass" "o")
+                                   ("cs" "c"))
+               collect `(,proj :keys ,key :children
+                         (,(z-z-doct-tmpl "task" proj)
+                          ,(z-z-doct-tmpl "event" proj)
+                          ,(z-z-doct-tmpl "note" proj))))
+    ,(let ((proj "cs"))
+       `(,proj :keys "c" :children
+         ,(cl-loop for (sub key) in '(("la" "l")
+                                      ("dm" "d")
+                                      ("ep" "e")
+                                      ("ad" "a"))
+                   collect `(,sub :keys ,key :children
+                             (,(z-z-doct-tmpl "task" proj sub)
+                              ,(z-z-doct-tmpl "note" proj sub))))))
 
-      ("journal" :keys "j"
-       :file (lambda () (format "~/Documents/journal/%s_journal.org}" (format-time-string "%F")))
-       :type plain
-       :template (,(format "#+title:  Daily Journal: %s" (format-time-string "%A, %E %B %Y"))
-                  ,(format "#+author: %s" user-full-name)
-                  ,(format "#+email:  %s" user-mail-address)
-                  ,(format "#+date:   %s" (format-time-string "%F"))
-                  ""
-                  "* Goals"
-                  "- %?"
-                  "* Tasks"
-                  "** [ ] "
-                  "* Gratitude"
-                  "- "
-                  "* Reflection & Review"
-                  "- "))
+    ("journal" :keys "j"
+     :file (lambda () (format "~/Documents/journal/%s_journal.org}" (format-time-string "%F")))
+     :type plain
+     :template (,(format "#+title:  Daily Journal: %s" (format-time-string "%A, %e %B %Y"))
+                ,(format "#+author: %s" user-full-name)
+                ,(format "#+email:  %s" user-mail-address)
+                ,(format "#+date:   %s" (format-time-string "%F"))
+                ""
+                "* Goals"
+                "- %?"
+                "* Tasks"
+                "** [ ] "
+                "* Gratitude"
+                "- "
+                "* Reflection & Review"
+                "- "))
 
-      ,(let* ((notes-dir "~/Documents/literature/notes/"))
-         `("literature" :keys "l"
-           :children
-           (("new" :keys "N"
-             :type plain
-             :title (lambda ()
-                      (setq z-doct-title
-                            (s-titleized-words (read-from-minibuffer "full title: ")))) ;; HACK :: store in var for later reuse of the input. (instead of reprompt)
-             :get-title (lambda () z-doct-title)
-             :author (lambda ()
-                       (setq z-doct-author
-                             (s-titleized-words (read-from-minibuffer "author: ")))) ;; HACK :: store in var for later reuse of the input. (instead of reprompt)
-             :get-author (lambda () z-doct-author)
-             :file (lambda ()
-                     (concat ,notes-dir
-                             (read-from-minibuffer "filename: "
-                                                   (downcase
-                                                    (replace-regexp-in-string " " "-"
-                                                                              (format "%s_%s"
-                                                                                      z-doct-title
-                                                                                      z-doct-author))))
-                             ".org"))
-             :template ("#+title:  %{title}"
-                        ,(format "#+author: %s" user-full-name)
-                        ,(format "#+email:  %s" user-mail-address)
-                        ,(format "#+date:   %s" (format-time-string "%F"))
-                        ""
-                        "* %{get-title}"
-                        ":PROPERTIES:"
-                        ":title:  %{get-title}"
-                        ":author: %{get-author}"
-                        ":year:   %^{year of publication}"
-                        ":tags:   %^{tags}"
-                        ":type:   %^{type}"
-                        ":pages:  %^{pages}"
-                        ":END:"
-                        "%?"
-                        "** Excerpts"
-                        "** Literature Notes"
-                        "** Transient Notes"
-                        "** Summary"))
+    ,(let* ((notes-dir "~/Documents/literature/notes/"))
+       `("literature" :keys "l"
+         :children
+         (("new" :keys "N"
+           :type plain
+           :title (lambda () (setq z-doct-title (s-titleized-words (read-from-minibuffer "full title: ")))) ;; HACK :: store in var for later reuse of the input. (instead of reprompt)
+           :get-title (lambda () z-doct-title)
+           :file (lambda ()
+                   (concat ,notes-dir
+                           (read-from-minibuffer "filename: " (downcase (replace-regexp-in-string " " "-" z-doct-title)))
+                           ".org"))
+           :template ("#+title:  %{title}"
+                      ,(format "#+author: %s" user-full-name)
+                      ,(format "#+email:  %s" user-mail-address)
+                      ,(format "#+date:   %s" (format-time-string "%F"))
+                      ""
+                      "* %{get-title}"
+                      ":PROPERTIES:"
+                      ":title:  %{get-title}"
+                      ":author: %^{author}"
+                      ":year:   %^{year of publication}"
+                      ":tags:   %^{tags}"
+                      ":type:   %^{type}"
+                      ":pages:  %^{pages}"
+                      ":END:"
+                      "%?"
+                      "** Excerpts"
+                      "** Literature Notes"
+                      "** Transient Notes"
+                      "** Summary")
+           :immediate-finish t)
 
-            ("excerpt" :keys "e"
-             :file (lambda () (read-file-name "file: " ,notes-dir))
-             :headline "Excerpts"
-             :type entry
-             :content (lambda () (current-kill 0))
-             :template ("* %^{title}"
-                        "#+begin_quote [[p: %^{pos-ref}]]"
-                        "%{content}"
-                        "#+end_quote"
-                        "%?"))
+          ("excerpt" :keys "e"
+           :file (lambda () (read-file-name "file: " ,notes-dir))
+           :headline "Excerpts"
+           :type entry
+           :content (lambda () (current-kill 0))
+           :template ("* %^{title}"
+                      "#+begin_quote [p: %^{pos-ref}]"
+                      "%{content}"
+                      "#+end_quote"
+                      "%?"))
 
-            ("note" :keys "n"
-             :file (lambda () (read-file-name "file: " ,notes-dir))
-             :headline "Literature Notes"
-             :type entry
-             :template ("* %^{title} [[p: %^{reference}]]"
-                        "%?"))))))))
+          ("note" :keys "n"
+           :file (lambda () (read-file-name "file: " ,notes-dir))
+           :headline "Literature Notes"
+           :type entry
+           :template ("* %^{title} [p: %^{reference}]"
+                      "%?"))))))))
 #+end_src
 
 ** [End]

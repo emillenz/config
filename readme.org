@@ -213,12 +213,6 @@ Today, many aspects of daily computer usage are split between different applicat
 - Completely integrated into the editor (think: finding/filtering headlines, notes, tasks..)
 - The best support for literate programming covering every language (looking at you: jupyter..)
 
-*** Elisp
-Everything integrated into the editor makes more sense to me than having the editor invoke other things as subprocesses and using confusing hacks such as tmux (I know emacs does this sometimes but in vim it's "the way you primarily go about doing things")
-Elisp and Lua are worlds apart. Lua exists to be an extension or config language. You are given access to certain api details.
-
-What this means to me is that emacs is the environment that grows with your forever. Period. No licensing bs, no bloated dependencies (eg: electron). The emacs build depends directly on basic os libraries and that’s it. It’s fairly efficient (now a days!) on ram and cpu vs other environments like vs code and intellij. The philosophy and design of the editor and underlying elisp is so stable and doesn’t change with the flavor of the day coding styles.
-
 ** Documentreader: Zathura
 - Lightweight
 - Distraction free, no unneccessary features.

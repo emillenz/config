@@ -1,20 +1,3 @@
-$data | range 0..($end)
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ''} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
-open `2022-00-00.md` | lines 
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != '### '} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| ($x | str starts-with "### ")} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| ($x | str starts-with '###')} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x =~  '###'} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data | take while {|x| $x =~  '###'} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data | take while {|x| $x =~  '###'} | length) - 1)<\n>$end
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data | take while {|x| ($x | str starts-with '###'} | length) - 1)<\n>$end
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data | take while {|x| ($x | str starts-with '###')} | length) - 1)<\n>$end
-$data | take until {|x| $x =~ "#"}
-$data
-$data | take until {|x| $x =~ "\#"}
-$data | take until {|x| $x =~ "a"}
-$data | take until {|x| x =~ "a"}
-$data | take until {|x| $x =~ "a"}
 take -h | bat
 take until -h | bat
 $data | take until {|x| $x = ""}
@@ -9998,3 +9981,20 @@ sys
 yay batify
 batifu
 yay -R batify
+yay nyxt
+nyxt
+nyxt  --help | bat --language=man
+nyxt
+yay -R nyxt
+yay qutebrowser
+qutebrowser 
+yay -R qutebrowser
+yay flatpak
+flatpak install flathub engineer.atlas.Nyxt
+yay -R flatpak
+xset -dpms
+sudo xset -dpms 
+sudo xset -dpms  && xset s off
+sudo xset -dpms; sudo xset s off
+2023 % 17
+2023 mod 17

@@ -10,6 +10,7 @@ audio/mpeg=mpv.desktop
 text/org=emacsclient.desktop
 x-scheme-handler/eclipse+installer=_home_lenz_Downloads_eclipse-installer_.desktop
 x-scheme-handler/eclipse+command x-scheme-handler/eclipse+mpc=_home_lenz_.eclipse_java-2023-09_eclipse_.desktop
+application/epub+zip=org.pwmt.zathura-pdf-mupdf.desktop
 
 [Added Associations]
 video/x-matroska=mpv.desktop;
@@ -18,3 +19,4 @@ text/org=emacsclient.desktop;nvim.desktop;
 text/markdown=nvim.desktop;
 application/rtf=libreoffice-writer.desktop;emacsclient.desktop;
 text/plain=emacsclient.desktop;
+application/epub+zip=org.pwmt.zathura-pdf-mupdf.desktop;

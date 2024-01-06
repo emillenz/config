@@ -129,8 +129,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
       display-line-numbers-type 'visual
       shell-command-prompt-show-cwd t)
 
-(setq-default major-mode 'org-mode)
-
 (save-place-mode 1)
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
@@ -168,15 +166,15 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
                             "s" #'+lookup/synonyms
                             "t" #'dictionary-search)))
 
-(after! evil-org
   (map! :localleader
         :map org-mode-map
-        (:prefix-map ("c" . "code")
+        "\\" #'org-latex-preview
+        (:prefix-map ("C" . "code")
                      "d" #'org-babel-detangle
                      "J" #'org-babel-tangle-jump-to-org
                      "j" #'z-jump-src
                      "t" #'org-babel-tangle
-                     "e" #'org-edit-special)))
+                     "e" #'org-edit-special))
 #+end_src
 
 ** Global navigation scheme
@@ -190,7 +188,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   - Instead if needed we can execute oneliners with ~(async-shell-command)~
 - buffers :: kill buffers when done (don't accumulate buffers in tha background)
 #+begin_src emacs-lisp
-(after! doom
   (map! :map  'override
         :nvim "M-j"   #'previous-window-any-frame
         :nvim "M-k"   #'next-window-any-frame
@@ -218,7 +215,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
         :nvim "C--"   #'doom/decrease-font-size
         :nvim "C-="   #'doom/increase-font-size
-        :nvim "C-0"   #'doom/reset-font-size))
+        :nvim "C-0"   #'doom/reset-font-size)
 #+end_src
 
 ** Evil-mode
@@ -238,7 +235,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - (Emacs already by default implements it that out of screen jumps center the screen which is sensible )
 
 #+begin_src emacs-lisp
-(after! evil
   ;; HACK :: disable all default-maps (mappings used are below)
   (add-hook 'evil-mode-hook #'evil-cleverparens-mode)
   (setq evil-cleverparens-use-s-and-S nil
@@ -263,7 +259,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
 
         :nmv  "go"  #'consult-imenu
-        :nmv  "g/"  #'+default/search-buffer))
+        :nmv  "g/"  #'+default/search-buffer)
 #+end_src
 
 ** Control-bindings
@@ -277,51 +273,46 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   - ~:w~ is the statistically most run vim-ex-command, but not very unergonomic.
   - Map it to the os-consistent key
 #+begin_src emacs-lisp
-(after! evil
   (map! :inmv "C-s" #'evil-write
         :nmv "C-q" #'kill-current-buffer
         :nmv "C-j" #'evil-forward-section-begin
-        :nmv "C-k" #'evil-backward-section-begin))
+        :nmv "C-k" #'evil-backward-section-begin)
 #+end_src
 
 *** Instant jumping
 - Emacs's answer to the mouse (even more efficient)
 - Override the otherwise useless ~s~ key with a precise char jump. No more relative line jumping and then ~f~ or ~t~ jumping inline, or spamming ~ewbhl~. Instead just jump to the exact position you need to get to immediately without the mental overhead (of doing both steps).
 #+begin_src emacs-lisp
-(after! evil
   (map! :map evil-snipe-local-mode-map ;; HACK :: need to override evil-snipe
         :nmvo "s" #'evil-avy-goto-char-2-below
-        :nmvo "S" #'evil-avy-goto-char-2-above))
+        :nmvo "S" #'evil-avy-goto-char-2-above)
 #+end_src
 
 *** Evil surround operator
 - For adding delimiters around objects.
 - Very frequently used => gets a first-level-mapping.
 #+begin_src emacs-lisp
-(after! evil
   (map! :map evil-operator-state-map
         "`" #'evil-surround-edit)
   (map! :nmv "`" #'evil-surround-region
-        :nmv "`" #'evil-surround-region))
+        :nmv "`" #'evil-surround-region)
 #+end_src
 
 ** Alignment
 - "Stronger indentation" => ~g</>~
 #+begin_src emacs-lisp
-(after! evil
   (map! :nmv "g<" #'evil-lion-left
-        :nmv "g>" #'evil-lion-right))
+        :nmv "g>" #'evil-lion-right)
 #+end_src
 
 ** Org mode
 #+begin_src emacs-lisp
-(after! evil-org
   (map! :map evil-org-mode-map
         :nmv "C-j"     #'org-forward-element
-        :nmv "C-k"     #'org-backward-element))
+        :nmv "C-k"     #'org-backward-element)
 #+end_src
 
-** Dired
+** Dired (keys)
 - Filemanagers :: Avoid using integrated filemanagers (such as dired / ranger / lf) whenever possible replace them with shell commands and finding (fzf: recent-files, root, current dir..)
   - In most cases it is more extensible and faster using tools such as emac's find-file in combination with fuzzy finding and using global bookmarks for frequently used projects/files.
   - ~:e~ & ~:w~ for creating and opening files in the same dir from the vim-cmd-line
@@ -349,36 +340,11 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         :nm "z" #'dired-do-compress
         :nm "." #'dired-omit-mode
         :nm "e" #'dired-create-empty-file
-        :nm "E" #'dired-create-directory)
+        :nm "E" #'dired-create-directory))
 
   (map! :localleader
         :map dired-mode-map
         :nm "A" #'z-dired-archive)
-
-  (setq dired-omit-files (rx (or (seq bol (? ".") "#")
-                                 (seq bol "." (not (any ".")))
-                                 (seq "~" eol)
-                                 (seq bol "CVS" eol))))
-
-  (setq dired-open-extensions '(("mkv"  . "mpv")
-                                ("mp4"  . "mpv")
-                                ("mp3"  . "ncmpcpp")
-                                ("gif"  . "nsxiv")
-                                ("jpeg" . "nsxiv")
-                                ("jpg"  . "nsxiv")
-                                ("png"  . "nsxiv")
-                                ("docx" . "libreoffice")
-                                ("odt"  . "libreoffice")
-                                ("odf"  . "libreoffice")
-                                ("epub" . "zathura")
-                                ("pdf"  . "zathura")))
-
-  (add-hook! 'dired-mode-hook #'dired-hide-details-mode)
-
-  (setq dired-recursive-copies 'always
-        dired-recursive-deletes 'top
-        global-auto-revert-non-file-buffers t
-        dired-kill-when-opening-new-dired-buffer t))
 #+end_src
 
 ** Minibuffer
@@ -395,13 +361,11 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         :nm "C-k" #'magit-section-backward-sibling))
 #+end_src
 
-
 * Editor
 - evil-mode :: need it everywhere => enable evil mode in minibuffers
 - Improve ~f~ & ~t~ motions with ~evil-snipe~
 - use verymagic (easier regex, more consistency with other tools & syntax)
 #+begin_src emacs-lisp
-(after! evil
   (evil-surround-mode 1)
 
   (setq evil-magic 'very-magic
@@ -425,13 +389,12 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
                  +lookup/implementations
                  +default/search-buffer
                  consult-imenu))
-    (evil-add-command-properties cmd :jump t)))
+    (evil-add-command-properties cmd :jump t))
 #+end_src
 
 ** Lsp & completion
 - Lsp saves *lots* of time, hence we want it fast, and enabled (almost) everywhere.
 #+begin_src emacs-lisp
-(after! company
   (setq company-minimum-prefix-length 1
         company-idle-delay 0.1 ;; NOTE :: setting to 0 => huge lags
         company-show-quick-access t
@@ -440,7 +403,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
                                message-mode
                                help-mode
                                gud-mode
-                               vterm-mode)))
+                               vterm-mode))
 #+end_src
 
 ** Templates & snippets
@@ -452,7 +415,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 * Dired
 - Always open media files externally (emacs bad at graphical stuff)
 #+begin_src emacs-lisp
-(after! dired
   (setq dired-omit-files
         (rx (or ;; NOTE:: this is the elegant && extensible way to do regex.
              (seq bol (? ".") "#")
@@ -460,8 +422,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
              (seq "~" eol)
              (seq bol "CVS" eol))))
 
-  (setq dired-open-extensions
-        '(("mkv"  . "mpv")
+  (setq dired-open-extensions '(("mkv"  . "mpv")
           ("mp4"  . "mpv")
           ("mp3"  . "ncmpcpp")
           ("gif"  . "nsxiv")
@@ -476,11 +437,10 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
   (add-hook! 'dired-mode-hook #'dired-hide-details-mode)
 
-  (setq
-   dired-recursive-copies 'always
+  (setq dired-recursive-copies 'always
    dired-recursive-deletes 'top
    global-auto-revert-non-file-buffers t
-   dired-kill-when-opening-new-dired-buffer t))
+   dired-kill-when-opening-new-dired-buffer t)
 #+end_src
 
 ** Archive file
@@ -550,7 +510,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+begin_src emacs-lisp
   (add-hook! 'org-mode-hook
              #'visual-line-mode
-             #'org-num-mode
+             #'org-fragtog-mode
              #'org-appear-mode
              #'org-auto-tangle-mode)
 
@@ -560,16 +520,18 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         org-reverse-note-order t
         org-startup-with-inline-images t
         org-startup-indented t
+        org-startup-numerated t
+        org-startup-align-all-tables t
         org-list-allow-alphabetical t
         org-tags-column 0
         org-fold-catch-invisible-edits 'smart
         org-export-headline-levels 5
-        ;; org-refile-use-outline-path 'file ;; [&]
+        org-refile-use-outline-path 'full-file-path
         org-refile-allow-creating-parent-nodes 'confirm
         org-use-sub-superscripts '{}
+        org-export-with-sub-superscripts '{}
         org-fontify-quote-and-verse-blocks t
         org-fontify-whole-block-delimiter-line t
-        org-export-with-sub-superscripts '{}
         doom-themes-org-fontify-special-tags t
         org-ellipsis "…"
         org-num-max-level 3
@@ -887,6 +849,8 @@ Jumps at tangled code from org src block."
   - set tags for entire file in header with ~#+filetags: :proj:~
   - configure file-local tags-presets with: ~#+tags: tag1 tag2~
     + will get you completion when setting tags in file (eg: ~:question:~)
+  - motivation :: this scheme of =agenda/notes= is used to have a structured and consistent approach for generic projects-management.
+    - Aligns with the philosophy of separating literate contents from code (notes=literate/agenda=data)
 
 #+begin_src emacs-lisp
 (defvar z-journal-dir "~/Documents/journal/"

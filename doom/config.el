@@ -92,8 +92,6 @@
       display-line-numbers-type 'visual
       shell-command-prompt-show-cwd t)
 
-(setq-default major-mode 'org-mode)
-
 (save-place-mode 1)
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
@@ -126,115 +124,108 @@
                             "s" #'+lookup/synonyms
                             "t" #'dictionary-search)))
 
-(after! evil-org
   (map! :localleader
         :map org-mode-map
-        (:prefix-map ("c" . "code")
+        "\\" #'org-latex-preview
+        (:prefix-map ("C" . "code")
                      "d" #'org-babel-detangle
                      "J" #'org-babel-tangle-jump-to-org
                      "j" #'z-jump-src
                      "t" #'org-babel-tangle
-                     "e" #'org-edit-special)))
+                     "e" #'org-edit-special))
 ;; Leader:1 ends here
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:1]]
-(after! doom
-  (map! :map  'override
-        :nvim "M-j"   #'previous-window-any-frame
-        :nvim "M-k"   #'next-window-any-frame
-        :nvim "M-t"   #'tab-bar-new-tab-to
-        :nvim "M-q"   (cmd! (kill-current-buffer) (evil-window-delete))
-        :nvmi "M-z"   #'+popup/toggle
-        :nvim "M-1"   (cmd! (tab-bar-select-tab 1))
-        :nvim "M-2"   (cmd! (tab-bar-select-tab 2))
-        :nvim "M-3"   (cmd! (tab-bar-select-tab 3))
-        :nvim "M-4"   (cmd! (tab-bar-select-tab 4))
-        :nvim "M-5"   (cmd! (tab-bar-select-tab 5))
-        :nvim "M-6"   (cmd! (tab-bar-select-tab 6))
-        :nvim "M-7"   (cmd! (tab-bar-select-tab 7))
-        :nvim "M-8"   (cmd! (tab-bar-select-tab 8))
-        :nvim "M-9"   (cmd! (tab-bar-select-tab 9))
-        :nvim "M-o"   #'find-file
-        :nvim "M-f"   #'consult-find
-        :nvim "M-F"   (cmd! (consult-find "~"))
-        :nvim "M-g"   #'consult-buffer
-        :nvim "M-r"   #'consult-recent-file
-        :nvim "M-c"   #'async-shell-command
-        :nvim "M-w"   #'+lookup/online
-        :nvim "M-;"   #'execute-extended-command
-        :nvim "M-'"   #'consult-bookmark
+(map! :map  'override
+      :nvim "M-j"   #'previous-window-any-frame
+      :nvim "M-k"   #'next-window-any-frame
+      :nvim "M-t"   #'tab-bar-new-tab-to
+      :nvim "M-q"   (cmd! (kill-current-buffer) (evil-window-delete))
+      :nvmi "M-z"   #'+popup/toggle
+      :nvim "M-1"   (cmd! (tab-bar-select-tab 1))
+      :nvim "M-2"   (cmd! (tab-bar-select-tab 2))
+      :nvim "M-3"   (cmd! (tab-bar-select-tab 3))
+      :nvim "M-4"   (cmd! (tab-bar-select-tab 4))
+      :nvim "M-5"   (cmd! (tab-bar-select-tab 5))
+      :nvim "M-6"   (cmd! (tab-bar-select-tab 6))
+      :nvim "M-7"   (cmd! (tab-bar-select-tab 7))
+      :nvim "M-8"   (cmd! (tab-bar-select-tab 8))
+      :nvim "M-9"   (cmd! (tab-bar-select-tab 9))
+      :nvim "M-o"   #'find-file
+      :nvim "M-f"   #'consult-find
+      :nvim "M-F"   (cmd! (consult-find "~"))
+      :nvim "M-g"   #'consult-buffer
+      :nvim "M-r"   #'consult-recent-file
+      :nvim "M-c"   #'async-shell-command
+      :nvim "M-w"   #'+lookup/online
+      :nvim "M-;"   #'execute-extended-command
+      :nvim "M-'"   #'consult-bookmark
 
-        :nvim "C--"   #'doom/decrease-font-size
-        :nvim "C-="   #'doom/increase-font-size
-        :nvim "C-0"   #'doom/reset-font-size))
+      :nvim "C--"   #'doom/decrease-font-size
+      :nvim "C-="   #'doom/increase-font-size
+      :nvim "C-0"   #'doom/reset-font-size)
 ;; Global navigation scheme:1 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
-(after! evil
-  ;; HACK :: disable all default-maps (mappings used are below)
-  (add-hook 'evil-mode-hook #'evil-cleverparens-mode)
-  (setq evil-cleverparens-use-s-and-S nil
-        evil-cleverparens-use-additional-bindings nil
-        evil-cleverparens-use-additional-movement-keys nil)
-  (map! :nmvo "j"   #'evil-next-visual-line
-        :nmvo "k"   #'evil-previous-visual-line
+;; HACK :: disable all default-maps (mappings used are below)
+(add-hook 'evil-mode-hook #'evil-cleverparens-mode)
+(setq evil-cleverparens-use-s-and-S nil
+      evil-cleverparens-use-additional-bindings nil
+      evil-cleverparens-use-additional-movement-keys nil)
+(map! :nmvo "j"   #'evil-next-visual-line
+      :nmvo "k"   #'evil-previous-visual-line
 
-        :nm   "TAB" #'+fold/toggle
+      :nm   "TAB" #'+fold/toggle
 
-        :nmv  "U"   #'evil-redo
-        :nmv  "Q"   #'evil-execute-last-recorded-macro
-        :nmv  "&"   #'evil-ex-repeat
-        :nmv  "M"   (cmd! (evil-goto-mark-line ?m))
+      :nmv  "U"   #'evil-redo
+      :nmv  "Q"   #'evil-execute-last-recorded-macro
+      :nmv  "&"   #'evil-ex-repeat
+      :nmv  "M"   (cmd! (evil-goto-mark-line ?m))
 
-        :nmv  "("   #'evil-cp-backward-up-sexp
-        :nmv  ")"   #'evil-cp-up-sexp
+      :nmv  "("   #'evil-cp-backward-up-sexp
+      :nmv  ")"   #'evil-cp-up-sexp
 
-        :nmv  "+"   #'evil-numbers/inc-at-pt
-        :nmv  "-"   #'evil-numbers/dec-at-pt
-        :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
-        :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
+      :nmv  "+"   #'evil-numbers/inc-at-pt
+      :nmv  "-"   #'evil-numbers/dec-at-pt
+      :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
+      :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
 
-        :nmv  "go"  #'consult-imenu
-        :nmv  "g/"  #'+default/search-buffer))
+      :nmv  "go"  #'consult-imenu
+      :nmv  "g/"  #'+default/search-buffer)
 ;; Evil-mode:1 ends here
 
 ;; [[file:config.org::*Control-bindings][Control-bindings:1]]
-(after! evil
-  (map! :inmv "C-s" #'evil-write
-        :nmv "C-q" #'kill-current-buffer
-        :nmv "C-j" #'evil-forward-section-begin
-        :nmv "C-k" #'evil-backward-section-begin))
+(map! :inmv "C-s" #'evil-write
+      :nmv "C-q" #'kill-current-buffer
+      :nmv "C-j" #'evil-forward-section-begin
+      :nmv "C-k" #'evil-backward-section-begin)
 ;; Control-bindings:1 ends here
 
 ;; [[file:config.org::*Instant jumping][Instant jumping:1]]
-(after! evil
-  (map! :map evil-snipe-local-mode-map ;; HACK :: need to override evil-snipe
-        :nmvo "s" #'evil-avy-goto-char-2-below
-        :nmvo "S" #'evil-avy-goto-char-2-above))
+(map! :map evil-snipe-local-mode-map ;; HACK :: need to override evil-snipe
+      :nmvo "s" #'evil-avy-goto-char-2-below
+      :nmvo "S" #'evil-avy-goto-char-2-above)
 ;; Instant jumping:1 ends here
 
 ;; [[file:config.org::*Evil surround operator][Evil surround operator:1]]
-(after! evil
-  (map! :map evil-operator-state-map
-        "`" #'evil-surround-edit)
-  (map! :nmv "`" #'evil-surround-region
-        :nmv "`" #'evil-surround-region))
+(map! :map evil-operator-state-map
+      "`" #'evil-surround-edit)
+(map! :nmv "`" #'evil-surround-region
+      :nmv "`" #'evil-surround-region)
 ;; Evil surround operator:1 ends here
 
 ;; [[file:config.org::*Alignment][Alignment:1]]
-(after! evil
-  (map! :nmv "g<" #'evil-lion-left
-        :nmv "g>" #'evil-lion-right))
+(map! :nmv "g<" #'evil-lion-left
+      :nmv "g>" #'evil-lion-right)
 ;; Alignment:1 ends here
 
 ;; [[file:config.org::*Org mode][Org mode:1]]
-(after! evil-org
-  (map! :map evil-org-mode-map
-        :nmv "C-j"     #'org-forward-element
-        :nmv "C-k"     #'org-backward-element))
+(map! :map evil-org-mode-map
+      :nmv "C-j"     #'org-forward-element
+      :nmv "C-k"     #'org-backward-element)
 ;; Org mode:1 ends here
 
-;; [[file:config.org::*Dired][Dired:1]]
+;; [[file:config.org::*Dired (keys)][Dired (keys):1]]
 (after! dired
   (map! :map dired-mode-map
         :nm "h" #'dired-up-directory
@@ -253,37 +244,12 @@
         :nm "z" #'dired-do-compress
         :nm "." #'dired-omit-mode
         :nm "e" #'dired-create-empty-file
-        :nm "E" #'dired-create-directory)
+        :nm "E" #'dired-create-directory))
 
   (map! :localleader
         :map dired-mode-map
         :nm "A" #'z-dired-archive)
-
-  (setq dired-omit-files (rx (or (seq bol (? ".") "#")
-                                 (seq bol "." (not (any ".")))
-                                 (seq "~" eol)
-                                 (seq bol "CVS" eol))))
-
-  (setq dired-open-extensions '(("mkv"  . "mpv")
-                                ("mp4"  . "mpv")
-                                ("mp3"  . "ncmpcpp")
-                                ("gif"  . "nsxiv")
-                                ("jpeg" . "nsxiv")
-                                ("jpg"  . "nsxiv")
-                                ("png"  . "nsxiv")
-                                ("docx" . "libreoffice")
-                                ("odt"  . "libreoffice")
-                                ("odf"  . "libreoffice")
-                                ("epub" . "zathura")
-                                ("pdf"  . "zathura")))
-
-  (add-hook! 'dired-mode-hook #'dired-hide-details-mode)
-
-  (setq dired-recursive-copies 'always
-        dired-recursive-deletes 'top
-        global-auto-revert-non-file-buffers t
-        dired-kill-when-opening-new-dired-buffer t))
-;; Dired:1 ends here
+;; Dired (keys):1 ends here
 
 ;; [[file:config.org::*Minibuffer][Minibuffer:1]]
 (map! :map vertico-map
@@ -298,44 +264,42 @@
 ;; Magit:1 ends here
 
 ;; [[file:config.org::*Editor][Editor:1]]
-(after! evil
-  (evil-surround-mode 1)
+(evil-surround-mode 1)
 
-  (setq evil-magic 'very-magic
-        evil-want-fine-undo nil
-        evil-ex-substitute-global t
-        evil-move-cursor-back t
-        evil-move-beyond-eol nil
-        evil-kill-on-visual-paste nil
-        evil-want-C-i-jump t
-        evil-want-minibuffer t)
+(setq evil-magic 'very-magic
+      evil-want-fine-undo nil
+      evil-ex-substitute-global t
+      evil-move-cursor-back t
+      evil-move-beyond-eol nil
+      evil-kill-on-visual-paste nil
+      evil-want-C-i-jump t
+      evil-want-minibuffer t)
 
-  (setq evil-snipe-scope 'visible
-        evil-snipe-repeat-keys t
-        evil-snipe-override-evil-repeat-keys t
-        evil-snipe-auto-scroll nil)
+(setq evil-snipe-scope 'visible
+      evil-snipe-repeat-keys t
+      evil-snipe-override-evil-repeat-keys t
+      evil-snipe-auto-scroll nil)
 
-  (dolist (cmd '(flycheck-next-error
-                 flycheck-previous-error
-                 +lookup/definition
-                 +lookup/references
-                 +lookup/implementations
-                 +default/search-buffer
-                 consult-imenu))
-    (evil-add-command-properties cmd :jump t)))
+(dolist (cmd '(flycheck-next-error
+               flycheck-previous-error
+               +lookup/definition
+               +lookup/references
+               +lookup/implementations
+               +default/search-buffer
+               consult-imenu))
+  (evil-add-command-properties cmd :jump t))
 ;; Editor:1 ends here
 
 ;; [[file:config.org::*Lsp & completion][Lsp & completion:1]]
-(after! company
-  (setq company-minimum-prefix-length 1
-        company-idle-delay 0.1 ;; NOTE :: setting to 0 => huge lags
-        company-show-quick-access t
-        company-global-modes '(not
-                               erc-mode
-                               message-mode
-                               help-mode
-                               gud-mode
-                               vterm-mode)))
+(setq company-minimum-prefix-length 1
+      company-idle-delay 0.1 ;; NOTE :: setting to 0 => huge lags
+      company-show-quick-access t
+      company-global-modes '(not
+                             erc-mode
+                             message-mode
+                             help-mode
+                             gud-mode
+                             vterm-mode))
 ;; Lsp & completion:1 ends here
 
 ;; [[file:config.org::*Templates & snippets][Templates & snippets:1]]
@@ -343,35 +307,32 @@
 ;; Templates & snippets:1 ends here
 
 ;; [[file:config.org::*Dired][Dired:1]]
-(after! dired
-  (setq dired-omit-files
-        (rx (or ;; NOTE:: this is the elegant && extensible way to do regex.
-             (seq bol (? ".") "#")
-             (seq bol "." (not (any ".")))
-             (seq "~" eol)
-             (seq bol "CVS" eol))))
+(setq dired-omit-files
+      (rx (or ;; NOTE:: this is the elegant && extensible way to do regex.
+           (seq bol (? ".") "#")
+           (seq bol "." (not (any ".")))
+           (seq "~" eol)
+           (seq bol "CVS" eol))))
 
-  (setq dired-open-extensions
-        '(("mkv"  . "mpv")
-          ("mp4"  . "mpv")
-          ("mp3"  . "ncmpcpp")
-          ("gif"  . "nsxiv")
-          ("jpeg" . "nsxiv")
-          ("jpg"  . "nsxiv")
-          ("png"  . "nsxiv")
-          ("docx" . "libreoffice")
-          ("odt"  . "libreoffice")
-          ("odf"  . "libreoffice")
-          ("epub" . "zathura")
-          ("pdf"  . "zathura")))
+(setq dired-open-extensions '(("mkv"  . "mpv")
+        ("mp4"  . "mpv")
+        ("mp3"  . "ncmpcpp")
+        ("gif"  . "nsxiv")
+        ("jpeg" . "nsxiv")
+        ("jpg"  . "nsxiv")
+        ("png"  . "nsxiv")
+        ("docx" . "libreoffice")
+        ("odt"  . "libreoffice")
+        ("odf"  . "libreoffice")
+        ("epub" . "zathura")
+        ("pdf"  . "zathura")))
 
-  (add-hook! 'dired-mode-hook #'dired-hide-details-mode)
+(add-hook! 'dired-mode-hook #'dired-hide-details-mode)
 
-  (setq
-   dired-recursive-copies 'always
-   dired-recursive-deletes 'top
-   global-auto-revert-non-file-buffers t
-   dired-kill-when-opening-new-dired-buffer t))
+(setq dired-recursive-copies 'always
+ dired-recursive-deletes 'top
+ global-auto-revert-non-file-buffers t
+ dired-kill-when-opening-new-dired-buffer t)
 ;; Dired:1 ends here
 
 ;; [[file:config.org::*Archive file][Archive file:1]]
@@ -421,7 +382,7 @@
 ;; [[file:config.org::*Options][Options:1]]
 (add-hook! 'org-mode-hook
            #'visual-line-mode
-           #'org-num-mode
+           #'org-fragtog-mode
            #'org-appear-mode
            #'org-auto-tangle-mode)
 
@@ -431,16 +392,18 @@
       org-reverse-note-order t
       org-startup-with-inline-images t
       org-startup-indented t
+      org-startup-numerated t
+      org-startup-align-all-tables t
       org-list-allow-alphabetical t
       org-tags-column 0
       org-fold-catch-invisible-edits 'smart
       org-export-headline-levels 5
-      ;; org-refile-use-outline-path 'file ;; [&]
+      org-refile-use-outline-path 'full-file-path
       org-refile-allow-creating-parent-nodes 'confirm
       org-use-sub-superscripts '{}
+      org-export-with-sub-superscripts '{}
       org-fontify-quote-and-verse-blocks t
       org-fontify-whole-block-delimiter-line t
-      org-export-with-sub-superscripts '{}
       doom-themes-org-fontify-special-tags t
       org-ellipsis "…"
       org-num-max-level 3

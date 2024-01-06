@@ -1,12 +1,12 @@
 # -*- mode: snippet -*-
-# name: org-file-header
-# key: org-file-header
-# uuid: org-file-header
+# name: header
+# key: header
+# uuid: header
 # --
 #+title:  ${1:`(s-titleized-words (replace-regexp-in-string "[-_.]" " " (file-name-base (or buffer-file-name "new buffer"))))`}
-#+author: :`user-full-name`
+#+author: `user-full-name`
 #+email:  `user-mail-address`
 #+date:   `(format-time-string "%F")`
-#+info:   ${2:Short description of document.}
+#+info:   ${2:Short description of document}
 
 $0

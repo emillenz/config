@@ -313,6 +313,7 @@
                  +lookup/definition
                  +lookup/references
                  +lookup/implementations
+                 +default/search-buffer
                  consult-imenu))
     (evil-add-command-properties cmd :jump t)))
 ;; Editor:1 ends here
@@ -406,9 +407,9 @@
       (replace-match "\n\n"))))
 ;; Clean Whitespace:1 ends here
 
-;; [[file:config.org::*\[begin\]][[begin]:1]]
+;; [[file:config.org::*\[begin org-after-block\]][[begin org-after-block]:1]]
 (after! org
-;; [begin]:1 ends here
+;; [begin org-after-block]:1 ends here
 
 ;; [[file:config.org::*Options][Options:1]]
 (add-hook! 'org-mode-hook
@@ -532,7 +533,7 @@
                            (?3 . 'all-the-icons-yellow)))
 
 (setq org-log-note-headings '((done        . "done note: %t")
-                              (state       . "state: %-3S -> %-6s %t") ;; NOTE :: DON'T change this?; my task-statuses are all 3x wide -> formatting needs adjustment if not used like that
+                              (state       . "state: %-3S -> %-3s %t") ;; NOTE :: DON'T change this?; my task-statuses are all 3x wide -> formatting needs adjustment if not in order to align them.
                               (note        . "note: %t")
                               (reschedule  . "reschedule: %S, %t")
                               (delschedule . "del-scheduled: %S, %t")
@@ -799,9 +800,9 @@ This helper function is used to consistently create filepaths for the 'agenda.or
               :template ("%?"))))))))
 ;; Capture templates:1 ends here
 
-;; [[file:config.org::*\[End\]][[End]:1]]
+;; [[file:config.org::*\[end: org-after-block\]][[end: org-after-block]:1]]
 )
-;; [End]:1 ends here
+;; [end: org-after-block]:1 ends here
 
 ;; [[file:config.org::*Nushell][Nushell:1]]
 (load! "user/nushell-mode.el")

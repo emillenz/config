@@ -14,14 +14,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   - modules: [[file:init.el]]
   - packages:[[file:packages.el]]
 
-** On comments
-- Valid comments should describe the why, the philosophy, the principle, the reason, and never explain what something does.
-- Emacs is self documenting, instead of explaining what a function does with a comment, you should just read the ALREADY EXISTING writtten documentation for it (function doc).
-- This is a principle which is elegant, extensible, structured for the following reasons:
-  - If code is changed, comment isn't updated automatically => can & will be forgotter (redundant/confusing comments)
-  - Code is data (rewrite code flow such that it is more understandeable)
-[[file:~/Documents/compass/computing/coding_principles.org][Coding Principles]]
-
 * User
 #+begin_src emacs-lisp
 (setq user-full-name "Emil Lenz"
@@ -240,7 +232,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   - ~M~ usecase: scratch mark: ~m~ (hook pos with ~mm~ -> do edits -> jump back to hooked pos: ~M~)
   - ~()~: Remapped to parens jumping
   - ~&~: Allows for same usage as normal: ~&~, but allows repeating any last command.
-  - ~TAB~: folding | inspired bby org-modes folding (simple one-stop folding)
+  - ~TAB~: folding (inspired bby org-modes folding (smart/simple one-key folding))
 - (Emacs already by default implements it that out of screen jumps center the screen which is sensible )
 
 #+begin_src emacs-lisp
@@ -277,7 +269,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   - jumplist-jumps: ~C-i/o~
   - page scrolling: ~C-u/d~
   - screen-scrolling:  ~C-y/e~
-    - sensible and consistent with other modes (~info~, ~magit~..)
+    - sensible and consistent with other modes (~info~, ~magit~, ~company~..)
   - paragraph nav: ~C-j/k~
 - ~C-s~  mapped sensibly to statistically frequently executed commands.
   - ~:w~ is the statistically most run vim-ex-command, but not very unergonomic.
@@ -420,6 +412,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
                  +lookup/definition
                  +lookup/references
                  +lookup/implementations
+                 +default/search-buffer
                  consult-imenu))
     (evil-add-command-properties cmd :jump t)))
 #+end_src
@@ -502,8 +495,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 ** Indentation: 2 spaces
 - consistency :: The only reliable, repeatable, transportable way to ensure that indentation remains consistent across viewing environments is to indent you code using only spaces.
-  - With tabs you will always get some cases where there is spaces where there should be a tab and vice versa, this needs then to be fixed manually. (eg: evil shift, or evil-align)
-- Having 8x or 4x indentations makes the code move too far to the right, and makes it really incoherent and spaced out on a 100-character terminal screen.
+  - tabs :: With tabs you will always get some cases where there is spaces where there should be a tab and vice versa, this needs then to be fixed manually. (eg: evil shift, or evil-align)
+- larger :: Having 8x or 4x indentations makes the code move too far to the right, and makes it really incoherent and spaced out on a 100-character terminal screen.
   - Scanning code horizontally is alot harder than reading it vertically. Especially when you’ve been looking at your screen for 20 straight hours, you’ll find it a lot easier to read your code if it is compacted and concise.
 - nesting :: if you need more than 3 levels of indentation, you’re screwed anyway and have nested your functions too deep and should fix your program.
 - completion :: ~<TAB>~ never autocompletes, confirm the autocompletion with ~<RET>~. (consistent with all other programs on the os (neovim, nushell, browser...))
@@ -534,7 +527,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 * Org
-** [begin]
+** [begin org-after-block]
 #+begin_src emacs-lisp
 (after! org
 #+end_src
@@ -734,7 +727,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
                              (?3 . 'all-the-icons-yellow)))
 
   (setq org-log-note-headings '((done        . "done note: %t")
-                                (state       . "state: %-3S -> %-6s %t") ;; NOTE :: DON'T change this?; my task-statuses are all 3x wide -> formatting needs adjustment if not used like that
+                                (state       . "state: %-3S -> %-3s %t") ;; NOTE :: DON'T change this?; my task-statuses are all 3x wide -> formatting needs adjustment if not in order to align them.
                                 (note        . "note: %t")
                                 (reschedule  . "reschedule: %S, %t")
                                 (delschedule . "del-scheduled: %S, %t")
@@ -806,38 +799,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
         org-clock-into-drawer t)
 #+end_src
 
-** Org workflow
-*** Daily Journal
-1. Brainstorm & get an overview of today
-   a. Write down all:
-      - TODO's
-      - tasks
-      - events
-      - projects
-2. Prioritize them based on how important they are (important / not important)
-3. Assess & rank them based on urgence. (urgent / not urgent)
-4. Schedule each item into the day according to the urgence & importance assessment
-   - urgent & important
-   - urgent & not important
-   - not urgent important
-   - not urgent & not important
-5. Allocate a precise timeframe for each item, not vaguely. if not important & not urgent, dont assign a timestamp
-6. Write out details on how to achive that task if neccessary.
-7. Refile each item into the respective file in the ~org-directory~ under the headline ~Inbox~ // use one file per project ex: ~personal~, ~uni~, ~work~
-
-*** Org directory
-- 2 files per project, (ex: ~uni~, ~personal~)
-  - Todo (todo items, tasks)
-  - Agenda: all events (meetings, appointments,...)
-- 1 Folder/file for notes => multiple different subjects => maybe more notes needed ex:
-  - lecture notes
-  - exercise notes
-  - ideas
-
-*** Timetracking
-- Use org-clock to track the time spent on tasks / projects.
-
-** UI - notes
+** Notes on UI
 - Ensure all headings and faces have the same heigth => better overview & less overhead
   - Visually distinctualize headings & keywods from the rest of the text with coloring and bold
 - Like in code, everything is code/data => also org mode / latex documents.
@@ -911,6 +873,9 @@ Jumps at tangled code from org src block."
 - For each project there is a separate folder (relative to org-dir) with files:
   - agenda :: all tasks (todos, completed etc) and events (physical appointments)
   - notes :: Thoughts, exploration -> to study, to remember, to refactor
+  - set tags for entire file in header with ~#+filetags: :proj:~
+  - configure file-local tags-presets with: ~#+tags: tag1 tag2~
+    + will get you completion when setting tags in file (eg: ~:question:~)
 
 #+begin_src emacs-lisp
 (defvar z-journal-dir "~/Documents/journal/"
@@ -1076,7 +1041,24 @@ This helper function is used to consistently create filepaths for the 'agenda.or
               :template ("%?"))))))))
 #+end_src
 
-** [End]
+*** Daily Journal - Useage
+1. Brainstorm & get an overview of today
+   a. Write down all:
+      - TODO's
+      - tasks
+      - events
+2. Prioritize them based on how important they are (important / not important)
+3. Assess & rank them based on urgence. (urgent / not urgent)
+4. Schedule each item into the day according to the urgence & importance assessment
+   - urgent & important
+   - urgent & not important
+   - not urgent important
+   - not urgent & not important
+5. Allocate a precise timeframe for each item, not vaguely. if not important & not urgent, dont assign a timestamp
+6. Write out details on how to achive that task if neccessary.
+7. Refile the task to the respective ~agenda~ file (for the respective project).
+
+** [end: org-after-block]
 #+begin_src emacs-lisp
   )
 #+end_src
@@ -1097,3 +1079,45 @@ This helper function is used to consistently create filepaths for the 'agenda.or
 #+begin_src emacs-lisp
 (setq +latex-viewers '(zathura pdf-tools))
 #+end_src
+
+* Computing Workflow Principles
+Following these principles will greatly improve the quality, longevity and consistency of your computing workflow. Since these are things that cannot be standardized through the config, they are the user's responsibility to implement.
+
+** File naming
+ #+begin_quote
+ A consistent file-naming scheme is the single best optimisation I ever did to my computing. Notwithstanding the Emacs parts.
+ - protesilaos stavrou
+#+end_quote
+
+*** Syntax
+~DATE_TITLE_TAGS.txt~
+
+- separator :: ~_~ for a new section, ~-~ for "spaces" between words
+- date :: in ISO 8601 date format. (ex: =2023-12-31=)
+  - time :: if neccessary, then concatted to date in (file-name appropriate) ISO 8601 time format (ex: =2024-01-06-T1145=, =T091654= is military time for: =11:45:54=
+- tags :: ex: =philosophy=, =economics=
+  - can also be subprojects
+- lowercase :: filenames are data, hence all lowercase (same as variables)
+
+ex: ~2023-12-31_communist-manifesto_philosophy-economics-politics.org~
+
+** File metadata
+In each new file systematically insert heading metadata (as comments) with the following template (+ more if suitable):
+#+begin_example
+#---
+#title:  File Metadata
+#author: Emil Lenz
+#email:  emillenz@protonmail.com
+#date:   2024-01-06
+#info:   Outlines file-metadata template, to be inserted at top of every file systematically.
+#---
+#+end_example
+- title :: Full title of document.
+- author :: document creator/"owner".
+- email :: author's email
+  - for contacting him with question's / reaching out.
+- date :: date of file creation, ISO 8601 format.
+  - track your coding/writing progress over the years and just generally it is important to document the timing of things, to analyze/order/reconstruct them.
+- info :: Short document description/summary, think of it as a docstring for the file with this the reader should know what the document is about in one line.
+
+- Do this using templates (keep workflow DRY).

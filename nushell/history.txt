@@ -1,18 +1,3 @@
-take -h | bat
-take until -h | bat
-$data | take until {|x| $x = ""}
-$data | take until {|x| $x = " "}
-$data | take until {|x| $x == ""}
-$data | take until {|x| $x ~= ""}
-$data | take until {|x| $x != ""}
-$data | take until {|x| $x == ""}
-$data | take until {|x| ($x | str starts-with '') }
-$data | take until {|x| ($x | str starts-with '#') }
-$data | take until {|x| ($x | str starts-with '\#') }
-$data | take until {|x| $x == ""}
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x == ""} | length) - 1)<\n>$end<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x == ""} | length) - 1)<\n>$end<\n># for i in ($data | range ($begin)..($end)) {<\n>#     print $i<\n># }
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>$end<\n># for i in ($data | range ($begin)..($end)) {<\n>#     print $i<\n># }
 let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
 let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>touch test.txt<\n>for i in ($data | range ($begin)..($end)) {<\n>    $i | save -a test.txt<\n>}
 bat test.txt
@@ -9998,3 +9983,18 @@ sudo xset -dpms  && xset s off
 sudo xset -dpms; sudo xset s off
 2023 % 17
 2023 mod 17
+emacs --debug-init
+ls **/*tasks.org
+ls **/*tasks.org | get name | each {|f| mv $f (str replace "tasks" "agenda"} |
+ls **/*tasks.org | get name | each {|f| mv $f (str replace "tasks" "agenda")}
+ls **/*tasks.org | get name | each {|f| mv $f ($f | str replace "tasks" "agenda")}
+tree
+ls
+help\ str replace
+help str replace
+ls **/*tasks.org | get name | each {|f| open $f | (str replace -r "(?i)tasks" "Agenda")}
+ls **/*agenda.org | get name | each {|f| open $f | (str replace -r "(?i)tasks" "Agenda")}
+ls **/*agenda.org | get name | each {|f| open $f | (str replace -r "(?i)tasks" "Agenda") | save -f $in}
+ls **/*agenda.org | get name | each {|f| open $f | (str replace -r "(?i)tasks" "Agenda") | save -f $f}
+ls **/*agenda.org | get name | each {|f| open $f }
+ls compass/

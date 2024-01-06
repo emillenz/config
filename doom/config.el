@@ -17,9 +17,7 @@
 ;; Theme: Solarized:1 ends here
 
 ;; [[file:config.org::*Font][Font:1]]
-(setq doom-font-increment 1
-      doom-big-font-increment 1
-      doom-font                (font-spec :family "Iosevka Comfy" :size 14)
+(setq doom-font                (font-spec :family "Iosevka Comfy" :size 14)
       doom-variable-pitch-font (font-spec :family "Iosevka Comfy Duo" :size 14)
       doom-serif-font          (font-spec :family "Iosevka Comfy Motion Duo" :size 14)
       doom-big-font            (font-spec :family "Iosevka Comfy" :size 24))
@@ -49,14 +47,14 @@
 
 (after! org
   (setq org-src-window-setup 'current-window)
-  (set-popup-rule! "^\\*Org Src" :ignore t)) ;; HACK :: fullscreen window
+  (set-popup-rule! "^\\*Org Src" :ignore t))
 
-;; HACK :: will only take effect after the config has been reloaded (weird..)
-(setq-default +popup-defaults '(:side right
-                                :width 0.33
-                                :select nil
-                                :quit nil
-                                :modeline t))
+;; HACK :: will only take effect after the config has been reloaded (have tried almost everything)
+(setq +popup-defaults '(:side right
+                        :width 0.33
+                        :select nil
+                        :quit nil
+                        :modeline t))
 ;; Window layout & behavior:1 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:2]]
@@ -70,8 +68,8 @@
 (global-display-fill-column-indicator-mode -1)
 (setq visual-fill-column-enable-sensible-window-split t
       visual-fill-column-center-text t
-      visual-fill-column-width 100)
-(setq-default fill-column 100)
+      visual-fill-column-width 100
+      fill-column 100)
 ;; Window layout & behavior:2 ends here
 
 ;; [[file:config.org::*Misc Options][Misc Options:1]]
@@ -124,15 +122,15 @@
                             "s" #'+lookup/synonyms
                             "t" #'dictionary-search)))
 
-  (map! :localleader
-        :map org-mode-map
-        "\\" #'org-latex-preview
-        (:prefix-map ("C" . "code")
-                     "d" #'org-babel-detangle
-                     "J" #'org-babel-tangle-jump-to-org
-                     "j" #'z-jump-src
-                     "t" #'org-babel-tangle
-                     "e" #'org-edit-special))
+(map! :localleader
+      :map org-mode-map
+      "\\" #'org-latex-preview
+      (:prefix-map ("C" . "code")
+                   "d" #'org-babel-detangle
+                   "J" #'org-babel-tangle-jump-to-org
+                   "j" #'z-jump-src
+                   "t" #'org-babel-tangle
+                   "e" #'org-edit-special))
 ;; Leader:1 ends here
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:1]]
@@ -246,9 +244,9 @@
         :nm "e" #'dired-create-empty-file
         :nm "E" #'dired-create-directory))
 
-  (map! :localleader
-        :map dired-mode-map
-        :nm "A" #'z-dired-archive)
+(map! :localleader
+      :map dired-mode-map
+      :nm "A" #'z-dired-archive)
 ;; Dired (keys):1 ends here
 
 ;; [[file:config.org::*Minibuffer][Minibuffer:1]]
@@ -315,24 +313,24 @@
            (seq bol "CVS" eol))))
 
 (setq dired-open-extensions '(("mkv"  . "mpv")
-        ("mp4"  . "mpv")
-        ("mp3"  . "ncmpcpp")
-        ("gif"  . "nsxiv")
-        ("jpeg" . "nsxiv")
-        ("jpg"  . "nsxiv")
-        ("png"  . "nsxiv")
-        ("docx" . "libreoffice")
-        ("odt"  . "libreoffice")
-        ("odf"  . "libreoffice")
-        ("epub" . "zathura")
-        ("pdf"  . "zathura")))
+                              ("mp4"  . "mpv")
+                              ("mp3"  . "ncmpcpp")
+                              ("gif"  . "nsxiv")
+                              ("jpeg" . "nsxiv")
+                              ("jpg"  . "nsxiv")
+                              ("png"  . "nsxiv")
+                              ("docx" . "libreoffice")
+                              ("odt"  . "libreoffice")
+                              ("odf"  . "libreoffice")
+                              ("epub" . "zathura")
+                              ("pdf"  . "zathura")))
 
 (add-hook! 'dired-mode-hook #'dired-hide-details-mode)
 
 (setq dired-recursive-copies 'always
- dired-recursive-deletes 'top
- global-auto-revert-non-file-buffers t
- dired-kill-when-opening-new-dired-buffer t)
+      dired-recursive-deletes 'top
+      global-auto-revert-non-file-buffers t
+      dired-kill-when-opening-new-dired-buffer t)
 ;; Dired:1 ends here
 
 ;; [[file:config.org::*Archive file][Archive file:1]]
@@ -579,195 +577,195 @@
 
 ;; [[file:config.org::*Jump to src file][Jump to src file:1]]
 (defun z-jump-src ()
-  "The opposite of `org-babel-tangle-jump-to-org'.
+    "The opposite of `org-babel-tangle-jump-to-org'.
 Jumps at tangled code from org src block."
-  (interactive)
-  (basic-save-buffer)
-  (org-babel-tangle)
-  (if (org-in-src-block-p)
-      (let* ((header (car (org-babel-tangle-single-block 1
-                                                         'only-this-block)))
-             (tangle (car header))
-             (lang (caadr header))
-             (buffer (nth 2 (cadr header)))
-             (org-id (nth 3 (cadr header)))
-             (source-name (nth 4 (cadr header)))
-             (search-comment (org-fill-template org-babel-tangle-comment-format-beg
-                                                `(("link" . ,org-id)
-                                                  ("source-name" . ,source-name))))
-             (file (expand-file-name (org-babel-effective-tangled-filename buffer
-                                                                           lang
-                                                                           tangle))))
-        (if (not (file-exists-p file))
-            (message "File does not exist. 'org-babel-tangle' first to create file.")
-          (find-file file)
-          (goto-char (point-min))
-          (search-forward search-comment)))
-    (message "Cannot jump to tangled file because point is not at org src block.")))
+    (interactive)
+    (basic-save-buffer)
+    (org-babel-tangle)
+    (if (org-in-src-block-p)
+        (let* ((header (car (org-babel-tangle-single-block 1
+                                                           'only-this-block)))
+               (tangle (car header))
+               (lang (caadr header))
+               (buffer (nth 2 (cadr header)))
+               (org-id (nth 3 (cadr header)))
+               (source-name (nth 4 (cadr header)))
+               (search-comment (org-fill-template org-babel-tangle-comment-format-beg
+                                                  `(("link" . ,org-id)
+                                                    ("source-name" . ,source-name))))
+               (file (expand-file-name (org-babel-effective-tangled-filename buffer
+                                                                             lang
+                                                                             tangle))))
+          (if (not (file-exists-p file))
+              (message "File does not exist. 'org-babel-tangle' first to create file.")
+            (find-file file)
+            (goto-char (point-min))
+            (search-forward search-comment)))
+      (message "Cannot jump to tangled file because point is not at org src block.")))
 ;; Jump to src file:1 ends here
 
 ;; [[file:config.org::*Capture templates][Capture templates:1]]
 (defvar z-journal-dir "~/Documents/journal/"
-  "Directory for daily journal files.")
-(defvar z-literature-notes-dir "~/Documents/literature/notes/"
-  "Directory for literature notes.")
-(defvar z-literature-source-dir "~/Documents/literature/source/"
-  "Directory for literature source files.")
+    "Directory for daily journal files.")
+  (defvar z-literature-notes-dir "~/Documents/literature/notes/"
+    "Directory for literature notes.")
+  (defvar z-literature-source-dir "~/Documents/literature/source/"
+    "Directory for literature source files.")
 
-(defun z-doct-agenda (projects &optional parent)
-  "Generate doct agenda preset for project.
+  (defun z-doct-agenda (projects &optional parent)
+    "Generate doct agenda preset for project.
 This helper function is used to consistently create filepaths for the 'agenda.org' file of the project.
 "
-  (cl-loop for (name key) in projects
-           collect `(,name
-                     :keys ,key
-                     :file ,(file-name-concat org-directory
-                                              (car parent)
-                                              name
-                                              "agenda.org"))))
+    (cl-loop for (name key) in projects
+             collect `(,name
+                       :keys ,key
+                       :file ,(file-name-concat org-directory
+                                                (car parent)
+                                                name
+                                                "agenda.org"))))
 
-(setq
- org-capture-templates
- ;; NOTE:: Define generic projects here for refuse in 'notes' and 'agenda'.
- (let ((cs       '("cs"       "c"))
-       (dm       '("dm"       "d"))
-       (ad       '("ad"       "a"))
-       (la       '("la"       "l"))
-       (ep       '("ep"       "e"))
-       (personal '("personal" "p"))
-       (config   '("config"   "f"))
-       (compass  '("compass"  "o"))
-       (journal  '("journal"  "j")))
+  (setq
+   org-capture-templates
+   ;; NOTE:: Define generic projects here for refuse in 'notes' and 'agenda'.
+   (let ((cs       '("cs"       "c"))
+         (dm       '("dm"       "d"))
+         (ad       '("ad"       "a"))
+         (la       '("la"       "l"))
+         (ep       '("ep"       "e"))
+         (personal '("personal" "p"))
+         (config   '("config"   "f"))
+         (compass  '("compass"  "o"))
+         (journal  '("journal"  "j")))
 
-   (doct `(("task" :keys "t"
-            :headline "Inbox"
-            :prepend t
-            :empty-lines-after 1
-            :template ("* [ ] %^{title} %^g"
-                       "%?")
-            :children ((,(car cs) :keys ,(cadr cs)
-                        :children ,(z-doct-agenda (list cs dm ad la ep) cs))
-                       ,@(z-doct-agenda (list personal config compass))))
+     (doct `(("task" :keys "t"
+              :headline "Inbox"
+              :prepend t
+              :empty-lines-after 1
+              :template ("* [ ] %^{title} %^g"
+                         "%?")
+              :children ((,(car cs) :keys ,(cadr cs)
+                          :children ,(z-doct-agenda (list cs dm ad la ep) cs))
+                         ,@(z-doct-agenda (list personal config compass))))
 
-           ("event" :keys "e"
-            :headline "Events"
-            :empty-lines-after 1
-            :prepend t
-            :template ("* [#] %^{title} %^g"
-                       "%^T"
-                       ":PROPERTIES:"
-                       ":location: %^{location}"
-                       ":material: %^{material}"
-                       ":END:"
-                       "%?")
-            :children (,@(z-doct-agenda (list personal))
-                       ,@(z-doct-agenda (list cs dm ad la ep) cs)))
-
-           ("note" :keys "n"
-            :empty-lines-after 1
-            :prepend t
-            :template ("* %^{title} %^g"
-                       ":PROPERTIES:"
-                       ":created: %U"
-                       ":END:"
-                       "%?")
-            :children ((,(car cs) :keys ,(cadr cs)
-                        :children ,(z-doct-agenda (list cs dm ad la ep) cs))
-                       ,@(z-doct-agenda (list personal compass config))))
-
-           ("journal" :keys "j"
-            :file (lambda ()
-                    (file-name-concat z-journal-dir
-                                      (format "%s_journal.org" (format-time-string "%F"))))
-            :children (("init-today" :keys "i"
-                        :type plain
-                        :template ("#+title:  Daily Note: %<%F>"
-                                   "#+author: %(user-full-name)"
-                                   "#+email:  %(message-user-mail-address)"
-                                   "#+date:   %<%F>"
-                                   ""
-                                   "* Personal Goals"
-                                   "- %?"
-                                   "* Agenda"
-                                   "** [ ] "))
-                       ("entry" :keys "e"
-                        :empty-lines-after 1
-                        :template ("* %^{title}"
-                                   ":PROPERTIES:"
-                                   ":created: %U"
-                                   ":END:"
-                                   "%?"))
-
-                       ("review-today" :keys "r"
-                        :unnarrowed  t
-                        :template ("* Gratitude"
-                                   "- %?"
-                                   ""
-                                   "* Reflection"
-                                   "-"))))
-
-           ("literature" :keys "l"
-            :file (lambda () (read-file-name "file: " z-literature-notes-dir))
-            :children
-            (("init-source" :keys "i"
-              :file (lambda ()
-                      (let* ((source (file-name-base (read-file-name "source: " z-literature-source-dir)))
-                             (prompt (format "%s.org" (downcase (replace-regexp-in-string " " "-" source))))
-                             (name (read-from-minibuffer "filename: " prompt)))
-                        (file-name-concat z-literature-notes-dir name)))
-              :type plain
-              :immediate-finish t
-              :book-author (lambda () (s-titleized-words (read-from-minibuffer "author: " )))
-              :template ("#+title:  %^{title}"
-                         "#+author: %(user-full-name)"
-                         "#+email:  %(message-user-mail-address)"
-                         "#+date:   %<%F>"
-                         ""
-                         "* [-] %\1"
+             ("event" :keys "e"
+              :headline "Events"
+              :empty-lines-after 1
+              :prepend t
+              :template ("* [#] %^{title} %^g"
+                         "%^T"
                          ":PROPERTIES:"
-                         ":title:  %\1"
-                         ":author: %^{author}"
-                         ":year:   %^{year}"
-                         ":tags:   %^{tags}"
-                         ":type:   %^{type|book|ebook|academic-paper|article|audio-book|podcast}"
-                         ":pages:  %^{pages}"
+                         ":location: %^{location}"
+                         ":material: %^{material}"
                          ":END:"
-                         ""
-                         "** Excerpts"
-                         "** Literature Notes"
-                         "** Transient Notes"
-                         "** Summary"
-                         "%?"))
-             ("excerpt" :keys "e"
-              :headline "Excerpts"
-              :empty-lines-after 1
-              :template
-              ("* %^{title} [p:%^{page}]"
-               "#+begin_quote"
-               "%x"
-               "#+end_quote"
-               "%?"))
+                         "%?")
+              :children (,@(z-doct-agenda (list personal))
+                         ,@(z-doct-agenda (list cs dm ad la ep) cs)))
 
-             ("literary-note" :keys "l"
-              :headline "Literature Notes"
+             ("note" :keys "n"
               :empty-lines-after 1
-              :template
-              ("* %^{title} [p:%^{page}]"
-               "%?"))
+              :prepend t
+              :template ("* %^{title} %^g"
+                         ":PROPERTIES:"
+                         ":created: %U"
+                         ":END:"
+                         "%?")
+              :children ((,(car cs) :keys ,(cadr cs)
+                          :children ,(z-doct-agenda (list cs dm ad la ep) cs))
+                         ,@(z-doct-agenda (list personal compass config))))
 
-             ("transient-note" :keys "t"
-              :headline "Transient Notes"
-              :empty-lines-after 1
-              :template
-              ("* %^{title}"
-               "%?"))
+             ("journal" :keys "j"
+              :file (lambda ()
+                      (file-name-concat z-journal-dir
+                                        (format "%s_journal.org" (format-time-string "%F"))))
+              :children (("init-today" :keys "i"
+                          :type plain
+                          :template ("#+title:  Daily Note: %<%F>"
+                                     "#+author: %(user-full-name)"
+                                     "#+email:  %(message-user-mail-address)"
+                                     "#+date:   %<%F>"
+                                     ""
+                                     "* Personal Goals"
+                                     "- %?"
+                                     "* Agenda"
+                                     "** [ ] "))
+                         ("entry" :keys "e"
+                          :empty-lines-after 1
+                          :template ("* %^{title}"
+                                     ":PROPERTIES:"
+                                     ":created: %U"
+                                     ":END:"
+                                     "%?"))
 
-             ;; NOTE:: make sure to complete the literature-task-headline in order to log closing time.
-             ("close-source" :keys "c"
-              :headline "Summary"
-              :unnarrowed t
-              :type plain
-              :template ("%?"))))))))
+                         ("review-today" :keys "r"
+                          :unnarrowed  t
+                          :template ("* Gratitude"
+                                     "- %?"
+                                     ""
+                                     "* Reflection"
+                                     "-"))))
+
+             ("literature" :keys "l"
+              :file (lambda () (read-file-name "file: " z-literature-notes-dir))
+              :children
+              (("init-source" :keys "i"
+                :file (lambda ()
+                        (let* ((source (file-name-base (read-file-name "source: " z-literature-source-dir)))
+                               (prompt (format "%s.org" (downcase (replace-regexp-in-string " " "-" source))))
+                               (name (read-from-minibuffer "filename: " prompt)))
+                          (file-name-concat z-literature-notes-dir name)))
+                :type plain
+                :immediate-finish t
+                :book-author (lambda () (s-titleized-words (read-from-minibuffer "author: " )))
+                :template ("#+title:  %^{title}"
+                           "#+author: %(user-full-name)"
+                           "#+email:  %(message-user-mail-address)"
+                           "#+date:   %<%F>"
+                           ""
+                           "* [-] %\1"
+                           ":PROPERTIES:"
+                           ":title:  %\1"
+                           ":author: %^{author}"
+                           ":year:   %^{year}"
+                           ":tags:   %^{tags}"
+                           ":type:   %^{type|book|ebook|academic-paper|article|audio-book|podcast}"
+                           ":pages:  %^{pages}"
+                           ":END:"
+                           ""
+                           "** Excerpts"
+                           "** Literature Notes"
+                           "** Transient Notes"
+                           "** Summary"
+                           "%?"))
+               ("excerpt" :keys "e"
+                :headline "Excerpts"
+                :empty-lines-after 1
+                :template
+                ("* %^{title} [p:%^{page}]"
+                 "#+begin_quote"
+                 "%x"
+                 "#+end_quote"
+                 "%?"))
+
+               ("literary-note" :keys "l"
+                :headline "Literature Notes"
+                :empty-lines-after 1
+                :template
+                ("* %^{title} [p:%^{page}]"
+                 "%?"))
+
+               ("transient-note" :keys "t"
+                :headline "Transient Notes"
+                :empty-lines-after 1
+                :template
+                ("* %^{title}"
+                 "%?"))
+
+               ;; NOTE:: make sure to complete the literature-task-headline in order to log closing time.
+               ("close-source" :keys "c"
+                :headline "Summary"
+                :unnarrowed t
+                :type plain
+                :template ("%?"))))))))
 ;; Capture templates:1 ends here
 
 ;; [[file:config.org::*\[end: org-after-block\]][[end: org-after-block]:1]]

@@ -2,6 +2,8 @@
 #+author: Emil Lenz
 #+email:  emillenz@protonmail.com
 #+date:   2022-11-1
+#+info:   Heavily opinionated emacs config with a principle-focused approach on: consistency, quality, efficiency & extensibility.
+
 #+property: header-args:emacs-lisp tangle config.el :comments link
 
 * Preface
@@ -384,6 +386,15 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (map! :map vertico-map
       :nmi "M-g" #'consult-dir)
 #+end_src
+
+** Magit
+#+begin_src emacs-lisp
+(after! magit
+  (map! :map magit-mode-map
+        :nm "C-j" #'magit-section-forward-sibling
+        :nm "C-k" #'magit-section-backward-sibling))
+#+end_src
+
 
 * Editor
 - evil-mode :: need it everywhere => enable evil mode in minibuffers
@@ -1104,13 +1115,13 @@ ex: ~2023-12-31_communist-manifesto_philosophy-economics-politics.org~
 ** File metadata
 In each new file systematically insert heading metadata (as comments) with the following template (+ more if suitable):
 #+begin_example
-#---
-#title:  File Metadata
-#author: Emil Lenz
-#email:  emillenz@protonmail.com
-#date:   2024-01-06
-#info:   Outlines file-metadata template, to be inserted at top of every file systematically.
-#---
+# ---
+# title:  File Metadata
+# author: Emil Lenz
+# email:  emillenz@protonmail.com
+# date:   2024-01-06
+# info:   Outlines file-metadata template, to be inserted at top of every file systematically.
+# ---
 #+end_example
 - title :: Full title of document.
 - author :: document creator/"owner".

@@ -290,6 +290,13 @@
       :nmi "M-g" #'consult-dir)
 ;; Minibuffer:1 ends here
 
+;; [[file:config.org::*Magit][Magit:1]]
+(after! magit
+  (map! :map magit-mode-map
+        :nm "C-j" #'magit-section-forward-sibling
+        :nm "C-k" #'magit-section-backward-sibling))
+;; Magit:1 ends here
+
 ;; [[file:config.org::*Editor][Editor:1]]
 (after! evil
   (evil-surround-mode 1)

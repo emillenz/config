@@ -118,19 +118,17 @@
                "w" #'z-clean-whitespace)
       (:prefix "s"
                (:prefix-map ("t" . "dictionary")
-                            "d" #'+lookup/dictionary-definition
-                            "s" #'+lookup/synonyms
-                            "t" #'dictionary-search)))
+                        "d" #'+lookup/dictionary-definition
+                        "s" #'+lookup/synonyms
+                        "t" #'dictionary-search)))
 
 (map! :localleader
       :map org-mode-map
       "\\" #'org-latex-preview
-      (:prefix-map ("C" . "code")
-                   "d" #'org-babel-detangle
-                   "J" #'org-babel-tangle-jump-to-org
-                   "j" #'z-jump-src
-                   "t" #'org-babel-tangle
-                   "e" #'org-edit-special))
+      (:prefix-map ("`" . "org-src")
+               "`" #'org-edit-special
+               "g" #'z-goto-src
+               "t" #'org-babel-tangle))
 ;; Leader:1 ends here
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:1]]
@@ -576,7 +574,7 @@
 ;; Keywords to downcase:1 ends here
 
 ;; [[file:config.org::*Jump to src file][Jump to src file:1]]
-(defun z-jump-src ()
+(defun z-goto-src ()
     "The opposite of `org-babel-tangle-jump-to-org'.
 Jumps at tangled code from org src block."
     (interactive)
@@ -641,23 +639,20 @@ This helper function is used to consistently create filepaths for the 'agenda.or
               :headline "Inbox"
               :prepend t
               :empty-lines-after 1
-              :template ("* [ ] %^{title} %^g"
-                         "%?")
+              :template ("* [ ] %^{title} %? %^g")
               :children ((,(car cs) :keys ,(cadr cs)
                           :children ,(z-doct-agenda (list cs dm ad la ep) cs))
                          ,@(z-doct-agenda (list personal config compass))))
 
              ("event" :keys "e"
               :headline "Events"
-              :empty-lines-after 1
               :prepend t
               :template ("* [#] %^{title} %^g"
                          "%^T"
                          ":PROPERTIES:"
                          ":location: %^{location}"
                          ":material: %^{material}"
-                         ":END:"
-                         "%?")
+                         ":END:%?")
               :children (,@(z-doct-agenda (list personal))
                          ,@(z-doct-agenda (list cs dm ad la ep) cs)))
 
@@ -667,8 +662,7 @@ This helper function is used to consistently create filepaths for the 'agenda.or
               :template ("* %^{title} %^g"
                          ":PROPERTIES:"
                          ":created: %U"
-                         ":END:"
-                         "%?")
+                         ":END:%?")
               :children ((,(car cs) :keys ,(cadr cs)
                           :children ,(z-doct-agenda (list cs dm ad la ep) cs))
                          ,@(z-doct-agenda (list personal compass config))))
@@ -679,13 +673,14 @@ This helper function is used to consistently create filepaths for the 'agenda.or
                                         (format "%s_journal.org" (format-time-string "%F"))))
               :children (("init-today" :keys "i"
                           :type plain
-                          :template ("#+title:  Daily Note: %<%F>"
+                          :template ("#+title:  Daily Note: %<%A, %e. %B %Y>"
                                      "#+author: %(user-full-name)"
                                      "#+email:  %(message-user-mail-address)"
                                      "#+date:   %<%F>"
                                      ""
                                      "* Personal Goals"
                                      "- %?"
+                                     ""
                                      "* Agenda"
                                      "** [ ] "))
                          ("entry" :keys "e"
@@ -693,8 +688,7 @@ This helper function is used to consistently create filepaths for the 'agenda.or
                           :template ("* %^{title}"
                                      ":PROPERTIES:"
                                      ":created: %U"
-                                     ":END:"
-                                     "%?"))
+                                     ":END:%?"))
 
                          ("review-today" :keys "r"
                           :unnarrowed  t
@@ -743,8 +737,7 @@ This helper function is used to consistently create filepaths for the 'agenda.or
                 ("* %^{title} [p:%^{page}]"
                  "#+begin_quote"
                  "%x"
-                 "#+end_quote"
-                 "%?"))
+                 "#+end_quote%?"))
 
                ("literary-note" :keys "l"
                 :headline "Literature Notes"

@@ -4,19 +4,21 @@
  user-mail-address "emillenz@protonmail.com")
 ;; User:1 ends here
 
-;; [[file:config.org::*Theme: Solarized][Theme: Solarized:1]]
+;; [[file:config.org::*Theme: Solarized (dark/light)][Theme: Solarized (dark/light):1]]
 (setq doom-theme 'doom-solarized-dark)
+
+(custom-set-faces!
+  `(tab-bar-tab :background ,(doom-color 'blue) :foreground ,(doom-color 'bg) :weight bold))
 
 (after! evil
   (setq
-   x-stretch-cursor t
-   evil-normal-state-cursor   '("#268BD2" box)
-   evil-insert-state-cursor   '("#268BD2" bar)
-   evil-visual-state-cursor   '("#6c71c4" box)
-   evil-motion-state-cursor   '("#cb4b16" box)
-   evil-operator-state-cursor '("#cb4b16" box)
-   evil-replace-state-cursor  '("#268BD2" hbar)))
-;; Theme: Solarized:1 ends here
+   evil-normal-state-cursor   `(,(doom-color 'blue) box)
+   evil-insert-state-cursor   `(,(doom-color 'blue) bar)
+   evil-motion-state-cursor   `(,(doom-color 'blue) box)
+   evil-visual-state-cursor   `(,(doom-color 'violet) box)
+   evil-operator-state-cursor `(,(doom-color 'red) box)
+   evil-replace-state-cursor  `(,(doom-color 'red) hbar)))
+;; Theme: Solarized (dark/light):1 ends here
 
 ;; [[file:config.org::*Font][Font:1]]
 (setq
@@ -503,23 +505,21 @@
     "[x](x!)"
     "[@](d@)" ;; HACK :: cannot use"@" => [D]elegated
     "[\\](\\@)")))
+
+(setq
+ org-todo-keyword-faces
+ '(("[#]"  . '(bold +org-todo-project))
+   ("[ ]"  . '(bold org-todo))
+   ("[-]"  . '(bold +org-todo-active))
+   ("[?]"  . '(bold +org-todo-onhold))
+   ("[=]"  . '(bold +org-todo-onhold))
+   ("[&]"  . '(bold +org-todo-onhold))
+   ("[@]"  . '(bold +org-todo-onhold))
+   ("[\\]" . '(bold org-done))
+   ("[x]"  . '(bold org-done))))
 ;; Task states:1 ends here
 
 ;; [[file:config.org::*Task states][Task states:2]]
-(setq
- org-todo-keyword-faces
- '(("[#]"  . +org-todo-project)
-   ("[ ]"  . +org-todo-cancel)
-   ("[-]"  . +org-todo-onhold)
-   ("[?]"  . org-todo)
-   ("[=]"  . org-todo)
-   ("[&]"  . org-todo)
-   ("[@]"  . +org-todo-active)
-   ("[\\]" . org-done)
-   ("[X]"  . org-done)))
-;; Task states:2 ends here
-
-;; [[file:config.org::*Task states][Task states:3]]
 (setq
  org-log-done 'time
  org-log-repeat 'time
@@ -547,7 +547,7 @@
    (deldeadline . "del-deadline: %S, %t")
    (refile      . "refile: %t")
    (clock-out   . "")))
-;; Task states:3 ends here
+;; Task states:2 ends here
 
 ;; [[file:config.org::*Babel][Babel:1]]
 (setq

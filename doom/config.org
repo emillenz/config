@@ -24,34 +24,37 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 * UI
-** Theme: Solarized
-- different cursor color dependent on mode you are in.
-#+begin_src emacs-lisp 
+** Theme: Solarized (dark/light)
+- Note :: change colors based on the theme dynamically and don't hard-code them in (extensible).
+- Cursor :: Different cursor color dependent on mode you are in.
+#+begin_src emacs-lisp
 (setq doom-theme 'doom-solarized-dark)
+
+(custom-set-faces!
+  `(tab-bar-tab :background ,(doom-color 'blue) :foreground ,(doom-color 'bg) :weight bold))
 
 (after! evil
   (setq
-   x-stretch-cursor t
-   evil-normal-state-cursor   '("#268BD2" box)
-   evil-insert-state-cursor   '("#268BD2" bar)
-   evil-visual-state-cursor   '("#6c71c4" box)
-   evil-motion-state-cursor   '("#cb4b16" box)
-   evil-operator-state-cursor '("#cb4b16" box)
-   evil-replace-state-cursor  '("#268BD2" hbar)))
+   evil-normal-state-cursor   `(,(doom-color 'blue) box)
+   evil-insert-state-cursor   `(,(doom-color 'blue) bar)
+   evil-motion-state-cursor   `(,(doom-color 'blue) box)
+   evil-visual-state-cursor   `(,(doom-color 'violet) box)
+   evil-operator-state-cursor `(,(doom-color 'red) box)
+   evil-replace-state-cursor  `(,(doom-color 'red) hbar)))
 #+end_src
 
 ** Font
 #+begin_src emacs-lisp
-(setq
- doom-font                (font-spec :family "Iosevka Comfy" :size 14)
- doom-variable-pitch-font (font-spec :family "Iosevka Comfy Duo" :size 14)
- doom-serif-font          (font-spec :family "Iosevka Comfy Motion Duo" :size 14)
- doom-big-font            (font-spec :family "Iosevka Comfy" :size 24))
+  (setq
+   doom-font                (font-spec :family "Iosevka Comfy" :size 14)
+   doom-variable-pitch-font (font-spec :family "Iosevka Comfy Duo" :size 14)
+   doom-serif-font          (font-spec :family "Iosevka Comfy Motion Duo" :size 14)
+   doom-big-font            (font-spec :family "Iosevka Comfy" :size 24))
 
-(custom-set-faces!
-  '(font-lock-keyword-face :slant normal :weight bold)
-  '(font-lock-type-face    :slant normal :weight normal)
-  '(font-lock-comment-face :slant italic :weight normal))
+  (custom-set-faces!
+    '(font-lock-keyword-face :slant normal :weight bold)
+    '(font-lock-type-face    :slant normal :weight normal)
+    '(font-lock-comment-face :slant italic :weight normal))
 #+end_src
 
 ** Modeline
@@ -688,35 +691,25 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
     "[x](x!)"
     "[@](d@)" ;; HACK :: cannot use"@" => [D]elegated
     "[\\](\\@)")))
-#+end_src
 
-- Color coding is done to give sense of importance: Red -> orange -> green -> grey | purple: misc
-| Color       | Assignment  |
-|-------------+-------------|
-| Red         | Outstanding |
-| orange      | Onhold      |
-| green       | In-progress |
-| purple/cyan | Misc        |
-
-#+begin_src emacs-lisp
 (setq
  org-todo-keyword-faces
- '(("[#]"  . +org-todo-project)
-   ("[ ]"  . +org-todo-cancel)
-   ("[-]"  . +org-todo-onhold)
-   ("[?]"  . org-todo)
-   ("[=]"  . org-todo)
-   ("[&]"  . org-todo)
-   ("[@]"  . +org-todo-active)
-   ("[\\]" . org-done)
-   ("[X]"  . org-done)))
+ '(("[#]"  . '(bold +org-todo-project))
+   ("[ ]"  . '(bold org-todo))
+   ("[-]"  . '(bold +org-todo-active))
+   ("[?]"  . '(bold +org-todo-onhold))
+   ("[=]"  . '(bold +org-todo-onhold))
+   ("[&]"  . '(bold +org-todo-onhold))
+   ("[@]"  . '(bold +org-todo-onhold))
+   ("[\\]" . '(bold org-done))
+   ("[x]"  . '(bold org-done))))
 #+end_src
 
 - Log to drawer: ~LOG~
   - shorter & more sensible than default: ~LOGBOOK~
 - Explain myself if i can't meet a deadline.
   - take responsibility
-- Make org-log messages more data orientated and concise
+- Make org-log messages more data orientated and functional. (less verbose and literate)
 #+begin_src emacs-lisp
 (setq
  org-log-done 'time

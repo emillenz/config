@@ -16,7 +16,7 @@ Imagine two kinds of grocery stores, one that just looks at what is the most pop
 #+end_quote
 
 * Philosophy
-- This config aims at making the workflow the most effective, while being as bare metal and lightweigth as possible, avoiding bloat and focusing on speed and amount of computational steps. (no headaches, no unexpected behavior, minimal mental overhead).
+- This config aims at making the workflow the most effective, while being as bare metal and lightweight as possible, avoiding bloat and focusing on speed and amount of computational steps. (no headaches, no unexpected behavior, minimal mental overhead).
 - This system is 100% centered at keyboard usage and aims to unify all navigational commands across the terminal, editor, webbrowser, window manager and other possible applications using Vim-bindings in combination with a custom global navigation keybinding-scheme which is used & consistent cross-application.
 - Using the mouse for non creative, non graphical usages is inefficient and creates mental overhead. Having to take the focus off the project just in order to click some ui takes way more mental capacity and computational steps than neccessary and can be negated by using the keyboard and having the same actions always on the same keys.
 - This system is designed to be a workstation. It is the opposite of a beautiful GUI experience that aims to be visually pleasing.
@@ -61,7 +61,7 @@ Solarized reduces brightness contrast but, unlike many low contrast colorschemes
 - Ethan Schoonover
 #+end_quote
 
-* Font: Iosevka Comfy (Custom iosevka build)
+* Font: Iosevka Nerd Font
 - It is incredibly compact in width to allow a lot of code on screen, especially when viewing content side by side.
 - Designed for writing code, using in terminals, and preparing technical documents.
   - The intent is to make everything feel part of the same aesthetic, hence setting the font system-wide.
@@ -74,9 +74,8 @@ Solarized reduces brightness contrast but, unlike many low contrast colorschemes
 - It is lean, thin and sharp. This allows it to be used in all context and interfaces.
 - Economical use of screen space and clarity/legibility at small sizes.
 #+begin_quote
-Iosevka Comfy optimises for inter-glyph and inter-style consistency within the overarching constraint of usability at small point sizes. The shapes are round and are designed in concert to both impose a predictable rhythm and keep characters distinct from each other.
+Iosevka Nerd Font optimises for inter-glyph and inter-style consistency within the overarching constraint of usability at small point sizes.
 #+end_quote
-[[https://github.com/protesilaos/iosevka-comfy][Full Spec]]
 
 * Dependencies
 - All packages & other commadns found under: [[file:setup.org][Setup]].
@@ -86,8 +85,8 @@ Iosevka Comfy optimises for inter-glyph and inter-style consistency within the o
 - In the WM, the set of program-names during runtime is known and consistent (unlike the set of buffers in applications, where tab-names are either unnamed, arbitrary or change during runtime), we use specific-chars for switching to the tabs instead of 1-9 (more ergonomic, better mnemonics, more consistent).
 - Abstain from using "alt-tab" (switching back to recent tab)
   - Enforce the habit of direct buffer switching (instead of spamming alt-tab to get back to the tab that is desired, which is what happens if you use it)
-- Using keychords over modal bindings ::
-  - Fast-repeat commands: page up/down, switch to prev/next tab, undo, redo, increase/decrease font size, zoom in/out, close tab.
+- Keychords :: (vs modal bindings)
+  - Chords Fast-repeat commands: page up/down, switch to prev/next tab, undo, redo, increase/decrease font size, zoom in/out, close tab.
     - Thus we need to be able to hold down the key to repeat the action multiple times.
     - And with holding down it is quicker to access
 - It is important that ~new-tab~ inserts the tab at the end of the tabline

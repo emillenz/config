@@ -12,7 +12,7 @@ origin = top-right
 # offset = 15x15
 horizontal_padding = 5
 transparency = 0
-font = Iosevka Comfy 10
+font = Iosevka Nerd Font 10
 format = "<b>%s %p</b>\n%b"
 
 # Solarized Dark

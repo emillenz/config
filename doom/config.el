@@ -22,10 +22,10 @@
 
 ;; [[file:config.org::*Font][Font:1]]
 (setq
- doom-font                (font-spec :family "Iosevka Comfy" :size 14)
- doom-variable-pitch-font (font-spec :family "Iosevka Comfy Duo" :size 14)
- doom-serif-font          (font-spec :family "Iosevka Comfy Motion Duo" :size 14)
- doom-big-font            (font-spec :family "Iosevka Comfy" :size 24))
+ doom-font                (font-spec :family "Iosevka Nerd Font" :size 14)
+ doom-variable-pitch-font (font-spec :family "Iosevka Nerd Font" :size 14)
+ doom-serif-font          (font-spec :family "Iosevka Nerd Font" :size 14)
+ doom-big-font            (font-spec :family "Iosevka Nerd Font" :size 24))
 
 (custom-set-faces!
   '(font-lock-keyword-face :slant normal :weight bold)
@@ -151,7 +151,7 @@
       :nvim "M-j" #'previous-window-any-frame
       :nvim "M-k" #'next-window-any-frame
       :nvim "M-t" #'tab-bar-new-tab-to
-      :nvim "M-q" (cmd! (kill-current-buffer) (evil-window-delete))
+      :nvim "M-q" #'z-quit
       :nvmi "M-z" #'+popup/toggle
       :nvim "M-1" (cmd! (tab-bar-select-tab 1))
       :nvim "M-2" (cmd! (tab-bar-select-tab 2))
@@ -175,6 +175,17 @@
       :nvim "C--" #'doom/decrease-font-size
       :nvim "C-=" #'doom/increase-font-size
       :nvim "C-0" #'doom/reset-font-size)
+
+(defun z-quit ()
+  "DWIM quit :: kill buffer & close tab/window.
+Kills current buffer and closes the window/tab it was displayed in.
+Consistent throuthout different contexts ('org-src'..)
+"
+  (interactive)
+  (cond
+   ((org-src-edit-buffer-p) (org-edit-src-exit) )
+   ((+popup-window-p) (+popup/quit-window))
+    (t (kill-current-buffer) (evil-window-delete))))
 ;; Global navigation scheme:1 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
@@ -703,8 +714,8 @@ This helper function is used to consistently create filepaths for the 'agenda.or
 
       ("event" :keys "e"
        :headline "Events"
-       :empty-lines-after 1
        :prepend t
+       :empty-lines-after 1
        :template
        ("* [#] %^{title}%? %^g"
         "%^T"
@@ -751,7 +762,7 @@ This helper function is used to consistently create filepaths for the 'agenda.or
           "* Agenda"
           "** [ ] "))
         ("entry" :keys "e"
-         :empty-lines-after 1
+         :empty-lines-before 1
          :template
          ("* %^{title}"
           ":PROPERTIES:"
@@ -794,9 +805,9 @@ This helper function is used to consistently create filepaths for the 'agenda.or
           "#+email:  %(message-user-mail-address)"
           "#+date:   %<%F>"
           ""
-          "* [-] %\1"
+          "* [-] %\\1"
           ":PROPERTIES:"
-          ":title:  %\1"
+          ":title:  %\\1"
           ":author: %^{author}"
           ":year:   %^{year}"
           ":tags:   %^{tags}"

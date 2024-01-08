@@ -46,10 +46,10 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 ** Font
 #+begin_src emacs-lisp
   (setq
-   doom-font                (font-spec :family "Iosevka Comfy" :size 14)
-   doom-variable-pitch-font (font-spec :family "Iosevka Comfy Duo" :size 14)
-   doom-serif-font          (font-spec :family "Iosevka Comfy Motion Duo" :size 14)
-   doom-big-font            (font-spec :family "Iosevka Comfy" :size 24))
+   doom-font                (font-spec :family "Iosevka Nerd Font" :size 14)
+   doom-variable-pitch-font (font-spec :family "Iosevka Nerd Font" :size 14)
+   doom-serif-font          (font-spec :family "Iosevka Nerd Font" :size 14)
+   doom-big-font            (font-spec :family "Iosevka Nerd Font" :size 24))
 
   (custom-set-faces!
     '(font-lock-keyword-face :slant normal :weight bold)
@@ -205,7 +205,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
       :nvim "M-j" #'previous-window-any-frame
       :nvim "M-k" #'next-window-any-frame
       :nvim "M-t" #'tab-bar-new-tab-to
-      :nvim "M-q" (cmd! (kill-current-buffer) (evil-window-delete))
+      :nvim "M-q" #'z-quit
       :nvmi "M-z" #'+popup/toggle
       :nvim "M-1" (cmd! (tab-bar-select-tab 1))
       :nvim "M-2" (cmd! (tab-bar-select-tab 2))
@@ -229,6 +229,17 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
       :nvim "C--" #'doom/decrease-font-size
       :nvim "C-=" #'doom/increase-font-size
       :nvim "C-0" #'doom/reset-font-size)
+
+(defun z-quit ()
+  "DWIM quit :: kill buffer & close tab/window.
+Kills current buffer and closes the window/tab it was displayed in.
+Consistent throuthout different contexts ('org-src'..)
+"
+  (interactive)
+  (cond
+   ((org-src-edit-buffer-p) (org-edit-src-exit) )
+   ((+popup-window-p) (+popup/quit-window))
+    (t (kill-current-buffer) (evil-window-delete))))
 #+end_src
 
 ** Evil-mode
@@ -494,7 +505,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 ** Indentation: 2 spaces
 - consistency :: The only reliable, repeatable, transportable way to ensure that indentation remains consistent across viewing environments is to indent you code using only spaces.
   - tabs :: With tabs you will always get some cases where there is spaces where there should be a tab and vice versa, this needs then to be fixed manually. (eg: evil shift, or evil-align)
-- larger :: Having 8x or 4x indentations makes the code move too far to the right, and makes it really incoherent and spaced out on a 100-character terminal screen.
+- Having 8x or 4x indentations makes the code move too far to the right, and makes it really incoherent and spaced out on a 100-character terminal screen.
   - Scanning code horizontally is alot harder than reading it vertically. Especially when you’ve been looking at your screen for 20 straight hours, you’ll find it a lot easier to read your code if it is compacted and concise.
 - nesting :: if you need more than 3 levels of indentation, you’re screwed anyway and have nested your functions too deep and should fix your program.
 - completion :: ~<TAB>~ never autocompletes, confirm the autocompletion with ~<RET>~. (consistent with all other programs on the os (neovim, nushell, browser...))
@@ -943,8 +954,8 @@ This helper function is used to consistently create filepaths for the 'agenda.or
 
       ("event" :keys "e"
        :headline "Events"
-       :empty-lines-after 1
        :prepend t
+       :empty-lines-after 1
        :template
        ("* [#] %^{title}%? %^g"
         "%^T"
@@ -991,7 +1002,7 @@ This helper function is used to consistently create filepaths for the 'agenda.or
           "* Agenda"
           "** [ ] "))
         ("entry" :keys "e"
-         :empty-lines-after 1
+         :empty-lines-before 1
          :template
          ("* %^{title}"
           ":PROPERTIES:"
@@ -1034,9 +1045,9 @@ This helper function is used to consistently create filepaths for the 'agenda.or
           "#+email:  %(message-user-mail-address)"
           "#+date:   %<%F>"
           ""
-          "* [-] %\1"
+          "* [-] %\\1"
           ":PROPERTIES:"
-          ":title:  %\1"
+          ":title:  %\\1"
           ":author: %^{author}"
           ":year:   %^{year}"
           ":tags:   %^{tags}"

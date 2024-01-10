@@ -28,43 +28,24 @@ modmap:
 keymap:
   - name: global
     remap:
-      capslock-j: down                            # j
-      capslock-k: up                              # k
-      capslock-h: left                            # h
-      capslock-l: right                           # l
-      capslock-u: pageup                          # u
-      capslock-d: pagedown                        # d
-      capslock-a: end                             # a
-      capslock-i: home                            # i
-      capslock-x: delete                          # x
-      capslock-e: c-right                         # e
-      capslock-b: c-left                          # b
-      capslock-p: c-v                             # p
-      capslock-y: c-c                             # y
-      capslock-g: c-home                          # g
-      capslock-shift-g: c-end                     # g
-      capslock-w: [c-right, c-right, c-left]  # w
-      capslock-c: [c-backspace]                   # c
-      capslock-shift-c: [home, shift-end, delete] # C
-      capslock-o: [end, enter]                    # o
-      capslock-shift-o: [up, end, enter]          # shift+o
-      capslock-y: [c-a, c-c]                      # y
-      # relative line jumping
-      capslock-1: [down]
-      capslock-2: [down, down]
-      capslock-3: [down, down, down]
-      capslock-4: [down, down, down, down]
-      capslock-5: [down, down, down, down, down]
-      capslock-6: [down, down, down, down, down, down]
-      capslock-7: [down, down, down, down, down, down, down]
-      capslock-8: [down, down, down, down, down, down, down, down]
-      capslock-9: [down, down, down, down, down, down, down, down, down]
-      capslock-shift-1: [up]
-      capslock-shift-2: [up, up]
-      capslock-shift-3: [up, up, up]
-      capslock-shift-4: [up, up, up, up]
-      capslock-shift-5: [up, up, up, up, up]
-      capslock-shift-6: [up, up, up, up, up, up]
-      capslock-shift-7: [up, up, up, up, up, up, up]
-      capslock-shift-8: [up, up, up, up, up, up, up, up]
-      capslock-shift-9: [up, up, up, up, up, up, up, up, up]
+      capslock-j: down
+      capslock-k: up
+      capslock-h: left
+      capslock-l: right
+      capslock-u: c-z
+      capslock-shift-u: c-shift-z
+      capslock-a: end
+      capslock-i: home
+      capslock-x: delete
+      capslock-e: c-right
+      capslock-b: c-left
+      capslock-p: c-v
+      capslock-y: c-c
+      capslock-g: c-home
+      capslock-shift-g: c-end
+      capslock-w: [c-right, c-right, c-left]
+      capslock-c: [c-backspace]
+      capslock-d: [home, shift-end, delete]
+      capslock-o: [end, enter]
+      capslock-shift-o: [up, end, enter]
+      capslock-y: [c-a, c-c]

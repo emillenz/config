@@ -5,7 +5,8 @@
                      '(("h" "help $0" "help" nil nil nil
                         "/home/lenz/.config/doom/snippets/erc-mode/help" nil "h")
                        ("b" "blist\n" "blist" nil nil nil
-                        "/home/lenz/.config/doom/snippets/erc-mode/blist" nil "b")))
+                        "/home/lenz/.config/doom/snippets/erc-mode/blist" nil
+                        "b")))
 
 
-;;; Do not edit! File generated at Wed Dec 27 03:16:53 2023
+;;; Do not edit! File generated at Mon Jan  8 21:54:44 2024

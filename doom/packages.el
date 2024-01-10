@@ -1,6 +1,6 @@
 ;; -*- no-byte-compile: t; -*-
 
-(package! evil-escape :disable t) ;; NOTE ::: Bloat, remap an ergo key os-wide
+(package! evil-escape :disable t) ;; NOTE :: Bloat, remap <ESC> to <left-alt> systemwide instead
 
 (package! dired-open)
 (package! rainbow-mode)
@@ -17,9 +17,4 @@
 (package! org-auto-tangle)
 (package! evil-cleverparens)
 (package! consult-dir)
-(package! chatgpt-shell)
-(package! org-pandoc-import
-  :recipe (:host github
-           :repo "tecosaur/org-pandoc-import"
-           :files ("*.el" "filters" "preprocessors")))
 (package! org-fragtog)

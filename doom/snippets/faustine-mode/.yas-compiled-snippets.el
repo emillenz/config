@@ -1,2 +1,2 @@
 ;;; Compiled snippets and support files for `faustine-mode'
-;;; Do not edit! File generated at Wed Dec 27 03:16:53 2023
+;;; Do not edit! File generated at Mon Jan  8 21:54:44 2024

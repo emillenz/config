@@ -8,4 +8,4 @@
                         "/home/lenz/.config/doom/snippets/pug-mode/link" nil nil)))
 
 
-;;; Do not edit! File generated at Wed Dec 27 03:16:54 2023
+;;; Do not edit! File generated at Mon Jan  8 21:54:45 2024

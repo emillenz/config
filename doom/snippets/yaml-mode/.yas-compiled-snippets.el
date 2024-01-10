@@ -3,11 +3,14 @@
 ;;;
 (yas-define-snippets 'yaml-mode
                      '(("--" "--- # ${1:section}\n$0" "section" nil nil nil
-                        "/home/lenz/.config/doom/snippets/yaml-mode/section" nil "--")
+                        "/home/lenz/.config/doom/snippets/yaml-mode/section" nil
+                        "--")
                        ("list" "[$1]\n$0" "list" nil nil nil
-                        "/home/lenz/.config/doom/snippets/yaml-mode/list" nil "list")
+                        "/home/lenz/.config/doom/snippets/yaml-mode/list" nil
+                        "list")
                        ("entry" "${1:entry}: ${2:value}\n$0" "entry" nil nil nil
-                        "/home/lenz/.config/doom/snippets/yaml-mode/entry" nil "entry")))
+                        "/home/lenz/.config/doom/snippets/yaml-mode/entry" nil
+                        "entry")))
 
 
-;;; Do not edit! File generated at Wed Dec 27 03:16:54 2023
+;;; Do not edit! File generated at Mon Jan  8 21:54:45 2024

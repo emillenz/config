@@ -42,17 +42,20 @@ Otherwise the reversed output of function `yas-trimmed-comment-start' is returne
 ;;;
 (yas-define-snippets 'prog-mode
                      '(("header"
-                        "`comment-start`----- \n`comment-start`title:  ${2:`(capitalize (replace-regexp-in-string \"[-_.]\" \" \" (file-name-sans-extension (file-name-nondirectory (buffer-file-name (current-buffer))))))`}\n`comment-start`author: `user-full-name`\n`comment-start`email:  `user-mail-address`\n`comment-start`date:   `(format-time-string \"%A, %e %B, %Y\")`\n`comment-start`info:   ${3:Short description}\n`comment-start`-----\n$0\n"
-                        "header" nil nil nil "/home/lenz/.config/doom/snippets/prog-mode/header" nil
+                        "`comment-start`---\n`comment-start`title:  ${2:`(s-titleized-words (replace-regexp-in-string \"[-_.]\" \" \" (file-name-base (or buffer-file-name \"Title\"))))`}\n`comment-start`author: `user-full-name`\n`comment-start`email:  `user-mail-address`\n`comment-start`date:   `(format-time-string \"%F\")`\n`comment-start`info:   ${3:Short description of file/document}\n`comment-start`---\n$0\n"
+                        "header" nil nil nil
+                        "/home/lenz/.config/doom/snippets/prog-mode/header" nil
                         "header")
                        ("---"
                         "`(yas-trimmed-comment-start)`${1: comment }${1:$(let* ((start (yas-trimmed-comment-start))\n                                                       (lastcom (aref start (1- (length start))))\n                                                       (end (yas-trimmed-comment-end))\n                                                       (endpadlen (- 79 (+ (current-column) (length end)))))\n                                              (concat (make-string (max endpadlen 0) lastcom)\n                                                      end))}$0"
                         "comment line" nil nil nil
-                        "/home/lenz/.config/doom/snippets/prog-mode/commentline" nil "---")
+                        "/home/lenz/.config/doom/snippets/prog-mode/commentline"
+                        nil "---")
                        ("cob"
                         "${1:$(let* ((col (current-column))\n           (str \"\")\n           (lastcom (substring (yas-trimmed-comment-start) -1))\n           (start (yas-trimmed-comment-start))\n           (end (yas-trimmed-comment-end))\n           (over (- (+ (string-width yas-text) (length start) (length end) col) 77)))\n         (while (< (length str) (+ (- 79 (length start) (length end) col) (if (> over 0) over 0)))\n                (setq str (concat str lastcom)))\n       (concat start str end))}\n${1:$(let* ((col (current-column))\n           (str \"\")\n           (start (yas-trimmed-comment-start))\n           (end (yas-trimmed-comment-end)))\n         (while (< (length str) (ffloor (/ (- 78.0 (+ col (length start) (string-width yas-text) (length end))) 2.0)))\n                (setq str (concat str \" \")))\n        (concat start str))} ${1:comment} ${1:$(let* ((col (current-column))\n                                                     (str \"\")\n                                                     (start (yas-trimmed-comment-start))\n                                                     (end (yas-trimmed-comment-end)))\n                                                   (while (< (length str) (- 79.0 (if (eq (mod (string-width yas-text) 2) 1) (- col 1) col) (length end)))\n                                                          (setq str (concat str \" \")))\n                                                 (concat str end))}\n${1:$(let* ((col (current-column))\n           (str \"\")\n           (lastcom (substring (yas-trimmed-comment-start) -1))\n           (start (yas-trimmed-comment-start))\n           (end (yas-trimmed-comment-end))\n           (over (- (+ (string-width yas-text) (length start) (length end) col) 77)))\n         (while (< (length str) (+ (- 79 (length start) (length end) col) (if (> over 0) over 0)))\n                (setq str (concat str lastcom)))\n       (concat start str end))}$0\n"
                         "commentblock" nil nil nil
-                        "/home/lenz/.config/doom/snippets/prog-mode/commentblock" nil "cob")))
+                        "/home/lenz/.config/doom/snippets/prog-mode/commentblock"
+                        nil "cob")))
 
 
-;;; Do not edit! File generated at Wed Dec 27 03:16:54 2023
+;;; Do not edit! File generated at Mon Jan  8 21:54:45 2024

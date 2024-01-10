@@ -1,20 +1,3 @@
-skip  -h | bat
-drop -h | bat
-skip 1
-open old.md | skip 1
-open old.md | skip 1 | str join
-open old.md | lines
-open old.md 
-open old.md | lines
-open old.md | lines | skip 1
-open old.md | lines | skip 1000
-open old.md | lines | skip 10000
-while (open 'old.md' | lines| length) == 0 {<\n>    let data = (open `old.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""}) | <\n>    $paragraph | save test<\n>    $data | skip ($paragraph | length)<\n>}<\n>bat test
-while (open 'old.md' | lines| length) == 0 {<\n>    let data = (open `old.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save test<\n>    $data | skip ($paragraph | length)<\n>}<\n>bat test
-open old.md | lines 
-open old.md | lines | length 
-while (open 'old.md' | lines| length) != 0 {<\n>    let data = (open `old.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save test<\n>    $data | skip ($paragraph | length)<\n>}<\n>bat test
-while (open 'old.md' | lines| length) != 0 {<\n>    let data = (open `old.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f test<\n>    $data | skip ($paragraph | length)<\n>}<\n>bat test
 cp -f -h | bat
 cp  -h | bat
 cp `2022-00-00.md` old.md
@@ -9998,3 +9981,20 @@ setxkbmap  us
 polybar
 nm-applet 
 nm-applet --help | bat --language=man
+ls
+ls -la
+ls
+jshell
+ls
+ls **/*.org
+open  --help | bat --language=man
+open ./compass/agenda.org
+ls **/*.org | get name | each {open}
+fd 'org'
+fd  --help | bat --language=man
+fd 
+ls **/*.org | get name | each {|f| open -r $f | str replace -a "[X]" "[x]" | save -f $f }
+python
+ls
+polybar
+python

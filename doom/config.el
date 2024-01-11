@@ -624,51 +624,45 @@ Jumps at tangled code from org src block."
 (defvar z-literature-source-dir "~/Documents/literature/source/"
   "Directory for literature source files.")
 
-(defun z-doct-agenda (taskp projects &optional parent)
+(defun z-doct-tmpl (type projects &optional parent)
   "Generate doct agenda preset for project.
-`TASK:' t / nil | t => use agenda.org file; nil => use notes.org file
-`PROJECTS:' '((name key)..) | list of projects as strings
-`PARENT:' '(name key) | parent directory to use (if projects are part
+`TYPE:' 'agenda / 'notes | t => use agenda.org file; nil => use notes.org file
+`PROJECTS:' '((name . key)..) | list of projects as strings
+`PARENT:' '(name . key) | parent directory to use (if projects are part
 of parent project)
 This helper function is used to consistently create filepaths for the
 `agenda.org' file of the project."
-  (mapcar (lambda (proj)
-            (let ((name (alist-get 'title proj))
-                  (dir (alist-get 'dir proj))
-                  (key (alist-get 'key proj)))
+  (mapcar (lambda (it)
+            (let* ((name (car it))
+                   (key (cdr it))
+                   (file (file-name-concat org-directory
+                                           (when parent (car parent))
+                                           name
+                                           (format "%s.org" (symbol-name type)))))
               `(,name
                 :keys ,key
-                :file ,(file-name-concat org-directory
-                                         (when parent (alist-get 'dir parent))
-                                         dir
-                                         (if taskp "agenda.org" "notes.org")))))
+                :file ,file)))
           projects))
-
-(defun z-doct-project-alist (title key dir)
-  "Return alist for project"
-  `((title . ,title)
-    (key . ,key)
-    (dir . ,dir)))
 
 (after! org
   (setq
    org-capture-templates
-   (let ((cs (z-doct-project "Computerscience (Uni)" "c" "cs"))
-         (dm  (z-doct-project "Discrete Maths" "d" "dm"))
-         (ad  (z-doct-project "Algorighms & Datastructures" "a" "ad"))
-         (la  (z-doct-project "Linear Algebra" "l" "la"))
-         (ep  (z-doct-project "Intro to programming" "e" "ep"))
-         (personal  (z-doct-project "Personal" "p" "personal"))
-         (config  (z-doct-project "Config" "f" "config"))
-         (compass  (z-doct-project "Compass" "o" "compass")))
+   (let ((cs '("cs" . "c"))
+         (dm  '("dm" . "d"))
+         (ad  '("ad" . "a"))
+         (la  '("la" . "l"))
+         (ep  '("ep" . "e"))
+         (personal  '("personal" . "p"))
+         (config  '("config" . "f"))
+         (compass  '("compass" . "o")))
      (doct
       `(("Task" :keys "t"
          :headline "Inbox"
          :prepend t
          :template ("* [ ] %^{title}%? %^g")
-         :children ((,(alist-get 'title cs) :keys ,(alist-get 'key cs)
-                     :children ,(z-doct-agenda t (list cs dm ad la ep) cs))
-                    ,@(z-doct-agenda t (list personal config compass))))
+         :children ((,(car cs) :keys ,(cdr cs)
+                     :children ,(z-doct-tmpl 'agenda (list cs dm ad la ep) cs))
+                    ,@(z-doct-tmpl 'agenda (list personal config compass))))
 
         ("Event" :keys "e"
          :headline "Events"
@@ -680,8 +674,8 @@ This helper function is used to consistently create filepaths for the
                     ":location: %^{location}"
                     ":material: %^{material}"
                     ":END:")
-         :children (,@(z-doct-agenda t (list personal))
-                    ,@(z-doct-agenda t (list cs dm ad la ep) cs)))
+         :children (,@(z-doct-tmpl 'agenda (list personal))
+                    ,@(z-doct-tmpl 'agenda (list cs dm ad la ep) cs)))
 
         ("Note" :keys "n"
          :prepend t
@@ -691,9 +685,9 @@ This helper function is used to consistently create filepaths for the
                     ":created: %U"
                     ":END:"
                     "%?")
-         :children ((,(alist-get 'title cs) :keys ,(alist-get 'key cs)
-                     :children ,(z-doct-agenda nil (list cs dm ad la ep) cs))
-                    ,@(z-doct-agenda nil (list personal compass config))))
+         :children ((,(car cs) :keys ,(cdr cs)
+                     :children ,(z-doct-tmpl 'notes (list cs dm ad la ep) cs))
+                    ,@(z-doct-tmpl 'notes (list personal compass config))))
 
         ("Journal" :keys "j"
          :file (lambda ()

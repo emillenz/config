@@ -74,18 +74,18 @@ $map $mod+Return     move workspace to output next
 # Core navigation:1 ends here
 
 # [[file:config.org::*Workspaces Assignments][Workspaces Assignments:1]]
-set $ws_cmd    "cmd"
-set $ws_doc    "doc"
-set $ws_web    "web"
-set $ws_edit   "edit"
-set $ws_vid    "vid"
-set $ws_img    "img"
-set $ws_bot    "bot"
-set $ws_music  "music"
+set $ws_cmd   "cmd"
+set $ws_doc   "doc"
+set $ws_web   "web"
+set $ws_edit  "edit"
+set $ws_vid   "vid"
+set $ws_img   "img"
+set $ws_bot   "bot"
+set $ws_music "music"
+set $ws_xyz   "xyz"
 
-# HACK :: order of these assingments are relevant: abstract -> detail.
-for_window [all] title_window_icon yes, $mv 1, focus
 for_window [urgent="latest"] focus
+for_window [all] title_window_icon yes, $mv $ws_xyz, focus
 
 for_window [class="(?i)cmd"]                         $mv $ws_cmd,   focus
 for_window [class="(?i)zathura"]                     $mv $ws_doc,   focus
@@ -106,6 +106,7 @@ workspace $ws_vid   output primary
 workspace $ws_img   output primary
 workspace $ws_bot   output primary
 workspace $ws_music output primary
+workspace $ws_xyz output primary
 workspace 1         output primary
 workspace 2         output primary
 workspace 3         output primary
@@ -122,6 +123,8 @@ $map $mod+shift+3 $mv 3; workspace 3
 $map $mod+4       workspace 4
 $map $mod+shift+4 $mv 4; workspace 4
 
+$map $mod+x       workspace $ws_xyz
+$map $mod+shift+x $mv $ws_xyz; workspace $ws_xyz
 $map $mod+c       workspace $ws_cmd
 $map $mod+shift+c $mv $ws_cmd; workspace $ws_cmd
 $map $mod+d       workspace $ws_doc
@@ -165,8 +168,8 @@ mode "$open" {
 $map $mod+f mode "$find"
 
 mode "$find" {
-  $map $mod+u $cmd xdg-open "$(fd -e=pdf . ~/Documents/uni/cs | $rofi)"; $esc
-  $map $mod+l $cmd xdg-open "$(fd -e=pdf -e=epub . ~/Documents/literature | $rofi)"; $esc
+  $map $mod+u $cmd xdg-open "$(fd --extension=pdf . ~/Documents/uni/cs | $rofi)"; $esc
+  $map $mod+l $cmd xdg-open "$(fd --extension=pdf --extension=epub . ~/Documents/literature | $rofi)"; $esc
   $map $mod+f $cmd xdg-open "$(fd . ~ | $rofi)"; $esc
   $map Escape $esc
 }

@@ -1,5 +1,3 @@
-cp -f -h | bat
-cp  -h | bat
 cp `2022-00-00.md` old.md
 cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) != 0 {<\n>    let data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    data = $data | skip ($paragraph | length)<\n>    print $data<\n>    "" | save -f out.md<\n>}<\n>bat test
 cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) != 0 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    data = $data | skip ($paragraph | length)<\n>    print $data<\n>    "" | save -f out.md<\n>}<\n>bat test
@@ -9998,3 +9996,5 @@ python
 ls
 polybar
 python
+144 - 06
+144 - 96

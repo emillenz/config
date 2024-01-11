@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("cs:ad:code" (filename . "~/Documents/uni/cs/ep/code/") (front-context-string)
+(("org-programming manual" (front-context-string . "     #+BEGIN_SRC")
+ (rear-context-string . "NAME: factorial\n") (position . 629041)
+ (last-modified 26014 60147 934761 901000)
+ (filename . "/usr/local/share/info/org") (info-node . "Using Header Arguments")
+ (handler . Info-bookmark-jump))
+("cs:ad:code" (filename . "~/Documents/uni/cs/ep/code/") (front-context-string)
  (rear-context-string . "0K Dec 14 09:17 ") (position . 1757)
  (last-modified 25985 24748 844005 612000))
 ("cs" (filename . "~/Documents/uni/cs/") (front-context-string)
@@ -12,10 +17,10 @@
  (front-context-string . "** doom's macros")
  (rear-context-string . "onfig:\n\n* inbox\n") (position . 198)
  (last-modified 26011 45660 551324 950000))
-("org-capture-last-stored" (filename . "~/Documents/org/cs/dm/agenda.org")
- (front-context-string . "** [ ] append tr")
- (rear-context-string . "]\n:END:\n* Inbox\n") (position . 1504)
- (last-modified 26013 33735 553311 645000))
+("org-capture-last-stored" (filename . "~/Documents/org/config/agenda.org")
+ (front-context-string . "** [ ] lowercase")
+ (rear-context-string . "config:\n* Inbox\n") (position . 237)
+ (last-modified 26014 62415 374723 682000))
 ("cs_todo.org" (filename . "~/Documents/org/cs_todo.org")
  (front-context-string . "#+title:    CS T") (rear-context-string)
  (position . 1) (last-modified 25870 60064 614301 850000))

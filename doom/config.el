@@ -174,12 +174,6 @@ Kills current buffer and closes the window/tab it was displayed in."
 ;; Global navigation scheme:1 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
-;; HACK :: disable all default-maps (mappings used are below)
-(add-hook 'evil-mode-hook #'evil-cleverparens-mode)
-(setq evil-cleverparens-use-s-and-S nil
-      evil-cleverparens-use-additional-bindings nil
-      evil-cleverparens-use-additional-movement-keys nil)
-
 (map! :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
 
@@ -235,27 +229,28 @@ Kills current buffer and closes the window/tab it was displayed in."
 ;; Org mode:1 ends here
 
 ;; [[file:config.org::*Dired (keys)][Dired (keys):1]]
-(after! dired
-  (map! :map dired-mode-map
-        :nm "h" #'dired-up-directory
-        :nm "l" #'dired-open-file
-        :nm "f" #'dired-goto-file
-        :nm "c" #'dired-do-copy
-        :nm "C" #'dired-do-compress
-        :nm "r" #'dired-do-rename
-        :nm "R" #'dired-do-redisplay
-        :nm "d" #'dired-do-delete
-        :nm "x" #'dired-do-chmod
-        :nm "s" #'dired-sort-toggle-or-edit
-        :nm "o" #'find-file
-        :nm "p" #'dired-do-print
-        :nm "y" #'dired-copy-filename-as-kill
-        :nm "z" #'dired-do-compress
-        :nm "." #'dired-omit-mode
-        :nm "e" #'dired-create-empty-file
-        :nm "E" #'dired-create-directory))
+(map! :after dired
+      :map dired-mode-map
+      :nm "h" #'dired-up-directory
+      :nm "l" #'dired-open-file
+      :nm "f" #'dired-goto-file
+      :nm "c" #'dired-do-copy
+      :nm "C" #'dired-do-compress
+      :nm "r" #'dired-do-rename
+      :nm "R" #'dired-do-redisplay
+      :nm "d" #'dired-do-delete
+      :nm "x" #'dired-do-chmod
+      :nm "s" #'dired-sort-toggle-or-edit
+      :nm "o" #'find-file
+      :nm "p" #'dired-do-print
+      :nm "y" #'dired-copy-filename-as-kill
+      :nm "z" #'dired-do-compress
+      :nm "." #'dired-omit-mode
+      :nm "e" #'dired-create-empty-file
+      :nm "E" #'dired-create-directory)
 
-(map! :localleader :map dired-mode-map
+(map! :after dired
+      :localleader :map dired-mode-map
       :nm "A" #'z-dired-archive)
 ;; Dired (keys):1 ends here
 
@@ -265,10 +260,10 @@ Kills current buffer and closes the window/tab it was displayed in."
 ;; Minibuffer:1 ends here
 
 ;; [[file:config.org::*Magit][Magit:1]]
-(after! magit
-  (map! :map magit-mode-map
-        :nm "C-j" #'magit-section-forward-sibling
-        :nm "C-k" #'magit-section-backward-sibling))
+(map! :after magit
+      :map magit-mode-map
+      :nm "C-j" #'magit-section-forward-sibling
+      :nm "C-k" #'magit-section-backward-sibling)
 ;; Magit:1 ends here
 
 ;; [[file:config.org::*Editor][Editor:1]]
@@ -642,7 +637,7 @@ This helper function is used to consistently create filepaths for the
 `agenda.org' file of the project."
   (mapcar (lambda (proj)
             (let ((name (car proj))
-                  (key (cadr proj))
+                  (key (cdr proj))
                   (parent (car parent)))
               `(,name
                 :keys ,key
@@ -652,29 +647,26 @@ This helper function is used to consistently create filepaths for the
                                          (if taskp "agenda.org" "notes.org")))))
           projects))
 
-
-(z-doct-agenda t '(("cs" "c") ("dm" "d")))
-
 (after! org
   (setq
    org-capture-templates
    ;; NOTE:: Define generic projects here for refuse in 'notes' and 'agenda'.
-   (let ((cs       '("cs"       "c"))
-         (dm       '("dm"       "d"))
-         (ad       '("ad"       "a"))
-         (la       '("la"       "l"))
-         (ep       '("ep"       "e"))
-         (personal '("personal" "p"))
-         (config   '("config"   "f"))
-         (compass  '("compass"  "o"))
-         (journal  '("journal"  "j")))
+   (let ((cs       '("Computerscience"            . "c"))
+         (dm       '("Discrete maths"             . "d"))
+         (ad       '("Algoriths & Datastructures" . "a"))
+         (la       '("Linear Algebra"             . "l"))
+         (ep       '("Intro to Programming"       . "e"))
+         (personal '("Personal"                   . "p"))
+         (config   '("Config"                     . "f"))
+         (compass  '("Compass"                    . "o"))
+         (journal  '("Journal"                    . "j")))
 
      (doct
       `(("task" :keys "t"
          :headline "Inbox"
          :prepend t
          :template ("* [ ] %^{title}%? %^g")
-         :children ((,(car cs) :keys ,(cadr cs)
+         :children ((,(car cs) :keys ,(cdr cs)
                      :children ,(z-doct-agenda t (list cs dm ad la ep) cs))
                     ,@(z-doct-agenda t (list personal config compass))))
 
@@ -699,7 +691,7 @@ This helper function is used to consistently create filepaths for the
                     ":created: %U"
                     ":END:"
                     "%?")
-         :children ((,(car cs) :keys ,(cadr cs)
+         :children ((,(car cs) :keys ,(cdr cs)
                      :children ,(z-doct-agenda nil (list cs dm ad la ep) cs))
                     ,@(z-doct-agenda nil (list personal compass config))))
 

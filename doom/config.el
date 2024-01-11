@@ -652,34 +652,23 @@ This helper function is used to consistently create filepaths for the
                     (key . "l")
                     (dir . "la"))))
 
+(defun z-doct-project-alist (title key dir)
+  `((title . ,title)
+    (key . ,key)
+    (dir . ,dir)))
+
 (after! org
   (setq
    org-capture-templates
    ;; NOTE:: Define generic projects here for refuse in 'notes' and 'agenda'.
-   (let ((cs '((title . "Computerscience (Uni)")
-               (key . "c" )
-               (dir . "cs")))
-         (dm  '((title . "Discrete Maths" )
-                (key . "d" )
-                (dir . "dm")))
-         (ad  '((title . "Algorighms & Datastructures" )
-                (key . "a" )
-                (dir . "ad")))
-         (la  '((title . "Linear Algebra" )
-                (key . "l" )
-                (dir . "la")))
-         (ep  '((title . "Intro to programming" )
-                (key . "e" )
-                (dir . "ep")))
-         (personal  '((title . "Personal" )
-                      (key . "p" )
-                      (dir . "personal")))
-         (config  '((title . "Config" )
-                    (key . "f" )
-                    (dir . "config")))
-         (compass  '((title . "Compass" )
-                     (key . "o" )
-                     (dir . "compass"))))
+   (let ((cs (z-doct-project "Computerscience (Uni)" "c" "cs"))
+         (dm  (z-doct-project "Discrete Maths" "d" "dm"))
+         (ad  (z-doct-project "Algorighms & Datastructures" "a" "ad"))
+         (la  (z-doct-project "Linear Algebra" "l" "la"))
+         (ep  (z-doct-project "Intro to programming" "e" "ep"))
+         (personal  (z-doct-project "Personal" "p" "personal"))
+         (config  (z-doct-project "Config" "f" "config"))
+         (compass  (z-doct-project "Compass" "o" "compass")))
      (doct
       `(("Task" :keys "t"
          :headline "Inbox"

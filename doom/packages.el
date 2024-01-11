@@ -15,6 +15,5 @@
 (package! org-tidy)
 (package! evil-numbers)
 (package! org-auto-tangle)
-(package! evil-cleverparens)
 (package! consult-dir)
 (package! org-fragtog)

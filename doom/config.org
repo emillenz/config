@@ -254,9 +254,6 @@ Kills current buffer and closes the window/tab it was displayed in."
       :nmv  "&"   #'evil-ex-repeat
       :nmv  "M"   (cmd! (evil-goto-mark-line ?m))
 
-      :nmv  "("   #'evil-cp-backward-up-sexp
-      :nmv  ")"   #'evil-cp-up-sexp
-
       :nmv  "+"   #'evil-numbers/inc-at-pt
       :nmv  "-"   #'evil-numbers/dec-at-pt
       :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
@@ -876,41 +873,63 @@ of parent project)
 This helper function is used to consistently create filepaths for the
 `agenda.org' file of the project."
   (mapcar (lambda (proj)
-            (let ((name (car proj))
-                  (key (cdr proj))
-                  (parent (car parent)))
+            (let ((name (alist-get 'title proj))
+                  (dir (alist-get 'dir proj))
+                  (key (alist-get 'key proj)))
               `(,name
                 :keys ,key
                 :file ,(file-name-concat org-directory
-                                         parent
-                                         name
+                                         (when parent (alist-get 'dir parent))
+                                         dir
                                          (if taskp "agenda.org" "notes.org")))))
           projects))
+
+;; TEST
+(z-doct-agenda t '(((title . "Computerscience (Uni)")
+                    (key . "c" )
+                    (dir . "cs"))
+                   ((title . "linalg")
+                    (key . "l")
+                    (dir . "la"))))
 
 (after! org
   (setq
    org-capture-templates
    ;; NOTE:: Define generic projects here for refuse in 'notes' and 'agenda'.
-   (let ((cs       '("Computerscience"            . "c"))
-         (dm       '("Discrete maths"             . "d"))
-         (ad       '("Algoriths & Datastructures" . "a"))
-         (la       '("Linear Algebra"             . "l"))
-         (ep       '("Intro to Programming"       . "e"))
-         (personal '("Personal"                   . "p"))
-         (config   '("Config"                     . "f"))
-         (compass  '("Compass"                    . "o"))
-         (journal  '("Journal"                    . "j")))
-
+   (let ((cs '((title . "Computerscience (Uni)")
+               (key . "c" )
+               (dir . "cs")))
+         (dm  '((title . "Discrete Maths" )
+                (key . "d" )
+                (dir . "dm")))
+         (ad  '((title . "Algorighms & Datastructures" )
+                (key . "a" )
+                (dir . "ad")))
+         (la  '((title . "Linear Algebra" )
+                (key . "l" )
+                (dir . "la")))
+         (ep  '((title . "Intro to programming" )
+                (key . "e" )
+                (dir . "ep")))
+         (personal  '((title . "Personal" )
+                      (key . "p" )
+                      (dir . "personal")))
+         (config  '((title . "Config" )
+                    (key . "f" )
+                    (dir . "config")))
+         (compass  '((title . "Compass" )
+                     (key . "o" )
+                     (dir . "compass"))))
      (doct
-      `(("task" :keys "t"
+      `(("Task" :keys "t"
          :headline "Inbox"
          :prepend t
          :template ("* [ ] %^{title}%? %^g")
-         :children ((,(car cs) :keys ,(cdr cs)
+         :children ((,(alist-get 'title cs) :keys ,(alist-get 'key cs)
                      :children ,(z-doct-agenda t (list cs dm ad la ep) cs))
                     ,@(z-doct-agenda t (list personal config compass))))
 
-        ("event" :keys "e"
+        ("Event" :keys "e"
          :headline "Events"
          :prepend t
          :empty-lines-after 1
@@ -923,7 +942,7 @@ This helper function is used to consistently create filepaths for the
          :children (,@(z-doct-agenda t (list personal))
                     ,@(z-doct-agenda t (list cs dm ad la ep) cs)))
 
-        ("note" :keys "n"
+        ("Note" :keys "n"
          :prepend t
          :empty-lines 1
          :template ("* %^{title} %^g"
@@ -931,11 +950,11 @@ This helper function is used to consistently create filepaths for the
                     ":created: %U"
                     ":END:"
                     "%?")
-         :children ((,(car cs) :keys ,(cdr cs)
+         :children ((,(alist-get 'title cs) :keys ,(alist-get 'key cs)
                      :children ,(z-doct-agenda nil (list cs dm ad la ep) cs))
                     ,@(z-doct-agenda nil (list personal compass config))))
 
-        ("journal" :keys "j"
+        ("Journal" :keys "j"
          :file (lambda ()
                  (file-name-concat z-journal-dir
                                    (format "%s_journal.org"
@@ -968,7 +987,7 @@ This helper function is used to consistently create filepaths for the
                                 "* Reflection"
                                 "-"))))
 
-        ("literature" :keys "l"
+        ("Literature" :keys "l"
          :file (lambda () (read-file-name "file: " z-literature-notes-dir))
          :children (("init-source" :keys "i"
                      :file (lambda ()
@@ -977,7 +996,7 @@ This helper function is used to consistently create filepaths for the
                                (file-name-concat z-literature-notes-dir name)))
                      :type plain
                      :book-author
-                     (lambda () (s-titleized-words (read-from-minibuffer "author: " )))
+                     (lambda () (s-titleized-words (read-from-minibuffer "author: ")))
                      :template ("#+title:  %^{full title}"
                                 "#+author: %(user-full-name)"
                                 "#+email:  %(message-user-mail-address)"

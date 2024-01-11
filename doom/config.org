@@ -884,15 +884,8 @@ This helper function is used to consistently create filepaths for the
                                          (if taskp "agenda.org" "notes.org")))))
           projects))
 
-;; TEST
-(z-doct-agenda t '(((title . "Computerscience (Uni)")
-                    (key . "c" )
-                    (dir . "cs"))
-                   ((title . "linalg")
-                    (key . "l")
-                    (dir . "la"))))
-
 (defun z-doct-project-alist (title key dir)
+  "Return alist for project"
   `((title . ,title)
     (key . ,key)
     (dir . ,dir)))
@@ -900,7 +893,6 @@ This helper function is used to consistently create filepaths for the
 (after! org
   (setq
    org-capture-templates
-   ;; NOTE:: Define generic projects here for refuse in 'notes' and 'agenda'.
    (let ((cs (z-doct-project "Computerscience (Uni)" "c" "cs"))
          (dm  (z-doct-project "Discrete Maths" "d" "dm"))
          (ad  (z-doct-project "Algorighms & Datastructures" "a" "ad"))

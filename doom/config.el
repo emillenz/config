@@ -624,47 +624,54 @@ Jumps at tangled code from org src block."
 (defvar z-literature-source-dir "~/Documents/literature/source/"
   "Directory for literature source files.")
 
-(defun z-doct-tmpl (type projects &optional parent)
-  "Generate doct agenda preset for project.
-`TYPE:' 'agenda / 'notes | t => use agenda.org file; nil => use notes.org file
-`PROJECTS:' '((name . key)..) | list of projects as strings
-`PARENT:' '(name . key) | parent directory to use (if projects are part
-of parent project)
-This helper function is used to consistently create filepaths for the
-`agenda.org' file of the project."
-  (mapcar (lambda (it)
-            (let* ((name (car it))
-                   (key (cdr it))
-                   (file (file-name-concat org-directory
-                                           (when parent (car parent))
-                                           name
-                                           (format "%s.org" (symbol-name type)))))
-              `(,name
-                :keys ,key
-                :file ,file)))
-          projects))
+(defun z-doct-expand (proj projs &optional type parent)
+  "Generate doct preset for project (standardized).
+
+`PROJ:'   'name             | Project key / name.
+`PROJS:'  '((name . key)..) | Projects alist containing PROJ
+`TYPE:'   'agenda / 'notes  | Which file to use (ex: agend.org). Omitted? => no :file returned.
+`PARENT:' 'name             | Is it a subproject of PARENT? (for :file).
+
+This approach to doct ensures all keys for one project use the same prefix and reduces
+code repetition."
+  (let* ((name (symbol-name proj))
+         (key (char-to-string (alist-get proj projs)))
+         (file (file-name-concat
+                org-directory
+                (when parent (symbol-name parent))
+                name
+                (format "%s.org" (symbol-name type)))))
+    `(,name
+      :keys ,key
+      ,@(when type `(:file ,file)))))
 
 (after! org
   (setq
    org-capture-templates
-   (let ((cs '("cs" . "c"))
-         (dm  '("dm" . "d"))
-         (ad  '("ad" . "a"))
-         (la  '("la" . "l"))
-         (ep  '("ep" . "e"))
-         (personal  '("personal" . "p"))
-         (config  '("config" . "f"))
-         (compass  '("compass" . "o")))
+   (let ((projs '((cs . ?c)
+                  (dm . ?d)
+                  (ad . ?a)
+                  (la . ?l)
+                  (ep . ?e)
+                  (personal . ?p)
+                  (config . ?f)
+                  (compass . ?o))))
      (doct
-      `(("Task" :keys "t"
+      `(("task" :keys "t"
          :headline "Inbox"
          :prepend t
          :template ("* [ ] %^{title}%? %^g")
-         :children ((,(car cs) :keys ,(cdr cs)
-                     :children ,(z-doct-tmpl 'agenda (list cs dm ad la ep) cs))
-                    ,@(z-doct-tmpl 'agenda (list personal config compass))))
+         :children ((,@(z-doct-expand 'cs projs)
+                     :children ,(mapcar
+                                 (lambda (proj)
+                                   (z-doct-expand proj projs 'agenda 'cs))
+                                 '(dm ad la ep)))
+                    ,@(mapcar
+                       (lambda (proj)
+                         (z-doct-expand proj projs 'agenda))
+                       '(personal config compass cs))))
 
-        ("Event" :keys "e"
+        ("event" :keys "e"
          :headline "Events"
          :prepend t
          :empty-lines-after 1
@@ -674,10 +681,17 @@ This helper function is used to consistently create filepaths for the
                     ":location: %^{location}"
                     ":material: %^{material}"
                     ":END:")
-         :children (,@(z-doct-tmpl 'agenda (list personal))
-                    ,@(z-doct-tmpl 'agenda (list cs dm ad la ep) cs)))
+         :children ((,@(z-doct-expand 'cs projs)
+                     :children ,(mapcar
+                                 (lambda (proj)
+                                   (z-doct-expand proj projs 'agenda 'cs))
+                                 '(dm ad la ep)))
+                    ,@(mapcar
+                       (lambda (proj)
+                         (z-doct-expand proj projs 'agenda))
+                       '(personal cs))))
 
-        ("Note" :keys "n"
+        ("note" :keys "n"
          :prepend t
          :empty-lines 1
          :template ("* %^{title} %^g"
@@ -685,15 +699,21 @@ This helper function is used to consistently create filepaths for the
                     ":created: %U"
                     ":END:"
                     "%?")
-         :children ((,(car cs) :keys ,(cdr cs)
-                     :children ,(z-doct-tmpl 'notes (list cs dm ad la ep) cs))
-                    ,@(z-doct-tmpl 'notes (list personal compass config))))
+         :children ((,@(z-doct-expand 'cs projs)
+                     :children ,(mapcar
+                                 (lambda (proj)
+                                   (z-doct-expand proj projs 'notes 'cs))
+                                 '(dm ad la ep)))
+                    ,@(mapcar
+                       (lambda (proj)
+                         (z-doct-expand proj projs 'notes))
+                       '(cs personal config compass))))
 
-        ("Journal" :keys "j"
+        ("journal" :keys "j"
          :file (lambda ()
-                 (file-name-concat z-journal-dir
-                                   (format "%s_journal.org"
-                                           (format-time-string "%F"))))
+                 (file-name-concat
+                  z-journal-dir
+                  (format "%s_journal.org" (format-time-string "%F"))))
          :children (("init-today" :keys "i"
                      :type plain
                      :template ("#+title:  Daily Note: %<%A, %e. %B %Y>"
@@ -722,13 +742,18 @@ This helper function is used to consistently create filepaths for the
                                 "* Reflection"
                                 "-"))))
 
-        ("Literature" :keys "l"
+        ("literature" :keys "l"
          :file (lambda () (read-file-name "file: " z-literature-notes-dir))
          :children (("init-source" :keys "i"
                      :file (lambda ()
-                             (let* ((name (concat (replace-regexp-in-region " " "-" (read-from-minibuffer "short title: "))
-                                                  ".org")))
-                               (file-name-concat z-literature-notes-dir name)))
+                             (let* ((name (concat
+                                           (replace-regexp-in-region
+                                            " " "-"
+                                            (read-from-minibuffer "short title: "))
+                                           ".org")))
+                               (file-name-concat
+                                z-literature-notes-dir
+                                name)))
                      :type plain
                      :book-author
                      (lambda () (s-titleized-words (read-from-minibuffer "author: ")))

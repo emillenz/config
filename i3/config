@@ -84,9 +84,7 @@ for_window [class="(?i)firefox"]                     $mv $ws_web,   focus
 for_window [class="(?i)mpv"]                         $mv $ws_vid,   focus
 for_window [class="(?i)firefox" title="(?i)ChatGPT"] $mv $ws_bot,   focus
 for_window [class="(?i)firefox" title="(?i)Spotify"] $mv $ws_music, focus
-# Workspaces Assignments:1 ends here
 
-# [[file:config.org::*\[-\] Options][[-] Options:5]]
 workspace $ws_cmd   output primary
 workspace $ws_doc   output primary
 workspace $ws_web   output primary
@@ -94,12 +92,12 @@ workspace $ws_edit  output primary
 workspace $ws_vid   output primary
 workspace $ws_bot   output primary
 workspace $ws_music output primary
-workspace $ws_xyz output primary
+workspace $ws_xyz   output primary
 workspace 1         output primary
 workspace 2         output primary
 workspace 3         output primary
 workspace 4         output primary
-# [-] Options:5 ends here
+# Workspaces Assignments:1 ends here
 
 # [[file:config.org::*App navigation bindings][App navigation bindings:1]]
 $map $mod+1       workspace 1
@@ -201,14 +199,7 @@ mode "$menus" {
 set $backg      #002b36
 set $foreg      #839496
 set $main       #268BD2
-set $yellow     #B58900
-set $orange     #CB4B16
 set $red        #DC322F
-set $purple     #6C71C4
-set $magenta    #d33682
-set $blue       #268BD2
-set $cyan       #2AA198
-set $green      #859900
 # Solarized dark:1 ends here
 
 # [[file:config.org::*Variables][Variables:1]]

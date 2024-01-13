@@ -3,7 +3,6 @@
 #+email:    emillenz@protonmail.com
 #+date:     2023-05-15
 #+property: header-args:conf :tangle config :comments link
-#+property: header-args:emacs-lisp :session *elisp*
 
 * About
 - All the packages (and more) required for the full setup are found under:
@@ -20,14 +19,6 @@
  - Minimal keystrokes to get from where you are to the app you want to be.
  - Keyboard driven workflow only. (Vi-mnemonic bindings)
  - Strictly avoid multitasking => Always work in maximized-mode to never have to resize a window => one workspace per window, to not get distracted by other open windows.
-
-* Global Vars
-#+begin_src emacs-lisp :results silent
-(setq modkey "Mod4"
-      rofi-alias "rofi -dmenu -i -no-custom -p ' '"
-      bin-dir  "~/.config/bin"
-      system-font "Iosevka Nerd Font 10")
-#+end_src
 
 * Abbreviations of (freq. used) long commands
 ,#+begin_src conf
@@ -165,281 +156,7 @@ for_window [class="(?i)firefox"]                     $mv $ws_web,   focus
 for_window [class="(?i)mpv"]                         $mv $ws_vid,   focus
 for_window [class="(?i)firefox" title="(?i)ChatGPT"] $mv $ws_bot,   focus
 for_window [class="(?i)firefox" title="(?i)Spotify"] $mv $ws_music, focus
-#+end_src
 
-** [-] Options
-- systemizing the whole process of using i3 (less clutter and more extensibility +just fun to do)
-#+name: options
-#+begin_src emacs-lisp
-(setq opts `((workspace_auto_back_and_forth "no")
-             (workspace_layout "tabbed")
-             (force_focus_wrapping "no")
-             (default_orientation "horizontal")
-             (default_border "pixel 1")
-             (hide_edge_borders "smart")
-             (title_align "left")
-             (font ,(format "pango: %s" system-font))
-             (focus_on_window_activation "focus")
-             (floating_modifier ,modkey)))
-
-(defun set-opt (opt)
-  (let ((var (symbol-name (car opt)))
-        (value (cadr opt)))
-    (concat
-     var
-     " "
-     (if (stringp value)
-         value
-       (string-join value " ")))))
-
-(mapconcat #'set-opt opts "\n")
-#+end_src
-
-#+RESULTS: options
-[[file:dynamic-config]]
-
-#+RESULTS:
-#+begin_example
-workspace_auto_back_and_forth no
-workspace_layout tabbed
-force_focus_wrapping no
-default_orientation horizontal
-default_border pixel 1
-hide_edge_borders smart
-title_align left
-font pango: Iosevka Nerd Font 10
-focus_on_window_activation focus
-floating_modifier Mod4
-#+end_example
-
-#+begin_src emacs-lisp
-(setq workspaces
-      `((:name "edit"
-         :key ?e
-         :class ("emacs" "eclipse")
-         :cmd  "emacsclient --reuse-frame || emacs --daemon")
-        (:name "web"
-         :key ?w
-         :class "firefox"
-         :cmd "firefox")
-        (:name "cmd"
-         :key ?w
-         :class "cmd"
-         :cmd "alacritty --class cmd -T cmd -e tmux new-session -A -s cmd")
-        (:name "doc"
-         :key ?d
-         :class "zathura"
-         :cmd ,(format "xdg-open \"$(fd --extension=pdf . ~ | %s)\"" rofi-alias))
-        (:name "vid"
-         :key ?v
-         :class "mpv"
-         :cmd "mpv $(xclip -out)")
-        (:name "music"
-         :key ?m
-         :class "firefox"
-         :title "spotify"
-         :cmd "firefox --new-window https://open.spotify.com")
-        (:name "bot"
-         :key ?b
-         :class "firefox"
-         :title "chatgpt"
-         :cmd "firefox --new-window https://chat.openai.com")
-        (:name "xyz"
-         :key ?x)
-        (:name "[1]" :key ?1)
-        (:name "[2]" :key ?2)
-        (:name "[3]" :key ?3)
-        (:name "[4]" :key ?4)))
-
-(defun set-workspace (ws)
-  (let ((name (plist-get ws :name))
-        (class (plist-get ws :class))
-        (cmd (plist-get ws :cmd))
-        (key (plist-get ws :key))
-        (title (plist-get ws :title)))
-    (string-join
-     (list
-      (format "workspace %s output primary" name)
-      (format "for_window [class=\"(?i)%s\" %s] move container to workspace %s, focus"
-              (if (stringp class)
-                  class
-                (string-join class "|"))
-              (if title
-                  (format "title=\"(?i)%s\""
-                          (if (stringp title)
-                              (format "%s" title)
-                            (string-join title "|")))
-                "")
-              name)
-      (set-keymap `(:modk t :key ,key :cmd ,(format "workspace %s" name)))
-      (set-keymap `(:modk t :key ,key :cmd ,(format "move container to workspace %s; workspace %s" name name))))
-     "\n")))
-
-(mapconcat #'set-workspace workspaces)
-#+end_src
-
-#+RESULTS:
-#+begin_example
-workspace edit output primary
-for_window [class="(?i)emacs|eclipse" ] move container to workspace edit, focus
-bindsym Mod4+e workspace edit;
-bindsym Mod4+e move container to workspace edit; workspace edit; workspace web output primary
-for_window [class="(?i)firefox" ] move container to workspace web, focus
-bindsym Mod4+w workspace web;
-bindsym Mod4+w move container to workspace web; workspace web; workspace cmd output primary
-for_window [class="(?i)cmd" ] move container to workspace cmd, focus
-bindsym Mod4+w workspace cmd;
-bindsym Mod4+w move container to workspace cmd; workspace cmd; workspace doc output primary
-for_window [class="(?i)zathura" ] move container to workspace doc, focus
-bindsym Mod4+d workspace doc;
-bindsym Mod4+d move container to workspace doc; workspace doc; workspace vid output primary
-for_window [class="(?i)mpv" ] move container to workspace vid, focus
-bindsym Mod4+v workspace vid;
-bindsym Mod4+v move container to workspace vid; workspace vid; workspace music output primary
-for_window [class="(?i)firefox" title="(?i)spotify"] move container to workspace music, focus
-bindsym Mod4+m workspace music;
-bindsym Mod4+m move container to workspace music; workspace music; workspace bot output primary
-for_window [class="(?i)firefox" title="(?i)chatgpt"] move container to workspace bot, focus
-bindsym Mod4+b workspace bot;
-bindsym Mod4+b move container to workspace bot; workspace bot; workspace xyz output primary
-for_window [class="(?i)" ] move container to workspace xyz, focus
-bindsym Mod4+x workspace xyz;
-bindsym Mod4+x move container to workspace xyz; workspace xyz; workspace [1] output primary
-for_window [class="(?i)" ] move container to workspace [1], focus
-bindsym Mod4+1 workspace [1];
-bindsym Mod4+1 move container to workspace [1]; workspace [1]; workspace [2] output primary
-for_window [class="(?i)" ] move container to workspace [2], focus
-bindsym Mod4+2 workspace [2];
-bindsym Mod4+2 move container to workspace [2]; workspace [2]; workspace [3] output primary
-for_window [class="(?i)" ] move container to workspace [3], focus
-bindsym Mod4+3 workspace [3];
-bindsym Mod4+3 move container to workspace [3]; workspace [3]; workspace [4] output primary
-for_window [class="(?i)" ] move container to workspace [4], focus
-bindsym Mod4+4 workspace [4];
-bindsym Mod4+4 move container to workspace [4]; workspace [4];
-#+end_example
-
-#+begin_src emacs-lisp
-(setq sys-keymaps
-      `((:key XF86MonBrightnessDown :exe t :cmd "sudo light -U 5 && notify-send \"󰃟 Light\" \"$(light)%\"")
-        (:key XF86MonBrightnessUp   :exe t :cmd "sudo light -A 5 && notify-send \"󰃟 Light\" \"$(light)%\"")
-        (:key XF86Display           :exe t :cmd ,(file-name-concat bin-dir "output_select"))
-        (:key XF86ScreenSaver       :exe t :cmd "xset dpms force off")
-        (:key XF86Sleep             :exe t :cmd ,(format "i3lock --ignore-empty-password --color %s && systemctl suspend" (plist-get solarized-dark-theme :bg)))
-
-        (:key XF86AudioPlay         :exe t :cmd "playerctl play")
-        (:key XF86AudioPause        :exe t :cmd "playerctl pause")
-        (:key XF86AudioNext         :exe t :cmd "playerctl next")
-        (:key XF86AudioPrev         :exe t :cmd "playerctl previous")
-        (:key XF86AudioRaiseVolume  :exe t :cmd "pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send \" Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]\" \"$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)\"")
-        (:key XF86AudioLowerVolume  :exe t :cmd "pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send \" Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]\" \"$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)\"")
-        (:key XF86AudioMute         :exe t :cmd "pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send \" Mute toggle\" \"$(pactl get-sink-mute @DEFAULT_SINK@)\"")
-        (:key Print                 :exe t :cmd ,(file-name-concat bin-dir "screenshot"))
-        (:modk t :key backslash     :exe t :cmd "playerctl play-pause")
-        (:modk t :key bracketright  :exe t :cmd "playerctl next")
-        (:modk t :key bracketleft   :exe t :cmd "playerctl previous")
-        (:modk t :key equal         :exe t :cmd "pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send \" Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]\" \"$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)\"")
-        (:modk t :key minus         :exe t :cmd "pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send \" Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]\" \"$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)\"")
-        (:modk t :key ?0             :exe t :cmd "pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send \" Mute toggle\" \"$(pactl get-sink-mute @DEFAULT_SINK@)\"")))
-
-(setq navi-keymaps
-      `((:modk t :key ?j :cmd "focus prev")
-        (:modk t :key ?J :cmd "move left")
-        (:modk t :key ?k :cmd "focus next")
-        (:modk t :key ?K :cmd "move right")
-        (:modk t :key ?q :cmd "kill")
-        (:modk t :key ?g :exe t :cmd "rofi -show window")
-        (:modk t :key ?s :exe t :cmd "rofi -show drun")
-        (:modk t :key ?t :cmd "layout toggle tabbed splith")
-        (:modk t :key Return :cmd "move workspace to output next")))
-
-(defun set-keymap (keymap)
-  (let ((modk (plist-get keymap :modk))
-        (opt (plist-get keymap :opt))
-        (key (plist-get keymap :key))
-        (exe (plist-get keymap :exe))
-        (cmd (plist-get keymap :cmd))
-        (mode (plist-get keymap :mode)))
-    (concat
-     "bindsym "
-     (when opt (format " %s" opt))
-     (when modk (format "%s+" modkey))
-     (if (characterp key)
-         (let ((keystr (char-to-string key)))
-           (if (char-uppercase-p key)
-               (format "shift+%s" (downcase keystr))
-             keystr))
-       (symbol-name key))
-     " "
-     (when exe "exec --no-startup-id ")
-     cmd
-     "; "
-     (when mode "mode \"default\" "))))
-
-(mapconcat #'set-keymap sys-keymaps "\n")
-;; (mapconcat #'set-keymap navi-keymaps "\n")
-#+end_src
-
-#+RESULTS:
-#+begin_example
-bindsym XF86MonBrightnessDown exec --no-startup-id sudo light -U 5 && notify-send "󰃟 Light" "$(light)%";
-bindsym XF86MonBrightnessUp exec --no-startup-id sudo light -A 5 && notify-send "󰃟 Light" "$(light)%";
-bindsym XF86Display exec --no-startup-id ~/.config/bin/output_select;
-bindsym XF86ScreenSaver exec --no-startup-id xset dpms force off;
-bindsym XF86Sleep exec --no-startup-id i3lock --ignore-empty-password --color #002b36 && systemctl suspend;
-bindsym XF86AudioPlay exec --no-startup-id playerctl play;
-bindsym XF86AudioPause exec --no-startup-id playerctl pause;
-bindsym XF86AudioNext exec --no-startup-id playerctl next;
-bindsym XF86AudioPrev exec --no-startup-id playerctl previous;
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '+%' | head -n 1)";
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '+%' | head -n 1)";
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)";
-bindsym Print exec --no-startup-id ~/.config/bin/screenshot;
-bindsym Mod4+backslash exec --no-startup-id playerctl play-pause;
-bindsym Mod4+bracketright exec --no-startup-id playerctl next;
-bindsym Mod4+bracketleft exec --no-startup-id playerctl previous;
-bindsym Mod4+equal exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '+%' | head -n 1)";
-bindsym Mod4+minus exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '+%' | head -n 1)";
-bindsym Mod4+0 exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)";
-#+end_example
-
-#+begin_src emacs-lisp
-(setq mode-find '(:name find
-                  :key ?f
-                  :keymaps ((:modk t :key ?u :exe t :cmd "xdg-open \"$(fd --extension=pdf . ~/Documents/uni/cs | $rofi)\"")
-                            (:modk t :key ?l :exe t :cmd "xdg-open \"$(fd --extension=pdf --extension=epub . ~/Documents/literature | $rofi)\"")
-                            (:modk t :key ?f :exe t :cmd "xdg-open \"$(fd . ~ | $rofi)\""))))
-
-(defun set-mode (mode)
-  (let ((name (plist-get mode :name))
-        (key (plist-get mode :key))
-        (keymaps (plist-get mode :keymaps)))
-    (string-join
-     (list
-      (set-keymap `(:modk t :key ,key :cmd ,(format "mode \"$%s\"" name)))
-      (format "mode \"$%s\" {" (symbol-name name))
-      (mapconcat
-       (lambda (it)
-         (set-keymap it))
-       keymaps
-       "\n")
-      (set-keymap '(:key Escape :cmd "mode \"default\" "))
-      "}")
-     "\n")))
-
-(set-mode mode-find)
-#+end_src
-
-#+RESULTS:
-: bindsym Mod4+f mode "$find";
-: mode "$find" {
-: bindsym Mod4+u exec --no-startup-id xdg-open "$(fd --extension=pdf . ~/Documents/uni/cs | $rofi)";
-: bindsym Mod4+l exec --no-startup-id xdg-open "$(fd --extension=pdf --extension=epub . ~/Documents/literature | $rofi)";
-: bindsym Mod4+f exec --no-startup-id xdg-open "$(fd . ~ | $rofi)";
-: bindsym Escape mode "default" ;
-: }
-
-#+begin_src conf
 workspace $ws_cmd   output primary
 workspace $ws_doc   output primary
 workspace $ws_web   output primary
@@ -447,7 +164,7 @@ workspace $ws_edit  output primary
 workspace $ws_vid   output primary
 workspace $ws_bot   output primary
 workspace $ws_music output primary
-workspace $ws_xyz output primary
+workspace $ws_xyz   output primary
 workspace 1         output primary
 workspace 2         output primary
 workspace 3         output primary
@@ -575,53 +292,12 @@ mode "$menus" {
 
 
 * Theme
-#+begin_src emacs-lisp
-(defvar solarized-light-theme
-  '(:bg "#F2E6CE" :fg "#586E75" :main "#268BD2" :red "#DC322F"))
-
-(defvar solarized-dark-theme
-  '(:bg "#002b36" :fg "#839496" :main "#268BD2" :red "#DC322F"))
-
-(defun set-theme (theme)
-  (let ((main (plist-get theme :main))
-        (fg (plist-get theme :fg))
-        (bg (plist-get theme :bg))
-        (red (plist-get theme :red)))
-    (mapconcat
-     (lambda (opt)
-       (set-opt opt))
-     `((client.focused ,(list main main bg fg main))
-       (client.focused_inactive ,(list bg fg bg bg bg))
-       (client.unfocused ,(list bg bg fg bg bg))
-       (client.urgent ,(list red red bg bg bg))
-       (client.placeholder ,(list bg bg fg bg bg))
-       (client.bground ,bg))
-     "\n")))
-
-(set-theme solarized-dark-theme)
-#+end_src
-
-#+RESULTS:
-: client.focused #268BD2 #268BD2 #002b36 #839496 #268BD2
-: client.focused_inactive #002b36 #839496 #002b36 #002b36 #002b36
-: client.unfocused #002b36 #002b36 #839496 #002b36 #002b36
-: client.urgent #DC322F #DC322F #002b36 #002b36 #002b36
-: client.placeholder #002b36 #002b36 #839496 #002b36 #002b36
-: client.bground #002b36
-
 ** Solarized light
 #+begin_src conf :tangle no
 set $backg      #F2E6CE
 set $foreg      #586E75
 set $main       #268BD2
-set $yellow     #B58900
-set $orange     #CB4B16
 set $red        #DC322F
-set $purple     #6C71C4
-set $magenta    #d33682
-set $blue       #268BD2
-set $cyan       #2AA198
-set $green      #859900
 #+end_src
 
 ** Solarized dark
@@ -629,14 +305,7 @@ set $green      #859900
 set $backg      #002b36
 set $foreg      #839496
 set $main       #268BD2
-set $yellow     #B58900
-set $orange     #CB4B16
 set $red        #DC322F
-set $purple     #6C71C4
-set $magenta    #d33682
-set $blue       #268BD2
-set $cyan       #2AA198
-set $green      #859900
 #+end_src
 
 ** Variables

@@ -280,15 +280,16 @@ Kills current buffer and closes the window/tab it was displayed in."
       evil-snipe-override-evil-repeat-keys t
       evil-snipe-auto-scroll nil)
 
-(dolist (cmd '(flycheck-next-error
-               flycheck-previous-error
-               evil-avy-goto-char-2-below
-               evil-avy-goto-char-2-above
-               +lookup/definition
-               +lookup/references
-               +lookup/implementations
-               +default/search-buffer
-               consult-imenu))
+(dolist (cmd
+         '(flycheck-next-error
+           flycheck-previous-error
+           evil-avy-goto-char-2-below
+           evil-avy-goto-char-2-above
+           +lookup/definition
+           +lookup/references
+           +lookup/implementations
+           +default/search-buffer
+           consult-imenu))
   (evil-add-command-properties cmd :jump t))
 ;; Editor:1 ends here
 
@@ -346,13 +347,14 @@ Kills current buffer and closes the window/tab it was displayed in."
   (interactive)
   (dolist (file (dired-get-marked-files))
     (let* ((file (dired-get-filename))
-           (dest (file-name-concat z-archive-dir
-                                   (file-relative-name file "~/"))))
+           (dest (file-name-concat
+                  z-archive-dir
+                  (file-relative-name file "~/"))))
       (rename-file file dest 1)))) ;; NOTE :: "1": propt before overwrite
 ;; Archive file:1 ends here
 
 ;; [[file:config.org::*Programming][Programming:1]]
-(add-hook! 'prog-mode-hook #'rainbow-mode #'rainbow-delimiters-mode)
+(add-hook! 'prog-mode-hook '(rainbow-mode rainbow-delimiters-mode))
 ;; Programming:1 ends here
 
 ;; [[file:config.org::*Indentation: 2 spaces][Indentation: 2 spaces:1]]
@@ -369,7 +371,7 @@ Kills current buffer and closes the window/tab it was displayed in."
 
 ;; [[file:config.org::*Clean Whitespace][Clean Whitespace:1]]
 (defun z-clean-whitespace ()
-  "Deletes consecutive empty lines if > 1, and strip trailing whitespace."
+  "Deletes consecutive empty lines if > 1, and strips trailing whitespace."
   (interactive)
   (delete-trailing-whitespace)
   (save-excursion
@@ -380,11 +382,12 @@ Kills current buffer and closes the window/tab it was displayed in."
 ;; Clean Whitespace:1 ends here
 
 ;; [[file:config.org::*Options][Options:1]]
-(add-hook! 'org-mode-hook '(visual-line-mode
-                            org-fragtog-mode
-                            +org-pretty-mode
-                            org-appear-mode
-                            org-auto-tangle-mode))
+(add-hook! 'org-mode-hook
+           '(visual-line-mode
+             org-fragtog-mode
+             +org-pretty-mode
+             org-appear-mode
+             org-auto-tangle-mode))
 
 (setq org-directory "~/Documents/org/"
       org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
@@ -629,8 +632,8 @@ Jumps at tangled code from org src block."
 (defun z-doct-expand (proj projs &optional type parent)
   "Generate doct preset for project (standardized).
 
-`PROJ:'   :name            | Project key / name.
-`PROJS:'  '(:name ?k..)    | Projects alist containing PROJ
+`PROJ:'   :name            | Project key (name)
+`PROJS:'  '(:name ?k..)    | Projects plist containing PROJ
 `TYPE:'   'agenda / 'notes | Which file to use (ex: agend.org). Omitted? => no :file returned.
 `PARENT:' :parentname      | Is it a subproject of PARENT? (for :file).
 

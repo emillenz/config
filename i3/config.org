@@ -21,7 +21,8 @@
  - Strictly avoid multitasking => Always work in maximized-mode to never have to resize a window => one workspace per window, to not get distracted by other open windows.
 
 * Abbreviations of (freq. used) long commands
-,#+begin_src conf
+- Expand before parsing 1:1 into the config.
+#+begin_src conf
 set $rofi rofi -dmenu -i -no-custom -p ' '
 set $esc mode "default"
 set $bin ~/.config/bin
@@ -32,14 +33,11 @@ set $cmd exec --no-startup-id
 
 * Startup automation
 [[file:~/.config/bin/startup][Startup]] Launches processes and daemons i need for my workflow.
-- Make sure that your user never get sudo prompted for commands, bc the script runs non-interactive sudo commands. (see: [[file:~/.config/setup.org][Setup]] on how to never be sudoprompted)
 #+begin_src conf
 $cmd $bin/startup
 #+end_src
 
 * Options
-- Like in all config: consistent font and vsplits.
-- always focus a new window when it's created.
 #+begin_src conf
 workspace_auto_back_and_forth no
 workspace_layout tabbed
@@ -136,45 +134,55 @@ $map $mod+Return     move workspace to output next
 - temporary workspaces :: 1-4, for moving windows to, viewing things side by side (scratchpads).
 - Upon opening new windows, automatically focus them (regardless of workspace. (sensible)
 - order of ws assignments is relevant: abstract -> detail
-#+begin_src conf
-set $ws_cmd   "cmd"
-set $ws_doc   "doc"
-set $ws_web   "web"
-set $ws_edit  "edit"
-set $ws_vid   "vid"
-set $ws_bot   "bot"
-set $ws_music "music"
-set $ws_xyz   "xyz"
-
-for_window [urgent="latest"] focus
-for_window [all] title_window_icon yes, $mv $ws_xyz, focus
-
-for_window [class="(?i)cmd"]                         $mv $ws_cmd,   focus
-for_window [class="(?i)zathura"]                     $mv $ws_doc,   focus
-for_window [class="(?i)emacs|(?i)eclipse"]           $mv $ws_edit,  focus
-for_window [class="(?i)firefox"]                     $mv $ws_web,   focus
-for_window [class="(?i)mpv"]                         $mv $ws_vid,   focus
-for_window [class="(?i)firefox" title="(?i)ChatGPT"] $mv $ws_bot,   focus
-for_window [class="(?i)firefox" title="(?i)Spotify"] $mv $ws_music, focus
-
-workspace $ws_cmd   output primary
-workspace $ws_doc   output primary
-workspace $ws_web   output primary
-workspace $ws_edit  output primary
-workspace $ws_vid   output primary
-workspace $ws_bot   output primary
-workspace $ws_music output primary
-workspace $ws_xyz   output primary
-workspace 1         output primary
-workspace 2         output primary
-workspace 3         output primary
-workspace 4         output primary
-#+end_src
-
-** App navigation bindings
 - The idea is to bind to the abstract function of the program, and not to the specific instance itself => if a different program is used, the functionality remains the same.
 - When sending a program to a ws, goto that workspace (sensible).
 - Restart i3 to send all windows back to their assigned workspaces.
+#+begin_src conf
+for_window [urgent="latest"] focus
+for_window [all] title_window_icon yes
+
+set $ws_xyz "xyz"
+$map $mod+x workspace $ws_xyz
+$map $mod+shift+x $mv $ws_xyz; workspace $ws_xyz
+for_window [all] $mv $ws_xyz, focus
+
+set $ws_cmd "cmd"
+$map $mod+c workspace $ws_cmd
+$map $mod+shift+c $mv $ws_cmd; workspace $ws_cmd
+for_window [class="(?i)cmd"] $mv $ws_cmd, focus
+
+set $ws_doc "doc"
+$map $mod+d workspace $ws_doc
+$map $mod+shift+d $mv $ws_doc; workspace $ws_doc
+for_window [class="(?i)zathura"] $mv $ws_doc, focus
+
+set $ws_web "web"
+$map $mod+w workspace $ws_web
+$map $mod+shift+w $mv $ws_web; workspace $ws_web
+for_window [class="(?i)firefox"] $mv $ws_web, focus
+
+set $ws_edit "edit"
+$map $mod+e workspace $ws_edit
+$map $mod+shift+e $mv $ws_edit; workspace $ws_edit
+for_window [class="(?i)emacs|(?i)eclipse"] $mv $ws_edit, focus
+
+set $ws_vid "vid"
+$map $mod+v workspace $ws_vid
+$map $mod+shift+v $mv $ws_vid; workspace $ws_vid
+for_window [class="(?i)mpv"] $mv $ws_vid, focus
+
+set $ws_bot "bot"
+$map $mod+b workspace $ws_bot
+$map $mod+shift+b $mv $ws_bot; workspace $ws_bot
+for_window [class="(?i)firefox" title="(?i)ChatGPT"] $mv $ws_bot, focus
+
+set $ws_music "music"
+$map $mod+m workspace $ws_music
+$map $mod+shift+m $mv $ws_music; workspace $ws_music
+for_window [class="(?i)firefox" title="(?i)Spotify"] $mv $ws_music, focus
+#+end_src
+
+** Scratch workspaces
 #+begin_src conf
 $map $mod+1       workspace 1
 $map $mod+shift+1 $mv 1; workspace 1
@@ -184,26 +192,9 @@ $map $mod+3       workspace 3
 $map $mod+shift+3 $mv 3; workspace 3
 $map $mod+4       workspace 4
 $map $mod+shift+4 $mv 4; workspace 4
-
-$map $mod+x       workspace $ws_xyz
-$map $mod+shift+x $mv $ws_xyz; workspace $ws_xyz
-$map $mod+c       workspace $ws_cmd
-$map $mod+shift+c $mv $ws_cmd; workspace $ws_cmd
-$map $mod+d       workspace $ws_doc
-$map $mod+shift+d $mv $ws_doc; workspace $ws_doc
-$map $mod+w       workspace $ws_web
-$map $mod+shift+w $mv $ws_web; workspace $ws_web
-$map $mod+e       workspace $ws_edit
-$map $mod+shift+e $mv $ws_edit; workspace $ws_edit
-$map $mod+v       workspace $ws_vid
-$map $mod+shift+v $mv $ws_vid; workspace $ws_vid
-$map $mod+b       workspace $ws_bot
-$map $mod+shift+b $mv $ws_bot; workspace $ws_bot
-$map $mod+m       workspace $ws_music
-$map $mod+shift+m $mv $ws_music; workspace $ws_music
 #+end_src
 
-** Open app keybindings
+** App opener
 #+begin_src  conf
 $map $mod+o mode "$open"
 

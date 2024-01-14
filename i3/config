@@ -197,12 +197,12 @@ mode "$menus" {
 }
 # Menus:1 ends here
 
-# [[file:config.org::*Solarized dark][Solarized dark:1]]
-set $backg      #002b36
-set $foreg      #839496
+# [[file:config.org::*Solarized light][Solarized light:1]]
+set $backg      #F2E6CE
+set $foreg      #586E75
 set $main       #268BD2
 set $red        #DC322F
-# Solarized dark:1 ends here
+# Solarized light:1 ends here
 
 # [[file:config.org::*Variables][Variables:1]]
 # class                 border  backg   text    indicator child_border

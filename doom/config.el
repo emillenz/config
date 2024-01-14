@@ -3,8 +3,8 @@
       user-mail-address "emillenz@protonmail.com")
 ;; User:1 ends here
 
-;; [[file:config.org::*Theme: Solarized (dark/light)][Theme: Solarized (dark/light):1]]
-(setq doom-theme 'doom-solarized-dark)
+;; [[file:config.org::*Theme: Solarized (light)][Theme: Solarized (light):1]]
+(setq doom-theme 'doom-oksolar-light)
 
 (custom-set-faces!
   `(tab-bar-tab :background ,(doom-color 'blue) :foreground ,(doom-color 'bg) :weight bold))
@@ -16,7 +16,7 @@
         evil-visual-state-cursor   `(,(doom-color 'violet) box)
         evil-operator-state-cursor `(,(doom-color 'red) box)
         evil-replace-state-cursor  `(,(doom-color 'red) hbar)))
-;; Theme: Solarized (dark/light):1 ends here
+;; Theme: Solarized (light):1 ends here
 
 ;; [[file:config.org::*Font][Font:1]]
 (setq doom-font                (font-spec :family "Iosevka Nerd Font" :size 14)
@@ -65,14 +65,11 @@
 (add-hook! '(text-mode-hook
              prog-mode-hook
              dired-mode-hook
+             conf-mode-hook
+             Info-mode-hook
              org-agenda-mode-hook
              magit-mode-hook)
            #'visual-fill-column-mode)
-
-(defadvice! z-maximize-popup (fn &rest args)
-  "Enable `visual-fill-column', when maximizing (for manual & help)."
-  :after #'doom/window-maximize-buffer
-  (visual-fill-column-mode 1))
 
 (global-display-fill-column-indicator-mode 0)
 
@@ -103,6 +100,7 @@
 (save-place-mode 1)
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
+(rainbow-mode 1)
 
 (tab-bar-mode 1)
 (setq tab-bar-tab-hints t
@@ -359,7 +357,7 @@ Kills current buffer and closes the window/tab it was displayed in."
 ;; Archive file:1 ends here
 
 ;; [[file:config.org::*Programming][Programming:1]]
-(add-hook! 'prog-mode-hook '(rainbow-mode rainbow-delimiters-mode))
+(add-hook! 'prog-mode-hook 'rainbow-delimiters-mode)
 ;; Programming:1 ends here
 
 ;; [[file:config.org::*Indentation: 2 spaces][Indentation: 2 spaces:1]]

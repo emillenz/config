@@ -18,8 +18,8 @@ alias rm = rm --recursive --verbose --force --trash
 alias cp = cp --recursive --verbose --progress
 alias mv = mv --verbose --force
 
-alias bat = bat --theme='Solarized (dark)'
-alias fzf = fzf --reverse --height=30 --color=dark --scheme=path
+alias bat = bat --theme='Solarized (light)'
+alias fzf = fzf --reverse --height=30 --color=light --scheme=path
 
 alias e = emacsclient --tty
 alias g = emacsclient --tty --eval "(magit-status)"
@@ -29,8 +29,8 @@ $env.PATH = ($env.PATH | append ["~/.config/bin", "~/.cargo/bin", "~/.config/ema
 $env.EDITOR = "emacsclient --tty --alternate-editor=nvim"
 $env.VISUAL = "emacsclient --reuse-frame --alternate-editor=nvim"
 $env.BROWSER = "firefox"
-$env.MANPAGER = "bat --plain --language=man --theme='Solarized (dark)'"
-$env.PAGER = "bat --theme='Solarized (dark)'"
+$env.MANPAGER = "bat --plain --language=man --theme='Solarized (light)'"
+$env.PAGER = "bat --theme='Solarized (light)'"
 
 let fish_completer = {|spans|
     fish --command $'complete "--do-complete=($spans | str join " ")"'
@@ -127,7 +127,7 @@ $env.config = {
     vi_normal: block
   }
 
-  color_config: (solarized_dark)
+  color_config: (solarized_light)
   use_grid_icons: false
   footer_mode: "25" # always, never, number_of_rows, auto
   float_precision: 2

@@ -284,7 +284,7 @@ mode "$menus" {
 
 * Theme
 ** Solarized light
-#+begin_src conf :tangle no
+#+begin_src conf
 set $backg      #F2E6CE
 set $foreg      #586E75
 set $main       #268BD2
@@ -292,7 +292,7 @@ set $red        #DC322F
 #+end_src
 
 ** Solarized dark
-#+begin_src conf
+#+begin_src conf :tangle no
 set $backg      #002b36
 set $foreg      #839496
 set $main       #268BD2

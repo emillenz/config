@@ -23,11 +23,12 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 * UI
-** Theme: Solarized (dark/light)
-- Note :: change colors based on the theme dynamically and don't hard-code them in (extensible).
+** Theme: Solarized (light)
+- oksolar :: better separation of elements (little more intense & draws borders).
+- Note :: change cursor etc colors based on the theme dynamically and don't hard-code them in (extensible).
 - Cursor :: Different cursor color dependent on mode you are in.
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-solarized-dark)
+(setq doom-theme 'doom-oksolar-light)
 
 (custom-set-faces!
   `(tab-bar-tab :background ,(doom-color 'blue) :foreground ,(doom-color 'bg) :weight bold))
@@ -102,14 +103,11 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (add-hook! '(text-mode-hook
              prog-mode-hook
              dired-mode-hook
+             conf-mode-hook
+             Info-mode-hook
              org-agenda-mode-hook
              magit-mode-hook)
            #'visual-fill-column-mode)
-
-(defadvice! z-maximize-popup (fn &rest args)
-  "Enable `visual-fill-column', when maximizing (for manual & help)."
-  :after #'doom/window-maximize-buffer
-  (visual-fill-column-mode 1))
 
 (global-display-fill-column-indicator-mode 0)
 
@@ -142,6 +140,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (save-place-mode 1)
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
+(rainbow-mode 1)
 
 (tab-bar-mode 1)
 (setq tab-bar-tab-hints t
@@ -474,7 +473,7 @@ Kills current buffer and closes the window/tab it was displayed in."
 
 * Programming
 #+begin_src emacs-lisp
-(add-hook! 'prog-mode-hook '(rainbow-mode rainbow-delimiters-mode))
+(add-hook! 'prog-mode-hook 'rainbow-delimiters-mode)
 #+end_src
 
 ** Indentation: 2 spaces

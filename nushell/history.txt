@@ -1,19 +1,3 @@
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip ($paragraph | length ))<\n>    $paragraph | length<\n>}<\n>bat test<\n><\n># while (open 'copy.md' | lines| length) > 1
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip ($paragraph | length ))<\n>    print ($paragraph | length)<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip ($paragraph | length ))<\n>    print $data<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 1) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    print $data<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
-save -h | bat
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    print $data | str join "\n"<\n>    # $data | str join "\n" <\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    print ($data | first 50 | str join "\n")<\n>    # $data | str join "\n" <\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
-collect -h | bat
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1) | str join "\n")<\n>    print ($data | first 20 )<\n>    # $data | str join "\n" <\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1) | str join "\n")<\n>    print ($data | lines | first 20 )<\n>    # $data | str join "\n" <\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1) | str join "\n")<\n>    print ($data | lines | first 20 )<\n>    $data | save -f copy.md<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
-bat `2022-00-00.md`
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != "***"})<\n>    $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1) | str join "\n")<\n>    print ($data | lines | first 20 )<\n>    $data | save -f copy.md<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
-flatpak install flathub md.obsidian.Obsidian
-zellij kill-session  -h | bat 
-zellij kill-session  notes
 e
 fd .
 fd ./
@@ -9998,3 +9982,19 @@ ls
 ulimit
 bash
 exit
+ls
+yay
+yay -R proggyfontsx
+yay -R proggyfonts
+yay
+alacritty --help | bat --language=man
+alacritty migrate
+ls
+la
+ls
+alacritty migrate
+ls
+ls -la
+ls
+ls -la
+ls

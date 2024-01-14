@@ -50,16 +50,18 @@ Imagine two kinds of grocery stores, one that just looks at what is the most pop
   - ex: relative line jumping over spamming =j=
   - ex: tab switching => thinking fast & instinctive, develop muscle memory (when there are too many => use analytical brain by searching through the list)
 
-** Colorscheme: Solarized (light/dark).
-- It was carfully and deliberately designed by hand and intensively tested to achieve the best visibilty while maintaining low eye strain.
-- The colors are incredibly contrast rich in light and dark mode which improves readability. and they are matched, so they work with dark and light theme interchangeably
-- It's functionality and colorchoices it brings is unmatched by any other colorscheme.
-- The light theme looks like as if someone left a sheet of paper out in the sun for far too long and now it is all yellowed. It reminds me of an old worn and torn document, that you can spend 20- hours looking at on without getting tired.
-- The background color of the dark variant is what i imagine one would see if they were drowning in the middle of the ocean. To me it represents the color you see when dying. Both light/dark are good for long time terminal and coding sessions.
-#+begin_quote
-Solarized reduces brightness contrast but, unlike many low contrast colorschemes, retains contrasting hues (based on colorwheel relations) for syntax highlighting readability.
+** Colorscheme: Solarized (light variant)
+#+begin_quote Solarized reduces brightness contrast but, unlike many low contrast colorschemes, retains contrasting hues (based on colorwheel relations) for syntax highlighting readability.
 - Ethan Schoonover
 #+end_quote
+
+- It was carfully and deliberately designed by hand and intensively tested to achieve the best visibilty while maintaining low eye strain.
+- The colors are incredibly contrast rich in light and dark mode which improves readability. and they are matched, so they work with dark and light theme interchangeably
+- It's functionality and colorchoices it brings is unmatched by any other colorscheme. (Protesilaos Stavrou's: modus-themes are a close runner up.)
+- Light variant :: Looks like as if someone left a sheet of paper out in the sun for far too long and now it is all yellowed. It reminds me of an old worn and torn document, that you can spend hours on end looking at on without getting tired.
+- Dark variant :: The background color of the dark variant is what i imagine one would see if they were drowning in the middle of the ocean. To me it represents the color you see when dying. Both light/dark are good for long time terminal and coding sessions.
+- Prefer to use light-variant per default, since this is mostly consistent with other applications (+websites) that are not themed and puts less strain on the eyes when reading in ambient/daylight conditions.
+  - You should always have ambient light on when coding at night, in order to protect the eyes. Thus using a dark theme makes little sense again.
 
 * Font: Iosevka Nerd Font
 - It is incredibly compact in width to allow a lot of code on screen, especially when viewing content side by side.
@@ -186,27 +188,27 @@ Today, many aspects of daily computer usage are split between different applicat
 - Integration between tasks previously relegated to different applications, but with a common subject - e.g. linking to an email in a to-do list etc
 - Emacs can be thought of as a platform within which various elements of your workflow may settle, while being able to interlink them interactively.
 - Reduced context-switching, many tools in one connected, coherent, interwoven keyboard-driven interface. This integration is very efficient and consistent, since now any function can be reused in all tools (eg. fuzzy finding, and doesn't have to be implemented in each separate program itself). It greatly reduces the mental overhead needed to customize and extend the tools, since the context and language is always the same. Since these tools are text-centric, they align withthe single focus, no multitasking buffer wokflow philosophy.
-  - editor:
-    - technical Documents
-    - academic papers
-    - code
-    - notes
-    - journaling
-  - coding tools:
-    - git interface
-    - manpages
-    - diff
-    - debugger
+  - Editor
+    - Technical Documents
+    - Academic papers
+    - Code
+    - Notes
+    - Journaling
+  - Coding tools
+    - Git interface
+    - Manpages
+    - Diff
+    - Debugger
   - Agenda
   - Emailclient
   - Todolist
-  - Filemanager (very efficient and extensible to keep the workflow dry)
+  - Filemanager
   - Manpager
-  - file/dir navigation & management: Find-file, fuzzy-find, (book)marks, dired
+  - File/dir navigation & management: find-file, fuzzy-find, (book)marks, dired
     - the most efficient workflow for finding, opening and editing files on the os that i have ever developed.
 
 *** Org mode
-- In my opinion the most elegant markup language, all the while keeping the syntax opinionated and simple with only one way to do it (=> looking at you: Markdown).
+- In my opinion the most elegant markup language, all the while keeping the syntax opinionated and simple with only one way to do it (=> looking at you: Markdown with your weird spacing rules and arcane markup for links/quotes).
 - One to rule them all, create websites, tables, journals, todolists, calendars and Programs, all with the same consistent elegant and formatted syntax.
 - Automate making entries into files and databases at specific places.
 - Completely integrated into the editor (think: finding/filtering headlines, notes, tasks..)
@@ -220,14 +222,14 @@ Today, many aspects of daily computer usage are split between different applicat
 
 ** Webbrowser: Firefox
 *** Install & configure extensions manually
-- keybindings: vimium
-- Passwords: keepassxc
-- Theming: solarized light
-- Set Font: terminus [+no custom fonts allowed]
-- Open files: set! all files => system default
-- Bookmarks: name them hierarchically w keywords [= org-mode tags], EX: =cs:math:exercises=
-  - quickly open website using vimium's bookmark find
-  - structured, easy to patternmatch & find bookmarks
+- keybindings (vim extension)
+- Passwords
+- Theming
+- Font (set to system wide font and don't allow custom fonts)
+- Open files
+- Bookmarks: name them hierarchically w keywords (syntax <=> org-mode-tags), ex: =cs:math:exercises=
+  - quickly open website using bookmark searching
+  - structured, easy to patternmatch (not having to put them into folders)
 
 ** Filexplorer
 - Avoid using integrated filemanagers (such as dired / ranger / lf / thunar) whenever possible (and dont even dare to suggest a gui file manager...).

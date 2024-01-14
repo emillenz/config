@@ -69,7 +69,12 @@
              magit-mode-hook)
            #'visual-fill-column-mode)
 
-(global-display-fill-column-indicator-mode -1)
+(defadvice! z-maximize-popup (fn &rest args)
+  "Enable `visual-fill-column', when maximizing (for manual & help)."
+  :after #'doom/window-maximize-buffer
+  (visual-fill-column-mode 1))
+
+(global-display-fill-column-indicator-mode 0)
 
 (setq visual-fill-column-enable-sensible-window-split t
       visual-fill-column-center-text t

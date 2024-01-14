@@ -106,7 +106,12 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
              magit-mode-hook)
            #'visual-fill-column-mode)
 
-(global-display-fill-column-indicator-mode -1)
+(defadvice! z-maximize-popup (fn &rest args)
+  "Enable `visual-fill-column', when maximizing (for manual & help)."
+  :after #'doom/window-maximize-buffer
+  (visual-fill-column-mode 1))
+
+(global-display-fill-column-indicator-mode 0)
 
 (setq visual-fill-column-enable-sensible-window-split t
       visual-fill-column-center-text t
@@ -188,7 +193,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   - When emacs creates splits we must handle them (includes minimal bindings for switching and closing splits)
 - terminal :: We never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...)
   - Instead if needed we can execute oneliners with ~(async-shell-command)~
-- buffers :: kill buffers when done (don't accumulate buffers in tha background)
+- Buffers :: kill buffers when done (don't accumulate buffers in tha background)
 #+begin_src emacs-lisp
 (map! :map 'override
       :nvim "M-j" #'previous-window-any-frame

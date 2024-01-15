@@ -8,7 +8,7 @@
 
 # NOTE: When programming in nushell non-interactively, use the full command-names and long style options in order to make the code scaleable and readeable.
 
-source theme.nu
+source solarized-light.nu
 
 alias exe = chmod +x
 alias ip = ip -color=auto

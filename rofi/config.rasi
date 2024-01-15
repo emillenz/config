@@ -260,9 +260,9 @@ error-message {
 
 // solarized-light
 * {
-  background:     #F2E6CE;
-  background-alt: #F2E6CE;
-  foreground:     #586E75;
+  background:     #F1E9D2;
+  background-alt: #FBF7EF;
+  foreground:     #657377;
   selected:       #268BD2;
   active:         #859900;
   urgent:         #DC322F;

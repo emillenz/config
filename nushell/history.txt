@@ -1,54 +1,3 @@
-e
-fd .
-fd ./
-fd .
-cd 2023
-fd .
-fd . -x mv {} ../
-fd . 
-cd ..
-fd . 
-ls 
-ls | where type == dir
-ls | where type == dir | find
-ls | where type == dir | find 0
-ls | where type == dir | ls  -h | bat
-ls | where type == dir 
-fd .
-fd . -x mv {} ~/journal/
-zellij kill-session  notes
-e
- synctihng
-dnfi emacs
-lf
-ls
-doom install
-ls
-./doom install
-doom sync
-./doom sync
-emacs
-git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
-rm -r ~/.config/emacs
-git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
-~/.config/emacs/bin/doom install
-^emacs --daemon
-starutp
-ps
-ps | find emacs
-ps  -h | bat
-ps  -l | find emacs
-ps  -l | get command | find firefox
-ps  -l | get command | find flameshot
-ps  -l | get command 
-ps  -l | get command | find nm
-ps  -l | get command | find  xauto
-starutup
-startup
-git status
-git add nvim
-git add scripts
-git add zellij
 git commit -am 'sync'; git push
 e
 doom sync
@@ -9993,6 +9942,57 @@ ls
 la
 ls
 alacritty migrate
+ls
+ls -la
+ls
+ls -la
+ls
+jshell
+ls
+ls -la
+ls
+ls -la
+ls
+sudo killall emacs
+ls
+ls -al
+ls -la
+ls
+sudo killall emacs
+sys
+ps
+ps | find emacs
+kill  --help | bat --language=man
+sudo kill 1506
+ps | find emacs
+kill 1506
+ps | find emacs
+kill 4318
+ps | find emacs
+ls
+la -la
+ls -la
+ls
+sys
+ls
+ls ls
+ls
+lsls
+ls
+cd ~/.config
+ls
+ls | where type == file | get name 
+ls
+ls -la
+ls
+(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
+cd .
+ls
+cd ~
+(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
+ls 
+ls
+ls -la
 ls
 ls -la
 ls

@@ -1,8 +1,8 @@
 #+title:  Doom Emacs Config
 #+author: Emil Lenz
 #+email:  emillenz@protonmail.com
-#+date:   2022-11-1
-#+info:   Heavily opinionated emacs config with a principle-focused approach on: consistency, quality, efficiency & extensibility.
+#+date:   2022-11-01
+#+info:   Heavily opinionated emacs evil-mode config, with a principle-focused approach on: consistency, quality, efficiency & extensibility.
 
 #+property: header-args:emacs-lisp tangle config.el :comments link
 
@@ -24,7 +24,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 * UI
 ** Theme: Solarized (light)
-- oksolar :: better separation of elements (little more intense & draws borders).
+- Oksolar :: has 1px delimiters & more creamy tinted background color (for better diststinction.)
 - Note :: change cursor etc colors based on the theme dynamically and don't hard-code them in (extensible).
 - Cursor :: Different cursor color dependent on mode you are in.
 #+begin_src emacs-lisp
@@ -265,6 +265,19 @@ Kills current buffer and closes the window/tab it was displayed in."
 
       :nmv  "go"  #'consult-imenu
       :nmv  "g/"  #'+default/search-buffer)
+#+end_src
+
+#+begin_src emacs-lisp
+(defadvice! z-update-evil-search-reg ()
+  "Update evil search register after jumping to a line with
+  `+default/search-buffer' to be able to jump to next/prev matches.
+This is sensible default behaviour."
+  :after) '+default/search-buffer
+(let ((str (string-replace
+            " " ".*"
+            (car consult--line-history))))
+  (push str evil-ex-search-history)
+  (setq evil-ex-search-pattern (list str t t)))
 #+end_src
 
 ** Control-bindings
@@ -1112,4 +1125,5 @@ In each new file systematically insert heading metadata (as comments) with the f
   - track your coding/writing progress over the years and just generally it is important to document the timing of things, to analyze/order/reconstruct them.
 - info :: Short document description/summary, think of it as a docstring for the file with this the reader should know what the document is about in one line.
 
-- Do this using templates (keep workflow DRY).
+Automate this using a snippet (keep workflow DRY)
+[[file:snippets/org-mode/header][org-mode-header]]

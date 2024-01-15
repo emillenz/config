@@ -34,12 +34,12 @@ format = "<b>%s %p</b>\n%b"
 
 # Solarized light
 [urgency_low]
-background =  "#F2E6CE"
+background =  "#F1E9D2"
 foreground =  "#586E75"
 frame_color = "#268bd2"
 timeout = 3
 [urgency_normal]
-background =  "#F2E6CE"
+background =  "#F1E9D2"
 foreground =  "#586E75"
 frame_color = "#268bd2"
 timeout = 5

@@ -196,6 +196,19 @@ Kills current buffer and closes the window/tab it was displayed in."
       :nmv  "g/"  #'+default/search-buffer)
 ;; Evil-mode:1 ends here
 
+;; [[file:config.org::*Evil-mode][Evil-mode:2]]
+(defadvice! z-update-evil-search-reg ()
+  "Update evil search register after jumping to a line with
+  `+default/search-buffer' to be able to jump to next/prev matches.
+This is sensible default behaviour."
+  :after) '+default/search-buffer
+(let ((str (string-replace
+            " " ".*"
+            (car consult--line-history))))
+  (push str evil-ex-search-history)
+  (setq evil-ex-search-pattern (list str t t)))
+;; Evil-mode:2 ends here
+
 ;; [[file:config.org::*Control-bindings][Control-bindings:1]]
 (map! :inmv "C-s" #'evil-write
       :nmv "C-q" #'kill-current-buffer

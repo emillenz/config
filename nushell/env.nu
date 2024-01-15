@@ -68,7 +68,7 @@ $env.PROMPT_COMMAND_RIGHT = ""
 $env.PROMPT_INDICATOR = {|| $"(ansi blue_bold)::(ansi reset)  " }
 $env.PROMPT_INDICATOR_VI_INSERT = {|| $"(ansi blue_bold)::(ansi reset)  " }
 $env.PROMPT_INDICATOR_VI_NORMAL = {|| $"(ansi green_bold)::(ansi reset)  " }
-$env.PROMPT_MULTILINE_INDICATOR = {|| $"(ansi blue_bold)=>(ansi reset)  " }
+$env.PROMPT_MULTILINE_INDICATOR = {|| $"(ansi blue_bold)>>(ansi reset)  " }
 
 # If you want previously entered commands to have a different prompt from the usual one,
 # you can uncomment one or more of the following lines.

@@ -50,18 +50,18 @@ Imagine two kinds of grocery stores, one that just looks at what is the most pop
   - ex: relative line jumping over spamming =j=
   - ex: tab switching => thinking fast & instinctive, develop muscle memory (when there are too many => use analytical brain by searching through the list)
 
-** Colorscheme: Solarized (light variant)
-#+begin_quote Solarized reduces brightness contrast but, unlike many low contrast colorschemes, retains contrasting hues (based on colorwheel relations) for syntax highlighting readability.
+** Colorscheme: Solarized
+#+begin_quote
+Solarized reduces brightness contrast but, unlike many low contrast colorschemes, retains contrasting hues (based on colorwheel relations) for syntax highlighting readability.
 - Ethan Schoonover
 #+end_quote
 
 - It was carfully and deliberately designed by hand and intensively tested to achieve the best visibilty while maintaining low eye strain.
 - The colors are incredibly contrast rich in light and dark mode which improves readability. and they are matched, so they work with dark and light theme interchangeably
 - It's functionality and colorchoices it brings is unmatched by any other colorscheme. (Protesilaos Stavrou's: modus-themes are a close runner up.)
-- Light variant :: Looks like as if someone left a sheet of paper out in the sun for far too long and now it is all yellowed. It reminds me of an old worn and torn document, that you can spend hours on end looking at on without getting tired.
 - Dark variant :: The background color of the dark variant is what i imagine one would see if they were drowning in the middle of the ocean. To me it represents the color you see when dying. Both light/dark are good for long time terminal and coding sessions.
-- Prefer to use light-variant per default, since this is mostly consistent with other applications (+websites) that are not themed and puts less strain on the eyes when reading in ambient/daylight conditions.
-  - You should always have ambient light on when coding at night, in order to protect the eyes. Thus using a dark theme makes little sense again.
+- Prefer to use dark-variant per default, since this is mostly consistent with other applications (+websites) that are not themed and reduces strain when focusing.
+  - You should always have ambient light on when coding at night, in order to protect the eyes.
 
 * Font: Iosevka Nerd Font
 - It is incredibly compact in width to allow a lot of code on screen, especially when viewing content side by side.

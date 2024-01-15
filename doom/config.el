@@ -3,12 +3,12 @@
       user-mail-address "emillenz@protonmail.com")
 ;; User:1 ends here
 
-;; [[file:config.org::*Theme: Solarized (light)][Theme: Solarized (light):1]]
-(setq doom-theme 'doom-oksolar-light)
+;; [[file:config.org::*Theme: Solarized (dark)][Theme: Solarized (dark):1]]
+(setq doom-theme 'doom-solarized-dark)
 
 (custom-set-faces!
   `(tab-bar-tab :background ,(doom-color 'blue) :foreground ,(doom-color 'bg) :weight bold)
-  `(default :background "#F1E9D2"))
+  `(org-list-dt :foreground ,(doom-color 'blue) :weight bold))
 
 (after! evil
   (setq evil-normal-state-cursor   `(,(doom-color 'blue) box)
@@ -17,7 +17,7 @@
         evil-visual-state-cursor   `(,(doom-color 'violet) box)
         evil-operator-state-cursor `(,(doom-color 'red) box)
         evil-replace-state-cursor  `(,(doom-color 'red) hbar)))
-;; Theme: Solarized (light):1 ends here
+;; Theme: Solarized (dark):1 ends here
 
 ;; [[file:config.org::*Font][Font:1]]
 (setq doom-font                (font-spec :family "Iosevka Nerd Font" :size 14)
@@ -201,12 +201,12 @@ Kills current buffer and closes the window/tab it was displayed in."
   "Update evil search register after jumping to a line with
   `+default/search-buffer' to be able to jump to next/prev matches.
 This is sensible default behaviour."
-  :after) '+default/search-buffer
+  :after  '+default/search-buffer
 (let ((str (string-replace
             " " ".*"
             (car consult--line-history))))
   (push str evil-ex-search-history)
-  (setq evil-ex-search-pattern (list str t t)))
+  (setq evil-ex-search-pattern (list str t t))))
 ;; Evil-mode:2 ends here
 
 ;; [[file:config.org::*Control-bindings][Control-bindings:1]]
@@ -264,7 +264,7 @@ This is sensible default behaviour."
 
 (map! :after dired
       :localleader :map dired-mode-map
-      :nm "A" #'z-dired-archive)
+      :nm "a" #'z-dired-archive)
 ;; Dired (keys):1 ends here
 
 ;; [[file:config.org::*Minibuffer][Minibuffer:1]]
@@ -361,12 +361,15 @@ This is sensible default behaviour."
 
 (defun z-dired-archive ()
   (interactive)
-  (dolist (file (dired-get-marked-files))
-    (let* ((file (dired-get-filename))
-           (dest (file-name-concat
-                  z-archive-dir
-                  (file-relative-name file "~/"))))
-      (rename-file file dest 1)))) ;; NOTE :: "1": propt before overwrite
+  (let ((files (dired-get-marked-files nil nil)))
+    (dolist (f files)
+      (let* ((dest (file-name-concat
+                    z-archive-dir
+                    (file-relative-name f "~/")))
+             (dir (file-name-directory dest)))
+        (unless (file-exists-p dir)
+          (make-directory dir t))
+        (rename-file f dest 1)))))
 ;; Archive file:1 ends here
 
 ;; [[file:config.org::*Programming][Programming:1]]
@@ -406,12 +409,10 @@ This is sensible default behaviour."
            '(visual-line-mode
              org-fragtog-mode
              +org-pretty-mode
-             org-appear-mode
-             org-auto-tangle-mode))
+             org-appear-mode))
 
 (setq org-directory "~/Documents/org/"
       org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
-      org-auto-tangle-default t
       org-use-property-inheritance t
       org-reverse-note-order t
       org-startup-with-inline-images t

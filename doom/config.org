@@ -11,7 +11,7 @@ Professional, minimalist tools like Emacs have a high learning curve and require
 
 The saying, "give 'em enough rope, and they'll likely hang themselves," holds true. Emacs provides the rope if you are not careful.
 
-- It is advised to only copy snippets of this config that are understood.
+- hey :: It is advised to only copy snippets of this config that are understood.
 - if you decide to use parts (or the entire config) *ensure* that you have *at least* every doom/module and package installed / enabled as i do, otherwise emacs will throw errors left and right.
   - modules: [[file:init.el]]
   - packages:[[file:packages.el]]
@@ -23,17 +23,15 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 * UI
-** Theme: Solarized (light)
-- Oksolar :: has 1px delimiters & better default background color for more contrast.
-  - default-bg :: change to more contrasting color.
+** Theme: Solarized (dark)
 - Note :: change cursor etc colors based on the theme dynamically and don't hard-code them in (extensible).
 - Cursor :: Different cursor color dependent on mode you are in.
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-oksolar-light)
+(setq doom-theme 'doom-solarized-dark)
 
 (custom-set-faces!
   `(tab-bar-tab :background ,(doom-color 'blue) :foreground ,(doom-color 'bg) :weight bold)
-  `(default :background "#F1E9D2"))
+  `(org-list-dt :foreground ,(doom-color 'blue) :weight bold))
 
 (after! evil
   (setq evil-normal-state-cursor   `(,(doom-color 'blue) box)
@@ -188,10 +186,10 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - Follows the os-consistent keymap, using alt for the only & essential navigational commands (there may better ones for what you want to achive => inside leadermode)
 - Projects :: When you are working in a project with multiple different files, open each file in a new tab. This-way you can hotkey to that exact file instantly.
   - Only do this for buffers you know you want to come back to later.  (doesn't become cluttered with all other buffers)
-- efficiency :: They are the most efficient way of navigating between multiple different files/buffer at the same time (most efficient way i have found to introduce little overhead when context-switching and remaining distractionfree)
-- splits :: Never create splits for buffers, prefer the full screen, full focus, no distractions - workflow. (no multitasking, no clutter)
+- Efficiency :: They are the most efficient way of navigating between multiple different files/buffer at the same time (most efficient way i have found to introduce little overhead when context-switching and remaining distractionfree)
+- Splits :: Never create splits for buffers, prefer the full screen, full focus, no distractions - workflow. (no multitasking, no clutter)
   - When emacs creates splits we must handle them (includes minimal bindings for switching and closing splits)
-- terminal :: We never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...)
+- Terminal :: We never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...)
   - Instead if needed we can execute oneliners with ~(async-shell-command)~
 - Buffers :: kill buffers when done (don't accumulate buffers in tha background)
 #+begin_src emacs-lisp
@@ -273,12 +271,12 @@ Kills current buffer and closes the window/tab it was displayed in."
   "Update evil search register after jumping to a line with
   `+default/search-buffer' to be able to jump to next/prev matches.
 This is sensible default behaviour."
-  :after) '+default/search-buffer
+  :after  '+default/search-buffer
 (let ((str (string-replace
             " " ".*"
             (car consult--line-history))))
   (push str evil-ex-search-history)
-  (setq evil-ex-search-pattern (list str t t)))
+  (setq evil-ex-search-pattern (list str t t))))
 #+end_src
 
 ** Control-bindings
@@ -287,7 +285,7 @@ This is sensible default behaviour."
   - page scrolling: ~C-u/d~
   - screen-scrolling:  ~C-y/e~
     - sensible and consistent with other modes (~info~, ~magit~, ~company~..)
-  - paragraph nav: ~C-j/k~
+  - r :: paragraph nav: ~C-j/k~
 - ~C-s~  mapped sensibly to statistically frequently executed commands.
   - ~:w~ is the statistically most run vim-ex-command, but not very unergonomic.
   - Map it to the os-consistent key
@@ -364,7 +362,7 @@ This is sensible default behaviour."
 
 (map! :after dired
       :localleader :map dired-mode-map
-      :nm "A" #'z-dired-archive)
+      :nm "a" #'z-dired-archive)
 #+end_src
 
 ** Minibuffer
@@ -477,12 +475,15 @@ This is sensible default behaviour."
 
 (defun z-dired-archive ()
   (interactive)
-  (dolist (file (dired-get-marked-files))
-    (let* ((file (dired-get-filename))
-           (dest (file-name-concat
-                  z-archive-dir
-                  (file-relative-name file "~/"))))
-      (rename-file file dest 1)))) ;; NOTE :: "1": propt before overwrite
+  (let ((files (dired-get-marked-files nil nil)))
+    (dolist (f files)
+      (let* ((dest (file-name-concat
+                    z-archive-dir
+                    (file-relative-name f "~/")))
+             (dir (file-name-directory dest)))
+        (unless (file-exists-p dir)
+          (make-directory dir t))
+        (rename-file f dest 1)))))
 #+end_src
 
 * Programming
@@ -528,23 +529,19 @@ This is sensible default behaviour."
 (add-hook! 'conf-mode-hook #'rainbow-mode)
 #+end_src
 
-
 * Org
 ** Options
 - Archive all done tasks in current file/headings with org-agenda bulk action.
 - Each file gets its own entry in ~~/Archive/org~
-- Auto-tangle a file after saving (efficient default behavior)
 #+begin_src emacs-lisp
 (add-hook! 'org-mode-hook
            '(visual-line-mode
              org-fragtog-mode
              +org-pretty-mode
-             org-appear-mode
-             org-auto-tangle-mode))
+             org-appear-mode))
 
 (setq org-directory "~/Documents/org/"
       org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
-      org-auto-tangle-default t
       org-use-property-inheritance t
       org-reverse-note-order t
       org-startup-with-inline-images t

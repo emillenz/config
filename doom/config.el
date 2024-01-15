@@ -7,7 +7,8 @@
 (setq doom-theme 'doom-oksolar-light)
 
 (custom-set-faces!
-  `(tab-bar-tab :background ,(doom-color 'blue) :foreground ,(doom-color 'bg) :weight bold))
+  `(tab-bar-tab :background ,(doom-color 'blue) :foreground ,(doom-color 'bg) :weight bold)
+  `(default :background ,(doom-color 'bg-alt)))
 
 (after! evil
   (setq evil-normal-state-cursor   `(,(doom-color 'blue) box)
@@ -455,12 +456,7 @@ This is sensible default behaviour."
 (add-hook! 'org-mode-hook '(org-superstar-mode prettify-symbols-mode))
 
 (setq org-superstar-headline-bullets-list
-      '("◉"
-        "◯"
-        "◈"
-        "◇"
-        "▣"
-        "□"))
+      '("◉" "◯" "▣" "□" "◈" "◇"))
 
 (setq org-superstar-item-bullet-alist
       '((?- . "─")
@@ -648,18 +644,18 @@ Jumps at tangled code from org src block."
 (defun z-doct-expand (proj projs &optional type parent)
   "Generate doct preset for project (standardized).
 
-`PROJ:'   :name            | Project key (name)
-`PROJS:'  '(:name ?k..)    | Projects plist containing PROJ
+`PROJ:'   'name            | Project key (name)
+`PROJS:'  '((name ?k)..)   | Projects plist containing PROJ
 `TYPE:'   'agenda / 'notes | Which file to use (ex: agend.org). Omitted? => no :file returned.
-`PARENT:' :parentname      | Is it a subproject of PARENT? (for :file).
+`PARENT:' 'parent          | Is it a subproject of PARENT? (for :file).
 
 This approach to doct ensures all keys for one project use the same prefix and reduces
 code repetition."
-  (let* ((name (string-replace ":" "" (symbol-name proj)))
-         (key (char-to-string (plist-get projs proj)))
+  (let* ((name (symbol-name proj))
+         (key (char-to-string (alist-get proj projs)))
          (file (file-name-concat
                 org-directory
-                (when parent (string-replace ":" "" (symbol-name parent)))
+                (when parent (symbol-name parent))
                 name
                 (format "%s.org" (symbol-name type)))))
     `(,name
@@ -669,28 +665,28 @@ code repetition."
 (after! org
   (setq
    org-capture-templates
-   (let ((projs '(:cs ?c
-                  :dm ?d
-                  :ad ?a
-                  :la ?l
-                  :ep ?e
-                  :personal ?p
-                  :config ?f
-                  :compass ?o)))
+   (let ((projs '((cs . ?c)
+                  (dm . ?d)
+                  (ad . ?a)
+                  (la . ?l)
+                  (ep . ?e)
+                  (personal . ?p)
+                  (config . ?f)
+                  (compass . ?o))))
      (doct
       `(("task" :keys "t"
          :headline "Inbox"
          :prepend t
          :template ("* [ ] %^{title}%? %^g")
-         :children ((,@(z-doct-expand :cs projs)
+         :children ((,@(z-doct-expand 'cs projs)
                      :children ,(mapcar
                                  (lambda (proj)
-                                   (z-doct-expand proj projs 'agenda :cs))
-                                 '(:dm :ad :la :ep)))
+                                   (z-doct-expand proj projs 'agenda 'cs))
+                                 '(dm ad la ep)))
                     ,@(mapcar
                        (lambda (proj)
                          (z-doct-expand proj projs 'agenda))
-                       '(:personal :config :compass :cs))))
+                       '(personal config compass cs))))
 
         ("event" :keys "e"
          :headline "Events"
@@ -702,15 +698,15 @@ code repetition."
                     ":location: %^{location}"
                     ":material: %^{material}"
                     ":END:")
-         :children ((,@(z-doct-expand :cs projs)
+         :children ((,@(z-doct-expand 'cs projs)
                      :children ,(mapcar
                                  (lambda (proj)
-                                   (z-doct-expand proj projs 'agenda :cs))
-                                 '(:dm :ad :la :ep)))
+                                   (z-doct-expand proj projs 'agenda 'cs))
+                                 '(dm ad la ep)))
                     ,@(mapcar
                        (lambda (proj)
                          (z-doct-expand proj projs 'agenda))
-                       '(:personal :cs))))
+                       '(personal cs))))
 
         ("note" :keys "n"
          :prepend t
@@ -720,15 +716,15 @@ code repetition."
                     ":created: %U"
                     ":END:"
                     "%?")
-         :children ((,@(z-doct-expand :cs projs)
+         :children ((,@(z-doct-expand 'cs projs)
                      :children ,(mapcar
                                  (lambda (proj)
-                                   (z-doct-expand proj projs 'notes :cs))
-                                 '(:dm :ad :la :ep)))
+                                   (z-doct-expand proj projs 'notes 'cs))
+                                 '(dm ad la ep)))
                     ,@(mapcar
                        (lambda (proj)
                          (z-doct-expand proj projs 'notes))
-                       '(:cs :personal :config :compass))))
+                       '(cs personal config compass))))
 
         ("journal" :keys "j"
          :file (lambda ()

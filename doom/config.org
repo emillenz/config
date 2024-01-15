@@ -24,7 +24,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 * UI
 ** Theme: Solarized (light)
-- Oksolar :: has 1px delimiters & more creamy tinted background color (for better diststinction.)
+- Oksolar :: has 1px delimiters & better default background color for more contrast.
   - default-bg :: change to more contrasting color.
 - Note :: change cursor etc colors based on the theme dynamically and don't hard-code them in (extensible).
 - Cursor :: Different cursor color dependent on mode you are in.
@@ -33,7 +33,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 (custom-set-faces!
   `(tab-bar-tab :background ,(doom-color 'blue) :foreground ,(doom-color 'bg) :weight bold)
-  `(default :background ,(doom-color 'bg-alt)))
+  `(default :background "#F1E9D2"))
 
 (after! evil
   (setq evil-normal-state-cursor   `(,(doom-color 'blue) box)
@@ -142,7 +142,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 (save-place-mode 1)
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
-(rainbow-mode 1)
 
 (tab-bar-mode 1)
 (setq tab-bar-tab-hints t
@@ -488,7 +487,7 @@ This is sensible default behaviour."
 
 * Programming
 #+begin_src emacs-lisp
-(add-hook! 'prog-mode-hook 'rainbow-delimiters-mode)
+(add-hook! 'prog-mode-hook #'rainbow-delimiters-mode)
 #+end_src
 
 ** Indentation: 2 spaces
@@ -524,6 +523,11 @@ This is sensible default behaviour."
       (replace-match "\n\n")))
   (basic-save-buffer))
 #+end_src
+* Conf-mode
+#+begin_src emacs-lisp
+(add-hook! 'conf-mode-hook #'rainbow-mode)
+#+end_src
+
 
 * Org
 ** Options

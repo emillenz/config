@@ -8,7 +8,7 @@
 
 (custom-set-faces!
   `(tab-bar-tab :background ,(doom-color 'blue) :foreground ,(doom-color 'bg) :weight bold)
-  `(default :background ,(doom-color 'bg-alt)))
+  `(default :background "#F1E9D2"))
 
 (after! evil
   (setq evil-normal-state-cursor   `(,(doom-color 'blue) box)
@@ -101,7 +101,6 @@
 (save-place-mode 1)
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
-(rainbow-mode 1)
 
 (tab-bar-mode 1)
 (setq tab-bar-tab-hints t
@@ -371,7 +370,7 @@ This is sensible default behaviour."
 ;; Archive file:1 ends here
 
 ;; [[file:config.org::*Programming][Programming:1]]
-(add-hook! 'prog-mode-hook 'rainbow-delimiters-mode)
+(add-hook! 'prog-mode-hook #'rainbow-delimiters-mode)
 ;; Programming:1 ends here
 
 ;; [[file:config.org::*Indentation: 2 spaces][Indentation: 2 spaces:1]]
@@ -397,6 +396,10 @@ This is sensible default behaviour."
       (replace-match "\n\n")))
   (basic-save-buffer))
 ;; Clean Whitespace:1 ends here
+
+;; [[file:config.org::*Conf-mode][Conf-mode:1]]
+(add-hook! 'conf-mode-hook #'rainbow-mode)
+;; Conf-mode:1 ends here
 
 ;; [[file:config.org::*Options][Options:1]]
 (add-hook! 'org-mode-hook

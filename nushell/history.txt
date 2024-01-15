@@ -1,38 +1,3 @@
-git commit -am 'sync'; git push
-e
-doom sync
-startup
-ls
-git status
-fd  -h | bat
-fd  'sync-conflict'
-fd  'sync-conflict' -x rm
-fd  'sync-conflict'
-git status
-git status -h | bat
-git status --long
-git status -v
-git status  -h | bat
-bat .git/index
-ls
-git  -h | bat
-git  show
-git   -h | bat
-git status
-ls -/a
-ls -la
-ls
-git statuts
-git status
-bat readme.org
-git status
-git commit -am 'sync'; git push
-ssh-keygen -t rsa -b 4096 -C "bbotak@protonmail.com"
-xclip -h | bat
-"aaa" | xclpi
-"aaa" | xclip
-cat ~/.ssh/id_rsa.pub
-git commit -am 'sync'; git push
 bash -c eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa<\n>
 git commit -am 'sync'; git push
@@ -3699,7 +3664,7 @@ md ass
 cd ..
 rm ass
 ls
-let solarized_light = {<\n>    separator: "#586e75"<\n>    leading_trailing_space_bg: { attr: "n" }<\n>    header: { fg: "#859900" attr: "b" }<\n>    empty: "#268bd2"<\n>    bool: {|| if $in { "#2aa198" } else { "light_gray" } }<\n>    int: "#586e75"<\n>    filesize: {|e|<\n>        if $e == 0b {<\n>            "#586e75"<\n>        } else if $e < 1mb {<\n>            "#2aa198"<\n>        } else {{ fg: "#268bd2" }}<\n>    }<\n>    duration: "#586e75"<\n>    date: {|| (date now) - $in |<\n>        if $in < 1hr {<\n>            { fg: "#dc322f" attr: "b" }<\n>        } else if $in < 6hr {<\n>            "#dc322f"<\n>        } else if $in < 1day {<\n>            "#b58900"<\n>        } else if $in < 3day {<\n>            "#859900"<\n>        } else if $in < 1wk {<\n>            { fg: "#859900" attr: "b" }<\n>        } else if $in < 6wk {<\n>            "#2aa198"<\n>        } else if $in < 52wk {<\n>            "#268bd2"<\n>        } else { "dark_gray" }<\n>    }<\n>    range: "#586e75"<\n>    float: "#586e75"<\n>    string: "#586e75"<\n>    nothing: "#586e75"<\n>    binary: "#586e75"<\n>    cellpath: "#586e75"<\n>    row_index: { fg: "#859900" attr: "b" }<\n>    record: "#586e75"<\n>    list: "#586e75"<\n>    block: "#586e75"<\n>    hints: "dark_gray"<\n>    search_result: { fg: "#dc322f" bg: "#586e75" }<\n><\n>    shape_and: { fg: "#6c71c4" attr: "b" }<\n>    shape_binary: { fg: "#6c71c4" attr: "b" }<\n>    shape_block: { fg: "#268bd2" attr: "b" }<\n>    shape_bool: "#2aa198"<\n>    shape_custom: "#859900"<\n>    shape_datetime: { fg: "#2aa198" attr: "b" }<\n>    shape_directory: "#2aa198"<\n>    shape_external: "#2aa198"<\n>    shape_externalarg: { fg: "#859900" attr: "b" }<\n>    shape_filepath: "#2aa198"<\n>    shape_flag: { fg: "#268bd2" attr: "b" }<\n>    shape_float: { fg: "#6c71c4" attr: "b" }<\n>    shape_garbage: { fg: "#FFFFFF" bg: "#FF0000" attr: "b" }<\n>    shape_globpattern: { fg: "#2aa198" attr: "b" }<\n>    shape_int: { fg: "#6c71c4" attr: "b" }<\n>    shape_internalcall: { fg: "#2aa198" attr: "b" }<\n>    shape_list: { fg: "#2aa198" attr: "b" }<\n>    shape_literal: "#268bd2"<\n>    shape_match_pattern: "#859900"<\n>    shape_matching_brackets: { attr: "u" }<\n>    shape_nothing: "#2aa198"<\n>    shape_operator: "#b58900"<\n>    shape_or: { fg: "#6c71c4" attr: "b" }<\n>    shape_pipe: { fg: "#6c71c4" attr: "b" }<\n>    shape_range: { fg: "#b58900" attr: "b" }<\n>    shape_record: { fg: "#2aa198" attr: "b" }<\n>    shape_redirection: { fg: "#6c71c4" attr: "b" }<\n>    shape_signature: { fg: "#859900" attr: "b" }<\n>    shape_string: "#859900"<\n>    shape_string_interpolation: { fg: "#2aa198" attr: "b" }<\n>    shape_table: { fg: "#268bd2" attr: "b" }<\n>    shape_variable: "#6c71c4"<\n><\n>    background: "#fdf6e3"<\n>    foreground: "#586e75"<\n>    cursor: "#586e75"<\n>}<\n>
+let solarized_light = {<\n>    separator: "#586e75"<\n>    leading_trailing_space_bg: { attr: "n" }<\n>    header: { fg: "#859900" attr: "b" }<\n>    empty: "#268bd2"<\n>    bool: {|| if $in { "#2aa198" } else { "light_gray" } }<\n>    int: "#586e75"<\n>    filesize: {|e|<\n>        if $e == 0b {<\n>            "#586e75"<\n>        } else if $e < 1mb {<\n>            "#2aa198"<\n>        } else {{ fg: "#268bd2" }}<\n>    }<\n>    duration: "#586e75"<\n>    date: {|| (date now) - $in |<\n>        if $in < 1hr {<\n>            { fg: "#dc322f" attr: "b" }<\n>        } else if $in < 6hr {<\n>            "#dc322f"<\n>        } else if $in < 1day {<\n>            "#b58900"<\n>        } else if $in < 3day {<\n>            "#859900"<\n>        } else if $in < 1wk {<\n>            { fg: "#859900" attr: "b" }<\n>        } else if $in < 6wk {<\n>            "#2aa198"<\n>        } else if $in < 52wk {<\n>            "#268bd2"<\n>        } else { "dark_gray" }<\n>    }<\n>    range: "#586e75"<\n>    float: "#586e75"<\n>    string: "#586e75"<\n>    nothing: "#586e75"<\n>    binary: "#586e75"<\n>    cellpath: "#586e75"<\n>    row_index: { fg: "#859900" attr: "b" }<\n>    record: "#586e75"<\n>    list: "#586e75"<\n>    block: "#586e75"<\n>    hints: "dark_gray"<\n>    search_result: { fg: "#dc322f" bg: "#586e75" }<\n><\n>    shape_and: { fg: "#6c71c4" attr: "b" }<\n>    shape_binary: { fg: "#6c71c4" attr: "b" }<\n>    shape_block: { fg: "#268bd2" attr: "b" }<\n>    shape_bool: "#2aa198"<\n>    shape_custom: "#859900"<\n>    shape_datetime: { fg: "#2aa198" attr: "b" }<\n>    shape_directory: "#2aa198"<\n>    shape_external: "#2aa198"<\n>    shape_externalarg: { fg: "#859900" attr: "b" }<\n>    shape_filepath: "#2aa198"<\n>    shape_flag: { fg: "#268bd2" attr: "b" }<\n>    shape_float: { fg: "#6c71c4" attr: "b" }<\n>    shape_garbage: { fg: "#FFFFFF" bg: "#FF0000" attr: "b" }<\n>    shape_globpattern: { fg: "#2aa198" attr: "b" }<\n>    shape_int: { fg: "#6c71c4" attr: "b" }<\n>    shape_internalcall: { fg: "#2aa198" attr: "b" }<\n>    shape_list: { fg: "#2aa198" attr: "b" }<\n>    shape_literal: "#268bd2"<\n>    shape_match_pattern: "#859900"<\n>    shape_matching_brackets: { attr: "u" }<\n>    shape_nothing: "#2aa198"<\n>    shape_operator: "#b58900"<\n>    shape_or: { fg: "#6c71c4" attr: "b" }<\n>    shape_pipe: { fg: "#6c71c4" attr: "b" }<\n>    shape_range: { fg: "#b58900" attr: "b" }<\n>    shape_record: { fg: "#2aa198" attr: "b" }<\n>    shape_redirection: { fg: "#6c71c4" attr: "b" }<\n>    shape_signature: { fg: "#859900" attr: "b" }<\n>    shape_string: "#859900"<\n>    shape_string_interpolation: { fg: "#2aa198" attr: "b" }<\n>    shape_table: { fg: "#268bd2" attr: "b" }<\n>    shape_variable: "#6c71c4"<\n><\n>    background: "#FBF7EF"<\n>    foreground: "#586e75"<\n>    cursor: "#586e75"<\n>}<\n>
 $solarized_light
 $solarized_light.date
 ls
@@ -9998,3 +9963,38 @@ ls -la
 ls
 ls -la
 ls
+ls -la 
+ls
+ls -la
+ls
+cd .config/
+ls **/* | where {type == file} | get name # | each {|f| }
+ls **/* | where type == file | get name # | each {|f| }
+rg -v 'solarized'
+rg -l 'solarized'
+rg -l 'solarized' | lines | each {|f| open $f | str replace -r "(?i)#FBF7EF" "#FBF7EF"}
+open  --help | bat --language=man
+rg -l 'solarized' | lines | each {|f| open -r $f | str replace -r "(?i)#FBF7EF" "#FBF7EF"}
+rg -l 'solarized' | lines | each {|f| open -r $f | str replace -r "(?i)#FDF6E3" "#FBF7EF" | save $f}
+rg -l 'solarized' | lines | each {|f| open -r $f | str replace -r "(?i)#FDF6E3" "#FBF7EF" | save -f $f}
+ls\
+ls
+rg -l 'solarized' | lines | each {|f| open -r $f | str replace -r "(?i)#FDF6E3" "#FBF7EF"}
+rg -l 'solarized' | lines | each {|f| open -r $f | str replace -r "(?i)#FBF7EF" "#FBF7EF"}
+ls
+rg -l 'solarized' | lines | each {|f| open -r $f | str replace -r "(?i)#fdf6e3" "#FBF7EF" | save -f $f}
+ls
+rg -l 'solarized' | lines | each {|f| open -r $f | str replace -r "#fdf6e3" "#FBF7EF" | save -f $f}
+rg -l 'solarized' | lines | each {|f| open -r $f | str replace -r "#FDF6E3" "#FBF7EF" | save -f $f}
+ls
+rg -l 'solarized' | lines 
+rg -l 'solarized' | sed -i 's/#fdf6e3/#FBF7EF/g'
+rg -l 'solarized' 
+sed  --help | bat --language=man
+tldr sed 
+ls **/* | where type == file | get name 
+rg -l 'solarized' 
+rg -l 'solarized' | lines 
+rg -l 'solarized' | lines | each {|f| open -r $f }
+rg -l 'solarized' | lines | each {|f| open -r $f } | find '#fdf6e3'
+rg -l 'solarized' | lines | each {|f| open -r $f  | find '#fdf6e3'}

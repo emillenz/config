@@ -40,7 +40,7 @@ $map XF86MonBrightnessDown $cmd sudo light -U 5 && notify-send "󰃟 Light" "$(l
 $map XF86MonBrightnessUp   $cmd sudo light -A 5 && notify-send "󰃟 Light" "$(light)%"
 $map XF86Display           $cmd $bin/output_select
 $map XF86ScreenSaver       $cmd xset dpms force off
-$map XF86Sleep             $cmd i3lock -e --color FBF7EF && systemctl suspend
+$map XF86Sleep             $cmd i3lock -e --color F1E9D2 && systemctl suspend
 
 $map XF86AudioPlay         $cmd playerctl play
 $map XF86AudioPause        $cmd playerctl pause
@@ -178,7 +178,7 @@ mode "$powermenu" {
   $map $mod+e       $cmd i3-msg exit; $esc
   $map $mod+shift+r $cmd systemctl reboot; $esc
   $map $mod+h       $cmd systemctl hibernate; $esc
-  $map $mod+l       $cmd i3lock -e --color FBF7EF && systemctl suspend; $esc
+  $map $mod+l       $cmd i3lock -e --color F1E9D2 && systemctl suspend; $esc
   $map $mod+s       $cmd sleep 1 && xset dpms force off; $esc
   $map $mod+p       $cmd systemctl poweroff; $esc
   $map Escape $esc
@@ -198,18 +198,18 @@ mode "$menus" {
 # Menus:1 ends here
 
 # [[file:config.org::*Solarized light][Solarized light:1]]
-set $backg      #F1E9D2
-set $foreg      #556b72
-set $main       #268BD2
-set $red        #DC322F
+set $bg   #F1E9D2
+set $fg   #556b72
+set $blue #268bd2
+set $red  #dc322f
 # Solarized light:1 ends here
 
 # [[file:config.org::*Variables][Variables:1]]
-# class                 border  backg   text    indicator child_border
-client.focused          $main   $main   $backg  $foreg    $main
-client.focused_inactive $foreg  $foreg  $backg  $backg    $backg
-client.unfocused        $backg  $backg  $foreg  $backg    $backg
-client.urgent           $red    $red    $backg  $backg    $backg
-client.placeholder      $backg  $backg  $foreg  $backg    $backg
-client.background       $backg
+# class                 border bg    text indicator child_border
+client.focused          $blue  $blue $bg  $fg       $blue
+client.focused_inactive $fg    $fg   $bg  $bg       $bg
+client.unfocused        $bg    $bg   $fg  $bg       $bg
+client.urgent           $red   $red  $bg  $bg       $bg
+client.placeholder      $bg    $bg   $fg  $bg       $bg
+client.background       $bg
 # Variables:1 ends here

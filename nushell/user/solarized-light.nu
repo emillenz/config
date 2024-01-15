@@ -52,9 +52,9 @@ export def solarized_light [] {
     row_index:     { fg: "#859900" attr: "b" }
     search_result: { fg: "#dc322f" bg: "#556b72" }
 
-    background: " #F1E9D2"
-    foreground: " #556b72"
-    cursor:   "   #268bd2"
+    background: "#F1E9D2"
+    foreground: "#556b72"
+    cursor:     "#268bd2"
 
     shape_bool:          "#2aa198"
     shape_custom:        "#859900"

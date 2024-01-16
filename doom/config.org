@@ -4,15 +4,14 @@
 #+date:   2022-11-01
 #+info:   Heavily opinionated emacs evil-mode config, with a principle-focused approach on: consistency, quality, efficiency & extensibility.
 
-#+property: header-args:emacs-lisp tangle config.el :comments link
+#+property: header-args:emacs-lisp tangle config.el :comments link :results silent
 
 * Preface
 Professional, minimalist tools like Emacs have a high learning curve and require thought and time to initially set up. But once things are working and customized they will work for years at a stretch without needing to fiddle with the nobs. And once mastered you can eliminate the "modern" GUI bits -- tool bars, menus, scrollbars and fancy animations and the like and what is left is about as clean an interface as you can get stripping everything down to the bare metal where it gets out of your way and provides the most streamlined workflow. The difference is that something like emacs is a longterm investment, it requires you to get over the high entry barrier but then never annoys you with a more elongated, bloated workflow that in other, more beginner friendly applications is the norm and cannot be changed away from.
 
 The saying, "give 'em enough rope, and they'll likely hang themselves," holds true. Emacs provides the rope if you are not careful.
 
-- hey :: It is advised to only copy snippets of this config that are understood.
-- if you decide to use parts (or the entire config) *ensure* that you have *at least* every doom/module and package installed / enabled as i do, otherwise emacs will throw errors left and right.
+- If you decide to use parts (or the entire config) *ensure* that you have *at least* every doom/module and package installed / enabled as i do, otherwise emacs will throw errors left and right.
   - modules: [[file:init.el]]
   - packages:[[file:packages.el]]
 
@@ -23,21 +22,34 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 * UI
-** Theme: Solarized (dark)
+** Theme: ok-solar (dark)
+- Oksolar :: Slightly improved contrast between fg/bg (using OKLab).
 - Note :: change cursor etc colors based on the theme dynamically and don't hard-code them in (extensible).
 - Cursor :: Different cursor color dependent on mode you are in.
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-solarized-dark)
+(setq doom-theme 'doom-oksolar-dark)
 
+;; HACK:: :inherit doesn't work
+;; => 'teal -> org-special-keyword
 (custom-set-faces!
-  `(tab-bar-tab :background ,(doom-color 'blue) :foreground ,(doom-color 'bg) :weight bold)
-  `(org-list-dt :foreground ,(doom-color 'blue) :weight bold))
+  `(tab-bar-tab
+    :background ,(doom-color 'highlight)
+    :foreground ,(doom-color 'bg)
+    :weight bold)
+  `(tab-bar-tab-inactive :background ,(doom-color 'region))
+  `(org-block
+    :background ,(doom-color 'bg-alt))
+  `(org-drawer :foreground ,(doom-color 'teal))
+  `(org-block-begin-line
+    :background ,(doom-color 'bg-alt)
+    :foreground ,(doom-color 'teal))
+  `(org-list-dt :inherit outline-1))
 
 (after! evil
   (setq evil-normal-state-cursor   `(,(doom-color 'blue) box)
         evil-insert-state-cursor   `(,(doom-color 'blue) bar)
         evil-motion-state-cursor   `(,(doom-color 'blue) box)
-        evil-visual-state-cursor   `(,(doom-color 'violet) box)
+        evil-visual-state-cursor   `(,(doom-color 'yellow) box)
         evil-operator-state-cursor `(,(doom-color 'red) box)
         evil-replace-state-cursor  `(,(doom-color 'red) hbar)))
 #+end_src
@@ -176,6 +188,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 (map! :localleader :map org-mode-map
       "\\" #'org-latex-preview
+      "," #'org-ctrl-c-ctrl-c
       (:prefix-map ("`" . "org-src")
                    "`" #'org-edit-special
                    "g" #'z-goto-src

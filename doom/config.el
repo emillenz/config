@@ -3,21 +3,33 @@
       user-mail-address "emillenz@protonmail.com")
 ;; User:1 ends here
 
-;; [[file:config.org::*Theme: Solarized (dark)][Theme: Solarized (dark):1]]
-(setq doom-theme 'doom-solarized-dark)
+;; [[file:config.org::*Theme: ok-solar (dark)][Theme: ok-solar (dark):1]]
+(setq doom-theme 'doom-oksolar-dark)
 
+;; HACK:: :inherit doesn't work
+;; => 'teal -> org-special-keyword
 (custom-set-faces!
-  `(tab-bar-tab :background ,(doom-color 'blue) :foreground ,(doom-color 'bg) :weight bold)
-  `(org-list-dt :foreground ,(doom-color 'blue) :weight bold))
+  `(tab-bar-tab
+    :background ,(doom-color 'highlight)
+    :foreground ,(doom-color 'bg)
+    :weight bold)
+  `(tab-bar-tab-inactive :background ,(doom-color 'region))
+  `(org-block
+    :background ,(doom-color 'bg-alt))
+  `(org-drawer :foreground ,(doom-color 'teal))
+  `(org-block-begin-line
+    :background ,(doom-color 'bg-alt)
+    :foreground ,(doom-color 'teal))
+  `(org-list-dt :inherit outline-1))
 
 (after! evil
   (setq evil-normal-state-cursor   `(,(doom-color 'blue) box)
         evil-insert-state-cursor   `(,(doom-color 'blue) bar)
         evil-motion-state-cursor   `(,(doom-color 'blue) box)
-        evil-visual-state-cursor   `(,(doom-color 'violet) box)
+        evil-visual-state-cursor   `(,(doom-color 'yellow) box)
         evil-operator-state-cursor `(,(doom-color 'red) box)
         evil-replace-state-cursor  `(,(doom-color 'red) hbar)))
-;; Theme: Solarized (dark):1 ends here
+;; Theme: ok-solar (dark):1 ends here
 
 ;; [[file:config.org::*Font][Font:1]]
 (setq doom-font                (font-spec :family "Iosevka Nerd Font" :size 14)
@@ -132,6 +144,7 @@
 
 (map! :localleader :map org-mode-map
       "\\" #'org-latex-preview
+      "," #'org-ctrl-c-ctrl-c
       (:prefix-map ("`" . "org-src")
                    "`" #'org-edit-special
                    "g" #'z-goto-src

@@ -1,6 +1,7 @@
 ;; -*- no-byte-compile: t; -*-
 
-(package! evil-escape :disable t) ;; NOTE :: Bloat, remap <ESC> to <left-alt> systemwide instead
+(package! evil-escape :disable t)
+(package! which-key :disable t)
 
 (package! dired-open)
 (package! rainbow-mode)

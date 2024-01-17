@@ -1,6 +1,7 @@
 #!/usr/bin/env nu
 
 const icon = "󰍹 "
+alias rofi = rofi -dmenu -i -no-custom -p
 
 # -----
 # title:  Outputselect
@@ -24,7 +25,7 @@ def main [] {
     single $outputs $outputs.0
   } else {
     let opts = ($outputs | append "multi")
-    let choice = ($opts | to text | rofi -dmenu -i -no-custom -p $"($icon) output:" | str trim | if $in == "" {exit 1} else {$in})
+    let choice = ($opts | to text | rofi $"($icon) output:" | str trim | if $in == "" {exit 1} else {$in})
     if ($choice == "multi") {
       double $outputs
     } else {
@@ -35,14 +36,14 @@ def main [] {
 
 def double [outputs: list] {
   let mirror = (
-    ([n y] | to text | rofi -dmenu -no-custom -auto-select -p $"($icon) Mirror: [n/y]" | str trim | if $in == "" {exit 1} else {$in})
+    ([n y] | to text | rofi $"($icon) Mirror: [n/y]" -auto-select | str trim | if $in == "" {exit 1} else {$in})
     == "y"
   )
-  let primary = ($outputs | to text | rofi -dmenu -i -no-custom -p $"($icon) Primary:" | if $in == "" {exit 1} else {$in})
+  let primary = ($outputs | to text | rofi "($icon) Primary:" | if $in == "" {exit 1} else {$in})
   let secondary = (
     match ($outputs | length) {
       2 => {$outputs | where {|e| $e != $primary}},
-      _ => {$outputs | where {|e| $e != $primary} | to text | rofi -dmenu -i -no-custom -p $"($icon) Secondary:" | if $in == "" {exit 1} else {$in}},
+      _ => {$outputs | where {|e| $e != $primary} | to text | rofi "($icon) Secondary:" | if $in == "" {exit 1} else {$in}},
     }
   )
 
@@ -72,7 +73,7 @@ def extend [primary: string, secondary: string] {
   let pos = (
     [h j k l]
     | to text
-    | rofi -dmenu -no-custom -auto-select -p $"($icon) Position of #2:($secondary): [j] down | [k] up | [h] left | [l] right"
+    | rofi -auto-select $"($icon) Position of #2:($secondary): [j] down | [k] up | [h] left | [l] right"
     | str trim
     | if $in == "" {exit 1} else {$in}
   )

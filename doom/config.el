@@ -101,11 +101,9 @@
       undo-limit 80000000
       history-length 1000
       consult-async-min-input 0
-      which-key-idle-delay 1
-      which-key-allow-multiple-replacements t
       hscroll-margin 0
       scroll-margin 0
-      enable-recursive-minibuffers nil
+      enable-recursive-minibuffers t
       highlight-indent-guides-responsive  t
       display-line-numbers-type 'visual
       shell-command-prompt-show-cwd t)
@@ -135,7 +133,7 @@
                "V" #'visual-fill-column-mode
                "C" #'company-mode)
       (:prefix "c"
-               "w" #'z-clean-whitespace)
+               "w" #'clean_whitespace)
       (:prefix "s"
                (:prefix-map ("t" . "dictionary")
                             "d" #'+lookup/dictionary-definition
@@ -147,7 +145,7 @@
       "," #'org-ctrl-c-ctrl-c
       (:prefix-map ("`" . "org-src")
                    "`" #'org-edit-special
-                   "g" #'z-goto-src
+                   "g" #'org_goto_src
                    "t" #'org-babel-tangle))
 ;; Leader:1 ends here
 
@@ -156,17 +154,12 @@
       :nvim "M-j" #'previous-window-any-frame
       :nvim "M-k" #'next-window-any-frame
       :nvim "M-t" #'tab-bar-new-tab-to
-      :nvim "M-q" #'z-quit
+      :nvim "M-q" #'tab_quit
       :nvmi "M-z" #'+popup/toggle
       :nvim "M-1" (cmd! (tab-bar-select-tab 1))
       :nvim "M-2" (cmd! (tab-bar-select-tab 2))
       :nvim "M-3" (cmd! (tab-bar-select-tab 3))
       :nvim "M-4" (cmd! (tab-bar-select-tab 4))
-      :nvim "M-5" (cmd! (tab-bar-select-tab 5))
-      :nvim "M-6" (cmd! (tab-bar-select-tab 6))
-      :nvim "M-7" (cmd! (tab-bar-select-tab 7))
-      :nvim "M-8" (cmd! (tab-bar-select-tab 8))
-      :nvim "M-9" (cmd! (tab-bar-select-tab 9))
       :nvim "M-o" #'find-file
       :nvim "M-f" #'consult-find
       :nvim "M-F" (cmd! (consult-find "~"))
@@ -181,7 +174,7 @@
       :nvim "C-=" #'doom/increase-font-size
       :nvim "C-0" #'doom/reset-font-size)
 
-(defun z-quit ()
+(defun tab_quit ()
   "DWIM quit :: kill buffer & close tab/window.
 Kills current buffer and closes the window/tab it was displayed in."
   (interactive)
@@ -210,7 +203,7 @@ Kills current buffer and closes the window/tab it was displayed in."
 ;; Evil-mode:1 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:2]]
-(defadvice! z-update-evil-search-reg ()
+(defadvice! update_evil_search_reg ()
   "Update evil search register after jumping to a line with
   `+default/search-buffer' to be able to jump to next/prev matches.
 This is sensible default behaviour."
@@ -227,6 +220,10 @@ This is sensible default behaviour."
       :nmv "C-q" #'kill-current-buffer
       :nmv "C-j" #'evil-forward-section-begin
       :nmv "C-k" #'evil-backward-section-begin)
+
+(map! :after evil-org :map evil-org-mode-map
+      :nmv "C-j"     #'org-forward-element
+      :nmv "C-k"     #'org-backward-element)
 ;; Control-bindings:1 ends here
 
 ;; [[file:config.org::*Instant jumping][Instant jumping:1]]
@@ -247,12 +244,6 @@ This is sensible default behaviour."
 (map! :nmv "g<" #'evil-lion-left
       :nmv "g>" #'evil-lion-right)
 ;; Alignment:1 ends here
-
-;; [[file:config.org::*Org mode][Org mode:1]]
-(map! :map evil-org-mode-map
-      :nmv "C-j"     #'org-forward-element
-      :nmv "C-k"     #'org-backward-element)
-;; Org mode:1 ends here
 
 ;; [[file:config.org::*Dired (keys)][Dired (keys):1]]
 (map! :after dired
@@ -277,7 +268,7 @@ This is sensible default behaviour."
 
 (map! :after dired
       :localleader :map dired-mode-map
-      :nm "a" #'z-dired-archive)
+      :nm "a" #'dired_archive)
 ;; Dired (keys):1 ends here
 
 ;; [[file:config.org::*Minibuffer][Minibuffer:1]]
@@ -330,6 +321,7 @@ This is sensible default behaviour."
                              erc-mode
                              message-mode
                              help-mode
+                             org-mode
                              gud-mode
                              vterm-mode))
 ;; Lsp & completion:1 ends here
@@ -369,15 +361,15 @@ This is sensible default behaviour."
 ;; Dired:1 ends here
 
 ;; [[file:config.org::*Archive file][Archive file:1]]
-(defvar z-archive-dir "~/Archive/"
+(defvar archive_dir "~/Archive/"
   "User's archive directory.")
 
-(defun z-dired-archive ()
+(defun dired_archive ()
   (interactive)
   (let ((files (dired-get-marked-files nil nil)))
     (dolist (f files)
       (let* ((dest (file-name-concat
-                    z-archive-dir
+                    archive_dir
                     (file-relative-name f "~/")))
              (dir (file-name-directory dest)))
         (unless (file-exists-p dir)
@@ -402,7 +394,7 @@ This is sensible default behaviour."
 ;; Indentation: 2 spaces:1 ends here
 
 ;; [[file:config.org::*Clean Whitespace][Clean Whitespace:1]]
-(defun z-clean-whitespace ()
+(defun clean_whitespace ()
   "Deletes consecutive empty lines if > 1, and strips trailing whitespace."
   (interactive)
   (delete-trailing-whitespace)
@@ -608,7 +600,7 @@ This is sensible default behaviour."
 ;; Clock:1 ends here
 
 ;; [[file:config.org::*Keywords to downcase][Keywords to downcase:1]]
-(defun z-org-convert-keywords-downcase ()
+(defun org_convert_keywords_downcase ()
   "Convert all #+KEYWORDS => #+keywords && :keyword: => :keyword:"
   (interactive)
   (save-excursion
@@ -619,7 +611,7 @@ This is sensible default behaviour."
 ;; Keywords to downcase:1 ends here
 
 ;; [[file:config.org::*Jump to src file][Jump to src file:1]]
-(defun z-goto-src ()
+(defun org_goto_src ()
   "The opposite of `org-babel-tangle-jump-to-org'.
 Jumps at tangled code from org src block."
   (interactive)
@@ -651,14 +643,14 @@ Jumps at tangled code from org src block."
 ;; Jump to src file:1 ends here
 
 ;; [[file:config.org::*Capture templates][Capture templates:1]]
-(defvar z-journal-dir "~/Documents/journal/"
+(defvar journal_dir "~/Documents/journal/"
   "Directory for daily journal files.")
-(defvar z-literature-notes-dir "~/Documents/literature/notes/"
+(defvar literature_notes_dir "~/Documents/literature/notes/"
   "Directory for literature notes.")
-(defvar z-literature-source-dir "~/Documents/literature/source/"
+(defvar literature_source_dir "~/Documents/literature/source/"
   "Directory for literature source files.")
 
-(defun z-doct-expand (proj projs &optional type parent)
+(defun doct_expand (proj projs &optional type parent)
   "Generate doct preset for project (standardized).
 
 `PROJ:'   'name            | Project key (name)
@@ -695,14 +687,14 @@ code repetition."
          :headline "Inbox"
          :prepend t
          :template ("* [ ] %^{title}%? %^g")
-         :children ((,@(z-doct-expand 'cs projs)
+         :children ((,@(doct_expand 'cs projs)
                      :children ,(mapcar
                                  (lambda (proj)
-                                   (z-doct-expand proj projs 'agenda 'cs))
+                                   (doct_expand proj projs 'agenda 'cs))
                                  '(dm ad la ep)))
                     ,@(mapcar
                        (lambda (proj)
-                         (z-doct-expand proj projs 'agenda))
+                         (doct_expand proj projs 'agenda))
                        '(personal config compass cs))))
 
         ("event" :keys "e"
@@ -715,14 +707,14 @@ code repetition."
                     ":location: %^{location}"
                     ":material: %^{material}"
                     ":END:")
-         :children ((,@(z-doct-expand 'cs projs)
+         :children ((,@(doct_expand 'cs projs)
                      :children ,(mapcar
                                  (lambda (proj)
-                                   (z-doct-expand proj projs 'agenda 'cs))
+                                   (doct_expand proj projs 'agenda 'cs))
                                  '(dm ad la ep)))
                     ,@(mapcar
                        (lambda (proj)
-                         (z-doct-expand proj projs 'agenda))
+                         (doct_expand proj projs 'agenda))
                        '(personal cs))))
 
         ("note" :keys "n"
@@ -733,20 +725,20 @@ code repetition."
                     ":created: %U"
                     ":END:"
                     "%?")
-         :children ((,@(z-doct-expand 'cs projs)
+         :children ((,@(doct_expand 'cs projs)
                      :children ,(mapcar
                                  (lambda (proj)
-                                   (z-doct-expand proj projs 'notes 'cs))
+                                   (doct_expand proj projs 'notes 'cs))
                                  '(dm ad la ep)))
                     ,@(mapcar
                        (lambda (proj)
-                         (z-doct-expand proj projs 'notes))
+                         (doct_expand proj projs 'notes))
                        '(cs personal config compass))))
 
         ("journal" :keys "j"
          :file (lambda ()
                  (file-name-concat
-                  z-journal-dir
+                  journal_dir
                   (format "%s_journal.org" (format-time-string "%F"))))
          :children (("init-today" :keys "i"
                      :type plain
@@ -777,7 +769,7 @@ code repetition."
                                 "-"))))
 
         ("literature" :keys "l"
-         :file (lambda () (read-file-name "file: " z-literature-notes-dir))
+         :file (lambda () (read-file-name "file: " literature_notes_dir))
          :children (("init-source" :keys "i"
                      :file (lambda ()
                              (let* ((name (concat
@@ -786,7 +778,7 @@ code repetition."
                                             (read-from-minibuffer "short title: "))
                                            ".org")))
                                (file-name-concat
-                                z-literature-notes-dir
+                                literature_notes_dir
                                 name)))
                      :type plain
                      :book-author

@@ -21,13 +21,13 @@ alias mv = mv --verbose --force
 alias bat = bat --theme='Solarized (dark)'
 alias fzf = fzf --reverse --height=30 --color=dark --scheme=path
 
-alias e = emacsclient --tty
-alias g = emacsclient --tty --eval "(magit-status)"
-alias d = emacsclient --tty --eval "(dired-jump)"
+alias e = emacs -nw
+alias g = emacs -nw --eval "(magit-status)"
+alias d = emacs -nw --eval "(dired-jump)"
 
 $env.PATH = ($env.PATH | append ["~/.config/bin", "~/.cargo/bin", "~/.config/emacs/bin"] | uniq)
-$env.EDITOR = "emacsclient --tty --alternate-editor=nvim"
-$env.VISUAL = "emacsclient --reuse-frame --alternate-editor=nvim"
+$env.EDITOR = "emacs -nw"
+$env.VISUAL = "emacsclient --reuse-frame"
 $env.BROWSER = "firefox"
 $env.MANPAGER = "bat --plain --language=man --theme='Solarized (dark)'"
 $env.PAGER = "bat --theme='Solarized (dark)'"

@@ -14,6 +14,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - If you decide to use parts (or the entire config) *ensure* that you have *at least* every doom/module and package installed / enabled as i do, otherwise emacs will throw errors left and right.
   - modules: [[file:init.el]]
   - packages:[[file:packages.el]]
+- I use: ~_~ in user defined functions and variables to distinguish them clearly from package related ones.
 
 * User
 #+begin_src emacs-lisp
@@ -140,11 +141,9 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
       undo-limit 80000000
       history-length 1000
       consult-async-min-input 0
-      which-key-idle-delay 1
-      which-key-allow-multiple-replacements t
       hscroll-margin 0
       scroll-margin 0
-      enable-recursive-minibuffers nil
+      enable-recursive-minibuffers t
       highlight-indent-guides-responsive  t
       display-line-numbers-type 'visual
       shell-command-prompt-show-cwd t)
@@ -164,7 +163,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 * Keybindings
-- ~helpful-key~ and ~which-key-show-full-keymap~ are crucial to understanding what your tools can do for you (ex: magit, dired, org-mode)
+- ~helpful-key~ and are crucial to understanding what your tools can do for you (ex: magit, dired, org-mode)
   - Always keep on exploring, learning new, efficient keybindings and break your old routines for newer, more effcient one's after evaluating wether they are faster or not.
 - ~,~ is useless (instead just be precise when using ~;~)
 ** Leader
@@ -179,7 +178,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
                "V" #'visual-fill-column-mode
                "C" #'company-mode)
       (:prefix "c"
-               "w" #'z-clean-whitespace)
+               "w" #'clean_whitespace)
       (:prefix "s"
                (:prefix-map ("t" . "dictionary")
                             "d" #'+lookup/dictionary-definition
@@ -191,7 +190,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
       "," #'org-ctrl-c-ctrl-c
       (:prefix-map ("`" . "org-src")
                    "`" #'org-edit-special
-                   "g" #'z-goto-src
+                   "g" #'org_goto_src
                    "t" #'org-babel-tangle))
 #+end_src
 
@@ -210,17 +209,12 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
       :nvim "M-j" #'previous-window-any-frame
       :nvim "M-k" #'next-window-any-frame
       :nvim "M-t" #'tab-bar-new-tab-to
-      :nvim "M-q" #'z-quit
+      :nvim "M-q" #'tab_quit
       :nvmi "M-z" #'+popup/toggle
       :nvim "M-1" (cmd! (tab-bar-select-tab 1))
       :nvim "M-2" (cmd! (tab-bar-select-tab 2))
       :nvim "M-3" (cmd! (tab-bar-select-tab 3))
       :nvim "M-4" (cmd! (tab-bar-select-tab 4))
-      :nvim "M-5" (cmd! (tab-bar-select-tab 5))
-      :nvim "M-6" (cmd! (tab-bar-select-tab 6))
-      :nvim "M-7" (cmd! (tab-bar-select-tab 7))
-      :nvim "M-8" (cmd! (tab-bar-select-tab 8))
-      :nvim "M-9" (cmd! (tab-bar-select-tab 9))
       :nvim "M-o" #'find-file
       :nvim "M-f" #'consult-find
       :nvim "M-F" (cmd! (consult-find "~"))
@@ -235,7 +229,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
       :nvim "C-=" #'doom/increase-font-size
       :nvim "C-0" #'doom/reset-font-size)
 
-(defun z-quit ()
+(defun tab_quit ()
   "DWIM quit :: kill buffer & close tab/window.
 Kills current buffer and closes the window/tab it was displayed in."
   (interactive)
@@ -258,6 +252,8 @@ Kills current buffer and closes the window/tab it was displayed in."
   - ~&~: Allows for same usage as normal: ~&~, but allows repeating any last command.
   - ~TAB~: folding (inspired bby org-modes folding (smart/simple one-key folding))
 - (Emacs already by default implements it that out of screen jumps center the screen which is sensible )
+- <esc> :: Remap <ESC> to <left-alt> systemwide instead.
+- whichkey :: the concept of whichkey is in my opinion causing bad habits. Since all functions often called (ie. bound to keys) should be remembered in muscle memory and not tediously looked up in this menu. If you don't know what you are looking for, then use ~M-x~ and it will show you the binding for next time. Additionally we don't want annoying popup's all the time (distractionless workflow). This is for the same reason as you should use a keyboard with blank keycaps => will force you to learn things by muscle memory, (touch type even special characters) to improve the speed exponentially in the long run.
 
 #+begin_src emacs-lisp
 (map! :nmvo "j"   #'evil-next-visual-line
@@ -280,7 +276,7 @@ Kills current buffer and closes the window/tab it was displayed in."
 #+end_src
 
 #+begin_src emacs-lisp
-(defadvice! z-update-evil-search-reg ()
+(defadvice! update_evil_search_reg ()
   "Update evil search register after jumping to a line with
   `+default/search-buffer' to be able to jump to next/prev matches.
 This is sensible default behaviour."
@@ -307,6 +303,10 @@ This is sensible default behaviour."
       :nmv "C-q" #'kill-current-buffer
       :nmv "C-j" #'evil-forward-section-begin
       :nmv "C-k" #'evil-backward-section-begin)
+
+(map! :after evil-org :map evil-org-mode-map
+      :nmv "C-j"     #'org-forward-element
+      :nmv "C-k"     #'org-backward-element)
 #+end_src
 
 *** Instant jumping
@@ -330,17 +330,10 @@ This is sensible default behaviour."
 #+end_src
 
 ** Alignment
-- "Stronger indentation" => ~g</>~
+- "Stronger indentation" => from: ~>~, ~<~
 #+begin_src emacs-lisp
 (map! :nmv "g<" #'evil-lion-left
       :nmv "g>" #'evil-lion-right)
-#+end_src
-
-** Org mode
-#+begin_src emacs-lisp
-(map! :map evil-org-mode-map
-      :nmv "C-j"     #'org-forward-element
-      :nmv "C-k"     #'org-backward-element)
 #+end_src
 
 ** Dired (keys)
@@ -349,9 +342,9 @@ This is sensible default behaviour."
   - ~:e~ & ~:w~ for creating and opening files in the same dir from the vim-cmd-line
   - ~:%!~ & ~:'<,'>!~ for processing the buffer with external shell-tools.
   - ~:!~ for all other commands such as ~cp~, ~mv~, ~rm~, ~chmod~...
-  - use fuzzyfinding of files that exist
-    - create files/directories in other directories
-    - cd into different dir
+  - Use fuzzyfinding of files that exist
+    - Create files/directories in other directories
+    - ~cd~ into different dir
 #+begin_src emacs-lisp
 (map! :after dired
       :map dired-mode-map
@@ -375,7 +368,7 @@ This is sensible default behaviour."
 
 (map! :after dired
       :localleader :map dired-mode-map
-      :nm "a" #'z-dired-archive)
+      :nm "a" #'dired_archive)
 #+end_src
 
 ** Minibuffer
@@ -428,7 +421,7 @@ This is sensible default behaviour."
 #+end_src
 
 ** Lsp & completion
-- Lsp saves *lots* of time, hence we want it fast, and enabled (almost) everywhere.
+- Lsp saves time, hence we want it fast, and enabled everywhere except for prose.
 #+begin_src emacs-lisp
 (setq company-minimum-prefix-length 1
       company-idle-delay 0.1 ;; NOTE :: setting to 0 => huge lags
@@ -437,6 +430,7 @@ This is sensible default behaviour."
                              erc-mode
                              message-mode
                              help-mode
+                             org-mode
                              gud-mode
                              vterm-mode))
 #+end_src
@@ -483,15 +477,15 @@ This is sensible default behaviour."
 - Archive all things that were once written or created by you (instead of deleting them) => digital content cost's little to no space. And you will be grateful later in life to have recorded data (that can be analyzed & crunched) what you were thinking and how you configured your tools etc...
 - This is a consistent archiving scheme (archive to original path under Archive)
 #+begin_src emacs-lisp
-(defvar z-archive-dir "~/Archive/"
+(defvar archive_dir "~/Archive/"
   "User's archive directory.")
 
-(defun z-dired-archive ()
+(defun dired_archive ()
   (interactive)
   (let ((files (dired-get-marked-files nil nil)))
     (dolist (f files)
       (let* ((dest (file-name-concat
-                    z-archive-dir
+                    archive_dir
                     (file-relative-name f "~/")))
              (dir (file-name-directory dest)))
         (unless (file-exists-p dir)
@@ -527,7 +521,7 @@ This is sensible default behaviour."
 ** Clean Whitespace
 - More than 1 empty line is inconsistent and makes things unneccessary hard to read.
 #+begin_src emacs-lisp
-(defun z-clean-whitespace ()
+(defun clean_whitespace ()
   "Deletes consecutive empty lines if > 1, and strips trailing whitespace."
   (interactive)
   (delete-trailing-whitespace)
@@ -830,7 +824,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 - By default emacs has these as uppercase (the poor man's bold), however times change and the lowercase standard should be used globally.
   - thus convert mostly everything with this function, when you happened to get a file where it is uppercase.
 #+begin_src emacs-lisp
-(defun z-org-convert-keywords-downcase ()
+(defun org_convert_keywords_downcase ()
   "Convert all #+KEYWORDS => #+keywords && :keyword: => :keyword:"
   (interactive)
   (save-excursion
@@ -843,7 +837,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
 ** Jump to src file
 - When done with the edits: ~org-bable-detangle~.
 #+begin_src emacs-lisp
-(defun z-goto-src ()
+(defun org_goto_src ()
   "The opposite of `org-babel-tangle-jump-to-org'.
 Jumps at tangled code from org src block."
   (interactive)
@@ -890,14 +884,14 @@ Jumps at tangled code from org src block."
     - Aligns with the philosophy of separating literate contents from code (notes=literate/agenda=data)
 
 #+begin_src emacs-lisp
-(defvar z-journal-dir "~/Documents/journal/"
+(defvar journal_dir "~/Documents/journal/"
   "Directory for daily journal files.")
-(defvar z-literature-notes-dir "~/Documents/literature/notes/"
+(defvar literature_notes_dir "~/Documents/literature/notes/"
   "Directory for literature notes.")
-(defvar z-literature-source-dir "~/Documents/literature/source/"
+(defvar literature_source_dir "~/Documents/literature/source/"
   "Directory for literature source files.")
 
-(defun z-doct-expand (proj projs &optional type parent)
+(defun doct_expand (proj projs &optional type parent)
   "Generate doct preset for project (standardized).
 
 `PROJ:'   'name            | Project key (name)
@@ -934,14 +928,14 @@ code repetition."
          :headline "Inbox"
          :prepend t
          :template ("* [ ] %^{title}%? %^g")
-         :children ((,@(z-doct-expand 'cs projs)
+         :children ((,@(doct_expand 'cs projs)
                      :children ,(mapcar
                                  (lambda (proj)
-                                   (z-doct-expand proj projs 'agenda 'cs))
+                                   (doct_expand proj projs 'agenda 'cs))
                                  '(dm ad la ep)))
                     ,@(mapcar
                        (lambda (proj)
-                         (z-doct-expand proj projs 'agenda))
+                         (doct_expand proj projs 'agenda))
                        '(personal config compass cs))))
 
         ("event" :keys "e"
@@ -954,14 +948,14 @@ code repetition."
                     ":location: %^{location}"
                     ":material: %^{material}"
                     ":END:")
-         :children ((,@(z-doct-expand 'cs projs)
+         :children ((,@(doct_expand 'cs projs)
                      :children ,(mapcar
                                  (lambda (proj)
-                                   (z-doct-expand proj projs 'agenda 'cs))
+                                   (doct_expand proj projs 'agenda 'cs))
                                  '(dm ad la ep)))
                     ,@(mapcar
                        (lambda (proj)
-                         (z-doct-expand proj projs 'agenda))
+                         (doct_expand proj projs 'agenda))
                        '(personal cs))))
 
         ("note" :keys "n"
@@ -972,20 +966,20 @@ code repetition."
                     ":created: %U"
                     ":END:"
                     "%?")
-         :children ((,@(z-doct-expand 'cs projs)
+         :children ((,@(doct_expand 'cs projs)
                      :children ,(mapcar
                                  (lambda (proj)
-                                   (z-doct-expand proj projs 'notes 'cs))
+                                   (doct_expand proj projs 'notes 'cs))
                                  '(dm ad la ep)))
                     ,@(mapcar
                        (lambda (proj)
-                         (z-doct-expand proj projs 'notes))
+                         (doct_expand proj projs 'notes))
                        '(cs personal config compass))))
 
         ("journal" :keys "j"
          :file (lambda ()
                  (file-name-concat
-                  z-journal-dir
+                  journal_dir
                   (format "%s_journal.org" (format-time-string "%F"))))
          :children (("init-today" :keys "i"
                      :type plain
@@ -1016,7 +1010,7 @@ code repetition."
                                 "-"))))
 
         ("literature" :keys "l"
-         :file (lambda () (read-file-name "file: " z-literature-notes-dir))
+         :file (lambda () (read-file-name "file: " literature_notes_dir))
          :children (("init-source" :keys "i"
                      :file (lambda ()
                              (let* ((name (concat
@@ -1025,7 +1019,7 @@ code repetition."
                                             (read-from-minibuffer "short title: "))
                                            ".org")))
                                (file-name-concat
-                                z-literature-notes-dir
+                                literature_notes_dir
                                 name)))
                      :type plain
                      :book-author

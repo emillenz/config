@@ -1,7 +1,7 @@
-#+title:    Functional and efficiency focused computing workflow
-#+author:   Emil Lenz
-#+email:    emillenz@protonmail.com
-#+date:     Tuesday, May 16, 2023
+#+title:  Functional and Efficiency Focused Computing Workflow
+#+author: Emil Lenz
+#+email:  emillenz@protonmail.com
+#+date:   2023-05-16
 
 #+begin_quote
 Functional and efficiency focused computing workflow.
@@ -50,7 +50,7 @@ Imagine two kinds of grocery stores, one that just looks at what is the most pop
   - ex: relative line jumping over spamming =j=
   - ex: tab switching => thinking fast & instinctive, develop muscle memory (when there are too many => use analytical brain by searching through the list)
 
-** Colorscheme: Solarized
+** Colorscheme: Solarized (dark)
 #+begin_quote
 Solarized reduces brightness contrast but, unlike many low contrast colorschemes, retains contrasting hues (based on colorwheel relations) for syntax highlighting readability.
 - Ethan Schoonover
@@ -84,7 +84,7 @@ Iosevka Nerd Font optimises for inter-glyph and inter-style consistency within t
 
 * Keymaps
 - Consistency is important because they make the keys easier to remember and you will not have to learn multiple paradigms of keymaps.
-- In the WM, the set of program-names during runtime is known and consistent (unlike the set of buffers in applications, where tab-names are either unnamed, arbitrary or change during runtime), we use specific-chars for switching to the tabs instead of 1-9 (more ergonomic, better mnemonics, more consistent).
+- In the WM, the set of program-names during runtime is known and consistent (unlike the set of buffers in applications, where tab-names are either unnamed, arbitrary or change during runtime), we use specific-chars for switching to the tabs instead of 1-4 (more ergonomic, better mnemonics, more consistent). We limit tabs to 4 since this is a good size for files needed simultaneously when working on a project (if you have more you should refactor probably).
 - Abstain from using "alt-tab" (switching back to recent tab)
   - Enforce the habit of direct buffer switching (instead of spamming alt-tab to get back to the tab that is desired, which is what happens if you use it)
 - Keychords :: (vs modal bindings)
@@ -101,7 +101,7 @@ Iosevka Nerd Font optimises for inter-glyph and inter-style consistency within t
 |-------+------------------------------+------------------------|
 | T     | new tab                      | Vim/Mnemonic/standard  |
 | J,K   | prev/next window (!not tabs) | Vim, ergonomic         |
-| 1-9   | Switch to tab by index       | Logic / stardard       |
+| 1-4   | Switch to tab by index       | Logic / stardard       |
 | G     | search tabs/buffers          | vim: goto              |
 | Q     | Quit (window=>tab=>program)  | Mnemonic / standard    |
 | E     | edit file / editor           | Mnemonic               |

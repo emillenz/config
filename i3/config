@@ -130,9 +130,9 @@ $map $mod+shift+4 $mv 4; workspace 4
 # Scratch workspaces:1 ends here
 
 # [[file:config.org::*App opener][App opener:1]]
-$map $mod+o mode "$open"
+$map $mod+o mode "open"
 
-mode "$open" {
+mode "open" {
   $map $mod+c       $cmd alacritty --class cmd -T cmd -e tmux new-session -A -s cmd; $esc
   $map $mod+shift+e $cmd emacsclient --$cmdute--eval '(emacs-everywhere)'; $esc
   $map $mod+d       $cmd xdg-open "$(fd -e=pdf . ~ | $rofi)"; $esc
@@ -150,9 +150,9 @@ mode "$open" {
 # App opener:1 ends here
 
 # [[file:config.org::*Find file][Find file:1]]
-$map $mod+f mode "$find"
+$map $mod+f mode "find"
 
-mode "$find" {
+mode "find" {
   $map $mod+u $cmd xdg-open "$(fd --extension=pdf . ~/Documents/uni/cs | $rofi)"; $esc
   $map $mod+l $cmd xdg-open "$(fd --extension=pdf --extension=epub . ~/Documents/literature | $rofi)"; $esc
   $map $mod+f $cmd xdg-open "$(fd . ~ | $rofi)"; $esc
@@ -161,18 +161,18 @@ mode "$find" {
 # Find file:1 ends here
 
 # [[file:config.org::*Leader][Leader:1]]
-$map $mod+space mode "$leader"
+$map $mod+space mode "leader"
 
-mode "$leader" {
-  $map $mod+k mode "$keyboard"
-  $map $mod+p mode "$powermenu"
-  $map $mod+m mode "$menus"
+mode "leader" {
+  $map $mod+k mode "keyboard"
+  $map $mod+p mode "powermenu"
+  $map $mod+m mode "menus"
   $map Escape $esc
 }
 # Leader:1 ends here
 
 # [[file:config.org::*Powermenu][Powermenu:1]]
-mode "$powermenu" {
+mode "powermenu" {
   $map $mod+r       $cmd i3-msg restart; $esc
   $map $mod+shift+s $cmd $bin/startup; $esc
   $map $mod+e       $cmd i3-msg exit; $esc
@@ -186,7 +186,7 @@ mode "$powermenu" {
 # Powermenu:1 ends here
 
 # [[file:config.org::*Menus][Menus:1]]
-mode "$menus" {
+mode "menus" {
   $map $mod+a       $cmd $bin/audio-menu; $esc
   $map $mod+o       $cmd $bin/output-menu; $esc
   $map $mod+shift+o $cmd $bin/layout-menu; $esc
@@ -198,10 +198,11 @@ mode "$menus" {
 # Menus:1 ends here
 
 # [[file:config.org::*Theme: Solarized (dark)][Theme: Solarized (dark):1]]
-set $bg   #002b36
-set $fg   #98a8a8
-set $blue #268bd2
-set $red  #dc322f
+set $bg     #002b36
+set $bg_alt #093946
+set $fg     #98a8a8
+set $blue   #268bd2
+set $red    #dc322f
 
 # class                 border bg    text indicator child_border
 client.focused          $blue  $blue $bg  $fg       $blue
@@ -216,20 +217,14 @@ client.background       $bg
 bar {
   mode hide
   hidden_state hide
-  workspace_buttons none
+  workspace_buttons no
   modifier none
-  position bottom
-  tray_output none
-colors {
-  background $bg
-  statusline $blue
-  separator  $fg
-  # class            $border $backg $text
-  focused_workspace  $blue   $blue  $bg
-  inactive_workspace $bg     $bg    $fg
-  active_workspace   $bg     $bg    $fg
-  urgent_workspace   $red    $red   $bg
-  binding_mode       $bg     $bg    $blue
+  colors {
+    background $bg_alt
+    statusline $fg
+    separator  $fg
+    # class      $border $backg $text
+    binding_mode $bg     $blue  $bg
   }
 }
 # Statusbar (hidden):1 ends here

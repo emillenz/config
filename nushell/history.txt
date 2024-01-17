@@ -1,4 +1,3 @@
-pandoc -s -f html -t org input.html -o output.org
 bat output.org
 wget -O input.html https://www.polyphasic.net/adaptation
 pandoc -s -f html -t org input.html -o output.org
@@ -9998,3 +9997,4 @@ g
 ls
 i3blocks 
 i3blocks  --help | bat --language=man
+i3-msg restart

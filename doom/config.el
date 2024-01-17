@@ -206,7 +206,7 @@ Kills current buffer and closes the window/tab it was displayed in."
 (defadvice! update_evil_search_reg ()
   "Update evil search register after jumping to a line with
   `+default/search-buffer' to be able to jump to next/prev matches.
-This is sensible default behaviour."
+This is sensible default behaviour, and integrates it into evil."
   :after  '+default/search-buffer
 (let ((str (string-replace
             " " ".*"
@@ -217,6 +217,7 @@ This is sensible default behaviour."
 
 ;; [[file:config.org::*Control-bindings][Control-bindings:1]]
 (map! :inmv "C-s" #'evil-write
+      :nmv "C-l" #'recenter-top-bottom
       :nmv "C-q" #'kill-current-buffer
       :nmv "C-j" #'evil-forward-section-begin
       :nmv "C-k" #'evil-backward-section-begin)

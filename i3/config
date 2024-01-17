@@ -215,16 +215,6 @@ client.background       $bg
 
 # [[file:config.org::*Statusbar (hidden)][Statusbar (hidden):1]]
 bar {
-  mode hide
-  hidden_state hide
-  workspace_buttons no
-  modifier none
-  colors {
-    background $bg_alt
-    statusline $fg
-    separator  $fg
-    # class      $border $backg $text
-    binding_mode $bg     $blue  $bg
-  }
+  mode invisible
 }
 # Statusbar (hidden):1 ends here

@@ -299,19 +299,8 @@ client.background       $bg
 #+end_src
 
 * Statusbar (hidden)
-- Only use bar to indicate when in leadermode.
 #+begin_src conf
 bar {
-  mode hide
-  hidden_state hide
-  workspace_buttons no
-  modifier none
-  colors {
-    background $bg_alt
-    statusline $fg
-    separator  $fg
-    # class      $border $backg $text
-    binding_mode $bg     $blue  $bg
-  }
+  mode invisible
 }
 #+end_src

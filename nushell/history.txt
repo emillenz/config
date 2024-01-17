@@ -1,8 +1,3 @@
-bat output.org
-wget -O input.html https://www.polyphasic.net/adaptation
-pandoc -s -f html -t org input.html -o output.org
-calcurse
-dnfr calcurse
 syncthing
 dired
 emacsclient -c --eval '(delete frame)'
@@ -9998,3 +9993,8 @@ ls
 i3blocks 
 i3blocks  --help | bat --language=man
 i3-msg restart
+ls
+ls -la
+ls
+stst
+sys

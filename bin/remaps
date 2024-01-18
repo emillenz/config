@@ -7,9 +7,11 @@
 # date:   Monday,  7 August, 2023
 # info:   This is a script that will get you vim-like remaps in any text field using Alt.
 #         Attention, the remaps defined in ~/.config/xremap/config.yml are for the dvorak keyboard layout and not standard qwerty.
+# note:   Do not increase key-repeat-rate (xset-hack). Because this enforces the
+#         bad habit of holding down keys, instead of being more efficient and precise by
+#         using universal arguments, serching or stronger variants (instead of delete,
+#         use kill word).
 # -----
 def main [] {
   $"sudo xremap --watch=device ~/.config/xremap/config.yml &>/dev/null &" | bash
-  sleep 2sec # HACK: wait for xremap to finish
-  xset r rate 300 70
 }

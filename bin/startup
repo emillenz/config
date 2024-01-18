@@ -8,21 +8,21 @@
 # info:   All background processes and commands to be run at startup for the system.
 # -----
 def main [] {
-  ~/.config/bin/remaps
-
   let start_ps = [
-    "batsignal -b -f 98 -w 50 -c 20 -d 5",
+    "sudo xremap --watch=device ~/.config/xremap/config.yml &>/dev/null &"
+    "xset r off"
+    "xset s off"
+    "batsignal -b -f 98 -w 50 -c 20 -d 5"
     "udiskie"
-    "nm-applet",
-    "playerctld",
-    "keepassxc",
-    "syncthing",
-    "tmux new-session -s 'cmd'",
-    "emacs --bg-daemon --eval='(doom/reload)'",
-    "unclutter",
-    "xsetroot -solid '#002b36'", # NOTE:: solarized_dark bg
-    "xset dpms 0 0 0",
-    "xset s off",
+    "nm-applet"
+    "playerctld"
+    "keepassxc"
+    "syncthing"
+    "tmux new-session -s 'cmd'"
+    "emacs --bg-daemon --eval='(doom/reload)'"
+    "unclutter"
+    "xsetroot -solid '#002b36'" # NOTE:: solarized_dark bg
+    "xset dpms 0 0 0"
   ]
 
   let pss = (ps | get name | each {split words | get 0})

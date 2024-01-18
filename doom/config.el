@@ -313,6 +313,7 @@ This is sensible default behaviour, and integrates it into evil."
            +lookup/references
            +lookup/implementations
            +default/search-buffer
+           universal-argument
            consult-imenu))
   (evil-add-command-properties cmd :jump t))
 ;; Editor:1 ends here

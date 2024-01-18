@@ -1,33 +1,30 @@
-# HACK: this mapping scheme is using the dvorak layout and xremaps maps to the keycodes directly to the hardware layout: us-qwerty
-# => thus the assigned keys but they just need to be translated
-# be efficient in key usage, use kill line instead of holding-down the delete key.
-#
-# - Remap unergonomic keys to more ergo positions, allowing you to keep the hands on the homerow
-# - Use adjacent-alts for the navigational keys: alt_l: os, alt_r: app
-# - Left thumb: escape; right thumb: space
-#
-# Bindings with alt are to keep my global remapping scheme consistent.
+# -----
+# title:  Xremap config
+# author: Emil Lenz
+# email:  emillenz@protonmail.com
+# date:   2024-01-18
+# info:   Implements global navigation scheme and enables vim layer systemwide.
+# -----
 
+# NOTE :: Vim layer (i know there is modal but this is meant for quick if you do more than that, you should use your editor (emacs) anyway.)
 virtual_modifiers:
   - capslock
 
+# NOTE::
+# - Left thumb: escape; right thumb: space
+# - Turn off key-repetition, this causes bad habits of you holding down a key instead of moving intelligently and fast using the appropriate motion (not holding down ~j~, istead using ~C-d~. Not spamming delete, instead using ~dw~).
 modmap:
   - name: global
     remap:
-      alt_l:
+      alt_l: # use as ergonomic super/alt key (if you don't have keyboard with thumbkeys).
+        held: super_l
         alone: esc
-        held:  super_l
-        one_timeout_millis: 100
-      capslock:
-        alone: backspace
-        held:  capslock
         one_timeout_millis: 100
       backspace:
         alone: backspace
         held:  capslock
         one_timeout_millis: 100
 
-# NOTE :: these mappings do the same as vim motions, if not specified otherwise.
 keymap:
   - name: global
     remap:
@@ -37,8 +34,8 @@ keymap:
       capslock-l: right
       capslock-u: c-z
       capslock-shift-u: c-shift-z
-      capslock-a: end
-      capslock-i: home
+      capslock-a: [end]
+      capslock-i: [home]
       capslock-x: delete
       capslock-e: c-right
       capslock-b: c-left
@@ -46,38 +43,72 @@ keymap:
       capslock-shift-g: c-end
       capslock-o: [end, enter]
       capslock-shift-o: [up, end, enter]
-      capslock-w: [c-right, c-right]
+      capslock-w: [c-right, c-right, c-left]
+      capslock-p: [end, enter, c-v]
+      capslock-slash: c-f
+      capslock-question: shift-f3
       capslock-c:
         remap:
           capslock-c: [home, shift-end, C-x]
           capslock-4: [shift-end, C-x]
-          capslock-w: [c-shift-left, c-shift-right, c-x]
+          capslock-6: [shift-home, C-x]
+          capslock-0: [shift-home, C-x]
+          capslock-w: [c-shift-right, c-x]
           capslock-e: [c-shift-right, c-x]
           capslock-b: [c-shift-left, c-x]
           capslock-g: [c-shift-home, c-x]
           capslock-shift-g: [c-shift-end, c-x]
+          capslock-i:
+            remap:
+              capslock-w: [c-shift-left, c-shift-right, c-x]
+      capslock-d:
+        remap:
+          capslock-d: [home, shift-end, C-x]
+          capslock-4: [shift-end, C-x]
+          capslock-6: [shift-home, C-x]
+          capslock-0: [shift-home, C-x]
+          capslock-w: [c-shift-right, c-x]
+          capslock-e: [c-shift-right, c-x]
+          capslock-b: [c-shift-left, c-x]
+          capslock-g: [c-shift-home, c-x]
+          shift-capslock-g: [c-shift-end, c-x]
+          capslock-a:
+            remap:
+              capslock-w: [c-shift-left, c-shift-right, c-x]
+          capslock-i:
+            remap:
+              capslock-w: [c-shift-left, c-shift-right, c-x]
       capslock-y:
         remap:
-          capslock-c: [home, shift-end, C-c, {set_mark: true}]
-          capslock-4: [shift-end, c-c, {set_mark: true}]
-          capslock-w: [c-shift-left, c-shift-right, c-c, {set_mark: true}]
-          capslock-e: [c-shift-right, c-c, {set_mark: true}]
-          capslock-b: [c-shift-left, c-c, {set_mark: true}]
+          capslock-y: [home, shift-end, C-c]
+          capslock-4: [shift-end, c-c]
+          capslock-6: [shift-home, C-c]
+          capslock-0: [shift-home, C-c]
+          capslock-w: [c-shift-right, c-c, ]
+          capslock-e: [c-shift-right, c-c, ]
+          capslock-b: [c-shift-left, c-c]
           capslock-g: [c-shift-home, c-c]
-          capslock-shift-g: [c-shift-end, c-c]
-      capslock-p: [end, enter, c-v] # vim :: paste line below
+          shift-capslock-g: [c-shift-end, c-c]
+          capslock-a:
+            remap:
+              capslock-w: [c-shift-left, c-shift-right, c-x]
+          capslock-i:
+            remap:
+              capslock-w: [c-shift-left, c-shift-right, c-x]
 
-  # use this in conjuction with firefox extension: vimium
+  # NOTE ::
+  # - global navigation.
+  # - use this in conjuction with firefox extension: vimium
   - name: browser
     application:
       only: firefox
     remap:
-      alt-t: c-t
-      alt-e: c-l
-      alt-o: c-o
-      alt-o: c-o
-      alt-q: c-w
-      alt-slash: c-f
-      alt-question: shift-f3
-      alt-n: c-g
-      alt-shift-n: c-shift-g
+      M-t: c-t
+      M-e: c-l
+      M-o: c-o
+      M-o: c-o
+      M-q: c-w
+      M-slash: c-f
+      M-question: shift-f3
+      M-n: c-g
+      M-shift-n: c-shift-g

@@ -136,7 +136,7 @@ mode "open" {
   $map $mod+c       $cmd alacritty --class cmd -T cmd -e tmux new-session -A -s cmd; $esc
   $map $mod+shift+e $cmd emacsclient --$cmdute--eval '(emacs-everywhere)'; $esc
   $map $mod+d       $cmd xdg-open "$(fd -e=pdf . ~ | $rofi)"; $esc
-  $map $mod+e       $cmd emacsclient --reuse-frame || emacs --daemon; $esc
+  $map $mod+e       $cmd emacsclient --reuse-frame || emacs --bg-daemon --eval='(doom/reload)' ; $esc
   $map $mod+w       $cmd firefox; $esc
   $map $mod+v       $cmd mpv $(xclip -o); $esc
   $map $mod+s       $cmd keepassxc; $esc

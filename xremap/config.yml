@@ -5,6 +5,8 @@
 # - Remap unergonomic keys to more ergo positions, allowing you to keep the hands on the homerow
 # - Use adjacent-alts for the navigational keys: alt_l: os, alt_r: app
 # - Left thumb: escape; right thumb: space
+#
+# Bindings with alt are to keep my global remapping scheme consistent.
 
 virtual_modifiers:
   - capslock
@@ -25,6 +27,7 @@ modmap:
         held:  capslock
         one_timeout_millis: 100
 
+# NOTE :: these mappings do the same as vim motions, if not specified otherwise.
 keymap:
   - name: global
     remap:
@@ -39,13 +42,42 @@ keymap:
       capslock-x: delete
       capslock-e: c-right
       capslock-b: c-left
-      capslock-p: c-v
-      capslock-y: c-c
       capslock-g: c-home
       capslock-shift-g: c-end
-      capslock-w: [c-right, c-right, c-left]
-      capslock-c: [c-backspace]
-      capslock-d: [home, shift-end, delete]
       capslock-o: [end, enter]
       capslock-shift-o: [up, end, enter]
-      capslock-y: [c-a, c-c]
+      capslock-w: [c-right, c-right]
+      capslock-c:
+        remap:
+          capslock-c: [home, shift-end, C-x]
+          capslock-4: [shift-end, C-x]
+          capslock-w: [c-shift-left, c-shift-right, c-x]
+          capslock-e: [c-shift-right, c-x]
+          capslock-b: [c-shift-left, c-x]
+          capslock-g: [c-shift-home, c-x]
+          capslock-shift-g: [c-shift-end, c-x]
+      capslock-y:
+        remap:
+          capslock-c: [home, shift-end, C-c, {set_mark: true}]
+          capslock-4: [shift-end, c-c, {set_mark: true}]
+          capslock-w: [c-shift-left, c-shift-right, c-c, {set_mark: true}]
+          capslock-e: [c-shift-right, c-c, {set_mark: true}]
+          capslock-b: [c-shift-left, c-c, {set_mark: true}]
+          capslock-g: [c-shift-home, c-c]
+          capslock-shift-g: [c-shift-end, c-c]
+      capslock-p: [end, enter, c-v] # vim :: paste line below
+
+  # use this in conjuction with firefox extension: vimium
+  - name: browser
+    application:
+      only: firefox
+    remap:
+      alt-t: c-t
+      alt-e: c-l
+      alt-o: c-o
+      alt-o: c-o
+      alt-q: c-w
+      alt-slash: c-f
+      alt-question: shift-f3
+      alt-n: c-g
+      alt-shift-n: c-shift-g

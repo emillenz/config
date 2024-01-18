@@ -1,10 +1,10 @@
 {
-  "settingsVersion": "1.67.7",
+  "settingsVersion": "1.67.6",
   "exclusionRules": [],
   "filterLinkHints": false,
   "waitForEnterForFilteredHints": true,
   "hideHud": false,
-  "keyMappings": "map <a-q> removeTab\nmap <a-Q> restoreTab\nmap <a-t> createTab\nmap <a-g> Vomnibar.activateTabSelection\nmap <a-k> nextTab\nmap <a-j> previousTab\nmap h goBack\nmap l goForward\nmap s LinkHints.activateMode\nmap S LinkHints.activateModeToOpenInNewTab\nmap i focusInput\nmap ' Marks.activateGotoMode",
+  "keyMappings": "map <a-g> Vomnibar.activateTabSelection\nmap h goBack\nmap l goForward\nmap s LinkHints.activateMode\nmap S LinkHints.activateModeToOpenInNewTab\nmap i focusInput\nmap ' Marks.activateGotoMode",
   "linkHintCharacters": "sadfjklewcmpgh",
   "linkHintNumbers": "0123456789",
   "newTabUrl": "duckduckgo.com",

@@ -1,39 +1,3 @@
-syncthing
-git status
-git commit -am 'sync'; git push
-dnfi rust-src
-keybindings list
-emacs
-^emacs
-startup
-^emacs
-syncthing
-cargo run  -h | bat
-cargo  -h | bat
-^emacs --debug-init
-^emacs
-startup
-^emacs
-startup
-doom sync
-ls
-^emacs
-doom sync
-startup
-emacs  -h | bat
-^emacs  -h | bat
-^emacs  --help
-startup
-emacs -nw
-uptime
-dnfi pandoc
-dnfi rust-src
-^emacs --debug-init
-startup
-^emacs --debug-init
-emacs
-^emacs
-^emacs --debug-init
 nvim ~/.config/doom/config.el
 ^emacs --debug-init
 cd .config/doom/
@@ -9998,3 +9962,39 @@ i3status
 sl
 i3status
 "i3status &" | bash
+ls 
+cd Documents/
+ls
+fd 
+fd . '-'
+fd '-'
+ls
+ls **/*.* 
+where  --help | bat --language=man
+fd -e=pdf -e=org -tf
+ls
+cd uni/cs
+ls
+ls **/*
+ls **/* | where type == file | get name 
+where  --help | bat --language=man
+ls **/* | where name =~ '.*org'
+cd .
+ls
+cd ~
+cd Documents/org/
+ls
+ls **
+ls **/*
+xremap
+sudo xremap --watch=device ~/.config/xremap/config.yml
+xev
+sudo xremap --watch=device ~/.config/xremap/config.yml
+ls
+sudo xremap --watch=device ~/.config/xremap/config.yml
+k
+sudo xremap --watch=device ~/.config/xremap/config.yml
+xev
+sudo xremap --watch=device ~/.config/xremap/config.yml
+sudo xremap --watch=device ~/.config/xremap/config.yml\
+sudo xremap --watch=device ~/.config/xremap/config.yml

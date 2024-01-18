@@ -1,5 +1,3 @@
-nvim config.org
-emacs
 startup
 ^emacs --debug-init
 ^emacs
@@ -9998,3 +9996,5 @@ sudo xremap --watch=device ~/.config/xremap/config.ym
 ls
 sudo xremap --watch=device ~/.config/xremap/config.ym
 sudo xremap --watch=device ~/.config/xremap/config.yml
+xset r off
+ls

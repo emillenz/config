@@ -26,76 +26,6 @@ modmap:
         one_timeout_millis: 100
 
 keymap:
-  - name: global
-    remap:
-      capslock-j: down
-      capslock-k: up
-      capslock-h: left
-      capslock-l: right
-      capslock-u: c-z
-      capslock-shift-u: c-shift-z
-      capslock-a: [end]
-      capslock-i: [home]
-      capslock-x: delete
-      capslock-e: c-right
-      capslock-b: c-left
-      capslock-g: c-home
-      capslock-shift-g: c-end
-      capslock-o: [end, enter]
-      capslock-shift-o: [up, end, enter]
-      capslock-w: [c-right, c-right, c-left]
-      capslock-p: [end, enter, c-v]
-      capslock-slash: c-f
-      capslock-question: shift-f3
-      capslock-c:
-        remap:
-          capslock-c: [home, shift-end, C-x]
-          capslock-4: [shift-end, C-x]
-          capslock-6: [shift-home, C-x]
-          capslock-0: [shift-home, C-x]
-          capslock-w: [c-shift-right, c-x]
-          capslock-e: [c-shift-right, c-x]
-          capslock-b: [c-shift-left, c-x]
-          capslock-g: [c-shift-home, c-x]
-          capslock-shift-g: [c-shift-end, c-x]
-          capslock-i:
-            remap:
-              capslock-w: [c-shift-left, c-shift-right, c-x]
-      capslock-d:
-        remap:
-          capslock-d: [home, shift-end, C-x]
-          capslock-4: [shift-end, C-x]
-          capslock-6: [shift-home, C-x]
-          capslock-0: [shift-home, C-x]
-          capslock-w: [c-shift-right, c-x]
-          capslock-e: [c-shift-right, c-x]
-          capslock-b: [c-shift-left, c-x]
-          capslock-g: [c-shift-home, c-x]
-          shift-capslock-g: [c-shift-end, c-x]
-          capslock-a:
-            remap:
-              capslock-w: [c-shift-left, c-shift-right, c-x]
-          capslock-i:
-            remap:
-              capslock-w: [c-shift-left, c-shift-right, c-x]
-      capslock-y:
-        remap:
-          capslock-y: [home, shift-end, C-c]
-          capslock-4: [shift-end, c-c]
-          capslock-6: [shift-home, C-c]
-          capslock-0: [shift-home, C-c]
-          capslock-w: [c-shift-right, c-c, ]
-          capslock-e: [c-shift-right, c-c, ]
-          capslock-b: [c-shift-left, c-c]
-          capslock-g: [c-shift-home, c-c]
-          shift-capslock-g: [c-shift-end, c-c]
-          capslock-a:
-            remap:
-              capslock-w: [c-shift-left, c-shift-right, c-x]
-          capslock-i:
-            remap:
-              capslock-w: [c-shift-left, c-shift-right, c-x]
-
   # NOTE ::
   # - global navigation.
   # - use this in conjuction with firefox extension: vimium
@@ -112,3 +42,60 @@ keymap:
       M-question: shift-f3
       M-n: c-g
       M-shift-n: c-shift-g
+
+  - name: global
+    remap:
+      capslock-j: down
+      capslock-k: up
+      capslock-h: left
+      capslock-l: right
+      capslock-u: c-z
+      capslock-shift-u: c-shift-z
+      capslock-a: end
+      capslock-i: home
+      capslock-x: delete
+      capslock-e: c-right
+      capslock-b: c-left
+      capslock-w: c-right
+      capslock-g: c-home
+      capslock-shift-g: c-end
+      capslock-o: [end, enter]
+      capslock-shift-o: [up, end, enter]
+      capslock-p: [end, enter, c-v]
+      capslock-slash: c-f
+      capslock-question: shift-f3
+      capslock-d: [c-delete] # NOTE :: delete word backward
+
+      capslock-shift-c: [shift-end, C-x]
+      capslock-c:
+        remap:
+          capslock-c: [home, shift-end, C-x]
+          capslock-l: [shift-end, C-x]
+          capslock-h: [shift-home, C-x]
+          capslock-e: [c-shift-right, c-x]
+          capslock-b: [c-shift-left, c-x]
+          capslock-g: [c-shift-home, c-x]
+          capslock-shift-g: [c-shift-end, c-x]
+          capslock-i:
+            remap:
+              capslock-w: [c-left, c-shift-right, c-x]
+          capslock-a:
+            remap:
+              capslock-w: [c-left, c-shift-right, c-x]
+
+      capslock-shift-y: [shift-end, C-c]
+      capslock-y:
+        remap:
+          capslock-y: [home, shift-end, C-c]
+          capslock-l: [shift-end, C-c]
+          capslock-h: [shift-home, C-c]
+          capslock-e: [c-shift-right, c-c]
+          capslock-b: [c-shift-left, c-c]
+          capslock-g: [c-shift-home, c-c]
+          shift-capslock-g: [c-shift-end, c-c]
+          capslock-i:
+            remap:
+              capslock-w: [c-left, c-shift-right, c-c]
+          capslock-a:
+            remap:
+              capslock-w: [c-left, c-shift-right, c-c]

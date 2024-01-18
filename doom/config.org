@@ -252,9 +252,10 @@ Kills current buffer and closes the window/tab it was displayed in."
   - ~M~: scratch mark: ~m~ (save pos: ~mm~ -> do edits elsewhere -> jump back to scratch: ~M~)
   - ~&~: Allows for same usage as normal: ~&~, but more powerful (repeat any last ~ex~ command)
   - ~TAB~: folding (inspired bby org-modes folding (smart/simple one-key folding))
-  - ~()~ for navigating code delimiters.
+  - ~()~ for quickly jumping out of code delimiters (and when coding in lisp, especially useful)
+  - ~HL~: relative line jumping and char-jumping is more efficient. ~^$~ are unergonomic and frequently used => remap.
 - Escape :: Remap ~esc~ to ~left-alt~ systemwide for ergonomic access. (don't map to ~capslock~, since ~caps~ should be mapped to: ~backspace~. Which is even more frequently used and even less ergonomic than ~esc~)
-- Whichkey :: removed on purpose
+- Whichkey :: Removed on purpose
   - The concept of ~whichkey~ is creating the bad habit of searching through a menu to find a keybindings (the exact opposite of what a keybind is for, to be executed instantaneously, engrained in memory)
   - If you know roughly what you are looking for, then use ~M-x~ and fuzzy search for the command and it will show you the binding for next time. Fuzzy finding is more efficient.
   - We remove annoying unwanted popup's and reduce visual sugar (=> distractionless, focused workflow).
@@ -266,8 +267,11 @@ Kills current buffer and closes the window/tab it was displayed in."
 
       :nm   "TAB" #'+fold/toggle
 
-      :nm   "("   #'forward-sexp
-      :nm   ")"   #'backward-sexp
+      :nmv  "("   #'sp-beginning-of-sexp
+      :nmv  ")"   #'sp-end-of-sexp
+
+      :nmv  "H"   #'evil-first-non-blank
+      :nmv  "L"   #'evil-end-of-line
 
       :nmv  "U"   #'evil-redo
       :nmv  "Q"   #'evil-execute-last-recorded-macro
@@ -284,19 +288,24 @@ Kills current buffer and closes the window/tab it was displayed in."
 #+end_src
 
 #+begin_src emacs-lisp
-(defadvice! update_evil_search_reg ()
+(defadvice! update_evil_search_reg (fn &rest args)
   "Update evil search register after jumping to a line with
   `+default/search-buffer' to be able to jump to next/prev matches.
 This is sensible default behaviour, and integrates it into evil."
-  :after  '+default/search-buffer
+  :after #'+default/search-buffer
 (let ((str (string-replace
             " " ".*"
             (car consult--line-history))))
   (push str evil-ex-search-history)
   (setq evil-ex-search-pattern (list str t t))))
+
+(defadvice! evil_sexp_cursor_offset (fn &rest args)
+  "Offset cursor position by -1, since this is optimal for evil's normal mode."
+  :after #'sp-beginning-of-sexp
+  (goto-char (- (point) 1)))
 #+end_src
 
-** Control-bindings
+*** Control-bindings
 - Screen movements ::
   - jumplist-jumps: ~C-i/o~
   - page scrolling: ~C-u/d~
@@ -313,10 +322,6 @@ This is sensible default behaviour, and integrates it into evil."
       :nmv "C-q" #'kill-current-buffer
       :nmv "C-j" #'evil-forward-section-begin
       :nmv "C-k" #'evil-backward-section-begin)
-
-(map! :after evil-org :map evil-org-mode-map
-      :nmv "C-j"     #'org-forward-element
-      :nmv "C-k"     #'org-backward-element)
 #+end_src
 
 *** Instant jumping
@@ -339,12 +344,22 @@ This is sensible default behaviour, and integrates it into evil."
       :nmv "`" #'evil-surround-region)
 #+end_src
 
-** Alignment
-- "Stronger indentation" => from: ~>~, ~<~
+*** Alignment
 #+begin_src emacs-lisp
 (map! :nmv "g<" #'evil-lion-left
       :nmv "g>" #'evil-lion-right)
 #+end_src
+
+*** Org
+- Org mode specific versions of my remaps.
+#+begin_src emacs-lisp
+(map! :after evil-org :map evil-org-mode-map
+      :nmv "H"   #'org-beginning-of-line
+      :nmv "L"   #'evil-org-end-of-line
+      :nmv "C-j" #'org-forward-element
+      :nmv "C-k" #'org-backward-element)
+#+end_src
+
 
 ** Dired (keys)
 - Filemanagers :: Avoid using integrated filemanagers (such as dired / ranger / lf) whenever possible replace them with shell commands and finding (fzf: recent-files, root, current dir..)

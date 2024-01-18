@@ -188,8 +188,11 @@ Kills current buffer and closes the window/tab it was displayed in."
 
       :nm   "TAB" #'+fold/toggle
 
-      :nm   "("   #'forward-sexp
-      :nm   ")"   #'backward-sexp
+      :nmv  "("   #'sp-beginning-of-sexp
+      :nmv  ")"   #'sp-end-of-sexp
+
+      :nmv  "H"   #'evil-first-non-blank
+      :nmv  "L"   #'evil-end-of-line
 
       :nmv  "U"   #'evil-redo
       :nmv  "Q"   #'evil-execute-last-recorded-macro
@@ -206,16 +209,21 @@ Kills current buffer and closes the window/tab it was displayed in."
 ;; Evil-mode:1 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:2]]
-(defadvice! update_evil_search_reg ()
+(defadvice! update_evil_search_reg (fn &rest args)
   "Update evil search register after jumping to a line with
   `+default/search-buffer' to be able to jump to next/prev matches.
 This is sensible default behaviour, and integrates it into evil."
-  :after  '+default/search-buffer
+  :after #'+default/search-buffer
 (let ((str (string-replace
             " " ".*"
             (car consult--line-history))))
   (push str evil-ex-search-history)
   (setq evil-ex-search-pattern (list str t t))))
+
+(defadvice! evil_sexp_cursor_offset (fn &rest args)
+  "Offset cursor position by -1, since this is optimal for evil's normal mode."
+  :after #'sp-beginning-of-sexp
+  (goto-char (- (point) 1)))
 ;; Evil-mode:2 ends here
 
 ;; [[file:config.org::*Control-bindings][Control-bindings:1]]
@@ -224,10 +232,6 @@ This is sensible default behaviour, and integrates it into evil."
       :nmv "C-q" #'kill-current-buffer
       :nmv "C-j" #'evil-forward-section-begin
       :nmv "C-k" #'evil-backward-section-begin)
-
-(map! :after evil-org :map evil-org-mode-map
-      :nmv "C-j"     #'org-forward-element
-      :nmv "C-k"     #'org-backward-element)
 ;; Control-bindings:1 ends here
 
 ;; [[file:config.org::*Instant jumping][Instant jumping:1]]
@@ -248,6 +252,14 @@ This is sensible default behaviour, and integrates it into evil."
 (map! :nmv "g<" #'evil-lion-left
       :nmv "g>" #'evil-lion-right)
 ;; Alignment:1 ends here
+
+;; [[file:config.org::*Org][Org:1]]
+(map! :after evil-org :map evil-org-mode-map
+      :nmv "H"   #'org-beginning-of-line
+      :nmv "L"   #'evil-org-end-of-line
+      :nmv "C-j" #'org-forward-element
+      :nmv "C-k" #'org-backward-element)
+;; Org:1 ends here
 
 ;; [[file:config.org::*Dired (keys)][Dired (keys):1]]
 (map! :after dired

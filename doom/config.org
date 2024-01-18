@@ -252,11 +252,12 @@ Kills current buffer and closes the window/tab it was displayed in."
   - ~M~: scratch mark: ~m~ (save pos: ~mm~ -> do edits elsewhere -> jump back to scratch: ~M~)
   - ~&~: Allows for same usage as normal: ~&~, but more powerful (repeat any last ~ex~ command)
   - ~TAB~: folding (inspired bby org-modes folding (smart/simple one-key folding))
+  - ~()~ for navigating code delimiters.
 - Escape :: Remap ~esc~ to ~left-alt~ systemwide for ergonomic access. (don't map to ~capslock~, since ~caps~ should be mapped to: ~backspace~. Which is even more frequently used and even less ergonomic than ~esc~)
-- Whichkey :: the concept of whichkey is in my opinion causing bad habits and redundant
-  - Since all functions often called (ie. bound to keys) should be engrained in muscle memory and not tediously looked up in this menu.
-  - If you don't know what you are looking for, then use ~M-x~ and fuzzy search for what you think you want to do and it will show you the binding for next time. This is more efficient.
-  - Additionally we remove annoying unwanted popup's (distractionless, focused workflow).
+- Whichkey :: removed on purpose
+  - The concept of ~whichkey~ is creating the bad habit of searching through a menu to find a keybindings (the exact opposite of what a keybind is for, to be executed instantaneously, engrained in memory)
+  - If you know roughly what you are looking for, then use ~M-x~ and fuzzy search for the command and it will show you the binding for next time. Fuzzy finding is more efficient.
+  - We remove annoying unwanted popup's and reduce visual sugar (=> distractionless, focused workflow).
   - This idea correlates with the insight that you should use a keyboard with blank keycaps. Which will force you to learn to type, without ever taking the focus off the screen. (reduced context switching, no speed bottleneck, increased continuity).
 
 #+begin_src emacs-lisp
@@ -264,6 +265,9 @@ Kills current buffer and closes the window/tab it was displayed in."
       :nmvo "k"   #'evil-previous-visual-line
 
       :nm   "TAB" #'+fold/toggle
+
+      :nm   "("   #'forward-sexp
+      :nm   ")"   #'backward-sexp
 
       :nmv  "U"   #'evil-redo
       :nmv  "Q"   #'evil-execute-last-recorded-macro

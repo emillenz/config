@@ -234,26 +234,14 @@ mode "find" {
 $map $mod+space mode "leader"
 
 mode "leader" {
-  $map $mod+k mode "keyboard"
   $map $mod+p mode "powermenu"
   $map $mod+m mode "menus"
   $map Escape $esc
 }
 #+end_src
 
-*** Keyboard layout
-- Somtimes i use multiple different keyboard layouts => switch between them.
-#+begin_src conf :tangle no
-mode "keyboard" {
-  $map $mod+d $cmd setxkbmap us dvorak; $esc
-  $map $mod+c $cmd setxkbmap ch; $esc
-  $map $mod+u $cmd setxkbmap us; $esc
-  $map Escape $esc
-}
-#+end_src
-
 *** Powermenu
-- Always hibernate => Preserves the state inbetween reboots => keeps workflow DRY.
+- Always hibernate and never poweroff => Preserves the state inbetween reboots => keeps workflow DRY.
 #+begin_src conf
 mode "powermenu" {
   $map $mod+r       $cmd i3-msg restart; $esc
@@ -298,9 +286,23 @@ client.placeholder      $bg    $bg   $fg  $bg       $bg
 client.background       $bg
 #+end_src
 
-* Statusbar (hidden)
+* Statusbar
+- Only used as a mode indicator.
+- Off in all other situations in order not to distract.
 #+begin_src conf
 bar {
-  mode invisible
+  mode hide
+  hidden_state hide
+  workspace_buttons no
+  modifier none
+  separator_symbol "|"
+  status_command i3status
+  colors {
+    background $bg_alt
+    statusline $blue
+    separator  $fg
+    # class            $border $backg  $text
+    binding_mode       $blue   $blue   $bg
+  }
 }
 #+end_src

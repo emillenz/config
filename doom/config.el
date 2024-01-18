@@ -188,6 +188,9 @@ Kills current buffer and closes the window/tab it was displayed in."
 
       :nm   "TAB" #'+fold/toggle
 
+      :nm   "("   #'forward-sexp
+      :nm   ")"   #'backward-sexp
+
       :nmv  "U"   #'evil-redo
       :nmv  "Q"   #'evil-execute-last-recorded-macro
       :nmv  "&"   #'evil-ex-repeat

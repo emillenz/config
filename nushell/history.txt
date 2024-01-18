@@ -1,58 +1,4 @@
 syncthing
-dired
-emacsclient -c --eval '(delete frame)'
-emacsclient -c --eval '(delete-frame)'
-emacsclient -c 
-ls
-git status
-syncthing
-git status
-fd  'sync-conflict'
-fd  'sync-conflict' -x rm
-git status
-emacs --debug-init
-^emacs --daemon
-^emacs --debug-init
-emacs
-^emacs
-vim .
-vi .
-^emacs --debug-init
-emacs --
-^emacs --debug-init
-dnfi vi
-nvim .
-^emacs --debug-init
-startup
-ps -l | get command
-ps -l | get command | find emacs
-syncthing
-startup
-^emacs --daemon
-startup
-^emacs -nw
-startup
-emacs --debug-init
-^emacs --debug-init
-^emacs 
-dnfs rust-src
-dnfi rust-src
-syncthing
-dnfs vterm
-doom sync
-startup
-emacs
-^emacs
-emacs --debug-init
-^emacs --debug-init
-^emacs
-startup
-^emacs
-cargo run
-ls
-starutp
-startup
-syncthing
 git status
 git commit -am 'sync'; git push
 dnfi rust-src
@@ -9998,3 +9944,57 @@ ls -la
 ls
 stst
 sys
+ls
+bat /etc/i3status.conf
+not path exists ~path
+not (path exists ~path)
+not (path exists ~)
+not (~ | path exists)
+not ("~" | path exists)
+not  --help | bat --language=man
+mkdir  --help | bat --language=man
+def mv [from: path, to: path] {<\n>  if not ($to | path exists) {<\n>    mkdir --verbose ($to | path dirname)<\n>  }<\n>  mv --verbose $from $to<\n>}<\n>
+mv --help | bat --language=man
+mkdir  --help | bat --language=man
+ls
+def mv [from: path, to: path] {<\n>  if not ($to | path exists) {<\n>    mkdir --verbose ($to | path dirname)<\n>  }<\n>  ^mv --verbose $from $to<\n>}
+ls
+touch f.txt
+mv f.txt f/f.txt
+ls
+ls f/
+rm -f f
+ls
+mkdir f/t
+ls
+ls f
+rm f
+ls
+rm  --help | bat --language=man
+e
+.
+ls
+cp /etc/i3status.conf ~/.config/i3status/conf
+ls
+mv  --help | bat --language=man
+cp --help | bat --language=man
+def cp [from: path, to: path] {<\n>  if not ($to | path exists) {<\n>    mkdir --verbose ($to | path dirname)<\n>  }<\n>  ^cp --verbose --progress --interactive $from $to<\n>}
+ls
+pactl
+pactl  --help | bat --language=man
+i3status
+man i3status
+i3status
+ls
+i3status
+man i3status
+3 bar
+i3bar
+i3status
+ls
+"i3status &" | bash
+ls
+i3status
+sl
+i3status
+"i3status &" | bash

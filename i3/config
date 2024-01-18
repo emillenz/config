@@ -164,7 +164,6 @@ mode "find" {
 $map $mod+space mode "leader"
 
 mode "leader" {
-  $map $mod+k mode "keyboard"
   $map $mod+p mode "powermenu"
   $map $mod+m mode "menus"
   $map Escape $esc
@@ -213,8 +212,20 @@ client.placeholder      $bg    $bg   $fg  $bg       $bg
 client.background       $bg
 # Theme: Solarized (dark):1 ends here
 
-# [[file:config.org::*Statusbar (hidden)][Statusbar (hidden):1]]
+# [[file:config.org::*Statusbar][Statusbar:1]]
 bar {
-  mode invisible
+  mode hide
+  hidden_state hide
+  workspace_buttons no
+  modifier none
+  separator_symbol "|"
+  status_command i3status
+  colors {
+    background $bg_alt
+    statusline $blue
+    separator  $fg
+    # class            $border $backg  $text
+    binding_mode       $blue   $blue   $bg
+  }
 }
-# Statusbar (hidden):1 ends here
+# Statusbar:1 ends here

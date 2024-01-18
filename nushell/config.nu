@@ -14,9 +14,9 @@ alias exe = chmod +x
 alias ip = ip -color=auto
 alias yay = yay --noconfirm
 
-alias rm = rm --recursive --verbose --force --trash
-alias cp = cp --recursive --verbose --progress
-alias mv = mv --verbose --force
+alias rm = rm --recursive --verbose --trash --interactive-once
+alias cp = cp --recursive --verbose --progress --interactive
+alias mv = mv --verbose
 
 alias bat = bat --theme='Solarized (dark)'
 alias fzf = fzf --reverse --height=30 --color=dark --scheme=path
@@ -31,6 +31,21 @@ $env.VISUAL = "emacsclient --reuse-frame"
 $env.BROWSER = "firefox"
 $env.MANPAGER = "bat --plain --language=man --theme='Solarized (dark)'"
 $env.PAGER = "bat --theme='Solarized (dark)'"
+
+# mv :: automatically create missing destination dir's.
+def mv [from: path, to: path] {
+  if not ($to | path exists) {
+    mkdir --verbose ($to | path dirname)
+  }
+  ^mv --verbose $from $to
+}
+
+def cp [from: path, to: path] {
+  if not ($to | path exists) {
+    mkdir --verbose ($to | path dirname)
+  }
+  ^cp --verbose --progress --interactive $from $to
+}
 
 let fish_completer = {|spans|
     fish --command $'complete "--do-complete=($spans | str join " ")"'

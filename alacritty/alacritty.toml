@@ -1,0 +1,36 @@
+import = ["~/.config/alacritty/solarized-dark.toml"]
+ipc_socket = true
+live_config_reload = true
+working_directory = "None"
+
+[cursor]
+unfocused_hollow = false
+vi_mode_style = "Block"
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+normal = {family = "Iosevka Nerd Font"}
+size = 10.5 # HACK :: .5 makes it scaled properly
+
+[mouse]
+hide_when_typing = true
+
+[scrolling]
+multiplier = 10
+
+[selection]
+save_to_clipboard = true
+
+[shell]
+program = "/usr/bin/nu"
+args = ["--login"]
+
+[window]
+decorations = "full"
+dynamic_padding = true
+dynamic_title = true
+startup_mode = "Maximized"
+opacity = 1.0
+class = { general = "cmd", instance = "cmd" }

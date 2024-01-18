@@ -1,0 +1,47 @@
+general {
+  colors = true
+  interval = 5
+  color_good = "#819500"
+  color_degraded = "#D56500"
+  color_bad = "#F23749"
+}
+
+order += "wireless _first_"
+order += "ethernet _first_"
+order += "battery all"
+order += "tztime local"
+
+
+wireless _first_ {
+  format_up = "wifi: %essid, %quality, "
+  format_down = "wifi: none"
+}
+
+ethernet _first_ {
+  format_up = "eth: %essid, %speed"
+  format_down = "eth: none"
+}
+
+battery all {
+  format = "bat: %percentage %status -> %emptytime"
+  format_percentage = "%03d%s"
+  format_down = "bat: nil"
+  status_chr = up
+  status_bat = down
+  status_unk = nil
+  status_full = full
+  low_threshold = 30
+  threshold_type = time
+}
+
+volume master {
+  format = "vol: %volume"
+  format_muted = "vol: mut [%volume]"
+  device = "default"
+  mixer = "Master"
+  mixer_idx = 0
+}
+
+tztime local {
+  format = "%Y-%m-%d %H:%M"
+}

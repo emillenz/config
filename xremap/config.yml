@@ -32,6 +32,7 @@ keymap:
 
   - name: global
     remap:
+      capslock-m: shift-3
       capslock-j: down
       capslock-k: up
       capslock-h: left
@@ -40,19 +41,17 @@ keymap:
       capslock-shift-u: c-shift-z
       capslock-a: end
       capslock-i: home
-      capslock-x: delete
+      capslock-x: backspace
+      capslock-o: enter # replaces normal enter
       capslock-e: c-right
       capslock-b: c-left
       capslock-w: c-right
       capslock-g: c-home
       capslock-shift-g: c-end
-      capslock-o: [end, enter]
-      capslock-shift-o: [up, end, enter]
       capslock-p: [end, enter, c-v]
       capslock-slash: c-f
       capslock-question: shift-f3
       capslock-c: [c-backspace]
-      capslock-key_semicolon: backspace
 
       capslock-shift-d: [shift-end, C-x]
       capslock-d:

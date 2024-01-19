@@ -1,15 +1,4 @@
 ^emacs
-ps -l | get command | find ema
-ps -l | get command | find emacs
-startup
-emacsclient -c 
-wmctrl emacs 
-wmctrl -xa emacs 
-sudo dnfs nuview
-dnfs nuview
-ls 
-ls | nuview
-^emacs
 ps 
 ps | find syncthing
 syncthing
@@ -9998,3 +9987,14 @@ sudo xremap --watch=device ~/.config/xremap/config.yml
 ls
 sudo killall xremap
 sudo xremap --watch=device ~/.config/xremap/config.yml
+xset r off
+sudo xremap --watch=device ~/.config/xremap/config.yml
+"sudo xremap --watch=device ~/.config/xremap/config.yml &" | bash
+xset r off
+ls
+ps | get name | each {split words | get 0}
+ps | get name
+let pss = (ps | get name | each {split words | get 0})<\n>if not (($p | split words | get 0) in $pss) {<\n>      $"($p) &>/dev/null &" | bash}
+let pss = (ps | get name | each {split words | get 0})<\n>if not (("xset r off" | split words | get 0) in $pss) {<\n>      $"xset r off &>/dev/null &" | bash}
+let pss = (ps | get name | each {split words | get 0})<\n>if not (("xset r off" | split words | get 0) in $pss) {<\n>      $"xset r off &>/dev/null &"}
+let pss = (ps | get name | each {split words | get 0})<\n>if not (("xset r off" | split words | get 0) in $pss) {<\n>      $"xset r off &>/dev/null &"}ls

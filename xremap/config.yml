@@ -1,34 +1,21 @@
-# -----
-# title:  Xremap config
-# author: Emil Lenz
-# email:  emillenz@protonmail.com
-# date:   2024-01-18
-# info:   Implements global navigation scheme and enables vim layer systemwide.
-# -----
-
-# NOTE :: Vim layer (i know there is modal but this is meant for quick if you do more than that, you should use your editor (emacs) anyway.)
+# [[file:config.org::*Src][Src:1]]
 virtual_modifiers:
   - capslock
 
-# NOTE::
-# - Left thumb: escape; right thumb: space
-# - Turn off key-repetition, this causes bad habits of you holding down a key instead of moving intelligently and fast using the appropriate motion (not holding down ~j~, istead using ~C-d~. Not spamming delete, instead using ~dw~).
 modmap:
   - name: global
     remap:
-      alt_l: # use as ergonomic super/alt key (if you don't have keyboard with thumbkeys).
-        held: super_l
-        alone: esc
-        one_timeout_millis: 100
       backspace:
-        alone: backspace
+        alone: esc
         held:  capslock
-        one_timeout_millis: 100
+        one_timeout_millis: 10
+      capslock:
+        alone: esc
+        held:  capslock
+        one_timeout_millis: 10
+      alt_l: super_l
 
 keymap:
-  # NOTE ::
-  # - global navigation.
-  # - use this in conjuction with firefox extension: vimium
   - name: browser
     application:
       only: firefox
@@ -64,12 +51,13 @@ keymap:
       capslock-p: [end, enter, c-v]
       capslock-slash: c-f
       capslock-question: shift-f3
-      capslock-d: [c-delete] # NOTE :: delete word backward
+      capslock-c: [c-backspace]
+      capslock-key_semicolon: backspace
 
-      capslock-shift-c: [shift-end, C-x]
-      capslock-c:
+      capslock-shift-d: [shift-end, C-x]
+      capslock-d:
         remap:
-          capslock-c: [home, shift-end, C-x]
+          capslock-d: [home, shift-end, C-x]
           capslock-l: [shift-end, C-x]
           capslock-h: [shift-home, C-x]
           capslock-e: [c-shift-right, c-x]
@@ -99,3 +87,4 @@ keymap:
           capslock-a:
             remap:
               capslock-w: [c-left, c-shift-right, c-c]
+# Src:1 ends here

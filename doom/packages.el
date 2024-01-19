@@ -16,3 +16,4 @@
 (package! evil-numbers)
 (package! consult-dir)
 (package! org-fragtog)
+(package! laas)

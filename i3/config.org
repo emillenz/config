@@ -295,7 +295,6 @@ bar {
   hidden_state hide
   workspace_buttons no
   modifier none
-  separator_symbol "|"
   status_command i3status
   colors {
     background $bg_alt

@@ -92,6 +92,11 @@
       fill-column 100)
 ;; Window layout & behavior:2 ends here
 
+;; [[file:config.org::*Editor][Editor:1]]
+(setq evil-goggles-enable-change t
+      evil-goggles-enable-delete t)
+;; Editor:1 ends here
+
 ;; [[file:config.org::*Misc Options][Misc Options:1]]
 (setq bookmark-default-file "~/.config/doom/bookmarks"
       delete-by-moving-to-trash t
@@ -151,35 +156,28 @@
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:1]]
 (map! :map 'override
-      :nvim "M-j" #'previous-window-any-frame
-      :nvim "M-k" #'next-window-any-frame
-      :nvim "M-t" #'tab-bar-new-tab-to
-      :nvim "M-q" #'tab_quit
-      :nvmi "M-z" #'+popup/toggle
-      :nvim "M-1" (cmd! (tab-bar-select-tab 1))
-      :nvim "M-2" (cmd! (tab-bar-select-tab 2))
-      :nvim "M-3" (cmd! (tab-bar-select-tab 3))
-      :nvim "M-4" (cmd! (tab-bar-select-tab 4))
-      :nvim "M-o" #'find-file
-      :nvim "M-f" #'consult-find
-      :nvim "M-F" (cmd! (consult-find "~"))
-      :nvim "M-g" #'consult-buffer
-      :nvim "M-r" #'consult-recent-file
-      :nvim "M-c" #'async-shell-command
-      :nvim "M-w" #'+lookup/online
-      :nvim "M-;" #'execute-extended-command
-      :nvim "M-'" #'consult-bookmark
+      :nvim "M-j"   #'previous-window-any-frame
+      :nvim "M-k"   #'next-window-any-frame
+      :nvim "M-t"   #'tab-bar-new-tab-to
+      :nvim "M-q"   #'evil-window-delete
+      :nvmi "M-z"   #'+popup/toggle
+      :nvim "M-1"   (cmd! (tab-bar-select-tab 1))
+      :nvim "M-2"   (cmd! (tab-bar-select-tab 2))
+      :nvim "M-3"   (cmd! (tab-bar-select-tab 3))
+      :nvim "M-4"   (cmd! (tab-bar-select-tab 4))
+      :nvim "M-o"   #'find-file
+      :nvim "M-f"   #'consult-find
+      :nvim "M-F"   (cmd! (consult-find "~"))
+      :nvim "M-g"   #'consult-buffer
+      :nvim "M-r"   #'consult-recent-file
+      :nvim "M-c"   #'async-shell-command
+      :nvim "M-w"   #'+lookup/online
+      :nvim "M-;"   #'execute-extended-command
+      :nvim "M-'"   #'consult-bookmark
 
-      :nvim "C--" #'doom/decrease-font-size
-      :nvim "C-=" #'doom/increase-font-size
-      :nvim "C-0" #'doom/reset-font-size)
-
-(defun tab_quit ()
-  "DWIM quit :: kill buffer & close tab/window.
-Kills current buffer and closes the window/tab it was displayed in."
-  (interactive)
-  (cond ((+popup-window-p) (+popup/quit-window))
-        (t (kill-current-buffer) (evil-window-delete))))
+      :nvim "C--"   #'doom/decrease-font-size
+      :nvim "C-="   #'doom/increase-font-size
+      :nvim "C-0"   #'doom/reset-font-size)
 ;; Global navigation scheme:1 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:1]]
@@ -209,16 +207,16 @@ Kills current buffer and closes the window/tab it was displayed in."
 ;; Evil-mode:1 ends here
 
 ;; [[file:config.org::*Evil-mode][Evil-mode:2]]
-(defadvice! update_evil_search_reg (fn &rest args)
+(defadvice! update_evil_search_reg ()
   "Update evil search register after jumping to a line with
   `+default/search-buffer' to be able to jump to next/prev matches.
 This is sensible default behaviour, and integrates it into evil."
   :after #'+default/search-buffer
-(let ((str (string-replace
-            " " ".*"
-            (car consult--line-history))))
-  (push str evil-ex-search-history)
-  (setq evil-ex-search-pattern (list str t t))))
+  (let ((str (string-replace
+              " " ".*"
+              (car consult--line-history))))
+    (push str evil-ex-search-history)
+    (setq evil-ex-search-pattern (list str t t))))
 
 (defadvice! evil_sexp_cursor_offset (fn &rest args)
   "Offset cursor position by -1, since this is optimal for evil's normal mode."
@@ -460,7 +458,7 @@ This is sensible default behaviour, and integrates it into evil."
       org-appear-autolinks t
       org-appear-autoentities t
       org-appear-autokeywords t
-      org-appear-inside-latex t
+      org-appear-inside-latex nil
       org-hide-emphasis-markers t)
 
 (setq org-pretty-entities t
@@ -497,20 +495,21 @@ This is sensible default behaviour, and integrates it into evil."
             :arrow_left    "←"
             :arrow_lr      "↔"
             :properties    "⚙"))
-;; Symbols:1 ends here
 
-;; [[file:config.org::*Ligatures][Ligatures:1]]
 (add-hook! 'org-mode-hook
   (appendq! prettify-symbols-alist
-            '(("->" . "→")
+            '(("--"  . "–")
+              ("---" . "—")
+              ("->" . "→")
               ("=>" . "⇒")
               ("<=>" . "⇔"))))
-;; Ligatures:1 ends here
+;; Symbols:1 ends here
 
 ;; [[file:config.org::*Task states][Task states:1]]
 (setq org-todo-keywords
       '((type
-         "[#](#)"
+         "[#](#)")
+        (sequence
          "[ ](t)" ;; HACK :: cannot use " " => [T]odo
          "[?](?!)"
          "[-](-@)"
@@ -615,49 +614,6 @@ This is sensible default behaviour, and integrates it into evil."
       org-clock-persist t
       org-clock-into-drawer t)
 ;; Clock:1 ends here
-
-;; [[file:config.org::*Keywords to downcase][Keywords to downcase:1]]
-(defun org_convert_keywords_downcase ()
-  "Convert all #+KEYWORDS => #+keywords && :keyword: => :keyword:"
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (let ((case-fold-search nil))
-      (while (re-search-forward "^[ \t]*#\\+[A-Z_]*" nil t)
-        (replace-match (downcase (match-string 0)) t)))))
-;; Keywords to downcase:1 ends here
-
-;; [[file:config.org::*Jump to src file][Jump to src file:1]]
-(defun org_goto_src ()
-  "The opposite of `org-babel-tangle-jump-to-org'.
-Jumps at tangled code from org src block."
-  (interactive)
-  (basic-save-buffer)
-  (org-babel-tangle)
-  (if (org-in-src-block-p)
-      (let* ((header (car
-                      (org-babel-tangle-single-block 1 'only-this-block)))
-             (tangle (car header))
-             (lang (caadr header))
-             (buffer (nth 2 (cadr header)))
-             (org-id (nth 3 (cadr header)))
-             (source-name (nth 4 (cadr header)))
-             (search-comment (org-fill-template
-                              org-babel-tangle-comment-format-beg
-                              `(("link" . ,org-id)
-                                ("source-name" . ,source-name))))
-             (file (expand-file-name
-                    (org-babel-effective-tangled-filename
-                     buffer
-                     lang
-                     tangle))))
-        (if (not (file-exists-p file))
-            (message "File does not exist. 'org-babel-tangle' first to create file.")
-          (find-file file)
-          (goto-char (point-min))
-          (search-forward search-comment)))
-    (message "Cannot jump to tangled file because point is not at org src block.")))
-;; Jump to src file:1 ends here
 
 ;; [[file:config.org::*Capture templates][Capture templates:1]]
 (defvar journal_dir "~/Documents/journal/"
@@ -847,6 +803,54 @@ code repetition."
                      :type plain
                      :template ("%?")))))))))
 ;; Capture templates:1 ends here
+
+;; [[file:config.org::*Latex][Latex:1]]
+(add-hook! 'org-mode-hook #'laas-mode)
+(setq org-startup-with-latex-preview t)
+;; Latex:1 ends here
+
+;; [[file:config.org::*Keywords to downcase][Keywords to downcase:1]]
+(defun org_convert_keywords_downcase ()
+  "Convert all #+KEYWORDS => #+keywords && :keyword: => :keyword:"
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (let ((case-fold-search nil))
+      (while (re-search-forward "^[ \t]*#\\+[A-Z_]*" nil t)
+        (replace-match (downcase (match-string 0)) t)))))
+;; Keywords to downcase:1 ends here
+
+;; [[file:config.org::*Jump to src file][Jump to src file:1]]
+(defun org_goto_src ()
+  "The opposite of `org-babel-tangle-jump-to-org'.
+Jumps at tangled code from org src block."
+  (interactive)
+  (basic-save-buffer)
+  (org-babel-tangle)
+  (if (org-in-src-block-p)
+      (let* ((header (car
+                      (org-babel-tangle-single-block 1 'only-this-block)))
+             (tangle (car header))
+             (lang (caadr header))
+             (buffer (nth 2 (cadr header)))
+             (org-id (nth 3 (cadr header)))
+             (source-name (nth 4 (cadr header)))
+             (search-comment (org-fill-template
+                              org-babel-tangle-comment-format-beg
+                              `(("link" . ,org-id)
+                                ("source-name" . ,source-name))))
+             (file (expand-file-name
+                    (org-babel-effective-tangled-filename
+                     buffer
+                     lang
+                     tangle))))
+        (if (not (file-exists-p file))
+            (message "File does not exist. 'org-babel-tangle' first to create file.")
+          (find-file file)
+          (goto-char (point-min))
+          (search-forward search-comment)))
+    (message "Cannot jump to tangled file because point is not at org src block.")))
+;; Jump to src file:1 ends here
 
 ;; [[file:config.org::*Nushell][Nushell:1]]
 (load! "user/nushell-mode.el")

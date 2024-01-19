@@ -130,6 +130,12 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
       fill-column 100)
 #+end_src
 
+** Editor
+#+begin_src emacs-lisp
+(setq evil-goggles-enable-change t
+      evil-goggles-enable-delete t)
+#+end_src
+
 * Misc Options
 - Save bookmarks in config dir => preserve between reinstalls
 #+begin_src emacs-lisp
@@ -206,35 +212,28 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - Buffers :: kill buffers when done (don't accumulate buffers in tha background)
 #+begin_src emacs-lisp
 (map! :map 'override
-      :nvim "M-j" #'previous-window-any-frame
-      :nvim "M-k" #'next-window-any-frame
-      :nvim "M-t" #'tab-bar-new-tab-to
-      :nvim "M-q" #'tab_quit
-      :nvmi "M-z" #'+popup/toggle
-      :nvim "M-1" (cmd! (tab-bar-select-tab 1))
-      :nvim "M-2" (cmd! (tab-bar-select-tab 2))
-      :nvim "M-3" (cmd! (tab-bar-select-tab 3))
-      :nvim "M-4" (cmd! (tab-bar-select-tab 4))
-      :nvim "M-o" #'find-file
-      :nvim "M-f" #'consult-find
-      :nvim "M-F" (cmd! (consult-find "~"))
-      :nvim "M-g" #'consult-buffer
-      :nvim "M-r" #'consult-recent-file
-      :nvim "M-c" #'async-shell-command
-      :nvim "M-w" #'+lookup/online
-      :nvim "M-;" #'execute-extended-command
-      :nvim "M-'" #'consult-bookmark
+      :nvim "M-j"   #'previous-window-any-frame
+      :nvim "M-k"   #'next-window-any-frame
+      :nvim "M-t"   #'tab-bar-new-tab-to
+      :nvim "M-q"   #'evil-window-delete
+      :nvmi "M-z"   #'+popup/toggle
+      :nvim "M-1"   (cmd! (tab-bar-select-tab 1))
+      :nvim "M-2"   (cmd! (tab-bar-select-tab 2))
+      :nvim "M-3"   (cmd! (tab-bar-select-tab 3))
+      :nvim "M-4"   (cmd! (tab-bar-select-tab 4))
+      :nvim "M-o"   #'find-file
+      :nvim "M-f"   #'consult-find
+      :nvim "M-F"   (cmd! (consult-find "~"))
+      :nvim "M-g"   #'consult-buffer
+      :nvim "M-r"   #'consult-recent-file
+      :nvim "M-c"   #'async-shell-command
+      :nvim "M-w"   #'+lookup/online
+      :nvim "M-;"   #'execute-extended-command
+      :nvim "M-'"   #'consult-bookmark
 
-      :nvim "C--" #'doom/decrease-font-size
-      :nvim "C-=" #'doom/increase-font-size
-      :nvim "C-0" #'doom/reset-font-size)
-
-(defun tab_quit ()
-  "DWIM quit :: kill buffer & close tab/window.
-Kills current buffer and closes the window/tab it was displayed in."
-  (interactive)
-  (cond ((+popup-window-p) (+popup/quit-window))
-        (t (kill-current-buffer) (evil-window-delete))))
+      :nvim "C--"   #'doom/decrease-font-size
+      :nvim "C-="   #'doom/increase-font-size
+      :nvim "C-0"   #'doom/reset-font-size)
 #+end_src
 
 ** Evil-mode
@@ -253,7 +252,6 @@ Kills current buffer and closes the window/tab it was displayed in."
   - ~&~: Allows for same usage as normal: ~&~, but more powerful (repeat any last ~ex~ command)
   - ~TAB~: folding (inspired bby org-modes folding (smart/simple one-key folding))
   - ~()~ for quickly jumping out of code delimiters (and when coding in lisp, especially useful)
-  - ~HL~: relative line jumping and char-jumping is more efficient. ~^$~ are unergonomic and frequently used => remap.
 - Escape :: Remap ~esc~ to ~left-alt~ systemwide for ergonomic access. (don't map to ~capslock~, since ~caps~ should be mapped to: ~backspace~. Which is even more frequently used and even less ergonomic than ~esc~)
 - Whichkey :: Removed on purpose
   - The concept of ~whichkey~ is creating the bad habit of searching through a menu to find a keybindings (the exact opposite of what a keybind is for, to be executed instantaneously, engrained in memory)
@@ -288,16 +286,16 @@ Kills current buffer and closes the window/tab it was displayed in."
 #+end_src
 
 #+begin_src emacs-lisp
-(defadvice! update_evil_search_reg (fn &rest args)
+(defadvice! update_evil_search_reg ()
   "Update evil search register after jumping to a line with
   `+default/search-buffer' to be able to jump to next/prev matches.
 This is sensible default behaviour, and integrates it into evil."
   :after #'+default/search-buffer
-(let ((str (string-replace
-            " " ".*"
-            (car consult--line-history))))
-  (push str evil-ex-search-history)
-  (setq evil-ex-search-pattern (list str t t))))
+  (let ((str (string-replace
+              " " ".*"
+              (car consult--line-history))))
+    (push str evil-ex-search-history)
+    (setq evil-ex-search-pattern (list str t t))))
 
 (defadvice! evil_sexp_cursor_offset (fn &rest args)
   "Offset cursor position by -1, since this is optimal for evil's normal mode."
@@ -600,7 +598,7 @@ This is sensible default behaviour, and integrates it into evil."
       org-appear-autolinks t
       org-appear-autoentities t
       org-appear-autokeywords t
-      org-appear-inside-latex t
+      org-appear-inside-latex nil
       org-hide-emphasis-markers t)
 
 (setq org-pretty-entities t
@@ -640,14 +638,12 @@ This is sensible default behaviour, and integrates it into evil."
             :arrow_left    "←"
             :arrow_lr      "↔"
             :properties    "⚙"))
-#+end_src
 
-** Ligatures
-- I use concise, functional notation, hence the unicode to make things look more coherent.
-#+begin_src emacs-lisp
 (add-hook! 'org-mode-hook
   (appendq! prettify-symbols-alist
-            '(("->" . "→")
+            '(("--"  . "–")
+              ("---" . "—")
+              ("->" . "→")
               ("=>" . "⇒")
               ("<=>" . "⇔"))))
 #+end_src
@@ -706,7 +702,8 @@ This is sensible default behaviour, and integrates it into evil."
 #+begin_src emacs-lisp
 (setq org-todo-keywords
       '((type
-         "[#](#)"
+         "[#](#)")
+        (sequence
          "[ ](t)" ;; HACK :: cannot use " " => [T]odo
          "[?](?!)"
          "[-](-@)"
@@ -845,54 +842,6 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
   - ~[ ] fix bugs in emacs config for the org mode module~ => ~[ ] fix bugs :config:emacs:org:~
   - this is a clear and highly structured, data orientated approach. (all the benefits of data follow: querying, extensibility...)
 - org-agenda :: filter for all headings with that specific tag across all files (eg. sort class specific todos w tags)
-
-** Keywords to downcase
-- By default emacs has these as uppercase (the poor man's bold), however times change and the lowercase standard should be used globally.
-  - thus convert mostly everything with this function, when you happened to get a file where it is uppercase.
-#+begin_src emacs-lisp
-(defun org_convert_keywords_downcase ()
-  "Convert all #+KEYWORDS => #+keywords && :keyword: => :keyword:"
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (let ((case-fold-search nil))
-      (while (re-search-forward "^[ \t]*#\\+[A-Z_]*" nil t)
-        (replace-match (downcase (match-string 0)) t)))))
-#+end_src
-
-** Jump to src file
-- When done with the edits: ~org-bable-detangle~.
-#+begin_src emacs-lisp
-(defun org_goto_src ()
-  "The opposite of `org-babel-tangle-jump-to-org'.
-Jumps at tangled code from org src block."
-  (interactive)
-  (basic-save-buffer)
-  (org-babel-tangle)
-  (if (org-in-src-block-p)
-      (let* ((header (car
-                      (org-babel-tangle-single-block 1 'only-this-block)))
-             (tangle (car header))
-             (lang (caadr header))
-             (buffer (nth 2 (cadr header)))
-             (org-id (nth 3 (cadr header)))
-             (source-name (nth 4 (cadr header)))
-             (search-comment (org-fill-template
-                              org-babel-tangle-comment-format-beg
-                              `(("link" . ,org-id)
-                                ("source-name" . ,source-name))))
-             (file (expand-file-name
-                    (org-babel-effective-tangled-filename
-                     buffer
-                     lang
-                     tangle))))
-        (if (not (file-exists-p file))
-            (message "File does not exist. 'org-babel-tangle' first to create file.")
-          (find-file file)
-          (goto-char (point-min))
-          (search-forward search-comment)))
-    (message "Cannot jump to tangled file because point is not at org src block.")))
-#+end_src
 
 ** Capture templates
 - Create capture-templates for organization on a per project basis, ex: university, personal, work..
@@ -1096,6 +1045,59 @@ code repetition."
                      :unnarrowed t
                      :type plain
                      :template ("%?")))))))))
+#+end_src
+** Latex
+#+begin_src emacs-lisp
+(add-hook! 'org-mode-hook #'laas-mode)
+(setq org-startup-with-latex-preview t)
+#+end_src
+
+** Keywords to downcase
+- By default emacs has these as uppercase (the poor man's bold), however times change and the lowercase standard should be used globally.
+  - thus convert mostly everything with this function, when you happened to get a file where it is uppercase.
+#+begin_src emacs-lisp
+(defun org_convert_keywords_downcase ()
+  "Convert all #+KEYWORDS => #+keywords && :keyword: => :keyword:"
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (let ((case-fold-search nil))
+      (while (re-search-forward "^[ \t]*#\\+[A-Z_]*" nil t)
+        (replace-match (downcase (match-string 0)) t)))))
+#+end_src
+
+** Jump to src file
+- When done with the edits: ~org-bable-detangle~.
+#+begin_src emacs-lisp
+(defun org_goto_src ()
+  "The opposite of `org-babel-tangle-jump-to-org'.
+Jumps at tangled code from org src block."
+  (interactive)
+  (basic-save-buffer)
+  (org-babel-tangle)
+  (if (org-in-src-block-p)
+      (let* ((header (car
+                      (org-babel-tangle-single-block 1 'only-this-block)))
+             (tangle (car header))
+             (lang (caadr header))
+             (buffer (nth 2 (cadr header)))
+             (org-id (nth 3 (cadr header)))
+             (source-name (nth 4 (cadr header)))
+             (search-comment (org-fill-template
+                              org-babel-tangle-comment-format-beg
+                              `(("link" . ,org-id)
+                                ("source-name" . ,source-name))))
+             (file (expand-file-name
+                    (org-babel-effective-tangled-filename
+                     buffer
+                     lang
+                     tangle))))
+        (if (not (file-exists-p file))
+            (message "File does not exist. 'org-babel-tangle' first to create file.")
+          (find-file file)
+          (goto-char (point-min))
+          (search-forward search-comment)))
+    (message "Cannot jump to tangled file because point is not at org src block.")))
 #+end_src
 
 * Nushell

@@ -259,9 +259,9 @@ $env.config = {
     }
 
     {
-    name: help
+    name: documentation
     modifier: shift
-    keycode: char_h
+    keycode: char_k
     mode: vi_normal
     event: [
       {edit: MoveToLineEnd}
@@ -271,9 +271,25 @@ $env.config = {
     }
 
     {
-    name: documentation
+    name: line_end
+    modifier: shift
+    keycode: char_l
+    mode: vi_normal
+    event: {edit: MoveToLineEnd}
+    }
+
+    {
+    name: line_begin
     modifier: shift
     keycode: char_k
+    mode: vi_normal
+    event: {edit: MoveToLineStart}
+    }
+
+    {
+    name: manpage
+    modifier: shift
+    keycode: char_m
     mode: vi_normal
     event: [
       {edit: MoveToLineStart}

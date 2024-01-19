@@ -32,7 +32,6 @@ keymap:
 
   - name: global
     remap:
-      capslock-m: shift-3
       capslock-j: down
       capslock-k: up
       capslock-h: left
@@ -42,7 +41,8 @@ keymap:
       capslock-a: end
       capslock-i: home
       capslock-x: backspace
-      capslock-o: enter # replaces normal enter
+      capslock-o: [end, enter]
+      capslock-o: [home, enter, up]
       capslock-e: c-right
       capslock-b: c-left
       capslock-w: c-right

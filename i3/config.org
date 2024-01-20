@@ -227,22 +227,11 @@ mode "find" {
 }
 #+end_src
 
-** Leader
-- For all system related apps and tasks.
-- Using mod bindings inside the leadermode aswell, because this is faster than having to release the modkeyfirst and then press the normal keys (+less mental overhead, additionally this is no problem if you have an ergonomic keyboard).
-#+begin_src conf
-$map $mod+space mode "leader"
-
-mode "leader" {
-  $map $mod+p mode "powermenu"
-  $map $mod+m mode "menus"
-  $map Escape $esc
-}
-#+end_src
-
-*** Powermenu
+** Powermenu
 - Always hibernate and never poweroff => Preserves the state inbetween reboots => keeps workflow DRY.
+- NOTE :: stronger-q -> for quitting (and making it hard to accidentally press).
 #+begin_src conf
+$map $mod+shift+q mode "powermenu"
 mode "powermenu" {
   $map $mod+r       $cmd i3-msg restart; $esc
   $map $mod+shift+s $cmd $bin/startup; $esc
@@ -256,8 +245,10 @@ mode "powermenu" {
 }
 #+end_src
 
-*** Menus
+** Menus
 #+begin_src conf
+$map $mod+space mode "menus"
+
 mode "menus" {
   $map $mod+a       $cmd $bin/audio-menu; $esc
   $map $mod+o       $cmd $bin/output-menu; $esc

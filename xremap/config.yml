@@ -6,14 +6,17 @@ modmap:
   - name: global
     remap:
       backspace:
-        alone: esc
-        held:  capslock
+        alone: backspace
+        held: capslock
         one_timeout_millis: 10
       capslock:
-        alone: esc
+        alone: backspace
         held:  capslock
         one_timeout_millis: 10
-      alt_l: super_l
+      alt_l:
+        alone: esc
+        held: super_l # (more ergonomic super key)
+        one_timeout_millis: 10
 
 keymap:
   - name: browser
@@ -32,58 +35,30 @@ keymap:
 
   - name: global
     remap:
-      capslock-j: down
-      capslock-k: up
-      capslock-h: left
-      capslock-l: right
-      capslock-u: c-z
-      capslock-shift-u: c-shift-z
-      capslock-a: end
-      capslock-i: home
-      capslock-x: backspace
-      capslock-o: [end, enter]
-      capslock-o: [home, enter, up]
-      capslock-e: c-right
-      capslock-b: c-left
-      capslock-w: c-right
-      capslock-g: c-home
-      capslock-shift-g: c-end
-      capslock-p: [end, enter, c-v]
-      capslock-slash: c-f
-      capslock-question: shift-f3
-      capslock-c: [c-backspace]
-
-      capslock-shift-d: [shift-end, C-x]
-      capslock-d:
-        remap:
-          capslock-d: [home, shift-end, C-x]
-          capslock-l: [shift-end, C-x]
-          capslock-h: [shift-home, C-x]
-          capslock-e: [c-shift-right, c-x]
-          capslock-b: [c-shift-left, c-x]
-          capslock-g: [c-shift-home, c-x]
-          capslock-shift-g: [c-shift-end, c-x]
-          capslock-i:
-            remap:
-              capslock-w: [c-left, c-shift-right, c-x]
-          capslock-a:
-            remap:
-              capslock-w: [c-left, c-shift-right, c-x]
-
-      capslock-shift-y: [shift-end, C-c]
-      capslock-y:
-        remap:
-          capslock-y: [home, shift-end, C-c]
-          capslock-l: [shift-end, C-c]
-          capslock-h: [shift-home, C-c]
-          capslock-e: [c-shift-right, c-c]
-          capslock-b: [c-shift-left, c-c]
-          capslock-g: [c-shift-home, c-c]
-          shift-capslock-g: [c-shift-end, c-c]
-          capslock-i:
-            remap:
-              capslock-w: [c-left, c-shift-right, c-c]
-          capslock-a:
-            remap:
-              capslock-w: [c-left, c-shift-right, c-c]
+      capslock-q: apostrophe
+      capslock-w: shift-comma
+      capslock-e: shift-dot
+      capslock-r: shift-apostrophe
+      capslock-t: grave
+      capslock-s: minus
+      capslock-d: shift-equal
+      capslock-f: equal
+      capslock-g: shift-key_3
+      capslock-x: shift-key_5
+      capslock-c: shift-key_8
+      capslock-v: slash
+      capslock-b: shift-grave
+      capslock-y: shift-key_7
+      capslock-h: shift-backslash
+      capslock-u: shift-leftbrace
+      capslock-i: shift-rightbrace
+      capslock-j: shift-key_9
+      capslock-k: shift-key_0
+      capslock-m: leftbrace
+      capslock-comma: rightbrace
+      capslock-n: backslash
+      capslock-l: shift-key_6
+      capslock-o: shift-key_1
+      capslock-p: shift-key_2
+      capslock-semicolon: shift-key_4
 # Src:1 ends here

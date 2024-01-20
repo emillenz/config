@@ -160,17 +160,9 @@ mode "find" {
 }
 # Find file:1 ends here
 
-# [[file:config.org::*Leader][Leader:1]]
-$map $mod+space mode "leader"
-
-mode "leader" {
-  $map $mod+p mode "powermenu"
-  $map $mod+m mode "menus"
-  $map Escape $esc
-}
-# Leader:1 ends here
-
 # [[file:config.org::*Powermenu][Powermenu:1]]
+# NOTE :: stronger-q-for-quit
+$map $mod+shift+q mode "powermenu"
 mode "powermenu" {
   $map $mod+r       $cmd i3-msg restart; $esc
   $map $mod+shift+s $cmd $bin/startup; $esc
@@ -185,6 +177,8 @@ mode "powermenu" {
 # Powermenu:1 ends here
 
 # [[file:config.org::*Menus][Menus:1]]
+$map $mod+space mode "menus"
+
 mode "menus" {
   $map $mod+a       $cmd $bin/audio-menu; $esc
   $map $mod+o       $cmd $bin/output-menu; $esc
@@ -218,7 +212,6 @@ bar {
   hidden_state hide
   workspace_buttons no
   modifier none
-  separator_symbol "|"
   status_command i3status
   colors {
     background $bg_alt

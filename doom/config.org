@@ -130,12 +130,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
       fill-column 100)
 #+end_src
 
-** Editor
-#+begin_src emacs-lisp
-(setq evil-goggles-enable-change t
-      evil-goggles-enable-delete t)
-#+end_src
-
 * Misc Options
 - Save bookmarks in config dir => preserve between reinstalls
 #+begin_src emacs-lisp
@@ -250,7 +244,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   - ~Q~: shortcut to ~@@~ (def macro with ~qq~, execute with ~@q~ in 99% of cases)
   - ~M~: scratch mark: ~m~ (save pos: ~mm~ -> do edits elsewhere -> jump back to scratch: ~M~)
   - ~&~: Allows for same usage as normal: ~&~, but more powerful (repeat any last ~ex~ command)
-  - ~TAB~: folding (inspired bby org-modes folding (smart/simple one-key folding))
+  - ~TAB~: folding (inspired by org-modes folding (smart/simple one-key folding))
   - ~()~ for quickly jumping out of code delimiters (and when coding in lisp, especially useful)
 - Escape :: Remap ~esc~ to ~left-alt~ systemwide for ergonomic access. (don't map to ~capslock~, since ~caps~ should be mapped to: ~backspace~. Which is even more frequently used and even less ergonomic than ~esc~)
 - Whichkey :: Removed on purpose
@@ -267,9 +261,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
       :nmv  "("   #'sp-beginning-of-sexp
       :nmv  ")"   #'sp-end-of-sexp
-
-      :nmv  "H"   #'evil-first-non-blank
-      :nmv  "L"   #'evil-end-of-line
 
       :nmv  "U"   #'evil-redo
       :nmv  "Q"   #'evil-execute-last-recorded-macro
@@ -305,19 +296,17 @@ This is sensible default behaviour, and integrates it into evil."
 
 *** Control-bindings
 - Screen movements ::
-  - jumplist-jumps: ~C-i/o~
-  - page scrolling: ~C-u/d~
-  - screen-scrolling:  ~C-y/e~
-    - sensible and consistent with other modes (~info~, ~magit~, ~company~..)
-  - r :: paragraph nav: ~C-j/k~
-- ~C-s~  mapped sensibly to statistically frequently executed commands.
-  - ~:w~ is the statistically most run vim-ex-command, but not very unergonomic.
+  - Jumplist-jumps: ~C-i/o~
+  - Page scrolling: ~C-u/d~
+  - Screen-scrolling:  ~C-y/e~
+    - Sensible and consistent with other modes (~info~, ~magit~, ~company~..)
+  - Navigate by sections :: Paragraph nav: ~C-j/k~
   - Map it to the os-consistent key
 - ~C-l~ does the same as ~C-l~ in the shell and is quicker & more mnemonic than ~zz~.
 #+begin_src emacs-lisp
 (map! :inmv "C-s" #'evil-write
-      :nmv "C-l" #'recenter-top-bottom
       :nmv "C-q" #'kill-current-buffer
+      :nmv "C-l" #'recenter-top-bottom
       :nmv "C-j" #'evil-forward-section-begin
       :nmv "C-k" #'evil-backward-section-begin)
 #+end_src
@@ -358,7 +347,6 @@ This is sensible default behaviour, and integrates it into evil."
       :nmv "C-k" #'org-backward-element)
 #+end_src
 
-
 ** Dired (keys)
 - Filemanagers :: Avoid using integrated filemanagers (such as dired / ranger / lf) whenever possible replace them with shell commands and finding (fzf: recent-files, root, current dir..)
   - In most cases it is more extensible and faster using tools such as emac's find-file in combination with fuzzy finding and using global bookmarks for frequently used projects/files.
@@ -395,8 +383,11 @@ This is sensible default behaviour, and integrates it into evil."
 #+end_src
 
 ** Minibuffer
+- Make tab behave as in all other completion frameworks: select next item
 #+begin_src emacs-lisp
 (map! :map vertico-map
+      :nmi "<tab>" #'vertico-next
+      :nmi "<backtab>" #'vertico-previous
       :nmi "M-g" #'consult-dir)
 #+end_src
 

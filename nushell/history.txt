@@ -1,38 +1,3 @@
-man syncthing 
-startup
-starutp
-emacs --daemon
-startup
-setxkbmap us dvorak
-tsnahoeu
-startup
-keepassxc  --help
-man keepass
-man keepassxc
-man keepassxc-cli
-startup
-emacsclient --eval '(emacs-everywhere)'
-xwininfo
-dnfi xwininfo
-dnfi xdotool
-dnfi xprop
-sudo dnf -y --allowerasing install tldr i3 i3status i3lock bc alacritty zathura zathura-pdf-mupdf arandr htop mpv curl libtool xset flameshot ripgrep fzf rofi light xclip xdg-utils xdotool wmctrl cmake sxiv fd-find npm bat unclutter firefox pavucontrol pamix pasystray polybar ffmpeg-free syncthing clementine playerctl keepassxc blueman lxappearance git gcc gcc-g++ make pkgconfig libX11-devel libXtst-devel libXi-devel texlive-scheme-basic latexmk cargo flatpak xautolock autofs emacs pandoc rust-src xwininfo xdotool xprop xclip<\n>
-dnfi xclip xdotool xprop xwininfo
-startup
-sudo xremap ~/.config/xremap/config.yml
-xremap ~/.config/xremap/config.yml
-sode xremap ~/.config/xremap/config.yml
-sudo xremap ~/.config/xremap/config.yml
-xremap ~/.config/xremap/config.yml
-sudo ~/.cargo/bin/xremap ~/.config/xremap/config.yml
-keepassxc  --help
-sudo ~/.cargo/bin/xremap ~/.config/xremap/config.yml
-vim .
-vi .
-sudo ~/.cargo/bin/xremap ~/.config/xremap/config.yml
-startup
-emacs -h | bat
-emacs -e '(emacs-everywhere)'
 dnfs xdotool
 dnfi xdotool
 dnfi xprop
@@ -9995,6 +9960,41 @@ let pss = (ps | get name | each {split words | get 0})<\n>if not (("xset r off" 
 5 - 4
 sudo xremap --watch=device ~/.config/xremap/config.yml
 xset r off
+sudo xremap --watch=device ~/.config/xremap/config.yml
+xev
+sudo xremap --watch=device ~/.config/xremap/config.yml
+yay xkbset
+xkbset sticky -twokey -sticky
+xkbset sticky -twokey -latchlock
+ls
+lll l
+sudo xremap --watch=device ~/.config/xremap/config.yml
+xkbset sticky -twokey -latchlock
+sudo xremap --watch=device ~/.config/xremap/config.yml
+sudo xremap --watch=device ~/.config/xremap/config.yml; xkbset sticky -twokey -latchlock
+xkbset sticky -twokey -latchlock
+oo
+ls
+sudo xremap --watch=device ~/.config/xremap/config.yml
+xev
+sudo xremap --watch=device ~/.config/xremap/config.yml
+xkbset sticky -twokey -latchlock
+sudo xremap --watch=device ~/.config/xremap/config.yml
+ls
+xkbset sticky -twokey -latchlock
+bash
+sleep 21
+sleep 1s
+sleep 1sec
+bash
+sudo xremap --watch=device ~/.config/xremap/config.yml
+xkbset sticky -twokey -latchlock
+sudo xremap --watch=device ~/.config/xremap/config.yml
+xev
+sudo xremap --watch=device ~/.config/xremap/config.yml
+xev
+sudo xremap --watch=device ~/.config/xremap/config.yml
+e
 sudo xremap --watch=device ~/.config/xremap/config.yml
 xev
 sudo xremap --watch=device ~/.config/xremap/config.yml

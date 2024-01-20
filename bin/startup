@@ -9,7 +9,7 @@
 # -----
 def main [] {
   let start_ps = [
-    "sudo xremap --watch=device ~/.config/xremap/config.yml &>/dev/null &"
+    "sudo xremap --watch=device ~/.config/xremap/config.yml"
     "batsignal -b -f 95 -w 20 -c 10 -d 5"
     "playerctld"
     "keepassxc"
@@ -20,7 +20,8 @@ def main [] {
     "xsetroot -solid '#002b36'" # NOTE:: solarized_dark bg
     "xset dpms 0 0 0"
     "xset s off"
-    "xset r off"
+    "sleep 1; xset r off" # HACK :: wait for xremap
+    "sleep 1; xkbset sticky -twokey -latchlock"
   ]
 
   let pss = (ps | get name | each {split words | get 0})

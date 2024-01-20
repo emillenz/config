@@ -92,11 +92,6 @@
       fill-column 100)
 ;; Window layout & behavior:2 ends here
 
-;; [[file:config.org::*Editor][Editor:1]]
-(setq evil-goggles-enable-change t
-      evil-goggles-enable-delete t)
-;; Editor:1 ends here
-
 ;; [[file:config.org::*Misc Options][Misc Options:1]]
 (setq bookmark-default-file "~/.config/doom/bookmarks"
       delete-by-moving-to-trash t
@@ -189,9 +184,6 @@
       :nmv  "("   #'sp-beginning-of-sexp
       :nmv  ")"   #'sp-end-of-sexp
 
-      :nmv  "H"   #'evil-first-non-blank
-      :nmv  "L"   #'evil-end-of-line
-
       :nmv  "U"   #'evil-redo
       :nmv  "Q"   #'evil-execute-last-recorded-macro
       :nmv  "&"   #'evil-ex-repeat
@@ -226,8 +218,8 @@ This is sensible default behaviour, and integrates it into evil."
 
 ;; [[file:config.org::*Control-bindings][Control-bindings:1]]
 (map! :inmv "C-s" #'evil-write
-      :nmv "C-l" #'recenter-top-bottom
       :nmv "C-q" #'kill-current-buffer
+      :nmv "C-l" #'recenter-top-bottom
       :nmv "C-j" #'evil-forward-section-begin
       :nmv "C-k" #'evil-backward-section-begin)
 ;; Control-bindings:1 ends here
@@ -287,6 +279,8 @@ This is sensible default behaviour, and integrates it into evil."
 
 ;; [[file:config.org::*Minibuffer][Minibuffer:1]]
 (map! :map vertico-map
+      :nmi "<tab>" #'vertico-next
+      :nmi "<backtab>" #'vertico-previous
       :nmi "M-g" #'consult-dir)
 ;; Minibuffer:1 ends here
 

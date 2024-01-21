@@ -303,8 +303,11 @@ This is sensible default behaviour, and integrates it into evil."
   - Navigate by sections :: Paragraph nav: ~C-j/k~
   - Map it to the os-consistent key
 - ~C-l~ does the same as ~C-l~ in the shell and is quicker & more mnemonic than ~zz~.
+- Marks :: set a mark for the jumplist with ~c-m~ at current position
+  - This has basically replaced my need for vim's marks as i mostly alternate between two positions.
 #+begin_src emacs-lisp
-(map! :inmv "C-s" #'evil-write
+(map! :nmv "C-s" #'evil-write
+      :nmv "C-m" #'evil-set-jump
       :nmv "C-q" #'kill-current-buffer
       :nmv "C-l" #'recenter-top-bottom
       :nmv "C-j" #'evil-forward-section-begin
@@ -386,9 +389,10 @@ This is sensible default behaviour, and integrates it into evil."
 - Make tab behave as in all other completion frameworks: select next item
 #+begin_src emacs-lisp
 (map! :map vertico-map
-      :nmi "<tab>" #'vertico-next
+      :nmi "<tab>"     #'vertico-next
       :nmi "<backtab>" #'vertico-previous
-      :nmi "M-g" #'consult-dir)
+      :nmi "S-<cr>"    #'vertico-insert
+      :nmi "M-g"       #'consult-dir)
 #+end_src
 
 ** Magit

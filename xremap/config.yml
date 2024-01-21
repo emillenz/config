@@ -5,10 +5,7 @@ virtual_modifiers:
 modmap:
   - name: global
     remap:
-      backspace:
-        alone: backspace
-        held: capslock
-        one_timeout_millis: 10
+      backspace: capslock
       capslock:
         alone: backspace
         held:  capslock
@@ -40,25 +37,30 @@ keymap:
       capslock-e: shift-dot
       capslock-r: shift-apostrophe
       capslock-t: grave
+
       capslock-s: minus
       capslock-d: shift-equal
       capslock-f: equal
-      capslock-g: shift-key_3
-      capslock-x: shift-key_5
+      capslock-x: shift-key_1
       capslock-c: shift-key_8
       capslock-v: slash
+
       capslock-b: shift-grave
+      capslock-g: shift-key_3
+
       capslock-y: shift-key_7
       capslock-h: shift-backslash
-      capslock-u: shift-leftbrace
-      capslock-i: shift-rightbrace
-      capslock-j: shift-key_9
-      capslock-k: shift-key_0
-      capslock-m: leftbrace
-      capslock-comma: rightbrace
       capslock-n: backslash
-      capslock-l: shift-key_6
-      capslock-o: shift-key_1
+
+      capslock-u: leftbrace
+      capslock-i: rightbrace
+      capslock-k: shift-key_0
+      capslock-j: shift-key_9
+      capslock-m: shift-leftbrace
+      capslock-comma: shift-rightbrace
+
+      capslock-l: shift-key_4
+      capslock-o: shift-key_6
       capslock-p: shift-key_2
-      capslock-semicolon: shift-key_4
+      capslock-semicolon: shift-key_5
 # Src:1 ends here

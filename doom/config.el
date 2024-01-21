@@ -217,7 +217,8 @@ This is sensible default behaviour, and integrates it into evil."
 ;; Evil-mode:2 ends here
 
 ;; [[file:config.org::*Control-bindings][Control-bindings:1]]
-(map! :inmv "C-s" #'evil-write
+(map! :nmv "C-s" #'evil-write
+      :nmv "C-m" #'evil-set-jump
       :nmv "C-q" #'kill-current-buffer
       :nmv "C-l" #'recenter-top-bottom
       :nmv "C-j" #'evil-forward-section-begin
@@ -279,9 +280,10 @@ This is sensible default behaviour, and integrates it into evil."
 
 ;; [[file:config.org::*Minibuffer][Minibuffer:1]]
 (map! :map vertico-map
-      :nmi "<tab>" #'vertico-next
+      :nmi "<tab>"     #'vertico-next
       :nmi "<backtab>" #'vertico-previous
-      :nmi "M-g" #'consult-dir)
+      :nmi "S-<cr>"    #'vertico-insert
+      :nmi "M-g"       #'consult-dir)
 ;; Minibuffer:1 ends here
 
 ;; [[file:config.org::*Magit][Magit:1]]

@@ -134,7 +134,7 @@ $map $mod+o mode "open"
 
 mode "open" {
   $map $mod+c       $cmd alacritty --class cmd -T cmd -e tmux new-session -A -s cmd; $esc
-  $map $mod+shift+e $cmd emacsclient --$cmdute--eval '(emacs-everywhere)'; $esc
+  $map --release    $mod+shift+e $cmd emacsclient --eval '(emacs-everywhere)'; $esc
   $map $mod+d       $cmd xdg-open "$(fd -e=pdf . ~ | $rofi)"; $esc
   $map $mod+e       $cmd emacsclient --reuse-frame || emacs --bg-daemon --eval='(doom/reload)' ; $esc
   $map $mod+w       $cmd firefox; $esc
@@ -161,7 +161,6 @@ mode "find" {
 # Find file:1 ends here
 
 # [[file:config.org::*Powermenu][Powermenu:1]]
-# NOTE :: stronger-q-for-quit
 $map $mod+shift+q mode "powermenu"
 mode "powermenu" {
   $map $mod+r       $cmd i3-msg restart; $esc

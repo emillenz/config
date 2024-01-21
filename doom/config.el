@@ -218,7 +218,7 @@ This is sensible default behaviour, and integrates it into evil."
 
 ;; [[file:config.org::*Control-bindings][Control-bindings:1]]
 (map! :nmv "C-s" #'evil-write
-      :nmv "C-m" #'evil-set-jump
+      :nmv "\C-m" #'evil-set-jump
       :nmv "C-q" #'kill-current-buffer
       :nmv "C-l" #'recenter-top-bottom
       :nmv "C-j" #'evil-forward-section-begin
@@ -253,8 +253,7 @@ This is sensible default behaviour, and integrates it into evil."
 ;; Org:1 ends here
 
 ;; [[file:config.org::*Dired (keys)][Dired (keys):1]]
-(map! :after dired
-      :map dired-mode-map
+(map! :map dired-mode-map :after dired
       :nm "h" #'dired-up-directory
       :nm "l" #'dired-open-file
       :nm "f" #'dired-goto-file
@@ -273,22 +272,12 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "e" #'dired-create-empty-file
       :nm "E" #'dired-create-directory)
 
-(map! :after dired
-      :localleader :map dired-mode-map
+(map! :map dired-mode-map :localleader :after dired
       :nm "a" #'dired_archive)
 ;; Dired (keys):1 ends here
 
-;; [[file:config.org::*Minibuffer][Minibuffer:1]]
-(map! :map vertico-map
-      :nmi "<tab>"     #'vertico-next
-      :nmi "<backtab>" #'vertico-previous
-      :nmi "S-<cr>"    #'vertico-insert
-      :nmi "M-g"       #'consult-dir)
-;; Minibuffer:1 ends here
-
 ;; [[file:config.org::*Magit][Magit:1]]
-(map! :after magit
-      :map magit-mode-map
+(map! :map magit-mode-map :after magit
       :nm "C-j" #'magit-section-forward-sibling
       :nm "C-k" #'magit-section-backward-sibling)
 ;; Magit:1 ends here

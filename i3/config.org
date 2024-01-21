@@ -195,12 +195,13 @@ $map $mod+shift+4 $mv 4; workspace 4
 #+end_src
 
 ** App opener
+- Use ~doom-everywhere~ to use emacs for anything that is more than just a simple textfield.
 #+begin_src  conf
 $map $mod+o mode "open"
 
 mode "open" {
   $map $mod+c       $cmd alacritty --class cmd -T cmd -e tmux new-session -A -s cmd; $esc
-  $map $mod+shift+e $cmd emacsclient --$cmdute--eval '(emacs-everywhere)'; $esc
+  $map --release    $mod+shift+e $cmd emacsclient --eval '(emacs-everywhere)'; $esc
   $map $mod+d       $cmd xdg-open "$(fd -e=pdf . ~ | $rofi)"; $esc
   $map $mod+e       $cmd emacsclient --reuse-frame || emacs --bg-daemon --eval='(doom/reload)' ; $esc
   $map $mod+w       $cmd firefox; $esc

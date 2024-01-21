@@ -20,7 +20,7 @@ keymap:
     application:
       only: firefox
     remap:
-      M-t: c-t
+      M-t: [c-t, esc] # HACK :: esc to disble popup menu (caused by alt-release)
       M-e: c-l
       M-o: c-o
       M-o: c-o
@@ -38,6 +38,7 @@ keymap:
       capslock-r: shift-apostrophe
       capslock-t: grave
 
+      capslock-a: shift-key_5
       capslock-s: minus
       capslock-d: shift-equal
       capslock-f: equal
@@ -52,15 +53,19 @@ keymap:
       capslock-h: shift-backslash
       capslock-n: backslash
 
-      capslock-u: leftbrace
-      capslock-i: rightbrace
-      capslock-k: shift-key_0
-      capslock-j: shift-key_9
-      capslock-m: shift-leftbrace
-      capslock-comma: shift-rightbrace
+      # NOTE :: for navigating selection menus
+      capslock-u: up
+      capslock-j: down
+      capslock-m: enter
 
-      capslock-l: shift-key_4
-      capslock-o: shift-key_6
-      capslock-p: shift-key_2
-      capslock-semicolon: shift-key_5
+      capslock-i: leftbrace
+      capslock-o: rightbrace
+      capslock-k: shift-key_9
+      capslock-l: shift-key_0
+      capslock-comma: shift-leftbrace
+      capslock-dot: shift-rightbrace
+
+      capslock-semicolon: shift-key_4
+      capslock-p: shift-key_6
+      capslock-slash: shift-key_2
 # Src:1 ends here

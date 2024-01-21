@@ -1,5 +1,3 @@
-dnfs xdotool
-dnfi xdotool
 dnfi xprop
 dnfi xwininfo
 'emacsclient -c --eval "(emacs-everywhere)"' | bash
@@ -9998,3 +9996,5 @@ e
 sudo xremap --watch=device ~/.config/xremap/config.yml
 xev
 sudo xremap --watch=device ~/.config/xremap/config.yml
+startupo
+startup

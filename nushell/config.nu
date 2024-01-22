@@ -84,11 +84,13 @@ $env.config = {
       # error: {bg: 'yellow', fg: 'blue'}
       # info: {bg: 'yellow', fg: 'blue'}
     }
+
     try: {
       # border_color: 'red'
       # highlighted_color: 'blue'
       # reactive: false
     }
+
     table: {
       split_line: '#404040'
       cursor: true
@@ -106,6 +108,7 @@ $env.config = {
       # padding_index_left: 2
       # padding_index_right: 1
     }
+
     config: {
       # cursor_color: {bg: 'yellow', fg: 'black' }
       # border_color: white
@@ -165,180 +168,184 @@ $env.config = {
 
   menus: [
     {
-    name: completion_menu
-    only_buffer_difference: false
-    marker: "> "
-    type: {
-      layout: columnar
-      columns: 1
-      col_width: 20
-      col_padding: 2
+      name: completion_menu
+      only_buffer_difference: false
+      marker: "> "
+      type: {
+        layout: columnar
+        columns: 1
+        col_width: 20
+        col_padding: 2
+      }
+      style: {
+        text: blue
+        selected_text: blue_reverse
+        description_text: blue
+      }
     }
-    style: {
-      text: blue
-      selected_text: blue_reverse
-      description_text: blue
-    }}
 
     {
-    name: history_menu
-    only_buffer_difference: true
-    marker: "> "
-    type: {layout: list, page_size: 100}
-    style: {
-      text: blue
-      selected_text: blue_reverse
-      description_text: yellow
-    }}
+      name: history_menu
+      only_buffer_difference: true
+      marker: "> "
+      type: {layout: list, page_size: 100}
+      style: {
+        text: blue
+        selected_text: blue_reverse
+        description_text: yellow
+      }
+    }
 
     {
-    name: help_menu
-    only_buffer_difference: true
-    marker: "> "
-    type: {
-      layout: description
-      columns: 4
-      col_width: 20
-      col_padding: 2
-      selection_rows: 4
-      description_rows: 10
+      name: help_menu
+      only_buffer_difference: true
+      marker: "> "
+      type: {
+        layout: description
+        columns: 4
+        col_width: 20
+        col_padding: 2
+        selection_rows: 4
+        description_rows: 10
+      }
+      style: {
+        text: blue
+        selected_text: blue_reverse
+        description_text: yellow
+      }
     }
-    style: {
-      text: blue
-      selected_text: blue_reverse
-      description_text: yellow
-    }}
   ]
 
   keybindings: [
     {
-    name: completion_menu
-    modifier: none
-    keycode: tab
-    mode: [emacs vi_normal vi_insert]
-    event: {
-      until: [
-        {send: menu name: completion_menu}
-        {send: menunext}
+      name: completion_menu
+      modifier: none
+      keycode: tab
+      mode: [emacs vi_normal vi_insert]
+      event: {
+        until: [
+          {send: menu name: completion_menu}
+          {send: menunext}
+        ]
+      }
+    }
+
+    {
+      name: completion_previous
+      modifier: shift
+      keycode: backtab
+      mode: [emacs vi_normal vi_insert]
+      event: {send: menuprevious}
+    }
+
+    {
+      name: help_menu
+      modifier: control
+      keycode: char_h
+      mode: [emacs vi_normal vi_insert]
+      event: {send: menu name: help_menu}
+    }
+
+    {
+      name: history_menu
+      modifier: control
+      keycode: char_r
+      mode: [emacs vi_normal vi_insert]
+      event: {send: menu name: history_menu}
+    }
+
+    {
+      name: insert_file
+      modifier: control
+      keycode: char_f
+      mode: [emacs, vi_normal, vi_insert]
+      event: [
+        {edit: InsertString, value: "(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)"},
+        {send: enter}
       ]
-    }}
-
-    {
-    name: completion_previous
-    modifier: shift
-    keycode: backtab
-    mode: [emacs vi_normal vi_insert]
-    event: {send: menuprevious}
     }
 
     {
-    name: help_menu
-    modifier: control
-    keycode: char_h
-    mode: [emacs vi_normal vi_insert]
-    event: {send: menu name: help_menu}
+      name: documentation
+      modifier: shift
+      keycode: char_k
+      mode: vi_normal
+      event: [
+        {edit: MoveToLineEnd}
+        {edit: InsertString, value: " --help | bat --language=man"}
+        {send: Enter}
+      ]
     }
 
     {
-    name: history_menu
-    modifier: control
-    keycode: char_r
-    mode: [emacs vi_normal vi_insert]
-    event: {send: menu name: history_menu}
+      name: line_end
+      modifier: shift
+      keycode: char_l
+      mode: vi_normal
+      event: {edit: MoveToLineEnd}
     }
 
     {
-    name: insert_file
-    modifier: control
-    keycode: char_f
-    mode: [emacs, vi_normal, vi_insert]
-    event: [
-      {edit: InsertString, value: "(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)"},
-      {send: enter}
-    ]
+      name: line_begin
+      modifier: shift
+      keycode: char_k
+      mode: vi_normal
+      event: {edit: MoveToLineStart}
     }
 
     {
-    name: documentation
-    modifier: shift
-    keycode: char_k
-    mode: vi_normal
-    event: [
-      {edit: MoveToLineEnd}
-      {edit: InsertString, value: " --help | bat --language=man"}
-      {send: Enter}
-    ]
+      name: manpage
+      modifier: shift
+      keycode: char_m
+      mode: vi_normal
+      event: [
+        {edit: MoveToLineStart}
+        {edit: InsertString, value: " man "}
+        {send: Enter}
+      ]
     }
 
     {
-    name: line_end
-    modifier: shift
-    keycode: char_l
-    mode: vi_normal
-    event: {edit: MoveToLineEnd}
+      name: home_dir
+      modifier: control_shift
+      keycode: char_p
+      mode: [emacs, vi_normal, vi_insert]
+      event: {send: executehostcommand, cmd: "cd ~"}
     }
 
     {
-    name: line_begin
-    modifier: shift
-    keycode: char_k
-    mode: vi_normal
-    event: {edit: MoveToLineStart}
+      name: prev_dir
+      modifier: control
+      keycode: char_p
+      mode: [emacs, vi_normal, vi_insert]
+      event: {send: executehostcommand, cmd: "cd .."}
     }
 
     {
-    name: manpage
-    modifier: shift
-    keycode: char_m
-    mode: vi_normal
-    event: [
-      {edit: MoveToLineStart}
-      {edit: InsertString, value: " man "}
-      {send: Enter}
-    ]
+      name: goto_dir
+      modifier: control
+      keycode: char_g
+      mode: [emacs, vi_normal, vi_insert]
+      event: {send: executehostcommand, cmd: "cd (fd --type=directory | fzf --preview='^ls --color=always {}' | str trim)"}
     }
 
     {
-    name: home_dir
-    modifier: control_shift
-    keycode: char_p
-    mode: [emacs, vi_normal, vi_insert]
-    event: {send: executehostcommand, cmd: "cd ~"}
+      name: open_editor
+      modifier: control
+      keycode: char_e
+      mode: [emacs vi_normal vi_insert]
+      event: [
+        {send: openeditor}
+        {send: Enter}
+      ]
     }
 
     {
-    name: prev_dir
-    modifier: control
-    keycode: char_p
-    mode: [emacs, vi_normal, vi_insert]
-    event: {send: executehostcommand, cmd: "cd .."}
-    }
-
-    {
-    name: goto_dir
-    modifier: control
-    keycode: char_g
-    mode: [emacs, vi_normal, vi_insert]
-    event: {send: executehostcommand, cmd: "cd (fd --type=directory | fzf --preview='^ls --color=always {}' | str trim)"}
-    }
-
-    {
-    name: open_editor
-    modifier: control
-    keycode: char_e
-    mode: [emacs vi_normal vi_insert]
-    event: [
-      {send: openeditor}
-      {send: Enter}
-    ]
-    }
-
-    {
-    name: listcontents
-    modifier: control
-    keycode: char_v
-    mode: [emacs, vi_normal, vi_insert]
-    event: {send: executehostcommand, cmd: " ls"}
+      name: listcontents
+      modifier: control
+      keycode: char_v
+      mode: [emacs, vi_normal, vi_insert]
+      event: {send: executehostcommand, cmd: " ls"}
     }
 
     {
@@ -354,9 +361,7 @@ $env.config = {
       modifier: none
       keycode: char_z
       mode: vi_normal
-      event: [
-        {send: clearscreen}
-      ]
+      event: {send: clearscreen}
     }
 
   ]

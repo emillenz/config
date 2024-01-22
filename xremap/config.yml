@@ -1,6 +1,6 @@
 # [[file:config.org::*Src][Src:1]]
 virtual_modifiers:
-  - capslock
+  - menu
 
 modmap:
   - name: global
@@ -8,7 +8,7 @@ modmap:
       backspace: capslock
       capslock:
         alone: backspace
-        held:  capslock
+        held:  menu
         one_timeout_millis: 10
       alt_l:
         alone: esc
@@ -32,40 +32,38 @@ keymap:
 
   - name: global
     remap:
-      capslock-q: apostrophe
-      capslock-w: shift-comma
-      capslock-e: shift-dot
-      capslock-r: shift-apostrophe
-      capslock-t: grave
+      menu-q: apostrophe
+      menu-w: shift-comma
+      menu-e: shift-dot
+      menu-r: shift-apostrophe
+      menu-t: grave
 
-      capslock-a: shift-key_5
-      capslock-s: minus
-      capslock-d: shift-equal
-      capslock-f: equal
-      capslock-x: shift-key_1
-      capslock-c: shift-key_8
-      capslock-v: slash
+      menu-a: shift-key_1
+      menu-s: shift-equal
+      menu-d: minus
+      menu-f: equal
+      menu-g: shift-key_3
 
-      capslock-b: shift-grave
-      capslock-g: shift-key_3
+      menu-x: shift-key_6
+      menu-c: shift-key_8
+      menu-v: slash
+      menu-b: shift-grave
 
-      capslock-y: shift-key_7
-      capslock-h: shift-backslash
-      capslock-n: backslash
+      menu-y: shift-key_7
+      menu-h: shift-backslash
+      menu-n: backslash
 
-      # NOTE :: for navigating selection menus
-      capslock-u: up
-      capslock-j: down
-      capslock-m: enter
+      menu-u: shift-semicolon
+      menu-j: shift-minus
+      menu-m: shift-key_4
 
-      capslock-i: leftbrace
-      capslock-o: rightbrace
-      capslock-k: shift-key_9
-      capslock-l: shift-key_0
-      capslock-comma: shift-leftbrace
-      capslock-dot: shift-rightbrace
+      menu-i: leftbrace
+      menu-o: rightbrace
+      menu-k: shift-key_9
+      menu-l: shift-key_0
+      menu-comma: shift-leftbrace
+      menu-dot: shift-rightbrace
 
-      capslock-semicolon: shift-key_4
-      capslock-p: shift-key_6
-      capslock-slash: shift-key_2
+      menu-p: shift-key_2
+      menu-semicolon: shift-key_5
 # Src:1 ends here

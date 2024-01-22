@@ -109,6 +109,11 @@
                         "#+begin_quote block" nil nil nil
                         "/home/lenz/.config/doom/snippets/org-mode/begin_quote"
                         nil "<q")
+                       ("begin_latex"
+                        "\\begin{${1:latex}}\n\\noindent $0\n\\end{$1}\n"
+                        "begin_latex" nil nil nil
+                        "/home/lenz/.config/doom/snippets/org-mode/begin_latex"
+                        nil "begin_latex")
                        ("<l" "#+begin_export latex\n`%`$0\n#+end_export\n"
                         "#+begin_export latex block" nil nil nil
                         "/home/lenz/.config/doom/snippets/org-mode/begin_export_latex"
@@ -144,4 +149,4 @@
                         "begin")))
 
 
-;;; Do not edit! File generated at Mon Jan  8 21:54:44 2024
+;;; Do not edit! File generated at Mon Jan 22 14:12:17 2024

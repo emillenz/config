@@ -1,8 +1,3 @@
-dnfi xprop
-dnfi xwininfo
-'emacsclient -c --eval "(emacs-everywhere)"' | bash
-emacs --eval "(emacs-everywhere)"
-emacs -h
 emacsclient -h
 dnfs xbindkeys
 dnfi xbindkeys
@@ -9998,3 +9993,8 @@ xev
 sudo xremap --watch=device ~/.config/xremap/config.yml
 startupo
 startup
+yay -R batsignal
+i3-msg restart
+iv
+vi
+vim

@@ -160,21 +160,6 @@ mode "find" {
 }
 # Find file:1 ends here
 
-# [[file:config.org::*Powermenu][Powermenu:1]]
-$map $mod+shift+q mode "powermenu"
-mode "powermenu" {
-  $map $mod+r       $cmd i3-msg restart; $esc
-  $map $mod+shift+s $cmd $bin/startup; $esc
-  $map $mod+e       $cmd i3-msg exit; $esc
-  $map $mod+shift+r $cmd systemctl reboot; $esc
-  $map $mod+h       $cmd systemctl hibernate; $esc
-  $map $mod+l       $cmd i3lock -e --color 002b36 && systemctl suspend; $esc
-  $map $mod+s       $cmd sleep 1 && xset dpms force off; $esc
-  $map $mod+p       $cmd systemctl poweroff; $esc
-  $map Escape $esc
-}
-# Powermenu:1 ends here
-
 # [[file:config.org::*Menus][Menus:1]]
 $map $mod+space mode "menus"
 
@@ -185,9 +170,23 @@ mode "menus" {
   $map $mod+s       $cmd $bin/screenshot-menu; $esc
   $map $mod+b       $cmd $bin/bluetooth-menu; $esc
   $map $mod+p       $cmd $bin/killprocess-menu; $esc
+  $map $mod+q       mode "sysact";
   $map Escape $esc
 }
 # Menus:1 ends here
+
+# [[file:config.org::*Systemact][Systemact:1]]
+mode "sysact" {
+  $map $mod+i $cmd i3-msg restart; $esc
+  $map $mod+e $cmd i3-msg exit; $esc
+  $map $mod+r $cmd systemctl reboot; $esc
+  $map $mod+h $cmd systemctl hibernate; $esc
+  $map $mod+l $cmd i3lock -e --color 002b36 && systemctl suspend; $esc
+  $map $mod+s $cmd sleep 1 && xset dpms force off; $esc
+  $map $mod+p $cmd systemctl poweroff; $esc
+  $map Escape $esc
+}
+# Systemact:1 ends here
 
 # [[file:config.org::*Theme: Solarized (dark)][Theme: Solarized (dark):1]]
 set $bg     #002b36

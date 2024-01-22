@@ -245,7 +245,7 @@ This is sensible default behaviour, and integrates it into evil."
 ;; Alignment:1 ends here
 
 ;; [[file:config.org::*Org][Org:1]]
-(map! :after evil-org :map evil-org-mode-map
+(map! :after org :map evil-org-mode-map
       :nmv "H"   #'org-beginning-of-line
       :nmv "L"   #'evil-org-end-of-line
       :nmv "C-j" #'org-forward-element
@@ -846,6 +846,5 @@ Jumps at tangled code from org src block."
 ;; Elisp:1 ends here
 
 ;; [[file:config.org::*Latex][Latex:1]]
-(setq +latex-viewers '(zathura
-                       pdf-tools))
+(setq +latex-viewers '(zathura))
 ;; Latex:1 ends here

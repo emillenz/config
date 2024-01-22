@@ -228,24 +228,6 @@ mode "find" {
 }
 #+end_src
 
-** Powermenu
-- Always hibernate and never poweroff => Preserves the state inbetween reboots => keeps workflow DRY.
-- NOTE :: stronger-q -> for quitting (and making it hard to accidentally press).
-#+begin_src conf
-$map $mod+shift+q mode "powermenu"
-mode "powermenu" {
-  $map $mod+r       $cmd i3-msg restart; $esc
-  $map $mod+shift+s $cmd $bin/startup; $esc
-  $map $mod+e       $cmd i3-msg exit; $esc
-  $map $mod+shift+r $cmd systemctl reboot; $esc
-  $map $mod+h       $cmd systemctl hibernate; $esc
-  $map $mod+l       $cmd i3lock -e --color 002b36 && systemctl suspend; $esc
-  $map $mod+s       $cmd sleep 1 && xset dpms force off; $esc
-  $map $mod+p       $cmd systemctl poweroff; $esc
-  $map Escape $esc
-}
-#+end_src
-
 ** Menus
 #+begin_src conf
 $map $mod+space mode "menus"
@@ -257,6 +239,22 @@ mode "menus" {
   $map $mod+s       $cmd $bin/screenshot-menu; $esc
   $map $mod+b       $cmd $bin/bluetooth-menu; $esc
   $map $mod+p       $cmd $bin/killprocess-menu; $esc
+  $map $mod+q       mode "sysact";
+  $map Escape $esc
+}
+#+end_src
+
+** Systemact
+- Always hibernate and never poweroff => Preserves the state inbetween reboots => keeps workflow DRY.
+#+begin_src conf
+mode "sysact" {
+  $map $mod+i $cmd i3-msg restart; $esc
+  $map $mod+e $cmd i3-msg exit; $esc
+  $map $mod+r $cmd systemctl reboot; $esc
+  $map $mod+h $cmd systemctl hibernate; $esc
+  $map $mod+l $cmd i3lock -e --color 002b36 && systemctl suspend; $esc
+  $map $mod+s $cmd sleep 1 && xset dpms force off; $esc
+  $map $mod+p $cmd systemctl poweroff; $esc
   $map Escape $esc
 }
 #+end_src

@@ -1,7 +1,6 @@
 ;; -*- no-byte-compile: t; -*-
 
-(package! evil-escape :disable t)
-(package! which-key :disable t)
+(disable-packages! evil-escape which-key solaire-mode)
 
 (package! dired-open)
 (package! rainbow-mode)

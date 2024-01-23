@@ -1,4 +1,3 @@
-man syncthing  
 syncthing -h | bat
 syncthing -h | bat cli  -h | bat
 syncthing cli  -h | bat
@@ -9998,3 +9997,4 @@ startup
 ls
 cd ~
 ls
+startup

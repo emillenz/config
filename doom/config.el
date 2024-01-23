@@ -143,29 +143,52 @@
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:1]]
 (map! :map 'override
-      :nvim "M-j"   #'previous-window-any-frame
-      :nvim "M-k"   #'next-window-any-frame
-      :nvim "M-t"   #'tab-bar-new-tab-to
-      :nvim "M-q"   #'evil-window-delete
-      :nvmi "M-z"   #'+popup/toggle
-      :nvim "M-1"   (cmd! (tab-bar-select-tab 1))
-      :nvim "M-2"   (cmd! (tab-bar-select-tab 2))
-      :nvim "M-3"   (cmd! (tab-bar-select-tab 3))
-      :nvim "M-4"   (cmd! (tab-bar-select-tab 4))
-      :nvim "M-o"   #'find-file
-      :nvim "M-f"   #'consult-find
-      :nvim "M-F"   (cmd! (consult-find "~"))
-      :nvim "M-g"   #'consult-buffer
-      :nvim "M-r"   #'consult-recent-file
-      :nvim "M-c"   #'async-shell-command
-      :nvim "M-w"   #'+lookup/online
-      :nvim "M-;"   #'execute-extended-command
-      :nvim "M-'"   #'consult-bookmark
+      "M-j"   #'previous-window-any-frame
+      "M-k"   #'next-window-any-frame
+      "M-t"   #'tab-bar-new-tab-to
+      "M-q"   #'evil-save-modified-and-close
+      "M-1"   (cmd! (tab-bar-select-tab 1))
+      "M-2"   (cmd! (tab-bar-select-tab 2))
+      "M-3"   (cmd! (tab-bar-select-tab 3))
+      "M-4"   (cmd! (tab-bar-select-tab 4))
+      "M-o"   #'find-file
+      "M-f"   #'consult-find
+      "M-F"   (cmd! (consult-find "~"))
+      "M-g"   #'consult-buffer
+      "M-r"   #'consult-recent-file
+      "M-c"   #'async-shell-command
+      "M-w"   #'+lookup/online
+      "M-;"   #'execute-extended-command
+      "M-'"   #'consult-bookmark
 
-      :nvim "C--"   #'doom/decrease-font-size
-      :nvim "C-="   #'doom/increase-font-size
-      :nvim "C-0"   #'doom/reset-font-size)
+      "C--"   #'doom/decrease-font-size
+      "C-="   #'doom/increase-font-size
+      "C-0"   #'doom/reset-font-size)
 ;; Global navigation scheme:1 ends here
+
+;; [[file:config.org::*Global navigation scheme][Global navigation scheme:2]]
+(defadvice! close_tab_first (fn &optional force)
+  "Close current tab before closing current frame (more sensible)."
+  :override #'evil-quit
+  (condition-case nil
+      (delete-window)
+    (error
+     (if (and (bound-and-true-p server-buffer-clients)
+              (fboundp 'server-edit)
+              (fboundp 'server-buffer-done))
+         (if force
+             (server-buffer-done (current-buffer))
+           (server-edit))
+       (condition-case nil
+           (tab-bar-close-tab)
+         (error
+          (condition-case nil
+              (delete-frame)
+            (error
+             (if force
+                 (kill-emacs)
+               (save-buffers-kill-emacs))))))))))
+;; Global navigation scheme:2 ends here
 
 ;; [[file:config.org::*Evil][Evil:1]]
 (map! :nmvo "j"   #'evil-next-visual-line
@@ -212,10 +235,9 @@ This is sensible default behaviour, and integrates it into evil."
 ;; Evil:2 ends here
 
 ;; [[file:config.org::*Control-bindings][Control-bindings:1]]
-(map! :nmv "C-s"  #'evil-write
-      :nmv "M"    #'evil-set-jump
-      :nmv "C-q"  #'doom/save-and-kill-buffer
-      :nmv "C-l"  #'recenter-top-bottom)
+(map! :nm "C-s"  #'evil-write
+      :nm "M"    #'evil-set-jump
+      :nm "C-l"  #'recenter-top-bottom)
 ;; Control-bindings:1 ends here
 
 ;; [[file:config.org::*Instant jumping][Instant jumping:1]]
@@ -237,7 +259,17 @@ This is sensible default behaviour, and integrates it into evil."
       :nmv "g>" #'evil-lion-right)
 ;; Alignment:1 ends here
 
-;; [[file:config.org::*Dired (keys)][Dired (keys):1]]
+;; [[file:config.org::*Org][Org:1]]
+(map! :localleader :map org-mode-map
+      "\\" #'org-latex-preview
+      "," #'org-ctrl-c-ctrl-c
+      (:prefix-map ("`" . "org-src")
+                   "`" #'org-edit-special
+                   "g" #'org_goto_src
+                   "t" #'org-babel-tangle))
+;; Org:1 ends here
+
+;; [[file:config.org::*Dired (keybindings)][Dired (keybindings):1]]
 (map! :map dired-mode-map :after dired
       :nm "h" #'dired-up-directory
       :nm "l" #'dired-open-file
@@ -259,7 +291,7 @@ This is sensible default behaviour, and integrates it into evil."
 
 (map! :map dired-mode-map :localleader :after dired
       :nm "a" #'dired_archive)
-;; Dired (keys):1 ends here
+;; Dired (keybindings):1 ends here
 
 ;; [[file:config.org::*Editor][Editor:1]]
 (evil-surround-mode 1)

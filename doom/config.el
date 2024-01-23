@@ -139,14 +139,6 @@
                             "d" #'+lookup/dictionary-definition
                             "s" #'+lookup/synonyms
                             "t" #'dictionary-search)))
-
-(map! :localleader :map org-mode-map
-      "\\" #'org-latex-preview
-      "," #'org-ctrl-c-ctrl-c
-      (:prefix-map ("`" . "org-src")
-                   "`" #'org-edit-special
-                   "g" #'org_goto_src
-                   "t" #'org-babel-tangle))
 ;; Leader:1 ends here
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:1]]
@@ -175,7 +167,7 @@
       :nvim "C-0"   #'doom/reset-font-size)
 ;; Global navigation scheme:1 ends here
 
-;; [[file:config.org::*Evil-mode][Evil-mode:1]]
+;; [[file:config.org::*Evil][Evil:1]]
 (map! :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
 
@@ -187,7 +179,6 @@
       :nmv  "U"   #'evil-redo
       :nmv  "Q"   #'evil-execute-last-recorded-macro
       :nmv  "&"   #'evil-ex-repeat
-      :nmv  "M"   (cmd! (evil-goto-mark-line ?m))
 
       :nmv  "+"   #'evil-numbers/inc-at-pt
       :nmv  "-"   #'evil-numbers/dec-at-pt
@@ -196,9 +187,13 @@
 
       :nmv  "go"  #'consult-imenu
       :nmv  "g/"  #'+default/search-buffer)
-;; Evil-mode:1 ends here
 
-;; [[file:config.org::*Evil-mode][Evil-mode:2]]
+(map! :after org :map evil-org-mode-map
+      :nmv "]]"  #'org-forward-element
+      :nmv "[["  #'org-backward-element)
+;; Evil:1 ends here
+
+;; [[file:config.org::*Evil][Evil:2]]
 (defadvice! update_evil_search_reg ()
   "Update evil search register after jumping to a line with
   `+default/search-buffer' to be able to jump to next/prev matches.
@@ -214,15 +209,13 @@ This is sensible default behaviour, and integrates it into evil."
   "Offset cursor position by -1, since this is optimal for evil's normal mode."
   :after #'sp-beginning-of-sexp
   (goto-char (- (point) 1)))
-;; Evil-mode:2 ends here
+;; Evil:2 ends here
 
 ;; [[file:config.org::*Control-bindings][Control-bindings:1]]
-(map! :nmv "C-s" #'evil-write
-      :nmv "\C-m" #'evil-set-jump
-      :nmv "C-q" #'kill-current-buffer
-      :nmv "C-l" #'recenter-top-bottom
-      :nmv "C-j" #'evil-forward-section-begin
-      :nmv "C-k" #'evil-backward-section-begin)
+(map! :nmv "C-s"  #'evil-write
+      :nmv "M"    #'evil-set-jump
+      :nmv "C-q"  #'doom/save-and-kill-buffer
+      :nmv "C-l"  #'recenter-top-bottom)
 ;; Control-bindings:1 ends here
 
 ;; [[file:config.org::*Instant jumping][Instant jumping:1]]
@@ -243,14 +236,6 @@ This is sensible default behaviour, and integrates it into evil."
 (map! :nmv "g<" #'evil-lion-left
       :nmv "g>" #'evil-lion-right)
 ;; Alignment:1 ends here
-
-;; [[file:config.org::*Org][Org:1]]
-(map! :after org :map evil-org-mode-map
-      :nmv "H"   #'org-beginning-of-line
-      :nmv "L"   #'evil-org-end-of-line
-      :nmv "C-j" #'org-forward-element
-      :nmv "C-k" #'org-backward-element)
-;; Org:1 ends here
 
 ;; [[file:config.org::*Dired (keys)][Dired (keys):1]]
 (map! :map dired-mode-map :after dired
@@ -275,12 +260,6 @@ This is sensible default behaviour, and integrates it into evil."
 (map! :map dired-mode-map :localleader :after dired
       :nm "a" #'dired_archive)
 ;; Dired (keys):1 ends here
-
-;; [[file:config.org::*Magit][Magit:1]]
-(map! :map magit-mode-map :after magit
-      :nm "C-j" #'magit-section-forward-sibling
-      :nm "C-k" #'magit-section-backward-sibling)
-;; Magit:1 ends here
 
 ;; [[file:config.org::*Editor][Editor:1]]
 (evil-surround-mode 1)
@@ -308,7 +287,6 @@ This is sensible default behaviour, and integrates it into evil."
            +lookup/references
            +lookup/implementations
            +default/search-buffer
-           universal-argument
            consult-imenu))
   (evil-add-command-properties cmd :jump t))
 ;; Editor:1 ends here

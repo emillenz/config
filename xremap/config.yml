@@ -9,11 +9,11 @@ modmap:
       capslock:
         alone: backspace
         held:  menu
-        one_timeout_millis: 10
+        one_timeout_millis: 50
       alt_l:
         alone: esc
-        held: super_l # (more ergonomic super key)
-        one_timeout_millis: 10
+        held: super_l # more ergo super-key
+        one_timeout_millis: 50
 
 keymap:
   - name: browser
@@ -32,6 +32,10 @@ keymap:
 
   - name: global
     remap:
+      ctrl-j: down
+      ctrl-k: up
+      shift-backspace: c-backspace
+
       menu-q: apostrophe
       menu-w: shift-comma
       menu-e: shift-dot
@@ -40,8 +44,8 @@ keymap:
 
       menu-a: shift-key_1
       menu-s: shift-equal
-      menu-d: minus
-      menu-f: equal
+      menu-d: equal
+      menu-f: minus
       menu-g: shift-key_3
 
       menu-x: shift-key_6

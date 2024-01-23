@@ -1,18 +1,3 @@
-emacsclient -h
-dnfs xbindkeys
-dnfi xbindkeys
-touch ~/.xbindkeysrc
-xbindkey
-xbindkeys
-xbindkeys -h | bat
-dnfr xbindkeys 
-startup
-doom sync
-ls
-git status
-git add i3
-syncthing
-syncthing  -h | bat
 man syncthing  
 syncthing -h | bat
 syncthing -h | bat cli  -h | bat
@@ -9998,3 +9983,18 @@ i3-msg restart
 iv
 vi
 vim
+nvim
+startup
+sudo xremap --watch=device ~/.config/xremap/config.yml
+sudo startup
+ls
+help startup
+startup -h
+yay batsigla
+yay batsignal
+startup
+sudo killall xremap; startup
+startup
+ls
+cd ~
+ls

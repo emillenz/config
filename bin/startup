@@ -9,17 +9,18 @@
 # -----
 def main [] {
   let start_ps = [
-    "sudo xremap --watch=device ~/.config/xremap/config.yml && xset r off && xkbset sticky -twokey -latchlock" # NOTE :: remaps
-    "batsignal -b -f 95 -w 20 -c 10 -d 5"
-    "playerctld"
-    "keepassxc"
-    "syncthing"
-    "tmux new-session -s 'cmd'"
+    "sudo xremap --watch=device ~/.config/xremap/config.yml"
+    "sleep 1 && xset r off" # HACK sleep :: wait for remaps to take affect
+    "batsignal -b -f 95 -w 20 -c 10 -d 5" # low battery level warning
+    "playerctld" # Music controls
+    "tmux new-session -s 'cmd'" # initialize tmux main session (for i3)
     "emacs --bg-daemon --eval='(doom/reload)'"
-    "unclutter"
+    "unclutter" # hide mousecursor after 1s
     "xsetroot -solid '#002b36'" # NOTE:: solarized_dark bg
-    "xset dpms 0 0 0"
-    "xset s off"
+    "xset dpms 0 0 0 " # never turn screen off (do it manually)
+    "xset s off" # no screensaver
+    "keepassxc" # TODO :: replace with pass
+    "syncthing" # NOTE :: personal
   ]
 
   let pss = (ps | get name | each {split words | get 0})

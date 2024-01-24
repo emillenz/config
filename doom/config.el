@@ -7,7 +7,7 @@
 (setq doom-theme 'doom-oksolar-dark)
 
 ;; HACK:: :inherit doesn't work
-;; => 'teal -> org-special-keyword
+;; => 'teal <=> org-special-keyword
 (custom-set-faces!
   `(tab-bar-tab
     :background ,(doom-color 'highlight)
@@ -143,35 +143,35 @@
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:1]]
 (map! :map 'override
-      "M-j"   #'previous-window-any-frame
-      "M-k"   #'next-window-any-frame
-      "M-t"   #'tab-bar-new-tab-to
-      "M-q"   #'evil-save-modified-and-close
-      "M-1"   (cmd! (tab-bar-select-tab 1))
-      "M-2"   (cmd! (tab-bar-select-tab 2))
-      "M-3"   (cmd! (tab-bar-select-tab 3))
-      "M-4"   (cmd! (tab-bar-select-tab 4))
-      "M-o"   #'find-file
-      "M-f"   #'consult-find
-      "M-F"   (cmd! (consult-find "~"))
-      "M-g"   #'consult-buffer
-      "M-r"   #'consult-recent-file
-      "M-c"   #'async-shell-command
-      "M-w"   #'+lookup/online
-      "M-;"   #'execute-extended-command
-      "M-'"   #'consult-bookmark
+      :inmv "M-j"   #'previous-window-any-frame
+      :inmv "M-k"   #'next-window-any-frame
+      :inmv "M-t"   #'tab-bar-new-tab-to
+      :inmv "M-q"   #'evil-quit
+      :inmv "M-1"   (cmd! (tab-bar-select-tab 1))
+      :inmv "M-2"   (cmd! (tab-bar-select-tab 2))
+      :inmv "M-3"   (cmd! (tab-bar-select-tab 3))
+      :inmv "M-4"   (cmd! (tab-bar-select-tab 4))
+      :inmv "M-o"   #'find-file
+      :inmv "M-f"   #'consult-find
+      :inmv "M-F"   (cmd! (consult-find "~"))
+      :inmv "M-g"   #'consult-buffer
+      :inmv "M-r"   #'consult-recent-file
+      :inmv "M-c"   #'async-shell-command
+      :inmv "M-w"   #'+lookup/online
+      :inmv "M-;"   #'execute-extended-command
+      :inmv "M-'"   #'consult-bookmark
 
-      "C--"   #'doom/decrease-font-size
-      "C-="   #'doom/increase-font-size
-      "C-0"   #'doom/reset-font-size)
+      :inmv "C--"   #'doom/decrease-font-size
+      :inmv "C-="   #'doom/increase-font-size
+      :inmv "C-0"   #'doom/reset-font-size)
 ;; Global navigation scheme:1 ends here
 
 ;; [[file:config.org::*Global navigation scheme][Global navigation scheme:2]]
-(defadvice! close_tab_first (fn &optional force)
+(defadvice! evil_quit (&optional force)
   "Close current tab before closing current frame (more sensible)."
   :override #'evil-quit
   (condition-case nil
-      (delete-window)
+      (evil-window-delete)
     (error
      (if (and (bound-and-true-p server-buffer-clients)
               (fboundp 'server-edit)
@@ -180,14 +180,11 @@
              (server-buffer-done (current-buffer))
            (server-edit))
        (condition-case nil
-           (tab-bar-close-tab)
+           (delete-frame)
          (error
-          (condition-case nil
-              (delete-frame)
-            (error
-             (if force
-                 (kill-emacs)
-               (save-buffers-kill-emacs))))))))))
+          (if force
+              (kill-emacs)
+            (save-buffers-kill-emacs))))))))
 ;; Global navigation scheme:2 ends here
 
 ;; [[file:config.org::*Evil][Evil:1]]
@@ -202,6 +199,7 @@
       :nmv  "U"   #'evil-redo
       :nmv  "Q"   #'evil-execute-last-recorded-macro
       :nmv  "&"   #'evil-ex-repeat
+      :nm   "M"   (cmd! (evil-set-jump))
 
       :nmv  "+"   #'evil-numbers/inc-at-pt
       :nmv  "-"   #'evil-numbers/dec-at-pt
@@ -212,8 +210,8 @@
       :nmv  "g/"  #'+default/search-buffer)
 
 (map! :after org :map evil-org-mode-map
-      :nmv "]]"  #'org-forward-element
-      :nmv "[["  #'org-backward-element)
+      :nmv "C-j"  #'org-forward-element
+      :nmv "C-k"  #'org-backward-element)
 ;; Evil:1 ends here
 
 ;; [[file:config.org::*Evil][Evil:2]]
@@ -227,17 +225,13 @@ This is sensible default behaviour, and integrates it into evil."
               (car consult--line-history))))
     (push str evil-ex-search-history)
     (setq evil-ex-search-pattern (list str t t))))
-
-(defadvice! evil_sexp_cursor_offset (fn &rest args)
-  "Offset cursor position by -1, since this is optimal for evil's normal mode."
-  :after #'sp-beginning-of-sexp
-  (goto-char (- (point) 1)))
 ;; Evil:2 ends here
 
 ;; [[file:config.org::*Control-bindings][Control-bindings:1]]
-(map! :nm "C-s"  #'evil-write
-      :nm "M"    #'evil-set-jump
-      :nm "C-l"  #'recenter-top-bottom)
+(map! :nm "C-s" #'evil-write
+      :nm "C-k" #'evil-backward-section-begin
+      :nm "C-j" #'evil-forward-section-end
+      :nm "C-l" #'recenter-top-bottom)
 ;; Control-bindings:1 ends here
 
 ;; [[file:config.org::*Instant jumping][Instant jumping:1]]
@@ -262,11 +256,16 @@ This is sensible default behaviour, and integrates it into evil."
 ;; [[file:config.org::*Org][Org:1]]
 (map! :localleader :map org-mode-map
       "\\" #'org-latex-preview
-      "," #'org-ctrl-c-ctrl-c
+      ","  #'org-ctrl-c-ctrl-c
       (:prefix-map ("`" . "org-src")
                    "`" #'org-edit-special
                    "g" #'org_goto_src
                    "t" #'org-babel-tangle))
+
+(defadvice! default ()
+  "Evil's implementation is broken => use default."
+  :override #'evil-org-edit-src-exit
+  (org-edit-src-exit))
 ;; Org:1 ends here
 
 ;; [[file:config.org::*Dired (keybindings)][Dired (keybindings):1]]
@@ -293,6 +292,12 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "a" #'dired_archive)
 ;; Dired (keybindings):1 ends here
 
+;; [[file:config.org::*Magit][Magit:1]]
+(map! :map magit-mode-map :after magit
+      :nm "C-j" #'magit-section-forward-sibling
+      :nm "C-k" #'magit-section-backward-sibling)
+;; Magit:1 ends here
+
 ;; [[file:config.org::*Editor][Editor:1]]
 (evil-surround-mode 1)
 
@@ -310,17 +315,20 @@ This is sensible default behaviour, and integrates it into evil."
       evil-snipe-override-evil-repeat-keys t
       evil-snipe-auto-scroll nil)
 
-(dolist (cmd
-         '(flycheck-next-error
-           flycheck-previous-error
-           evil-avy-goto-char-2-below
-           evil-avy-goto-char-2-above
-           +lookup/definition
-           +lookup/references
-           +lookup/implementations
-           +default/search-buffer
-           consult-imenu))
+(dolist (cmd '(flycheck-next-error
+               flycheck-previous-error
+               evil-avy-goto-char-2-below
+               evil-avy-goto-char-2-above
+               +lookup/definition
+               +lookup/references
+               +lookup/implementations
+               +default/search-buffer
+               consult-imenu))
   (evil-add-command-properties cmd :jump t))
+
+(map! (cmd '(evil-backward-section-begin
+             evil-forward-section-end))
+      (evil-remove-command-properties cmd :jump))
 ;; Editor:1 ends here
 
 ;; [[file:config.org::*Lsp & completion][Lsp & completion:1]]
@@ -539,7 +547,7 @@ This is sensible default behaviour, and integrates it into evil."
       org-priority-lowest 3)
 
 (setq org-priority-faces
-      '((?1  . 'all-the-icons-red)
+      '((?1 . 'all-the-icons-red)
         (?2 . 'all-the-icons-orange)
         (?3 . 'all-the-icons-yellow)))
 

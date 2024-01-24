@@ -1,19 +1,17 @@
 # [[file:config.org::*Src][Src:1]]
 virtual_modifiers:
   - menu
+  - capslock
 
 modmap:
   - name: global
     remap:
-      backspace: capslock
-      capslock:
-        alone: backspace
-        held:  menu
-        one_timeout_millis: 50
+      capslock: menu
       alt_l:
-        alone: esc
-        held: super_l # more ergo super-key
-        one_timeout_millis: 50
+        alone: esc 
+        held: alt_l
+        one_timeout_millis: 10
+      alt_r: capslock
 
 keymap:
   - name: browser
@@ -32,9 +30,25 @@ keymap:
 
   - name: global
     remap:
-      ctrl-j: down
-      ctrl-k: up
-      shift-backspace: c-backspace
+      capslock-j: down
+      capslock-k: up
+      capslock-h: left
+      capslock-l: right
+      capslock-a: end
+      capslock-i: home
+      capslock-x: backspace
+      capslock-e: c-right
+      capslock-b: c-left
+      capslock-w: [c-right, c-right, c-left]
+      capslock-o: enter
+      capslock-c: c-backspace
+      capslock-slash: c-f
+      capslock-question: shift-f3
+      capslock-d:
+        remap:
+          capslock-d: [home, shift-end, C-x]
+          capslock-a: [shift-end, C-x]
+          capslock-i: [shift-home, C-x]
 
       menu-q: apostrophe
       menu-w: shift-comma

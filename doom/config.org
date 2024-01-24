@@ -3,7 +3,6 @@
 #+email:  emillenz@protonmail.com
 #+date:   2022-11-01
 #+info:   Heavily opinionated emacs evil-mode config, with a principle-focused approach on: consistency, quality, efficiency & extensibility.
-
 #+property: header-args:emacs-lisp tangle config.el :comments link :results silent
 
 * Preface
@@ -12,8 +11,8 @@ Professional, minimalist tools like Emacs have a high learning curve and require
 The saying, "give 'em enough rope, and they'll likely hang themselves," holds true. Emacs provides the rope if you are not careful.
 
 - If you decide to use parts (or the entire config) *ensure* that you have *at least* every doom/module and package installed / enabled as i do, otherwise emacs will throw errors left and right.
-  - modules: [[file:init.el]]
-  - packages:[[file:packages.el]]
+  - Modules: [[file:init.el]]
+  - Packages:[[file:packages.el]]
 - I use: ~_~ in user defined functions and variables to distinguish them clearly from package related ones.
 
 * User
@@ -24,14 +23,14 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 * UI
 ** Theme: ok-solar (dark)
-- Oksolar :: Slightly improved contrast between fg/bg (using OKLab).
+- Oksolar :: Slightly improved contrast between fg/bg vs normal Solarized theme (using modern OKLab colorspaces).
 - Note :: change cursor etc colors based on the theme dynamically and don't hard-code them in (extensible).
 - Cursor :: Different cursor color dependent on mode you are in.
 #+begin_src emacs-lisp
 (setq doom-theme 'doom-oksolar-dark)
 
 ;; HACK:: :inherit doesn't work
-;; => 'teal -> org-special-keyword
+;; => 'teal <=> org-special-keyword
 (custom-set-faces!
   `(tab-bar-tab
     :background ,(doom-color 'highlight)
@@ -82,7 +81,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 ** Window layout & behavior
-- vsplit :: Constrain popup buffers (inevitable) to consistently, and always ~vsplit~, and have a reasonable size.
+- Vsplit :: Constrain popup buffers (inevitable) to consistently, and always ~vsplit~, and have a reasonable size.
   - Never mix vertical with horizontal splitting => creates mental overhead navigating the windows (+requires another set of totally unneccessary keybindings)
 #+begin_src emacs-lisp
 (setq evil-vsplit-window-right t
@@ -106,8 +105,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 - Centered windows :: better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).
   - Narrowed FOV yields improved readability & focus of textparagraphs, especially if you stare at the computer for 8h+ a day.
-  - compact and coherent data
-  - allows the user to keep the entire window in the fov
+  - Compact and coherent data
+  - Allows the user to keep the entire window in the fov
   - Vertical navigation is easier than horizontal
   - Reading code/data/formulas is easiest sequentially = top to bottom // vs horizontally
     - Take math for example, its easier to read equations if they are on newline
@@ -198,36 +197,36 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - Buffers :: Use vim's: ~ZZ, ZX, ZQ~
 #+begin_src emacs-lisp
 (map! :map 'override
-      "M-j"   #'previous-window-any-frame
-      "M-k"   #'next-window-any-frame
-      "M-t"   #'tab-bar-new-tab-to
-      "M-q"   #'evil-save-modified-and-close
-      "M-1"   (cmd! (tab-bar-select-tab 1))
-      "M-2"   (cmd! (tab-bar-select-tab 2))
-      "M-3"   (cmd! (tab-bar-select-tab 3))
-      "M-4"   (cmd! (tab-bar-select-tab 4))
-      "M-o"   #'find-file
-      "M-f"   #'consult-find
-      "M-F"   (cmd! (consult-find "~"))
-      "M-g"   #'consult-buffer
-      "M-r"   #'consult-recent-file
-      "M-c"   #'async-shell-command
-      "M-w"   #'+lookup/online
-      "M-;"   #'execute-extended-command
-      "M-'"   #'consult-bookmark
+      :inmv "M-j"   #'previous-window-any-frame
+      :inmv "M-k"   #'next-window-any-frame
+      :inmv "M-t"   #'tab-bar-new-tab-to
+      :inmv "M-q"   #'evil-quit
+      :inmv "M-1"   (cmd! (tab-bar-select-tab 1))
+      :inmv "M-2"   (cmd! (tab-bar-select-tab 2))
+      :inmv "M-3"   (cmd! (tab-bar-select-tab 3))
+      :inmv "M-4"   (cmd! (tab-bar-select-tab 4))
+      :inmv "M-o"   #'find-file
+      :inmv "M-f"   #'consult-find
+      :inmv "M-F"   (cmd! (consult-find "~"))
+      :inmv "M-g"   #'consult-buffer
+      :inmv "M-r"   #'consult-recent-file
+      :inmv "M-c"   #'async-shell-command
+      :inmv "M-w"   #'+lookup/online
+      :inmv "M-;"   #'execute-extended-command
+      :inmv "M-'"   #'consult-bookmark
 
-      "C--"   #'doom/decrease-font-size
-      "C-="   #'doom/increase-font-size
-      "C-0"   #'doom/reset-font-size)
+      :inmv "C--"   #'doom/decrease-font-size
+      :inmv "C-="   #'doom/increase-font-size
+      :inmv "C-0"   #'doom/reset-font-size)
 #+end_src
 
-- Redefine ~evil-quit~ to close the tab before closing the frame.
+- Redefine ~evil-quit~ to close tab before frame.
 #+begin_src emacs-lisp
-(defadvice! close_tab_first (fn &optional force)
+(defadvice! evil_quit (&optional force)
   "Close current tab before closing current frame (more sensible)."
   :override #'evil-quit
   (condition-case nil
-      (delete-window)
+      (evil-window-delete)
     (error
      (if (and (bound-and-true-p server-buffer-clients)
               (fboundp 'server-edit)
@@ -236,29 +235,26 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
              (server-buffer-done (current-buffer))
            (server-edit))
        (condition-case nil
-           (tab-bar-close-tab)
+           (delete-frame)
          (error
-          (condition-case nil
-              (delete-frame)
-            (error
-             (if force
-                 (kill-emacs)
-               (save-buffers-kill-emacs))))))))))
+          (if force
+              (kill-emacs)
+            (save-buffers-kill-emacs))))))))
 #+end_src
 
 ** Evil
 *Goal* :: Make vim's bindings even more mnemonic/sane/sensible/efficient and improve consistency of implementation. Maximize the keyboard real-estate usage.
 
 - Relative lines ::
-  - more sensible default
-  - minimizes mental overhead (and spamming of ~gj~ / ~gk~)
+  - More sensible default
+  - Minimizes mental overhead (and spamming of ~gj~ / ~gk~)
 - Splits ::
   - At most have 2 splits => toggle between windows with single key (instead of mental overhead for directional navigation ex: C-hjkl)
   - This is for navigating and controlling some inevitable popup-buffers.
   - Avoid splits at all costs and use tabs instead
 - Useless default mappings :: remap underused/useless keys to statistically frequently used commands
   - ~Q~: shortcut to ~@@~ (def macro with ~qq~, execute with ~@q~ in 99% of cases)
-  - ~M~: save point to jumplist (save pos -> do edits elsewhere -> jump back to saved pos: ~C-p~)
+  - ~M~: save point to jumplist (save pos -> do edits elsewhere -> jump back to saved pos: ~C-o~)
   - ~&~: Allows for same usage as normal: ~&~, but more powerful (repeat any last ~ex~ command)
   - ~TAB~: folding (inspired by org-modes folding (smart/simple one-key folding))
   - ~()~ for quickly jumping out of code delimiters (and when coding in lisp, especially useful)
@@ -282,6 +278,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
       :nmv  "U"   #'evil-redo
       :nmv  "Q"   #'evil-execute-last-recorded-macro
       :nmv  "&"   #'evil-ex-repeat
+      :nm   "M"   (cmd! (evil-set-jump))
 
       :nmv  "+"   #'evil-numbers/inc-at-pt
       :nmv  "-"   #'evil-numbers/dec-at-pt
@@ -292,8 +289,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
       :nmv  "g/"  #'+default/search-buffer)
 
 (map! :after org :map evil-org-mode-map
-      :nmv "]]"  #'org-forward-element
-      :nmv "[["  #'org-backward-element)
+      :nmv "C-j"  #'org-forward-element
+      :nmv "C-k"  #'org-backward-element)
 #+end_src
 
 #+begin_src emacs-lisp
@@ -307,11 +304,6 @@ This is sensible default behaviour, and integrates it into evil."
               (car consult--line-history))))
     (push str evil-ex-search-history)
     (setq evil-ex-search-pattern (list str t t))))
-
-(defadvice! evil_sexp_cursor_offset (fn &rest args)
-  "Offset cursor position by -1, since this is optimal for evil's normal mode."
-  :after #'sp-beginning-of-sexp
-  (goto-char (- (point) 1)))
 #+end_src
 
 *** Control-bindings
@@ -319,16 +311,16 @@ This is sensible default behaviour, and integrates it into evil."
   - Jumplist-jumps: ~C-i/o~
   - Page scrolling: ~C-u/d~
   - Screen-scrolling:  ~C-y/e~
-    - Sensible and consistent with other modes (~info~, ~magit~, ~company~..)
-  - Navigate by sections :: Paragraph nav: ~C-j/k~
+- Navigate by sections :: ~C-j/k~ (implemented sensibly for other tools)
   - Map it to the os-consistent key
 - ~C-l~ does the same as ~C-l~ in the shell and is quicker & more mnemonic than ~zz~.
-- Marks :: set a mark for the jumplist with ~c-m~ at current position
-  - This has basically replaced my need for vim's marks as i mostly alternate between two positions.
+- Marks :: set a mark for the jumplist with ~M~ at current position
+  - This has basically replaced my need for vim's marks as i mostly alternate between two positions for quick edits, and if i need two separate positions.
 #+begin_src emacs-lisp
-(map! :nm "C-s"  #'evil-write
-      :nm "M"    #'evil-set-jump
-      :nm "C-l"  #'recenter-top-bottom)
+(map! :nm "C-s" #'evil-write
+      :nm "C-k" #'evil-backward-section-begin
+      :nm "C-j" #'evil-forward-section-end
+      :nm "C-l" #'recenter-top-bottom)
 #+end_src
 
 *** Instant jumping
@@ -361,11 +353,16 @@ This is sensible default behaviour, and integrates it into evil."
 #+begin_src emacs-lisp
 (map! :localleader :map org-mode-map
       "\\" #'org-latex-preview
-      "," #'org-ctrl-c-ctrl-c
+      ","  #'org-ctrl-c-ctrl-c
       (:prefix-map ("`" . "org-src")
                    "`" #'org-edit-special
                    "g" #'org_goto_src
                    "t" #'org-babel-tangle))
+
+(defadvice! default ()
+  "Evil's implementation is broken => use default."
+  :override #'evil-org-edit-src-exit
+  (org-edit-src-exit))
 #+end_src
 
 ** Dired (keybindings)
@@ -401,11 +398,19 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "a" #'dired_archive)
 #+end_src
 
+** Magit
+#+begin_src emacs-lisp
+(map! :map magit-mode-map :after magit
+      :nm "C-j" #'magit-section-forward-sibling
+      :nm "C-k" #'magit-section-backward-sibling)
+#+end_src
+
 * Editor
-- evil-mode :: need it everywhere => enable evil mode in minibuffers
+- Evil-mode :: need it everywhere => enable evil mode in minibuffers.
+  - Very helpful when editing complex search & replace patterns etc...
 - Improve ~f~ & ~t~ motions with ~evil-snipe~
-- use verymagic (easier regex, more consistency with other tools & syntax)
-- add more movement commands to the jumplist
+- Very-magic-mode :: easier regex, more consistency with other tools & syntax.
+- Jumplist :: add more movement commands
 #+begin_src emacs-lisp
 (evil-surround-mode 1)
 
@@ -423,17 +428,21 @@ This is sensible default behaviour, and integrates it into evil."
       evil-snipe-override-evil-repeat-keys t
       evil-snipe-auto-scroll nil)
 
-(dolist (cmd
-         '(flycheck-next-error
-           flycheck-previous-error
-           evil-avy-goto-char-2-below
-           evil-avy-goto-char-2-above
-           +lookup/definition
-           +lookup/references
-           +lookup/implementations
-           +default/search-buffer
-           consult-imenu))
+(dolist (cmd '(flycheck-next-error
+               flycheck-previous-error
+               evil-avy-goto-char-2-below
+               evil-avy-goto-char-2-above
+               +lookup/definition
+               +lookup/references
+               +lookup/implementations
+               +default/search-buffer
+               consult-imenu))
   (evil-add-command-properties cmd :jump t))
+
+(map! (cmd '(evil-backward-section-begin
+             evil-forward-section-end))
+      (evil-remove-command-properties cmd :jump))
+
 #+end_src
 
 ** Lsp & completion
@@ -490,7 +499,7 @@ This is sensible default behaviour, and integrates it into evil."
 #+end_src
 
 ** Archive file
-- Archive all things that were once written or created by you (instead of deleting them) => digital content cost's little to no space. And you will be grateful later in life to have recorded data (that can be analyzed & crunched) what you were thinking and how you configured your tools etc...
+- Archive all things that were once written or created by you (instead of deleting them) => digital content cost's little to no space.  And you will be grateful later in life to have recorded data (that can be analyzed & crunched) what you were thinking and how you configured your tools etc...
 - This is a consistent archiving scheme (archive to original path under Archive)
 #+begin_src emacs-lisp
 (defvar archive_dir "~/Archive/"
@@ -515,12 +524,12 @@ This is sensible default behaviour, and integrates it into evil."
 #+end_src
 
 ** Indentation: 2 spaces
-- consistency :: The only reliable, repeatable, transportable way to ensure that indentation remains consistent across viewing environments is to indent you code using only spaces.
-  - tabs :: With tabs you will always get some cases where there is spaces where there should be a tab and vice versa, this needs then to be fixed manually. (eg: evil shift, or evil-align)
+- Consistency :: The only reliable, repeatable, transportable way to ensure that indentation remains consistent across viewing environments is to indent you code using only spaces.
+  - Tabs :: With tabs you will always get some cases where there is spaces where there should be a tab and vice versa, this needs then to be fixed manually.  (eg: evil shift, or evil-align)
 - Having 8x or 4x indentations makes the code move too far to the right, and makes it really incoherent and spaced out on a 100-character terminal screen.
-  - Scanning code horizontally is alot harder than reading it vertically. Especially when you’ve been looking at your screen for 20 straight hours, you’ll find it a lot easier to read your code if it is compacted and concise.
-- nesting :: if you need more than 3 levels of indentation, you’re screwed anyway and have nested your functions too deep and should fix your program.
-- completion :: ~<TAB>~ never autocompletes, confirm the autocompletion with ~<RET>~. (consistent with all other programs on the os (neovim, nushell, browser...))
+  - Scanning code horizontally is alot harder than reading it vertically.  Especially when you’ve been looking at your screen for 20 straight hours, you’ll find it a lot easier to read your code if it is compacted and concise.
+- Nesting :: if you need more than 3 levels of indentation, you’re screwed anyway and have nested your functions too deep and should fix your program.
+- Completion :: ~<TAB>~ never autocompletes, confirm the autocompletion with ~<RET>~.  (consistent with all other programs on the os (neovim, nushell, browser...))
 
 #+begin_src emacs-lisp
 (advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
@@ -642,7 +651,7 @@ This is sensible default behaviour, and integrates it into evil."
 #+end_src
 
 ** Task states
-- These are task states are used for personal daily organization & studying at university (keeping track of lectures, assignments, events, exercise sheets.)
+- These are task states are used for personal daily organization & studying at university (keeping track of lectures, assignments, events)
 - Using symbols instead of words to represent states => less clutter, more concise, readeable & structured.
 - Order them with priorities to assign order of execution if there are many tasks
 - States with ~@~ prompt for note | if want to do manually: ~org-add-note~
@@ -669,7 +678,7 @@ This is sensible default behaviour, and integrates it into evil."
 - ~[?] Read supplemental article~
 
 ~[-]~: In-progress / started
-- item being worked on
+- Item being worked on
 - ~[-] Watch lecture [00:57h]~
 
 ~[=]~: On-hold | pause symbol
@@ -720,9 +729,9 @@ This is sensible default behaviour, and integrates it into evil."
 #+end_src
 
 - Log to drawer: ~LOG~
-  - shorter & more sensible than default: ~LOGBOOK~
+  - Shorter & more sensible than default: ~LOGBOOK~
 - Explain myself if i can't meet a deadline.
-  - take responsibility
+  - Take responsibility
 - Make org-log messages more data orientated and functional. (less verbose and literate)
 #+begin_src emacs-lisp
 (setq org-log-done 'time
@@ -736,7 +745,7 @@ This is sensible default behaviour, and integrates it into evil."
       org-priority-lowest 3)
 
 (setq org-priority-faces
-      '((?1  . 'all-the-icons-red)
+      '((?1 . 'all-the-icons-red)
         (?2 . 'all-the-icons-orange)
         (?3 . 'all-the-icons-yellow)))
 
@@ -823,18 +832,18 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
   - Its not about some fancy looking thing, its about the internals, the quality of the data, not the presentation.
 
 ** Tags
-- always use tags to specify what a todo-item belongs to & never write it in the todo-name | not: ~TODO uni math assignment [2]~ => instead: ~TODO assignment [2] :uni:math:assignments:~
-- use tags with path hierarchy & inheritance to signal to which project / topic / subject the task belongs to have a clear overview in the agenda.
-  - mark top level subject with tag
-  - ex: ~:cs:math:statisticts:exercise~ => filter: outstanding ~exercises~ of math.
-  - ex: ~:cs:math:statisticts:question:~ => filter: outstanding ~questions~
-  - ex: ~:personal:youtube:video~
-  - ex: ~:personal:book:fiction~
-  - ex: ~- [ ] Change keybindings :config:emacs:~
+- Always use tags to specify what a todo-item belongs to & never write it in the todo-name | not: ~TODO uni math assignment [2]~ => instead: ~TODO assignment [2] :uni:math:assignments:~
+- Use tags with path hierarchy & inheritance to signal to which project / topic / subject the task belongs to have a clear overview in the agenda.
+  - Mark top level subject with tag
+  - Ex: ~:cs:math:statisticts:exercise~ => filter: outstanding ~exercises~ of math.
+  - Ex: ~:cs:math:statisticts:question:~ => filter: outstanding ~questions~
+  - Ex: ~:personal:youtube:video~
+  - Ex: ~:personal:book:fiction~
+  - Ex: ~- [ ] Change keybindings :config:emacs:~
 - Never mention the location/project of the task, instead specify it as a task hierarchy (scope resolution, flexible querying) (same as in programming var-names should never include the typee / functions don't have module-name in their name, instead the location is specified via module)
   - ~[ ] fix bugs in emacs config for the org mode module~ => ~[ ] fix bugs :config:emacs:org:~
-  - this is a clear and highly structured, data orientated approach. (all the benefits of data follow: querying, extensibility...)
-- org-agenda :: filter for all headings with that specific tag across all files (eg. sort class specific todos w tags)
+  - This is a clear and highly structured, data orientated approach. (all the benefits of data follow: querying, extensibility...)
+- Org-agenda :: filter for all headings with that specific tag across all files (eg. sort class specific todos w tags)
 
 ** Capture templates
 - Create capture-templates for organization on a per project basis, ex: university, personal, work..
@@ -843,12 +852,12 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
   - This is very customizeable allows you to setup complex templates and should be used whenever you want to log data / repeatatively track things, or want to capture structured data with different entries consistently (eg: literature-system to track reading process).
 - Use the heading: ~inbox~ for collecting the captured tasks => can get messy, and can be refactored out of inbox into more structure if neccessary.
 - For each project there is a separate folder (relative to org-dir) with files:
-  - agenda :: all tasks (todos, completed etc) and events (physical appointments)
-  - notes :: Thoughts, exploration -> to study, to remember, to refactor
-  - set tags for entire file in header with ~#+filetags: :proj:~
-  - configure file-local tags-presets with: ~#+tags: tag1 tag2~
-    + will get you completion when setting tags in file (eg: ~:question:~)
-  - motivation :: this scheme of =agenda/notes= is used to have a structured and consistent approach for generic projects-management.
+  - Agenda :: all tasks (todos, completed etc) and events (physical appointments)
+  - Notes :: Thoughts, exploration -> to study, to remember, to refactor
+  - Set tags for entire file in header with ~#+filetags: :proj:~
+  - Configure file-local tags-presets with: ~#+tags: tag1 tag2~
+    - Will get you completion when setting tags in file (eg: ~:question:~)
+  - Motivation :: this scheme of =agenda/notes= is used to have a structured and consistent approach for generic projects-management.
     - Aligns with the philosophy of separating literate contents from code (notes=literate/agenda=data)
 
 #+begin_src emacs-lisp
@@ -1047,7 +1056,7 @@ code repetition."
 
 ** Keywords to downcase
 - By default emacs has these as uppercase (the poor man's bold), however times change and the lowercase standard should be used globally.
-  - thus convert mostly everything with this function, when you happened to get a file where it is uppercase.
+  - Thus convert mostly everything with this function, when you happened to get a file where it is uppercase.
 #+begin_src emacs-lisp
 (defun org_convert_keywords_downcase ()
   "Convert all #+KEYWORDS => #+keywords && :keyword: => :keyword:"
@@ -1116,18 +1125,18 @@ Following these principles will greatly improve the quality, longevity and consi
 ** File naming
  #+begin_quote
  A consistent file-naming scheme is the single best optimisation I ever did to my computing. Notwithstanding the Emacs parts.
- - protesilaos stavrou
+ - Protesilaos Stavrou
 #+end_quote
 
 *** Syntax
 ~DATE_TITLE_TAGS.txt~
 
-- separator :: ~_~ for a new section, ~-~ for "spaces" between words
-- date :: in ISO 8601 date format. (ex: =2023-12-31=)
-  - time :: if neccessary, then concatted to date in (file-name appropriate) ISO 8601 time format (ex: =2024-01-06-T1145=, =T091654= is military time for: =11:45:54=
-- tags :: ex: =philosophy=, =economics=
-  - can also be subprojects
-- lowercase :: filenames are data, hence all lowercase (same as variables)
+- Separator :: ~_~ for a new section, ~-~ for "spaces" between words
+- Date :: in ISO 8601 date format. (ex: =2023-12-31=)
+  - Time :: if neccessary, then concatted to date in (file-name appropriate) ISO 8601 time format (ex: =2024-01-06-T1145=, =T091654= is military time for: =11:45:54=
+- Tags :: ex: =philosophy=, =economics=
+  - Can also be subprojects
+- Lowercase :: filenames are data, hence all lowercase (same as variables)
 
 ex: ~2023-12-31_communist-manifesto_philosophy-economics-politics.org~
 
@@ -1142,13 +1151,14 @@ In each new file systematically insert heading metadata (as comments) with the f
 # info:   Outlines file-metadata template, to be inserted at top of every file systematically.
 # ---
 #+end_example
-- title :: Full title of document.
-- author :: document creator/"owner".
-- email :: author's email
-  - for contacting him with question's / reaching out.
-- date :: date of file creation, ISO 8601 format.
-  - track your coding/writing progress over the years and just generally it is important to document the timing of things, to analyze/order/reconstruct them.
-- info :: Short document description/summary, think of it as a docstring for the file with this the reader should know what the document is about in one line.
+
+- Title :: Full title of document.
+- Author :: Document creator/"owner".
+- Email :: Author's email
+  - For contacting him with question's / reaching out.
+- Date :: Date of file creation, ISO 8601 format.
+  - Track your coding/writing progress over the years and just generally it is important to document the timing of things, to analyze/order/reconstruct them.
+- Info :: Short document description/summary, think of it as a docstring for the file with this the reader should know what the document is about in one line.
 
 Automate this using a snippet (keep workflow DRY)
 [[file:snippets/org-mode/header][org-mode-header]]

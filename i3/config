@@ -224,7 +224,7 @@ set $main   #2f447f
 set $red    #ff5f59
 
 # class                 $border $bg     $text $indicator $child_border
-client.focused          $main   $main   $fg   $fg        $sep
+client.focused          $main   $main   $fg   $fg        $main
 client.focused_inactive $bg_alt $bg_alt $fg   $bg        $bg
 client.unfocused        $bg     $bg     $fg   $bg        $bg
 client.urgent           $red    $red    $bg   $bg        $bg
@@ -244,9 +244,9 @@ bar {
   colors {
     background $bg_alt
     statusline $fg
-    separator  $fg
+    separator  $main
     # class            $border $backg  $text
-    binding_mode       $fg     $main   $fg
+    binding_mode       $main    $main  $fg
   }
 }
 # Statusbar:1 ends here

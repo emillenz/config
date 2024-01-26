@@ -6,7 +6,7 @@
 # info:	  Nushell conifg with safer defaults, and efficient custom keybindings.
 # -----
 
-# NOTE: When programming in nushell non-interactively, use the full command-names and long style options in order to make the code scaleable and readeable.
+# NOTE: When programming in nushell non-interactively, use full-length-flags in order to make the code scaleable and readeable.
 
 source modus_vivendi.nu
 
@@ -147,7 +147,7 @@ $env.config = {
 
   color_config: (modus_vivendi)
   use_grid_icons: false
-  footer_mode: "25" # always, never, number_of_rows, auto
+  footer_mode: "25"
   float_precision: 2
   use_ansi_coloring: true
   edit_mode: vi
@@ -156,12 +156,11 @@ $env.config = {
   bracketed_paste: true
 
   hooks: {
-    pre_prompt: [ {|| null} ] # replace with source code to run before the prompt is shown
+    pre_prompt: [ {|| null} ]
     pre_execution: [ {|| null} ]
     env_change: {
-      PWD: [ {|before, after| ls | get name } ] # replace with source code to run if the PWD environment is different since the last repl input
+      PWD: [ {|before, after| ls | get name } ]
     }
-    # viewing in vertical orinentation with transpose
     display_output: {|| if (term size).columns >= 100 {table -e} else {table -e}}
     command_not_found: {||}
   }

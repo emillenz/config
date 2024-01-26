@@ -1,6 +1,3 @@
-^emacs --daemon
-ps -l 
-ps -l | get command | find firefox
 startup
 syncthing
 killall syncthing
@@ -9998,3 +9995,6 @@ ls -las
 ls
 ls -la
 ls
+ls -la
+ls
+ls -la

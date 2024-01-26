@@ -275,13 +275,13 @@ mode "sysact" {
 set $bg     #002b36
 set $bg_alt #093946
 set $fg     #98a8a8
-set $blue   #268bd2
+set $main   #268bd2
 set $red    #dc322f
 #+end_src
 
 #+begin_src conf
 # class                 border bg    text indicator child_border
-client.focused          $blue  $blue $bg  $fg       $blue
+client.focused          $main  $main $bg  $fg       $main
 client.focused_inactive $fg    $fg   $bg  $bg       $bg
 client.unfocused        $bg    $bg   $fg  $bg       $bg
 client.urgent           $red   $red  $bg  $bg       $bg
@@ -292,19 +292,17 @@ client.background       $bg
 ** Modus vivendi
 #+begin_src conf
 set $bg     #000000
-set $bg_alt #1e1e1e
+set $bg_alt #303030
 set $fg     #ffffff
-set $blue   #2fafff
+set $main   #2f447f
 set $red    #ff5f59
-#+end_src
 
-#+begin_src conf
-# class                 border bg    text indicator child_border
-client.focused          $blue  $blue $bg  $fg       $blue
-client.focused_inactive $fg    $fg   $bg  $bg       $bg
-client.unfocused        $bg    $bg   $fg  $bg       $bg
-client.urgent           $red   $red  $bg  $bg       $bg
-client.placeholder      $bg    $bg   $fg  $bg       $bg
+# class                 $border $bg     $text $indicator $child_border
+client.focused          $main   $main   $fg   $fg        $sep
+client.focused_inactive $bg_alt $bg_alt $fg   $bg        $bg
+client.unfocused        $bg     $bg     $fg   $bg        $bg
+client.urgent           $red    $red    $bg   $bg        $bg
+client.placeholder      $bg     $bg     $fg   $bg        $bg
 client.background       $bg
 #+end_src
 
@@ -322,10 +320,10 @@ bar {
   separator_symbol " | "
   colors {
     background $bg_alt
-    statusline $blue
+    statusline $fg
     separator  $fg
     # class            $border $backg  $text
-    binding_mode       $blue   $blue   $bg
+    binding_mode       $fg     $main   $fg
   }
 }
 #+end_src

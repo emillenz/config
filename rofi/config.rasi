@@ -157,7 +157,7 @@ element normal.active {
 }
 element selected.normal {
   background-color : @selected;
-  text-color       : @background;
+  text-color       : @foreground;
 }
 element selected.urgent {
   background-color : @active;
@@ -261,9 +261,9 @@ error-message {
 // modus
 * {
   background:     #000000;
-  background-alt: #1e1e1e;
+  background-alt: #303030;
   foreground:     #ffffff;
-  selected:       #2fafff;
+  selected:       #2f447f;
   active:         #44bc44;
   urgent:         #ff5f59;
 }

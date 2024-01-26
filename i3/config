@@ -202,13 +202,13 @@ mode "sysact" {
 set $bg     #002b36
 set $bg_alt #093946
 set $fg     #98a8a8
-set $blue   #268bd2
+set $main   #268bd2
 set $red    #dc322f
 # Solarized:1 ends here
 
 # [[file:config.org::*Solarized][Solarized:2]]
 # class                 border bg    text indicator child_border
-client.focused          $blue  $blue $bg  $fg       $blue
+client.focused          $main  $main $bg  $fg       $main
 client.focused_inactive $fg    $fg   $bg  $bg       $bg
 client.unfocused        $bg    $bg   $fg  $bg       $bg
 client.urgent           $red   $red  $bg  $bg       $bg
@@ -218,21 +218,19 @@ client.background       $bg
 
 # [[file:config.org::*Modus vivendi][Modus vivendi:1]]
 set $bg     #000000
-set $bg_alt #1e1e1e
+set $bg_alt #303030
 set $fg     #ffffff
-set $blue   #2fafff
+set $main   #2f447f
 set $red    #ff5f59
-# Modus vivendi:1 ends here
 
-# [[file:config.org::*Modus vivendi][Modus vivendi:2]]
-# class                 border bg    text indicator child_border
-client.focused          $blue  $blue $bg  $fg       $blue
-client.focused_inactive $fg    $fg   $bg  $bg       $bg
-client.unfocused        $bg    $bg   $fg  $bg       $bg
-client.urgent           $red   $red  $bg  $bg       $bg
-client.placeholder      $bg    $bg   $fg  $bg       $bg
+# class                 $border $bg     $text $indicator $child_border
+client.focused          $main   $main   $fg   $fg        $sep
+client.focused_inactive $bg_alt $bg_alt $fg   $bg        $bg
+client.unfocused        $bg     $bg     $fg   $bg        $bg
+client.urgent           $red    $red    $bg   $bg        $bg
+client.placeholder      $bg     $bg     $fg   $bg        $bg
 client.background       $bg
-# Modus vivendi:2 ends here
+# Modus vivendi:1 ends here
 
 # [[file:config.org::*Statusbar][Statusbar:1]]
 bar {
@@ -245,10 +243,10 @@ bar {
   separator_symbol " | "
   colors {
     background $bg_alt
-    statusline $blue
+    statusline $fg
     separator  $fg
     # class            $border $backg  $text
-    binding_mode       $blue   $blue   $bg
+    binding_mode       $fg     $main   $fg
   }
 }
 # Statusbar:1 ends here

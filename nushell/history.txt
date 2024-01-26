@@ -1,22 +1,3 @@
-startup
-syncthing=
-syncthing
-startup
-^emacs --daemon
-emacs
-^\emacs
-^emacs
-^emacs --daemon
-emacs --debug-init
-^emacs --debug-init
-ps syncthing
-ps |find syncthing
-syncthing
-killall emacs
-killall emacsdaemon
-^emacs --daemon
-startup
-^^emacs --daemon
 ^emacs --daemon
 ps -l 
 ps -l | get command | find firefox
@@ -9998,3 +9979,22 @@ ls lsa
 ls -la
 ls fla
 ls -la
+emacs
+ls
+hello 
+lsl
+ls
+ls fla
+nu
+nu
+nu
+ls
+lsls
+ls
+ls -la
+ls la
+ls -la
+ls -las
+ls
+ls -la
+ls

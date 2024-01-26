@@ -17,19 +17,16 @@
   '(modus-themes-heading-1 :foreground "#2fafff")
   '(org-document-title :foreground "#2fafff")
   '(org-list-dt :foreground "#2fafff")
-  '(tab-bar-tab
-    :background "#2fafff"
-    :foreground "#000000"
-    :weight bold)
-  `(tab-bar-tab-inactive :background "#1e1e1e")
+  '(tab-bar-tab :background "#2f447f" :weight bold :box nil)
+  `(tab-bar-tab-inactive :box nil)
   '(org-drawer :foreground "#00d3d0")
   '(org-meta-line :foreground "#00d3d0")
   '(org-document-info-keyword :foreground "#00d3d0")
   '(org-block-begin-line :foreground "#00d3d0"))
 (setq
- evil-normal-state-cursor `(,"#2fafff" box)
- evil-insert-state-cursor `(,"#2fafff" bar)
- evil-motion-state-cursor `(,"#2fafff" box)
+ evil-normal-state-cursor `(,"#00d3d0" box)
+ evil-insert-state-cursor `(,"#00d3d0" bar)
+ evil-motion-state-cursor `(,"#00d3d0" box)
  evil-visual-state-cursor `(,"#d0bc00" box)
  evil-operator-state-cursor `(,"#ff5f59" box)
  evil-replace-state-cursor `(,"#ff5f59" hbar))

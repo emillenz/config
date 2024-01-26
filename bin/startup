@@ -5,28 +5,28 @@
 # author: Emil Lenz
 # email:  emillenz@protonmail.com
 # date:   2023-08-08
-# info:   All background processes and commands to be run at startup. Additionally runs commands to configure X11 behaviour.
+# info:   All background processes and commands to be run at startup. Additionally runs commands to configure X11 behaviour. Starts all programs automatically, that are used in basically every-session (DRY).
 # -----
 def main [] {
   let start_ps = [
     "sudo xremap --watch=device ~/.config/xremap/config.yml"
     "sleep 1 && xset r off" # HACK sleep :: wait for remaps to take affect
     "batsignal -b -f 95 -w 20 -c 10 -d 5" # low battery level warning
-    "playerctld" # Music controls
-    "tmux new-session -s 'cmd'" # initialize tmux main session (for i3)
-    "emacs --bg-daemon --eval='(doom/reload)'"
-    "unclutter" # hide mousecursor after 1s
-    "xsetroot -solid '#002b36'" # NOTE:: solarized_dark bg
-    "xset dpms 0 0 0 " # never turn screen off (do it manually)
-    "xset s off" # no screensaver
+    "playerctld" # music controls
+    "alacritty --class cmd -T cmd -e tmux new-session -A -s cmd" # main cmd-session
+    "emacs --daemon --eval='(doom/reload)'" # editor
+    "unclutter" # hide cursor
+    "xsetroot -solid '#000000'" # solarized_dark bg: #002b36; modus: #000000
+    "xset dpms 0 0 0 && xset s off" # never screensave / turn screen off (do manually if needed)
+    "syncthing --no-browser" # based file-syncing, no more cloud dependency / suckling on google/microsoft
+    "firefox --new-window https://chat.openai.com" # chatbot (integrated into workflow)
+    "firefox --new-window"
     "keepassxc" # TODO :: replace with pass
-    "syncthing" # NOTE :: personal
   ]
 
-  let pss = (ps | get name | each {split words | get 0})
-
+  let pss = (ps | get name)
   for p in $start_ps {
-    if not (($p | split words | get 0) in $pss) {
+    if not ($pss | any {$in =~ ($p | split words | get 0)}) {
       $"($p) &>/dev/null &" | bash
     }
   }

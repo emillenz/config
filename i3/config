@@ -40,7 +40,8 @@ $map XF86MonBrightnessDown $cmd sudo light -U 5 && notify-send "󰃟 Light" "$(l
 $map XF86MonBrightnessUp   $cmd sudo light -A 5 && notify-send "󰃟 Light" "$(light)%"
 $map XF86Display           $cmd $bin/output_select
 $map XF86ScreenSaver       $cmd xset dpms force off
-$map XF86Sleep             $cmd i3lock -e --color 002b36 && systemctl suspend
+# $map XF86Sleep             $cmd i3lock -e --color 002b36 && systemctl suspend
+$map XF86Sleep             $cmd i3lock -e --color 000000 && systemctl suspend
 
 $map XF86AudioPlay         $cmd playerctl play
 $map XF86AudioPause        $cmd playerctl pause
@@ -78,41 +79,49 @@ for_window [urgent="latest"] focus
 for_window [all] title_window_icon yes
 
 set $ws_xyz "xyz"
+workspace $ws_xyz output primary
 $map $mod+x workspace $ws_xyz
 $map $mod+shift+x $mv $ws_xyz; workspace $ws_xyz
 for_window [all] $mv $ws_xyz, focus
 
 set $ws_cmd "cmd"
+workspace $ws_cmd output primary
 $map $mod+c workspace $ws_cmd
 $map $mod+shift+c $mv $ws_cmd; workspace $ws_cmd
 for_window [class="(?i)cmd"] $mv $ws_cmd, focus
 
 set $ws_doc "doc"
+workspace $ws_doc output primary
 $map $mod+d workspace $ws_doc
 $map $mod+shift+d $mv $ws_doc; workspace $ws_doc
 for_window [class="(?i)zathura"] $mv $ws_doc, focus
 
 set $ws_web "web"
+workspace $ws_web output primary
 $map $mod+w workspace $ws_web
 $map $mod+shift+w $mv $ws_web; workspace $ws_web
 for_window [class="(?i)firefox"] $mv $ws_web, focus
 
 set $ws_edit "edit"
+workspace $ws_edit output primary
 $map $mod+e workspace $ws_edit
 $map $mod+shift+e $mv $ws_edit; workspace $ws_edit
 for_window [class="(?i)emacs|(?i)eclipse"] $mv $ws_edit, focus
 
 set $ws_vid "vid"
+workspace $ws_vid output primary
 $map $mod+v workspace $ws_vid
 $map $mod+shift+v $mv $ws_vid; workspace $ws_vid
 for_window [class="(?i)mpv"] $mv $ws_vid, focus
 
 set $ws_bot "bot"
+workspace $ws_bot output primary
 $map $mod+b workspace $ws_bot
 $map $mod+shift+b $mv $ws_bot; workspace $ws_bot
 for_window [class="(?i)firefox" title="(?i)ChatGPT"] $mv $ws_bot, focus
 
 set $ws_music "music"
+workspace $ws_music output primary
 $map $mod+m workspace $ws_music
 $map $mod+shift+m $mv $ws_music; workspace $ws_music
 for_window [class="(?i)firefox" title="(?i)Spotify"] $mv $ws_music, focus
@@ -181,20 +190,23 @@ mode "sysact" {
   $map $mod+e $cmd i3-msg exit; $esc
   $map $mod+r $cmd systemctl reboot; $esc
   $map $mod+h $cmd systemctl hibernate; $esc
-  $map $mod+l $cmd i3lock -e --color 002b36 && systemctl suspend; $esc
+  # $map $mod+l $cmd i3lock -e --color 002b36 && systemctl suspend; $esc
+  $map $mod+l $cmd i3lock -e --color 000000 && systemctl suspend; $esc
   $map $mod+s $cmd sleep 1 && xset dpms force off; $esc
   $map $mod+p $cmd systemctl poweroff; $esc
   $map Escape $esc
 }
 # Systemact:1 ends here
 
-# [[file:config.org::*Theme: Solarized (dark)][Theme: Solarized (dark):1]]
+# [[file:config.org::*Solarized][Solarized:1]]
 set $bg     #002b36
 set $bg_alt #093946
 set $fg     #98a8a8
 set $blue   #268bd2
 set $red    #dc322f
+# Solarized:1 ends here
 
+# [[file:config.org::*Solarized][Solarized:2]]
 # class                 border bg    text indicator child_border
 client.focused          $blue  $blue $bg  $fg       $blue
 client.focused_inactive $fg    $fg   $bg  $bg       $bg
@@ -202,7 +214,25 @@ client.unfocused        $bg    $bg   $fg  $bg       $bg
 client.urgent           $red   $red  $bg  $bg       $bg
 client.placeholder      $bg    $bg   $fg  $bg       $bg
 client.background       $bg
-# Theme: Solarized (dark):1 ends here
+# Solarized:2 ends here
+
+# [[file:config.org::*Modus vivendi][Modus vivendi:1]]
+set $bg     #000000
+set $bg_alt #1e1e1e
+set $fg     #ffffff
+set $blue   #2fafff
+set $red    #ff5f59
+# Modus vivendi:1 ends here
+
+# [[file:config.org::*Modus vivendi][Modus vivendi:2]]
+# class                 border bg    text indicator child_border
+client.focused          $blue  $blue $bg  $fg       $blue
+client.focused_inactive $fg    $fg   $bg  $bg       $bg
+client.unfocused        $bg    $bg   $fg  $bg       $bg
+client.urgent           $red   $red  $bg  $bg       $bg
+client.placeholder      $bg    $bg   $fg  $bg       $bg
+client.background       $bg
+# Modus vivendi:2 ends here
 
 # [[file:config.org::*Statusbar][Statusbar:1]]
 bar {
@@ -211,6 +241,8 @@ bar {
   workspace_buttons no
   modifier none
   status_command i3status
+  tray_output primary
+  separator_symbol " | "
   colors {
     background $bg_alt
     statusline $blue

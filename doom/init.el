@@ -30,7 +30,7 @@
        ;;  +github)  ;  we hate emoji's
        hl-todo           ; highlight keywords: TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW/BUG
        ;;hydra
-       indent-guides     ; highlighted indent columns
+       ;; indent-guides     ; highlighted indent columns
        (ligatures         ; ligatures and symbols
         +extra
         +iosevka)

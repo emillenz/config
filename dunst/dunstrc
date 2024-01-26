@@ -21,13 +21,34 @@ background =  "#002b36"
 foreground =  "#98a8a8"
 frame_color = "#268bd2"
 timeout = 3
+
 [urgency_normal]
 background =  "#002b36"
 foreground =  "#98a8a8"
 frame_color = "#268bd2"
 timeout = 5
+
 [urgency_critical]
 background =  "#dc322f"
 foreground =  "#002b36"
 frame_color = "#268bd2"
+timeout = 10
+
+# modus vivendi
+[urgency_low]
+background = "#000000"
+foreground = "#ffffff"
+frame_color = "#2fafff"
+timeout = 3
+
+[urgency_normal]
+background = "#000000"
+foreground = "#ffffff"
+frame_color = "#2fafff"
+timeout = 5
+
+[urgency_critical]
+background = "#000000"
+foreground = "#ffffff"
+frame_color = "#2fafff"
 timeout = 10

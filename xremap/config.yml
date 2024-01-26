@@ -6,21 +6,23 @@ virtual_modifiers:
 modmap:
   - name: global
     remap:
-      capslock: menu
-      alt_l:
-        alone: esc 
-        held: alt_l
-        one_timeout_millis: 10
+      capslock:
+        alone: backspace
+        held: menu
+        one_timeout_millis: 200
       alt_r: capslock
+      alt_l:
+        alone: esc
+        held: alt_l
+        one_timeout_millis: 200
 
 keymap:
   - name: browser
     application:
       only: firefox
     remap:
-      M-t: [c-t, esc] # HACK :: esc to disble popup menu (caused by alt-release)
-      M-e: c-l
-      M-o: c-o
+      M-t: [c-t, esc] # HACK :: needs esc
+      M-i: c-l # i -> insert
       M-o: c-o
       M-q: c-w
       M-slash: c-f
@@ -36,7 +38,7 @@ keymap:
       capslock-l: right
       capslock-a: end
       capslock-i: home
-      capslock-x: backspace
+      capslock-x: delete
       capslock-e: c-right
       capslock-b: c-left
       capslock-w: [c-right, c-right, c-left]
@@ -44,6 +46,8 @@ keymap:
       capslock-c: c-backspace
       capslock-slash: c-f
       capslock-question: shift-f3
+      capslock-y: [C-a, C-c]
+      capslock-p: C-v
       capslock-d:
         remap:
           capslock-d: [home, shift-end, C-x]

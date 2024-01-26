@@ -1,4 +1,4 @@
-import = ["~/.config/alacritty/solarized-dark.toml"]
+import = ["~/.config/alacritty/modus_vivendi.toml"]
 ipc_socket = true
 live_config_reload = true
 working_directory = "None"

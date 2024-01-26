@@ -3,33 +3,37 @@
       user-mail-address "emillenz@protonmail.com")
 ;; User:1 ends here
 
-;; [[file:config.org::*Theme: ok-solar (dark)][Theme: ok-solar (dark):1]]
-(setq doom-theme 'doom-oksolar-dark)
+;; [[file:config.org::*Modus theme][Modus theme:1]]
+(setq doom-theme 'modus-vivendi)
 
-;; HACK:: :inherit doesn't work
-;; => 'teal <=> org-special-keyword
+(setq
+ modus-themes-mixed-fonts t
+ modus-themes-italic-constructs t
+ modus-themes-bold-constructs t
+ modus-themes-org-blocks 'gray-background)
+
+;; HACK:: cannot be set in modus themes
 (custom-set-faces!
-  `(tab-bar-tab
-    :background ,(doom-color 'highlight)
-    :foreground ,(doom-color 'bg)
+  '(modus-themes-heading-1 :foreground "#2fafff")
+  '(org-document-title :foreground "#2fafff")
+  '(org-list-dt :foreground "#2fafff")
+  '(tab-bar-tab
+    :background "#2fafff"
+    :foreground "#000000"
     :weight bold)
-  `(tab-bar-tab-inactive :background ,(doom-color 'region))
-  `(org-block
-    :background ,(doom-color 'bg-alt))
-  `(org-drawer :foreground ,(doom-color 'teal))
-  `(org-block-begin-line
-    :background ,(doom-color 'bg-alt)
-    :foreground ,(doom-color 'teal))
-  `(org-list-dt :inherit outline-1))
-
-(after! evil
-  (setq evil-normal-state-cursor   `(,(doom-color 'blue) box)
-        evil-insert-state-cursor   `(,(doom-color 'blue) bar)
-        evil-motion-state-cursor   `(,(doom-color 'blue) box)
-        evil-visual-state-cursor   `(,(doom-color 'yellow) box)
-        evil-operator-state-cursor `(,(doom-color 'red) box)
-        evil-replace-state-cursor  `(,(doom-color 'red) hbar)))
-;; Theme: ok-solar (dark):1 ends here
+  `(tab-bar-tab-inactive :background "#1e1e1e")
+  '(org-drawer :foreground "#00d3d0")
+  '(org-meta-line :foreground "#00d3d0")
+  '(org-document-info-keyword :foreground "#00d3d0")
+  '(org-block-begin-line :foreground "#00d3d0"))
+(setq
+ evil-normal-state-cursor `(,"#2fafff" box)
+ evil-insert-state-cursor `(,"#2fafff" bar)
+ evil-motion-state-cursor `(,"#2fafff" box)
+ evil-visual-state-cursor `(,"#d0bc00" box)
+ evil-operator-state-cursor `(,"#ff5f59" box)
+ evil-replace-state-cursor `(,"#ff5f59" hbar))
+;; Modus theme:1 ends here
 
 ;; [[file:config.org::*Font][Font:1]]
 (setq doom-font                (font-spec :family "Iosevka Nerd Font" :size 14)
@@ -104,7 +108,6 @@
       hscroll-margin 0
       scroll-margin 0
       enable-recursive-minibuffers t
-      highlight-indent-guides-responsive  t
       display-line-numbers-type 'visual
       shell-command-prompt-show-cwd t)
 
@@ -228,8 +231,7 @@ This is sensible default behaviour, and integrates it into evil."
 ;; Evil:2 ends here
 
 ;; [[file:config.org::*Control-bindings][Control-bindings:1]]
-(map! :nm "C-s" #'evil-write
-      :nm "C-k" #'evil-backward-section-begin
+(map! :nm "C-k" #'evil-backward-section-begin
       :nm "C-j" #'evil-forward-section-end
       :nm "C-l" #'recenter-top-bottom)
 ;; Control-bindings:1 ends here
@@ -326,14 +328,15 @@ This is sensible default behaviour, and integrates it into evil."
                consult-imenu))
   (evil-add-command-properties cmd :jump t))
 
-(map! (cmd '(evil-backward-section-begin
+(dolist (cmd '(evil-backward-section-begin
              evil-forward-section-end))
       (evil-remove-command-properties cmd :jump))
 ;; Editor:1 ends here
 
 ;; [[file:config.org::*Lsp & completion][Lsp & completion:1]]
 (setq company-minimum-prefix-length 1
-      company-idle-delay 0.1 ;; NOTE :: setting to 0 => huge lags
+      ;; company-idle-delay 0.2 ;; NOTE :: setting to 0 => huge lags
+      ;; company-tooltip-idle-delay 0.2
       company-show-quick-access t
       company-global-modes '(not
                              erc-mode
@@ -858,10 +861,6 @@ Jumps at tangled code from org src block."
 ;; [[file:config.org::*Nushell][Nushell:1]]
 (load! "user/nushell-mode.el")
 ;; Nushell:1 ends here
-
-;; [[file:config.org::*Elisp][Elisp:1]]
-(add-hook! 'emacs-lisp-mode-hook (highlight-indent-guides-mode 0))
-;; Elisp:1 ends here
 
 ;; [[file:config.org::*Latex][Latex:1]]
 (setq +latex-viewers '(zathura))

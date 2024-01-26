@@ -8,7 +8,7 @@
 
 # NOTE: When programming in nushell non-interactively, use the full command-names and long style options in order to make the code scaleable and readeable.
 
-source solarized-dark.nu
+source modus_vivendi.nu
 
 alias exe = chmod +x
 alias ip = ip -color=auto
@@ -145,7 +145,7 @@ $env.config = {
     vi_normal: block
   }
 
-  color_config: (solarized_dark)
+  color_config: (modus_vivendi)
   use_grid_icons: false
   footer_mode: "25" # always, never, number_of_rows, auto
   float_precision: 2
@@ -275,22 +275,6 @@ $env.config = {
         {edit: InsertString, value: " --help | bat --language=man"}
         {send: Enter}
       ]
-    }
-
-    {
-      name: line_end
-      modifier: shift
-      keycode: char_l
-      mode: vi_normal
-      event: {edit: MoveToLineEnd}
-    }
-
-    {
-      name: line_begin
-      modifier: shift
-      keycode: char_k
-      mode: vi_normal
-      event: {edit: MoveToLineStart}
     }
 
     {

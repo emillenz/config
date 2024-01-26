@@ -26,7 +26,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - Oksolar :: Slightly improved contrast between fg/bg vs normal Solarized theme (using modern OKLab colorspaces).
 - Note :: change cursor etc colors based on the theme dynamically and don't hard-code them in (extensible).
 - Cursor :: Different cursor color dependent on mode you are in.
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (setq doom-theme 'doom-oksolar-dark)
 
 ;; HACK:: :inherit doesn't work
@@ -52,6 +52,39 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
         evil-visual-state-cursor   `(,(doom-color 'yellow) box)
         evil-operator-state-cursor `(,(doom-color 'red) box)
         evil-replace-state-cursor  `(,(doom-color 'red) hbar)))
+#+end_src
+
+** Modus theme
+#+begin_src emacs-lisp
+(setq doom-theme 'modus-vivendi)
+
+(setq
+ modus-themes-mixed-fonts t
+ modus-themes-italic-constructs t
+ modus-themes-bold-constructs t
+ modus-themes-org-blocks 'gray-background)
+
+;; HACK:: cannot be set in modus themes
+(custom-set-faces!
+  '(modus-themes-heading-1 :foreground "#2fafff")
+  '(org-document-title :foreground "#2fafff")
+  '(org-list-dt :foreground "#2fafff")
+  '(tab-bar-tab
+    :background "#2fafff"
+    :foreground "#000000"
+    :weight bold)
+  `(tab-bar-tab-inactive :background "#1e1e1e")
+  '(org-drawer :foreground "#00d3d0")
+  '(org-meta-line :foreground "#00d3d0")
+  '(org-document-info-keyword :foreground "#00d3d0")
+  '(org-block-begin-line :foreground "#00d3d0"))
+(setq
+ evil-normal-state-cursor `(,"#2fafff" box)
+ evil-insert-state-cursor `(,"#2fafff" bar)
+ evil-motion-state-cursor `(,"#2fafff" box)
+ evil-visual-state-cursor `(,"#d0bc00" box)
+ evil-operator-state-cursor `(,"#ff5f59" box)
+ evil-replace-state-cursor `(,"#ff5f59" hbar))
 #+end_src
 
 ** Font
@@ -143,7 +176,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
       hscroll-margin 0
       scroll-margin 0
       enable-recursive-minibuffers t
-      highlight-indent-guides-responsive  t
       display-line-numbers-type 'visual
       shell-command-prompt-show-cwd t)
 
@@ -256,7 +288,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   - ~Q~: shortcut to ~@@~ (def macro with ~qq~, execute with ~@q~ in 99% of cases)
   - ~M~: save point to jumplist (save pos -> do edits elsewhere -> jump back to saved pos: ~C-o~)
   - ~&~: Allows for same usage as normal: ~&~, but more powerful (repeat any last ~ex~ command)
-  - ~TAB~: folding (inspired by org-modes folding (smart/simple one-key folding))
+  - ~TAB~: folding. Inspired by org-modes folding functionality. (smart/simple one-key folding))
   - ~()~ for quickly jumping out of code delimiters (and when coding in lisp, especially useful)
 - Escape :: Remap ~esc~ to ~left-alt~ systemwide for ergonomic access. (don't map to ~capslock~, since ~caps~ should be mapped to: ~backspace~. Which is even more frequently used and even less ergonomic than ~esc~)
 - Moving by Sections :: ~[]~, implemented in all relevant modes (org, magit..)
@@ -317,8 +349,7 @@ This is sensible default behaviour, and integrates it into evil."
 - Marks :: set a mark for the jumplist with ~M~ at current position
   - This has basically replaced my need for vim's marks as i mostly alternate between two positions for quick edits, and if i need two separate positions.
 #+begin_src emacs-lisp
-(map! :nm "C-s" #'evil-write
-      :nm "C-k" #'evil-backward-section-begin
+(map! :nm "C-k" #'evil-backward-section-begin
       :nm "C-j" #'evil-forward-section-end
       :nm "C-l" #'recenter-top-bottom)
 #+end_src
@@ -439,7 +470,7 @@ This is sensible default behaviour, and integrates it into evil."
                consult-imenu))
   (evil-add-command-properties cmd :jump t))
 
-(map! (cmd '(evil-backward-section-begin
+(dolist (cmd '(evil-backward-section-begin
              evil-forward-section-end))
       (evil-remove-command-properties cmd :jump))
 
@@ -449,7 +480,8 @@ This is sensible default behaviour, and integrates it into evil."
 - Lsp saves time, hence we want it fast, and enabled everywhere except for prose.
 #+begin_src emacs-lisp
 (setq company-minimum-prefix-length 1
-      company-idle-delay 0.1 ;; NOTE :: setting to 0 => huge lags
+      ;; company-idle-delay 0.2 ;; NOTE :: setting to 0 => huge lags
+      ;; company-tooltip-idle-delay 0.2
       company-show-quick-access t
       company-global-modes '(not
                              erc-mode
@@ -1108,10 +1140,6 @@ Jumps at tangled code from org src block."
 
 #+begin_src emacs-lisp
 (load! "user/nushell-mode.el")
-#+end_src
-* Elisp
-#+begin_src emacs-lisp
-(add-hook! 'emacs-lisp-mode-hook (highlight-indent-guides-mode 0))
 #+end_src
 
 * Latex

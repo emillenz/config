@@ -1,153 +1,3 @@
-emacs config.org
-doom sync
-startup
-^emacs
-^emacs
-startup
-doom sync
-startup
-ps | find syncthing
-killall syncthing
-syncthing 
-ps | find syncthing
-kill -h | bat
-killall -h | bat
-man killall -h | bat
-sleep 5min; print aaaa
-sleep 5sec; print aaaa
-sync_config
-$env.PATH
-sync_config
-dnfi xournalpp
-dnfi libreoffice
-dnfs wacom
-dnfi xorg-x11-drv-wacom
-focus tui 'bc -l'
-starutp
-startup
-"" 
-"" == nothing
-"" == Nothing
-"" == null
-sync_config 
-syncthing
-killall syncthing
-killall emacs
-emacs --daemon
-^emacs --daemon
-doom sync
-git status=
-git status
-cd doom/
-ls
-git status
-git add snippets
-git status
-git commit -am 'sync'; git push
-syncthing
-ipa
-ip a
-route 
-route
-emacs --daemon
-^emacs --daemon
-sync_config 
-ls
-^emacs --daemon
-sync_config 
-^emacs --daemon
-xprop
-startup
-setxkbmap us dvorak
-startup
-^emacs --daemon
-sync_config 
-^emacs --daemon
-sync_config 
-killall syncthing
-syncthing
-pandoc  -h | bat
-tldr pandoc
-pandoc ~/.config/i3/config.org -o /tmp/config.html; firefox /tmp/config.html
-pandoc ~/.config/i3/config.org -o /tmp/config.pdf; firefox /tmp/config.html
-pandoc ~/.config/i3/config.org -o /tmp/config.pdf; firefox /tmp/config.pdf
-~/.config/i3/config | less
-open ~/.config/i3/config | less
-open ~/.config/i3/config.org | less
-open ~/.config/i3/config.org | bat
-tldr bat
-bat --list-languages
-open ~/.config/i3/config.org | bat  -h | bat
-open ~/.config/i3/config.org | bat  -l org
-tldr pandoc
-pandoc  -h | bat
-pandoc ~/.config/i3/config.org -o /tmp/config.pdf --toc; firefox /tmp/config.pdf
-pandoc ~/.config/i3/config.org -o /tmp/config.html --toc; firefox /tmp/config.html
-rm -f /tmp/config.html; pandoc ~/.config/i3/config.org -o /tmp/config.html --toc; firefox /tmp/config.html
-rm -f /tmp/config.html; pandoc ~/.config/i3/config.org -o --toc /tmp/config.html ; firefox /tmp/config.html
-rm -f /tmp/config.html; pandoc ~/.config/i3/config.org --toc -o /tmp/config.html ; firefox /tmp/config.html
-emacs ~/.config/i3/config.org
-startup
-ls
-starutp
-startup
-sync_config 
-syncthing
-startup
-^emacs --daemon
-git status
-sync_config 
-killall syncthing
-syncthing
-6emacs --daemon
-^emacs --daemon
-doom sync
-dnfi xournalpp
-dnfi libreoffice
-dnfs obs
-sudo dnf install kmod-v4l2loopback
-flatpak search
-flatpak search --help
-flatpak search obs
-flatpak  -h | bat
-flatpak search open broadcast
-flatpak install flathub com.obsproject.Studio
-ps | find syncthing
-"syncthing &" | bash
-^emacs --daemon
-tree
-vi .
-vi booklist.org
-firefox -h | bat
-ps -l 
-firefox google.com
-ps -l | find google
-ps -l | find fier
-ps -l | find fire
-oracel
-oracle
-dnfs vm
-go install -v github.com/owasp-amass/amass/v3/...@master
-extract (fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf)
-extract amass_Linux_amd64.zip
-ls
-bat readme.md
-bat README.md
-./amass
-cd amass_Linux_amd64/
-mv amass /usr/bin
-sudo mv amass /usr/bin
-ls /usr/bin
-ls /usr/bin _
-ls /usr/bin | find amass
-amass
-amass -h | bat
-man amass 
-amass -h
-syncthing
-^emacs --daemon
-syncthing
-ps | find syncthing=
 startup
 syncthing=
 syncthing
@@ -9998,3 +9848,153 @@ ls
 startup
 ls
 startup
+ls
+syncthing
+startup
+sudo killall xremap; startup
+sudo killall xremap and startup
+sudo killall xremap && startup
+sudo killall xremap
+startup
+sudo killall xremap; startup
+startup
+sudo killall xremap; startup
+ls
+startup
+ls
+sudo killall xremap
+startup
+xremap --watch=device ~/.config/xremap/config.yml
+sudo xremap --watch=device ~/.config/xremap/config.yml
+"sudo xremap --watch=device ~/.config/xremap/config.yml &" | bash
+ls
+sl
+ls
+sla
+lsa
+ls
+lsd
+ls
+sudo xremap --watch=device ~/.config/xremap/config.yml
+"sudo xremap --watch=device ~/.config/xremap/config.yml &" | bash
+nvim
+;q
+nvim
+yay exo
+exo
+ls
+startup
+emacs 
+xremap --watch=device ~/.config/xremap/config.yml
+ps | get name | each {split words | get 0}
+ps | get name | each {split words | get 0} | find firefox
+ps | get name 
+ps | get name | find firefox
+ps | get name | find emacs
+ps | get name | find xremap
+ps | get name 
+ps | get name | if xremap in $in
+ps | get name | if (xremap in $in) {print f}
+ps
+xremap in (ps | get name)
+"xremap" in (ps | get name)
+help any 
+(ps | get name) | any { $in =~ "xremap"}
+(ps | get name) | any { $in =~ "fa;slkdfj"}
+help in
+sudo xremap --watch=device ~/.config/xremap/config.yml
+startup
+ls
+diff
+tldr diff 
+"In linear algebra, the Reduced Row Echelon Form (RREF) of a matrix serves several important purposes:<\n><\n>    Solving Systems of Linear Equations: The RREF provides a systematic method for solving systems of linear equations by identifying the solutions, including determining whether the system has no solution, a unique solution, or infinitely many solutions.<\n><\n>    Determining Linear Independence: The RREF helps in determining the linear independence of vectors or the columns of a matrix. Linearly independent columns correspond to pivot columns in the RREF.<\n><\n>    Computing Basis and Dimension: In conjunction with determining linear independence, the RREF aids in computing the basis and dimension of the column space (image) and null space (kernel) of a matrix.<\n><\n>    Finding Rank: The number of non-zero rows in the RREF gives the rank of the matrix, which is a fundamental concept in linear algebra with various applications, such as solving linear systems and understanding the structure of linear transformations.<\n><\n>    Solving Eigenvalue Problems: The RREF can be useful in solving eigenvalue problems and understanding the eigenspace of a matrix.<\n><\n>    Reducing Complexity: The RREF simplifies matrices by bringing them into a canonical form, making it easier to analyze their properties and relationships.<\n><\n>Overall, the RREF is a powerful tool in linear algebra for solving equations, understanding the structure of vector spaces, and analyzing the properties of linear transformations. It simplifies computations and provides insights into the behavior of linear systems and matrices." | save 1.txt
+"In linear algebra, the Reduced Row Echelon Form (rref) of a matrix serves several important purposes:<\n><\n>    Solving Systems of Linear Equations: The rref provides a systematic method for solving systems of linear equations by identifying the solutions, including determining whether the system has no solution, a unique solution, or infinitely many solutions.<\n><\n>    Determining Linear Independence: The rref helps in determining the linear independence of vectors or the columns of a matrix. Linearly independent columns correspond to pivot columns in the rref.<\n><\n>    Computing Basis and Dimension: In conjunction with determining linear independence, the rref aids in computing the basis and dimension of the column space (image) and null space (kernel) of a matrix.<\n><\n>    Finding Rank: The number of non-zero rows in the rref gives the rank of the matrix, which is a fundamental concept in linear algebra with various applications, such as solving linear systems and understanding the structure of linear transformations.<\n><\n>    Solving Eigenvalue Problems: The rref can be useful in solving eigenvalue problems and understanding the eigenspace of a matrix.<\n><\n>    Reducing Complexity: The rref simplifies matrices by bringing them into a canonical form, making it easier to analyze their properties and relationships.<\n><\n>Overall, the rref is a powerful tool in linear algebra for solving equations, understanding the structure of vector spaces, and analyzing the properties of linear transformations. It simplifies computations and provides insights into the behavior of linear systems and matrices." | save 2.txt
+diff 1.txt 2.txt
+"In linear algebra, the Reduced Row Echelon Form (rref) of a matrix serves several important purposes:<\n><\n>    Solving Systems of Linear Equations: The rref provides a systematic method for solving systems of linear equations by identifying the solutions, including determining whether the system has no solution, a unique solution, or infinitely many solutions.<\n><\n>    Determining Linear Independence: The rref helps in determining the linear independence of vectors or the columns of a matrix. Linearly independent columns correspond to pivot columns in the rref.<\n><\n>    Computing Basis and Dimension: In conjunction with determining linear independence, the rref aids in computing the basis and dimension of the column space (image) and null space (kernel) of a matrix.<\n><\n>    Finding Rank: The number of non-zero rows in the rref gives the rank of the matrix, which is a fundamental concept in linear algebra with various applications, such as solving linear systems and understanding the structure of linear transformations.<\n><\n>    Solving Eigenvalue Problems: The rref can be useful in solving eigenvalue problems and understanding the eigenspace of a matrix.<\n><\n>    Reducing Complexity: The rref simplifies matrices by bringing them into a canonical form, making it easier to analyze their properties and relationships.<\n><\n>Overall, the rref is a powerful tool in linear algebra for solving equations, understanding the structure of vector spaces, and analyzing the properties of linear transformations. It simplifies computations and provides insights into the behavior of linear systems and matrices.\n" | save 2.txt
+"In linear algebra, the Reduced Row Echelon Form (rref) of a matrix serves several important purposes:<\n><\n>    Solving Systems of Linear Equations: The rref provides a systematic method for solving systems of linear equations by identifying the solutions, including determining whether the system has no solution, a unique solution, or infinitely many solutions.<\n><\n>    Determining Linear Independence: The rref helps in determining the linear independence of vectors or the columns of a matrix. Linearly independent columns correspond to pivot columns in the rref.<\n><\n>    Computing Basis and Dimension: In conjunction with determining linear independence, the rref aids in computing the basis and dimension of the column space (image) and null space (kernel) of a matrix.<\n><\n>    Finding Rank: The number of non-zero rows in the rref gives the rank of the matrix, which is a fundamental concept in linear algebra with various applications, such as solving linear systems and understanding the structure of linear transformations.<\n><\n>    Solving Eigenvalue Problems: The rref can be useful in solving eigenvalue problems and understanding the eigenspace of a matrix.<\n><\n>    Reducing Complexity: The rref simplifies matrices by bringing them into a canonical form, making it easier to analyze their properties and relationships.<\n><\n>Overall, the rref is a powerful tool in linear algebra for solving equations, understanding the structure of vector spaces, and analyzing the properties of linear transformations. It simplifies computations and provides insights into the behavior of linear systems and matrices.\n" | save - f2.txt
+"In linear algebra, the Reduced Row Echelon Form (rref) of a matrix serves several important purposes:<\n><\n>    Solving Systems of Linear Equations: The rref provides a systematic method for solving systems of linear equations by identifying the solutions, including determining whether the system has no solution, a unique solution, or infinitely many solutions.<\n><\n>    Determining Linear Independence: The rref helps in determining the linear independence of vectors or the columns of a matrix. Linearly independent columns correspond to pivot columns in the rref.<\n><\n>    Computing Basis and Dimension: In conjunction with determining linear independence, the rref aids in computing the basis and dimension of the column space (image) and null space (kernel) of a matrix.<\n><\n>    Finding Rank: The number of non-zero rows in the rref gives the rank of the matrix, which is a fundamental concept in linear algebra with various applications, such as solving linear systems and understanding the structure of linear transformations.<\n><\n>    Solving Eigenvalue Problems: The rref can be useful in solving eigenvalue problems and understanding the eigenspace of a matrix.<\n><\n>    Reducing Complexity: The rref simplifies matrices by bringing them into a canonical form, making it easier to analyze their properties and relationships.<\n><\n>Overall, the rref is a powerful tool in linear algebra for solving equations, understanding the structure of vector spaces, and analyzing the properties of linear transformations. It simplifies computations and provides insights into the behavior of linear systems and matrices.\n" | save -f 2.txt
+"In linear algebra, the Reduced Row Echelon Form (RREF) of a matrix serves several important purposes:<\n><\n>    Solving Systems of Linear Equations: The RREF provides a systematic method for solving systems of linear equations by identifying the solutions, including determining whether the system has no solution, a unique solution, or infinitely many solutions.<\n><\n>    Determining Linear Independence: The RREF helps in determining the linear independence of vectors or the columns of a matrix. Linearly independent columns correspond to pivot columns in the RREF.<\n><\n>    Computing Basis and Dimension: In conjunction with determining linear independence, the RREF aids in computing the basis and dimension of the column space (image) and null space (kernel) of a matrix.<\n><\n>    Finding Rank: The number of non-zero rows in the RREF gives the rank of the matrix, which is a fundamental concept in linear algebra with various applications, such as solving linear systems and understanding the structure of linear transformations.<\n><\n>    Solving Eigenvalue Problems: The RREF can be useful in solving eigenvalue problems and understanding the eigenspace of a matrix.<\n><\n>    Reducing Complexity: The RREF simplifies matrices by bringing them into a canonical form, making it easier to analyze their properties and relationships.<\n><\n>Overall, the RREF is a powerful tool in linear algebra for solving equations, understanding the structure of vector spaces, and analyzing the properties of linear transformations. It simplifies computations and provides insights into the behavior of linear systems and matrices.\n" | save -f 1.txt
+diff 1.txt 2.txt
+ls
+glob  --help | bat --language=man
+glob *.txt
+glob *txt
+ls **/*txt
+ls *txt
+ls *txt | each {get name | rm $in}
+ls
+git clone https://github.com/miikanissi/dotfiles
+git clone https://github.com/miikanissi/modus-themes.nvim
+cd modus-themes.nvim/
+ls
+yay oomox
+ls
+cd ..
+ls
+ls -al
+la -la my anus
+ls -la
+ls
+ls -la
+ls
+ls 
+ls -la
+ls _la
+ls -la
+ls -a
+ls
+ls -la 
+ls -la
+ls
+sl
+ls
+ls --la
+ls la
+ls
+sys
+emacs --debug-init
+ls
+ls -la
+emacs --debug-init
+emacs
+emacs --nw
+emacsclient -nw
+ls
+nvim
+ls
+emacs --debug-init
+ls
+ls _la
+ls -al
+ls -la
+emacs --debug-init
+ls
+emacs --debug-init
+ls fla
+ls -la
+is
+ls
+ls -la
+ls
+ls -la
+ls fla
+ls -la
+htop
+ls
+ls -la
+ls -las
+startup
+ls
+ls -la
+emacs
+ls
+ls -la
+ls la
+ls -la
+ls
+ls #la
+ls -la
+ls lsa
+ls -la
+ls fla
+ls -la

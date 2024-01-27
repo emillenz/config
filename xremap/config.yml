@@ -22,7 +22,7 @@ keymap:
       only: firefox
     remap:
       M-t: [c-t, esc] # HACK :: needs esc
-      M-i: c-l # i -> insert
+      M-i: c-l
       M-o: c-o
       M-q: c-w
       M-slash: c-f
@@ -42,7 +42,7 @@ keymap:
       capslock-e: c-right
       capslock-b: c-left
       capslock-w: [c-right, c-right, c-left]
-      capslock-o: enter
+      capslock-o: [end, enter]
       capslock-c: c-backspace
       capslock-slash: c-f
       capslock-question: shift-f3

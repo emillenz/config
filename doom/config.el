@@ -4,8 +4,6 @@
 ;; User:1 ends here
 
 ;; [[file:config.org::*Modus theme][Modus theme:1]]
-(require-theme 'modus-themes)
-
 (setq
  modus-themes-mixed-fonts t
  modus-themes-italic-constructs t
@@ -19,10 +17,13 @@
         (bg-tab-other bg-inactive)
         (bg-tab-current bg-completion)
 
+        (fg-region unspecified) ;; NOTE :: don't turn off syntax highlighting in region
+
         (fg-heading-1 fg-heading-0)
         (prose-metadata variable)
         (prose-block variable)))
 
+;; HACK :: cannot be set within modus themes
 (custom-set-faces!
   `(org-list-dt :inherit modus-themes-heading-0)
   `(org-block-begin-line :inherit modus-themes-fg-cyan))
@@ -35,7 +36,7 @@
  evil-operator-state-cursor '("#ff5f59" box)
  evil-replace-state-cursor '("#ff5f59" hbar))
 
-(load-theme 'modus-vivendi)
+(setq doom-theme 'modus-vivendi)
 ;; Modus theme:1 ends here
 
 ;; [[file:config.org::*Font][Font:1]]

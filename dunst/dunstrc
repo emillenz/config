@@ -36,19 +36,19 @@ timeout = 10
 
 # modus vivendi
 [urgency_low]
-background = "#000000"
+background = "#303030"
 foreground = "#ffffff"
 frame_color = "#2266ae"
 timeout = 3
 
 [urgency_normal]
-background = "#000000"
+background = "#303030"
 foreground = "#ffffff"
 frame_color = "#2266ae"
 timeout = 5
 
 [urgency_critical]
-background = "#000000"
+background = "#303030"
 foreground = "#ffffff"
 frame_color = "#2266ae"
 timeout = 10

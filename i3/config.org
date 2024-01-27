@@ -290,19 +290,21 @@ client.background       $bg
 #+end_src
 
 ** Modus vivendi
+- We use mainly ~bg_alt~ in oder to distinguish the i3 bar with a different grey from the application's all black background. (Analog to modeline in emacs).
 #+begin_src conf
-set $bg     #000000
-set $bg_alt #303030
-set $fg     #ffffff
-set $main   #2266ae
-set $red    #ff5f59
+set $bg         #000000
+set $bg_alt     #303030
+set $fg         #ffffff
+set $focus      #2266ae
+set $focus_alt  #535353
+set $urgent     #ff5f59
 
-# class                 $border $bg     $text $indicator $child_border
-client.focused          $main   $main   $fg   $fg        $main
-client.focused_inactive $bg_alt $bg_alt $fg   $bg        $bg
-client.unfocused        $bg     $bg     $fg   $bg        $bg
-client.urgent           $red    $red    $bg   $bg        $bg
-client.placeholder      $bg     $bg     $fg   $bg        $bg
+# class                 $border    $bg        $text $indicator $child_border
+client.focused          $focus     $focus     $fg   $fg        $focus
+client.focused_inactive $focus_alt $focus_alt $fg   $bg        $bg
+client.unfocused        $bg_alt    $bg_alt    $fg   $bg        $bg
+client.urgent           $urgent    $urgent    $bg   $bg        $bg
+client.placeholder      $bg_alt    $bg_alt    $fg   $bg        $bg
 client.background       $bg
 #+end_src
 
@@ -322,8 +324,8 @@ bar {
     background $bg_alt
     statusline $fg
     separator  $fg
-    # class            $border $backg  $text
-    binding_mode       $main    $main  $fg
+    # class      $border $backg $text
+    binding_mode $focus  $focus $fg
   }
 }
 #+end_src

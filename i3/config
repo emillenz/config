@@ -217,18 +217,19 @@ client.background       $bg
 # Solarized:2 ends here
 
 # [[file:config.org::*Modus vivendi][Modus vivendi:1]]
-set $bg     #000000
-set $bg_alt #303030
-set $fg     #ffffff
-set $main   #2266ae
-set $red    #ff5f59
+set $bg         #000000
+set $bg_alt     #303030
+set $fg         #ffffff
+set $focus      #2266ae
+set $focus_alt  #535353
+set $urgent     #ff5f59
 
-# class                 $border $bg     $text $indicator $child_border
-client.focused          $main   $main   $fg   $fg        $main
-client.focused_inactive $bg_alt $bg_alt $fg   $bg        $bg
-client.unfocused        $bg     $bg     $fg   $bg        $bg
-client.urgent           $red    $red    $bg   $bg        $bg
-client.placeholder      $bg     $bg     $fg   $bg        $bg
+# class                 $border    $bg        $text $indicator $child_border
+client.focused          $focus     $focus     $fg   $fg        $focus
+client.focused_inactive $focus_alt $focus_alt $fg   $bg        $bg
+client.unfocused        $bg_alt    $bg_alt    $fg   $bg        $bg
+client.urgent           $urgent    $urgent    $bg   $bg        $bg
+client.placeholder      $bg_alt    $bg_alt    $fg   $bg        $bg
 client.background       $bg
 # Modus vivendi:1 ends here
 
@@ -244,9 +245,9 @@ bar {
   colors {
     background $bg_alt
     statusline $fg
-    separator  $main
-    # class            $border $backg  $text
-    binding_mode       $main    $main  $fg
+    separator  $fg
+    # class      $border $backg $text
+    binding_mode $focus  $focus $fg
   }
 }
 # Statusbar:1 ends here

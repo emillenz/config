@@ -4,7 +4,7 @@
 ;; User:1 ends here
 
 ;; [[file:config.org::*Modus theme][Modus theme:1]]
-(setq doom-theme 'modus-vivendi)
+(require-theme 'modus-themes)
 
 (setq
  modus-themes-mixed-fonts t
@@ -12,24 +12,30 @@
  modus-themes-bold-constructs t
  modus-themes-org-blocks 'gray-background)
 
-;; HACK:: cannot be set in modus themes
+(setq modus-themes-common-palette-overrides
+      `((bg-completion bg-cyan-intense)
+
+        (bg-tab-bar bg-main)
+        (bg-tab-other bg-inactive)
+        (bg-tab-current bg-completion)
+
+        (fg-heading-1 fg-heading-0)
+        (prose-metadata variable)
+        (prose-block variable)))
+
 (custom-set-faces!
-  '(modus-themes-heading-1 :foreground "#2fafff")
-  '(org-document-title :foreground "#2fafff")
-  '(org-list-dt :foreground "#2fafff")
-  '(tab-bar-tab :background "#2f447f" :weight bold :box nil)
-  `(tab-bar-tab-inactive :box nil)
-  '(org-drawer :foreground "#00d3d0")
-  '(org-meta-line :foreground "#00d3d0")
-  '(org-document-info-keyword :foreground "#00d3d0")
-  '(org-block-begin-line :foreground "#00d3d0"))
+  `(org-list-dt :inherit modus-themes-heading-0)
+  `(org-block-begin-line :inherit modus-themes-fg-cyan))
+
 (setq
- evil-normal-state-cursor `(,"#00d3d0" box)
- evil-insert-state-cursor `(,"#00d3d0" bar)
- evil-motion-state-cursor `(,"#00d3d0" box)
- evil-visual-state-cursor `(,"#d0bc00" box)
- evil-operator-state-cursor `(,"#ff5f59" box)
- evil-replace-state-cursor `(,"#ff5f59" hbar))
+ evil-insert-state-cursor '("#ffffff" bar)
+ evil-normal-state-cursor '("#ffffff" box)
+ evil-motion-state-cursor '("#ffffff" box)
+ evil-visual-state-cursor '("#d0bc00" box)
+ evil-operator-state-cursor '("#ff5f59" box)
+ evil-replace-state-cursor '("#ff5f59" hbar))
+
+(load-theme 'modus-vivendi)
 ;; Modus theme:1 ends here
 
 ;; [[file:config.org::*Font][Font:1]]
@@ -431,6 +437,7 @@ This is sensible default behaviour, and integrates it into evil."
 (add-hook! 'org-mode-hook
            '(visual-line-mode
              org-fragtog-mode
+             rainbow-mode
              +org-pretty-mode
              org-appear-mode))
 

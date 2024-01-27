@@ -1,70 +1,3 @@
-startup
-syncthing
-killall syncthing
-firefox google.com 
-syncthing
-startup
-starutp
-startup
-syncthing
-tre
-ls
-cd bo
-dnfs oracle vm
-dnfs whatweb
-dnfi whatweb
-whatweb rust.com
-whatweb https://rust.com
-whatweb https://www.rust.com
-whatweb https://www.google.com
-whatweb https://www.tesla.com
-whatweb http://www.tesla.com
-whatweb http://tesla.com
-oraclevm
-dnfs oraclevm
-dnfs vmware
-dnfs virtualbox
-git clone https://github.com/sudodus/tarballs.git
-cd tarballs && tar -xf dus.tar.xz
-cd ..
-ls
-cd dus-tmp/
-dus
-sudo dus
-sudo ./dus
-./dus
-dnfs mkusb
-dnfs do usb
-cd ..
-bot README.md
-bat README.md
-ls
-cd ..
-ls
-rm -r org tarballs
-git clone https://github.com/sudodus/tarballs.git
-ls
-./dus-installer
-./dus-installer i
-dnfs mkusb
-cd ..
-ls
-./dus-installer i
-sudo ./dus-installer i
-dnfs xterm
-dnfi xterm
-dnfs pv
-dnfi pv
-dnfs dialog
-sudo ./dus-installer i
-dnfs xdialog
-dnfs dialog
-dnfd dialog
-dnfi dialog
-sudo ./dus-installer i
-dus
-ip a
-dnfs usb-pack
 git clone https://github.com/andreyv/usb-pack-efi.git<\n>
 sudo dnf install livecd-tools liveusb-creator<\n>
 sudo fdisk -l
@@ -9998,3 +9931,70 @@ ls
 ls -la
 ls
 ls -la
+ls
+ls -la
+ls
+ls -la
+ls
+ls -la
+lls
+ls
+ls -la
+ls
+ls fla
+ls
+startup
+nvim
+ls
+vi
+ls 
+ls
+bat theme
+bat --list-themese
+bat --list-themes
+cls
+ls
+(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
+bat
+ls
+man rg
+ls
+bad
+lu
+ls
+(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
+ls
+ls\
+ls
+cd ..
+cd v
+cd vb
+cd /
+ls
+cd ~
+ls
+ssys
+sys
+ls
+ls 
+sys
+ls
+fd 
+ls
+sys
+emacs --debug-init
+ls
+man 5 alacritty
+ls
+ls -la
+ls
+ls -la
+ls
+ls -la
+emacs --nw
+emacsclient -nw
+e
+g
+emacsclient -nw --eval "(magit-status)"
+emacsclient --eval "(magit-status)"
+d

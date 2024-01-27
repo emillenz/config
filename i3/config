@@ -220,7 +220,7 @@ client.background       $bg
 set $bg     #000000
 set $bg_alt #303030
 set $fg     #ffffff
-set $main   #2f447f
+set $main   #2266ae
 set $red    #ff5f59
 
 # class                 $border $bg     $text $indicator $child_border

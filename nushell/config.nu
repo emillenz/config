@@ -18,19 +18,19 @@ alias rm = rm --recursive --verbose --trash --interactive-once
 alias cp = cp --recursive --verbose --progress --interactive
 alias mv = mv --verbose
 
-alias bat = bat --theme='Solarized (dark)'
+alias bat = bat 
 alias fzf = fzf --reverse --height=30 --color=dark --scheme=path
 
-alias e = emacs -nw
-alias g = emacs -nw --eval "(magit-status)"
-alias d = emacs -nw --eval "(dired-jump)"
+alias e = emacsclient -nw
+alias g = emacsclient -nw --eval "(magit-status)"
+alias d = emacsclient -nw --eval "(dired-jump)"
 
 $env.PATH = ($env.PATH | append ["~/.config/bin", "~/.cargo/bin", "~/.config/emacs/bin"] | uniq)
 $env.EDITOR = "emacs -nw"
 $env.VISUAL = "emacsclient --reuse-frame"
 $env.BROWSER = "firefox"
-$env.MANPAGER = "bat --plain --language=man --theme='Solarized (dark)'"
-$env.PAGER = "bat --theme='Solarized (dark)'"
+$env.MANPAGER = "bat --plain --language=man"
+$env.PAGER = "bat"
 
 # mv :: automatically create missing destination dir's.
 def mv [from: path, to: path] {

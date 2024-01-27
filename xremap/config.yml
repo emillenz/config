@@ -88,4 +88,5 @@ keymap:
 
       menu-p: shift-key_2
       menu-semicolon: shift-key_5
+      menu-slash: shift-slash
 # Src:1 ends here

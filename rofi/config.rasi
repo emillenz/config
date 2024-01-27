@@ -263,7 +263,7 @@ error-message {
   background:     #000000;
   background-alt: #303030;
   foreground:     #ffffff;
-  selected:       #2f447f;
+  selected:       #2266ae;
   active:         #44bc44;
   urgent:         #ff5f59;
 }

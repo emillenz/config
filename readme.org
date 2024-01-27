@@ -65,8 +65,6 @@ Solarized reduces brightness contrast but, unlike many low contrast colorschemes
 
 ** Colorscheme: Modus
 The modus-themes are designed in accordance with the WCAG AAA standard for colour contrast, which represents a minimum contrast ratio of 7:1 in relative luminance between any given combination of background and foreground colour values. In simple terms, the themes are designed to be highly legible.
-We never want to make exaggerations, because their cumulative effect will burden the user. We use complementary colours when it is absolutely necessary. We avoid clustering intense colours and, generally, try to give attention to whichever construct truly deserves it.
-Do we get something usable? Or do we have a gestalt form that constantly reminds the user “hey, look how pretty I am!”? We want the design to help the user. Nothing more, nothing less.
 
 * Font: Iosevka Nerd Font
 - It is incredibly compact in width to allow a lot of code on screen, especially when viewing content side by side.

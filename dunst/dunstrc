@@ -38,17 +38,17 @@ timeout = 10
 [urgency_low]
 background = "#000000"
 foreground = "#ffffff"
-frame_color = "#00d3d0"
+frame_color = "#2266ae"
 timeout = 3
 
 [urgency_normal]
 background = "#000000"
 foreground = "#ffffff"
-frame_color = "#00d3d0"
+frame_color = "#2266ae"
 timeout = 5
 
 [urgency_critical]
 background = "#000000"
 foreground = "#ffffff"
-frame_color = "#00d3d0"
+frame_color = "#2266ae"
 timeout = 10

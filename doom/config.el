@@ -26,7 +26,8 @@
 ;; HACK :: cannot be set within modus themes
 (custom-set-faces!
   `(org-list-dt :inherit modus-themes-heading-0)
-  `(org-block-begin-line :inherit modus-themes-fg-cyan))
+  `(org-block-begin-line :inherit modus-themes-fg-cyan)
+  `(org-quote :slant italic))
 
 (setq
  evil-insert-state-cursor '("#ffffff" bar)
@@ -755,15 +756,16 @@ code repetition."
         ("literature" :keys "l"
          :file (lambda () (read-file-name "file: " literature_notes_dir))
          :children (("init-source" :keys "i"
-                     :file (lambda ()
-                             (let* ((name (concat
-                                           (replace-regexp-in-region
-                                            " " "-"
-                                            (read-from-minibuffer "short title: "))
-                                           ".org")))
-                               (file-name-concat
-                                literature_notes_dir
-                                name)))
+                     :file
+                     (lambda ()
+                       (let* ((name (concat
+                                     (replace-regexp-in-string
+                                      " " "_"
+                                      (read-from-minibuffer "short title: "))
+                                     ".org")))
+                         (file-name-concat
+                          literature_notes_dir
+                          name)))
                      :type plain
                      :book-author
                      (lambda () (s-titleized-words (read-from-minibuffer "author: ")))
@@ -778,7 +780,7 @@ code repetition."
                                 ":author: %^{author}"
                                 ":year:   %^{year}"
                                 ":tags:   %^{tags}"
-                                ":type:   %^{type|book|ebook|academic-paper|article|audio-book|podcast}"
+                                ":type:   %^{type|book|ebook|paper|article|audio-book|podcast}"
                                 ":pages:  %^{pages}"
                                 ":END:"
                                 ""

@@ -51,10 +51,10 @@ window {
   enabled          : true;
   margin           : 0px;
   padding          : 0px;
-  border           : 0px 0px 0px 0px;
-  border-color     : @selected;
+  border           : 1px 1px 1px 1px;
+  border-color     : @bg-alt;
   cursor           : "default";
-  background-color : @background;
+  background-color : @bg;
 }
 
 mainbox {
@@ -75,7 +75,7 @@ inputbar {
   padding          : 5px;
   border           : 0px 0px 1px 0px;
   border-color     : @selected;
-  background-color : @background;
+  background-color : @bg;
   text-color       : @foreground;
   children         : [ "prompt", "entry" ];
 }
@@ -84,7 +84,7 @@ prompt {
   enabled          : true;
   padding          : 0px;
   background-color : inherit;
-  text-color       : inherit;
+  text-color       : @prompt;
 }
 textbox-prompt-colon {
   enabled          : true;
@@ -129,7 +129,7 @@ scrollbar {
   handle-width     : 5px ;
   handle-color     : @selected;
   border           : 0px 0px 0px 0px;
-  background-color : @background;
+  background-color : @bg;
 }
 
 element {
@@ -144,16 +144,16 @@ element {
   cursor           : pointer;
 }
 element normal.normal {
-  background-color : @background;
+  background-color : @bg;
   text-color       : @foreground;
 }
 element normal.urgent {
   background-color : @urgent;
-  text-color       : @background;
+  text-color       : @bg;
 }
 element normal.active {
   background-color : @active;
-  text-color       : @background;
+  text-color       : @bg;
 }
 element selected.normal {
   background-color : @selected;
@@ -161,23 +161,23 @@ element selected.normal {
 }
 element selected.urgent {
   background-color : @active;
-  text-color       : @background;
+  text-color       : @bg;
 }
 element selected.active {
   background-color : @urgent;
-  text-color       : @background;
+  text-color       : @bg;
 }
 element alternate.normal {
-  background-color : @background;
+  background-color : @bg;
   text-color       : @foreground;
 }
 element alternate.urgent {
   background-color : @urgent;
-  text-color       : @background;
+  text-color       : @bg;
 }
 element alternate.active {
   background-color : @active;
-  text-color       : @background;
+  text-color       : @bg;
 }
 element-icon {
   background-color : transparent;
@@ -209,13 +209,13 @@ button {
   border           : 0px 0px 0px 0px;
   border-radius    : 0px;
   border-color     : @selected;
-  background-color : @background;
+  background-color : @bg;
   text-color       : inherit;
   cursor           : pointer;
 }
 button selected {
   background-color : @selected;
-  text-color       : @background;
+  text-color       : @bg;
 }
 
 message {
@@ -231,7 +231,7 @@ textbox {
   padding           : 5px;
   border            : 0px 0px 0px 0px;
   border-color      : @selected;
-  background-color  : @background;
+  background-color  : @bg;
   text-color        : @foreground;
   vertical-align    : 0.5;
   horizontal-align  : 0.0;
@@ -244,14 +244,14 @@ error-message {
   padding          : 5px;
   border           : 0px 0px 0px 0px;
   border-color     : @selected;
-  background-color : @background;
+  background-color : @bg;
   text-color       : @foreground;
 }
 
 // // solarized-dark
 // * {
 //   background:     #002b36;
-//   background-alt: #002b36;
+//   bg-alt:         #002b36;
 //   foreground:     #98a8a8;
 //   selected:       #268bd2;
 //   active:         #859900;
@@ -261,9 +261,10 @@ error-message {
 // modus
 * {
   background:     #000000;
-  background-alt: #303030;
+  bg-alt:         #535353;
   foreground:     #ffffff;
   selected:       #2266ae;
   active:         #44bc44;
   urgent:         #ff5f59;
+  prompt:         #00d3d0;
 }

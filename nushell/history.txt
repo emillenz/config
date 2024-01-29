@@ -1,160 +1,3 @@
-nmap -sn 192.168.1.108
-nmap -sn 192.168.1.108/21
-ip a
-nmap -sn 192.168.1.108/24
-nmap -h | bat
-tldr nmap
-man nmap
-man nmap 
-man nmap | less
-nmap -v -p- 192.168.1.108/24
-nmap -v -p- -sU 192.168.1.108/24
-sudo nmap -v -p- -sU 192.168.1.108/24
-sudo nmap -v -p -sU 192.168.1.108/24
-nmap  -h | bat
-man nmap
-bash -c sudo su
-sudo nmap -v --top-ports 1000 -sU 192.168.1.108/24
-sudo nmap -v -sT 192.168.1.108/24
-sudo nmap -sT 192.168.1.108/24
-let data = (sudo nmap -sT 192.168.1.108/24)
-ls
-$data
-$data 
-$data | where str starts-with "\d"
-$data | where str starts-with '\d'
-let mut data = (data |lines)
-let mut data = ($data |lines)
-mut data = ($data |lines)
-$data
-$data | where str starts-with '\d'
-$data | where { str starts-with '\d'} 
-$data | where { str starts-with "\d" } 
-$data | where { str starts-with "8" } 
-$data
-$data
-str contains  -h | bat
-$data | where  -h | bat
-$data | where {|x| $x =~ "^\d.*"}
-$data | where {|x| $x =~ "^.*"}
-$data | where {|x| $x =~ "^2.*"}
-$data | where {|x| $x =~ "^.*"}
-$data | where str starts-with "PORT"
-str starts-with  -h | bat
-where -h | bat
-$data | where {$in str starts-with "PORT"}
-$data | where {$in | str starts-with "PORT"}
-$data 
-$data | str starts-with "2"
-$data 
-$data | find -h | bat
-$data | find -r "^2"
-$data | find -r "^\d"
-$data | find -r "^\\d"
-$data | find -r "^\\d" | parse
-$data | find -r "^\\d" | parse "{port} {state} {type}"
-parse -h | bat
-columns -h | bat
-$data | find -r "^\\d" | split column
-$data | find -r "^\\d" | split column '\s'
-$data | find -r "^\\d" | split column "\s"
-$data | find -r "^\\d" | split column "\\s"
-$data | find -r "^\\d" | split words
-$data | find -r "^\\d" | split column -c ' '
-$data | find -r "^\\d" | split column -c '   '
-$data | find -r "^\\d" | split column -c ' '
-parse  -h | bat
-head -h | bat
-header -h | bat
-columns -h | bat
-$data | find -r "^\\d" | split column -c ' ' | get column1 
-$data
-$data | find -r "^\\d" | split column -c ' ' 
-$data | find -r "^\\d" 
-$data | find -r "^\\d" | parse -r "{port}\\s{state}\\s{type}"
-$data | find -r "^\\d" | parse -r "{port}\s{state} {type}"
-$data | find -r "^\\d" | parse -r "{port}{state} {type}"
-$data | find -r "^\\d" | parse -r "{port} {state} {type}"
-$data | find -r "^\\d" | parse "{port} {state} {type}"
-$data | find -r "^\\d" | parse "(.*)\s(.*)\s(.*)"
-$data | find -r "^\\d" | parse "(.*)\s*(.*)\s*(.*)"
-$data | find -r "^\\d" | parse '(.*)\s*(.*)\s*(.*)'
-$data | find -r "^\\d" | parse '{a}\s*'
-$data | find -r "^\\d" | parse -'{a}\s*'
-$data | find -r "^\\d" | parse -r '{a}\s*'
-$data | find -r "^\\d" | parse '{a}'
-$data | find -r "^\\d" | parse -r '{a}'
-$data | find -r "^\\d" | parse -r '.*'
-$data | find -r "^\\d" | parse -regex '.*'
-$data | find -r "^\\d" | parse --regex '.*'
-$data | find -r "^\\d" | parse --regex '(.*)'
-$data | find -r "^\\d" | parse --regex '(.*)\s (.*)'
-$data | find -r "^\\d" | parse --regex '(.*)\s(.*)'
-$data | find -r "^\\d" | parse --regex '(.*)\s(.*)\s(.*)'
-$data | find -r "^\\d" | parse --regex '(.*)\s*(.*)\s*(.*)'
-$data | find -r "^\\d" | parse --regex '(.*)\s(.*)\s(.*)'
-$data | find -r "^\\d" | split column -c ' ' 
-$data | find -r "^\\d" | split column -c ' '
-$data | find -r "^\\d" | detect columns 
-$data | find -r "^\\d" 
-let data_raw = (sudo nmap -sT 192.168.1.108/24)
-$data_raw
-parse  -h | bat
-$data_raw | find -rm "^\\d"
-$data_raw | find -mr "^\\d"
-$data_raw | find -mr "^\d"
-$data_raw | find -mr "^22"
-$data_raw | lines | find -mr "^22"
-$data_raw | lines | find -mr "^"
-$data_raw | lines | find -mr "^\\d"
-$data_raw | lines | find -mr "^\\d" | split column -c ' '
-find -h | bat
-split  -h | bat
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | each {column1 | split column -c '/'}
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | each {$in.column1 | split column -c '/'}
-ls
-ls | update  -h | bat
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' 
-split column  -h | bat
-rename
-rename -h | bat
-insert
-insert -h | bat
-str substring  -h | bat
-str -h | bat
-str trim  -h | bat
-spilt  -h | bat
-split -h | bat
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|| split column -c '/' | get column2}
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|| split column -c '/' }
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | split column -c '/' }
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | split column -c '/' | get column2}
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | split column -c '/' | get column2 | flatten}
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | split column -c '/' | get column2.0}
-str replace  -h | bat
-path -h | bat
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename}
-update  -h | bat
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname}
-$data_raw 
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} 
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocel\
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol\
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol
-(nmap -p -sT (ip a)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol
-(nmap -sT (ip a)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol
-ip a
-ipaddr
-ip addr
-ip  -h | bat
-ip address-
-ip address
-ip -h
-ip a -h
-ip -h a
-ip -h a | line
-ip -h a | lines
-ip -h a | lines | get 8 | split words | get 2
 ip -h a | lines | get 8 | split words
 ip -h a | lines | get 8 
 ip -h a | lines | get 8 | split words
@@ -9998,3 +9841,160 @@ sys
 ls
 sys
 fd
+ls
+ls -la
+ls
+ls -la
+lf -la
+ls -la
+ls
+sys
+ls -la
+for file in (ls | where type == file | get name) {<\n>        cp -v $file test<\n>}<\n><\n>for file in (ls test | get name) {<\n>        open $file |<\n>        lines |<\n>        each {|x| if $x =~ '#' {<\n>                str replace -a '\s{4}' "\t"}<\n>        } |<\n>        to text |<\n>        save -f $file<\n>}
+ls
+ls -la
+ls
+ls -la
+ls
+ls -la
+ls
+ls my ass
+ls
+sys
+ls -la
+ls
+sys
+ls
+sys
+ls
+sys
+ps
+ls
+ls -la
+ls
+ls -la
+sys
+ls | where type == file | get name 
+ls -las | where type == directory 
+ls -las
+ls -las | any {type == dir}
+ls -las | where type == dir
+ls -las | where type == dir | get name
+ls -las | where type == file | get name
+ls
+ls | where type == file | get name
+ls
+ls | where type == file 
+ls
+[1 2 3 4] | pring
+[1 2 3 4] | print
+ls
+ls -la
+nu --version
+nu --help
+help any
+ls
+help any
+ls
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+ls -la
+ls
+ls -la
+startup
+jshell
+ls
+ls -la
+"# Longest Palindromic Subsequence<\n><\n>A ***palindrome*** is a sequence of characters which reads the same backward as forward, e.g., "level", "noon","racecar". <\n>Given a sequence $A$ of $n$ characters, your task is to compute the ***length*** of the **longest palindromic subsequence** of $A$, i.e., the *length* of the *longest subsequence* of $A$ that is a *palindrome*.<\n>For instance, if $A$ is "ETZHEEHU", "HEEH" is the longest palindromic subsequence of $A$, and its length is **4**.<\n><\n><\n>**Grading** (16 points):<\n><\n>- An $O(n^2)$-time implementation gets 16 points, while an $O(2^n)$-time implementation still gets 6 points.<\n><\n><\n>**Note**: The input array $A$ is indexed from $0$, and all characters are capitals. <\n><\n><\n>**Attention**: <\n><\n>- You are NOT allowed to use imports explicitly or implicitly other than the imports already in the code template.  <\n>- You see the **percentage** of your submission in the CodeExpert system instead of points." | save -f ex.md
+ls
+bat ex.md
+pandoc ex.md -o ex.pdf
+ls
+sys
+ls
+ls -la
+ls
+lf fla
+ls -la
+sys
+ls
+sys
+ils
+ls
+ls -la
+ls
+rm ex.md ex.pdf
+ls
+"# Pair-Subsequence<\n><\n>You are given an array $A$ of $n$ integers, some of them positive and some of them negative, indexed from $0$ to $n-1$.<\n><\n>Your task is to find the maximum sum that the elements of a *pair-subsequence* of $A$ can have. A pair-subsequence is defined as a subsequence that also satisfies the following properties:<\n><\n>- if the element with index $i$ appears in the subsequence, then either the element with index $i-1$ or the element with index $i+1$ also appears in the subsequence<\n>- no three elements with consecutive indices appear in the subsequence<\n><\n>More informally, a pair-subsequence is a subsequence obtained by selecting pairs of consecutive elements of $A$, such that the pairs are not adjacent to each other. A pair-subsequence is also allowed to be empty, case in which the sum of its elements is defined to be $0$.<\n><\n>For example, for $n=8$ and $A=[1, 2, 3, 3, 2, 2, -10, 10]$, the pair-subsequence of maximum sum is the one with indices $1, 2, 4, 5$, corresponding to values $2, 3, 2, 2$, and hence with sum $9$.<\n><\n>Return the maximum sum of the elements of a pair-subsequence of $A$.<\n><\n>You need to implement your solution as a method **getMaximumSum($n$, $A$)**.<\n><\n>**Grading** (16 points):<\n><\n>- An $O(n^2)$ solution gets 6 points and an $O(n)$ solution gets 16 points.<\n><\n>**Attention**: <\n><\n>- You are **NOT** allowed to use imports explicitly or implicitly, other than the imports already included in the code template.  <\n>- When you submit the code, you see your score as a **percentage**, not as a number of points." | save -f ex.md
+pandoc ex.md -o ex.pdf
+"# Players on a Graph<\n><\n>You are given a directed graph with $n$ nodes and $n$ edges, such that the out-degree of each node is $1$. You are guaranteed that, viewing the edges as *undirected*, the graph is connected. Such a graph always contains exactly one cycle. Here is an example for $n=11$, in which the nodes $4$, $7$, $8$, and $10$ form the cycle:<\n><\n>![cycle_graph.png](/cycle_graph.png)<\n><\n>In the beginning, each node of the graph contains a player. Then a timer starts, and at each time step, each players moves to the node indicated by the edge of its current node. The timer continues forever. Note that multiple players may arrive at the same time at the same node -- that is allowed.<\n><\n>Given such a graph, you have to answer queries of the following type:<\n><\n>1.  **cycleLength()**: Return the length of the cycle of the graph.<\n><\n>2.  **distanceToCycle($x$)**: For the player that starts at node $x$, return the number of edges that it has to traverse to reach the cycle. (If $x$ is already in the cycle, the answer is $0$.)<\n><\n>3.  **firstNodeInCycle($x$)**: After some time steps, the player that starts at node $x$ reaches the cycle. Return the first node in the cycle that this player reaches. (If $x$ is already in the cycle, the answer is $x$.)<\n><\n>4.  **distanceInCycle($x$, $y$)**: After some time steps, both the player that starts at node $x$ and the player that starts at node $y$ have reached the cycle. Return the distance between them on the cycle (this distance is calculated viewing the edges of the cycle as *undirected*; that is, the minimum of the clockwise distance and counterclockwise distance on the cycle).<\n><\n>    (Note that the two players may reach the cycle at different time steps.)<\n><\n>You have to implement the four methods described above. In addition, we provide an **intialize()** method which we guarantee to run exactly once, before the queries. Feel free to use this method, for example, to initialize information that you want available in all of the queries.<\n><\n>**Grading** (24 points):<\n><\n>1.  **cycleLength()** (4 points): This query will be run at most once. An $O(n)$-time implementation gets $4$ points.<\n>2.  **distanceToCycle($x$)** (6 points): If $q$ is the number of queries of this type, an $O(n+q)$-time implementation gets 6 points and an $O(nq)$-time implementation gets 3 points.<\n>3.  **firstNodeInCycle($x$)** (6 points): If $q$ is the number of queries of this type, an $O(n+q)$-time implementation gets 6 points and an $O(nq)$-time implementation gets 3 points.<\n>4.  **distanceInCycle($x$, $y$)** (8 points): If $q$ is the number of queries of this type, an $O(n+q)$-time implementation gets 8 points and an $O(nq)$-time implementation gets 4 points.<\n><\n>**Attention**:<\n><\n>*   You are **NOT** allowed to use imports explicitly or implicitly, other than the imports already included in the code template.<\n>*   When you submit the code, you see your score as a **percentage**, not as a number of points." | save -f ex.md
+pandoc ex.md -o ex.pdf
+"# Players on a Graph<\n><\n>You are given a directed graph with $n$ nodes and $n$ edges, such that the out-degree of each node is $1$. You are guaranteed that, viewing the edges as *undirected*, the graph is connected. Such a graph always contains exactly one cycle. Here is an example for $n=11$, in which the nodes $4$, $7$, $8$, and $10$ form the cycle:<\n><\n>![cycle_graph.png](cycle_graph.png)<\n><\n>In the beginning, each node of the graph contains a player. Then a timer starts, and at each time step, each players moves to the node indicated by the edge of its current node. The timer continues forever. Note that multiple players may arrive at the same time at the same node -- that is allowed.<\n><\n>Given such a graph, you have to answer queries of the following type:<\n><\n>1.  **cycleLength()**: Return the length of the cycle of the graph.<\n><\n>2.  **distanceToCycle($x$)**: For the player that starts at node $x$, return the number of edges that it has to traverse to reach the cycle. (If $x$ is already in the cycle, the answer is $0$.)<\n><\n>3.  **firstNodeInCycle($x$)**: After some time steps, the player that starts at node $x$ reaches the cycle. Return the first node in the cycle that this player reaches. (If $x$ is already in the cycle, the answer is $x$.)<\n><\n>4.  **distanceInCycle($x$, $y$)**: After some time steps, both the player that starts at node $x$ and the player that starts at node $y$ have reached the cycle. Return the distance between them on the cycle (this distance is calculated viewing the edges of the cycle as *undirected*; that is, the minimum of the clockwise distance and counterclockwise distance on the cycle).<\n><\n>    (Note that the two players may reach the cycle at different time steps.)<\n><\n>You have to implement the four methods described above. In addition, we provide an **intialize()** method which we guarantee to run exactly once, before the queries. Feel free to use this method, for example, to initialize information that you want available in all of the queries.<\n><\n>**Grading** (24 points):<\n><\n>1.  **cycleLength()** (4 points): This query will be run at most once. An $O(n)$-time implementation gets $4$ points.<\n>2.  **distanceToCycle($x$)** (6 points): If $q$ is the number of queries of this type, an $O(n+q)$-time implementation gets 6 points and an $O(nq)$-time implementation gets 3 points.<\n>3.  **firstNodeInCycle($x$)** (6 points): If $q$ is the number of queries of this type, an $O(n+q)$-time implementation gets 6 points and an $O(nq)$-time implementation gets 3 points.<\n>4.  **distanceInCycle($x$, $y$)** (8 points): If $q$ is the number of queries of this type, an $O(n+q)$-time implementation gets 8 points and an $O(nq)$-time implementation gets 4 points.<\n><\n>**Attention**:<\n><\n>*   You are **NOT** allowed to use imports explicitly or implicitly, other than the imports already included in the code template.<\n>*   When you submit the code, you see your score as a **percentage**, not as a number of points." | save -f ex.md
+bat ex.md
+ls
+pandoc ex.md -o ex.pdf
+ls
+sudo xremap --watch=device ~/.config/xremap/config.yml
+starup
+startup
+ls
+ls -las
+ls -la
+ls -)a
+sys
+ls
+ls -la
+startup
+ls
+startup
+sudo xremap --watch=device ~/.config/xremap/config.yml
+startup
+sl
+ls
+jshell
+ls
+"# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template." | pandoc -f markdown -o cx.pdf
+'# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template.' | pandoc -f markdown -o cx.pdf
+ls
+"# Two Trees<\n><\n>You are given two rooted trees, $A$ and $B$, with disjoint vertex sets. Tree $A$ has vertices indexed by $a_0$, ..., $a_{n-1}$, with the root at index $a_0$, and tree $B$ has vertices indexed by $b_0$, ..., $b_{n-1}$, with the root at index $b_0$. The edges in each tree are weighted by positive integers.<\n><\n>You want to add some new edges that connect leaves of $A$ with leaves of $B$, thus creating a connected graph. Specifically, you can add an edge only if it goes between a leaf of $A$ and a leaf of $B$. Any edge that you add has weight $0$.<\n><\n>The distance between two vertices is defined as minimum total weight of a path that connects the two vertices.<\n><\n>Given these two trees, you have to implement the following methods. All the answers are guaranteed to fit on an "int" type.<\n><\n>1. **edgeCount()**: Return the total number of edges that you can add between the two trees.<\n><\n>2. **minDistRoots()**: Return the minimum distance between the roots of the two trees that you can achieve by adding exactly one edge.<\n><\n>3. **cycle()**: Return $1$ if you can add exactly two edges such that the resulting graph has a simple cycle (no repeated vertices) that contains the two roots.<\n><\n>4. **minDistCycle()**: Return the minimum length of a simple cycle (no repeated vertices) that contains the two roots that you can achieve by adding exactly two edges. You can assume such a simple cycle exists.<\n><\n>**Grading** (24 points):<\n><\n>1. **edgeCount()** (4 points): An $O(n)$-time implementation gets $4$ points.<\n>2. **minDistRoots()** (8 points): An $O(n)$-time implementation gets $8$ points and an $O(n^2)$-time implementation gets $4$ points.<\n>3. **cycle()** (4 points): An $O(n)$-time implementation gets $4$ points.<\n>4. **minDistCycle()** (8 points): An $O(n)$-time implementation gets $8$ points and an $O(n^2)$-time implementation gets $4$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template." | pandoc -f markdown -o pdf
+"# Two Trees<\n><\n>You are given two rooted trees, $A$ and $B$, with disjoint vertex sets. Tree $A$ has vertices indexed by $a_0$, ..., $a_{n-1}$, with the root at index $a_0$, and tree $B$ has vertices indexed by $b_0$, ..., $b_{n-1}$, with the root at index $b_0$. The edges in each tree are weighted by positive integers.<\n><\n>You want to add some new edges that connect leaves of $A$ with leaves of $B$, thus creating a connected graph. Specifically, you can add an edge only if it goes between a leaf of $A$ and a leaf of $B$. Any edge that you add has weight $0$.<\n><\n>The distance between two vertices is defined as minimum total weight of a path that connects the two vertices.<\n><\n>Given these two trees, you have to implement the following methods. All the answers are guaranteed to fit on an "int" type.<\n><\n>1. **edgeCount()**: Return the total number of edges that you can add between the two trees.<\n><\n>2. **minDistRoots()**: Return the minimum distance between the roots of the two trees that you can achieve by adding exactly one edge.<\n><\n>3. **cycle()**: Return $1$ if you can add exactly two edges such that the resulting graph has a simple cycle (no repeated vertices) that contains the two roots.<\n><\n>4. **minDistCycle()**: Return the minimum length of a simple cycle (no repeated vertices) that contains the two roots that you can achieve by adding exactly two edges. You can assume such a simple cycle exists.<\n><\n>**Grading** (24 points):<\n><\n>1. **edgeCount()** (4 points): An $O(n)$-time implementation gets $4$ points.<\n>2. **minDistRoots()** (8 points): An $O(n)$-time implementation gets $8$ points and an $O(n^2)$-time implementation gets $4$ points.<\n>3. **cycle()** (4 points): An $O(n)$-time implementation gets $4$ points.<\n>4. **minDistCycle()** (8 points): An $O(n)$-time implementation gets $8$ points and an $O(n^2)$-time implementation gets $4$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template." | pandoc -f markdown -o cx.pdf
+vim
+nvim
+ls
+ls -la
+sl gf la
+ls -la
+ls -las
+ls
+startup
+l
+s
+ls
+well i don
+startup
+ls
+ls -la

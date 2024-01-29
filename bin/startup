@@ -19,8 +19,8 @@ def main [] {
     "xsetroot -solid '#000000'" # solarized_dark bg: #002b36; modus: #000000
     "xset dpms 0 0 0 && xset s off" # never screensave / turn screen off (do manually if needed)
     "syncthing --no-browser" # based file-syncing, no more cloud dependency / suckling on google/microsoft
-    "firefox --new-window https://chat.openai.com" # chatbot (integrated into workflow)
     "firefox --new-window"
+    "firefox --new-window https://chat.openai.com" # chatbot (integrated into workflow)
     "keepassxc" # TODO :: replace with pass
   ]
 

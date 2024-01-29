@@ -9,12 +9,12 @@ modmap:
       capslock:
         alone: backspace
         held: menu
-        one_timeout_millis: 200
-      alt_r: capslock
+        one_timeout_millis: 100
       alt_l:
         alone: esc
         held: alt_l
-        one_timeout_millis: 200
+        one_timeout_millis: 100
+      alt_r: capslock
 
 keymap:
   - name: browser
@@ -39,6 +39,8 @@ keymap:
       capslock-a: end
       capslock-i: home
       capslock-x: delete
+      capslock-u: c-z
+      capslock-shift-u: c-shift-z
       capslock-e: c-right
       capslock-b: c-left
       capslock-w: [c-right, c-right, c-left]
@@ -46,7 +48,7 @@ keymap:
       capslock-c: c-backspace
       capslock-slash: c-f
       capslock-question: shift-f3
-      capslock-y: [C-a, C-c]
+      capslock-y: C-c
       capslock-p: C-v
       capslock-d:
         remap:

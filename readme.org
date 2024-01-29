@@ -49,8 +49,16 @@ Imagine two kinds of grocery stores, one that just looks at what is the most pop
   - ex: use vims search replace with patterns instead of manually going through and changing each instance
   - ex: relative line jumping over spamming =j=
   - ex: tab switching => thinking fast & instinctive, develop muscle memory (when there are too many => use analytical brain by searching through the list)
+** The mouse
+#+begin_quote anon
+My preference for emacs boils down to the fact that it doesn't force me to use a mouse. A mouse is a pseudoanalog device that suffers from all the control-theory anomalies like overshoot and oscillation, plus lack of haptic confirmation. Using the mouse forces my hands off the home row, forces my eyes off my cursor (to the target of a gesture). The mouse and all its control-theory ephemera are a source of sheer agony. They cause me to hate my computer and to tire quickly from any use of it. Emacs, however, lets me focus my mind, keep my hands in an efficient pose, lets me look at my work, gives me digital feedback (press a physical keyboard button, see a result, no overshoot and oscillation) and enables longer hours in a state of pleasant flow.
 
-** Colorscheme: Solarized (dark)
+It's not Emacs specifically, but any computer tool that helps me avoid mousing. Along with mousing goes all those proprietary binary formats for documents: anything but ASCII (or, begrudgingly, UTF-8) must be banned. Long-live Emacs, org-mode, org-table, org-babel, LaTeX, git, and everything that can be represented in plain text.
+
+There is a special ring in Dante's inferno for the inventor of the mouse and for the legions of GUI designers that built all the World's software around it.
+#+end_quote
+
+* Colorscheme: Solarized (dark)
 #+begin_quote
 Solarized reduces brightness contrast but, unlike many low contrast colorschemes, retains contrasting hues (based on colorwheel relations) for syntax highlighting readability.
 - Ethan Schoonover
@@ -63,7 +71,7 @@ Solarized reduces brightness contrast but, unlike many low contrast colorschemes
 - Prefer to use dark-variant per default, since this is mostly consistent with other applications (+websites) that are not themed and reduces strain when focusing.
   - You should always have ambient light on when coding at night, in order to protect the eyes.
 
-** Colorscheme: Modus
+* Colorscheme: Modus
 The modus-themes are designed in accordance with the WCAG AAA standard for colour contrast, which represents a minimum contrast ratio of 7:1 in relative luminance between any given combination of background and foreground colour values. In simple terms, the themes are designed to be highly legible.
 
 * Font: Iosevka Nerd Font

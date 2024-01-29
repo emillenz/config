@@ -22,10 +22,13 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 * UI
-** Theme: ok-solar (dark)
+** [&] Theme: ok-solar (dark)
+:LOG:
+- state:     -> "[&]" [2024-01-27 Sat 21:08] \\
+  - Under review, as currently modus themes seem superior to me in terms of functionality and design process.
+  - Made by my favorite emacs wizard: Protesilaos Stavrou
+:END:
 - Oksolar :: Slightly improved contrast between fg/bg vs normal Solarized theme (using modern OKLab colorspaces).
-- Note :: change cursor etc colors based on the theme dynamically and don't hard-code them in (extensible).
-- Cursor :: Different cursor color dependent on mode you are in.
 #+begin_src emacs-lisp :tangle no
 (setq doom-theme 'doom-oksolar-dark)
 
@@ -55,7 +58,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 #+end_src
 
 ** Modus theme
- - Note :: make ~tab-bar~ consistent with completion interface.
+ - Make ~tab-bar~ consistent with completion interface.
+ - Cursor :: Different cursor color dependent on mode you are in.
 #+begin_src emacs-lisp
 (setq
  modus-themes-mixed-fonts t
@@ -79,7 +83,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 ;; HACK :: cannot be set within modus themes
 (custom-set-faces!
   `(org-list-dt :inherit modus-themes-heading-0)
-  `(org-block-begin-line :inherit modus-themes-fg-cyan))
+  `(org-block-begin-line :inherit modus-themes-fg-cyan)
+  `(org-quote :slant italic))
 
 (setq
  evil-insert-state-cursor '("#ffffff" bar)
@@ -1027,15 +1032,16 @@ code repetition."
         ("literature" :keys "l"
          :file (lambda () (read-file-name "file: " literature_notes_dir))
          :children (("init-source" :keys "i"
-                     :file (lambda ()
-                             (let* ((name (concat
-                                           (replace-regexp-in-region
-                                            " " "-"
-                                            (read-from-minibuffer "short title: "))
-                                           ".org")))
-                               (file-name-concat
-                                literature_notes_dir
-                                name)))
+                     :file
+                     (lambda ()
+                       (let* ((name (concat
+                                     (replace-regexp-in-string
+                                      " " "_"
+                                      (read-from-minibuffer "short title: "))
+                                     ".org")))
+                         (file-name-concat
+                          literature_notes_dir
+                          name)))
                      :type plain
                      :book-author
                      (lambda () (s-titleized-words (read-from-minibuffer "author: ")))
@@ -1050,7 +1056,7 @@ code repetition."
                                 ":author: %^{author}"
                                 ":year:   %^{year}"
                                 ":tags:   %^{tags}"
-                                ":type:   %^{type|book|ebook|academic-paper|article|audio-book|podcast}"
+                                ":type:   %^{type|book|ebook|paper|article|audio-book|podcast}"
                                 ":pages:  %^{pages}"
                                 ":END:"
                                 ""
@@ -1155,24 +1161,6 @@ Jumps at tangled code from org src block."
 
 * Computing Workflow Principles
 Following these principles will greatly improve the quality, longevity and consistency of your computing workflow. Since these are things that cannot be standardized through the config, they are the user's responsibility to implement.
-
-** File naming
- #+begin_quote
- A consistent file-naming scheme is the single best optimisation I ever did to my computing. Notwithstanding the Emacs parts.
- - Protesilaos Stavrou
-#+end_quote
-
-*** Syntax
-~DATE_TITLE_TAGS.txt~
-
-- Separator :: ~_~ for a new section, ~-~ for "spaces" between words
-- Date :: in ISO 8601 date format. (ex: =2023-12-31=)
-  - Time :: if neccessary, then concatted to date in (file-name appropriate) ISO 8601 time format (ex: =2024-01-06-T1145=, =T091654= is military time for: =11:45:54=
-- Tags :: ex: =philosophy=, =economics=
-  - Can also be subprojects
-- Lowercase :: filenames are data, hence all lowercase (same as variables)
-
-ex: ~2023-12-31_communist-manifesto_philosophy-economics-politics.org~
 
 ** File metadata
 In each new file systematically insert heading metadata (as comments) with the following template (+ more if suitable):

@@ -1,0 +1,217 @@
+#+title:  Keyboard Layering & Remaps
+#+author: Emil Lenz
+#+email:  emillenz@protonmail.com
+#+date:   2024-01-19
+#+info:   Global keyboard remapping scheme. With a focus on speed, ergonomics and accuracy.
+
+#+property: header-args:yaml :tangle config.yml :comments link
+
+* General notes
+- Key-repetition :: Disable it.
+  - This causes bad habits of you holding down a key instead of moving intelligently and fast using the appropriate motion (not holding down ~j~, istead using ~C-d~. Not spamming delete, instead using ~d...~).
+- Backspace :: Original position forces one to leave the homerow and thus interrupts flow, speed and is just plain annoying for a highly frequent key. It needs to be comfortably pressed in rapid succession. The most optial placement is: ~capslock~.
+  - Symbollayer mod-key :: it's ergonomic to hold it down and allows full range of motion for all other fingers. Needs to be backspace as symbollayer is very frequently used.
+- Vim layer :: If you do more than just typing something into a prompt you should really be using ~emacs-everywhere~ instead.
+  - The implemented control's allow for quick line editing without leaving insert mode. (for prompts in apps outside terminal/emacs)
+- Esc :: remapped ergonomically as a thumbkey to: ~alt_l~, since original position is atrocious for speed in vim motions (and uncomfortable too).
+- Left thumb :: super & alt grouped (since the have analogous functionality) => wm and in app navigation.
+- Ctrl-keys :: Get in the habit of pressing the control key's with the palm of your wrists for maximum comfort. (assuming you have a mechanical keyboard)
+- Browser :: Remap shorcuts to be consistent with global navigation scheme (use ~alt~ instead of ~ctrl~)
+
+* Layout
+I am currently forced to use ~qwerty~ due to writing exam's at my university, however once this requirement has ceeded i will return back to dvorak. Dvorak is the superior layout, since it is the only ergo-layout where ~jk~ are adjacent (for vim) and it is widely available. Additionally it is more pure, not considering ~zxcv-hotkeys~ and placing the punctuation sensibly (for programming).
+
+* Symbols Layer
+- This greatly increases precision, typing accuracy (and speed) when typing sybols.
+- Typing mistakes are worse than typing slow. Since you now have to interrupt your flow, delete and then resume again.
+- The most qualitative and longterm efficient typing style is with consistent speed with a focus on avoiding typos (Getting things right the first time). There is no shortcut to typing fast, you must learn first to type correct, only then should you start to speed up (and will do so naturally). If you don't focus on correctness, you will encourage and develop bad habits and mistakes into your typing that would have been easily avoideable.
+- And since programmers use symbols super-frequently this makes complete and total sense to have them accessible and not having reach across the entire keyboard every second word, just to type some ~()~ or a ~_~.
+
+** Layout
+| 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 |
+|---+---+---+---+---+---+---+---+---+---|
+| ' | < | > | " | ` | & | : | [ | ] | @ |
+|---+---+---+---+---+---+---+---+---+---|
+| ! | + | = | - | # | ∣ | _ | ( | ) | % |
+|---+---+---+---+---+---+---+---+---+---|
+|   | ^ | * | / | ~ | \ | $ | { | } | ? |
+|---+---+---+---+---+---+---+---+---+---|
+
+** Design principles
+Symbols are not like alpha characters, they occur less often, and they tend to occur in isolation or in short bigrams (in C code, things like ~#~ and ~!=~). We can learn nevertheless from work on optimizing alpha key layouts and apply some of those findings to symbol layouts.
+
+It’s a good idea to put the most used keys on home row and rare keys toward the corners.
+Avoid the pinkies for keys that are often double tapped (~== ++ //~). Or you might like a Repeat Key to circumvent double tapping.
+
+Make common bigrams (~!= <= += ->~) comfortable to type. Ideally they are “inward rolls”. An inward roll is a pattern typed on one hand with successive keys moving toward the center of the keyboard ("inward"), like drumming your fingers from pinky to index finger.
+
+While each principle above is reasonable for an isolated key, they will easily conflict when getting into the design. Obviously, not all keys can be on the home row and not all bigrams can be inward rolls. We need to make compromises.
+
+In order to increase the ergonomics, typing accuracy and finger travel distance we remap all symbols from the top row onto the base layer using ~capslock~ as the layer-modifier.
+
+Using vim motions also greatly benefits from using a symbol layer, since many useful keybinds such as ~{}, $, ^~ are frequently used but unergonomic.
+
+We include on this symbol layer all symbols that are accessed with shift and those who are not located on that main typing layer (ie. hard to reach, ex: ~backslash~).
+
+** Features:
+- The left hand has mathematical operators mainly (if you use dvorak, then this overlaps).
+  - Comparisons ~!= ~<= >=~
+  - Assignment operators ~-~+= ~/= *=~
+  - Arrow operators: ~-> =>~
+- Most symbols are double tapped in some use: ~<< == && || **~. So pinky keys are deliberately things that aren’t commonly double tapped
+- Right has all the braces under the powerfingers (ordered by frequency: ~() -> {} -> []~)
+- Right-side has ~^ $~, since often used in conjuction in regex (and commonly used with vim motions).
+- ~_~ is one of the most frequently used keys for namespacing in programming => under the powerfinger (and on the other hand the counterpart: ~-~, also under powerfinger, but on the operator side).
+- ~C-j, C-k~: up down => navigate completion menus in all apps.
+  - unused shortcut in most apps => more important first level mapping)
+
+* Src
+#+begin_src yaml
+virtual_modifiers:
+  - menu
+  - capslock
+
+modmap:
+  - name: global
+    remap:
+      capslock:
+        alone: backspace
+        held: menu
+        one_timeout_millis: 100
+      alt_l:
+        alone: esc
+        held: alt_l
+        one_timeout_millis: 100
+      alt_r: capslock
+
+keymap:
+  - name: browser
+    application:
+      only: firefox
+    remap:
+      M-t: [c-t, esc] # HACK :: needs esc (hides popup menu)
+      M-i: c-l
+      M-o: c-o
+      M-q: c-w
+      M-slash: c-f
+      M-question: shift-f3
+      M-n: c-g
+      M-shift-n: c-shift-g
+
+  - name: global
+    remap:
+      shift-backspace: c-backspace # NOTE :: ergonomic with capslock
+
+      capslock-j: down
+      capslock-k: up
+      capslock-h: left
+      capslock-l: right
+
+      capslock-a: end
+      capslock-i: home
+
+      capslock-u: c-z
+      capslock-shift-u: c-shift-z
+
+      capslock-e: c-right
+      capslock-b: c-left
+      capslock-w: [c-right, c-right, c-left]
+
+      capslock-o: [end, enter]
+      capslock-shift-o: [up, end, enter]
+
+      capslock-slash: c-f
+      capslock-question: shift-f3
+
+      capslock-y: C-c
+      capslock-p: C-v
+
+      capslock-x: delete
+      capslock-d:
+        remap:
+          capslock-d: [home, shift-end, delete]
+          capslock-a: [shift-end, delete]
+          capslock-i: [shift-home, delete]
+          capslock-e: c-delete
+          capslock-w: c-delete
+          capslock-b: [c-shift-left, c-x]
+
+      menu-q: apostrophe
+      menu-w: shift-comma
+      menu-e: shift-dot
+      menu-r: shift-apostrophe
+      menu-t: grave
+
+      menu-a: shift-key_1
+      menu-s: shift-equal
+      menu-d: equal
+      menu-f: minus
+      menu-g: shift-key_3
+
+      menu-x: shift-key_6
+      menu-c: shift-key_8
+      menu-v: slash
+      menu-b: shift-grave
+
+      menu-y: shift-key_7
+      menu-h: shift-backslash
+      menu-n: backslash
+
+      menu-u: shift-semicolon
+      menu-j: shift-minus
+      menu-m: shift-key_4
+
+      menu-i: leftbrace
+      menu-o: rightbrace
+      menu-k: shift-key_9
+      menu-l: shift-key_0
+      menu-comma: shift-leftbrace
+      menu-dot: shift-rightbrace
+
+      menu-p: shift-key_2
+      menu-semicolon: shift-key_5
+      menu-slash: shift-slash
+#+end_src
+
+* Symbol character frequencies
+This section is on measuring character frequencies, which helps optimize the layout for the programming languages you use. Some symbols occur much more often than others. It’s helpful to know the distribution so that we can prioritize the layout for more frequent symbols.
+
+[[https://getreuer.info/posts/keyboards/symbol-layer/index.html][Pascal Getreuer]] counted how often each symbol occurs in his files. Below are character frequencies counted on six different kinds of text, each column counted on at least 40K of data. Units are percentages. “Prose” is a mix of email and other plain text files. “Mixed” is a mixed corpus.
+
+#+begin_example
+|     | Prose    | C/C++    | Python   | Shell    | LaTeX    | Mixed    |
+|-----+----------+----------+----------+----------+----------+----------|
+| #1  | .  1.249 | _  1.369 | _  2.213 | "  2.792 | \  2.254 | ,  1.416 |
+| #2  | ,  0.952 | *  1.238 | .  2.183 | -  2.430 | {  1.327 | .  1.067 |
+| #3  | 1  0.743 | ,  1.200 | ,  1.428 | $  1.464 | }  1.326 | "  0.529 |
+| #4  | 0  0.713 | )  1.151 | )  1.248 | 0  1.386 | .  0.932 | _  0.497 |
+| #5  | -  0.633 | (  1.151 | (  1.246 | =  1.386 | $  0.800 | )  0.396 |
+| #6  | 2  0.514 | .  1.037 | '  0.844 | 1  1.333 | ,  0.754 | (  0.396 |
+| #7  | )  0.487 | /  0.991 | "  0.784 | _  1.250 | _  0.454 | -  0.362 |
+| #8  | (  0.486 | 0  0.938 | =  0.780 | /  1.219 | )  0.383 | *  0.343 |
+| #9  | 6  0.396 | ;  0.909 | 0  0.692 | ]  1.095 | (  0.372 | '  0.335 |
+| #10 | 4  0.394 | -  0.689 | :  0.663 | [  1.095 | 1  0.370 | ;  0.317 |
+| #11 | /  0.360 | 1  0.643 | 1  0.422 | .  0.937 | 0  0.361 | 0  0.315 |
+| #12 | 8  0.306 | =  0.589 | 2  0.373 | #  0.898 | 2  0.344 | /  0.290 |
+| #13 | 5  0.298 | 2  0.554 | #  0.336 | 2  0.879 | -  0.285 | 1  0.223 |
+| #14 | 3  0.281 | 3  0.361 | [  0.332 | \  0.823 | :  0.232 | =  0.210 |
+| #15 | +  0.274 | :  0.336 | ]  0.329 | ;  0.748 | %  0.212 | 2  0.191 |
+| #16 | [  0.246 | 4  0.321 | -  0.303 | :  0.658 | ^  0.194 | :  0.162 |
+| #17 | ]  0.246 | 8  0.311 | /  0.184 | )  0.653 | ~  0.176 | \  0.150 |
+| #18 | 9  0.231 | {  0.291 | 3  0.171 | (  0.493 | =  0.152 | {  0.136 |
+| #19 | 7  0.219 | }  0.291 | *  0.162 | ,  0.476 | /  0.141 | }  0.136 |
+| #20 | :  0.210 | 5  0.288 | 5  0.141 | 3  0.473 | [  0.131 | 3  0.115 |
+| #21 | =  0.191 | 9  0.287 | 4  0.136 | 6  0.466 | ]  0.128 | 4  0.101 |
+| #22 | _  0.168 | 6  0.286 | >  0.110 | 4  0.422 | 5  0.128 | [  0.101 |
+| #23 | 0.137    | +  0.282 | 6  0.108 | '  0.422 | 3  0.113 | ]  0.100 |
+| #24 | '  0.098 | >  0.272 | `  0.081 | 5  0.362 | &  0.110 | 5  0.093 |
+| #25 | "  0.070 | <  0.264 | 8  0.076 | 9  0.279 | 9  0.095 | 8  0.093 |
+| #26 | *  0.064 | [  0.262 | +  0.076 | 8  0.260 | 7  0.094 | 6  0.090 |
+| #27 | <  0.031 | ]  0.262 | 7  0.072 | 7  0.250 | 4  0.088 | !  0.089 |
+| #28 | ?  0.020 | "  0.251 | \  0.057 | 0.248    | 6  0.087 | 9  0.087 |
+| #29 | @  0.018 | 7  0.247 | <  0.057 | %  0.204 | +  0.075 | +  0.083 |
+| #30 | ~  0.017 | \  0.186 | {  0.057 | }  0.187 | 8  0.071 | >  0.079 |
+#+end_example
+
+- Caveat :: What we actually care about are keys typed. But considering editor hotkeys, that’s not necessarily the same as characters written, which is what the above counts. For instance in Vim, many symbol keys are hotkeys in normal mode, like ~/~ for search.
+- Digits :: My conclusion is digits better go on the base layer, even for coding, contrary to “programmer” layout variants. Since we need number's frequently numbered arguments to vim's commands, and sometimes for heavy data entry (calculator's, spreadsheets, etc...).

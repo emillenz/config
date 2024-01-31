@@ -1,0 +1,28 @@
+[colors]
+transparent_background_colors = false
+
+[colors.primary]
+background = "#000000"
+foreground = "#ffffff"
+
+[colors.normal]
+black =   "#000000"
+red =     "#ff5f59"
+green =   "#44bc44"
+yellow =  "#d0bc00"
+blue =    "#2fafff"
+magenta = "#b6a0ff"
+cyan =    "#00d3d0"
+white =   "#989898" # NOTE :: fg-dim
+
+[colors.cursor]
+cursor     = "#ffffff"
+text       = "#000000"
+
+[colors.vi_mode_cursor]
+cursor     = "#ffffff"
+text       = "#000000"
+
+[colors.selection]
+background = "CellForeground"
+text       = "CellBackground"

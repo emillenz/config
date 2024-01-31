@@ -32,29 +32,40 @@ keymap:
 
   - name: global
     remap:
+      shift-backspace: c-backspace # NOTE :: use this frequently for entire words when suitable
       capslock-j: down
       capslock-k: up
       capslock-h: left
       capslock-l: right
+
       capslock-a: end
       capslock-i: home
-      capslock-x: delete
+
       capslock-u: c-z
       capslock-shift-u: c-shift-z
+
       capslock-e: c-right
       capslock-b: c-left
       capslock-w: [c-right, c-right, c-left]
+
       capslock-o: [end, enter]
-      capslock-c: c-backspace
+      capslock-shift-o: [up, end, enter]
+
       capslock-slash: c-f
       capslock-question: shift-f3
+
       capslock-y: C-c
       capslock-p: C-v
+
+      capslock-x: delete
       capslock-d:
         remap:
-          capslock-d: [home, shift-end, C-x]
-          capslock-a: [shift-end, C-x]
-          capslock-i: [shift-home, C-x]
+          capslock-d: [home, shift-end, delete]
+          capslock-a: [shift-end, delete]
+          capslock-i: [shift-home, delete]
+          capslock-e: c-delete
+          capslock-w: c-delete
+          capslock-b: [c-shift-left, c-x]
 
       menu-q: apostrophe
       menu-w: shift-comma

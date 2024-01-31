@@ -4,6 +4,8 @@
 ;; User:1 ends here
 
 ;; [[file:config.org::*Modus theme][Modus theme:1]]
+(require-theme 'modus-themes)
+
 (setq
  modus-themes-mixed-fonts t
  modus-themes-italic-constructs t
@@ -12,30 +14,22 @@
 
 (setq modus-themes-common-palette-overrides
       `((bg-completion bg-cyan-intense)
+        (fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
+        (fg-heading-1 fg-heading-0)))
 
-        (bg-tab-bar bg-main)
-        (bg-tab-other bg-inactive)
-        (bg-tab-current bg-completion)
+;; HACK :: cannot be set with `modus-themes-common-palette-overrides'
+(modus-themes-with-colors
+  (setq
+   evil-insert-state-cursor `(,fg-main bar)
+   evil-normal-state-cursor `(,fg-main box)
+   evil-motion-state-cursor `(,fg-main box)
+   evil-visual-state-cursor `(,fg-main box)
+   evil-operator-state-cursor `(,red box)
+   evil-replace-state-cursor `(,red hbar))
 
-        (fg-region unspecified) ;; NOTE :: don't turn off syntax highlighting in region
-
-        (fg-heading-1 fg-heading-0)
-        (prose-metadata variable)
-        (prose-block variable)))
-
-;; HACK :: cannot be set within modus themes
-(custom-set-faces!
-  `(org-list-dt :inherit modus-themes-heading-0)
-  `(org-block-begin-line :inherit modus-themes-fg-cyan)
-  `(org-quote :slant italic))
-
-(setq
- evil-insert-state-cursor '("#ffffff" bar)
- evil-normal-state-cursor '("#ffffff" box)
- evil-motion-state-cursor '("#ffffff" box)
- evil-visual-state-cursor '("#d0bc00" box)
- evil-operator-state-cursor '("#ff5f59" box)
- evil-replace-state-cursor '("#ff5f59" hbar))
+  (custom-set-faces!
+    '(org-list-dt :inherit modus-themes-heading-0)
+    '(org-quote :slant italic)))
 
 (setq doom-theme 'modus-vivendi)
 ;; Modus theme:1 ends here

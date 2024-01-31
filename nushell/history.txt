@@ -1,97 +1,3 @@
-ip -h a | lines | get 8 | split words
-ip -h a | lines | get 8 
-ip -h a | lines | get 8 | split words
-ip -h a | lines | get 8 | split column
-ip -h a | lines | get 8 | split column ' '
-ip -h a | lines | get 8 | split column -c ' '
-ip -h a | lines | get 8 | split column  -h | bat
-ip -h a | lines | get 8 | split column -c ' '
-str trim
-str trim -h | bat
-(nmap -p -sT (ip a | lines | get 8 | split column -c ' ' | get column2 | str trim)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol
-(nmap -sT (ip a | lines | get 8 | split column -c ' ' | get column2 | str trim)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol
-(nmap -sT (ip a | lines | get 8 | split column -c ' ' | get column2 | str trim)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol | save scanned.txt
-let $table = ((nmap -sT (ip a | lines | get 8 | split column -c ' ' | get column2 | str trim)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol )
-dnfs vbox
-dnfs oracle
-dnfi VirtualBox-7.0.8_156879_fedora36-1.x86_64.rpm
-ls
-dnfi VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64.rpm
-sudo /sbin/vboxconfig
-dnfi kernel-devel kernel-devel-6.3.6-200.fc38.x86_6
-dnfs devel
-sudo dnf -y install @development-tools
-sudo dnf install kernel-headers kernel-devel dkms  -y
-/sbin/vboxconfig
-sudo /sbin/vboxconfig
-sudo dnf install kernel-devel
-sudo /sbin/vboxconfig
-sudo dnf install kernel-devel kernel-devel-6.3.6-200.fc38.x86_64
-uname -r
-sudo dnf install kernel-devel kernel-devel-6.3.6-200.fc38.x86_64
-sudo dnf update
-arp-scan -l
-dnfs arp-scan
-dnfi arp-scan
-sudo /sbin/vboxconfig
-dnfi kernel-devel
-dnfi kernel-devel-6.3.6-200.fc38.x86_64
-dnfs kernel-devel
-dnfs kernel-devel-matched
-dnfi kernel-devel-matched
-sudo dnf install kernel-headers
-sudo /sbin/vboxconfig
-sudo dnf install @development-tools
-sudo dnf install kernel-headers kernel-devel dkms
-"[virtualbox]<\n>name=Fedora $releasever - $basearch - VirtualBox<\n>baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch<\n>enabled=1<\n>gpgcheck=1<\n>repo_gpgcheck=1<\n>gpgkey=https://www.virtualbox.org/download/oracle_vbox_2016.asc!" | save /etc/yum.repos.d/virtualbox.repo
-sudo "[virtualbox]<\n>name=Fedora $releasever - $basearch - VirtualBox<\n>baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch<\n>enabled=1<\n>gpgcheck=1<\n>repo_gpgcheck=1<\n>gpgkey=https://www.virtualbox.org/download/oracle_vbox_2016.asc!" | save /etc/yum.repos.d/virtualbox.repo
-"[virtualbox]<\n>name=Fedora $releasever - $basearch - VirtualBox<\n>baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch<\n>enabled=1<\n>gpgcheck=1<\n>repo_gpgcheck=1<\n>gpgkey=https://www.virtualbox.org/download/oracle_vbox_2016.asc!" | sud osave /etc/yum.repos.d/virtualbox.repo
-"[virtualbox]<\n>name=Fedora $releasever - $basearch - VirtualBox<\n>baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch<\n>enabled=1<\n>gpgcheck=1<\n>repo_gpgcheck=1<\n>gpgkey=https://www.virtualbox.org/download/oracle_vbox_2016.asc!" | sudo save /etc/yum.repos.d/virtualbox.repo
-sudo su
-dnfi VirtualBox-7.0.8_156879_fedora36-1.x86_64.rpm
-dnfr VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64.rpm
-dnfr VirtualBox
-dnfs Virtualbox
-dnfr VirtualBox-7.0.x86_64
-dnfr VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64
-dnfs VirtualBox
-dnfi VirtualBox-7.0.x86_64
-dnfr VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64
-dnfr -f VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64
-dnfr -y VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64
-dnfi netdiscover
-dnfs netdiscover
-netdiscover
-dnfs kernel header
-dnfs kernel-headers
-dnfi kernel-headers
-sudo dnf upgrade
-sudo dnf update
-sudo dnf upgrade --refresh
-sudo dnf install kernel-headers
-sudo vmware
-dnfi kernel-headers
-sudo dnfi dkms
-do dnfi dkms
-dnfi dkms
-sudo dnf install gcc kernel-devel kernel-headers make<\n>
-ls
-bsash
-ls
-dnfs oracle
-dnfs VirtualBox
-dnfi VirtualBox-7.0.x86_64
-dnfr VirtualBox-7.0.x86_64
-dnfi VirtualBox-7.0.x86_64
-arp-scan -l
-sudo arp-scan -l
-ls
-arp-scan -l
-ls
-sudo arp-scan -l
-dnfs arp-scan
-dnfs nikto
-dnfi nikto
 sudo arp-scan -l
 sudo arp-scan -l | lines
 let data = (sudo arp-scan -l | lines)
@@ -9998,3 +9904,97 @@ well i don
 startup
 ls
 ls -la
+startup\
+startup
+startup\
+ls
+'Nach Satz 6.5 (Parsevalsche Formel) kann mann hier auch das Euklidsche Skalarprodukt $x^Ty$  verwenden. <\n><\n><\n><\n><\n><\n>Dann $M_1 = \begin{pmatrix}2 \\0\\4 \\-4 \\\end{pmatrix}$<\n><\n>$M_2 = \begin{pmatrix}3 \\1\\3 \\0 \\\end{pmatrix}$<\n><\n>(2x2 Matrix Isomorph zu 4x1 Vektor)<\n><\n><\n><\n>$b_1 = \|M_1\|_2M_1 =  \begin{pmatrix}1/3 \\0\\2/3 \\-2/3 \\\end{pmatrix}$<\n><\n><\n><\n><\n><\n>(Vor Normierung) $b_2 = \begin{pmatrix}3 \\1\\3 \\0 \\\end{pmatrix} - <b_1,M_2>_{Euklid}b_1 = \begin{pmatrix}2 \\1\\1 \\2 \\\end{pmatrix}$<\n><\n><\n><\n>(Normierung)<\n><\n>$b_2 =  1/\sqrt{10}\begin{pmatrix}2 \\1\\1 \\2 \\\end{pmatrix}$<\n><\n><\n><\n>$\Rightarrow B = \{\begin{pmatrix}1/3 \\0\\2/3 \\-2/3 \\\end{pmatrix}, \begin{pmatrix}2/\sqrt{10} \\1/\sqrt{10}\\1/\sqrt{10} \\2/\sqrt{10} \\\end{pmatrix} \}$<\n><\n><\n><\n>(Die Bedingungen aus Satz 6.4 sind gegeben, da $V$ n-dimensional ist (2x2), ein Skalarprodukt definiert ist und $M_1$ und $M_2$ bezüglich der Standardbasis gegeben sind (also einer Orthonormalbasis).<\n><\n> Wobei ich mir zwar ziemlich sicher bin, dass dies stimmt (das Resultat ist richtig), aber nicht 100%) <\n><\n><\n><\n>* "Satz 6.4" und "Satz 6.5" verweisen auf das HS2011 Skript von Martin H. Gutknecht.' | pandoc -f markdown -t pdf | zathura
+'Nach Satz 6.5 (Parsevalsche Formel) kann mann hier auch das Euklidsche Skalarprodukt $x^Ty$  verwenden. <\n><\n><\n><\n><\n><\n>Dann $M_1 = \begin{pmatrix}2 \\0\\4 \\-4 \\\end{pmatrix}$<\n><\n>$M_2 = \begin{pmatrix}3 \\1\\3 \\0 \\\end{pmatrix}$<\n><\n>(2x2 Matrix Isomorph zu 4x1 Vektor)<\n><\n><\n><\n>$b_1 = \|M_1\|_2M_1 =  \begin{pmatrix}1/3 \\0\\2/3 \\-2/3 \\\end{pmatrix}$<\n><\n><\n><\n><\n><\n>(Vor Normierung) $b_2 = \begin{pmatrix}3 \\1\\3 \\0 \\\end{pmatrix} - <b_1,M_2>_{Euklid}b_1 = \begin{pmatrix}2 \\1\\1 \\2 \\\end{pmatrix}$<\n><\n><\n><\n>(Normierung)<\n><\n>$b_2 =  1/\sqrt{10}\begin{pmatrix}2 \\1\\1 \\2 \\\end{pmatrix}$<\n><\n><\n><\n>$\Rightarrow B = \{\begin{pmatrix}1/3 \\0\\2/3 \\-2/3 \\\end{pmatrix}, \begin{pmatrix}2/\sqrt{10} \\1/\sqrt{10}\\1/\sqrt{10} \\2/\sqrt{10} \\\end{pmatrix} \}$<\n><\n><\n><\n>(Die Bedingungen aus Satz 6.4 sind gegeben, da $V$ n-dimensional ist (2x2), ein Skalarprodukt definiert ist und $M_1$ und $M_2$ bezüglich der Standardbasis gegeben sind (also einer Orthonormalbasis).<\n><\n> Wobei ich mir zwar ziemlich sicher bin, dass dies stimmt (das Resultat ist richtig), aber nicht 100%) <\n><\n><\n><\n>* "Satz 6.4" und "Satz 6.5" verweisen auf das HS2011 Skript von Martin H. Gutknecht.' | pandoc -f markdown -t pdf 
+'Nach Satz 6.5 (Parsevalsche Formel) kann mann hier auch das Euklidsche Skalarprodukt $x^Ty$  verwenden. <\n><\n><\n><\n><\n><\n>Dann $M_1 = \begin{pmatrix}2 \\0\\4 \\-4 \\\end{pmatrix}$<\n><\n>$M_2 = \begin{pmatrix}3 \\1\\3 \\0 \\\end{pmatrix}$<\n><\n>(2x2 Matrix Isomorph zu 4x1 Vektor)<\n><\n><\n><\n>$b_1 = \|M_1\|_2M_1 =  \begin{pmatrix}1/3 \\0\\2/3 \\-2/3 \\\end{pmatrix}$<\n><\n><\n><\n><\n><\n>(Vor Normierung) $b_2 = \begin{pmatrix}3 \\1\\3 \\0 \\\end{pmatrix} - <b_1,M_2>_{Euklid}b_1 = \begin{pmatrix}2 \\1\\1 \\2 \\\end{pmatrix}$<\n><\n><\n><\n>(Normierung)<\n><\n>$b_2 =  1/\sqrt{10}\begin{pmatrix}2 \\1\\1 \\2 \\\end{pmatrix}$<\n><\n><\n><\n>$\Rightarrow B = \{\begin{pmatrix}1/3 \\0\\2/3 \\-2/3 \\\end{pmatrix}, \begin{pmatrix}2/\sqrt{10} \\1/\sqrt{10}\\1/\sqrt{10} \\2/\sqrt{10} \\\end{pmatrix} \}$<\n><\n><\n><\n>(Die Bedingungen aus Satz 6.4 sind gegeben, da $V$ n-dimensional ist (2x2), ein Skalarprodukt definiert ist und $M_1$ und $M_2$ bezüglich der Standardbasis gegeben sind (also einer Orthonormalbasis).<\n><\n> Wobei ich mir zwar ziemlich sicher bin, dass dies stimmt (das Resultat ist richtig), aber nicht 100%) <\n><\n><\n><\n>* "Satz 6.4" und "Satz 6.5" verweisen auf das HS2011 Skript von Martin H. Gutknecht.' | pandoc -f markdown -o - | zathura
+'# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template.' | pandoc -f markdown -o pdf - 
+'# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template.' | pandoc -f markdown -o pdf
+'# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template.' | pandoc -f markdown -t pdf
+'# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template.' | pandoc -f markdown -t pdf -o -
+'# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template.' | pandoc -f markdown -t pdf -o - | zathura
+'# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template.' | pandoc -f markdown -t pdf -o - 
+'# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template.' | pandoc -f markdown -t pdf -o - | zathura -
+xclip  --help | bat --plain
+xclip -selection clipboard
+xclip -o
+xclip -o | pandoc -f markdown -t pdf -o
+xclip -o | pandoc -f markdown -t pdf -o -
+xclip -o | pandoc -f markdown -t pdf -o - | zathura -
+cb | pandoc -f markdown -t pdf -o - | zathura -
+xclip -o | pandoc -f markdown -t pdf -o - | zathura -
+ip
+ip -color=auto h
+ip -color=auto 
+ip help
+xclip -o | pandoc -f markdown -t pdf -o - | zathura -
+xclip -o | pandoc -f markdown -t pdf -o - | zathura -\
+xclip -o
+xclip -o | xclip
+ls
+ls 
+sys
+ls
+ls -#la
+ls fla
+ls la
+ls -sla
+ls
+rm -f ./go/
+sudo rm ./go
+sudo rm -rf ./go
+ls
+ls Code/
+ls Code/java/adder/Adder.java
+at Code/java/adder/Adder.java
+bat Code/java/adder/Adder.java
+bat --list-themes
+bat --config-dir
+bat --generate-config-file
+ls
+"# Two Trees<\n><\n>You are given two rooted trees, $A$ and $B$, with disjoint vertex sets. Tree $A$ has vertices indexed by $a_0$, ..., $a_{n-1}$, with the root at index $a_0$, and tree $B$ has vertices indexed by $b_0$, ..., $b_{n-1}$, with the root at index $b_0$. The edges in each tree are weighted by positive integers.<\n><\n>You want to add some new edges that connect leaves of $A$ with leaves of $B$, thus creating a connected graph. Specifically, you can add an edge only if it goes between a leaf of $A$ and a leaf of $B$. Any edge that you add has weight $0$.<\n><\n>The distance between two vertices is defined as minimum total weight of a path that connects the two vertices.<\n><\n>Given these two trees, you have to implement the following methods. All the answers are guaranteed to fit on an "int" type.<\n><\n>1. **edgeCount()**: Return the total number of edges that you can add between the two trees.<\n><\n>2. **minDistRoots()**: Return the minimum distance between the roots of the two trees that you can achieve by adding exactly one edge.<\n><\n>3. **cycle()**: Return $1$ if you can add exactly two edges such that the resulting graph has a simple cycle (no repeated vertices) that contains the two roots.<\n><\n>4. **minDistCycle()**: Return the minimum length of a simple cycle (no repeated vertices) that contains the two roots that you can achieve by adding exactly two edges. You can assume such a simple cycle exists.<\n><\n>**Grading** (24 points):<\n><\n>1. **edgeCount()** (4 points): An $O(n)$-time implementation gets $4$ points.<\n>2. **minDistRoots()** (8 points): An $O(n)$-time implementation gets $8$ points and an $O(n^2)$-time implementation gets $4$ points.<\n>3. **cycle()** (4 points): An $O(n)$-time implementation gets $4$ points.<\n>4. **minDistCycle()** (8 points): An $O(n)$-time implementation gets $8$ points and an $O(n^2)$-time implementation gets $4$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template." | bat
+man bat
+ls
+(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
+ls
+(fd --type=file | fzf --preview='bat {}' | str trim)
+ls
+(fd --type=file | fzf --preview='bat {}' | str trim)
+ls
+sl
+ls
+ls -la
+ls
+ls | get name
+ls | transpose 
+ls | get name | transpose 
+ls | get name 
+ls | get name | to list
+ls | get name | list
+ls | get name | into list
+ls
+ls 
+ls -la
+sys
+ls
+ls
+ls -la
+ls
+sys
+ls
+eclipse
+ls
+ellie
+ls ellie
+use std
+which ellie
+ellie
+std ellie 
+which std ellie
+std ellie -h
+std ellie
+well
+ls

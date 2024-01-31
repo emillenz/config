@@ -6,20 +6,17 @@
 # info:	  Nushell conifg with safer defaults, and efficient custom keybindings.
 # -----
 
-# NOTE: When programming in nushell non-interactively, use full-length-flags in order to make the code scaleable and readeable.
+# NOTE: When programming in nushell non-interactively, use full-length-flags in order to make the code more readeable and easier to maintain in the future.
 
+# theme ::
 source modus_vivendi.nu
 
-alias exe = chmod +x
 alias ip = ip -color=auto
 alias yay = yay --noconfirm
-
 alias rm = rm --recursive --verbose --trash --interactive-once
 alias cp = cp --recursive --verbose --progress --interactive
 alias mv = mv --verbose
-
-alias bat = bat 
-alias fzf = fzf --reverse --height=30 --color=dark --scheme=path
+alias fzf = fzf --reverse --height=15 --color=dark --scheme=path # os-consistent completion (rofi, emacs, fzf ..)
 
 alias e = emacsclient -nw
 alias g = emacsclient -nw --eval "(magit-status)"
@@ -30,7 +27,7 @@ $env.EDITOR = "emacs -nw"
 $env.VISUAL = "emacsclient --reuse-frame"
 $env.BROWSER = "firefox"
 $env.MANPAGER = "bat --plain"
-$env.PAGER = "bat"
+$env.PAGER = "bat "
 
 # mv :: automatically create missing destination dir's.
 def mv [from: path, to: path] {
@@ -40,6 +37,7 @@ def mv [from: path, to: path] {
   ^mv --verbose $from $to
 }
 
+# cp :: automatically create missing destination dir's.
 def cp [from: path, to: path] {
   if not ($to | path exists) {
     mkdir --verbose ($to | path dirname)
@@ -47,12 +45,12 @@ def cp [from: path, to: path] {
   ^cp --verbose --progress --interactive $from $to
 }
 
+# settings ::
 let fish_completer = {|spans|
     fish --command $'complete "--do-complete=($spans | str join " ")"'
     | $"value(char tab)description(char newline)" + $in
     | from tsv --flexible --no-infer
 }
-
 $env.config = {
   show_banner: false
   ls: {
@@ -259,7 +257,7 @@ $env.config = {
       keycode: char_f
       mode: [emacs, vi_normal, vi_insert]
       event: [
-        {edit: InsertString, value: "(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)"},
+        {edit: InsertString, value: "(fd --type=file | fzf --preview='bat {}' | str trim)"},
         {send: enter}
       ]
     }
@@ -321,14 +319,6 @@ $env.config = {
         {send: openeditor}
         {send: Enter}
       ]
-    }
-
-    {
-      name: listcontents
-      modifier: control
-      keycode: char_v
-      mode: [emacs, vi_normal, vi_insert]
-      event: {send: executehostcommand, cmd: " ls"}
     }
 
     {

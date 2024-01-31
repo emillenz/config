@@ -295,13 +295,11 @@ client.background       $bg
 set $bg         #000000
 set $bg_alt     #303030
 set $fg         #ffffff
-set $focus      #2266ae
-set $focus_alt  #535353
 set $urgent     #ff5f59
 
 # class                 $border    $bg        $text $indicator $child_border
-client.focused          $focus     $focus     $fg   $fg        $focus
-client.focused_inactive $focus_alt $focus_alt $fg   $bg        $bg
+client.focused          $bg        $bg        $fg   $fg        $fg
+client.focused_inactive $bg_alt    $bg        $fg   $bg        $bg
 client.unfocused        $bg_alt    $bg_alt    $fg   $bg        $bg
 client.urgent           $urgent    $urgent    $bg   $bg        $bg
 client.placeholder      $bg_alt    $bg_alt    $fg   $bg        $bg
@@ -325,7 +323,7 @@ bar {
     statusline $fg
     separator  $fg
     # class      $border $backg $text
-    binding_mode $focus  $focus $fg
+    binding_mode $bg     $bg    $fg
   }
 }
 #+end_src

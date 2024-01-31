@@ -16,14 +16,13 @@ map u scroll half-up
 map d scroll half-down
 map C-u scroll half-up
 map C-d scroll half-down
-map C-f Page Up
-map C-b Page Down
 map a adjust_window best-fit
 map A adjust_window width
 map z snap_to_page
 map t toggle_page_mode
 map r reload
 map R rotate
+map 0 adjust_window best-fit
 map = zoom in
 map - zoom out
 map i recolor

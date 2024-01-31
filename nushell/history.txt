@@ -1,36 +1,3 @@
-sudo arp-scan -l
-sudo arp-scan -l | lines
-let data = (sudo arp-scan -l | lines)
-mut data = ($data |lines)
-mut d = ($data |lines)
-$data
-mut data = (sudo arp-scan -l |lines)
-$data
-$data | drop 1
-$data | range 2..9
-$data | range 2..8
-$data 
-$data range 2..8
-$data | range 2..8
-$data | range 2..8 | parse "{c1} {c2} {c3}"
-$data | range 2..8 | parse "{c1}(.*){c2}(.*){c3}"
-$data | range 2..8 | split column ' '
-$data | range 2..8 | split column -c ' '
-$data | range 2..8 | split words
-$data | range 2..8
-$data | range 2..8 | split column -c "\s"
-$data | range 2..8 | split column -c "\\s"
-$data | range 2..8 | split column  -h | bat
-$data | range 2..8 | split column  -r "\\s*"
-$data | range 2..8 | split column  -r "\\s"
-$data | range 2..8 | split column  " "
-$data | range 2..8 | split column  -r "\\s"
-data = ($data | range 2..8 | split column  -r "\\s" )
-$data = ($data | range 2..8 | split column  -r "\\s" )
-$data 
-for x in $data.column1 { nikto -h $in}
-let d = $data
-for x in $d {print $in}
 $d
 for x in $d.colummn1 {nikto -h $x}
 for x in $d.column1 {nikto -h $x}
@@ -9998,3 +9965,36 @@ std ellie -h
 std ellie
 well
 ls
+emacs
+34 / a
+34 / 4
+yay xournalpp
+yay -R xournalpp
+nano
+ls
+vi
+nvim
+yay eclipse
+eclipse
+ls
+killall eclipse
+eclipse
+ls
+firefox
+yay -Syyu 
+ls
+transmission-cli magnet:?xt=urn:btih:1FBF9B03F4053BA2E60139092DBE7B63A2977264&dn=The+Swarm+-+Frank+Schatzing+-+2023+%28miok%29+%5BAudiobook%5D+%28Thriller%29&tr=http%3A%2F%2Fp4p.arenabg.com%3A1337%2Fannounce&tr=udp%3A%2F%2F47.ip-51-68-199.eu%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2780%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2730%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2920%2Fannounce&tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&tr=udp%3A%2F%2Fopentracker.i2p.rocks%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.cyberia.is%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.dler.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Ftracker.pirateparty.gr%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.tiny-vps.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451%2Fannounce
+nushell
+ls
+transmission-cli magnet:?xt=urn:btih:1FBF9B03F4053BA2E60139092DBE7B63A2977264&dn=The+Swarm+-+Frank+Schatzing+-+2023+%28miok%29+%5BAudiobook%5D+%28Thriller%29&tr=http%3A%2F%2Fp4p.arenabg.com%3A1337%2Fannounce&tr=udp%3A%2F%2F47.ip-51-68-199.eu%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2780%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2730%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2920%2Fannounce&tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&tr=udp%3A%2F%2Fopentracker.i2p.rocks%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.cyberia.is%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.dler.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Ftracker.pirateparty.gr%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.tiny-vps.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451%2Fannounce
+ls
+ls -la
+ellie
+std ellie
+ls
+ls la
+ls -la
+yay -Syyu
+yay xwininfo
+maim
+man maim

@@ -15,6 +15,12 @@
 (setq modus-themes-common-palette-overrides
       `((bg-completion bg-cyan-intense)
         (fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
+
+        (bg-tab-bar bg-main)
+        (bg-tab-other bg-inactive)
+        (bg-tab-current bg-completion)
+
+        (fg-region unspecified) ;; NOTE :: don't turn off syntax highlighting in region
         (fg-heading-1 fg-heading-0)))
 
 ;; HACK :: cannot be set with `modus-themes-common-palette-overrides'
@@ -29,6 +35,7 @@
 
   (custom-set-faces!
     '(org-list-dt :inherit modus-themes-heading-0)
+    `(org-block-begin-line :foreground ,prose-metadata)
     '(org-quote :slant italic)))
 
 (setq doom-theme 'modus-vivendi)
@@ -140,6 +147,7 @@
                (:prefix-map ("t" . "dictionary")
                             "d" #'+lookup/dictionary-definition
                             "s" #'+lookup/synonyms
+                            "w" #'ispell-word
                             "t" #'dictionary-search)))
 ;; Leader:1 ends here
 
@@ -211,6 +219,10 @@
       :nmv  "go"  #'consult-imenu
       :nmv  "g/"  #'+default/search-buffer)
 
+(map! :nm "C-k" #'evil-backward-section-begin
+      :nm "C-j" #'evil-forward-section-end
+      :nm "C-l" #'recenter-top-bottom)
+
 (map! :after org :map evil-org-mode-map
       :nmv "C-j"  #'org-forward-element
       :nmv "C-k"  #'org-backward-element)
@@ -228,12 +240,6 @@ This is sensible default behaviour, and integrates it into evil."
     (push str evil-ex-search-history)
     (setq evil-ex-search-pattern (list str t t))))
 ;; Evil:2 ends here
-
-;; [[file:config.org::*Control-bindings][Control-bindings:1]]
-(map! :nm "C-k" #'evil-backward-section-begin
-      :nm "C-j" #'evil-forward-section-end
-      :nm "C-l" #'recenter-top-bottom)
-;; Control-bindings:1 ends here
 
 ;; [[file:config.org::*Instant jumping][Instant jumping:1]]
 (map! :map evil-snipe-local-mode-map ;; HACK :: need to override evil-snipe
@@ -361,7 +367,7 @@ This is sensible default behaviour, and integrates it into evil."
 (setq dired-open-extensions
       '(("mkv"  . "mpv")
         ("mp4"  . "mpv")
-        ("mp3"  . "ncmpcpp")
+        ("mp3"  . "mpv")
         ("gif"  . "nsxiv")
         ("jpeg" . "nsxiv")
         ("jpg"  . "nsxiv")
@@ -674,7 +680,7 @@ code repetition."
                     ,@(mapcar
                        (lambda (proj)
                          (doct_expand proj projs 'agenda))
-                       '(personal config compass cs))))
+                       '(personal config compass))))
 
         ("event" :keys "e"
          :headline "Events"

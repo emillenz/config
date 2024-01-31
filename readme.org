@@ -11,8 +11,6 @@ Tech Geeker: (noun) A programmer nerd who are ignorant of social sciences yet pe
 
 It may looks ridiculous to the outside observer, but efficiency it’s about eliminating that invisible barrier between you and the tool that you’re using,”
 @Ethan Schonoover
-
-Imagine two kinds of grocery stores, one that just looks at what is the most popular and easy to carry that is run by a clerk that puts no further thought into his products and cannot tell you any more than what it says on the label about the product. Then let me introduce you to the second grocery store, which is run by a clerk who takes up only products into his sortiment, of which he personally has tried and stands behind. If asked why, he can reason about why he handpicked the product. It's product choices are hand picked and exquisitely selected.
 #+end_quote
 
 * Philosophy
@@ -58,25 +56,7 @@ It's not Emacs specifically, but any computer tool that helps me avoid mousing. 
 There is a special ring in Dante's inferno for the inventor of the mouse and for the legions of GUI designers that built all the World's software around it.
 #+end_quote
 
-#+begin_quote
-When i write software, i write and think of it mostly in the timespan of decades, not shortterm. Hence valuing languages like C, which will still compile, even in a decade from now.
-This same principle is applied to plain text computing.
-#+end_quote
-
-* Colorscheme: Solarized (dark)
-#+begin_quote
-Solarized reduces brightness contrast but, unlike many low contrast colorschemes, retains contrasting hues (based on colorwheel relations) for syntax highlighting readability.
-- Ethan Schoonover
-#+end_quote
-
-- It was carfully and deliberately designed by hand and intensively tested to achieve the best visibilty while maintaining low eye strain.
-- The colors are incredibly contrast rich in light and dark mode which improves readability. and they are matched, so they work with dark and light theme interchangeably
-- It's functionality and colorchoices it brings is unmatched by any other colorscheme. (Protesilaos Stavrou's: modus-themes are a close runner up.)
-- Dark variant :: The background color of the dark variant is what i imagine one would see if they were drowning in the middle of the ocean. To me it represents the color you see when dying. Both light/dark are good for long time terminal and coding sessions.
-- Prefer to use dark-variant per default, since this is mostly consistent with other applications (+websites) that are not themed and reduces strain when focusing.
-  - You should always have ambient light on when coding at night, in order to protect the eyes.
-
-* Colorscheme: Modus
+* Modus-theme (vivendi, bg:"#000000")
 The modus-themes are designed in accordance with the WCAG AAA standard for colour contrast, which represents a minimum contrast ratio of 7:1 in relative luminance between any given combination of background and foreground colour values. In simple terms, the themes are designed to be highly legible.
 Additionally the light/dark themes are designed to only invert the background/foreground relations, but maintaining consistency throughout everything else.
 
@@ -276,3 +256,8 @@ When you find yourself doing the same things repetitively or you get annoyed it 
 - Correctness :: The design must be correct in all observable aspects. Incorrectness is simply not allowed.
 - Consistency :: The design must be consistent. A design is allowed to be slightly less simple and less complete to avoid inconsistency. Consistency is as important as correctness.
 - Completeness :: The design must cover as many important situations as is practical. All reasonably expected cases must be covered. Simplicity is not allowed to overly reduce completeness.
+
+#+begin_quote
+When i write software, i write and think of it mostly in the timespan of decades, not shortterm. Hence valuing languages like C, which will still compile, even in a decade from now.
+This same principle is applied to plain text computing.
+#+end_quote

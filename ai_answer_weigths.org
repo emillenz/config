@@ -1,7 +1,8 @@
-#+title:    Ai Answer Weigths
-#+author:   Emil Lenz
-#+email:    emillenz@protonmail.com
-#+date:     Wednesday, August 23, 2023
+#+title:  Ai Answer Weigths
+#+author: Emil Lenz
+#+email:  emillenz@protonmail.com
+#+date:   2023-08-23
+#+info:   Instructions for text-based chat-bots in order to tune the result.
 
 * Answers
 ** Ideas

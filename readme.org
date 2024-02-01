@@ -56,9 +56,11 @@ It's not Emacs specifically, but any computer tool that helps me avoid mousing. 
 There is a special ring in Dante's inferno for the inventor of the mouse and for the legions of GUI designers that built all the World's software around it.
 #+end_quote
 
-* Modus-theme (vivendi, bg:"#000000")
+* Modus-theme
+(vivendi, bg:"#000000")
 The modus-themes are designed in accordance with the WCAG AAA standard for colour contrast, which represents a minimum contrast ratio of 7:1 in relative luminance between any given combination of background and foreground colour values. In simple terms, the themes are designed to be highly legible.
 Additionally the light/dark themes are designed to only invert the background/foreground relations, but maintaining consistency throughout everything else.
+Most of today's themes are an angry fruit-salad: Using as many hues as possible without considering if they fit in context and are even needed.
 
 * Font: Iosevka Nerd Font
 - It is incredibly compact in width to allow a lot of code on screen, especially when viewing content side by side.
@@ -175,6 +177,10 @@ I am of the strong opinion that you should minimize things you do repeatedly. Th
 ** Editor: (Doom) Emacs
 #+begin_quote
 Today, many aspects of daily computer usage are split between different applications which act like islands, but this often doesn’t mirror how we actually use our computers. Emacs, if one goes down the rabbit hole, can give users the power to bridge this gap into a visually and functionally consistent environment.
+
+Professional, minimalist tools like Emacs have a high learning curve and require thought and time to initially set up. But once things are working and customized they will work for years at a stretch without needing to fiddle with the nobs. And once mastered you can eliminate the "modern" GUI bits -- tool bars, menus, scrollbars and fancy animations and the like and what is left is about as clean an interface as you can get stripping everything down to the bare metal where it gets out of your way and provides the most streamlined workflow. The difference is that something like emacs is a longterm investment, it requires you to get over the high entry barrier but then never annoys you with a more elongated, bloated workflow that in other, more beginner friendly applications is the norm and cannot be changed away from.
+
+The saying, "give 'em enough rope, and they'll likely hang themselves," holds true. Emacs provides the rope if you are not careful.
 #+end_quote
 
 *Emacs* is one of the most incredible piece of Software ever made:

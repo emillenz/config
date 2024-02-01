@@ -1,7 +1,7 @@
 #+title:     Setup
 #+author:    Emil Lenz
 #+email:     emillenz@protonmail.com
-#+date:      Wednesday, June 28, 2023
+#+date:      2023-05-28
 #+property:  header-args:sh :tangle yes :shebang #!/bin/bash
 
 * Info
@@ -11,13 +11,13 @@
 
 * Setup
 #+begin_src sh
-sudo pacman -Syyu
+sudo pacman --syncyyu
 #+end_src
 
 * Core tools
 ** Terminal, Nushell
 #+begin_src sh
-yay --noconfirm -S alacritty curl libtool fzf fd ripgrep xclip xdg-utils cmake npm bat git gcc make xdotool tldr htop fish ttf-iosevka-nerd nushell tmux
+yay --noconfirm --sync alacritty curl libtool fzf fd ripgrep xclip xdg-utils cmake npm bat git gcc make xdotool tldr htop fish ttf-iosevka-nerd nushell tmux
 #+end_src
 
 Set nushell to loginshell
@@ -39,8 +39,8 @@ fd . ~/.config/bin -tf -x chmod +x {}
 
 * Editor: doom emacs
 #+begin_src sh
-yay --noconfirm -S emacs-nativecomp
-yay --noconfirm -S wordnet-cli # NOTE :: dictionary dependency
+yay --noconfirm --sync emacs-nativecomp
+yay --noconfirm --sync wordnet-cli # NOTE :: dictionary dependency
 
 git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 ~/.config/emacs/bin/doom install
@@ -48,7 +48,7 @@ git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 
 * Gui apps & packages
 #+begin_src sh
-yay --noconfirm -S i3 i3lock zathura zathura-pdf-mupdf arandr mpv rofi light sxiv unclutter firefox pavucontrol pasystray playerctl blueman xorg-xprop xremap-x11-bin light networkmanager mpd dunst notify-send nsxiv maim pulsemixer xorg-xset xorg-xsetroot
+yay --noconfirm --sync i3 i3lock zathura zathura-pdf-mupdf arandr mpv rofi light sxiv unclutter firefox pavucontrol pasystray playerctl blueman xorg-xprop xremap-x11-bin light networkmanager mpd dunst notify-send nsxiv maim pulsemixer xorg-xset xorg-xsetroot
 #+end_src
 
 ** Enable daemons
@@ -64,32 +64,32 @@ sudo systemctl enable bluetooth
 *** latex
 - For writing papers
 #+begin_src sh :tangle no
-yay --noconfirm -S texlive-latexextra latex-mk pandoc
+yay --noconfirm --sync texlive-latexextra latex-mk pandoc
 #+end_src
 
 *** Rust
 - The main language for anything that is a program and not a script.
 #+begin_src sh :tangle no
-yay --noconfirm -S rustup
+yay --noconfirm --sync rustup
 rustup component add rustfmt
 #+end_src
 
 *** C
 - When you like bare bones
 #+begin_src sh :tangle no
-yay --noconfirm -S clang gdb strace libgccjit
+yay --noconfirm --sync clang gdb strace libgccjit
 #+end_src
 
 *** Python
 - I hate python passionately for its inconsitencies and lack of consistency, but it has spread everywhere like a virus so i need support for it.
 #+begin_src sh :tangle no
-yay --noconfirm -S python pls python-black flake8
+yay --noconfirm --sync python pls python-black flake8
 #+end_src
 
 ** Misc
 - I have multiple laptops, and i want all my files to be in perfect sync, so no matter on which device i am, i have all my files.
 #+begin_src sh :tangle no
-yay --noconfirm -S syncthing transmission-cli
+yay --noconfirm --sync syncthing transmission-cli
 #+end_src
 
 ** Blackarch repo
@@ -105,11 +105,11 @@ chmod +x strap.sh
 sudo ./strap.sh
 
 # Enable multilib following https://wiki.archlinux.org/index.php/Official_repositories#Enabling_multilib and run:
-yay --noconfirm -Syu
+yay --noconfirm --syncyu
 #+end_src
 
 ** Obs & Nvidia drivers
 #+begin_src sh :tangle no
-yay --noconfirm -S obs-studio
-yay --noconfirm -S nvidia nvidia-utils lib32-nvidia-utils nvidia-settings
+yay --noconfirm --sync obs-studio
+yay --noconfirm --sync nvidia nvidia-utils lib32-nvidia-utils nvidia-settings
 #+end_src

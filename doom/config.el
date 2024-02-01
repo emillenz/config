@@ -13,14 +13,12 @@
  modus-themes-org-blocks 'gray-background)
 
 (setq modus-themes-common-palette-overrides
-      `((bg-completion bg-cyan-intense)
-        (fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
+      `((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
 
         (bg-tab-bar bg-main)
         (bg-tab-other bg-inactive)
         (bg-tab-current bg-completion)
 
-        (fg-region unspecified) ;; NOTE :: don't turn off syntax highlighting in region
         (fg-heading-1 fg-heading-0)))
 
 ;; HACK :: cannot be set with `modus-themes-common-palette-overrides'
@@ -29,14 +27,14 @@
    evil-insert-state-cursor `(,fg-main bar)
    evil-normal-state-cursor `(,fg-main box)
    evil-motion-state-cursor `(,fg-main box)
-   evil-visual-state-cursor `(,fg-main box)
+   evil-visual-state-cursor `(,yellow box)
    evil-operator-state-cursor `(,red box)
-   evil-replace-state-cursor `(,red hbar))
+   evil-replace-state-cursor `(,red hbar)))
 
-  (custom-set-faces!
-    '(org-list-dt :inherit modus-themes-heading-0)
-    `(org-block-begin-line :foreground ,prose-metadata)
-    '(org-quote :slant italic)))
+(custom-set-faces!
+  '(org-list-dt :inherit modus-themes-heading-1)
+  '(org-block-begin-line :foreground "#989898") ;; HACK :: cannot be set within modus-themes
+  '(org-quote :slant italic))
 
 (setq doom-theme 'modus-vivendi)
 ;; Modus theme:1 ends here

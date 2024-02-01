@@ -16,7 +16,7 @@ export def modus_vivendi []  {
     header:                     {fg: "#00bcff" attr: "b"}
     row_index:                  {fg: "#00bcff" attr: "b"}
 
-    search_result:              {fg: "#2266ae" bg: "#ffffff"}
+    search_result:              {fg: "#2f447f" bg: "#ffffff"}
 
     nothing:                    "#00bcff"
     empty:                      "#6ae4b9"

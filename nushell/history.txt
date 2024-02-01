@@ -1,11 +1,3 @@
-$d
-for x in $d.colummn1 {nikto -h $x}
-for x in $d.column1 {nikto -h $x}
-nikto -h 192.168.1.112
-nikto -h https://192.168.1.112
-nikto -h http://192.168.1.112
-nikto -h http://192.168.1.10
-nikto -h https://192.168.1.10
 nikto -h https://192.168.1.102
 nikto -h https://192.168.1.103
 nikto -h https://192.168.1.124
@@ -9998,3 +9990,11 @@ yay -Syyu
 yay xwininfo
 maim
 man maim
+emacs
+ls
+yay  --help | bat --plain
+ls
+emacs --debug-init
+emacs
+zathura
+man zathura

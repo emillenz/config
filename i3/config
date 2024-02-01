@@ -198,29 +198,11 @@ mode "sysact" {
 }
 # Systemact:1 ends here
 
-# [[file:config.org::*Solarized][Solarized:1]]
-set $bg     #002b36
-set $bg_alt #093946
-set $fg     #98a8a8
-set $main   #268bd2
-set $red    #dc322f
-# Solarized:1 ends here
-
-# [[file:config.org::*Solarized][Solarized:2]]
-# class                 border bg    text indicator child_border
-client.focused          $main  $main $bg  $fg       $main
-client.focused_inactive $fg    $fg   $bg  $bg       $bg
-client.unfocused        $bg    $bg   $fg  $bg       $bg
-client.urgent           $red   $red  $bg  $bg       $bg
-client.placeholder      $bg    $bg   $fg  $bg       $bg
-client.background       $bg
-# Solarized:2 ends here
-
 # [[file:config.org::*Modus vivendi][Modus vivendi:1]]
 set $bg         #000000
 set $bg_alt     #303030
 set $fg         #ffffff
-set $focus      #2266ae
+set $focus      #2f447f
 set $urgent     #ff5f59
 
 # class                 $border    $bg        $text $indicator $child_border

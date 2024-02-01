@@ -3,13 +3,10 @@
 #+email:  emillenz@protonmail.com
 #+date:   2022-11-01
 #+info:   Heavily opinionated emacs evil-mode config, with a principle-focused approach on: consistency, quality, efficiency & extensibility.
+
 #+property: header-args:emacs-lisp tangle config.el :comments link :results silent
 
 * Preface
-Professional, minimalist tools like Emacs have a high learning curve and require thought and time to initially set up. But once things are working and customized they will work for years at a stretch without needing to fiddle with the nobs. And once mastered you can eliminate the "modern" GUI bits -- tool bars, menus, scrollbars and fancy animations and the like and what is left is about as clean an interface as you can get stripping everything down to the bare metal where it gets out of your way and provides the most streamlined workflow. The difference is that something like emacs is a longterm investment, it requires you to get over the high entry barrier but then never annoys you with a more elongated, bloated workflow that in other, more beginner friendly applications is the norm and cannot be changed away from.
-
-The saying, "give 'em enough rope, and they'll likely hang themselves," holds true. Emacs provides the rope if you are not careful.
-
 - If you decide to use parts (or the entire config) *ensure* that you have *at least* every doom/module and package installed / enabled as i do, otherwise emacs will throw errors left and right.
   - Modules: [[file:init.el]]
   - Packages:[[file:packages.el]]
@@ -36,14 +33,12 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
  modus-themes-org-blocks 'gray-background)
 
 (setq modus-themes-common-palette-overrides
-      `((bg-completion bg-cyan-intense)
-        (fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
+      `((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
 
         (bg-tab-bar bg-main)
         (bg-tab-other bg-inactive)
         (bg-tab-current bg-completion)
 
-        (fg-region unspecified) ;; NOTE :: don't turn off syntax highlighting in region
         (fg-heading-1 fg-heading-0)))
 
 ;; HACK :: cannot be set with `modus-themes-common-palette-overrides'
@@ -52,14 +47,14 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
    evil-insert-state-cursor `(,fg-main bar)
    evil-normal-state-cursor `(,fg-main box)
    evil-motion-state-cursor `(,fg-main box)
-   evil-visual-state-cursor `(,fg-main box)
+   evil-visual-state-cursor `(,yellow box)
    evil-operator-state-cursor `(,red box)
-   evil-replace-state-cursor `(,red hbar))
+   evil-replace-state-cursor `(,red hbar)))
 
-  (custom-set-faces!
-    '(org-list-dt :inherit modus-themes-heading-0)
-    `(org-block-begin-line :foreground ,prose-metadata)
-    '(org-quote :slant italic)))
+(custom-set-faces!
+  '(org-list-dt :inherit modus-themes-heading-1)
+  '(org-block-begin-line :foreground "#989898") ;; HACK :: cannot be set within modus-themes
+  '(org-quote :slant italic))
 
 (setq doom-theme 'modus-vivendi)
 #+end_src

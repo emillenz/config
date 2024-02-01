@@ -248,22 +248,12 @@ error-message {
   text-color       : @foreground;
 }
 
-// // solarized-dark
-// * {
-//   background:     #002b36;
-//   bg-alt:         #002b36;
-//   foreground:     #98a8a8;
-//   selected:       #268bd2;
-//   active:         #859900;
-//   urgent:         #dc322f;
-// }
-
-// modus
+// modus-vivendi theme ::
 * {
   background:     #000000;
   bg-alt:         #535353;
   foreground:     #ffffff;
-  selected:       #2266ae;
+  selected:       #2f447f;
   active:         #44bc44;
   urgent:         #ff5f59;
   prompt:         #00d3d0;

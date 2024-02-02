@@ -18,17 +18,19 @@ export def modus_vivendi []  {
 
     search_result:              {fg: "#2f447f" bg: "#ffffff"}
 
-    nothing:                    "#00bcff"
+    # NOTE :: differentiate numbers from types; string -> white default
+    int:                        "#f78fe7"
+    float:                      "#f78fe7"
+
     empty:                      "#6ae4b9"
     bool:                       "#6ae4b9"
-    int:                        "#6ae4b9"
     filesize:                   "#6ae4b9"
     duration:                   "#6ae4b9"
-    float:                      "#6ae4b9"
+    nothing:                    "#6ae4b9"
     cellpath:                   "#6ae4b9"
+    date:                       "#6ae4b9"
+    range:                      "#6ae4b9"
 
-    date:                       "#ffffff"
-    range:                      "#ffffff"
     string:                     "#ffffff"
     binary:                     "#ffffff"
     record:                     "#ffffff"
@@ -46,15 +48,14 @@ export def modus_vivendi []  {
     shape_externalarg:          "#b6a0ff"
     shape_flag:                 "#b6a0ff"
 
-    shape_directory:            "#ffffff"
-    shape_filepath:             "#ffffff"
-    shape_datetime:             "#ffffff"
-    shape_binary:               "#ffffff"
-
-    shape_nothing:              "#00bcff"
+    shape_directory:            "#6ae4b9"
+    shape_filepath:             "#6ae4b9"
+    shape_datetime:             "#6ae4b9"
+    shape_binary:               "#6ae4b9"
+    shape_nothing:              "#6ae4b9"
     shape_bool:                 "#6ae4b9"
-    shape_float:                "#6ae4b9"
-    shape_int:                  "#6ae4b9"
+    shape_float:                "#f78fe7"
+    shape_int:                  "#f78fe7"
     shape_literal:              "#79a8ff"
     shape_string:               "#79a8ff"
     shape_string_interpolation: "#79a8ff"

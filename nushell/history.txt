@@ -1,89 +1,3 @@
-nikto -h https://192.168.1.102
-nikto -h https://192.168.1.103
-nikto -h https://192.168.1.124
-sudo arp-scan -l | lines
-nmap
-nmap -sT
-dnfs dirbuster
-dnfs gobuster
-dnfi gobuster
-ip a
-netwdiscover -h
-netdiscover -h
-nmap -sT 192.168.1.108/24
-dnfs netdiscover
-ls
-extract kali-linux-2023.2-vmware-amd64.7z
-extract kali-linux-2023.2-virtualbox-amd64(1).7z
-dnfs 7z
-dnfs p7z
-dnfi p7zip
-extract kali-linux-2023.2-virtualbox-amd64.7z
-extract kali-linux-2023.2-virtualbox-amd64(1).7z
-dnfs p7z
-dnfi p7zip-gui 
-tldr 7z
-7z x kali-linux-2023.2-virtualbox-amd64(1).7z\
-arp a
-arg -h | bat
-arp -h | bat
-arp
-arp | parse "{aaa} {b}"
-arp | lines |parse "{aaa} {b}"
-arp | lines |parse "{aaa} {b} {c} {d}"
-arp | lines |parse "{aaa} {b} {c} "
-arp | lines |parse "{aaa} {b} {c}"
-arp | lines | parse -r "\\s*(.*)\\s*(.*)"
-arp | lines | parse -r "\\s*(.*)"
-arp | lines | parse -r "(.*)"
-arp | lines | parse -r "(.*)(.*)"
-arp | lines | parse -r "(.*) (.*)"
-arp | lines | parse -r "(.*) (.*) (.*)"
-arp | lines | parse -r "(.*)\\s*(.*) (.*)"
-arp | lines | parse -r "(.*)\\s*(.*)\\s*(.*)"
-arp | detect columns
-arp | detect columns | drop Mask
-arp | detect columns 
-arp | detect columns | drop Mask
-arp | detect columns | drop "Mask"\
-arp | detect columns | drop 6
-arp | detect columns | drop column Mask
-arp | detect columns | drop column 6
-arp | detect columns | drop column  -h | bat
-arp | detect columns | reject Masks
-arp | detect columns | reject Mask
-$d
-$data
-ip a
-arp a
-arg
-arp
-sudo arp-scan -l
-nmap -h | bat
-ip a
-nmap -sn 192.168.1.108/24
-gobuster
-tldr gobuster
-gobuster https://www.google.com
-gobuster dir "https://www.google.com"
-man gobuster 
-gobuster --help
-rustup
-dnfs rustup
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-ls
-setxkbmap us dvorak
-startup
-sudo light -S 20
-startup
-ls
-ls | skip 3 | drop 2
-ps 
-sudo fdisk -l\
-sudo fdisk -l
-sudo fdisk -l | lines
-sudo fdisk -l | lines | drop 7 | skip  -h | bat
-sudo fdisk -l | lines | enumerate
 drop -h | bat
 get  -h | bat
 sudo fdisk -l | lines | get 8..11
@@ -9998,3 +9912,89 @@ emacs --debug-init
 emacs
 zathura
 man zathura
+ls /usr/bin
+ls /usr/bin | find ecli
+man zgreg
+man zgrep
+ls /usr/bin | length
+yay -Q
+yay -Q | lines | length
+yay -Q |  length
+yay -Q | length
+yay -Q | wc -l
+yay -Q | lines
+yay -Qs ruby
+yay -R ruby
+yay -Rs ruby
+yay -Rs rubygems
+yay -Qs ruby
+yay -Qs ruby | lines
+yay -Qs ruby | lines 
+str starts-with  --help | bat --plain
+yay -Qs ruby | lines | where { $in | str starts-with 'local'}
+yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename }
+yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path split }
+split 
+yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { split  }
+yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { split row }
+yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { split row ' ' }
+yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' }
+yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }
+each  --help | bat --plain
+for --help | bat --plain
+[1 2] | for
+for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) {<\n>print yay -R $c<\n>}
+for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) {<\n>print yay $c<\n>}
+for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) {<\n>print $"yay -R ($c)"<\n>}
+for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) {yay -R ($c)<\n>}
+for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) { yay -Rd ($c) }
+for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) { yay -Rs $c }
+for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) { yay -Rns $c }
+for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) { yay -Rds $c }
+for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) { yay -Rdd $c }
+yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }
+yay -Qs go | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }
+yay -Qs go | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 } | str join ' '
+yay -Qs go | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 } 
+ls -la
+ls
+ls -la
+sys
+ls
+sys
+ls
+sys
+ls
+sys
+ls -la
+ny
+ls -la
+ls **/*
+ls **/* | find bruges
+ls **/* | find 2008
+ls **/* | find barbara
+ls **/* | find barbara.*jpg
+ls **/* | find "barbara.*jpg"
+ls **/*barbara*.jpg 
+ls **/*barbara.*.jpg 
+ls  --help | bat --plain
+fd 
+fd "barbara.*\.jpg"
+fd 'barbara.*\.jpg'
+fd '.*barbara.*\.jpg'
+fd '.*barb'
+fd '.*barbara'
+fd '.*barbara.*'
+fd barbara
+fd 
+fd  | find barb
+fd Barbara
+fd .*Barbara.*
+yay chromium
+ls
+yay -Syyu
+yay tmate
+ls
+ls -la
+ld
+doom sync

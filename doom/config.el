@@ -69,17 +69,22 @@
       split-height-threshold nil
       split-width-threshold 0)
 
+;; NOTE :: :ignore treats buffer as if regular (takes over current buffer)
 (after! org
   (setq org-src-window-setup 'current-window)
-  (set-popup-rule! "^\\*Org Src" :ignore t))
+  (set-popup-rule! "\\*Org Src" :ignore t))
 
-;; HACK :: will only take effect after the config has been reloaded (have tried almost everything)
 (setq +popup-defaults
       '(:side right
         :width 0.33
-        :select nil
         :quit nil
-        :modeline t))
+        :modeline nil
+        :ttl nil))
+
+(set-popup-rules!
+  '(("\\*\\(eshell\\|vterm\\)" :ignore t)
+    ("\\*helpful" :side right)
+    ("\\*info" :ignore t)))
 ;; Window layout & behavior:1 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:2]]
@@ -668,7 +673,7 @@ code repetition."
      (doct
       `(("task" :keys "t"
          :headline "Inbox"
-         :prepend t
+         :prepend t :empty-lines-after 1
          :template ("* [ ] %^{title}%? %^g")
          :children ((,@(doct_expand 'cs projs)
                      :children ,(mapcar
@@ -682,8 +687,7 @@ code repetition."
 
         ("event" :keys "e"
          :headline "Events"
-         :prepend t
-         :empty-lines-after 1
+         :prepend t :empty-lines-after 1
          :template ("* [#] %^{title}%? %^g"
                     "%^T"
                     ":PROPERTIES:"
@@ -701,8 +705,7 @@ code repetition."
                        '(personal cs))))
 
         ("note" :keys "n"
-         :prepend t
-         :empty-lines 1
+         :prepend t :empty-lines-after 1
          :template ("* %^{title} %^g"
                     ":PROPERTIES:"
                     ":created: %U"

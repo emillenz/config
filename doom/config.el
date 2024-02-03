@@ -69,7 +69,6 @@
       split-height-threshold nil
       split-width-threshold 0)
 
-;; NOTE :: :ignore treats buffer as if regular (takes over current buffer)
 (after! org
   (setq org-src-window-setup 'current-window)
   (set-popup-rule! "\\*Org Src" :ignore t))
@@ -77,14 +76,15 @@
 (setq +popup-defaults
       '(:side right
         :width 0.33
+        :select nil
         :quit nil
-        :modeline nil
-        :ttl nil))
+        :modeline nil))
 
 (set-popup-rules!
-  '(("\\*\\(eshell\\|vterm\\)" :ignore t)
-    ("\\*helpful" :side right)
-    ("\\*info" :ignore t)))
+  `(("^\\*" ,@+popup-defaults)
+    ("^\\*info" :ignore t)))
+(after! lsp-mode
+  (set-popup-rules! `(("^\\*" ,@+popup-defaults))))
 ;; Window layout & behavior:1 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:2]]
@@ -105,6 +105,20 @@
       fill-column 100)
 ;; Window layout & behavior:2 ends here
 
+;; [[file:config.org::*Tabs][Tabs:1]]
+(tab-bar-mode 1)
+(setq tab-bar-tab-hints t
+      tab-bar-new-button-show nil
+      tab-bar-new-tab-to 'rightmost
+      tab-bar-close-button-show nil)
+
+(defadvice! with_newtab (fn &rest args)
+  :before '(eshell
+            +vterm/here
+            info-display-manual)
+  (tab-bar-new-tab-to))
+;; Tabs:1 ends here
+
 ;; [[file:config.org::*Misc Options][Misc Options:1]]
 (setq bookmark-default-file "~/.config/doom/bookmarks"
       delete-by-moving-to-trash t
@@ -124,12 +138,6 @@
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
 
-(tab-bar-mode 1)
-(setq tab-bar-tab-hints t
-      tab-bar-new-button-show nil
-      tab-bar-new-tab-to 'rightmost
-      tab-bar-close-button-show nil)
-
 (setq calc-angle-mode 'rad
       calc-symbolic-mode t)
 ;; Misc Options:1 ends here
@@ -146,6 +154,9 @@
                "C" #'company-mode)
       (:prefix "c"
                "w" #'clean_whitespace)
+
+      (:prefix "o"
+               "c" #'eshell)
       (:prefix "s"
                (:prefix-map ("t" . "dictionary")
                             "d" #'+lookup/dictionary-definition
@@ -324,11 +335,11 @@ This is sensible default behaviour, and integrates it into evil."
       evil-snipe-repeat-keys t
       evil-snipe-override-evil-repeat-keys t
       evil-snipe-auto-scroll nil)
+;; Editor:1 ends here
 
+;; [[file:config.org::*Jump property][Jump property:1]]
 (dolist (cmd '(flycheck-next-error
                flycheck-previous-error
-               evil-avy-goto-char-2-below
-               evil-avy-goto-char-2-above
                +lookup/definition
                +lookup/references
                +lookup/implementations
@@ -337,9 +348,10 @@ This is sensible default behaviour, and integrates it into evil."
   (evil-add-command-properties cmd :jump t))
 
 (dolist (cmd '(evil-backward-section-begin
+               evil-jump-item
              evil-forward-section-end))
       (evil-remove-command-properties cmd :jump))
-;; Editor:1 ends here
+;; Jump property:1 ends here
 
 ;; [[file:config.org::*Lsp & completion][Lsp & completion:1]]
 (setq company-minimum-prefix-length 1
@@ -347,11 +359,9 @@ This is sensible default behaviour, and integrates it into evil."
       ;; company-tooltip-idle-delay 0.2
       company-show-quick-access t
       company-global-modes '(not
-                             erc-mode
-                             message-mode
                              help-mode
+                             eshell-mode
                              org-mode
-                             gud-mode
                              vterm-mode))
 ;; Lsp & completion:1 ends here
 

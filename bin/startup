@@ -14,7 +14,7 @@ def main [] {
     "batsignal -b -f 95 -w 20 -c 10 -d 5" # low battery level warning
     "playerctld" # music controls
     "alacritty --class cmd -T cmd -e tmux new-session -A -s cmd" # main cmd-session
-    "emacs --daemon --eval='(doom/reload)'" # editor
+    "emacs --daemon; emacsclient --reuse-frame" # editor
     "unclutter" # hide cursor
     "xsetroot -solid '#000000'" # solarized_dark bg: #002b36; modus: #000000
     "xset dpms 0 0 0 && xset s off" # never screensave / turn screen off (do manually if needed)

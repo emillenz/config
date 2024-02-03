@@ -20,9 +20,9 @@
 
 * UI
 ** Modus theme
- - Make ~tab-bar~ consistent with completion interface.
+ - tab-bar :: Consistent with completion interface (& emphasis on currently selected tab).
  - Cursor :: Emphasize change of mode.
- - Custom-set-faces :: Make org more consistent (and colorize org list headers like headings).
+ - Custom-set-faces :: Make org more consistent.
 #+begin_src emacs-lisp
 (require-theme 'modus-themes)
 
@@ -86,8 +86,10 @@
 #+end_src
 
 ** Window layout & behavior
-- Vsplit :: Constrain popup buffers (inevitable) to consistently, and always ~vsplit~, and have a reasonable size.
+- Vsplit always :: Constrain popup buffers (inevitable) to consistently, and always ~vsplit~, and have a reasonable size.
   - Never mix vertical with horizontal splitting => creates mental overhead navigating the windows (+requires another set of totally unneccessary keybindings)
+- Don't focus help buffer's.
+- Maximize buffer's that are standalone / proper (ex: Manuals, org-src).
 #+begin_src emacs-lisp
 (setq evil-vsplit-window-right t
       even-window-sizes 'width-only
@@ -95,7 +97,6 @@
       split-height-threshold nil
       split-width-threshold 0)
 
-;; NOTE :: :ignore treats buffer as if regular (takes over current buffer)
 (after! org
   (setq org-src-window-setup 'current-window)
   (set-popup-rule! "\\*Org Src" :ignore t))
@@ -103,24 +104,25 @@
 (setq +popup-defaults
       '(:side right
         :width 0.33
+        :select nil
         :quit nil
-        :modeline nil
-        :ttl nil))
+        :modeline nil))
 
 (set-popup-rules!
-  '(("\\*\\(eshell\\|vterm\\)" :ignore t)
-    ("\\*helpful" :side right)
-    ("\\*info" :ignore t)))
+  `(("^\\*" ,@+popup-defaults)
+    ("^\\*info" :ignore t)))
+(after! lsp-mode
+  (set-popup-rules! `(("^\\*" ,@+popup-defaults))))
 #+end_src
 
 - Centered windows :: better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).
-  - Narrowed FOV yields improved readability & focus of textparagraphs, especially if you stare at the computer for 8h+ a day.
-  - Compact and coherent data
-  - Allows the user to keep the entire window in the fov
-  - Vertical navigation is easier than horizontal
-  - Reading code/data/formulas is easiest sequentially = top to bottom // vs horizontally
-    - Take math for example, its easier to read equations if they are on newline
-    - Coding: typically one statement per line
+- Narrowed FOV yields improved readability & focus of textparagraphs, especially if you stare at the computer for 8h+ a day.
+- Compact and coherent data
+- Allows the user to keep the entire window in the fov
+- Vertical navigation is easier than horizontal
+- Reading code/data/formulas is easiest sequentially = top to bottom // vs horizontally
+- Take math for example, its easier to read equations if they are on newline
+- Coding: typically one statement per line
 #+begin_src emacs-lisp
 (add-hook! '(text-mode-hook
              prog-mode-hook
@@ -137,6 +139,21 @@
       visual-fill-column-center-text t
       visual-fill-column-width 100
       fill-column 100)
+#+end_src
+
+** Tabs
+#+begin_src emacs-lisp
+(tab-bar-mode 1)
+(setq tab-bar-tab-hints t
+      tab-bar-new-button-show nil
+      tab-bar-new-tab-to 'rightmost
+      tab-bar-close-button-show nil)
+
+(defadvice! with_newtab (fn &rest args)
+  :before '(eshell
+            +vterm/here
+            info-display-manual)
+  (tab-bar-new-tab-to))
 #+end_src
 
 * Misc Options
@@ -160,12 +177,6 @@
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
 
-(tab-bar-mode 1)
-(setq tab-bar-tab-hints t
-      tab-bar-new-button-show nil
-      tab-bar-new-tab-to 'rightmost
-      tab-bar-close-button-show nil)
-
 (setq calc-angle-mode 'rad
       calc-symbolic-mode t)
 #+end_src
@@ -187,6 +198,9 @@
                "C" #'company-mode)
       (:prefix "c"
                "w" #'clean_whitespace)
+
+      (:prefix "o"
+               "c" #'eshell)
       (:prefix "s"
                (:prefix-map ("t" . "dictionary")
                             "d" #'+lookup/dictionary-definition
@@ -426,11 +440,13 @@ This is sensible default behaviour, and integrates it into evil."
       evil-snipe-repeat-keys t
       evil-snipe-override-evil-repeat-keys t
       evil-snipe-auto-scroll nil)
+#+end_src
 
+** Jump property
+- save position to jumplist only for functions that go out of the current view.
+#+begin_src emacs-lisp
 (dolist (cmd '(flycheck-next-error
                flycheck-previous-error
-               evil-avy-goto-char-2-below
-               evil-avy-goto-char-2-above
                +lookup/definition
                +lookup/references
                +lookup/implementations
@@ -439,6 +455,7 @@ This is sensible default behaviour, and integrates it into evil."
   (evil-add-command-properties cmd :jump t))
 
 (dolist (cmd '(evil-backward-section-begin
+               evil-jump-item
              evil-forward-section-end))
       (evil-remove-command-properties cmd :jump))
 
@@ -452,11 +469,9 @@ This is sensible default behaviour, and integrates it into evil."
       ;; company-tooltip-idle-delay 0.2
       company-show-quick-access t
       company-global-modes '(not
-                             erc-mode
-                             message-mode
                              help-mode
+                             eshell-mode
                              org-mode
-                             gud-mode
                              vterm-mode))
 #+end_src
 

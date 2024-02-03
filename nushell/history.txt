@@ -1,54 +1,3 @@
-drop -h | bat
-get  -h | bat
-sudo fdisk -l | lines | get 8..11
-sudo fdisk -l | lines | get 8.11
-sudo fdisk -l | lines | range 7.. 12
-sudo fdisk -l | lines | range 7..12
-sudo fdisk -l | lines 
-sudo fdisk -l | lines | range 8..11
-split
-split -h | bat
-sudo fdisk -l | lines | range 8..11 | split column
-sudo fdisk -l | lines | range 8..11 | split column ' '
-sudo fdisk -l | lines | range 8..11 | split column -c' '
-sudo fdisk -l | lines | range 8..11 | split column -c ' '
-sudo fdisk -l | lines | range 8..11 | split words
-sudo fdisk -l | lines | range 8..11 | split row
-sudo fdisk -l | lines | range 8..11 | split row ' '
-sudo fdisk -l | lines | range 8..11 | split list
-sudo fdisk -l | lines | range 8..11 | split list ' '
-sudo fdisk -l | lines | range 8..11 | split column -cr "\s*"
-sudo fdisk -l | lines | range 8..11 | split column -cr "\\s*"
-sudo fdisk -l | lines | range 8..11 | split column -cr "\\s"
-sudo fdisk -l | lines | range 8..11 | split column -c "\\s"
-sudo fdisk -l | lines | range 8..11 | split column -c " "
-sudo fdisk -l | lines | range 8..11 | parse
-sudo fdisk -l | lines | range 8..11 | detect columns
-sudo fdisk -l | lines | range 8..11 | str join
-sudo fdisk -l | lines | range 8..11 | str join "\n"
-sudo fdisk -l | lines | range 8..11 | str join "\n" | detect columns
-sudo fdisk -l | lines | range 8..11 | split column " "
-sudo fdisk -l | lines | range 8..11 | split column -c " "
-sudo fdisk -l | lines | range 8..11 
-table -h | bat
-sudo fdisk -l | lines | range 8..11 | table
-sudo fdisk -l | lines | range 8..11 
-column 
-column  -h | bat
-sudo fdisk -l | lines | range 8..11 | column 
-sudo fdisk -l | lines | range 8..11 | column -t
-sudo fdisk -l | lines | range 8..11 | columns
-sudo fdisk -l | lines | range 8..11 | headers
-"a b c | 1 2 3" | split row "|"
-"a b c |<\n>1 2 3" | split row "|"
-"a b c |1 2 3" | split row "|"
-"a b c |1 2 3" | split row "|" | split column 
-"a b c |1 2 3" | split row "|" | split column " "
-"a b c |1 2 3" | split row "|" | split column -c  " "
-"a b c |1 2 3" | split row "|" | split column -c " "
-"a b c |1 2 3" | split row "|" | split column -c " " | header
-"a b c |1 2 3" | split row "|" | split column -c " " | headers
-sudo fdisk -l | lines | range 8..11 
 sudo fdisk -l | lines | range 8..11 | split column -c " "
 sudo fdisk -l | lines | range 8..11 | split column -c " " |headers
 sudo fdisk -l
@@ -9998,3 +9947,54 @@ ls
 ls -la
 ld
 doom sync
+htop
+ps
+ps | columns  
+ps | sort cpu  
+sort  --help | bat --plain
+sort-by  --help | bat --plain
+ps | sort-by mem
+ps | sort-by -rmem
+ps | sort-by -r mem
+ps | sort-by mem
+ps | sort-by cpu
+emacsclient
+emacsclient --reuse-frame
+emacsclient --create-frame
+emacsclient --reuse-frame
+sudo xremap --watch=device ~/.config/xremap/config.yml
+startup
+ls
+yay espeak
+startup
+ls
+/jshell
+ls
+bash
+sudo
+sudo nu
+exit
+zsh
+htop
+ls
+ls -la 
+ls
+jsehll
+jshell
+ls
+emacs --debug-init
+(fd --type=file | fzf --preview='bat {}' | str trim)
+ls
+ls ~
+rm ./~
+ls
+ls fla
+ls -
+ls -la
+bat main
+bat main.rs
+e main.rs
+emacs main.rs
+emacs 
+emacs main.rs
+emacs --debug-init

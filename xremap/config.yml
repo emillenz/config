@@ -9,11 +9,11 @@ modmap:
       capslock:
         alone: backspace
         held: menu
-        one_timeout_millis: 100
+        alone_timeout_millis: 200
       alt_l:
         alone: esc
         held: alt_l
-        one_timeout_millis: 100
+        alone_timeout_millis: 200
       alt_r: capslock
 
 keymap:
@@ -21,7 +21,7 @@ keymap:
     application:
       only: firefox
     remap:
-      M-t: [c-t, esc] # HACK :: needs esc
+      M-t: [c-t, esc] # HACK :: needs esc (hides popup menu)
       M-i: c-l
       M-o: c-o
       M-q: c-w
@@ -32,7 +32,8 @@ keymap:
 
   - name: global
     remap:
-      shift-backspace: c-backspace # NOTE :: use this frequently for entire words when suitable
+      shift-backspace: c-backspace # NOTE :: ergonomic with capslock
+
       capslock-j: down
       capslock-k: up
       capslock-h: left
@@ -48,9 +49,6 @@ keymap:
       capslock-b: c-left
       capslock-w: [c-right, c-right, c-left]
 
-      capslock-o: [end, enter]
-      capslock-shift-o: [up, end, enter]
-
       capslock-slash: c-f
       capslock-question: shift-f3
 
@@ -64,7 +62,7 @@ keymap:
           capslock-a: [shift-end, delete]
           capslock-i: [shift-home, delete]
           capslock-e: c-delete
-          capslock-w: c-delete
+          capslock-w: [c-shift-right, c-x]
           capslock-b: [c-shift-left, c-x]
 
       menu-q: apostrophe

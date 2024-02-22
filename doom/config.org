@@ -96,8 +96,18 @@
       split-height-threshold nil
       split-width-threshold 0)
 
-(after! org
-  (setq org-src-window-setup 'current-window)
+(setq +popup-defaults
+      '(:side right
+        :width 0.50
+        :select nil
+        :quit nil
+        :modeline nil))
+
+(setq org-src-window-setup 'current-window)
+
+(set-popup-rules! `(("^\\*info" :ignore t)
+                    ("^\\*helpful" ,@+popup-defaults)
+                    ("^\\*Org Src" :ignore t)))
 #+end_src
 
 - Centered windows :: better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).

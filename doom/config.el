@@ -68,8 +68,18 @@
       split-height-threshold nil
       split-width-threshold 0)
 
-(after! org
-  (setq org-src-window-setup 'current-window)
+(setq +popup-defaults
+      '(:side right
+        :width 0.50
+        :select nil
+        :quit nil
+        :modeline nil))
+
+(setq org-src-window-setup 'current-window)
+
+(set-popup-rules! `(("^\\*info" :ignore t)
+                    ("^\\*helpful" ,@+popup-defaults)
+                    ("^\\*Org Src" :ignore t)))
 ;; Window layout & behavior:1 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:2]]

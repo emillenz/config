@@ -1,42 +1,41 @@
 ;; [[file:config.org::*User][User:1]]
-(setq user-full-name "Emil Lenz"
+(setq user-full-name "emil lenz"
       user-mail-address "emillenz@protonmail.com")
 ;; User:1 ends here
 
 ;; [[file:config.org::*Modus theme][Modus theme:1]]
-(require-theme 'modus-themes)
-
-(setq
- modus-themes-mixed-fonts t
- modus-themes-italic-constructs t
- modus-themes-bold-constructs t
- modus-themes-org-blocks 'gray-background)
-
-(setq modus-themes-common-palette-overrides
-      `((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
-
-        (bg-tab-bar bg-main)
-        (bg-tab-other bg-inactive)
-        (bg-tab-current bg-completion)
-
-        (fg-heading-1 fg-heading-0)))
-
-;; HACK :: cannot be set with `modus-themes-common-palette-overrides'
-(modus-themes-with-colors
+(use-package! modus-themes
+  :config
   (setq
-   evil-insert-state-cursor `(,fg-main bar)
-   evil-normal-state-cursor `(,fg-main box)
-   evil-motion-state-cursor `(,fg-main box)
-   evil-visual-state-cursor `(,yellow box)
-   evil-operator-state-cursor `(,red box)
-   evil-replace-state-cursor `(,red hbar)))
+   modus-themes-mixed-fonts t
+   modus-themes-italic-constructs t
+   modus-themes-bold-constructs t
+   modus-themes-org-blocks 'gray-background)
 
-(custom-set-faces!
-  '(org-list-dt :inherit modus-themes-heading-1)
-  '(org-block-begin-line :foreground "#989898") ;; HACK :: cannot be set within modus-themes
-  '(org-quote :slant italic))
+  (setq modus-themes-common-palette-overrides
+        `((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
 
-(setq doom-theme 'modus-vivendi)
+          (bg-tab-bar bg-main)
+          (bg-tab-other bg-inactive)
+          (bg-tab-current bg-completion)
+
+          (fg-heading-1 fg-heading-0)))
+
+  ;; HACK :: cannot customize these things with `modus-themes-common-palette-overrides'
+  (modus-themes-with-colors
+    (setq
+     evil-insert-state-cursor `(,fg-main bar)
+     evil-normal-state-cursor `(,fg-main box)
+     evil-motion-state-cursor `(,fg-main box)
+     evil-visual-state-cursor `(,yellow box)
+     evil-operator-state-cursor `(,red box)
+     evil-replace-state-cursor `(,red hbar)))
+
+  (custom-set-faces!
+    `(org-list-dt :inherit modus-themes-heading-1)
+    `(org-block-begin-line :foreground ,(modus-themes-get-color-value 'prose-metadata))
+    `(org-quote :slant italic))
+  (setq doom-theme 'modus-vivendi))
 ;; Modus theme:1 ends here
 
 ;; [[file:config.org::*Font][Font:1]]
@@ -71,25 +70,11 @@
 
 (after! org
   (setq org-src-window-setup 'current-window)
-  (set-popup-rule! "\\*Org Src" :ignore t))
-
-(setq +popup-defaults
-      '(:side right
-        :width 0.33
-        :select nil
-        :quit nil
-        :modeline nil))
-
-(set-popup-rules!
-  `(("^\\*" ,@+popup-defaults)
-    ("^\\*info" :ignore t)))
-(after! lsp-mode
-  (set-popup-rules! `(("^\\*" ,@+popup-defaults))))
 ;; Window layout & behavior:1 ends here
 
 ;; [[file:config.org::*Window layout & behavior][Window layout & behavior:2]]
 (add-hook! '(text-mode-hook
-             prog-mode-hook
+             ;; prog-mode-hook ;; NOTE :: don't use it, breaks with flycheck
              dired-mode-hook
              conf-mode-hook
              Info-mode-hook
@@ -115,7 +100,7 @@
 (defadvice! with_newtab (fn &rest args)
   :before '(eshell
             +vterm/here
-            info-display-manual)
+            info)
   (tab-bar-new-tab-to))
 ;; Tabs:1 ends here
 
@@ -282,11 +267,6 @@ This is sensible default behaviour, and integrates it into evil."
                    "`" #'org-edit-special
                    "g" #'org_goto_src
                    "t" #'org-babel-tangle))
-
-(defadvice! default ()
-  "Evil's implementation is broken => use default."
-  :override #'evil-org-edit-src-exit
-  (org-edit-src-exit))
 ;; Org:1 ends here
 
 ;; [[file:config.org::*Dired (keybindings)][Dired (keybindings):1]]
@@ -355,8 +335,8 @@ This is sensible default behaviour, and integrates it into evil."
 
 ;; [[file:config.org::*Lsp & completion][Lsp & completion:1]]
 (setq company-minimum-prefix-length 1
-      ;; company-idle-delay 0.2 ;; NOTE :: setting to 0 => huge lags
-      ;; company-tooltip-idle-delay 0.2
+      company-idle-delay 0.1 ;; NOTE :: setting to 0 => huge lags
+      company-tooltip-idle-delay 0.1
       company-show-quick-access t
       company-global-modes '(not
                              help-mode
@@ -395,8 +375,7 @@ This is sensible default behaviour, and integrates it into evil."
 
 (setq dired-recursive-copies 'always
       dired-recursive-deletes 'top
-      global-auto-revert-non-file-buffers t
-      dired-kill-when-opening-new-dired-buffer t)
+      global-auto-revert-non-file-buffers t)
 ;; Dired:1 ends here
 
 ;; [[file:config.org::*Archive file][Archive file:1]]
@@ -427,7 +406,7 @@ This is sensible default behaviour, and integrates it into evil."
       org-indent-indentation-per-level 2
       evil-shift-width 2
       standard-indent 2
-      tab-width 2
+;;      tab-width 2
       evil-indent-convert-tabs t
       indent-tabs-mode nil)
 ;; Indentation: 2 spaces:1 ends here
@@ -531,7 +510,8 @@ This is sensible default behaviour, and integrates it into evil."
 ;; Symbols:1 ends here
 
 ;; [[file:config.org::*Task states][Task states:1]]
-(setq org-todo-keywords
+(after! org
+ (setq org-todo-keywords
       '((type
          "[#](#)")
         (sequence
@@ -554,36 +534,8 @@ This is sensible default behaviour, and integrates it into evil."
         ("[&]"  . '(bold +org-todo-onhold))
         ("[@]"  . '(bold +org-todo-onhold))
         ("[\\]" . '(bold org-done))
-        ("[x]"  . '(bold org-done))))
+        ("[x]"  . '(bold org-done)))))
 ;; Task states:1 ends here
-
-;; [[file:config.org::*Task states][Task states:2]]
-(setq org-log-done 'time
-      org-log-repeat 'time
-      org-todo-repeat-to-state t
-      org-log-redeadline 'time
-      org-log-reschedule 'time
-      org-log-into-drawer "LOG")
-
-(setq org-priority-highest 1
-      org-priority-lowest 3)
-
-(setq org-priority-faces
-      '((?1 . 'all-the-icons-red)
-        (?2 . 'all-the-icons-orange)
-        (?3 . 'all-the-icons-yellow)))
-
-(setq org-log-note-headings
-      '((done        . "done note: %t")
-        (state       . "state: %-3S -> %-3s %t") ;; NOTE :: DON'T change this?; my task-statuses are all 3x wide -> formatting needs adjustment if not in order to align them.
-        (note        . "note: %t")
-        (reschedule  . "reschedule: %S, %t")
-        (delschedule . "del-scheduled: %S, %t")
-        (redeadline  . "re-deadline: %S, %t")
-        (deldeadline . "del-deadline: %S, %t")
-        (refile      . "refile: %t")
-        (clock-out   . "")))
-;; Task states:2 ends here
 
 ;; [[file:config.org::*Babel][Babel:1]]
 (setq org-babel-default-header-args
@@ -672,7 +624,8 @@ code repetition."
 (after! org
   (setq
    org-capture-templates
-   (let ((projs '((cs . ?c)
+   (let ((projs '((CS . ?C)
+                  (cs . ?c)
                   (dm . ?d)
                   (ad . ?a)
                   (la . ?l)
@@ -682,7 +635,7 @@ code repetition."
                   (compass . ?o))))
      (doct
       `(("task" :keys "t"
-         :headline "Inbox"
+         :headline "inbox"
          :prepend t :empty-lines-after 1
          :template ("* [ ] %^{title}%? %^g")
          :children ((,@(doct_expand 'cs projs)
@@ -696,7 +649,7 @@ code repetition."
                        '(personal config compass))))
 
         ("event" :keys "e"
-         :headline "Events"
+         :headline "events"
          :prepend t :empty-lines-after 1
          :template ("* [#] %^{title}%? %^g"
                     "%^T"
@@ -736,17 +689,17 @@ code repetition."
                  (file-name-concat
                   journal_dir
                   (format "%s_journal.org" (format-time-string "%F"))))
-         :children (("init-today" :keys "i"
+         :children (("begin" :keys "i"
                      :type plain
                      :template ("#+title:  Daily Note: %<%A, %e. %B %Y>"
                                 "#+author: %(user-full-name)"
                                 "#+email:  %(message-user-mail-address)"
                                 "#+date:   %<%F>"
                                 ""
-                                "* Personal Goals"
+                                "* personal goals"
                                 "- %?"
                                 ""
-                                "* Agenda"
+                                "* agenda"
                                 "** [ ] "))
                     ("entry" :keys "e"
                      :empty-lines-before 1
@@ -756,17 +709,17 @@ code repetition."
                                 ":END:"
                                 "%?"))
 
-                    ("review-today" :keys "r"
+                    ("end" :keys "r"
                      :unnarrowed t
-                     :template ("* Gratitude"
+                     :template ("* gratitude"
                                 "- %?"
                                 ""
-                                "* Reflection"
+                                "* reflection"
                                 "-"))))
 
         ("literature" :keys "l"
          :file (lambda () (read-file-name "file: " literature_notes_dir))
-         :children (("init-source" :keys "i"
+         :children (("init" :keys "i"
                      :file
                      (lambda ()
                        (let* ((name (concat
@@ -795,34 +748,34 @@ code repetition."
                                 ":pages:  %^{pages}"
                                 ":END:"
                                 ""
-                                "** Excerpts"
-                                "** Literature Notes"
-                                "** Transient Notes"
-                                "** Summary"))
+                                "** excerpts"
+                                "** literature notes"
+                                "** transient notes"
+                                "** summary"))
 
                     ("excerpt" :keys "e"
-                     :headline "Excerpts"
+                     :headline "excerpts"
                      :empty-lines-after 1
                      :template ("* %^{title} [p:%^{page}]"
                                 "#+begin_quote"
                                 "%x"
                                 "#+end_quote"))
 
-                    ("literary-note" :keys "l"
-                     :headline "Literature Notes"
+                    ("note: literary" :keys "l"
+                     :headline "literature notes"
                      :empty-lines-after 1
                      :template ("* %^{title} [p:%^{page}]"
                                 "%?"))
 
-                    ("transient-note" :keys "t"
-                     :headline "Transient Notes"
+                    ("note: transient" :keys "t"
+                     :headline "transient notes"
                      :empty-lines-after 1
                      :template ("* %^{title}"
                                 "%?"))
 
                     ;; NOTE:: make sure to complete the literature-task-headline in order to log closing time.
-                    ("close-source" :keys "c"
-                     :headline "Summary"
+                    ("summarize" :keys "c"
+                     :headline "summary"
                      :unnarrowed t
                      :type plain
                      :template ("%?")))))))))
@@ -878,6 +831,7 @@ Jumps at tangled code from org src block."
 
 ;; [[file:config.org::*Nushell][Nushell:1]]
 (load! "user/nushell-mode.el")
+(setq shell-file-name "/usr/bin/bash")  ;; NOTE :: Emacs expects bash for it's internal shellcommands
 ;; Nushell:1 ends here
 
 ;; [[file:config.org::*Latex][Latex:1]]

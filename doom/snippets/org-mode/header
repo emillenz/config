@@ -3,10 +3,10 @@
 # key: header
 # uuid: header
 # --
-#+title:  ${1:`(s-titleized-words (replace-regexp-in-string "[-_.]" " " (file-name-base (or buffer-file-name "Title"))))`}
+#+title:  ${1:`(replace-regexp-in-string "[-_.]" " " (file-name-base (or buffer-file-name "title")))`}
 #+author: `user-full-name`
 #+email:  `user-mail-address`
 #+date:   `(format-time-string "%F")`
-#+info:   ${2:Short description of document}
+#+info:   ${2:short description of document}
 
 $0

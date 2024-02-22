@@ -4,11 +4,11 @@
 # uuid: header
 # --
 
-`comment-start`---
-`comment-start`title:  ${2:`(s-titleized-words (replace-regexp-in-string "[-_.]" " " (file-name-base (or buffer-file-name "Title"))))`}
-`comment-start`author: `user-full-name`
-`comment-start`email:  `user-mail-address`
-`comment-start`date:   `(format-time-string "%F")`
-`comment-start`info:   ${3:Short description of file/document}
-`comment-start`---
+`comment-start` ---
+`comment-start` title:  ${2:`(replace-regexp-in-string "[-_.]" " " (file-name-base (or buffer-file-name "title")))`}
+`comment-start` author: `user-full-name`
+`comment-start` email:  `user-mail-address`
+`comment-start` date:   `(format-time-string "%F")`
+`comment-start` info:   ${3:short description of file/document}
+`comment-start` ---
 $0

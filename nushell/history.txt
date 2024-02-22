@@ -1,3 +1,1329 @@
+open `2022-00-00.md` | lines | find '###'
+open `2022-00-00.md` | lines | find -r '^### \d'
+for line in (open `2022-00-00.md`) {if ($line =~ "^### \d") {print $line}}
+for line in (open `2022-00-00.md`) {if ($line =~ "^### ") {print $line}}
+for line in (open `2022-00-00.md`) {if ($line =~ "### ") {print $line}}
+open `2022-00-00.md` | lines | find -r '^### \d'
+for line in (open `2022-00-00.md`) {<\n>    if ($line | str starts-with '### ') {<\n>        print $line<\n>    }<\n>}
+for line in (open `2022-00-00.md`) {<\n>    if ($line | str starts-with '###') {<\n>        print $line<\n>    }<\n>}
+for line in (open `2022-00-00.md`) {if ($line =~ "### ") {print $line}}
+for line in (open `2022-00-00.md`) {if ($line | str starts-with "### " ) {print $line}}
+for line in (open `2022-00-00.md`) {if ($line | str starts-with '### ' ) {print $line}}
+open `2022-00-00.md` | lines 
+open `2022-00-00.md` | lines | split column "\n" 
+open `2022-00-00.md` | lines | split column \n
+open `2022-00-00.md` | lines | each {split column \n}
+open `2022-00-00.md` | lines | each {split list "\n"}
+open `2022-00-00.md` | lines | each {split row "\n"}
+open `2022-00-00.md` | lines | each {split row "\n"} | flatten 
+open `2022-00-00.md` | lines | each {split row "\n"} | flatten -h
+open `2022-00-00.md` | lines | each {split row "\n"} | split list ''
+open `2022-00-00.md` | lines | each {split row "\n"} | split list null
+open `2022-00-00.md` | lines | each {split row "\n"} | range -h | bat
+open `2022-00-00.md` | lines | each {split row "\n"} 
+takke -h | bat
+take -h | bat
+open `2022-00-00.md` | lines | each {split row "\n"} | take until null
+open `2022-00-00.md` | lines | each {split row "\n"} | take while not null
+open `2022-00-00.md` | lines | each {split row "\n"} | take while (not null)
+take until  -h | bat
+open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| == null}
+open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| == ''}
+open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| = []}
+open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| $x == []}
+open `2022-00-00.md` | lines | each {split row "\n"} 
+open `2022-00-00.md` | lines | each {split row "\n"} | get 0 
+open `2022-00-00.md` | lines | each {split row "\n"} | each {flatten} 
+open `2022-00-00.md` | lines | each {split row "\n"} | flatten
+open `2022-00-00.md` | lines | take until {|x| $x == '\n'}
+open `2022-00-00.md` | lines 
+open `2022-00-00.md` | lines | take until {|x| $x == ''}
+open `2022-00-00.md` | lines | take while {|x| $x == ''}
+open `2022-00-00.md` | lines | take while {|x| $x != ''}
+open `2022-00-00.md` | lines | take while {|x| $x == ''}
+open `2022-00-00.md` | lines | take while {|x| $x != ''}
+open `2022-00-00.md` | lines | enumerate
+split-by "\n\n"
+open `2022-00-00.md` | split-by  "\n\n"
+open `2022-00-00.md` | lines | split-by "\n\n"
+open `2022-00-00.md` | str collect | split-by "\n\n"
+open `2022-00-00.md` | str join | split-by "\n\n"
+open `2022-00-00.md` | lines | get 0
+open `2022-00-00.md` | lines | get 0 | index
+get  -h | bat
+split-by -h | bat 
+open `2022-00-00.md` | lines 
+open `2022-00-00.md` | lines | split row '\s'
+open `2022-00-00.md` | lines | split row '\n'
+open `2022-00-00.md` | lines | split row "\n"
+open `2022-00-00.md` | lines | split row "n"
+open `2022-00-00.md` | lines | split list a
+open `2022-00-00.md` | lines 
+open `2022-00-00.md` | lines | take 4
+open `2022-00-00.md` | lines | take 4 | length 
+mut end = ((open `2022-00-00.md` | lines | take while {|x| $x != ''} | length) -1 )
+mut end = ((open `2022-00-00.md` | lines | take while {|x| $x != ''} | length) - 1 )
+$end
+range -h | bat
+let data = (open `2022-00-00.md`) <\n>mut begin = 0<\n>mut end (($data| lines | take while {|x| $x != ''} | length) - 1)<\n>for i in ($data | range $begin $end) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md`) <\n>mut begin = 0<\n>mut end = (($data| lines | take while {|x| $x != ''} | length) - 1)<\n>for i in ($data | range $begin $end) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md`) <\n>mut begin = 0<\n>mut end = (($data| lines | take while {|x| $x != ''} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md`) <\n>mut begin = 0<\n>mut end = (($data| lines | take while {|x| $x != ''} | length) - 1)
+$end
+$begin
+$data | range 0..($end)
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ''} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+open `2022-00-00.md` | lines 
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != '### '} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| ($x | str starts-with "### ")} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| ($x | str starts-with '###')} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x =~  '###'} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data | take while {|x| $x =~  '###'} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data | take while {|x| $x =~  '###'} | length) - 1)<\n>$end
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data | take while {|x| ($x | str starts-with '###'} | length) - 1)<\n>$end
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data | take while {|x| ($x | str starts-with '###')} | length) - 1)<\n>$end
+$data | take until {|x| $x =~ "#"}
+$data
+$data | take until {|x| $x =~ "\#"}
+$data | take until {|x| $x =~ "a"}
+$data | take until {|x| x =~ "a"}
+$data | take until {|x| $x =~ "a"}
+take -h | bat
+take until -h | bat
+$data | take until {|x| $x = ""}
+$data | take until {|x| $x = " "}
+$data | take until {|x| $x == ""}
+$data | take until {|x| $x ~= ""}
+$data | take until {|x| $x != ""}
+$data | take until {|x| $x == ""}
+$data | take until {|x| ($x | str starts-with '') }
+$data | take until {|x| ($x | str starts-with '#') }
+$data | take until {|x| ($x | str starts-with '\#') }
+$data | take until {|x| $x == ""}
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x == ""} | length) - 1)<\n>$end<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x == ""} | length) - 1)<\n>$end<\n># for i in ($data | range ($begin)..($end)) {<\n>#     print $i<\n># }
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>$end<\n># for i in ($data | range ($begin)..($end)) {<\n>#     print $i<\n># }
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
+let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>touch test.txt<\n>for i in ($data | range ($begin)..($end)) {<\n>    $i | save -a test.txt<\n>}
+bat test.txt
+save -h | bat
+rm test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = []<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>}<\n>$paragraph
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = []<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>}<\n>$paragraph
+touch test.txt
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = []<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>}<\n>$paragraph
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = []<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>    print $i<\n>}<\n>$paragraph
+append -h | bat
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = [aa]<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>    print $i<\n>}<\n>$paragraph
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = [aa]<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append ($i | into string)<\n>}<\n>$paragraph
+str -h | bat
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph =  [1, 2]<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>}<\n>$paragraph
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph =  [1, 2]<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append "aa"<\n>}<\n>$paragraph
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph =  [1, 2]<\n>for i in ($data | range ($begin)..($end)) {<\n>    paragraph | append "aa"<\n>}<\n>$paragraph
+rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>$data | range ($begin)..($end) | save test.txt<\n>bat test.txt
+rm test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>$data | range ($begin)..($end) | save test.txt<\n>bat test.txt
+rm test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>while $end != ($data | length) {<\n>    $data | range ($begin)..($end) | save test.txt<\n>    begin = $end<\n>    end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>}<\n>bat test.txt
+let data = (open `2022-00-00.md` | lines) <\n>($data| | take while {|x| $x != ""}) | save test<\n>bat test
+rm test
+touch test
+open test | length
+cp  `2022-00-00.md` old.md
+open old.md | skip 3
+open old.md 
+skip  -h | bat
+drop -h | bat
+skip 1
+open old.md | skip 1
+open old.md | skip 1 | str join
+open old.md | lines
+open old.md 
+open old.md | lines
+open old.md | lines | skip 1
+open old.md | lines | skip 1000
+open old.md | lines | skip 10000
+while (open 'old.md' | lines| length) == 0 {<\n>    let data = (open `old.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""}) | <\n>    $paragraph | save test<\n>    $data | skip ($paragraph | length)<\n>}<\n>bat test
+while (open 'old.md' | lines| length) == 0 {<\n>    let data = (open `old.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save test<\n>    $data | skip ($paragraph | length)<\n>}<\n>bat test
+open old.md | lines 
+open old.md | lines | length 
+while (open 'old.md' | lines| length) != 0 {<\n>    let data = (open `old.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save test<\n>    $data | skip ($paragraph | length)<\n>}<\n>bat test
+while (open 'old.md' | lines| length) != 0 {<\n>    let data = (open `old.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f test<\n>    $data | skip ($paragraph | length)<\n>}<\n>bat test
+cp -f -h | bat
+cp  -h | bat
+cp `2022-00-00.md` old.md
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) != 0 {<\n>    let data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    data = $data | skip ($paragraph | length)<\n>    print $data<\n>    "" | save -f out.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) != 0 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    data = $data | skip ($paragraph | length)<\n>    print $data<\n>    "" | save -f out.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) != 0 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = $data | skip ($paragraph | length)<\n>    print $data<\n>    "" | save -f out.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) != 0 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    print $data<\n>    $paragraph | save -f out.md<\n>    # $data = $data | skip ($paragraph | length)<\n>    "" | save -f out.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) != 0 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    print $data<\n>    $paragraph | save -f out.md<\n>    # $data = $data | skip ($paragraph | length)<\n>    rm copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    print $data<\n>    $paragraph | save -f out.md<\n>    # $data = $data | skip ($paragraph | length)<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    print $data<\n>    $paragraph | save -f out.md<\n>    $data = $data | skip ($paragraph | length)<\n>    "" | save -f copy.md<\n>}<\n>bat test
+open old.md | lines | rang 1..10
+open old.md | lines | range 1..10
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    print $data<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip ($paragraph | length))<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip ($paragraph | length))<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip 1000)<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    print ($paragraph | length)<\n>    $data = ($data | skip ($paragraph | length))<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip ($paragraph | length))<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip ($paragraph | length + 1))<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    print ($data | skip (($paragraph | length ) + 1)) <\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    "" | save -f copy.md<\n>}<\n>bat test
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>}<\n>bat test<\n><\n># while (open 'copy.md' | lines| length) > 1 {
+ls | get name | find tmp 
+ls | get name | find tmp | rm 
+ls | get name | find tmp | each {|x| rm $x}
+save  -h | bat
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    $data | save -f 'copy.md'<\n>}<\n>bat test<\n><\n># while (open 'copy.md' | lines| length) > 1 {
+ls | get name | find tmp | each {|x| rm $x}
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    $data<\n>}<\n>bat test<\n><\n># while (open 'copy.md' | lines| length) > 1 {
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip ($paragraph | length ))<\n>    $data<\n>}<\n>bat test<\n><\n># while (open 'copy.md' | lines| length) > 1 
+bat copy.md
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip ($paragraph | length ))<\n>    $paragraph | length<\n>}<\n>bat test<\n><\n># while (open 'copy.md' | lines| length) > 1
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip ($paragraph | length ))<\n>    print ($paragraph | length)<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip ($paragraph | length ))<\n>    print $data<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 1) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    print $data<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+save -h | bat
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    print $data | str join "\n"<\n>    # $data | str join "\n" <\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    print ($data | first 50 | str join "\n")<\n>    # $data | str join "\n" <\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+collect -h | bat
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1) | str join "\n")<\n>    print ($data | first 20 )<\n>    # $data | str join "\n" <\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1) | str join "\n")<\n>    print ($data | lines | first 20 )<\n>    # $data | str join "\n" <\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1) | str join "\n")<\n>    print ($data | lines | first 20 )<\n>    $data | save -f copy.md<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+bat `2022-00-00.md`
+cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != "***"})<\n>    $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1) | str join "\n")<\n>    print ($data | lines | first 20 )<\n>    $data | save -f copy.md<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
+flatpak install flathub md.obsidian.Obsidian
+zellij kill-session  -h | bat 
+zellij kill-session  notes
+e
+fd .
+fd ./
+fd .
+cd 2023
+fd .
+fd . -x mv {} ../
+fd . 
+cd ..
+fd . 
+ls 
+ls | where type == dir
+ls | where type == dir | find
+ls | where type == dir | find 0
+ls | where type == dir | ls  -h | bat
+ls | where type == dir 
+fd .
+fd . -x mv {} ~/journal/
+zellij kill-session  notes
+e
+ synctihng
+dnfi emacs
+lf
+ls
+doom install
+ls
+./doom install
+doom sync
+./doom sync
+emacs
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+rm -r ~/.config/emacs
+git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+~/.config/emacs/bin/doom install
+^emacs --daemon
+starutp
+ps
+ps | find emacs
+ps  -h | bat
+ps  -l | find emacs
+ps  -l | get command | find firefox
+ps  -l | get command | find flameshot
+ps  -l | get command 
+ps  -l | get command | find nm
+ps  -l | get command | find  xauto
+starutup
+startup
+git status
+git add nvim
+git add scripts
+git add zellij
+git commit -am 'sync'; git push
+e
+doom sync
+startup
+ls
+git status
+fd  -h | bat
+fd  'sync-conflict'
+fd  'sync-conflict' -x rm
+fd  'sync-conflict'
+git status
+git status -h | bat
+git status --long
+git status -v
+git status  -h | bat
+bat .git/index
+ls
+git  -h | bat
+git  show
+git   -h | bat
+git status
+ls -/a
+ls -la
+ls
+git statuts
+git status
+bat readme.org
+git status
+git commit -am 'sync'; git push
+ssh-keygen -t rsa -b 4096 -C "bbotak@protonmail.com"
+xclip -h | bat
+"aaa" | xclpi
+"aaa" | xclip
+cat ~/.ssh/id_rsa.pub
+git commit -am 'sync'; git push
+bash -c eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_rsa<\n>
+git commit -am 'sync'; git push
+gitt commit
+git commit
+git commit  -h | bat
+git commit  -a
+git push
+ssh-add ~/.ssh/id_ed25519
+ssh-keygen -t ed25519 -C "your_email@example.com"
+bash -c eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+ssh-keygen -t ed25519 -C "bbotak@protonmail.com"
+ssh-add ~/.ssh/id_ed25519
+cat ~/.ssh/id_ed25519.pub
+git status
+git git commit -am 'sync'; git push
+git commit -am 'sync'; git push
+git init
+git status
+git add alacritty commands doom fonts htop i3 keepassxc lf mpv nushell nvim packages polybar readme.org rofi scripts starship.toml themes xremap zathura zellij
+git status
+git  -h | bat
+tldr git
+git --help
+man git 
+git remote  -h | bat
+man git remote  
+git remote add  -h | bat
+git remote add master https://github.com/bbotakk/config
+ls
+git status
+git push
+git push -h | bat
+git push --set upstream master master
+git remote -v
+git remote add upstream https://github.com/bbotakk/config
+git push --set-upstream upstream master
+git branch
+git remote -v
+git remote  -h | bat
+git remote  remove upstream
+git remote  -h | bat
+git remote -v
+git branch -h | bat
+man git branch 
+git branch -l
+git branch --show-current
+git remote -h | bat
+git remote -h | bat add -h | bat
+git remote add
+git remote add origin -h | bat
+git remote remove master
+git remote -v
+git remote add origin https://github.com/bbotakk/config
+git remote -v
+git commit -am 'sync'; git push
+git commit -am 'sync'; git push --set-upstream origin master
+git remote add origin git@github.com:bbotakk/config.git
+git remote remove origin
+git remote add origin git@github.com:bbotakk/config.git
+git remote -v
+git status
+git git commit -am 'sync'; git push
+git commit -am 'sync'; git push
+git commit -am 'sync'; git push --set-upstream origin master
+git push --help
+git push  -h | bat
+git commit -am 'sync'; git push --set-upstream origin master -f
+dnfs carpace
+git status
+dnfr qualculate-gtk
+dnfs qalculate-gtk
+dnfr qalculate-gtk
+nu
+keepassxc  --help
+man keepassxc 
+man 
+calcurse
+lf
+syncthing
+fd  'sync-conflict'
+^emacs --daemon
+startup
+pandoc
+dnfi pandoc
+pandoc -s -f html -t org https://www.polyphasic.net/adaptation/strictness-of-sleep-times/ -o output.org
+wget -O input.html https://www.polyphasic.net/adaptation/strictness-of-sleep-times/
+pandoc -s -f html -t org input.html -o output.org
+bat output.org
+wget -O input.html https://www.polyphasic.net/adaptation
+pandoc -s -f html -t org input.html -o output.org
+calcurse
+dnfr calcurse
+syncthing
+dired
+emacsclient -c --eval '(delete frame)'
+emacsclient -c --eval '(delete-frame)'
+emacsclient -c 
+ls
+git status
+syncthing
+git status
+fd  'sync-conflict'
+fd  'sync-conflict' -x rm
+git status
+emacs --debug-init
+^emacs --daemon
+^emacs --debug-init
+emacs
+^emacs
+vim .
+vi .
+^emacs --debug-init
+emacs --
+^emacs --debug-init
+dnfi vi
+nvim .
+^emacs --debug-init
+startup
+ps -l | get command
+ps -l | get command | find emacs
+syncthing
+startup
+^emacs --daemon
+startup
+^emacs -nw
+startup
+emacs --debug-init
+^emacs --debug-init
+^emacs 
+dnfs rust-src
+dnfi rust-src
+syncthing
+dnfs vterm
+doom sync
+startup
+emacs
+^emacs
+emacs --debug-init
+^emacs --debug-init
+^emacs
+startup
+^emacs
+cargo run
+ls
+starutp
+startup
+syncthing
+git status
+git commit -am 'sync'; git push
+dnfi rust-src
+keybindings list
+emacs
+^emacs
+startup
+^emacs
+syncthing
+cargo run  -h | bat
+cargo  -h | bat
+^emacs --debug-init
+^emacs
+startup
+^emacs
+startup
+doom sync
+ls
+^emacs
+doom sync
+startup
+emacs  -h | bat
+^emacs  -h | bat
+^emacs  --help
+startup
+emacs -nw
+uptime
+dnfi pandoc
+dnfi rust-src
+^emacs --debug-init
+startup
+^emacs --debug-init
+emacs
+^emacs
+^emacs --debug-init
+nvim ~/.config/doom/config.el
+^emacs --debug-init
+cd .config/doom/
+bat packages.el
+nvim ~/.config/doom/config.el
+^emacs --debug-init
+nvim ~/.config/doom/config.el
+^emacs --debug-init
+nvim ~/.config/doom/config.org
+cd .config/doom/
+mv config.org ~
+^emacs 
+nvim config.el
+mv config.el ~
+^emacs 
+mv ~/config.org .
+mv config.org ~
+mv ~/config.el .
+^emacs --debug-init
+nvim config.el
+ls ~
+mv ~/config.org .
+nvim config.org
+emacs
+startup
+^emacs --debug-init
+^emacs
+bat config.el
+^emacs
+cd ~/Books/
+^emacs booklist.org
+startup
+^emacs booklist.org
+startup
+^emacs booklist.org
+^emacs
+^emacs booklist.orgc
+^emacs booklist.org
+^emacs --eval '(dired-jump)'
+^emacs 
+startup
+^emacs
+startup4
+startup
+emacsclient -c 
+startup
+emacsclient -c 
+^emacs
+doom sync
+^emacs
+doom sync
+^emacs
+ps -l | get command | find ema
+ps -l | get command | find emacs
+startup
+emacsclient -c 
+wmctrl emacs 
+wmctrl -xa emacs 
+sudo dnfs nuview
+dnfs nuview
+ls 
+ls | nuview
+^emacs
+ps 
+ps | find syncthing
+syncthing
+"syncthing &" 
+"syncthing &" | bash
+syncthing -h | bat
+man syncthing 
+startup
+starutp
+emacs --daemon
+startup
+setxkbmap us dvorak
+tsnahoeu
+startup
+keepassxc  --help
+man keepass
+man keepassxc
+man keepassxc-cli
+startup
+emacsclient --eval '(emacs-everywhere)'
+xwininfo
+dnfi xwininfo
+dnfi xdotool
+dnfi xprop
+sudo dnf -y --allowerasing install tldr i3 i3status i3lock bc alacritty zathura zathura-pdf-mupdf arandr htop mpv curl libtool xset flameshot ripgrep fzf rofi light xclip xdg-utils xdotool wmctrl cmake sxiv fd-find npm bat unclutter firefox pavucontrol pamix pasystray polybar ffmpeg-free syncthing clementine playerctl keepassxc blueman lxappearance git gcc gcc-g++ make pkgconfig libX11-devel libXtst-devel libXi-devel texlive-scheme-basic latexmk cargo flatpak xautolock autofs emacs pandoc rust-src xwininfo xdotool xprop xclip<\n>
+dnfi xclip xdotool xprop xwininfo
+startup
+sudo xremap ~/.config/xremap/config.yml
+xremap ~/.config/xremap/config.yml
+sode xremap ~/.config/xremap/config.yml
+sudo xremap ~/.config/xremap/config.yml
+xremap ~/.config/xremap/config.yml
+sudo ~/.cargo/bin/xremap ~/.config/xremap/config.yml
+keepassxc  --help
+sudo ~/.cargo/bin/xremap ~/.config/xremap/config.yml
+vim .
+vi .
+sudo ~/.cargo/bin/xremap ~/.config/xremap/config.yml
+startup
+emacs -h | bat
+emacs -e '(emacs-everywhere)'
+dnfs xdotool
+dnfi xdotool
+dnfi xprop
+dnfi xwininfo
+'emacsclient -c --eval "(emacs-everywhere)"' | bash
+emacs --eval "(emacs-everywhere)"
+emacs -h
+emacsclient -h
+dnfs xbindkeys
+dnfi xbindkeys
+touch ~/.xbindkeysrc
+xbindkey
+xbindkeys
+xbindkeys -h | bat
+dnfr xbindkeys 
+startup
+doom sync
+ls
+git status
+git add i3
+syncthing
+syncthing  -h | bat
+man syncthing  
+syncthing -h | bat
+syncthing -h | bat cli  -h | bat
+syncthing cli  -h | bat
+syncthing-cli  -h | bat
+man syncthing cli 
+sycthing continue
+syncthing --paused
+date
+date now
+doom sync
+emacs  -h | bat
+man emacs 
+emacs --daemon
+^emacs --daemon
+git status
+syncthing
+^emacs --daemon
+ls
+ls -la
+strartup
+startup
+cd doom/
+emacs config.org
+doom sync
+startup
+^emacs
+^emacs
+startup
+doom sync
+startup
+ps | find syncthing
+killall syncthing
+syncthing 
+ps | find syncthing
+kill -h | bat
+killall -h | bat
+man killall -h | bat
+sleep 5min; print aaaa
+sleep 5sec; print aaaa
+sync_config
+$env.PATH
+sync_config
+dnfi xournalpp
+dnfi libreoffice
+dnfs wacom
+dnfi xorg-x11-drv-wacom
+focus tui 'bc -l'
+starutp
+startup
+"" 
+"" == nothing
+"" == Nothing
+"" == null
+sync_config 
+syncthing
+killall syncthing
+killall emacs
+emacs --daemon
+^emacs --daemon
+doom sync
+git status=
+git status
+cd doom/
+ls
+git status
+git add snippets
+git status
+git commit -am 'sync'; git push
+syncthing
+ipa
+ip a
+route 
+route
+emacs --daemon
+^emacs --daemon
+sync_config 
+ls
+^emacs --daemon
+sync_config 
+^emacs --daemon
+xprop
+startup
+setxkbmap us dvorak
+startup
+^emacs --daemon
+sync_config 
+^emacs --daemon
+sync_config 
+killall syncthing
+syncthing
+pandoc  -h | bat
+tldr pandoc
+pandoc ~/.config/i3/config.org -o /tmp/config.html; firefox /tmp/config.html
+pandoc ~/.config/i3/config.org -o /tmp/config.pdf; firefox /tmp/config.html
+pandoc ~/.config/i3/config.org -o /tmp/config.pdf; firefox /tmp/config.pdf
+~/.config/i3/config | less
+open ~/.config/i3/config | less
+open ~/.config/i3/config.org | less
+open ~/.config/i3/config.org | bat
+tldr bat
+bat --list-languages
+open ~/.config/i3/config.org | bat  -h | bat
+open ~/.config/i3/config.org | bat  -l org
+tldr pandoc
+pandoc  -h | bat
+pandoc ~/.config/i3/config.org -o /tmp/config.pdf --toc; firefox /tmp/config.pdf
+pandoc ~/.config/i3/config.org -o /tmp/config.html --toc; firefox /tmp/config.html
+rm -f /tmp/config.html; pandoc ~/.config/i3/config.org -o /tmp/config.html --toc; firefox /tmp/config.html
+rm -f /tmp/config.html; pandoc ~/.config/i3/config.org -o --toc /tmp/config.html ; firefox /tmp/config.html
+rm -f /tmp/config.html; pandoc ~/.config/i3/config.org --toc -o /tmp/config.html ; firefox /tmp/config.html
+emacs ~/.config/i3/config.org
+startup
+ls
+starutp
+startup
+sync_config 
+syncthing
+startup
+^emacs --daemon
+git status
+sync_config 
+killall syncthing
+syncthing
+6emacs --daemon
+^emacs --daemon
+doom sync
+dnfi xournalpp
+dnfi libreoffice
+dnfs obs
+sudo dnf install kmod-v4l2loopback
+flatpak search
+flatpak search --help
+flatpak search obs
+flatpak  -h | bat
+flatpak search open broadcast
+flatpak install flathub com.obsproject.Studio
+ps | find syncthing
+"syncthing &" | bash
+^emacs --daemon
+tree
+vi .
+vi booklist.org
+firefox -h | bat
+ps -l 
+firefox google.com
+ps -l | find google
+ps -l | find fier
+ps -l | find fire
+oracel
+oracle
+dnfs vm
+go install -v github.com/owasp-amass/amass/v3/...@master
+extract (fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf)
+extract amass_Linux_amd64.zip
+ls
+bat readme.md
+bat README.md
+./amass
+cd amass_Linux_amd64/
+mv amass /usr/bin
+sudo mv amass /usr/bin
+ls /usr/bin
+ls /usr/bin _
+ls /usr/bin | find amass
+amass
+amass -h | bat
+man amass 
+amass -h
+syncthing
+^emacs --daemon
+syncthing
+ps | find syncthing=
+startup
+syncthing=
+syncthing
+startup
+^emacs --daemon
+emacs
+^\emacs
+^emacs
+^emacs --daemon
+emacs --debug-init
+^emacs --debug-init
+ps syncthing
+ps |find syncthing
+syncthing
+killall emacs
+killall emacsdaemon
+^emacs --daemon
+startup
+^^emacs --daemon
+^emacs --daemon
+ps -l 
+ps -l | get command | find firefox
+startup
+syncthing
+killall syncthing
+firefox google.com 
+syncthing
+startup
+starutp
+startup
+syncthing
+tre
+ls
+cd bo
+dnfs oracle vm
+dnfs whatweb
+dnfi whatweb
+whatweb rust.com
+whatweb https://rust.com
+whatweb https://www.rust.com
+whatweb https://www.google.com
+whatweb https://www.tesla.com
+whatweb http://www.tesla.com
+whatweb http://tesla.com
+oraclevm
+dnfs oraclevm
+dnfs vmware
+dnfs virtualbox
+git clone https://github.com/sudodus/tarballs.git
+cd tarballs && tar -xf dus.tar.xz
+cd ..
+ls
+cd dus-tmp/
+dus
+sudo dus
+sudo ./dus
+./dus
+dnfs mkusb
+dnfs do usb
+cd ..
+bot README.md
+bat README.md
+ls
+cd ..
+ls
+rm -r org tarballs
+git clone https://github.com/sudodus/tarballs.git
+ls
+./dus-installer
+./dus-installer i
+dnfs mkusb
+cd ..
+ls
+./dus-installer i
+sudo ./dus-installer i
+dnfs xterm
+dnfi xterm
+dnfs pv
+dnfi pv
+dnfs dialog
+sudo ./dus-installer i
+dnfs xdialog
+dnfs dialog
+dnfd dialog
+dnfi dialog
+sudo ./dus-installer i
+dus
+ip a
+dnfs usb-pack
+git clone https://github.com/andreyv/usb-pack-efi.git<\n>
+sudo dnf install livecd-tools liveusb-creator<\n>
+sudo fdisk -l
+^ls
+sudo livecd-iso-to-disk --overlay-size-mb 15000 ./Parrot-security-5.3_amd.iso /dev/sdb<\n>
+sudo livecd-iso-to-disk --overlay-size-mb 15000 ./Parrot-security-5.3_amd64.iso /dev/sdb<\n>
+sudo livecd-iso-to-disk --overlay-size-mb 15000 ./Parrot-security-5.3_amd64.iso /dev/sdb1
+sudo fdisk -l
+sudo umount /dev/sdX
+sudo umount /dev/sdb
+sudo mkfs.fat -F32 /dev/sdb
+sudo fdisk -l
+lsblk -a
+sudo mkfs.fat -F32 /dev/sdb1
+sudo fdisk /dev/sdb
+sudo fdisk -l
+sudo mkfs.fat -F32 /dev/sdb1
+sudo fdisk /dev/sdX
+sudo fdisk /dev/sdb
+sudo mkfs.fat -F32 /dev/sdb1
+sudo livecd-iso-to-disk --overlay-size-mb 15000 ./Parrot-security-5.3_amd64.iso /dev/sdb1
+sudo livecd-iso-to-disk --overlay-size-mb 4096 ./Parrot-security-5.3_amd64.iso /dev/sdb1
+sudo livecd-iso-to-disk --overlay-size-mb 4096 Parrot-security-5.3_amd64.iso /dev/sdb1
+./dus-installer i
+sudo ./dus-installer i
+sudo fdisk -l
+dnfs nmap
+nmap
+dnfi nmap
+man nmap 
+man nmap | less
+startup
+man man nmap
+man nmap
+dd if=kali-linux-2023.2-live-amd64.iso of=/dev/sdb1 conv=fsync bs=4M status=progress
+ls
+sudo dd if=kali-linux-2023.2-live-amd64.iso of=/dev/sdb1 conv=fsync bs=4M status=progress
+tldr nmap
+ip a
+ls
+ip a
+man nmap
+nmap -h | bat
+nmap -sL
+man nmap
+nmap -sn 192.168.1.108
+nmap -sn 192.168.1.108/21
+ip a
+nmap -sn 192.168.1.108/24
+nmap -h | bat
+tldr nmap
+man nmap
+man nmap 
+man nmap | less
+nmap -v -p- 192.168.1.108/24
+nmap -v -p- -sU 192.168.1.108/24
+sudo nmap -v -p- -sU 192.168.1.108/24
+sudo nmap -v -p -sU 192.168.1.108/24
+nmap  -h | bat
+man nmap
+bash -c sudo su
+sudo nmap -v --top-ports 1000 -sU 192.168.1.108/24
+sudo nmap -v -sT 192.168.1.108/24
+sudo nmap -sT 192.168.1.108/24
+let data = (sudo nmap -sT 192.168.1.108/24)
+ls
+$data
+$data 
+$data | where str starts-with "\d"
+$data | where str starts-with '\d'
+let mut data = (data |lines)
+let mut data = ($data |lines)
+mut data = ($data |lines)
+$data
+$data | where str starts-with '\d'
+$data | where { str starts-with '\d'} 
+$data | where { str starts-with "\d" } 
+$data | where { str starts-with "8" } 
+$data
+$data
+str contains  -h | bat
+$data | where  -h | bat
+$data | where {|x| $x =~ "^\d.*"}
+$data | where {|x| $x =~ "^.*"}
+$data | where {|x| $x =~ "^2.*"}
+$data | where {|x| $x =~ "^.*"}
+$data | where str starts-with "PORT"
+str starts-with  -h | bat
+where -h | bat
+$data | where {$in str starts-with "PORT"}
+$data | where {$in | str starts-with "PORT"}
+$data 
+$data | str starts-with "2"
+$data 
+$data | find -h | bat
+$data | find -r "^2"
+$data | find -r "^\d"
+$data | find -r "^\\d"
+$data | find -r "^\\d" | parse
+$data | find -r "^\\d" | parse "{port} {state} {type}"
+parse -h | bat
+columns -h | bat
+$data | find -r "^\\d" | split column
+$data | find -r "^\\d" | split column '\s'
+$data | find -r "^\\d" | split column "\s"
+$data | find -r "^\\d" | split column "\\s"
+$data | find -r "^\\d" | split words
+$data | find -r "^\\d" | split column -c ' '
+$data | find -r "^\\d" | split column -c '   '
+$data | find -r "^\\d" | split column -c ' '
+parse  -h | bat
+head -h | bat
+header -h | bat
+columns -h | bat
+$data | find -r "^\\d" | split column -c ' ' | get column1 
+$data
+$data | find -r "^\\d" | split column -c ' ' 
+$data | find -r "^\\d" 
+$data | find -r "^\\d" | parse -r "{port}\\s{state}\\s{type}"
+$data | find -r "^\\d" | parse -r "{port}\s{state} {type}"
+$data | find -r "^\\d" | parse -r "{port}{state} {type}"
+$data | find -r "^\\d" | parse -r "{port} {state} {type}"
+$data | find -r "^\\d" | parse "{port} {state} {type}"
+$data | find -r "^\\d" | parse "(.*)\s(.*)\s(.*)"
+$data | find -r "^\\d" | parse "(.*)\s*(.*)\s*(.*)"
+$data | find -r "^\\d" | parse '(.*)\s*(.*)\s*(.*)'
+$data | find -r "^\\d" | parse '{a}\s*'
+$data | find -r "^\\d" | parse -'{a}\s*'
+$data | find -r "^\\d" | parse -r '{a}\s*'
+$data | find -r "^\\d" | parse '{a}'
+$data | find -r "^\\d" | parse -r '{a}'
+$data | find -r "^\\d" | parse -r '.*'
+$data | find -r "^\\d" | parse -regex '.*'
+$data | find -r "^\\d" | parse --regex '.*'
+$data | find -r "^\\d" | parse --regex '(.*)'
+$data | find -r "^\\d" | parse --regex '(.*)\s (.*)'
+$data | find -r "^\\d" | parse --regex '(.*)\s(.*)'
+$data | find -r "^\\d" | parse --regex '(.*)\s(.*)\s(.*)'
+$data | find -r "^\\d" | parse --regex '(.*)\s*(.*)\s*(.*)'
+$data | find -r "^\\d" | parse --regex '(.*)\s(.*)\s(.*)'
+$data | find -r "^\\d" | split column -c ' ' 
+$data | find -r "^\\d" | split column -c ' '
+$data | find -r "^\\d" | detect columns 
+$data | find -r "^\\d" 
+let data_raw = (sudo nmap -sT 192.168.1.108/24)
+$data_raw
+parse  -h | bat
+$data_raw | find -rm "^\\d"
+$data_raw | find -mr "^\\d"
+$data_raw | find -mr "^\d"
+$data_raw | find -mr "^22"
+$data_raw | lines | find -mr "^22"
+$data_raw | lines | find -mr "^"
+$data_raw | lines | find -mr "^\\d"
+$data_raw | lines | find -mr "^\\d" | split column -c ' '
+find -h | bat
+split  -h | bat
+$data_raw | lines | find -mr "^\\d" | split column -c ' ' | each {column1 | split column -c '/'}
+$data_raw | lines | find -mr "^\\d" | split column -c ' ' | each {$in.column1 | split column -c '/'}
+ls
+ls | update  -h | bat
+$data_raw | lines | find -mr "^\\d" | split column -c ' ' 
+split column  -h | bat
+rename
+rename -h | bat
+insert
+insert -h | bat
+str substring  -h | bat
+str -h | bat
+str trim  -h | bat
+spilt  -h | bat
+split -h | bat
+$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|| split column -c '/' | get column2}
+$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|| split column -c '/' }
+$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | split column -c '/' }
+$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | split column -c '/' | get column2}
+$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | split column -c '/' | get column2 | flatten}
+$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | split column -c '/' | get column2.0}
+str replace  -h | bat
+path -h | bat
+$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename}
+update  -h | bat
+$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname}
+$data_raw 
+$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} 
+$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocel\
+$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol\
+$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol
+(nmap -p -sT (ip a)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol
+(nmap -sT (ip a)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol
+ip a
+ipaddr
+ip addr
+ip  -h | bat
+ip address-
+ip address
+ip -h
+ip a -h
+ip -h a
+ip -h a | line
+ip -h a | lines
+ip -h a | lines | get 8 | split words | get 2
+ip -h a | lines | get 8 | split words
+ip -h a | lines | get 8 
+ip -h a | lines | get 8 | split words
+ip -h a | lines | get 8 | split column
+ip -h a | lines | get 8 | split column ' '
+ip -h a | lines | get 8 | split column -c ' '
+ip -h a | lines | get 8 | split column  -h | bat
+ip -h a | lines | get 8 | split column -c ' '
+str trim
+str trim -h | bat
+(nmap -p -sT (ip a | lines | get 8 | split column -c ' ' | get column2 | str trim)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol
+(nmap -sT (ip a | lines | get 8 | split column -c ' ' | get column2 | str trim)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol
+(nmap -sT (ip a | lines | get 8 | split column -c ' ' | get column2 | str trim)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol | save scanned.txt
+let $table = ((nmap -sT (ip a | lines | get 8 | split column -c ' ' | get column2 | str trim)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol )
+dnfs vbox
+dnfs oracle
+dnfi VirtualBox-7.0.8_156879_fedora36-1.x86_64.rpm
+ls
+dnfi VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64.rpm
+sudo /sbin/vboxconfig
+dnfi kernel-devel kernel-devel-6.3.6-200.fc38.x86_6
+dnfs devel
+sudo dnf -y install @development-tools
+sudo dnf install kernel-headers kernel-devel dkms  -y
+/sbin/vboxconfig
+sudo /sbin/vboxconfig
+sudo dnf install kernel-devel
+sudo /sbin/vboxconfig
+sudo dnf install kernel-devel kernel-devel-6.3.6-200.fc38.x86_64
+uname -r
+sudo dnf install kernel-devel kernel-devel-6.3.6-200.fc38.x86_64
+sudo dnf update
+arp-scan -l
+dnfs arp-scan
+dnfi arp-scan
+sudo /sbin/vboxconfig
+dnfi kernel-devel
+dnfi kernel-devel-6.3.6-200.fc38.x86_64
+dnfs kernel-devel
+dnfs kernel-devel-matched
+dnfi kernel-devel-matched
+sudo dnf install kernel-headers
+sudo /sbin/vboxconfig
+sudo dnf install @development-tools
+sudo dnf install kernel-headers kernel-devel dkms
+"[virtualbox]<\n>name=Fedora $releasever - $basearch - VirtualBox<\n>baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch<\n>enabled=1<\n>gpgcheck=1<\n>repo_gpgcheck=1<\n>gpgkey=https://www.virtualbox.org/download/oracle_vbox_2016.asc!" | save /etc/yum.repos.d/virtualbox.repo
+sudo "[virtualbox]<\n>name=Fedora $releasever - $basearch - VirtualBox<\n>baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch<\n>enabled=1<\n>gpgcheck=1<\n>repo_gpgcheck=1<\n>gpgkey=https://www.virtualbox.org/download/oracle_vbox_2016.asc!" | save /etc/yum.repos.d/virtualbox.repo
+"[virtualbox]<\n>name=Fedora $releasever - $basearch - VirtualBox<\n>baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch<\n>enabled=1<\n>gpgcheck=1<\n>repo_gpgcheck=1<\n>gpgkey=https://www.virtualbox.org/download/oracle_vbox_2016.asc!" | sud osave /etc/yum.repos.d/virtualbox.repo
+"[virtualbox]<\n>name=Fedora $releasever - $basearch - VirtualBox<\n>baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch<\n>enabled=1<\n>gpgcheck=1<\n>repo_gpgcheck=1<\n>gpgkey=https://www.virtualbox.org/download/oracle_vbox_2016.asc!" | sudo save /etc/yum.repos.d/virtualbox.repo
+sudo su
+dnfi VirtualBox-7.0.8_156879_fedora36-1.x86_64.rpm
+dnfr VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64.rpm
+dnfr VirtualBox
+dnfs Virtualbox
+dnfr VirtualBox-7.0.x86_64
+dnfr VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64
+dnfs VirtualBox
+dnfi VirtualBox-7.0.x86_64
+dnfr VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64
+dnfr -f VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64
+dnfr -y VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64
+dnfi netdiscover
+dnfs netdiscover
+netdiscover
+dnfs kernel header
+dnfs kernel-headers
+dnfi kernel-headers
+sudo dnf upgrade
+sudo dnf update
+sudo dnf upgrade --refresh
+sudo dnf install kernel-headers
+sudo vmware
+dnfi kernel-headers
+sudo dnfi dkms
+do dnfi dkms
+dnfi dkms
+sudo dnf install gcc kernel-devel kernel-headers make<\n>
+ls
+bsash
+ls
+dnfs oracle
+dnfs VirtualBox
+dnfi VirtualBox-7.0.x86_64
+dnfr VirtualBox-7.0.x86_64
+dnfi VirtualBox-7.0.x86_64
+arp-scan -l
+sudo arp-scan -l
+ls
+arp-scan -l
+ls
+sudo arp-scan -l
+dnfs arp-scan
+dnfs nikto
+dnfi nikto
+sudo arp-scan -l
+sudo arp-scan -l | lines
+let data = (sudo arp-scan -l | lines)
+mut data = ($data |lines)
+mut d = ($data |lines)
+$data
+mut data = (sudo arp-scan -l |lines)
+$data
+$data | drop 1
+$data | range 2..9
+$data | range 2..8
+$data 
+$data range 2..8
+$data | range 2..8
+$data | range 2..8 | parse "{c1} {c2} {c3}"
+$data | range 2..8 | parse "{c1}(.*){c2}(.*){c3}"
+$data | range 2..8 | split column ' '
+$data | range 2..8 | split column -c ' '
+$data | range 2..8 | split words
+$data | range 2..8
+$data | range 2..8 | split column -c "\s"
+$data | range 2..8 | split column -c "\\s"
+$data | range 2..8 | split column  -h | bat
+$data | range 2..8 | split column  -r "\\s*"
+$data | range 2..8 | split column  -r "\\s"
+$data | range 2..8 | split column  " "
+$data | range 2..8 | split column  -r "\\s"
+data = ($data | range 2..8 | split column  -r "\\s" )
+$data = ($data | range 2..8 | split column  -r "\\s" )
+$data 
+for x in $data.column1 { nikto -h $in}
+let d = $data
+for x in $d {print $in}
+$d
+for x in $d.colummn1 {nikto -h $x}
+for x in $d.column1 {nikto -h $x}
+nikto -h 192.168.1.112
+nikto -h https://192.168.1.112
+nikto -h http://192.168.1.112
+nikto -h http://192.168.1.10
+nikto -h https://192.168.1.10
+nikto -h https://192.168.1.102
+nikto -h https://192.168.1.103
+nikto -h https://192.168.1.124
+sudo arp-scan -l | lines
+nmap
+nmap -sT
+dnfs dirbuster
+dnfs gobuster
+dnfi gobuster
+ip a
+netwdiscover -h
+netdiscover -h
+nmap -sT 192.168.1.108/24
+dnfs netdiscover
+ls
+extract kali-linux-2023.2-vmware-amd64.7z
+extract kali-linux-2023.2-virtualbox-amd64(1).7z
+dnfs 7z
+dnfs p7z
+dnfi p7zip
+extract kali-linux-2023.2-virtualbox-amd64.7z
+extract kali-linux-2023.2-virtualbox-amd64(1).7z
+dnfs p7z
+dnfi p7zip-gui 
+tldr 7z
+7z x kali-linux-2023.2-virtualbox-amd64(1).7z\
+arp a
+arg -h | bat
+arp -h | bat
+arp
+arp | parse "{aaa} {b}"
+arp | lines |parse "{aaa} {b}"
+arp | lines |parse "{aaa} {b} {c} {d}"
+arp | lines |parse "{aaa} {b} {c} "
+arp | lines |parse "{aaa} {b} {c}"
+arp | lines | parse -r "\\s*(.*)\\s*(.*)"
+arp | lines | parse -r "\\s*(.*)"
+arp | lines | parse -r "(.*)"
+arp | lines | parse -r "(.*)(.*)"
+arp | lines | parse -r "(.*) (.*)"
+arp | lines | parse -r "(.*) (.*) (.*)"
+arp | lines | parse -r "(.*)\\s*(.*) (.*)"
+arp | lines | parse -r "(.*)\\s*(.*)\\s*(.*)"
+arp | detect columns
+arp | detect columns | drop Mask
+arp | detect columns 
+arp | detect columns | drop Mask
+arp | detect columns | drop "Mask"\
+arp | detect columns | drop 6
+arp | detect columns | drop column Mask
+arp | detect columns | drop column 6
+arp | detect columns | drop column  -h | bat
+arp | detect columns | reject Masks
+arp | detect columns | reject Mask
+$d
+$data
+ip a
+arp a
+arg
+arp
+sudo arp-scan -l
+nmap -h | bat
+ip a
+nmap -sn 192.168.1.108/24
+gobuster
+tldr gobuster
+gobuster https://www.google.com
+gobuster dir "https://www.google.com"
+man gobuster 
+gobuster --help
+rustup
+dnfs rustup
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+ls
+setxkbmap us dvorak
+startup
+sudo light -S 20
+startup
+ls
+ls | skip 3 | drop 2
+ps 
+sudo fdisk -l\
+sudo fdisk -l
+sudo fdisk -l | lines
+sudo fdisk -l | lines | drop 7 | skip  -h | bat
+sudo fdisk -l | lines | enumerate
+drop -h | bat
+get  -h | bat
+sudo fdisk -l | lines | get 8..11
+sudo fdisk -l | lines | get 8.11
+sudo fdisk -l | lines | range 7.. 12
+sudo fdisk -l | lines | range 7..12
+sudo fdisk -l | lines 
+sudo fdisk -l | lines | range 8..11
+split
+split -h | bat
+sudo fdisk -l | lines | range 8..11 | split column
+sudo fdisk -l | lines | range 8..11 | split column ' '
+sudo fdisk -l | lines | range 8..11 | split column -c' '
+sudo fdisk -l | lines | range 8..11 | split column -c ' '
+sudo fdisk -l | lines | range 8..11 | split words
+sudo fdisk -l | lines | range 8..11 | split row
+sudo fdisk -l | lines | range 8..11 | split row ' '
+sudo fdisk -l | lines | range 8..11 | split list
+sudo fdisk -l | lines | range 8..11 | split list ' '
+sudo fdisk -l | lines | range 8..11 | split column -cr "\s*"
+sudo fdisk -l | lines | range 8..11 | split column -cr "\\s*"
+sudo fdisk -l | lines | range 8..11 | split column -cr "\\s"
+sudo fdisk -l | lines | range 8..11 | split column -c "\\s"
+sudo fdisk -l | lines | range 8..11 | split column -c " "
+sudo fdisk -l | lines | range 8..11 | parse
+sudo fdisk -l | lines | range 8..11 | detect columns
+sudo fdisk -l | lines | range 8..11 | str join
+sudo fdisk -l | lines | range 8..11 | str join "\n"
+sudo fdisk -l | lines | range 8..11 | str join "\n" | detect columns
+sudo fdisk -l | lines | range 8..11 | split column " "
+sudo fdisk -l | lines | range 8..11 | split column -c " "
+sudo fdisk -l | lines | range 8..11 
+table -h | bat
+sudo fdisk -l | lines | range 8..11 | table
+sudo fdisk -l | lines | range 8..11 
+column 
+column  -h | bat
+sudo fdisk -l | lines | range 8..11 | column 
+sudo fdisk -l | lines | range 8..11 | column -t
+sudo fdisk -l | lines | range 8..11 | columns
+sudo fdisk -l | lines | range 8..11 | headers
+"a b c | 1 2 3" | split row "|"
+"a b c |<\n>1 2 3" | split row "|"
+"a b c |1 2 3" | split row "|"
+"a b c |1 2 3" | split row "|" | split column 
+"a b c |1 2 3" | split row "|" | split column " "
+"a b c |1 2 3" | split row "|" | split column -c  " "
+"a b c |1 2 3" | split row "|" | split column -c " "
+"a b c |1 2 3" | split row "|" | split column -c " " | header
+"a b c |1 2 3" | split row "|" | split column -c " " | headers
+sudo fdisk -l | lines | range 8..11 
 sudo fdisk -l | lines | range 8..11 | split column -c " "
 sudo fdisk -l | lines | range 8..11 | split column -c " " |headers
 sudo fdisk -l
@@ -2618,7 +3944,7 @@ md ass
 cd ..
 rm ass
 ls
-let solarized_light = {<\n>    separator: "#586e75"<\n>    leading_trailing_space_bg: { attr: "n" }<\n>    header: { fg: "#859900" attr: "b" }<\n>    empty: "#268bd2"<\n>    bool: {|| if $in { "#2aa198" } else { "light_gray" } }<\n>    int: "#586e75"<\n>    filesize: {|e|<\n>        if $e == 0b {<\n>            "#586e75"<\n>        } else if $e < 1mb {<\n>            "#2aa198"<\n>        } else {{ fg: "#268bd2" }}<\n>    }<\n>    duration: "#586e75"<\n>    date: {|| (date now) - $in |<\n>        if $in < 1hr {<\n>            { fg: "#dc322f" attr: "b" }<\n>        } else if $in < 6hr {<\n>            "#dc322f"<\n>        } else if $in < 1day {<\n>            "#b58900"<\n>        } else if $in < 3day {<\n>            "#859900"<\n>        } else if $in < 1wk {<\n>            { fg: "#859900" attr: "b" }<\n>        } else if $in < 6wk {<\n>            "#2aa198"<\n>        } else if $in < 52wk {<\n>            "#268bd2"<\n>        } else { "dark_gray" }<\n>    }<\n>    range: "#586e75"<\n>    float: "#586e75"<\n>    string: "#586e75"<\n>    nothing: "#586e75"<\n>    binary: "#586e75"<\n>    cellpath: "#586e75"<\n>    row_index: { fg: "#859900" attr: "b" }<\n>    record: "#586e75"<\n>    list: "#586e75"<\n>    block: "#586e75"<\n>    hints: "dark_gray"<\n>    search_result: { fg: "#dc322f" bg: "#586e75" }<\n><\n>    shape_and: { fg: "#6c71c4" attr: "b" }<\n>    shape_binary: { fg: "#6c71c4" attr: "b" }<\n>    shape_block: { fg: "#268bd2" attr: "b" }<\n>    shape_bool: "#2aa198"<\n>    shape_custom: "#859900"<\n>    shape_datetime: { fg: "#2aa198" attr: "b" }<\n>    shape_directory: "#2aa198"<\n>    shape_external: "#2aa198"<\n>    shape_externalarg: { fg: "#859900" attr: "b" }<\n>    shape_filepath: "#2aa198"<\n>    shape_flag: { fg: "#268bd2" attr: "b" }<\n>    shape_float: { fg: "#6c71c4" attr: "b" }<\n>    shape_garbage: { fg: "#FFFFFF" bg: "#FF0000" attr: "b" }<\n>    shape_globpattern: { fg: "#2aa198" attr: "b" }<\n>    shape_int: { fg: "#6c71c4" attr: "b" }<\n>    shape_internalcall: { fg: "#2aa198" attr: "b" }<\n>    shape_list: { fg: "#2aa198" attr: "b" }<\n>    shape_literal: "#268bd2"<\n>    shape_match_pattern: "#859900"<\n>    shape_matching_brackets: { attr: "u" }<\n>    shape_nothing: "#2aa198"<\n>    shape_operator: "#b58900"<\n>    shape_or: { fg: "#6c71c4" attr: "b" }<\n>    shape_pipe: { fg: "#6c71c4" attr: "b" }<\n>    shape_range: { fg: "#b58900" attr: "b" }<\n>    shape_record: { fg: "#2aa198" attr: "b" }<\n>    shape_redirection: { fg: "#6c71c4" attr: "b" }<\n>    shape_signature: { fg: "#859900" attr: "b" }<\n>    shape_string: "#859900"<\n>    shape_string_interpolation: { fg: "#2aa198" attr: "b" }<\n>    shape_table: { fg: "#268bd2" attr: "b" }<\n>    shape_variable: "#6c71c4"<\n><\n>    background: "#FBF7EF"<\n>    foreground: "#586e75"<\n>    cursor: "#586e75"<\n>}<\n>
+let solarized_light = {<\n>    separator: "#586e75"<\n>    leading_trailing_space_bg: { attr: "n" }<\n>    header: { fg: "#859900" attr: "b" }<\n>    empty: "#268bd2"<\n>    bool: {|| if $in { "#2aa198" } else { "light_gray" } }<\n>    int: "#586e75"<\n>    filesize: {|e|<\n>        if $e == 0b {<\n>            "#586e75"<\n>        } else if $e < 1mb {<\n>            "#2aa198"<\n>        } else {{ fg: "#268bd2" }}<\n>    }<\n>    duration: "#586e75"<\n>    date: {|| (date now) - $in |<\n>        if $in < 1hr {<\n>            { fg: "#dc322f" attr: "b" }<\n>        } else if $in < 6hr {<\n>            "#dc322f"<\n>        } else if $in < 1day {<\n>            "#b58900"<\n>        } else if $in < 3day {<\n>            "#859900"<\n>        } else if $in < 1wk {<\n>            { fg: "#859900" attr: "b" }<\n>        } else if $in < 6wk {<\n>            "#2aa198"<\n>        } else if $in < 52wk {<\n>            "#268bd2"<\n>        } else { "dark_gray" }<\n>    }<\n>    range: "#586e75"<\n>    float: "#586e75"<\n>    string: "#586e75"<\n>    nothing: "#586e75"<\n>    binary: "#586e75"<\n>    cellpath: "#586e75"<\n>    row_index: { fg: "#859900" attr: "b" }<\n>    record: "#586e75"<\n>    list: "#586e75"<\n>    block: "#586e75"<\n>    hints: "dark_gray"<\n>    search_result: { fg: "#dc322f" bg: "#586e75" }<\n><\n>    shape_and: { fg: "#6c71c4" attr: "b" }<\n>    shape_binary: { fg: "#6c71c4" attr: "b" }<\n>    shape_block: { fg: "#268bd2" attr: "b" }<\n>    shape_bool: "#2aa198"<\n>    shape_custom: "#859900"<\n>    shape_datetime: { fg: "#2aa198" attr: "b" }<\n>    shape_directory: "#2aa198"<\n>    shape_external: "#2aa198"<\n>    shape_externalarg: { fg: "#859900" attr: "b" }<\n>    shape_filepath: "#2aa198"<\n>    shape_flag: { fg: "#268bd2" attr: "b" }<\n>    shape_float: { fg: "#6c71c4" attr: "b" }<\n>    shape_garbage: { fg: "#FFFFFF" bg: "#FF0000" attr: "b" }<\n>    shape_globpattern: { fg: "#2aa198" attr: "b" }<\n>    shape_int: { fg: "#6c71c4" attr: "b" }<\n>    shape_internalcall: { fg: "#2aa198" attr: "b" }<\n>    shape_list: { fg: "#2aa198" attr: "b" }<\n>    shape_literal: "#268bd2"<\n>    shape_match_pattern: "#859900"<\n>    shape_matching_brackets: { attr: "u" }<\n>    shape_nothing: "#2aa198"<\n>    shape_operator: "#b58900"<\n>    shape_or: { fg: "#6c71c4" attr: "b" }<\n>    shape_pipe: { fg: "#6c71c4" attr: "b" }<\n>    shape_range: { fg: "#b58900" attr: "b" }<\n>    shape_record: { fg: "#2aa198" attr: "b" }<\n>    shape_redirection: { fg: "#6c71c4" attr: "b" }<\n>    shape_signature: { fg: "#859900" attr: "b" }<\n>    shape_string: "#859900"<\n>    shape_string_interpolation: { fg: "#2aa198" attr: "b" }<\n>    shape_table: { fg: "#268bd2" attr: "b" }<\n>    shape_variable: "#6c71c4"<\n><\n>    background: "#fdf6e3"<\n>    foreground: "#586e75"<\n>    cursor: "#586e75"<\n>}<\n>
 $solarized_light
 $solarized_light.date
 ls
@@ -4229,7 +5555,7 @@ startup
 remaps
 ls
 rg 'Iosevka'
-rg 'Iosevka Nerd Font'
+rg 'Iosevka Comfy'
 killall polybar dunst; startup
 startup emacs
 startup
@@ -8598,1403 +9924,77 @@ ls
 la -la
 ls -la
 ls
-nvim
-ls
-"({["
-(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
-xset dpms  --help | bat --language=man
-xset -dpms
-yay batsignal
-ls
-(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
-ls -la
-ls
-bash
-i3lock  --help | bat --language=man
-ls
-ansi reset
-help ansi
-ansi  --help | bat --language=man
-ls
-xset dpms force off
-xset -dpms
-yay hunspell
-math pi
-pg
-pg  --help | bat --language=man
-pg .bashrc
-bat .bashrc
-yay exo
-jshell
-hp-setup
-lpr
-lpr  --help | bat --language=man
-lpr
-ls /dev
-lsblk
-sudo killall dd
-ls
-dd if=/dev/zero of=/dev/sda bs=512 count=1
-sudo dd if=/dev/zero of=/dev/sda bs=512 count=1 status=progress
-sudo mkfs.fat -F32 /dev/sda1
-sudo fdisk /dev/sda
-ls
-sudo dd if=/dev/zero of=/dev/sda bs=512 count=1 status=progress
-sudo fdisk /dev/sda
-sudo mkfs.fat -F32 /dev/sda1
-yay mount
-yay udisk
-udiskie
-"udiskie &" | bash
-udiskie  --help | bat --language=man
-ls
-tldr pdflatex 
-nmtui
-yay calibre
-batsignal 
-upower 
-acpi
-fc-list font 
-fc-list
-yay computer modern
-yay cmu
-fc-list | find motion
-fc-list | find motion duo
-fc-list | find DejaVu Serif
-acpi
-fd --help | bat --language=man
-fd -e=pdf epub . ~/Documents/literature 
-fd -e=pdf  . ~/Documents/literature 
-cd Code/
-yay wn
-yay wordnet
-yay wordnut
-yay -S wordnet-cli
-emacs --daemon
-cd .config/
-nvim (fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
-emacs --daemon; emacsclient -c --no-wait
-emacsclient -c --no-wait
-ls
-yay -S emacs-nativecomp
-emacs
-nvim .config/setup.org
-bat .config/setup.org
-open .config/setup.org
-nvim .config/
-rm .config/emacs
-bash
-ls
-doom sync
-ls
-doom doctor
-doom sync
-emacsclient -c --no-wait
-doom sync
-emacsclient -c --no-wait
-emacs --daemon; emacsclient -c --no-wait
-killall emacs; emacs --daemon; emacsclient -c --no-wait
-emacs --daemon; emacsclient -c --no-wait
-killall emacs; emacs --daemon; emacsclient -c --no-wait
-ls
-rm *readwise
-ls
-ls *readwise
-ls
-acpi 
-ch Documents/
-cd Documents/
-acpi 
-acpi
-batsignal  --help | bat --language=man
-batsignal -o
-tldr batsignal
-batsignal -f 1
-batsignal -f 15
-batsignal -f 16
-batsignal -o -f 16
-batsignal -o 
-yaya
-ya
-acpi
-yay
-ls
-e
-pavucontrol 
-git clone https://github.com/rougier/nano-emacs
-emacs -ql nano.el
-emacs -q -l nano.el
-xset -dpms
-acpi
-ls
-emacsclient --tty --alternate-editor=nvim
-acpg
-acpi
-yay xclip
-yay xdotool
-yay xwininfo
-yay xprop
-emacs
-doom sync
-emacs --daemon; emacsclient -c --no-wait
-doom doctor
-acpi
-sysfs
-sys
-(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
-yay batify
-batifu
-yay -R batify
-yay nyxt
-nyxt
-nyxt  --help | bat --language=man
-nyxt
-yay -R nyxt
-yay qutebrowser
-qutebrowser 
-yay -R qutebrowser
-yay flatpak
-flatpak install flathub engineer.atlas.Nyxt
-yay -R flatpak
-xset -dpms
-sudo xset -dpms 
-sudo xset -dpms  && xset s off
-sudo xset -dpms; sudo xset s off
-2023 % 17
-2023 mod 17
-emacs --debug-init
-ls **/*tasks.org
-ls **/*tasks.org | get name | each {|f| mv $f (str replace "tasks" "agenda"} |
-ls **/*tasks.org | get name | each {|f| mv $f (str replace "tasks" "agenda")}
-ls **/*tasks.org | get name | each {|f| mv $f ($f | str replace "tasks" "agenda")}
-tree
-ls
-help\ str replace
-help str replace
-ls **/*tasks.org | get name | each {|f| open $f | (str replace -r "(?i)tasks" "Agenda")}
-ls **/*agenda.org | get name | each {|f| open $f | (str replace -r "(?i)tasks" "Agenda")}
-ls **/*agenda.org | get name | each {|f| open $f | (str replace -r "(?i)tasks" "Agenda") | save -f $in}
-ls **/*agenda.org | get name | each {|f| open $f | (str replace -r "(?i)tasks" "Agenda") | save -f $f}
-ls **/*agenda.org | get name | each {|f| open $f }
-ls compass/
-yay computer modern
-yay cm 
-yay cm font
-288 / 9
-uptime
-toe -a | grep direct
-cd ~/.config/
-ls
-ls **/* | get name | each {|f| open $f | str replace "Iosevka Nerd Font" "Iosevka Nerd Font" }
-help where
-ls **/* | where type == file | get name | each {|f| open $f | str replace "Iosevka Nerd Font" "Iosevka Nerd Font" }
-tldr rg
-rg -l "Iosevka" | lines 
-rg -l "Iosevka" | lines | each {|f| open $f | str replace "Nerd Font" "Nerd Font" }
-rg -l "Iosevka" | lines | each {|f| open -r $f | str replace "Nerd Font" "Nerd Font" }
-rg -l "Iosevka" | lines | each {|f| open -r $f | str replace "Nerd Font" "Nerd Font" | save -f $f }
-ls
-hehe
-rg -l "Iosevka" | lines | each {|f| open -r $f | str replace -a -r "Nerd Font( Duo)?" "Nerd Font" | save -f $f }
-rg -l "Iosevka" | lines | each {|f| open -r $f | str replace -a -r "Comfy( Motion Duo)?" "Nerd Font" | save -f $f }
-rg -l "Iosevka .* Motion" 
-ls
-setxkbmap  us
-polybar
-nm-applet 
-nm-applet --help | bat --language=man
-ls
-ls -la
-ls
-jshell
-ls
-ls **/*.org
-open  --help | bat --language=man
-open ./compass/agenda.org
-ls **/*.org | get name | each {open}
-fd 'org'
-fd  --help | bat --language=man
-fd 
-ls **/*.org | get name | each {|f| open -r $f | str replace -a "[X]" "[x]" | save -f $f }
-python
-ls
-polybar
-python
-144 - 06
-144 - 96
-nvim .config/
-doom sync
-140 | math sqrt 
-xclip  --help | bat --language=man
-man xclip
-i3lock --help | bat --language=man
-man i3lock 
-ls ** 
-sys
-help null 
-help
-ls
-help
-help help
-yay htop
-pacman -S pass
-sudo pacman -S pass
-ls
-setxkbmap  us
-ls
-xxx
-man xss-lock
-nvim /etc/default
-sudo nvim /etc/default
-ls
-ulimit
-bash
-exit
-ls
-yay
-yay -R proggyfontsx
-yay -R proggyfonts
-yay
-alacritty --help | bat --language=man
-alacritty migrate
-ls
-la
-ls
-alacritty migrate
-ls
-ls -la
-ls
-ls -la
-ls
-jshell
-ls
-ls -la
-ls
-ls -la
-ls
-sudo killall emacs
-ls
-ls -al
-ls -la
-ls
-sudo killall emacs
-sys
 ps
-ps | find emacs
-kill  --help | bat --language=man
-sudo kill 1506
-ps | find emacs
-kill 1506
-ps | find emacs
-kill 4318
-ps | find emacs
-ls
-la -la
-ls -la
-ls
-sys
-ls
-ls ls
-ls
-lsls
-ls
-cd ~/.config
-ls
-ls | where type == file | get name 
-ls
-ls -la
-ls
-(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
-cd .
-ls
-cd ~
-(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
-ls 
-ls
-ls -la
-ls
-ls -la
-ls
-ls -la
-ls
-ls -la 
-ls
-ls -la
-ls
-cd .config/
-ls **/* | where {type == file} | get name # | each {|f| }
-ls **/* | where type == file | get name # | each {|f| }
-rg -v 'solarized'
-rg -l 'solarized'
-rg -l 'solarized' | lines | each {|f| open $f | str replace -r "(?i)#FBF7EF" "#FBF7EF"}
-open  --help | bat --language=man
-rg -l 'solarized' | lines | each {|f| open -r $f | str replace -r "(?i)#FBF7EF" "#FBF7EF"}
-rg -l 'solarized' | lines | each {|f| open -r $f | str replace -r "(?i)#FDF6E3" "#FBF7EF" | save $f}
-rg -l 'solarized' | lines | each {|f| open -r $f | str replace -r "(?i)#FDF6E3" "#FBF7EF" | save -f $f}
-ls\
-ls
-rg -l 'solarized' | lines | each {|f| open -r $f | str replace -r "(?i)#FDF6E3" "#FBF7EF"}
-rg -l 'solarized' | lines | each {|f| open -r $f | str replace -r "(?i)#FBF7EF" "#FBF7EF"}
-ls
-rg -l 'solarized' | lines | each {|f| open -r $f | str replace -r "(?i)#fdf6e3" "#FBF7EF" | save -f $f}
-ls
-rg -l 'solarized' | lines | each {|f| open -r $f | str replace -r "#fdf6e3" "#FBF7EF" | save -f $f}
-rg -l 'solarized' | lines | each {|f| open -r $f | str replace -r "#FDF6E3" "#FBF7EF" | save -f $f}
-ls
-rg -l 'solarized' | lines 
-rg -l 'solarized' | sed -i 's/#fdf6e3/#FBF7EF/g'
-rg -l 'solarized' 
-sed  --help | bat --language=man
-tldr sed 
-ls **/* | where type == file | get name 
-rg -l 'solarized' 
-rg -l 'solarized' | lines 
-rg -l 'solarized' | lines | each {|f| open -r $f }
-rg -l 'solarized' | lines | each {|f| open -r $f } | find '#fdf6e3'
-rg -l 'solarized' | lines | each {|f| open -r $f  | find '#fdf6e3'}
-lsls
-ls 
-ls
-ls 
-ls
-ls -la
-sys
-sls
-ls
-this
-ls
-ls -la
-ls
-ls -la
-ls
-sys
-fd 
-ls
-ls 
-ls -la
-emacs 
-ls
-emacs --daemon; emacsclient -c --no-wait
-ls
-ls 
-ls my all
-ls my ass
-ls
-ls -la
-ls
-ls ls
-ls
-ls -la
-ls
-ls -la
-ls
-jshell
-ls
-ls -la
-ls
-bash\
-bashh
-bash
-9ls
-ls
-9ls
-ls
-cd .config/
-ls
-(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
-ls
-(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
-ls
-./test.nu
-rofi  --help | bat --language=man
-./test.nu
-string join0
-string join
-./test.nu
-[1 2]
-./test.nu
-ls (if true {-la})
-(if true)
-(if true {ls})
-$"(if true {ls})"
-help alias
-exec  --help | bat --language=man
-rofi  --help | bat --language=man
-nu --help | bat --language=man
-emacs  --help | bat --language=man
-vim
-e
-emacs -nw
-e
-g
-.config
-g
-emacs -nw --eval '(magit-status)'
-emacs  --help | bat --language=man
-emacsclient --help | bat --language=man
-emacsclient -nw
-ls
-e
-e readme.org
-g
-ls
-i3blocks 
-i3blocks  --help | bat --language=man
-i3-msg restart
-ls
-ls -la
-ls
-stst
-sys
-ls
-bat /etc/i3status.conf
-not path exists ~path
-not (path exists ~path)
-not (path exists ~)
-not (~ | path exists)
-not ("~" | path exists)
-not  --help | bat --language=man
-mkdir  --help | bat --language=man
-def mv [from: path, to: path] {<\n>  if not ($to | path exists) {<\n>    mkdir --verbose ($to | path dirname)<\n>  }<\n>  mv --verbose $from $to<\n>}<\n>
-mv --help | bat --language=man
-mkdir  --help | bat --language=man
-ls
-def mv [from: path, to: path] {<\n>  if not ($to | path exists) {<\n>    mkdir --verbose ($to | path dirname)<\n>  }<\n>  ^mv --verbose $from $to<\n>}
-ls
-touch f.txt
-mv f.txt f/f.txt
-ls
-ls f/
-rm -f f
-ls
-mkdir f/t
-ls
-ls f
-rm f
-ls
-rm  --help | bat --language=man
-e
-.
-ls
-cp /etc/i3status.conf ~/.config/i3status/conf
-ls
-mv  --help | bat --language=man
-cp --help | bat --language=man
-def cp [from: path, to: path] {<\n>  if not ($to | path exists) {<\n>    mkdir --verbose ($to | path dirname)<\n>  }<\n>  ^cp --verbose --progress --interactive $from $to<\n>}
-ls
-pactl
-pactl  --help | bat --language=man
-i3status
-man i3status
-i3status
-ls
-i3status
-man i3status
-3 bar
-i3bar
-i3status
-ls
-"i3status &" | bash
-ls
-i3status
-sl
-i3status
-"i3status &" | bash
-ls 
-cd Documents/
-ls
-fd 
-fd . '-'
-fd '-'
-ls
-ls **/*.* 
-where  --help | bat --language=man
-fd -e=pdf -e=org -tf
-ls
-cd uni/cs
-ls
-ls **/*
-ls **/* | where type == file | get name 
-where  --help | bat --language=man
-ls **/* | where name =~ '.*org'
-cd .
-ls
-cd ~
-cd Documents/org/
-ls
-ls **
-ls **/*
-xremap
-sudo xremap --watch=device ~/.config/xremap/config.yml
-xev
-sudo xremap --watch=device ~/.config/xremap/config.yml
-ls
-sudo xremap --watch=device ~/.config/xremap/config.yml
-k
-sudo xremap --watch=device ~/.config/xremap/config.yml
-xev
-sudo xremap --watch=device ~/.config/xremap/config.yml
-sudo xremap --watch=device ~/.config/xremap/config.yml\
-sudo xremap --watch=device ~/.config/xremap/config.yml
-sudo xremap --watch=device ~/.config/xremap/config.yml\
-sudo xremap --watch=device ~/.config/xremap/config.yml
-sudo xremap --watch=device ~/.config/xremap/config.yml\
-sudo xremap --watch=device ~/.config/xremap/config.yml
-sudo xremap --watch=device ~/.config/xremap/config.yml\
-sudo xremap --watch=device ~/.config/xremap/config.yml
-xremap --watch=device ~/.config/xremap/config.yml
-sudo xremap --watch=device ~/.config/xremap/config.yml
-xset
-ls
-keybindings listne
-keybindings listen
-xset r rate 0
-xset r off
-sudo xremap --watch=device ~/.config/xremap/config.yml
-sudo xremap --watch=device ~/.config/xremap/config.yml\
-sudo xremap --watch=device ~/.config/xremap/config.ym
-sudo xremap --watch=device ~/.config/xremap/config.yml
-sudo xremap --watch=device ~/.config/xremap/config.ym
-ls
-sudo xremap --watch=device ~/.config/xremap/config.ym
-sudo xremap --watch=device ~/.config/xremap/config.yml
-xset r off
-ls
-i3bar
-i3status
-i3bar
-ls
-xset r off
-i3bar
-"i3bar &" | bash
-ls
-i3bar
-"i3bar &" | bash
-sudo xremap --watch=device ~/.config/xremap/config.yml
-keybindings listen
-xev
-sudo xremap --watch=device ~/.config/xremap/config.yml
-xev
-xev
-sudo xremap --watch=device ~/.config/xremap/config.yml
-k
-sudo xremap --watch=device ~/.config/xremap/config.yml
-xset r off
-sudo xremap --watch=device ~/.config/xremap/config.yml
-sudo xremap --watch=device ~/.config/xremap/config.yml\
-sudo xremap --watch=device ~/.config/xremap/config.yml
-"sudo xremap --watch=device ~/.config/xremap/config.yml &" | bash
-ls
-sudo killall xremap
-sudo xremap --watch=device ~/.config/xremap/config.yml
-xset r off
-sudo xremap --watch=device ~/.config/xremap/config.yml
-"sudo xremap --watch=device ~/.config/xremap/config.yml &" | bash
-xset r off
-ls
-ps | get name | each {split words | get 0}
-ps | get name
-let pss = (ps | get name | each {split words | get 0})<\n>if not (($p | split words | get 0) in $pss) {<\n>      $"($p) &>/dev/null &" | bash}
-let pss = (ps | get name | each {split words | get 0})<\n>if not (("xset r off" | split words | get 0) in $pss) {<\n>      $"xset r off &>/dev/null &" | bash}
-let pss = (ps | get name | each {split words | get 0})<\n>if not (("xset r off" | split words | get 0) in $pss) {<\n>      $"xset r off &>/dev/null &"}
-let pss = (ps | get name | each {split words | get 0})<\n>if not (("xset r off" | split words | get 0) in $pss) {<\n>      $"xset r off &>/dev/null &"}ls
-4-5
-5 - 4
-sudo xremap --watch=device ~/.config/xremap/config.yml
-xset r off
-sudo xremap --watch=device ~/.config/xremap/config.yml
-xev
-sudo xremap --watch=device ~/.config/xremap/config.yml
-yay xkbset
-xkbset sticky -twokey -sticky
-xkbset sticky -twokey -latchlock
-ls
-lll l
-sudo xremap --watch=device ~/.config/xremap/config.yml
-xkbset sticky -twokey -latchlock
-sudo xremap --watch=device ~/.config/xremap/config.yml
-sudo xremap --watch=device ~/.config/xremap/config.yml; xkbset sticky -twokey -latchlock
-xkbset sticky -twokey -latchlock
-oo
-ls
-sudo xremap --watch=device ~/.config/xremap/config.yml
-xev
-sudo xremap --watch=device ~/.config/xremap/config.yml
-xkbset sticky -twokey -latchlock
-sudo xremap --watch=device ~/.config/xremap/config.yml
-ls
-xkbset sticky -twokey -latchlock
-bash
-sleep 21
-sleep 1s
-sleep 1sec
-bash
-sudo xremap --watch=device ~/.config/xremap/config.yml
-xkbset sticky -twokey -latchlock
-sudo xremap --watch=device ~/.config/xremap/config.yml
-xev
-sudo xremap --watch=device ~/.config/xremap/config.yml
-xev
-sudo xremap --watch=device ~/.config/xremap/config.yml
-e
-sudo xremap --watch=device ~/.config/xremap/config.yml
-xev
-sudo xremap --watch=device ~/.config/xremap/config.yml
-startupo
+ps | find syncting 
+ps | find syncthing
+restart
+doom upgrade
+doom upgrade --force
+ls
+doom upgrade --force
 startup
-yay -R batsignal
-i3-msg restart
-iv
-vi
-vim
-nvim
-startup
-sudo xremap --watch=device ~/.config/xremap/config.yml
-sudo startup
+yay --Syyu
 ls
-help startup
-startup -h
-yay batsigla
-yay batsignal
-startup
-sudo killall xremap; startup
-startup
-ls
-cd ~
-ls
-startup
-nvim
-ls
-startup
-ls
-ls *region
-ls *.region
-ls .*region
-ls **/*region
-ls
-rm _region_.log _region_.pdf _region_.synctex.gz _region_.tex
-ls -la
-startup
-ls
-startup
-nvim
-startup
-ls
-startup
-ls
-startup
-ls
-startup
-ls
-syncthing
-startup
-sudo killall xremap; startup
-sudo killall xremap and startup
-sudo killall xremap && startup
-sudo killall xremap
-startup
-sudo killall xremap; startup
-startup
-sudo killall xremap; startup
-ls
-startup
-ls
-sudo killall xremap
-startup
-xremap --watch=device ~/.config/xremap/config.yml
-sudo xremap --watch=device ~/.config/xremap/config.yml
-"sudo xremap --watch=device ~/.config/xremap/config.yml &" | bash
-ls
-sl
-ls
-sla
-lsa
-ls
-lsd
-ls
-sudo xremap --watch=device ~/.config/xremap/config.yml
-"sudo xremap --watch=device ~/.config/xremap/config.yml &" | bash
-nvim
-;q
-nvim
-yay exo
-exo
-ls
-startup
-emacs 
-xremap --watch=device ~/.config/xremap/config.yml
-ps | get name | each {split words | get 0}
-ps | get name | each {split words | get 0} | find firefox
-ps | get name 
-ps | get name | find firefox
-ps | get name | find emacs
-ps | get name | find xremap
-ps | get name 
-ps | get name | if xremap in $in
-ps | get name | if (xremap in $in) {print f}
-ps
-xremap in (ps | get name)
-"xremap" in (ps | get name)
-help any 
-(ps | get name) | any { $in =~ "xremap"}
-(ps | get name) | any { $in =~ "fa;slkdfj"}
-help in
-sudo xremap --watch=device ~/.config/xremap/config.yml
-startup
-ls
-diff
-tldr diff 
-"In linear algebra, the Reduced Row Echelon Form (RREF) of a matrix serves several important purposes:<\n><\n>    Solving Systems of Linear Equations: The RREF provides a systematic method for solving systems of linear equations by identifying the solutions, including determining whether the system has no solution, a unique solution, or infinitely many solutions.<\n><\n>    Determining Linear Independence: The RREF helps in determining the linear independence of vectors or the columns of a matrix. Linearly independent columns correspond to pivot columns in the RREF.<\n><\n>    Computing Basis and Dimension: In conjunction with determining linear independence, the RREF aids in computing the basis and dimension of the column space (image) and null space (kernel) of a matrix.<\n><\n>    Finding Rank: The number of non-zero rows in the RREF gives the rank of the matrix, which is a fundamental concept in linear algebra with various applications, such as solving linear systems and understanding the structure of linear transformations.<\n><\n>    Solving Eigenvalue Problems: The RREF can be useful in solving eigenvalue problems and understanding the eigenspace of a matrix.<\n><\n>    Reducing Complexity: The RREF simplifies matrices by bringing them into a canonical form, making it easier to analyze their properties and relationships.<\n><\n>Overall, the RREF is a powerful tool in linear algebra for solving equations, understanding the structure of vector spaces, and analyzing the properties of linear transformations. It simplifies computations and provides insights into the behavior of linear systems and matrices." | save 1.txt
-"In linear algebra, the Reduced Row Echelon Form (rref) of a matrix serves several important purposes:<\n><\n>    Solving Systems of Linear Equations: The rref provides a systematic method for solving systems of linear equations by identifying the solutions, including determining whether the system has no solution, a unique solution, or infinitely many solutions.<\n><\n>    Determining Linear Independence: The rref helps in determining the linear independence of vectors or the columns of a matrix. Linearly independent columns correspond to pivot columns in the rref.<\n><\n>    Computing Basis and Dimension: In conjunction with determining linear independence, the rref aids in computing the basis and dimension of the column space (image) and null space (kernel) of a matrix.<\n><\n>    Finding Rank: The number of non-zero rows in the rref gives the rank of the matrix, which is a fundamental concept in linear algebra with various applications, such as solving linear systems and understanding the structure of linear transformations.<\n><\n>    Solving Eigenvalue Problems: The rref can be useful in solving eigenvalue problems and understanding the eigenspace of a matrix.<\n><\n>    Reducing Complexity: The rref simplifies matrices by bringing them into a canonical form, making it easier to analyze their properties and relationships.<\n><\n>Overall, the rref is a powerful tool in linear algebra for solving equations, understanding the structure of vector spaces, and analyzing the properties of linear transformations. It simplifies computations and provides insights into the behavior of linear systems and matrices." | save 2.txt
-diff 1.txt 2.txt
-"In linear algebra, the Reduced Row Echelon Form (rref) of a matrix serves several important purposes:<\n><\n>    Solving Systems of Linear Equations: The rref provides a systematic method for solving systems of linear equations by identifying the solutions, including determining whether the system has no solution, a unique solution, or infinitely many solutions.<\n><\n>    Determining Linear Independence: The rref helps in determining the linear independence of vectors or the columns of a matrix. Linearly independent columns correspond to pivot columns in the rref.<\n><\n>    Computing Basis and Dimension: In conjunction with determining linear independence, the rref aids in computing the basis and dimension of the column space (image) and null space (kernel) of a matrix.<\n><\n>    Finding Rank: The number of non-zero rows in the rref gives the rank of the matrix, which is a fundamental concept in linear algebra with various applications, such as solving linear systems and understanding the structure of linear transformations.<\n><\n>    Solving Eigenvalue Problems: The rref can be useful in solving eigenvalue problems and understanding the eigenspace of a matrix.<\n><\n>    Reducing Complexity: The rref simplifies matrices by bringing them into a canonical form, making it easier to analyze their properties and relationships.<\n><\n>Overall, the rref is a powerful tool in linear algebra for solving equations, understanding the structure of vector spaces, and analyzing the properties of linear transformations. It simplifies computations and provides insights into the behavior of linear systems and matrices.\n" | save 2.txt
-"In linear algebra, the Reduced Row Echelon Form (rref) of a matrix serves several important purposes:<\n><\n>    Solving Systems of Linear Equations: The rref provides a systematic method for solving systems of linear equations by identifying the solutions, including determining whether the system has no solution, a unique solution, or infinitely many solutions.<\n><\n>    Determining Linear Independence: The rref helps in determining the linear independence of vectors or the columns of a matrix. Linearly independent columns correspond to pivot columns in the rref.<\n><\n>    Computing Basis and Dimension: In conjunction with determining linear independence, the rref aids in computing the basis and dimension of the column space (image) and null space (kernel) of a matrix.<\n><\n>    Finding Rank: The number of non-zero rows in the rref gives the rank of the matrix, which is a fundamental concept in linear algebra with various applications, such as solving linear systems and understanding the structure of linear transformations.<\n><\n>    Solving Eigenvalue Problems: The rref can be useful in solving eigenvalue problems and understanding the eigenspace of a matrix.<\n><\n>    Reducing Complexity: The rref simplifies matrices by bringing them into a canonical form, making it easier to analyze their properties and relationships.<\n><\n>Overall, the rref is a powerful tool in linear algebra for solving equations, understanding the structure of vector spaces, and analyzing the properties of linear transformations. It simplifies computations and provides insights into the behavior of linear systems and matrices.\n" | save - f2.txt
-"In linear algebra, the Reduced Row Echelon Form (rref) of a matrix serves several important purposes:<\n><\n>    Solving Systems of Linear Equations: The rref provides a systematic method for solving systems of linear equations by identifying the solutions, including determining whether the system has no solution, a unique solution, or infinitely many solutions.<\n><\n>    Determining Linear Independence: The rref helps in determining the linear independence of vectors or the columns of a matrix. Linearly independent columns correspond to pivot columns in the rref.<\n><\n>    Computing Basis and Dimension: In conjunction with determining linear independence, the rref aids in computing the basis and dimension of the column space (image) and null space (kernel) of a matrix.<\n><\n>    Finding Rank: The number of non-zero rows in the rref gives the rank of the matrix, which is a fundamental concept in linear algebra with various applications, such as solving linear systems and understanding the structure of linear transformations.<\n><\n>    Solving Eigenvalue Problems: The rref can be useful in solving eigenvalue problems and understanding the eigenspace of a matrix.<\n><\n>    Reducing Complexity: The rref simplifies matrices by bringing them into a canonical form, making it easier to analyze their properties and relationships.<\n><\n>Overall, the rref is a powerful tool in linear algebra for solving equations, understanding the structure of vector spaces, and analyzing the properties of linear transformations. It simplifies computations and provides insights into the behavior of linear systems and matrices.\n" | save -f 2.txt
-"In linear algebra, the Reduced Row Echelon Form (RREF) of a matrix serves several important purposes:<\n><\n>    Solving Systems of Linear Equations: The RREF provides a systematic method for solving systems of linear equations by identifying the solutions, including determining whether the system has no solution, a unique solution, or infinitely many solutions.<\n><\n>    Determining Linear Independence: The RREF helps in determining the linear independence of vectors or the columns of a matrix. Linearly independent columns correspond to pivot columns in the RREF.<\n><\n>    Computing Basis and Dimension: In conjunction with determining linear independence, the RREF aids in computing the basis and dimension of the column space (image) and null space (kernel) of a matrix.<\n><\n>    Finding Rank: The number of non-zero rows in the RREF gives the rank of the matrix, which is a fundamental concept in linear algebra with various applications, such as solving linear systems and understanding the structure of linear transformations.<\n><\n>    Solving Eigenvalue Problems: The RREF can be useful in solving eigenvalue problems and understanding the eigenspace of a matrix.<\n><\n>    Reducing Complexity: The RREF simplifies matrices by bringing them into a canonical form, making it easier to analyze their properties and relationships.<\n><\n>Overall, the RREF is a powerful tool in linear algebra for solving equations, understanding the structure of vector spaces, and analyzing the properties of linear transformations. It simplifies computations and provides insights into the behavior of linear systems and matrices.\n" | save -f 1.txt
-diff 1.txt 2.txt
-ls
-glob  --help | bat --language=man
-glob *.txt
-glob *txt
-ls **/*txt
-ls *txt
-ls *txt | each {get name | rm $in}
-ls
-git clone https://github.com/miikanissi/dotfiles
-git clone https://github.com/miikanissi/modus-themes.nvim
-cd modus-themes.nvim/
-ls
-yay oomox
-ls
-cd ..
-ls
-ls -al
-la -la my anus
-ls -la
-ls
-ls -la
-ls
-ls 
-ls -la
-ls _la
-ls -la
-ls -a
-ls
-ls -la 
-ls -la
-ls
-sl
-ls
-ls --la
-ls la
-ls
-sys
-emacs --debug-init
-ls
-ls -la
-emacs --debug-init
-emacs
-emacs --nw
-emacsclient -nw
-ls
-nvim
-ls
-emacs --debug-init
-ls
-ls _la
-ls -al
-ls -la
-emacs --debug-init
-ls
-emacs --debug-init
-ls fla
-ls -la
-is
-ls
-ls -la
-ls
-ls -la
-ls fla
-ls -la
-htop
-ls
-ls -la
-ls -las
-startup
-ls
-ls -la
-emacs
-ls
-ls -la
-ls la
-ls -la
-ls
-ls #la
-ls -la
-ls lsa
-ls -la
-ls fla
-ls -la
-emacs
-ls
-hello 
-lsl
-ls
-ls fla
-nu
-nu
-nu
-ls
-lsls
-ls
-ls -la
-ls la
-ls -la
-ls -las
-ls
-ls -la
-ls
-ls -la
-ls
-ls -la
-ls
-ls -la
-ls
-ls -la
-ls
-ls -la
-lls
-ls
-ls -la
-ls
-ls fla
-ls
-startup
-nvim
-ls
-vi
-ls 
-ls
-bat theme
-bat --list-themese
-bat --list-themes
-cls
-ls
-(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
-bat
-ls
-man rg
-ls
-bad
-lu
-ls
-(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
-ls
-ls\
-ls
-cd ..
-cd v
-cd vb
-cd /
-ls
-cd ~
-ls
-ssys
-sys
-ls
-ls 
-sys
-ls
-fd 
-ls
-sys
-emacs --debug-init
-ls
-man 5 alacritty
-ls
-ls -la
-ls
-ls -la
-ls
-ls -la
-emacs --nw
-emacsclient -nw
-e
-g
-emacsclient -nw --eval "(magit-status)"
-emacsclient --eval "(magit-status)"
-d
-ls
-ls -la
-ls
-rm todo__dotfiles/
-ls
-ls -la
-ls
-ls 
-ls
-nu
-nu
-ls
-startup
-ls
-starTUP
-startup
-ls
-tldr pandoc
-pandoc ass.org -o cx.pdf
-"# Longest Power-of-Two Subsequence<\n><\n>You are given an array of $n$ integers between (and including) $0$ and $2^{20}-1 = 1048575$. Your task is to compute the length of the longest subsequence such that the absolute difference between consecutive elements is a power of two (that is, one of $1$, $2$, $4$, $8$, and so on). Note that the elements of the subsequence do not need to be on consecutive positions in the original array.<\n><\n>For example, for the input array $1$, $6$, $3$, $7$, $3$, $9$, the answer is $4$. This is because there exists a valid subsequence of length $4$: this is $1$, $3$, $7$, $3$. On the other hand, there exists no valid subsequence of length $5$.<\n><\n>You need to implement your solution as a method **getLongestSubsequence($n$, $A$)**, where $A$ is the given array.<\n><\n>**Grading** (16 points):<\n><\n>- Let $h$ be the maximum value of an integer in the input. So, $h$ is at most $2^{20}-1 = 1048575$. An $O(h + n \log h)$-time implementation gets 16 points and an $O(n^2)$-time implementation gets 6 points.<\n><\n>**Attention**: <\n><\n>- You are NOT allowed to use imports explicitly or implicitly other than the imports already in the code template.  <\n>- You see the **percentage** of your submission in the CodeExpert system instead of points." | save ex.md
-'# Longest Power-of-Two Subsequence<\n><\n>You are given an array of $n$ integers between (and including) $0$ and $2^{20}-1 = 1048575$. Your task is to compute the length of the longest subsequence such that the absolute difference between consecutive elements is a power of two (that is, one of $1$, $2$, $4$, $8$, and so on). Note that the elements of the subsequence do not need to be on consecutive positions in the original array.<\n><\n>For example, for the input array $1$, $6$, $3$, $7$, $3$, $9$, the answer is $4$. This is because there exists a valid subsequence of length $4$: this is $1$, $3$, $7$, $3$. On the other hand, there exists no valid subsequence of length $5$.<\n><\n>You need to implement your solution as a method **getLongestSubsequence($n$, $A$)**, where $A$ is the given array.<\n><\n>**Grading** (16 points):<\n><\n>- Let $h$ be the maximum value of an integer in the input. So, $h$ is at most $2^{20}-1 = 1048575$. An $O(h + n \log h)$-time implementation gets 16 points and an $O(n^2)$-time implementation gets 6 points.<\n><\n>**Attention**: <\n><\n>- You are NOT allowed to use imports explicitly or implicitly other than the imports already in the code template.  <\n>- You see the **percentage** of your submission in the CodeExpert system instead of points.' | save ex.md
-ls
-rm cx.pdf ass.org
-pandoc ex.md -o ex.pdf
-'# Longest Power-of-Two Subsequence<\n><\n>You are given an array of $n$ integers between (and including) $0$ and $2^{20}-1 = 1048575$. Your task is to compute the length of the longest subsequence such that the absolute difference between consecutive elements is a power of two (that is, one of $1$, $2$, $4$, $8$, and so on). Note that the elements of the subsequence do not need to be on consecutive positions in the original array.<\n><\n>For example, for the input array $1$, $6$, $3$, $7$, $3$, $9$, the answer is $4$. This is because there exists a valid subsequence of length $4$: this is $1$, $3$, $7$, $3$. On the other hand, there exists no valid subsequence of length $5$.<\n><\n>You need to implement your solution as a method **getLongestSubsequence($n$, $A$)**, where $A$ is the given array.<\n><\n>**Grading** (16 points):<\n><\n>- Let $h$ be the maximum value of an integer in the input. So, $h$ is at most $2^{20}-1 = 1048575$. An $O(h + n \log h)$-time implementation gets 16 points and an $O(n^2)$-time implementation gets 6 points.<\n><\n>**Attention**: <\n><\n>- You are NOT allowed to use imports explicitly or implicitly other than the imports already in the code template.  <\n>- You see the **percentage** of your submission in the CodeExpert system instead of points.' | save -f ex.md
-pandoc ex.md -o ex.pdf
-man tmux
-ls
-bat --list-themes
-ls
-bat ex.md
-ls
-tmux  --help | bat
-ls
-fd --help | bat
-fd  --help | bat --plain
-ls
-nu 
-nu
-nu
-nu
-sys
-ls
-sys
-fd
-ls
-ls -la
-ls
-ls -la
-lf -la
-ls -la
-ls
-sys
-ls -la
-for file in (ls | where type == file | get name) {<\n>        cp -v $file test<\n>}<\n><\n>for file in (ls test | get name) {<\n>        open $file |<\n>        lines |<\n>        each {|x| if $x =~ '#' {<\n>                str replace -a '\s{4}' "\t"}<\n>        } |<\n>        to text |<\n>        save -f $file<\n>}
-ls
-ls -la
-ls
-ls -la
-ls
-ls -la
-ls
-ls my ass
-ls
-sys
-ls -la
-ls
-sys
-ls
-sys
-ls
-sys
-ps
-ls
-ls -la
-ls
-ls -la
-sys
-ls | where type == file | get name 
-ls -las | where type == directory 
-ls -las
-ls -las | any {type == dir}
-ls -las | where type == dir
-ls -las | where type == dir | get name
-ls -las | where type == file | get name
-ls
-ls | where type == file | get name
-ls
-ls | where type == file 
-ls
-[1 2 3 4] | pring
-[1 2 3 4] | print
-ls
-ls -la
-nu --version
-nu --help
-help any
-ls
-help any
-ls
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-nu
-ls -la
-ls
-ls -la
-startup
-jshell
-ls
-ls -la
-"# Longest Palindromic Subsequence<\n><\n>A ***palindrome*** is a sequence of characters which reads the same backward as forward, e.g., "level", "noon","racecar". <\n>Given a sequence $A$ of $n$ characters, your task is to compute the ***length*** of the **longest palindromic subsequence** of $A$, i.e., the *length* of the *longest subsequence* of $A$ that is a *palindrome*.<\n>For instance, if $A$ is "ETZHEEHU", "HEEH" is the longest palindromic subsequence of $A$, and its length is **4**.<\n><\n><\n>**Grading** (16 points):<\n><\n>- An $O(n^2)$-time implementation gets 16 points, while an $O(2^n)$-time implementation still gets 6 points.<\n><\n><\n>**Note**: The input array $A$ is indexed from $0$, and all characters are capitals. <\n><\n><\n>**Attention**: <\n><\n>- You are NOT allowed to use imports explicitly or implicitly other than the imports already in the code template.  <\n>- You see the **percentage** of your submission in the CodeExpert system instead of points." | save -f ex.md
-ls
-bat ex.md
-pandoc ex.md -o ex.pdf
-ls
-sys
-ls
-ls -la
-ls
-lf fla
-ls -la
-sys
-ls
-sys
-ils
-ls
-ls -la
-ls
-rm ex.md ex.pdf
-ls
-"# Pair-Subsequence<\n><\n>You are given an array $A$ of $n$ integers, some of them positive and some of them negative, indexed from $0$ to $n-1$.<\n><\n>Your task is to find the maximum sum that the elements of a *pair-subsequence* of $A$ can have. A pair-subsequence is defined as a subsequence that also satisfies the following properties:<\n><\n>- if the element with index $i$ appears in the subsequence, then either the element with index $i-1$ or the element with index $i+1$ also appears in the subsequence<\n>- no three elements with consecutive indices appear in the subsequence<\n><\n>More informally, a pair-subsequence is a subsequence obtained by selecting pairs of consecutive elements of $A$, such that the pairs are not adjacent to each other. A pair-subsequence is also allowed to be empty, case in which the sum of its elements is defined to be $0$.<\n><\n>For example, for $n=8$ and $A=[1, 2, 3, 3, 2, 2, -10, 10]$, the pair-subsequence of maximum sum is the one with indices $1, 2, 4, 5$, corresponding to values $2, 3, 2, 2$, and hence with sum $9$.<\n><\n>Return the maximum sum of the elements of a pair-subsequence of $A$.<\n><\n>You need to implement your solution as a method **getMaximumSum($n$, $A$)**.<\n><\n>**Grading** (16 points):<\n><\n>- An $O(n^2)$ solution gets 6 points and an $O(n)$ solution gets 16 points.<\n><\n>**Attention**: <\n><\n>- You are **NOT** allowed to use imports explicitly or implicitly, other than the imports already included in the code template.  <\n>- When you submit the code, you see your score as a **percentage**, not as a number of points." | save -f ex.md
-pandoc ex.md -o ex.pdf
-"# Players on a Graph<\n><\n>You are given a directed graph with $n$ nodes and $n$ edges, such that the out-degree of each node is $1$. You are guaranteed that, viewing the edges as *undirected*, the graph is connected. Such a graph always contains exactly one cycle. Here is an example for $n=11$, in which the nodes $4$, $7$, $8$, and $10$ form the cycle:<\n><\n>![cycle_graph.png](/cycle_graph.png)<\n><\n>In the beginning, each node of the graph contains a player. Then a timer starts, and at each time step, each players moves to the node indicated by the edge of its current node. The timer continues forever. Note that multiple players may arrive at the same time at the same node -- that is allowed.<\n><\n>Given such a graph, you have to answer queries of the following type:<\n><\n>1.  **cycleLength()**: Return the length of the cycle of the graph.<\n><\n>2.  **distanceToCycle($x$)**: For the player that starts at node $x$, return the number of edges that it has to traverse to reach the cycle. (If $x$ is already in the cycle, the answer is $0$.)<\n><\n>3.  **firstNodeInCycle($x$)**: After some time steps, the player that starts at node $x$ reaches the cycle. Return the first node in the cycle that this player reaches. (If $x$ is already in the cycle, the answer is $x$.)<\n><\n>4.  **distanceInCycle($x$, $y$)**: After some time steps, both the player that starts at node $x$ and the player that starts at node $y$ have reached the cycle. Return the distance between them on the cycle (this distance is calculated viewing the edges of the cycle as *undirected*; that is, the minimum of the clockwise distance and counterclockwise distance on the cycle).<\n><\n>    (Note that the two players may reach the cycle at different time steps.)<\n><\n>You have to implement the four methods described above. In addition, we provide an **intialize()** method which we guarantee to run exactly once, before the queries. Feel free to use this method, for example, to initialize information that you want available in all of the queries.<\n><\n>**Grading** (24 points):<\n><\n>1.  **cycleLength()** (4 points): This query will be run at most once. An $O(n)$-time implementation gets $4$ points.<\n>2.  **distanceToCycle($x$)** (6 points): If $q$ is the number of queries of this type, an $O(n+q)$-time implementation gets 6 points and an $O(nq)$-time implementation gets 3 points.<\n>3.  **firstNodeInCycle($x$)** (6 points): If $q$ is the number of queries of this type, an $O(n+q)$-time implementation gets 6 points and an $O(nq)$-time implementation gets 3 points.<\n>4.  **distanceInCycle($x$, $y$)** (8 points): If $q$ is the number of queries of this type, an $O(n+q)$-time implementation gets 8 points and an $O(nq)$-time implementation gets 4 points.<\n><\n>**Attention**:<\n><\n>*   You are **NOT** allowed to use imports explicitly or implicitly, other than the imports already included in the code template.<\n>*   When you submit the code, you see your score as a **percentage**, not as a number of points." | save -f ex.md
-pandoc ex.md -o ex.pdf
-"# Players on a Graph<\n><\n>You are given a directed graph with $n$ nodes and $n$ edges, such that the out-degree of each node is $1$. You are guaranteed that, viewing the edges as *undirected*, the graph is connected. Such a graph always contains exactly one cycle. Here is an example for $n=11$, in which the nodes $4$, $7$, $8$, and $10$ form the cycle:<\n><\n>![cycle_graph.png](cycle_graph.png)<\n><\n>In the beginning, each node of the graph contains a player. Then a timer starts, and at each time step, each players moves to the node indicated by the edge of its current node. The timer continues forever. Note that multiple players may arrive at the same time at the same node -- that is allowed.<\n><\n>Given such a graph, you have to answer queries of the following type:<\n><\n>1.  **cycleLength()**: Return the length of the cycle of the graph.<\n><\n>2.  **distanceToCycle($x$)**: For the player that starts at node $x$, return the number of edges that it has to traverse to reach the cycle. (If $x$ is already in the cycle, the answer is $0$.)<\n><\n>3.  **firstNodeInCycle($x$)**: After some time steps, the player that starts at node $x$ reaches the cycle. Return the first node in the cycle that this player reaches. (If $x$ is already in the cycle, the answer is $x$.)<\n><\n>4.  **distanceInCycle($x$, $y$)**: After some time steps, both the player that starts at node $x$ and the player that starts at node $y$ have reached the cycle. Return the distance between them on the cycle (this distance is calculated viewing the edges of the cycle as *undirected*; that is, the minimum of the clockwise distance and counterclockwise distance on the cycle).<\n><\n>    (Note that the two players may reach the cycle at different time steps.)<\n><\n>You have to implement the four methods described above. In addition, we provide an **intialize()** method which we guarantee to run exactly once, before the queries. Feel free to use this method, for example, to initialize information that you want available in all of the queries.<\n><\n>**Grading** (24 points):<\n><\n>1.  **cycleLength()** (4 points): This query will be run at most once. An $O(n)$-time implementation gets $4$ points.<\n>2.  **distanceToCycle($x$)** (6 points): If $q$ is the number of queries of this type, an $O(n+q)$-time implementation gets 6 points and an $O(nq)$-time implementation gets 3 points.<\n>3.  **firstNodeInCycle($x$)** (6 points): If $q$ is the number of queries of this type, an $O(n+q)$-time implementation gets 6 points and an $O(nq)$-time implementation gets 3 points.<\n>4.  **distanceInCycle($x$, $y$)** (8 points): If $q$ is the number of queries of this type, an $O(n+q)$-time implementation gets 8 points and an $O(nq)$-time implementation gets 4 points.<\n><\n>**Attention**:<\n><\n>*   You are **NOT** allowed to use imports explicitly or implicitly, other than the imports already included in the code template.<\n>*   When you submit the code, you see your score as a **percentage**, not as a number of points." | save -f ex.md
-bat ex.md
-ls
-pandoc ex.md -o ex.pdf
-ls
-sudo xremap --watch=device ~/.config/xremap/config.yml
-starup
-startup
-ls
-ls -las
-ls -la
-ls -)a
-sys
-ls
-ls -la
-startup
-ls
-startup
-sudo xremap --watch=device ~/.config/xremap/config.yml
-startup
-sl
-ls
-jshell
-ls
-"# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template." | pandoc -f markdown -o cx.pdf
-'# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template.' | pandoc -f markdown -o cx.pdf
-ls
-"# Two Trees<\n><\n>You are given two rooted trees, $A$ and $B$, with disjoint vertex sets. Tree $A$ has vertices indexed by $a_0$, ..., $a_{n-1}$, with the root at index $a_0$, and tree $B$ has vertices indexed by $b_0$, ..., $b_{n-1}$, with the root at index $b_0$. The edges in each tree are weighted by positive integers.<\n><\n>You want to add some new edges that connect leaves of $A$ with leaves of $B$, thus creating a connected graph. Specifically, you can add an edge only if it goes between a leaf of $A$ and a leaf of $B$. Any edge that you add has weight $0$.<\n><\n>The distance between two vertices is defined as minimum total weight of a path that connects the two vertices.<\n><\n>Given these two trees, you have to implement the following methods. All the answers are guaranteed to fit on an "int" type.<\n><\n>1. **edgeCount()**: Return the total number of edges that you can add between the two trees.<\n><\n>2. **minDistRoots()**: Return the minimum distance between the roots of the two trees that you can achieve by adding exactly one edge.<\n><\n>3. **cycle()**: Return $1$ if you can add exactly two edges such that the resulting graph has a simple cycle (no repeated vertices) that contains the two roots.<\n><\n>4. **minDistCycle()**: Return the minimum length of a simple cycle (no repeated vertices) that contains the two roots that you can achieve by adding exactly two edges. You can assume such a simple cycle exists.<\n><\n>**Grading** (24 points):<\n><\n>1. **edgeCount()** (4 points): An $O(n)$-time implementation gets $4$ points.<\n>2. **minDistRoots()** (8 points): An $O(n)$-time implementation gets $8$ points and an $O(n^2)$-time implementation gets $4$ points.<\n>3. **cycle()** (4 points): An $O(n)$-time implementation gets $4$ points.<\n>4. **minDistCycle()** (8 points): An $O(n)$-time implementation gets $8$ points and an $O(n^2)$-time implementation gets $4$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template." | pandoc -f markdown -o pdf
-"# Two Trees<\n><\n>You are given two rooted trees, $A$ and $B$, with disjoint vertex sets. Tree $A$ has vertices indexed by $a_0$, ..., $a_{n-1}$, with the root at index $a_0$, and tree $B$ has vertices indexed by $b_0$, ..., $b_{n-1}$, with the root at index $b_0$. The edges in each tree are weighted by positive integers.<\n><\n>You want to add some new edges that connect leaves of $A$ with leaves of $B$, thus creating a connected graph. Specifically, you can add an edge only if it goes between a leaf of $A$ and a leaf of $B$. Any edge that you add has weight $0$.<\n><\n>The distance between two vertices is defined as minimum total weight of a path that connects the two vertices.<\n><\n>Given these two trees, you have to implement the following methods. All the answers are guaranteed to fit on an "int" type.<\n><\n>1. **edgeCount()**: Return the total number of edges that you can add between the two trees.<\n><\n>2. **minDistRoots()**: Return the minimum distance between the roots of the two trees that you can achieve by adding exactly one edge.<\n><\n>3. **cycle()**: Return $1$ if you can add exactly two edges such that the resulting graph has a simple cycle (no repeated vertices) that contains the two roots.<\n><\n>4. **minDistCycle()**: Return the minimum length of a simple cycle (no repeated vertices) that contains the two roots that you can achieve by adding exactly two edges. You can assume such a simple cycle exists.<\n><\n>**Grading** (24 points):<\n><\n>1. **edgeCount()** (4 points): An $O(n)$-time implementation gets $4$ points.<\n>2. **minDistRoots()** (8 points): An $O(n)$-time implementation gets $8$ points and an $O(n^2)$-time implementation gets $4$ points.<\n>3. **cycle()** (4 points): An $O(n)$-time implementation gets $4$ points.<\n>4. **minDistCycle()** (8 points): An $O(n)$-time implementation gets $8$ points and an $O(n^2)$-time implementation gets $4$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template." | pandoc -f markdown -o cx.pdf
-vim
-nvim
-ls
-ls -la
-sl gf la
-ls -la
-ls -las
-ls
-startup
-l
-s
-ls
-well i don
-startup
-ls
-ls -la
-startup\
-startup
-startup\
-ls
-'Nach Satz 6.5 (Parsevalsche Formel) kann mann hier auch das Euklidsche Skalarprodukt $x^Ty$  verwenden. <\n><\n><\n><\n><\n><\n>Dann $M_1 = \begin{pmatrix}2 \\0\\4 \\-4 \\\end{pmatrix}$<\n><\n>$M_2 = \begin{pmatrix}3 \\1\\3 \\0 \\\end{pmatrix}$<\n><\n>(2x2 Matrix Isomorph zu 4x1 Vektor)<\n><\n><\n><\n>$b_1 = \|M_1\|_2M_1 =  \begin{pmatrix}1/3 \\0\\2/3 \\-2/3 \\\end{pmatrix}$<\n><\n><\n><\n><\n><\n>(Vor Normierung) $b_2 = \begin{pmatrix}3 \\1\\3 \\0 \\\end{pmatrix} - <b_1,M_2>_{Euklid}b_1 = \begin{pmatrix}2 \\1\\1 \\2 \\\end{pmatrix}$<\n><\n><\n><\n>(Normierung)<\n><\n>$b_2 =  1/\sqrt{10}\begin{pmatrix}2 \\1\\1 \\2 \\\end{pmatrix}$<\n><\n><\n><\n>$\Rightarrow B = \{\begin{pmatrix}1/3 \\0\\2/3 \\-2/3 \\\end{pmatrix}, \begin{pmatrix}2/\sqrt{10} \\1/\sqrt{10}\\1/\sqrt{10} \\2/\sqrt{10} \\\end{pmatrix} \}$<\n><\n><\n><\n>(Die Bedingungen aus Satz 6.4 sind gegeben, da $V$ n-dimensional ist (2x2), ein Skalarprodukt definiert ist und $M_1$ und $M_2$ bezüglich der Standardbasis gegeben sind (also einer Orthonormalbasis).<\n><\n> Wobei ich mir zwar ziemlich sicher bin, dass dies stimmt (das Resultat ist richtig), aber nicht 100%) <\n><\n><\n><\n>* "Satz 6.4" und "Satz 6.5" verweisen auf das HS2011 Skript von Martin H. Gutknecht.' | pandoc -f markdown -t pdf | zathura
-'Nach Satz 6.5 (Parsevalsche Formel) kann mann hier auch das Euklidsche Skalarprodukt $x^Ty$  verwenden. <\n><\n><\n><\n><\n><\n>Dann $M_1 = \begin{pmatrix}2 \\0\\4 \\-4 \\\end{pmatrix}$<\n><\n>$M_2 = \begin{pmatrix}3 \\1\\3 \\0 \\\end{pmatrix}$<\n><\n>(2x2 Matrix Isomorph zu 4x1 Vektor)<\n><\n><\n><\n>$b_1 = \|M_1\|_2M_1 =  \begin{pmatrix}1/3 \\0\\2/3 \\-2/3 \\\end{pmatrix}$<\n><\n><\n><\n><\n><\n>(Vor Normierung) $b_2 = \begin{pmatrix}3 \\1\\3 \\0 \\\end{pmatrix} - <b_1,M_2>_{Euklid}b_1 = \begin{pmatrix}2 \\1\\1 \\2 \\\end{pmatrix}$<\n><\n><\n><\n>(Normierung)<\n><\n>$b_2 =  1/\sqrt{10}\begin{pmatrix}2 \\1\\1 \\2 \\\end{pmatrix}$<\n><\n><\n><\n>$\Rightarrow B = \{\begin{pmatrix}1/3 \\0\\2/3 \\-2/3 \\\end{pmatrix}, \begin{pmatrix}2/\sqrt{10} \\1/\sqrt{10}\\1/\sqrt{10} \\2/\sqrt{10} \\\end{pmatrix} \}$<\n><\n><\n><\n>(Die Bedingungen aus Satz 6.4 sind gegeben, da $V$ n-dimensional ist (2x2), ein Skalarprodukt definiert ist und $M_1$ und $M_2$ bezüglich der Standardbasis gegeben sind (also einer Orthonormalbasis).<\n><\n> Wobei ich mir zwar ziemlich sicher bin, dass dies stimmt (das Resultat ist richtig), aber nicht 100%) <\n><\n><\n><\n>* "Satz 6.4" und "Satz 6.5" verweisen auf das HS2011 Skript von Martin H. Gutknecht.' | pandoc -f markdown -t pdf 
-'Nach Satz 6.5 (Parsevalsche Formel) kann mann hier auch das Euklidsche Skalarprodukt $x^Ty$  verwenden. <\n><\n><\n><\n><\n><\n>Dann $M_1 = \begin{pmatrix}2 \\0\\4 \\-4 \\\end{pmatrix}$<\n><\n>$M_2 = \begin{pmatrix}3 \\1\\3 \\0 \\\end{pmatrix}$<\n><\n>(2x2 Matrix Isomorph zu 4x1 Vektor)<\n><\n><\n><\n>$b_1 = \|M_1\|_2M_1 =  \begin{pmatrix}1/3 \\0\\2/3 \\-2/3 \\\end{pmatrix}$<\n><\n><\n><\n><\n><\n>(Vor Normierung) $b_2 = \begin{pmatrix}3 \\1\\3 \\0 \\\end{pmatrix} - <b_1,M_2>_{Euklid}b_1 = \begin{pmatrix}2 \\1\\1 \\2 \\\end{pmatrix}$<\n><\n><\n><\n>(Normierung)<\n><\n>$b_2 =  1/\sqrt{10}\begin{pmatrix}2 \\1\\1 \\2 \\\end{pmatrix}$<\n><\n><\n><\n>$\Rightarrow B = \{\begin{pmatrix}1/3 \\0\\2/3 \\-2/3 \\\end{pmatrix}, \begin{pmatrix}2/\sqrt{10} \\1/\sqrt{10}\\1/\sqrt{10} \\2/\sqrt{10} \\\end{pmatrix} \}$<\n><\n><\n><\n>(Die Bedingungen aus Satz 6.4 sind gegeben, da $V$ n-dimensional ist (2x2), ein Skalarprodukt definiert ist und $M_1$ und $M_2$ bezüglich der Standardbasis gegeben sind (also einer Orthonormalbasis).<\n><\n> Wobei ich mir zwar ziemlich sicher bin, dass dies stimmt (das Resultat ist richtig), aber nicht 100%) <\n><\n><\n><\n>* "Satz 6.4" und "Satz 6.5" verweisen auf das HS2011 Skript von Martin H. Gutknecht.' | pandoc -f markdown -o - | zathura
-'# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template.' | pandoc -f markdown -o pdf - 
-'# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template.' | pandoc -f markdown -o pdf
-'# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template.' | pandoc -f markdown -t pdf
-'# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template.' | pandoc -f markdown -t pdf -o -
-'# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template.' | pandoc -f markdown -t pdf -o - | zathura
-'# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template.' | pandoc -f markdown -t pdf -o - 
-'# Array Compression<\n><\n>You are given an array of $n$ integers $A[0]$, ..., $A[n-1]$. <\n><\n>You can perform the following compression operation to the array: for some $i < j$ such that $A[i] = A[j]$, you can remove from the array all the elements $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$. After that the array is re-indexed and you can perform other compression operations.<\n><\n>You really love compression operations. Return the maximum number of compression operations that you can perform to the array.<\n><\n>For example, for $n=6$ and the array $A=[4, 5, 6, 4, 6, 5]$, the answer is $2$: you can compress $[6, 4, 6]$, after which the array becomes $[4, 5, 5]$, and then you can compress $[5, 5]$.<\n><\n>You need to implement your solution as a method **maxCompressions($n$, $A$)**.<\n><\n>*Hint*: Use dynamic programming with $D[i][j]$ representing the maximum number of compression operations that you can perform to the array $A[i]$, $A[i + 1]$, ..., $A[j - 1]$, $A[j]$.<\n><\n>**Grading** (16 points): An $O(n^3)$ implementation gets $16$ points. An implementation that runs in time less than $0.1$ seconds for $n \leq 10$ gets at least $6$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template.' | pandoc -f markdown -t pdf -o - | zathura -
-xclip  --help | bat --plain
-xclip -selection clipboard
-xclip -o
-xclip -o | pandoc -f markdown -t pdf -o
-xclip -o | pandoc -f markdown -t pdf -o -
-xclip -o | pandoc -f markdown -t pdf -o - | zathura -
-cb | pandoc -f markdown -t pdf -o - | zathura -
-xclip -o | pandoc -f markdown -t pdf -o - | zathura -
-ip
-ip -color=auto h
-ip -color=auto 
-ip help
-xclip -o | pandoc -f markdown -t pdf -o - | zathura -
-xclip -o | pandoc -f markdown -t pdf -o - | zathura -\
-xclip -o
-xclip -o | xclip
-ls
-ls 
-sys
-ls
-ls -#la
-ls fla
-ls la
-ls -sla
-ls
-rm -f ./go/
-sudo rm ./go
-sudo rm -rf ./go
-ls
-ls Code/
-ls Code/java/adder/Adder.java
-at Code/java/adder/Adder.java
-bat Code/java/adder/Adder.java
-bat --list-themes
-bat --config-dir
-bat --generate-config-file
-ls
-"# Two Trees<\n><\n>You are given two rooted trees, $A$ and $B$, with disjoint vertex sets. Tree $A$ has vertices indexed by $a_0$, ..., $a_{n-1}$, with the root at index $a_0$, and tree $B$ has vertices indexed by $b_0$, ..., $b_{n-1}$, with the root at index $b_0$. The edges in each tree are weighted by positive integers.<\n><\n>You want to add some new edges that connect leaves of $A$ with leaves of $B$, thus creating a connected graph. Specifically, you can add an edge only if it goes between a leaf of $A$ and a leaf of $B$. Any edge that you add has weight $0$.<\n><\n>The distance between two vertices is defined as minimum total weight of a path that connects the two vertices.<\n><\n>Given these two trees, you have to implement the following methods. All the answers are guaranteed to fit on an "int" type.<\n><\n>1. **edgeCount()**: Return the total number of edges that you can add between the two trees.<\n><\n>2. **minDistRoots()**: Return the minimum distance between the roots of the two trees that you can achieve by adding exactly one edge.<\n><\n>3. **cycle()**: Return $1$ if you can add exactly two edges such that the resulting graph has a simple cycle (no repeated vertices) that contains the two roots.<\n><\n>4. **minDistCycle()**: Return the minimum length of a simple cycle (no repeated vertices) that contains the two roots that you can achieve by adding exactly two edges. You can assume such a simple cycle exists.<\n><\n>**Grading** (24 points):<\n><\n>1. **edgeCount()** (4 points): An $O(n)$-time implementation gets $4$ points.<\n>2. **minDistRoots()** (8 points): An $O(n)$-time implementation gets $8$ points and an $O(n^2)$-time implementation gets $4$ points.<\n>3. **cycle()** (4 points): An $O(n)$-time implementation gets $4$ points.<\n>4. **minDistCycle()** (8 points): An $O(n)$-time implementation gets $8$ points and an $O(n^2)$-time implementation gets $4$ points.<\n><\n>**Attention**: You are **NOT** allowed to use additional imports, other than the imports already included in the code template." | bat
-man bat
-ls
-(fd --type=file | fzf --preview='bat --force-colorization {}' | str trim)
-ls
-(fd --type=file | fzf --preview='bat {}' | str trim)
-ls
-(fd --type=file | fzf --preview='bat {}' | str trim)
-ls
-sl
-ls
-ls -la
-ls
-ls | get name
-ls | transpose 
-ls | get name | transpose 
-ls | get name 
-ls | get name | to list
-ls | get name | list
-ls | get name | into list
-ls
-ls 
-ls -la
-sys
-ls
-ls
-ls -la
-ls
-sys
-ls
-eclipse
-ls
-ellie
-ls ellie
-use std
-which ellie
-ellie
-std ellie 
-which std ellie
-std ellie -h
-std ellie
-well
-ls
-emacs
-34 / a
-34 / 4
-yay xournalpp
-yay -R xournalpp
-nano
-ls
-vi
-nvim
-yay eclipse
-eclipse
-ls
-killall eclipse
-eclipse
-ls
-firefox
-yay -Syyu 
-ls
-transmission-cli magnet:?xt=urn:btih:1FBF9B03F4053BA2E60139092DBE7B63A2977264&dn=The+Swarm+-+Frank+Schatzing+-+2023+%28miok%29+%5BAudiobook%5D+%28Thriller%29&tr=http%3A%2F%2Fp4p.arenabg.com%3A1337%2Fannounce&tr=udp%3A%2F%2F47.ip-51-68-199.eu%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2780%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2730%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2920%2Fannounce&tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&tr=udp%3A%2F%2Fopentracker.i2p.rocks%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.cyberia.is%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.dler.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Ftracker.pirateparty.gr%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.tiny-vps.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451%2Fannounce
-nushell
-ls
-transmission-cli magnet:?xt=urn:btih:1FBF9B03F4053BA2E60139092DBE7B63A2977264&dn=The+Swarm+-+Frank+Schatzing+-+2023+%28miok%29+%5BAudiobook%5D+%28Thriller%29&tr=http%3A%2F%2Fp4p.arenabg.com%3A1337%2Fannounce&tr=udp%3A%2F%2F47.ip-51-68-199.eu%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2780%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2730%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2920%2Fannounce&tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&tr=udp%3A%2F%2Fopentracker.i2p.rocks%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.cyberia.is%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.dler.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Ftracker.pirateparty.gr%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.tiny-vps.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451%2Fannounce
-ls
-ls -la
-ellie
-std ellie
-ls
-ls la
-ls -la
+yay --Syy
 yay -Syyu
-yay xwininfo
-maim
-man maim
-emacs
-ls
-yay  --help | bat --plain
-ls
-emacs --debug-init
-emacs
-zathura
-man zathura
-ls /usr/bin
-ls /usr/bin | find ecli
-man zgreg
-man zgrep
-ls /usr/bin | length
-yay -Q
-yay -Q | lines | length
-yay -Q |  length
-yay -Q | length
-yay -Q | wc -l
-yay -Q | lines
-yay -Qs ruby
-yay -R ruby
-yay -Rs ruby
-yay -Rs rubygems
-yay -Qs ruby
-yay -Qs ruby | lines
-yay -Qs ruby | lines 
-str starts-with  --help | bat --plain
-yay -Qs ruby | lines | where { $in | str starts-with 'local'}
-yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename }
-yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path split }
-split 
-yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { split  }
-yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { split row }
-yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { split row ' ' }
-yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' }
-yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }
-each  --help | bat --plain
-for --help | bat --plain
-[1 2] | for
-for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) {<\n>print yay -R $c<\n>}
-for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) {<\n>print yay $c<\n>}
-for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) {<\n>print $"yay -R ($c)"<\n>}
-for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) {yay -R ($c)<\n>}
-for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) { yay -Rd ($c) }
-for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) { yay -Rs $c }
-for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) { yay -Rns $c }
-for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) { yay -Rds $c }
-for c in (yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }) { yay -Rdd $c }
-yay -Qs ruby | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }
-yay -Qs go | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 }
-yay -Qs go | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 } | str join ' '
-yay -Qs go | lines | where { $in | str starts-with 'local'} | each { path basename | split row ' ' | get 0 } 
-ls -la
-ls
-ls -la
-sys
-ls
-sys
-ls
-sys
-ls
-sys
-ls -la
-ny
-ls -la
-ls **/*
-ls **/* | find bruges
-ls **/* | find 2008
-ls **/* | find barbara
-ls **/* | find barbara.*jpg
-ls **/* | find "barbara.*jpg"
-ls **/*barbara*.jpg 
-ls **/*barbara.*.jpg 
-ls  --help | bat --plain
-fd 
-fd "barbara.*\.jpg"
-fd 'barbara.*\.jpg'
-fd '.*barbara.*\.jpg'
-fd '.*barb'
-fd '.*barbara'
-fd '.*barbara.*'
-fd barbara
-fd 
-fd  | find barb
-fd Barbara
-fd .*Barbara.*
-yay chromium
-ls
 yay -Syyu
-yay tmate
+yay ligth
+yay light
+yay -Syyu
 ls
-ls -la
-ld
+emacs --debug-init
+doom doctor
+startup
+nvim .config/doom/config.org
+nvim .config/xremap/config.yml
+doom upgrade --force
+ls
+emacs --debug-init
+emacs
+ls
 doom sync
-htop
-ps
-ps | columns  
-ps | sort cpu  
-sort  --help | bat --plain
-sort-by  --help | bat --plain
-ps | sort-by mem
-ps | sort-by -rmem
-ps | sort-by -r mem
-ps | sort-by mem
-ps | sort-by cpu
-emacsclient
-emacsclient --reuse-frame
-emacsclient --create-frame
-emacsclient --reuse-frame
-sudo xremap --watch=device ~/.config/xremap/config.yml
-startup
 ls
-yay espeak
-startup
-ls
-/jshell
-ls
-bash
-sudo
-sudo nu
-exit
-zsh
-htop
-ls
-ls -la 
-ls
-jsehll
-jshell
-ls
-emacs --debug-init
-(fd --type=file | fzf --preview='bat {}' | str trim)
-ls
-ls ~
-rm ./~
-ls
-ls fla
-ls -
-ls -la
-bat main
-bat main.rs
-e main.rs
-emacs main.rs
+doom reload
+doom  --help | bat --plain
+doom doctor
 emacs 
-emacs main.rs
+emacs
+doom sync
 emacs --debug-init
+doom sync
+emacs --debug-init
+emacs
+startup
+emacs
+startup
+emacs
+ls
+rm mpv-shot0001.jpg
+ls
+str ls
+cd ~
+ls
+emacs
+emacs --debug-init
+emacs
+emcas
+emacs
+doom sync
+emacs
+doom sync
+emacs
+doom sync
+emacs
+emacs --debug-init
+emacs 
+doom  --help | bat --plain
+doom purge
+doom sync
+emacs .config/doom/config.org
+doom purge
+emacs .config/doom/config.org
+ls
+emacs .config/doom/config.org
+doom upgrade
+doom build
+ls

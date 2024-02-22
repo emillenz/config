@@ -1,6 +1,3 @@
-//NOTE: use S-RET to spawn app / command in terminal.
-//NOTE: use S-DEL to delete entry permanently
-
 configuration {
   case-insensitive: true;
   matching: "glob"; // normal, regex, glob, fuzzy, prefix

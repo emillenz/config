@@ -547,6 +547,34 @@ This is sensible default behaviour, and integrates it into evil."
         ("[x]"  . '(bold org-done)))))
 ;; Task states:1 ends here
 
+;; [[file:config.org::*Task states][Task states:2]]
+(setq org-log-done 'time
+      org-log-repeat 'time
+      org-todo-repeat-to-state t
+      org-log-redeadline 'time
+      org-log-reschedule 'time
+      org-log-into-drawer "LOG")
+
+(setq org-priority-highest 1
+      org-priority-lowest 3)
+
+(setq org-priority-faces
+      '((?1 . 'all-the-icons-red)
+        (?2 . 'all-the-icons-orange)
+        (?3 . 'all-the-icons-yellow)))
+
+(setq org-log-note-headings
+      '((done        . "done note: %t")
+        (state       . "state: %-3S -> %-3s %t") ;; NOTE :: DON'T change this?; my task-statuses are all 3x wide -> formatting needs adjustment if not in order to align them.
+        (note        . "note: %t")
+        (reschedule  . "reschedule: %S, %t")
+        (delschedule . "del-scheduled: %S, %t")
+        (redeadline  . "re-deadline: %S, %t")
+        (deldeadline . "del-deadline: %S, %t")
+        (refile      . "refile: %t")
+        (clock-out   . "")))
+;; Task states:2 ends here
+
 ;; [[file:config.org::*Babel][Babel:1]]
 (setq org-babel-default-header-args
       '((:session  . "none")
@@ -610,53 +638,57 @@ This is sensible default behaviour, and integrates it into evil."
 (defvar literature_source_dir "~/Documents/literature/source/"
   "Directory for literature source files.")
 
-(defun doct_expand (proj projs &optional type parent)
+(defun doct_expand (projects target &optional ppath)
   "Generate doct preset for project (standardized).
-
-`PROJ:'   'name            | Project key (name)
-`PROJS:'  '((name ?k)..)   | Projects plist containing PROJ
-`TYPE:'   'agenda / 'notes | Which file to use (ex: agend.org). Omitted? => no :file returned.
-`PARENT:' 'parent          | Is it a subproject of PARENT? (for :file).
+TODO
 
 This approach to doct ensures all keys for one project use the same prefix and reduces
 code repetition."
-  (let* ((name (symbol-name proj))
-         (key (char-to-string (alist-get proj projs)))
-         (file (file-name-concat
-                org-directory
-                (when parent (symbol-name parent))
-                name
-                (format "%s.org" (symbol-name type)))))
-    `(,name
-      :keys ,key
-      ,@(when type `(:file ,file)))))
+  (mapcar
+   (lambda (proj)
+     (let*
+         ((name (car proj))
+          (path (file-name-concat ppath name))
+          (keys (plist-get (cdr proj) :keys))
+          (children (plist-get (cdr proj) :children))
+          (file (file-name-concat
+                 org-directory
+                 path
+                 (format "%s.org" target)))
+          (self `(,name :keys ,keys :file ,file)))
+
+       (append
+        self
+        (when children
+          `(:children ,(cons self (doct_expand children target path)))))))
+   projects))
+
+(doct_expand '(("cs" :keys "c"
+                :children (("pp" :keys "p")
+                           ("as" :keys "a")
+                           ("aw ":keys "w")
+                           ("ddca" :keys "d")))
+               ("personal" :keys "p")
+               ("config" :keys "f")
+               ("compass" :keys "o")) "agenda")
 
 (after! org
   (setq
    org-capture-templates
-   (let ((projs '((CS . ?C)
-                  (cs . ?c)
-                  (dm . ?d)
-                  (ad . ?a)
-                  (la . ?l)
-                  (ep . ?e)
-                  (personal . ?p)
-                  (config . ?f)
-                  (compass . ?o))))
+   (let ((projects '(("cs" :keys "c"
+                      :children (("pp" :keys "p")
+                                 ("as1" :keys "a")
+                                 ("aw" :keys "w")
+                                 ("ddca" :keys "d")))
+                     ("personal" :keys "p")
+                     ("config" :keys "f")
+                     ("compass" :keys "o"))))
      (doct
       `(("task" :keys "t"
          :headline "inbox"
          :prepend t :empty-lines-after 1
          :template ("* [ ] %^{title}%? %^g")
-         :children ((,@(doct_expand 'cs projs)
-                     :children ,(mapcar
-                                 (lambda (proj)
-                                   (doct_expand proj projs 'agenda 'cs))
-                                 '(dm ad la ep)))
-                    ,@(mapcar
-                       (lambda (proj)
-                         (doct_expand proj projs 'agenda))
-                       '(personal config compass))))
+         :children ,(doct_expand projects "agenda"))
 
         ("event" :keys "e"
          :headline "events"
@@ -667,15 +699,7 @@ code repetition."
                     ":location: %^{location}"
                     ":material: %^{material}"
                     ":END:")
-         :children ((,@(doct_expand 'cs projs)
-                     :children ,(mapcar
-                                 (lambda (proj)
-                                   (doct_expand proj projs 'agenda 'cs))
-                                 '(dm ad la ep)))
-                    ,@(mapcar
-                       (lambda (proj)
-                         (doct_expand proj projs 'agenda))
-                       '(personal cs))))
+         :children ,(doct_expand projects "agenda"))
 
         ("note" :keys "n"
          :prepend t :empty-lines-after 1
@@ -684,34 +708,27 @@ code repetition."
                     ":created: %U"
                     ":END:"
                     "%?")
-         :children ((,@(doct_expand 'cs projs)
-                     :children ,(mapcar
-                                 (lambda (proj)
-                                   (doct_expand proj projs 'notes 'cs))
-                                 '(dm ad la ep)))
-                    ,@(mapcar
-                       (lambda (proj)
-                         (doct_expand proj projs 'notes))
-                       '(cs personal config compass))))
+         :children ,(doct_expand projects "notes"))
 
         ("journal" :keys "j"
          :file (lambda ()
                  (file-name-concat
                   journal_dir
                   (format "%s_journal.org" (format-time-string "%F"))))
-         :children (("begin" :keys "i"
+         :children (("begin" :keys "b"
                      :type plain
-                     :template ("#+title:  Daily Note: %<%A, %e. %B %Y>"
+                     :template ("#+title:  daily note: %<%A, %e. %B %Y>"
                                 "#+author: %(user-full-name)"
                                 "#+email:  %(message-user-mail-address)"
                                 "#+date:   %<%F>"
+                                "#+filetags: :journal:"
                                 ""
                                 "* personal goals"
                                 "- %?"
                                 ""
                                 "* agenda"
                                 "** [ ] "))
-                    ("entry" :keys "e"
+                    ("entry" :keys "n"
                      :empty-lines-before 1
                      :template ("* %^{title}"
                                 ":PROPERTIES:"
@@ -719,7 +736,7 @@ code repetition."
                                 ":END:"
                                 "%?"))
 
-                    ("end" :keys "r"
+                    ("end" :keys "e"
                      :unnarrowed t
                      :template ("* gratitude"
                                 "- %?"

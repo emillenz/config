@@ -2,10 +2,7 @@
 ;;; Snippet definitions:
 ;;;
 (yas-define-snippets 'conf-unix-mode
-                     '(("sec" "Section \"${1:Device}\"\n        $0\nEndSection"
-                        "section" nil nil nil
-                        "/home/lenz/.config/doom/snippets/conf-unix-mode/section"
-                        nil "sec")))
+                     '(("sec" "Section \"${1:Device}\"\n        $0\nEndSection" "section" nil nil nil "/home/lenz/.config/doom/snippets/conf-unix-mode/section" nil "sec")))
 
 
-;;; Do not edit! File generated at Mon Jan 22 14:12:16 2024
+;;; Do not edit! File generated at Thu Feb 22 15:51:42 2024

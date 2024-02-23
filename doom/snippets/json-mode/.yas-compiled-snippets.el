@@ -2,14 +2,11 @@
 ;;; Snippet definitions:
 ;;;
 (yas-define-snippets 'json-mode
-                     '(("eslint"
-                        "\"eslintConfig\": {\n    \"env\": {\n        \"es6\": true,\n        \"browser\": true,\n        \"commonjs\": true,\n        \"node\": true\n    },\n    \"parserOptions\": {\n        \"ecmaFeatures\": {\n            \"jsx\": true\n        }\n    }\n}"
-                        "eslintConfig"
-                        (equal (file-name-nondirectory buffer-file-name)
-                               "package.json")
-                        nil nil
-                        "/home/lenz/.config/doom/snippets/json-mode/eslintConfig"
-                        nil "eslint")))
+                     '(("eslint" "\"eslintConfig\": {\n    \"env\": {\n        \"es6\": true,\n        \"browser\": true,\n        \"commonjs\": true,\n        \"node\": true\n    },\n    \"parserOptions\": {\n        \"ecmaFeatures\": {\n            \"jsx\": true\n        }\n    }\n}" "eslintConfig"
+                        (equal
+                         (file-name-nondirectory buffer-file-name)
+                         "package.json")
+                        nil nil "/home/lenz/.config/doom/snippets/json-mode/eslintConfig" nil "eslint")))
 
 
-;;; Do not edit! File generated at Mon Jan 22 14:12:17 2024
+;;; Do not edit! File generated at Thu Feb 22 15:51:43 2024

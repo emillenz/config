@@ -26,7 +26,7 @@ $env.PATH = ($env.PATH | append ["~/.config/bin", "~/.cargo/bin", "~/.config/ema
 $env.EDITOR = "emacs -nw"
 $env.VISUAL = "emacsclient --reuse-frame"
 $env.BROWSER = "firefox"
-$env.MANPAGER = "bat --plain"
+$env.MANPAGER = "bat --plain --language=man"
 $env.PAGER = "bat "
 
 # mv :: automatically create missing destination dir's.
@@ -269,7 +269,7 @@ $env.config = {
       mode: vi_normal
       event: [
         {edit: MoveToLineEnd}
-        {edit: InsertString, value: " --help | bat --plain"}
+        {edit: InsertString, value: " --help | bat --plain --language=help"}
         {send: Enter}
       ]
     }

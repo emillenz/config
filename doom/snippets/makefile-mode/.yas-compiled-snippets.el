@@ -2,9 +2,7 @@
 ;;; Snippet definitions:
 ;;;
 (yas-define-snippets 'makefile-mode
-                     '(("all" "all:\n        $0" "all" nil nil nil
-                        "/home/lenz/.config/doom/snippets/makefile-mode/all" nil
-                        "all")))
+                     '(("all" "all:\n        $0" "all" nil nil nil "/home/lenz/.config/doom/snippets/makefile-mode/all" nil "all")))
 
 
-;;; Do not edit! File generated at Mon Jan 22 14:12:17 2024
+;;; Do not edit! File generated at Thu Feb 22 15:51:43 2024

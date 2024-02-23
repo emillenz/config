@@ -1,4 +1,5 @@
 # [[file:config.org::*Src][Src:1]]
+# note :: unused keys
 virtual_modifiers:
   - menu
   - capslock
@@ -7,14 +8,14 @@ modmap:
   - name: global
     remap:
       capslock:
-        alone: backspace
+        alone: esc
         held: menu
         alone_timeout_millis: 200
-      alt_l:
-        alone: esc
-        held: alt_l
+      alt_l: super_l
+      apostrophe:
+        alone: backspace
+        held: capslock
         alone_timeout_millis: 200
-      alt_r: capslock
 
 keymap:
   - name: browser

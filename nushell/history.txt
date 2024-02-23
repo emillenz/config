@@ -1,40 +1,3 @@
-open `2022-00-00.md` | lines | each {split row "\n"} | range -h | bat
-open `2022-00-00.md` | lines | each {split row "\n"} 
-takke -h | bat
-take -h | bat
-open `2022-00-00.md` | lines | each {split row "\n"} | take until null
-open `2022-00-00.md` | lines | each {split row "\n"} | take while not null
-open `2022-00-00.md` | lines | each {split row "\n"} | take while (not null)
-take until  -h | bat
-open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| == null}
-open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| == ''}
-open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| = []}
-open `2022-00-00.md` | lines | each {split row "\n"} | take until {|x| $x == []}
-open `2022-00-00.md` | lines | each {split row "\n"} 
-open `2022-00-00.md` | lines | each {split row "\n"} | get 0 
-open `2022-00-00.md` | lines | each {split row "\n"} | each {flatten} 
-open `2022-00-00.md` | lines | each {split row "\n"} | flatten
-open `2022-00-00.md` | lines | take until {|x| $x == '\n'}
-open `2022-00-00.md` | lines 
-open `2022-00-00.md` | lines | take until {|x| $x == ''}
-open `2022-00-00.md` | lines | take while {|x| $x == ''}
-open `2022-00-00.md` | lines | take while {|x| $x != ''}
-open `2022-00-00.md` | lines | take while {|x| $x == ''}
-open `2022-00-00.md` | lines | take while {|x| $x != ''}
-open `2022-00-00.md` | lines | enumerate
-split-by "\n\n"
-open `2022-00-00.md` | split-by  "\n\n"
-open `2022-00-00.md` | lines | split-by "\n\n"
-open `2022-00-00.md` | str collect | split-by "\n\n"
-open `2022-00-00.md` | str join | split-by "\n\n"
-open `2022-00-00.md` | lines | get 0
-open `2022-00-00.md` | lines | get 0 | index
-get  -h | bat
-split-by -h | bat 
-open `2022-00-00.md` | lines 
-open `2022-00-00.md` | lines | split row '\s'
-open `2022-00-00.md` | lines | split row '\n'
-open `2022-00-00.md` | lines | split row "\n"
 open `2022-00-00.md` | lines | split row "n"
 open `2022-00-00.md` | lines | split list a
 open `2022-00-00.md` | lines 
@@ -9998,3 +9961,40 @@ emacs .config/doom/config.org
 doom clean
 doom sync
 emacs .config/doom/config.org
+sudo xremap --watch=device ~/.config/xremap/config.yml
+k
+sudo xremap --watch=device ~/.config/xremap/config.yml
+startup
+javap --help | bat --plain
+man javap
+man bat 
+man bat | bat --language=man
+javap --help | bat 
+bat --number .bashrc
+bat --terminal-width=80 .bashrc
+man bat | bat --plain
+man bat | bat --plain --terminal-width 80
+man bat | bat --terminal-width 80
+man bat | bat
+man bat | bat --plain
+man bat | bat --plain --number
+man bat | bat --plain
+man bat | bat --plain --force-colorization
+man bat | bat --force-colorization
+man bat | bat --plain --force-colorizatio
+man bat | bat --plain --force-colorization
+man bat | bat --plain --language man
+bat --list-languages
+ls
+ls -h | ba
+ls  --help | bat --plain
+grep  --help | bat --language=man
+grep  --help | bat --plain
+bat --list-languages
+grep  --help | bat --plain --language help
+man grep | bat --plain --language help
+man grep | bat --plain --language man
+ls
+grep  --help | bat --plain --language=help
+grep  --help | bat --language=help
+grep  --help | bat --plain --language=help

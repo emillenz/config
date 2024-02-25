@@ -70,7 +70,7 @@
 
 (setq +popup-defaults
       '(:side right
-        :width 0.50
+        :width 0.5
         :select nil
         :quit nil
         :modeline nil))
@@ -360,6 +360,8 @@ This is sensible default behaviour, and integrates it into evil."
 ;; Templates & snippets:1 ends here
 
 ;; [[file:config.org::*Dired][Dired:1]]
+(add-hook! dired-mode-hook #'display-line-numbers-mode)
+
 ;; NOTE:: this is the elegant && extensible way to do regex.
 (setq dired-omit-files
       (rx (or (seq bol (? ".") "#")
@@ -567,10 +569,10 @@ This is sensible default behaviour, and integrates it into evil."
       '((done        . "done note: %t")
         (state       . "state: %-3S -> %-3s %t") ;; NOTE :: DON'T change this?; my task-statuses are all 3x wide -> formatting needs adjustment if not in order to align them.
         (note        . "note: %t")
-        (reschedule  . "reschedule: %S, %t")
-        (delschedule . "del-scheduled: %S, %t")
+        (reschedule  . "re-schedule: %S, %t")
+        (delschedule . "rm-schedule: %S, %t")
         (redeadline  . "re-deadline: %S, %t")
-        (deldeadline . "del-deadline: %S, %t")
+        (deldeadline . "rm-deadline: %S, %t")
         (refile      . "refile: %t")
         (clock-out   . "")))
 ;; Task states:2 ends here
@@ -638,39 +640,42 @@ This is sensible default behaviour, and integrates it into evil."
 (defvar literature_source_dir "~/Documents/literature/source/"
   "Directory for literature source files.")
 
-(defun doct_expand (projects target &optional ppath)
+(defun doct_projects (projects &optional target ppath)
   "Generate doct preset for project (standardized).
-TODO
+
+PROJECTS :: all projects with their keys [and children]
+TARGET :: the caputure target file tag (notes / agenda)
+PPATH :: always omit (used for internal recursive purposes)
 
 This approach to doct ensures all keys for one project use the same prefix and reduces
 code repetition."
   (mapcar
    (lambda (proj)
-     (let*
-         ((name (car proj))
-          (path (file-name-concat ppath name))
-          (keys (plist-get (cdr proj) :keys))
-          (children (plist-get (cdr proj) :children))
-          (file (file-name-concat
-                 org-directory
-                 path
-                 (format "%s.org" target)))
-          (self `(,name :keys ,keys :file ,file)))
+     (let* ((name (car proj))
+            (path (file-name-concat ppath name))
+            (keys (plist-get (cdr proj) :keys))
+            (children (plist-get (cdr proj) :children))
+            (file (file-name-concat
+                   org-directory
+                   path
+                   (format "%s.org" target)))
+            (self `(,name :keys ,keys :file ,file)))
 
        (append
         self
         (when children
-          `(:children ,(cons self (doct_expand children target path)))))))
+          `(:children ,(cons self (doct_projects children target path)))))))
    projects))
 
-(doct_expand '(("cs" :keys "c"
-                :children (("pp" :keys "p")
-                           ("as" :keys "a")
-                           ("aw ":keys "w")
-                           ("ddca" :keys "d")))
-               ("personal" :keys "p")
-               ("config" :keys "f")
-               ("compass" :keys "o")) "agenda")
+(defun doct_journal_file (&optional time)
+  "Filepath for journal.
+
+TIME :: Time of note to return. (default: today)"
+  (file-name-concat
+   journal_dir
+   (format
+    "%s_journal.org"
+    (format-time-string "%F" (or time (current-time))))))
 
 (after! org
   (setq
@@ -687,34 +692,31 @@ code repetition."
       `(("task" :keys "t"
          :headline "inbox"
          :prepend t :empty-lines-after 1
-         :template ("* [ ] %^{title}%? %^g")
-         :children ,(doct_expand projects "agenda"))
+         :template ("* [ ] %^{title}%?")
+         :children ,(doct_projects projects "agenda"))
 
         ("event" :keys "e"
          :headline "events"
          :prepend t :empty-lines-after 1
-         :template ("* [#] %^{title}%? %^g"
+         :template ("* [#] %^{title}%?"
                     "%^T"
                     ":PROPERTIES:"
                     ":location: %^{location}"
                     ":material: %^{material}"
                     ":END:")
-         :children ,(doct_expand projects "agenda"))
+         :children ,(doct_projects projects "agenda"))
 
         ("note" :keys "n"
-         :prepend t :empty-lines-after 1
+         :prepend t :empty-lines 1
          :template ("* %^{title} %^g"
                     ":PROPERTIES:"
                     ":created: %U"
                     ":END:"
                     "%?")
-         :children ,(doct_expand projects "notes"))
+         :children ,(doct_projects projects "notes"))
 
         ("journal" :keys "j"
-         :file (lambda ()
-                 (file-name-concat
-                  journal_dir
-                  (format "%s_journal.org" (format-time-string "%F"))))
+         :file (lambda () (doct_journal_file))
          :children (("begin" :keys "b"
                      :type plain
                      :template ("#+title:  daily note: %<%A, %e. %B %Y>"
@@ -723,12 +725,12 @@ code repetition."
                                 "#+date:   %<%F>"
                                 "#+filetags: :journal:"
                                 ""
-                                "* personal goals"
+                                "* goals"
                                 "- %?"
                                 ""
                                 "* agenda"
                                 "** [ ] "))
-                    ("entry" :keys "n"
+                    ("entry" :keys "e"
                      :empty-lines-before 1
                      :template ("* %^{title}"
                                 ":PROPERTIES:"
@@ -736,8 +738,12 @@ code repetition."
                                 ":END:"
                                 "%?"))
 
-                    ("end" :keys "e"
+                    ("end yesterday" :keys "y"
+                     :empty-lines-before 1
                      :unnarrowed t
+                     :file (lambda () (doct_journal_file (time-subtract
+                                                          (current-time)
+                                                          (days-to-time 1))))
                      :template ("* gratitude"
                                 "- %?"
                                 ""
@@ -765,13 +771,13 @@ code repetition."
                                 "#+email:  %(message-user-mail-address)"
                                 "#+date:   %<%F>"
                                 ""
-                                "* [-] %\\1"
+                                "* [-] %\\1%?"
                                 ":PROPERTIES:"
                                 ":title:  %\\1"
                                 ":author: %^{author}"
                                 ":year:   %^{year}"
                                 ":tags:   %^{tags}"
-                                ":type:   %^{type|book|ebook|paper|article|audio-book|podcast}"
+                                ":type:   %^{book|ebook|paper|article|audiobook|podcast}"
                                 ":pages:  %^{pages}"
                                 ":END:"
                                 ""

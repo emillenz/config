@@ -1,128 +1,3 @@
-open `2022-00-00.md` | lines | split row "n"
-open `2022-00-00.md` | lines | split list a
-open `2022-00-00.md` | lines 
-open `2022-00-00.md` | lines | take 4
-open `2022-00-00.md` | lines | take 4 | length 
-mut end = ((open `2022-00-00.md` | lines | take while {|x| $x != ''} | length) -1 )
-mut end = ((open `2022-00-00.md` | lines | take while {|x| $x != ''} | length) - 1 )
-$end
-range -h | bat
-let data = (open `2022-00-00.md`) <\n>mut begin = 0<\n>mut end (($data| lines | take while {|x| $x != ''} | length) - 1)<\n>for i in ($data | range $begin $end) {<\n>    print $i<\n>}
-let data = (open `2022-00-00.md`) <\n>mut begin = 0<\n>mut end = (($data| lines | take while {|x| $x != ''} | length) - 1)<\n>for i in ($data | range $begin $end) {<\n>    print $i<\n>}
-let data = (open `2022-00-00.md`) <\n>mut begin = 0<\n>mut end = (($data| lines | take while {|x| $x != ''} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
-let data = (open `2022-00-00.md`) <\n>mut begin = 0<\n>mut end = (($data| lines | take while {|x| $x != ''} | length) - 1)
-$end
-$begin
-$data | range 0..($end)
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ''} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
-open `2022-00-00.md` | lines 
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != '### '} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| ($x | str starts-with "### ")} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| ($x | str starts-with '###')} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x =~  '###'} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data | take while {|x| $x =~  '###'} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data | take while {|x| $x =~  '###'} | length) - 1)<\n>$end
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data | take while {|x| ($x | str starts-with '###'} | length) - 1)<\n>$end
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data | take while {|x| ($x | str starts-with '###')} | length) - 1)<\n>$end
-$data | take until {|x| $x =~ "#"}
-$data
-$data | take until {|x| $x =~ "\#"}
-$data | take until {|x| $x =~ "a"}
-$data | take until {|x| x =~ "a"}
-$data | take until {|x| $x =~ "a"}
-take -h | bat
-take until -h | bat
-$data | take until {|x| $x = ""}
-$data | take until {|x| $x = " "}
-$data | take until {|x| $x == ""}
-$data | take until {|x| $x ~= ""}
-$data | take until {|x| $x != ""}
-$data | take until {|x| $x == ""}
-$data | take until {|x| ($x | str starts-with '') }
-$data | take until {|x| ($x | str starts-with '#') }
-$data | take until {|x| ($x | str starts-with '\#') }
-$data | take until {|x| $x == ""}
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x == ""} | length) - 1)<\n>$end<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x == ""} | length) - 1)<\n>$end<\n># for i in ($data | range ($begin)..($end)) {<\n>#     print $i<\n># }
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>$end<\n># for i in ($data | range ($begin)..($end)) {<\n>#     print $i<\n># }
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>for i in ($data | range ($begin)..($end)) {<\n>    print $i<\n>}
-let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>touch test.txt<\n>for i in ($data | range ($begin)..($end)) {<\n>    $i | save -a test.txt<\n>}
-bat test.txt
-save -h | bat
-rm test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = []<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>}<\n>$paragraph
-rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = []<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>}<\n>$paragraph
-touch test.txt
-rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = []<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>}<\n>$paragraph
-rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = []<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>    print $i<\n>}<\n>$paragraph
-append -h | bat
-rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = [aa]<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>    print $i<\n>}<\n>$paragraph
-rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph = [aa]<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append ($i | into string)<\n>}<\n>$paragraph
-str -h | bat
-rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph =  [1, 2]<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append $i<\n>}<\n>$paragraph
-rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph =  [1, 2]<\n>for i in ($data | range ($begin)..($end)) {<\n>    $paragraph | append "aa"<\n>}<\n>$paragraph
-rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>mut paragraph =  [1, 2]<\n>for i in ($data | range ($begin)..($end)) {<\n>    paragraph | append "aa"<\n>}<\n>$paragraph
-rm test.txt<\n>touch test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>$data | range ($begin)..($end) | save test.txt<\n>bat test.txt
-rm test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>$data | range ($begin)..($end) | save test.txt<\n>bat test.txt
-rm test.txt<\n>let data = (open `2022-00-00.md` | lines) <\n>mut begin = 0<\n>mut end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>while $end != ($data | length) {<\n>    $data | range ($begin)..($end) | save test.txt<\n>    begin = $end<\n>    end = (($data| | take while {|x| $x != ""} | length) - 1)<\n>}<\n>bat test.txt
-let data = (open `2022-00-00.md` | lines) <\n>($data| | take while {|x| $x != ""}) | save test<\n>bat test
-rm test
-touch test
-open test | length
-cp  `2022-00-00.md` old.md
-open old.md | skip 3
-open old.md 
-skip  -h | bat
-drop -h | bat
-skip 1
-open old.md | skip 1
-open old.md | skip 1 | str join
-open old.md | lines
-open old.md 
-open old.md | lines
-open old.md | lines | skip 1
-open old.md | lines | skip 1000
-open old.md | lines | skip 10000
-while (open 'old.md' | lines| length) == 0 {<\n>    let data = (open `old.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""}) | <\n>    $paragraph | save test<\n>    $data | skip ($paragraph | length)<\n>}<\n>bat test
-while (open 'old.md' | lines| length) == 0 {<\n>    let data = (open `old.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save test<\n>    $data | skip ($paragraph | length)<\n>}<\n>bat test
-open old.md | lines 
-open old.md | lines | length 
-while (open 'old.md' | lines| length) != 0 {<\n>    let data = (open `old.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save test<\n>    $data | skip ($paragraph | length)<\n>}<\n>bat test
-while (open 'old.md' | lines| length) != 0 {<\n>    let data = (open `old.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f test<\n>    $data | skip ($paragraph | length)<\n>}<\n>bat test
-cp -f -h | bat
-cp  -h | bat
-cp `2022-00-00.md` old.md
-cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) != 0 {<\n>    let data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    data = $data | skip ($paragraph | length)<\n>    print $data<\n>    "" | save -f out.md<\n>}<\n>bat test
-cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) != 0 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    data = $data | skip ($paragraph | length)<\n>    print $data<\n>    "" | save -f out.md<\n>}<\n>bat test
-cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) != 0 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = $data | skip ($paragraph | length)<\n>    print $data<\n>    "" | save -f out.md<\n>}<\n>bat test
-cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) != 0 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    print $data<\n>    $paragraph | save -f out.md<\n>    # $data = $data | skip ($paragraph | length)<\n>    "" | save -f out.md<\n>}<\n>bat test
-cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) != 0 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    print $data<\n>    $paragraph | save -f out.md<\n>    # $data = $data | skip ($paragraph | length)<\n>    rm copy.md<\n>}<\n>bat test
-cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    print $data<\n>    $paragraph | save -f out.md<\n>    # $data = $data | skip ($paragraph | length)<\n>    "" | save -f copy.md<\n>}<\n>bat test
-cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    print $data<\n>    $paragraph | save -f out.md<\n>    $data = $data | skip ($paragraph | length)<\n>    "" | save -f copy.md<\n>}<\n>bat test
-open old.md | lines | rang 1..10
-open old.md | lines | range 1..10
-cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    print $data<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip ($paragraph | length))<\n>    "" | save -f copy.md<\n>}<\n>bat test
-cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip ($paragraph | length))<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
-cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip 1000)<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
-cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    print ($paragraph | length)<\n>    $data = ($data | skip ($paragraph | length))<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
-cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip ($paragraph | length))<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
-cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip ($paragraph | length + 1))<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
-cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    print $data<\n>    "" | save -f copy.md<\n>}<\n>bat test
-cp `2022-00-00.md` copy.md <\n>while (open 'copy.md' | lines| length) > 1 {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f out.md<\n>    print ($data | skip (($paragraph | length ) + 1)) <\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    "" | save -f copy.md<\n>}<\n>bat test
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>}<\n>bat test<\n><\n># while (open 'copy.md' | lines| length) > 1 {
-ls | get name | find tmp 
-ls | get name | find tmp | rm 
-ls | get name | find tmp | each {|x| rm $x}
-save  -h | bat
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    $data | save -f 'copy.md'<\n>}<\n>bat test<\n><\n># while (open 'copy.md' | lines| length) > 1 {
-ls | get name | find tmp | each {|x| rm $x}
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    $data<\n>}<\n>bat test<\n><\n># while (open 'copy.md' | lines| length) > 1 {
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip ($paragraph | length ))<\n>    $data<\n>}<\n>bat test<\n><\n># while (open 'copy.md' | lines| length) > 1 
-bat copy.md
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip ($paragraph | length ))<\n>    $paragraph | length<\n>}<\n>bat test<\n><\n># while (open 'copy.md' | lines| length) > 1
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip ($paragraph | length ))<\n>    print ($paragraph | length)<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 5) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip ($paragraph | length ))<\n>    print $data<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
-cp `2022-00-00.md` copy.md <\n>for i in (seq 1 1) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    print $data<\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
-save -h | bat
 cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    print $data | str join "\n"<\n>    # $data | str join "\n" <\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
 cp `2022-00-00.md` copy.md <\n>for i in (seq 1 3) {<\n>    mut data = (open `copy.md` | lines) <\n>    let paragraph = ($data| | take while {|x| $x != ""})<\n>    # $paragraph | save -f $"($i).tmp"<\n>    $data = ($data | skip (($paragraph | length ) + 1))<\n>    print ($data | first 50 | str join "\n")<\n>    # $data | str join "\n" <\n>}<\n><\n># while (open 'copy.md' | lines| length) > 1
 collect -h | bat
@@ -9998,3 +9873,128 @@ ls
 grep  --help | bat --plain --language=help
 grep  --help | bat --language=help
 grep  --help | bat --plain --language=help
+ls
+xset  --help | bat --plain --language=help
+xset -h | bat --plain --language=help
+yay eclipse
+xset
+man xset
+xrandr  --help | bat --plain --language=help
+xrandr --dpi 96
+ls
+seq --help | bat --plain --language=help
+math  --help | bat --plain --language=help
+2 ^ 2
+for i in (seq 1 10) {print $"$i, (2 ** $i)"}
+for i in (seq 1 10) {print $"($i), (2 ** $i)"}
+for i in (seq 1 10) {print $"($i)  (2 ** $i)"}
+for i in (seq 1 10) {print $"($i) (2 ** $i)"}
+for i in (seq 1 10) {print $"($i) | (2 ** $i)"}
+for i in (seq 1 10) {print $"($i)  (2 ** $i)"}
+for  --help | bat --plain --language=help
+loop --help | bat --plain --language=help
+for i in 1..3
+for i in 1..10 {print $"($i)  (2 ** $i)"}
+javac
+ls
+javac
+jshell
+yay -R batsignal
+ls
+yay wn
+yay wordnut
+yay word nut
+ls
+emacs --debug-init
+doom sync
+doom clean
+doom  --help | bat --plain --language=help
+emacs --debug-init
+ls
+rm mpv-shot0001.jpg
+ls
+outputselect
+ls
+cd .config/bin/
+ls
+./outputmenu
+./output-menu
+outputs
+audio
+scrot
+ls
+man scrot
+xopen 2024-02-24-101610_1600x900_scrot.png
+xdg-open 2024-02-24-101610_1600x900_scrot.png
+killall syncthing
+ls
+ps | find syncthing
+i3-msg restart
+ls
+cd ~
+ls
+find personal
+rg 'personal goals'
+ls
+ls -la
+(3.75 + 3 * 4.25) / 4
+syncthing
+man stdbool.h
+startup
+sls
+doo sync
+doom sync
+audio 
+ls
+audio
+ls
+audio
+k
+audio
+str trim  --help | bat --plain --language=help
+audio
+$sinks
+sinks | where {|i| i.description == $sinks.description.1}
+$sinks | where {|i| i.description == $sinks.description.1}
+$sinks | where {|i| $i.description == $sinks.description.1}S
+$sinks | where {|i| $i.description == $sinks.description.1}
+any --help | bat --plain --language=help
+in  --help | bat --plain --language=help
+any --help | bat --plain --language=help
+audio
+$sinks.description
+$sinks.description | to text 
+audio
+ls
+man javap
+cd Code/java/adder/
+ls
+man javac
+javac --help | bat --plain --language=help
+tldr javap
+ls
+java adder
+java Adder
+nu --list
+nu --help
+keybindings list
+ls
+keybindings listen
+ls
+sudo xremap --watch=device ~/.config/xremap/config.yml
+keybindings listen
+keybindings list
+keybindings list | find sugg
+ls
+lls
+gr
+ls
+sudo xremap --watch=device ~/.config/xremap/config.yml
+nu
+nu
+nu
+nu
+wmctrl -x -l
+sudo xremap --watch=device ~/.config/xremap/config.yml
+keybindings list 
+startup

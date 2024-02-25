@@ -247,7 +247,7 @@ error-message {
 
 // modus-vivendi theme ::
 * {
-  background:     #000000;
+  bg:     #000000;
   bg-alt:         #535353;
   foreground:     #ffffff;
   selected:       #2f447f;

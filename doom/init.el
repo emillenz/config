@@ -32,7 +32,7 @@
        ;;hydra
        ;; indent-guides     ; highlighted indent columns
        (ligatures         ; ligatures and symbols
-        +extra
+        ;; +extra
         +iosevka)
        ;; minimap           ; show a map of the code on the side
        (modeline)  ;; light => no icons

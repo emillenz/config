@@ -11,7 +11,6 @@ def main [] {
   let start_ps = [
     "sudo xremap --watch=device ~/.config/xremap/config.yml"
     "sleep 1 && xset r off" # HACK sleep :: wait for remaps to take affect
-    "batsignal -b -f 95 -w 20 -c 10 -d 5" # low battery level warning
     "playerctld" # music controls
     "alacritty --class cmd -T cmd -e tmux new-session -A -s cmd" # main cmd-session
     "emacs --daemon; emacsclient --reuse-frame" # editor

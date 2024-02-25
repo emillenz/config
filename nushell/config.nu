@@ -23,7 +23,7 @@ alias g = emacsclient -nw --eval "(magit-status)"
 alias d = emacsclient -nw --eval "(dired-jump)"
 
 $env.PATH = ($env.PATH | append ["~/.config/bin", "~/.cargo/bin", "~/.config/emacs/bin"] | uniq)
-$env.EDITOR = "emacs -nw"
+$env.EDITOR = "-nw"
 $env.VISUAL = "emacsclient --reuse-frame"
 $env.BROWSER = "firefox"
 $env.MANPAGER = "bat --plain --language=man"
@@ -182,7 +182,7 @@ $env.config = {
     }
 
     {
-      name: history_menu
+      name: recent_cmds_menu
       only_buffer_difference: true
       marker: "> "
       type: {layout: list, page_size: 100}
@@ -218,7 +218,7 @@ $env.config = {
       name: completion_menu
       modifier: none
       keycode: tab
-      mode: [emacs vi_normal vi_insert]
+      mode: [vi_normal vi_insert]
       event: {
         until: [
           {send: menu name: completion_menu}
@@ -231,24 +231,32 @@ $env.config = {
       name: completion_previous
       modifier: shift
       keycode: backtab
-      mode: [emacs vi_normal vi_insert]
+      mode: [vi_normal vi_insert]
       event: {send: menuprevious}
     }
 
     {
-      name: help_menu
+      name: complete_hint
       modifier: control
+      keycode: char_a
+      mode: [vi_normal vi_insert]
+      event: {send: HistoryHintComplete}
+    }
+
+    {
+      name: help_menu
+      modifier: shift_control
       keycode: char_h
-      mode: [emacs vi_normal vi_insert]
+      mode: [vi_normal vi_insert]
       event: {send: menu name: help_menu}
     }
 
     {
-      name: history_menu
+      name: recent_cmds_menu
       modifier: control
       keycode: char_r
-      mode: [emacs vi_normal vi_insert]
-      event: {send: menu name: history_menu}
+      mode: [vi_normal vi_insert]
+      event: {send: menu name: recent_cmds_menu}
     }
 
     {
@@ -263,10 +271,10 @@ $env.config = {
     }
 
     {
-      name: documentation
-      modifier: shift
-      keycode: char_k
-      mode: vi_normal
+      name: help
+      modifier: control
+      keycode: char_h
+      mode: [vi_normal vi_insert]
       event: [
         {edit: MoveToLineEnd}
         {edit: InsertString, value: " --help | bat --plain --language=help"}
@@ -276,30 +284,14 @@ $env.config = {
 
     {
       name: manpage
-      modifier: shift
+      modifier: shift_control
       keycode: char_m
-      mode: vi_normal
+      mode: [vi_normal vi_insert]
       event: [
         {edit: MoveToLineStart}
-        {edit: InsertString, value: " man "}
+        {edit: InsertString, value: " man"}
         {send: Enter}
       ]
-    }
-
-    {
-      name: home_dir
-      modifier: control_shift
-      keycode: char_p
-      mode: [emacs, vi_normal, vi_insert]
-      event: {send: executehostcommand, cmd: "cd ~"}
-    }
-
-    {
-      name: prev_dir
-      modifier: control
-      keycode: char_p
-      mode: [emacs, vi_normal, vi_insert]
-      event: {send: executehostcommand, cmd: "cd .."}
     }
 
     {
@@ -314,7 +306,7 @@ $env.config = {
       name: open_editor
       modifier: control
       keycode: char_e
-      mode: [emacs vi_normal vi_insert]
+      mode: [vi_normal vi_insert]
       event: [
         {send: openeditor}
         {send: Enter}

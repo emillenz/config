@@ -20,6 +20,10 @@ map u scroll half-up
 map d scroll half-down
 map C-u scroll half-up
 map C-d scroll half-down
+map i jumplist forward
+map o jumplist backward
+map C-i jumplist forward
+map C-o jumplist backward
 map z snap_to_page
 map t toggle_page_mode
 map r reload
@@ -27,7 +31,7 @@ map R rotate
 map 0 adjust_window best-fit
 map = zoom in
 map - zoom out
-map i recolor
+map v recolor
 
 # modus vivendi theme ::
 set notification-error-bg       "#303030"

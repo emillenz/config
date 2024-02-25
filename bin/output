@@ -10,6 +10,7 @@ alias rofi = rofi -dmenu -i -no-custom -p
 # date:   Monday,  7 August, 2023
 # info:   A completion-menu for detecting and selecting external outputs.
 #         Probes xrandr for connected & prompts using rofi.
+#         TODO :: currently not functional
 # -----
 def main [] {
   let outputs = (

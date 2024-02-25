@@ -243,12 +243,12 @@ mode "find" {
 $map $mod+space mode "menus"
 
 mode "menus" {
-  $map $mod+a       $cmd $bin/audio-menu; $esc
-  $map $mod+o       $cmd $bin/output-menu; $esc
-  $map $mod+shift+o $cmd $bin/layout-menu; $esc
-  $map $mod+s       $cmd $bin/screenshot-menu; $esc
-  $map $mod+b       $cmd $bin/bluetooth-menu; $esc
-  $map $mod+p       $cmd $bin/killprocess-menu; $esc
+  $map $mod+a       $cmd $bin/audio; $esc
+  $map $mod+o       $cmd $bin/layout; $esc
+  $map $mod+shift+o $cmd $bin/output; $esc
+  $map $mod+s       $cmd $bin/screenshot; $esc
+  $map $mod+b       $cmd $bin/btcon; $esc
+  $map $mod+p       $cmd $bin/killproc; $esc
   $map $mod+q       mode "sysact";
   $map Escape $esc
 }

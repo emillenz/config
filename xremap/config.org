@@ -12,11 +12,10 @@
 - Backspace :: Original position forces one to leave the homerow and thus interrupts flow, speed and is just plain annoying for a highly frequent key. It needs to be comfortably pressed in rapid succession. The most optial placement is: ~capslock~.
   - Symbollayer mod-key :: it's ergonomic to hold it down and allows full range of motion for all other fingers. Needs to be backspace as symbollayer is very frequently used.
 - Vim layer :: If you do more than just typing something into a prompt you should really be using ~emacs-everywhere~ instead.
-  - The implemented control's allow for quick line editing without leaving insert mode. (for prompts in apps outside terminal/emacs)
-  - using remapped (sym-layer) apostrophe key.
 - Esc :: remapped ergonomically as a thumbkey to: ~alt_l~, since original position is atrocious for speed in vim motions (and uncomfortable too).
 - Thumbs :: super & alt (since the have analogous functionality) => wm and in app navigation. (remapped super, since it is unergonomical to hold down)
-- Ctrl-keys :: Get in the habit of pressing the control key's with the palm of your wrists for maximum comfort. (assuming you have a mechanical keyboard)
+- Ctrl-keys :: Get in the habit of pressing the control key's with the palm of your wrists for maximum comfort. (assuming you have a mechanical keyboard).
+  - we use C-j/k for vertical completion-menus globally
 - Browser :: Remap shorcuts to be consistent with global navigation scheme (use ~alt~ instead of ~ctrl~)
 
 * Layout
@@ -77,13 +76,13 @@ modmap:
   - name: global
     remap:
       capslock:
-        alone: esc
+        alone: backspace
         held: menu
         alone_timeout_millis: 200
       alt_l: super_l
-      apostrophe:
-        alone: backspace
-        held: capslock
+      alt_r:
+        alone: esc
+        held: alt_r
         alone_timeout_millis: 200
 
 keymap:
@@ -100,41 +99,15 @@ keymap:
       M-n: c-g
       M-shift-n: c-shift-g
 
-  - name: global
+  - name: completion
+    application:
+      not: Emacs
     remap:
-      shift-backspace: c-backspace # NOTE :: ergonomic with capslock
+      c-j: down
+      c-k: up
 
-      capslock-j: down
-      capslock-k: up
-      capslock-h: left
-      capslock-l: right
-
-      capslock-a: end
-      capslock-i: home
-
-      capslock-u: c-z
-      capslock-shift-u: c-shift-z
-
-      capslock-e: c-right
-      capslock-b: c-left
-      capslock-w: [c-right, c-right, c-left]
-
-      capslock-slash: c-f
-      capslock-question: shift-f3
-
-      capslock-y: C-c
-      capslock-p: C-v
-
-      capslock-x: delete
-      capslock-d:
-        remap:
-          capslock-d: [home, shift-end, delete]
-          capslock-a: [shift-end, delete]
-          capslock-i: [shift-home, delete]
-          capslock-e: c-delete
-          capslock-w: [c-shift-right, c-x]
-          capslock-b: [c-shift-left, c-x]
-
+  - name: symlayer
+    remap:
       menu-q: apostrophe
       menu-w: shift-comma
       menu-e: shift-dot

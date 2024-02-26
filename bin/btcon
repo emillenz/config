@@ -2,11 +2,11 @@
 
 
 # -----
-# title:  Bluetoothconnect
-# author: Emil Lenz
+# title:  bluetoothconnect
+# author: emil lenz
 # email:  emillenz@protonmail.com
-# date:   Saturday,  4 November, 2023
-# info:   Connect to a bluetooth device.
+# date:   2023-11-04
+# info:   connect to a bluetooth device.
 # -----
 def main [] {
   let icon = ""

@@ -1,11 +1,11 @@
 #!/usr/bin/env nu
 
 # -----
-# title:  Layoutselect
-# author: Emil Lenz
+# title:  layoutselect
+# author: emil lenz
 # email:  emillenz@protonmail.com
-# date:   Thursday,  2 November, 2023
-# info:   Select one of your saved output layouts.
+# date:   2023-11-02
+# info:   select one of your saved output layouts.
 # -----
 def main [
   --directory(-d): string = "~/.screenlayout" # specify custom directory // default: ~/.screenlayout
@@ -14,5 +14,5 @@ def main [
   let layout = (ls $directory | get name | path basename | to text | rofi -dmenu -i -no-custom -p $"($icon)" | str trim | if $in == "" {exit 1} else {$in})
 
   nu -c ($directory | path join $layout); # HACK: is in bash
-  notify-send -i $icon "Layoutselect" $"Switched to:\n ($layout)"
+  notify-send -i $icon "layoutselect" $"switched to:\n ($layout)"
 }

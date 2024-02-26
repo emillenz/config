@@ -1,3 +1,10 @@
+# ---
+# title:  alacritty configuration file
+# author: emil lenz
+# email:  emillenz@protonmail.com
+# date:   2022-02-25
+# info:   minimal, coinsistent and fast config
+# ---
 import = ["~/.config/alacritty/modus_vivendi.toml"]
 ipc_socket = true
 live_config_reload = true
@@ -8,7 +15,8 @@ unfocused_hollow = false
 vi_mode_style = "Block"
 
 [env]
-TERM = "xterm-256color"
+TERM = "xterm-256color" # NOTE :: correct tmux nvim colors
+WINIT_X11_SCALE_FACTOR = "1" # NOTE :: same fontsize across different dpi displays
 
 [font]
 normal = {family = "Iosevka Nerd Font"}

@@ -1,11 +1,11 @@
 #!/usr/bin/env nu
 
 # -----
-# title:  Startup
-# author: Emil Lenz
+# title:  startup
+# author: emil lenz
 # email:  emillenz@protonmail.com
 # date:   2023-08-08
-# info:   All background processes and commands to be run at startup. Additionally runs commands to configure X11 behaviour. Starts all programs automatically, that are used in basically every-session (DRY).
+# info:   all background processes and commands to be run at startup. additionally runs commands to configure x11 behaviour. starts all programs automatically, that are used in basically every-session (dry).
 # -----
 def main [] {
   let start_ps = [

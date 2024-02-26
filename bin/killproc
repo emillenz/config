@@ -1,15 +1,15 @@
 #!/usr/bin/env nu
 
 # -----
-# title:  Rofi menu to kill a running process.
-# author: Emil Lenz
+# title:  rofi menu to kill a running process.
+# author: emil lenz
 # email:  emillenz@protonmail.com
 # date:   2023-08-08
-# info:   Utility script using rofi, to kill a specific process by name.
+# info:   utility script using rofi, to kill a specific process by name.
 # -----
 def main []  {
   let $icon = " "
   let ps = (ps | get name | to text | rofi -dmenu -i -no-custom -p $"($icon)" | str trim | if $in == "" {exit 1} else {$in})
   sudo killall $ps
-  notify-send $"($icon) Killprocess" $ps
+  notify-send $"($icon) killprocess" $ps
 }

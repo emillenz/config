@@ -32,8 +32,6 @@ keymap:
       M-shift-n: c-shift-g
 
   - name: completion
-    application:
-      not: Emacs
     remap:
       c-j: down
       c-k: up

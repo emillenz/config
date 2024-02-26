@@ -4,12 +4,12 @@ const icon = "󰍹 "
 alias rofi = rofi -dmenu -i -no-custom -p
 
 # -----
-# title:  Outputselect
-# author: Emil Lenz
+# title:  outputselect
+# author: emil lenz
 # email:  emillenz@protonmail.com
-# date:   Monday,  7 August, 2023
-# info:   A completion-menu for detecting and selecting external outputs.
-#         Probes xrandr for connected & prompts using rofi.
+# date:   2023-08-07
+# info:   a completion-menu for detecting and selecting external outputs.
+#         probes xrandr for connected & prompts using rofi.
 #         TODO :: currently not functional
 # -----
 def main [] {
@@ -22,7 +22,7 @@ def main [] {
   )
 
   if ($outputs | length) == 1 {
-    notify-send $"($icon)  Outputselect" "Only one output detected."
+    notify-send $"($icon) outputselect" "only one output detected."
     single $outputs $outputs.0
   } else {
     let opts = ($outputs | append "multi")
@@ -37,14 +37,14 @@ def main [] {
 
 def double [outputs: list] {
   let mirror = (
-    ([n y] | to text | rofi $"($icon) Mirror: [n/y]" -auto-select | str trim | if $in == "" {exit 1} else {$in})
+    ([n y] | to text | rofi $"($icon) mirror: [n/y]" -auto-select | str trim | if $in == "" {exit 1} else {$in})
     == "y"
   )
-  let primary = ($outputs | to text | rofi "($icon) Primary:" | if $in == "" {exit 1} else {$in})
+  let primary = ($outputs | to text | rofi "($icon) primary:" | if $in == "" {exit 1} else {$in})
   let secondary = (
     match ($outputs | length) {
       2 => {$outputs | where {|e| $e != $primary}},
-      _ => {$outputs | where {|e| $e != $primary} | to text | rofi "($icon) Secondary:" | if $in == "" {exit 1} else {$in}},
+      _ => {$outputs | where {|e| $e != $primary} | to text | rofi "($icon) secondary:" | if $in == "" {exit 1} else {$in}},
     }
   )
 
@@ -61,20 +61,20 @@ def single [outputs: list, output: string] {
   # for o in  $others {
   #   xrandr --output $o --off
   # }
-  notify-send $"($icon)  Outputselect" $"Single\n> ($output)"
+  notify-send $"($icon) outputselect" $"single\n> ($output)"
 }
 
 def mirror [primary: string, secondary: string] {
   xrandr --output $primary --auto --primary
   xrandr --output $secondary --same-as $primary --auto
-  notify-send $"($icon)  Outputselect" $"Mirroring\n> ($primary)\n  ($secondary)"
+  notify-send $"($icon) outputselect" $"mirroring\n> ($primary)\n ($secondary)"
 }
 
 def extend [primary: string, secondary: string] {
   let pos = (
     [h j k l]
     | to text
-    | rofi -auto-select $"($icon) Position of #2:($secondary): [j] down | [k] up | [h] left | [l] right"
+    | rofi -auto-select $"($icon) position of #2:($secondary): [j] down | [k] up | [h] left | [l] right"
     | str trim
     | if $in == "" {exit 1} else {$in}
   )
@@ -85,5 +85,5 @@ def extend [primary: string, secondary: string] {
     "k" => {xrandr --output ($secondary) --above    ($primary) --auto},
     "l" => {xrandr --output ($secondary) --below    ($primary) --auto},
   }
-  notify-send $"($icon)  Outputselect" $"Extended\n> ($primary)\n  ($secondary)"
+  notify-send $"($icon) outputselect" $"extended\n> ($primary)\n ($secondary)"
 }

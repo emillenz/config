@@ -15,7 +15,7 @@
 - Esc :: remapped ergonomically as a thumbkey to: ~alt_l~, since original position is atrocious for speed in vim motions (and uncomfortable too).
 - Thumbs :: super & alt (since the have analogous functionality) => wm and in app navigation. (remapped super, since it is unergonomical to hold down)
 - Ctrl-keys :: Get in the habit of pressing the control key's with the palm of your wrists for maximum comfort. (assuming you have a mechanical keyboard).
-  - we use C-j/k for vertical completion-menus globally
+  - we use C-j/k for vertical completion-menus globally (better than tab && shift/tab)
 - Browser :: Remap shorcuts to be consistent with global navigation scheme (use ~alt~ instead of ~ctrl~)
 
 * Layout
@@ -41,7 +41,7 @@ I am currently forced to use ~qwerty~ due to writing exam's at my university, ho
 Symbols are not like alpha characters, they occur less often, and they tend to occur in isolation or in short bigrams (in C code, things like ~#~ and ~!=~). We can learn nevertheless from work on optimizing alpha key layouts and apply some of those findings to symbol layouts.
 
 It’s a good idea to put the most used keys on home row and rare keys toward the corners.
-Avoid the pinkies for keys that are often double tapped (~== ++ //~). Or you might like a Repeat Key to circumvent double tapping.
+Avoid the pinkies for keys that are often double tapped (~== ++ // \\~). Or you might like a Repeat Key to circumvent double tapping.
 
 Make common bigrams (~!= <= += ->~) comfortable to type. Ideally they are “inward rolls”. An inward roll is a pattern typed on one hand with successive keys moving toward the center of the keyboard ("inward"), like drumming your fingers from pinky to index finger.
 
@@ -55,15 +55,13 @@ We include on this symbol layer all symbols that are accessed with shift and tho
 
 ** Features:
 - The left hand has mathematical operators mainly (if you use dvorak, then this overlaps).
-  - Comparisons ~!= ~<= >=~
+  - Comparisons ~!= ~<= >= =~~
   - Assignment operators ~-~+= ~/= *=~
   - Arrow operators: ~-> =>~
-- Most symbols are double tapped in some use: ~<< == && || **~. So pinky keys are deliberately things that aren’t commonly double tapped
+- Most symbols are double tapped in some use: ~<< == && || ** \\~. So pinky keys are deliberately things that aren’t commonly double tapped
 - Right has all the braces under the powerfingers (ordered by frequency: ~() -> {} -> []~)
-- Right-side has ~^ $~, since often used in conjuction in regex (and commonly used with vim motions).
 - ~_~ is one of the most frequently used keys for namespacing in programming => under the powerfinger (and on the other hand the counterpart: ~-~, also under powerfinger, but on the operator side).
-- ~C-j, C-k~: up down => navigate completion menus in all apps.
-  - unused shortcut in most apps => more important first level mapping)
+- ~C-j, C-k~: up down => navigate completion menus in all apps. (emacs: inbuilt)
 
 * Src
 #+begin_src yaml
@@ -100,8 +98,6 @@ keymap:
       M-shift-n: c-shift-g
 
   - name: completion
-    application:
-      not: Emacs
     remap:
       c-j: down
       c-k: up

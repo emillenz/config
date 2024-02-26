@@ -1,9 +1,9 @@
-;; [[file:config.org::*User][User:1]]
+;; [[file:config.org::*user][user:1]]
 (setq user-full-name "emil lenz"
       user-mail-address "emillenz@protonmail.com")
-;; User:1 ends here
+;; user:1 ends here
 
-;; [[file:config.org::*Modus theme][Modus theme:1]]
+;; [[file:config.org::*modus-theme][modus-theme:1]]
 (use-package! modus-themes
   :config
   (setq
@@ -36,9 +36,9 @@
     `(org-block-begin-line :foreground ,(modus-themes-get-color-value 'prose-metadata))
     `(org-quote :slant italic))
   (setq doom-theme 'modus-vivendi))
-;; Modus theme:1 ends here
+;; modus-theme:1 ends here
 
-;; [[file:config.org::*Font][Font:1]]
+;; [[file:config.org::*font][font:1]]
 (setq doom-font                (font-spec :family "Iosevka Nerd Font" :size 14)
       doom-variable-pitch-font (font-spec :family "Iosevka Nerd Font" :size 14)
       doom-serif-font          (font-spec :family "Iosevka Nerd Font" :size 14)
@@ -49,9 +49,9 @@
   '(font-lock-type-face    :slant normal)
   '(font-lock-comment-face :slant italic)
   '(font-lock-string-face  :slant italic))
-;; Font:1 ends here
+;; font:1 ends here
 
-;; [[file:config.org::*Modeline][Modeline:1]]
+;; [[file:config.org::*modeline][modeline:1]]
 (setq display-battery-mode nil
       display-time-mode nil
       doom-modeline-height 15
@@ -59,9 +59,9 @@
       doom-modeline-enable-word-count t
       doom-modeline-persp-name t
       doom-modeline-major-mode-icon t)
-;; Modeline:1 ends here
+;; modeline:1 ends here
 
-;; [[file:config.org::*Window layout & behavior][Window layout & behavior:1]]
+;; [[file:config.org::*window layout & behavior][window layout & behavior:1]]
 (setq evil-vsplit-window-right t
       even-window-sizes 'width-only
       window-combination-resize t
@@ -75,14 +75,15 @@
         :quit nil
         :modeline nil))
 
-(setq org-src-window-setup 'current-window)
+(after! org
+  (setq org-src-window-setup 'current-window)
+  (set-popup-rule! "^\\*Org Src" :ignore t))
 
 (set-popup-rules! `(("^\\*info" :ignore t)
-                    ("^\\*helpful" ,@+popup-defaults)
-                    ("^\\*Org Src" :ignore t)))
-;; Window layout & behavior:1 ends here
+                    ("^\\*helpful" ,@+popup-defaults)))
+;; window layout & behavior:1 ends here
 
-;; [[file:config.org::*Window layout & behavior][Window layout & behavior:2]]
+;; [[file:config.org::*window layout & behavior][window layout & behavior:2]]
 (add-hook! '(text-mode-hook
              ;; prog-mode-hook ;; NOTE :: don't use it, breaks with flycheck
              dired-mode-hook
@@ -98,23 +99,17 @@
       visual-fill-column-center-text t
       visual-fill-column-width 100
       fill-column 100)
-;; Window layout & behavior:2 ends here
+;; window layout & behavior:2 ends here
 
-;; [[file:config.org::*Tabs][Tabs:1]]
+;; [[file:config.org::*tabs][tabs:1]]
 (tab-bar-mode 1)
 (setq tab-bar-tab-hints t
       tab-bar-new-button-show nil
       tab-bar-new-tab-to 'rightmost
       tab-bar-close-button-show nil)
+;; tabs:1 ends here
 
-(defadvice! with_newtab (fn &rest args)
-  :before '(eshell
-            +vterm/here
-            info)
-  (tab-bar-new-tab-to))
-;; Tabs:1 ends here
-
-;; [[file:config.org::*Misc Options][Misc Options:1]]
+;; [[file:config.org::*misc options][misc options:1]]
 (setq bookmark-default-file "~/.config/doom/bookmarks"
       delete-by-moving-to-trash t
       truncate-string-ellipsis "…"
@@ -135,9 +130,9 @@
 
 (setq calc-angle-mode 'rad
       calc-symbolic-mode t)
-;; Misc Options:1 ends here
+;; misc options:1 ends here
 
-;; [[file:config.org::*Leader][Leader:1]]
+;; [[file:config.org::*leader][leader:1]]
 (setq doom-leader-key "SPC"
       doom-leader-alt-key "M-SPC"
       doom-localleader-key ","
@@ -158,9 +153,9 @@
                             "s" #'+lookup/synonyms
                             "w" #'ispell-word
                             "t" #'dictionary-search)))
-;; Leader:1 ends here
+;; leader:1 ends here
 
-;; [[file:config.org::*Global navigation scheme][Global navigation scheme:1]]
+;; [[file:config.org::*global navigation scheme][global navigation scheme:1]]
 (map! :map 'override
       :inmv "M-j"   #'previous-window-any-frame
       :inmv "M-k"   #'next-window-any-frame
@@ -183,9 +178,9 @@
       :inmv "C--"   #'doom/decrease-font-size
       :inmv "C-="   #'doom/increase-font-size
       :inmv "C-0"   #'doom/reset-font-size)
-;; Global navigation scheme:1 ends here
+;; global navigation scheme:1 ends here
 
-;; [[file:config.org::*Global navigation scheme][Global navigation scheme:2]]
+;; [[file:config.org::*global navigation scheme][global navigation scheme:2]]
 (defadvice! evil_quit (&optional force)
   "Close current tab before closing current frame (more sensible)."
   :override #'evil-quit
@@ -204,9 +199,9 @@
           (if force
               (kill-emacs)
             (save-buffers-kill-emacs))))))))
-;; Global navigation scheme:2 ends here
+;; global navigation scheme:2 ends here
 
-;; [[file:config.org::*Evil][Evil:1]]
+;; [[file:config.org::*evil][evil:1]]
 (map! :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
 
@@ -235,9 +230,9 @@
 (map! :after org :map evil-org-mode-map
       :nmv "C-j"  #'org-forward-element
       :nmv "C-k"  #'org-backward-element)
-;; Evil:1 ends here
+;; evil:1 ends here
 
-;; [[file:config.org::*Evil][Evil:2]]
+;; [[file:config.org::*evil][evil:2]]
 (defadvice! update_evil_search_reg ()
   "Update evil search register after jumping to a line with
   `+default/search-buffer' to be able to jump to next/prev matches.
@@ -248,7 +243,7 @@ This is sensible default behaviour, and integrates it into evil."
               (car consult--line-history))))
     (push str evil-ex-search-history)
     (setq evil-ex-search-pattern (list str t t))))
-;; Evil:2 ends here
+;; evil:2 ends here
 
 ;; [[file:config.org::*Instant jumping][Instant jumping:1]]
 (map! :map evil-snipe-local-mode-map ;; HACK :: need to override evil-snipe
@@ -269,7 +264,7 @@ This is sensible default behaviour, and integrates it into evil."
       :nmv "g>" #'evil-lion-right)
 ;; Alignment:1 ends here
 
-;; [[file:config.org::*Org][Org:1]]
+;; [[file:config.org::*org][org:1]]
 (map! :localleader :map org-mode-map
       "\\" #'org-latex-preview
       ","  #'org-ctrl-c-ctrl-c
@@ -277,9 +272,9 @@ This is sensible default behaviour, and integrates it into evil."
                    "`" #'org-edit-special
                    "g" #'org_goto_src
                    "t" #'org-babel-tangle))
-;; Org:1 ends here
+;; org:1 ends here
 
-;; [[file:config.org::*Dired (keybindings)][Dired (keybindings):1]]
+;; [[file:config.org::*dired (keybindings)][dired (keybindings):1]]
 (map! :map dired-mode-map :after dired
       :nm "h" #'dired-up-directory
       :nm "l" #'dired-open-file
@@ -301,15 +296,15 @@ This is sensible default behaviour, and integrates it into evil."
 
 (map! :map dired-mode-map :localleader :after dired
       :nm "a" #'dired_archive)
-;; Dired (keybindings):1 ends here
+;; dired (keybindings):1 ends here
 
-;; [[file:config.org::*Magit][Magit:1]]
+;; [[file:config.org::*magit][magit:1]]
 (map! :map magit-mode-map :after magit
       :nm "C-j" #'magit-section-forward-sibling
       :nm "C-k" #'magit-section-backward-sibling)
-;; Magit:1 ends here
+;; magit:1 ends here
 
-;; [[file:config.org::*Editor][Editor:1]]
+;; [[file:config.org::*editor][editor:1]]
 (evil-surround-mode 1)
 
 (setq evil-magic 'very-magic
@@ -325,7 +320,7 @@ This is sensible default behaviour, and integrates it into evil."
       evil-snipe-repeat-keys t
       evil-snipe-override-evil-repeat-keys t
       evil-snipe-auto-scroll nil)
-;; Editor:1 ends here
+;; editor:1 ends here
 
 ;; [[file:config.org::*Jump property][Jump property:1]]
 (dolist (cmd '(flycheck-next-error
@@ -339,8 +334,8 @@ This is sensible default behaviour, and integrates it into evil."
 
 (dolist (cmd '(evil-backward-section-begin
                evil-jump-item
-             evil-forward-section-end))
-      (evil-remove-command-properties cmd :jump))
+               evil-forward-section-end))
+  (evil-remove-command-properties cmd :jump))
 ;; Jump property:1 ends here
 
 ;; [[file:config.org::*Lsp & completion][Lsp & completion:1]]
@@ -359,7 +354,7 @@ This is sensible default behaviour, and integrates it into evil."
 (setq yas-triggers-in-field t)
 ;; Templates & snippets:1 ends here
 
-;; [[file:config.org::*Dired][Dired:1]]
+;; [[file:config.org::*dired][dired:1]]
 (add-hook! dired-mode-hook #'display-line-numbers-mode)
 
 ;; NOTE:: this is the elegant && extensible way to do regex.
@@ -388,7 +383,7 @@ This is sensible default behaviour, and integrates it into evil."
 (setq dired-recursive-copies 'always
       dired-recursive-deletes 'top
       global-auto-revert-non-file-buffers t)
-;; Dired:1 ends here
+;; dired:1 ends here
 
 ;; [[file:config.org::*Archive file][Archive file:1]]
 (defvar archive_dir "~/Archive/"
@@ -407,9 +402,9 @@ This is sensible default behaviour, and integrates it into evil."
         (rename-file f dest 1)))))
 ;; Archive file:1 ends here
 
-;; [[file:config.org::*Programming][Programming:1]]
+;; [[file:config.org::*programming][programming:1]]
 (add-hook! 'prog-mode-hook #'rainbow-delimiters-mode)
-;; Programming:1 ends here
+;; programming:1 ends here
 
 ;; [[file:config.org::*Indentation: 2 spaces][Indentation: 2 spaces:1]]
 (advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
@@ -418,7 +413,7 @@ This is sensible default behaviour, and integrates it into evil."
       org-indent-indentation-per-level 2
       evil-shift-width 2
       standard-indent 2
-;;      tab-width 2
+      ;;      tab-width 2
       evil-indent-convert-tabs t
       indent-tabs-mode nil)
 ;; Indentation: 2 spaces:1 ends here
@@ -435,11 +430,11 @@ This is sensible default behaviour, and integrates it into evil."
   (basic-save-buffer))
 ;; Clean Whitespace:1 ends here
 
-;; [[file:config.org::*Conf-mode][Conf-mode:1]]
+;; [[file:config.org::*conf-mode][conf-mode:1]]
 (add-hook! 'conf-mode-hook #'rainbow-mode)
-;; Conf-mode:1 ends here
+;; conf-mode:1 ends here
 
-;; [[file:config.org::*Options][Options:1]]
+;; [[file:config.org::*options][options:1]]
 (add-hook! 'org-mode-hook
            '(visual-line-mode
              org-fragtog-mode
@@ -490,9 +485,9 @@ This is sensible default behaviour, and integrates it into evil."
 
 (setq org-blank-before-new-entry '((heading         . t)
                                    (plain-list-item . nil)))
-;; Options:1 ends here
+;; options:1 ends here
 
-;; [[file:config.org::*Symbols][Symbols:1]]
+;; [[file:config.org::*symbols][symbols:1]]
 (add-hook! 'org-mode-hook '(org-superstar-mode prettify-symbols-mode))
 
 (setq org-superstar-headline-bullets-list
@@ -519,37 +514,37 @@ This is sensible default behaviour, and integrates it into evil."
               ("->" . "→")
               ("=>" . "⇒")
               ("<=>" . "⇔"))))
-;; Symbols:1 ends here
+;; symbols:1 ends here
 
-;; [[file:config.org::*Task states][Task states:1]]
+;; [[file:config.org::*task states][task states:1]]
 (after! org
- (setq org-todo-keywords
-      '((type
-         "[#](#)")
-        (sequence
-         "[ ](t)" ;; HACK :: cannot use " " => [T]odo
-         "[?](?!)"
-         "[-](-@)"
-         "[=](=@)"
-         "[&](&@)"
-         "|"
-         "[x](x!)"
-         "[@](d@)" ;; HACK :: cannot use"@" => [D]elegated
-         "[\\](\\@)")))
+  (setq org-todo-keywords
+        '((type
+           "[#](#)")
+          (sequence
+           "[ ](t)" ;; HACK :: cannot use " " => [T]odo
+           "[?](?!)"
+           "[-](-@)"
+           "[=](=@)"
+           "[&](&@)"
+           "|"
+           "[x](x!)"
+           "[@](d@)" ;; HACK :: cannot use"@" => [D]elegated
+           "[\\](\\@)")))
 
-(setq org-todo-keyword-faces
-      '(("[#]"  . '(bold +org-todo-project))
-        ("[ ]"  . '(bold org-todo))
-        ("[-]"  . '(bold +org-todo-active))
-        ("[?]"  . '(bold +org-todo-onhold))
-        ("[=]"  . '(bold +org-todo-onhold))
-        ("[&]"  . '(bold +org-todo-onhold))
-        ("[@]"  . '(bold +org-todo-onhold))
-        ("[\\]" . '(bold org-done))
-        ("[x]"  . '(bold org-done)))))
-;; Task states:1 ends here
+  (setq org-todo-keyword-faces
+        '(("[#]"  . '(bold +org-todo-project))
+          ("[ ]"  . '(bold org-todo))
+          ("[-]"  . '(bold +org-todo-active))
+          ("[?]"  . '(bold +org-todo-onhold))
+          ("[=]"  . '(bold +org-todo-onhold))
+          ("[&]"  . '(bold +org-todo-onhold))
+          ("[@]"  . '(bold +org-todo-onhold))
+          ("[\\]" . '(bold org-done))
+          ("[x]"  . '(bold org-done)))))
+;; task states:1 ends here
 
-;; [[file:config.org::*Task states][Task states:2]]
+;; [[file:config.org::*task states][task states:2]]
 (setq org-log-done 'time
       org-log-repeat 'time
       org-todo-repeat-to-state t
@@ -575,9 +570,9 @@ This is sensible default behaviour, and integrates it into evil."
         (deldeadline . "rm-deadline: %S, %t")
         (refile      . "refile: %t")
         (clock-out   . "")))
-;; Task states:2 ends here
+;; task states:2 ends here
 
-;; [[file:config.org::*Babel][Babel:1]]
+;; [[file:config.org::*babel][babel:1]]
 (setq org-babel-default-header-args
       '((:session  . "none")
         (:results  . "replace")
@@ -588,9 +583,9 @@ This is sensible default behaviour, and integrates it into evil."
         (:tangle   . "no")
         (:mkdirp   . "yes")
         (:comments . "link")))
-;; Babel:1 ends here
+;; babel:1 ends here
 
-;; [[file:config.org::*Agenda][Agenda:1]]
+;; [[file:config.org::*agenda][agenda:1]]
 (add-hook! 'org-agenda-mode-hook
            #'org-super-agenda-mode)
 
@@ -614,9 +609,9 @@ This is sensible default behaviour, and integrates it into evil."
         (1.0 . org-warning)
         (0.5 . org-upcoming-deadline)
         (0.0 . org-upcoming-distant-deadline)))
-;; Agenda:1 ends here
+;; agenda:1 ends here
 
-;; [[file:config.org::*Agenda][Agenda:2]]
+;; [[file:config.org::*agenda][agenda:2]]
 (setq org-agenda-todo-keyword-format "%-3s"
       org-agenda-scheduled-leaders '("─────" "<-%2dd") ;; NOTE :: unicode is not fixed width => breaks formatting => cannot use it.
       org-agenda-deadline-leaders '("━━━━━" "=>%2dd" "<=%2dd")
@@ -624,21 +619,19 @@ This is sensible default behaviour, and integrates it into evil."
                                  (todo .   "%-12c%-6s%-12t")
                                  (tags .   "%-12c%-6s%-12t")
                                  (search . "%-12c%-6s%-12t")))
-;; Agenda:2 ends here
+;; agenda:2 ends here
 
-;; [[file:config.org::*Clock][Clock:1]]
+;; [[file:config.org::*clock][clock:1]]
 (setq org-clock-out-when-done t
       org-clock-persist t
       org-clock-into-drawer t)
-;; Clock:1 ends here
+;; clock:1 ends here
 
-;; [[file:config.org::*Capture templates][Capture templates:1]]
-(defvar journal_dir "~/Documents/journal/"
+;; [[file:config.org::*capture templates][capture templates:1]]
+(defvar org_journal_dir (file-name-concat "~/Documents/journal/")
   "Directory for daily journal files.")
-(defvar literature_notes_dir "~/Documents/literature/notes/"
+(defvar org_literature_dir "~/Documents/literature/notes/"
   "Directory for literature notes.")
-(defvar literature_source_dir "~/Documents/literature/source/"
-  "Directory for literature source files.")
 
 (defun doct_projects (projects &optional target ppath)
   "Generate doct preset for project (standardized).
@@ -647,8 +640,8 @@ PROJECTS :: all projects with their keys [and children]
 TARGET :: the caputure target file tag (notes / agenda)
 PPATH :: always omit (used for internal recursive purposes)
 
-This approach to doct ensures all keys for one project use the same prefix and reduces
-code repetition."
+This approach to doct ensures all keys for one project use the same prefix and
+reduces code repetition."
   (mapcar
    (lambda (proj)
      (let* ((name (car proj))
@@ -672,10 +665,28 @@ code repetition."
 
 TIME :: Time of note to return. (default: today)"
   (file-name-concat
-   journal_dir
+   org_journal_dir
    (format
-    "%s_journal.org"
+    "%s__journal.org"
     (format-time-string "%F" (or time (current-time))))))
+
+(defun org_refile_todos (target_file target_hl)
+  "Refile TODO's in current buffer to given location.
+
+TARGET_FILE
+TARGET_HL :: to refile HL under
+
+* NOTE :: the TODO keyword must be the same as in the variable `org-todo-keywords'"
+  (let ((pos (save-excursion
+               (find-file target_file)
+               (org-find-exact-headline-in-buffer target_hl))))
+    (org-map-entries (lambda ()
+                       (org-refile nil
+                                   nil
+                                   (list target_hl
+                                         target_file nil pos)))
+                     "[ ]"
+                     'tree)))
 
 (after! org
   (setq
@@ -692,13 +703,13 @@ TIME :: Time of note to return. (default: today)"
       `(("task" :keys "t"
          :headline "inbox"
          :prepend t :empty-lines-after 1
-         :template ("* [ ] %^{title}%?")
+         :template ("* [ ] %^{title}%? %^g")
          :children ,(doct_projects projects "agenda"))
 
         ("event" :keys "e"
          :headline "events"
          :prepend t :empty-lines-after 1
-         :template ("* [#] %^{title}%?"
+         :template ("* [#] %^{title}%? %^g"
                     "%^T"
                     ":PROPERTIES:"
                     ":location: %^{location}"
@@ -717,9 +728,9 @@ TIME :: Time of note to return. (default: today)"
 
         ("journal" :keys "j"
          :file (lambda () (doct_journal_file))
-         :children (("begin" :keys "b"
+         :children (("begin today" :keys "t"
                      :type plain
-                     :template ("#+title:  daily note: %<%A, %e. %B %Y>"
+                     :template ("#+title:  Daily Note: %<%A, %e. %B %Y>"
                                 "#+author: %(user-full-name)"
                                 "#+email:  %(message-user-mail-address)"
                                 "#+date:   %<%F>"
@@ -729,7 +740,8 @@ TIME :: Time of note to return. (default: today)"
                                 "- %?"
                                 ""
                                 "* agenda"
-                                "** [ ] "))
+                                "** [ ] "
+                                "SCHEDULED: <%<%F %a>>"))
                     ("entry" :keys "e"
                      :empty-lines-before 1
                      :template ("* %^{title}"
@@ -748,10 +760,12 @@ TIME :: Time of note to return. (default: today)"
                                 "- %?"
                                 ""
                                 "* reflection"
-                                "-"))))
+                                "-")
+                     :prepare-finalize (lambda () (org_refile_todos "~/Documents/org/personal/agenda.org" "inbox"))
+                     )))
 
         ("literature" :keys "l"
-         :file (lambda () (read-file-name "file: " literature_notes_dir))
+         :file (lambda () (read-file-name "file: " org_literature_dir))
          :children (("init" :keys "i"
                      :file
                      (lambda ()
@@ -770,6 +784,7 @@ TIME :: Time of note to return. (default: today)"
                                 "#+author: %(user-full-name)"
                                 "#+email:  %(message-user-mail-address)"
                                 "#+date:   %<%F>"
+                                "#+filetags: :literature:"
                                 ""
                                 "* [-] %\\1%?"
                                 ":PROPERTIES:"
@@ -789,7 +804,7 @@ TIME :: Time of note to return. (default: today)"
                     ("excerpt" :keys "e"
                      :headline "excerpts"
                      :empty-lines-after 1
-                     :template ("* %^{title} [p:%^{page}]"
+                     :template ("* %^{title} [p:%^{page}] %^g"
                                 "#+begin_quote"
                                 "%x"
                                 "#+end_quote"))
@@ -797,13 +812,13 @@ TIME :: Time of note to return. (default: today)"
                     ("note: literary" :keys "l"
                      :headline "literature notes"
                      :empty-lines-after 1
-                     :template ("* %^{title} [p:%^{page}]"
+                     :template ("* %^{title} [p:%^{page}] %^g"
                                 "%?"))
 
                     ("note: transient" :keys "t"
                      :headline "transient notes"
                      :empty-lines-after 1
-                     :template ("* %^{title}"
+                     :template ("* %^{title} %^g"
                                 "%?"))
 
                     ;; NOTE:: make sure to complete the literature-task-headline in order to log closing time.
@@ -812,14 +827,14 @@ TIME :: Time of note to return. (default: today)"
                      :unnarrowed t
                      :type plain
                      :template ("%?")))))))))
-;; Capture templates:1 ends here
+;; capture templates:1 ends here
 
-;; [[file:config.org::*Latex][Latex:1]]
+;; [[file:config.org::*latex][latex:1]]
 (add-hook! 'org-mode-hook #'laas-mode)
 (setq org-startup-with-latex-preview t)
-;; Latex:1 ends here
+;; latex:1 ends here
 
-;; [[file:config.org::*Keywords to downcase][Keywords to downcase:1]]
+;; [[file:config.org::*keywords to downcase][keywords to downcase:1]]
 (defun org_convert_keywords_downcase ()
   "Convert all #+KEYWORDS => #+keywords && :keyword: => :keyword:"
   (interactive)
@@ -828,7 +843,7 @@ TIME :: Time of note to return. (default: today)"
     (let ((case-fold-search nil))
       (while (re-search-forward "^[ \t]*#\\+[A-Z_]*" nil t)
         (replace-match (downcase (match-string 0)) t)))))
-;; Keywords to downcase:1 ends here
+;; keywords to downcase:1 ends here
 
 ;; [[file:config.org::*Jump to src file][Jump to src file:1]]
 (defun org_goto_src ()
@@ -862,11 +877,11 @@ Jumps at tangled code from org src block."
     (message "Cannot jump to tangled file because point is not at org src block.")))
 ;; Jump to src file:1 ends here
 
-;; [[file:config.org::*Nushell][Nushell:1]]
+;; [[file:config.org::*nushell][nushell:1]]
 (load! "user/nushell-mode.el")
 (setq shell-file-name "/usr/bin/bash")  ;; NOTE :: Emacs expects bash for it's internal shellcommands
-;; Nushell:1 ends here
+;; nushell:1 ends here
 
-;; [[file:config.org::*Latex][Latex:1]]
+;; [[file:config.org::*latex][latex:1]]
 (setq +latex-viewers '(zathura))
-;; Latex:1 ends here
+;; latex:1 ends here

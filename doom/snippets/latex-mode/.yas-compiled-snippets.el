@@ -109,4 +109,4 @@
                        ("ac" "\\newacronym{${1:label}}{${1:$(upcase yas-text)}}{${2:Name}}" "acronym" nil nil nil "/home/lenz/.config/doom/snippets/latex-mode/acronym" nil "ac")))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:43 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:42 2024

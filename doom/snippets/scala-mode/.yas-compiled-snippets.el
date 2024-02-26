@@ -13,4 +13,4 @@
                        ("List" "List(${1:args}) $0" "List(...)" nil nil nil "/home/lenz/.config/doom/snippets/scala-mode/List" nil nil)))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:44 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:43 2024

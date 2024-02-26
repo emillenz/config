@@ -20,4 +20,4 @@
                        ("attrib" "/// <summary>\n/// $3\n/// </summary>\nprivate $1 $2;" "private attribute ....;" nil nil nil "/home/lenz/.config/doom/snippets/csharp-mode/attrib" nil "attrib")))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:42 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:41 2024

@@ -5,4 +5,4 @@
                      '(("fct" "import React from 'react';\n\ninterface ${1:`(file-name-base buffer-file-name)`}PropTypes {\n\n}\n\nconst $1 = (props: $1PropTypes) => (\n  $0\n);\n\nexport { $1 };\n" "functionalComponentTSX" nil nil nil "/home/lenz/.config/doom/snippets/typescript-tsx-mode/componentTSX" nil nil)))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:45 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:44 2024

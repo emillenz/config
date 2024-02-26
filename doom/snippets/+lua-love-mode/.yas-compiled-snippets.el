@@ -10,4 +10,4 @@
                        ("love" "function love.${1:update}($2)\n    `%`${0:-- code}\nend\n" "love.? function" love-mode nil nil "/home/lenz/.config/doom/snippets/+lua-love-mode/love" nil nil)))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:41 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:40 2024

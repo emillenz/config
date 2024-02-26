@@ -9,4 +9,4 @@
                        ("php" "<?php `(doom-snippets-format \"%n%s%n\")`$0 ?>" "<?php ... ?>" nil nil nil "/home/lenz/.config/doom/snippets/web-mode/php" nil nil)))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:45 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:44 2024

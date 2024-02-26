@@ -10,4 +10,4 @@
                        ("LBSuggestionsScript" "<key>LBSuggestionsScript</key>\n<dict>\n    <key>LBScriptName</key>\n    <string>${1:suggestions}.js</string>\n\n    <key>LBBackgroundKillEnabled</key>\n    <true />\n</dict>" "LBSuggestionsScript" nil nil nil "/home/lenz/.config/doom/snippets/+javascript-lb6-mode/LBSuggestionsScript" nil nil)))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:41 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:40 2024

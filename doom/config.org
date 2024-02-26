@@ -2,10 +2,13 @@
 #+author: emil lenz
 #+email:  emillenz@protonmail.com
 #+date:   2022-11-01
-#+modified:
-#+info:   heavily opinionated emacs evil-mode config, with a principle-focused approach on: consistency, quality, efficiency & extensibility.
+#+info:   heavily opinionated config, with a principle-focused approach on: consistency, quality, efficiency & extensibility.
+#+macro: last-revision (eval (format-time-string "%F") )
+#+macro: loc (eval (save-excursion (find-file (file-name-concat doom-user-dir "config.el")) (count-lines (point-min) (point-max))))
 
 #+property: header-args:emacs-lisp tangle config.el :comments link :results silent
+
+last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
 
 * preface
 - if you decide to use parts (or the entire config) *ensure* that you have *at least* every doom/module and package installed / enabled as i do, otherwise emacs will throw errors left and right.

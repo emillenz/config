@@ -64,4 +64,4 @@
                        ("body" "<body$1>\n  $0\n</body>" "<body>...</body>" nil nil nil "/home/lenz/.config/doom/snippets/nxml-mode/body" nil nil)))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:44 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:43 2024

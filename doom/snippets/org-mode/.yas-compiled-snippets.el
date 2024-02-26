@@ -4,6 +4,7 @@
 (yas-define-snippets 'org-mode
                      '(("width" "#+attr_html: :width ${1:500px}" "#+attr_html: :width ..." nil nil nil "/home/lenz/.config/doom/snippets/org-mode/width" nil nil)
                        ("verse" "#+begin_verse\n`%`$0\n#+end_verse" "verse" nil nil nil "/home/lenz/.config/doom/snippets/org-mode/verse" nil "verse")
+                       ("uni_class" "#+title:  ${1:`(replace-regexp-in-string \"[-_.]\" \" \" (file-name-base (or buffer-file-name \"title\")))`}\n#+author: `user-full-name`\n#+email:  `user-mail-address`\n#+date:   `(format-time-string \"%F\")`\n#+info:   ${2:document description}\n#+filetags: ${3:filetags}\n$0" "uni_course" nil nil nil "/home/lenz/.config/doom/snippets/org-mode/uni_class" nil nil)
                        ("todo" "TODO ${1:task description}" "TODO item" nil nil nil "/home/lenz/.config/doom/snippets/org-mode/todo" nil "todo")
                        ("quote" "#+begin_quote\n`%`$0\n#+end_quote" "quote block" nil nil nil "/home/lenz/.config/doom/snippets/org-mode/quote" nil "quote")
                        ("name" "#+name: $0\n" "name" nil nil nil "/home/lenz/.config/doom/snippets/org-mode/name" nil "name")
@@ -12,7 +13,7 @@
                        ("srci" "src_${1:language}[${2:header}]{${0:body}}\n" "Inline Source" t nil nil "/home/lenz/.config/doom/snippets/org-mode/inline_source" nil "srci")
                        ("inl" "src_${1:language}${2:[${3::exports code}]}{${4:code}}" "inline code" nil nil nil "/home/lenz/.config/doom/snippets/org-mode/inline" nil "inl")
                        ("img" "#+attr_html: :alt $2 :align ${3:left} :class img\n[[${1:src}]${4:[${5:title}]}]\n`%`$0" "img" nil nil nil "/home/lenz/.config/doom/snippets/org-mode/img" nil "img")
-                       ("header" "#+title:  ${1:`(replace-regexp-in-string \"[-_.]\" \" \" (file-name-base (or buffer-file-name \"title\")))`}\n#+author: `user-full-name`\n#+email:  `user-mail-address`\n#+date:   `(format-time-string \"%F\")`\n#+info:   ${2:short description of document}\n#+filetags: ${3: filetags}\n\n$0\n" "header" nil nil nil "/home/lenz/.config/doom/snippets/org-mode/header" nil "header")
+                       ("header" "#+title:  ${1:`(replace-regexp-in-string \"[-_.]\" \" \" (file-name-base (or buffer-file-name \"title\")))`}\n#+author: `user-full-name`\n#+email:  `user-mail-address`\n#+date:   `(format-time-string \"%F\")`\n#+info:   ${2:document description}\n#+filetags: ${3:filetags}\n$0\n" "header" nil nil nil "/home/lenz/.config/doom/snippets/org-mode/header" nil "header")
                        ("fig" "#+caption: ${1:caption}\n#+attr_latex: ${2:scale=0.75}\n#+name: fig-${3:label}\n" "figure" nil nil nil "/home/lenz/.config/doom/snippets/org-mode/figure" nil "fig")
                        ("export" "#+begin_export ${1:type}\n`%`$0\n#+end_export" "export" nil nil nil "/home/lenz/.config/doom/snippets/org-mode/export" nil "export")
                        ("ex" "#+begin_example\n`%`$0\n#+end_example\n" "example" nil nil nil "/home/lenz/.config/doom/snippets/org-mode/example" nil "ex")
@@ -61,4 +62,4 @@
                        ("begin" "#+begin_${1:type} ${2:options}\n`%`$0\n#+end_$1" "begin" nil nil nil "/home/lenz/.config/doom/snippets/org-mode/begin" nil "begin")))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:44 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:43 2024

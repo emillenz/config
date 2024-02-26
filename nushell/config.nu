@@ -17,6 +17,7 @@ alias rm = rm --recursive --verbose --trash --interactive-once
 alias cp = cp --recursive --verbose --progress --interactive
 alias mv = mv --verbose
 alias fzf = fzf --reverse --height=15 --color=dark --scheme=path # os-consistent completion (rofi, emacs, fzf ..)
+alias psk = sudo killall
 
 alias e = emacsclient -nw
 alias g = emacsclient -nw --eval "(magit-status)"

@@ -15,4 +15,4 @@
                        ("case" "case ${1:var} of\n     ${2:cond} -> ${3:value}\n     $0\n     otherwise -> ${4:other}" "case" nil nil nil "/home/lenz/.config/doom/snippets/haskell-mode/case" nil "case")))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:43 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:42 2024

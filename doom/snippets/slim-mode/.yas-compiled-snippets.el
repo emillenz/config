@@ -16,4 +16,4 @@
                        ("cdn-modernizr.min.js" "script src=\"https://cdnjs.cloudflare.com/ajax/libs/modernizr/${1:2.8.3}/modernizr.min.js\"" "script src=\"https://cdn.js.cloudflare.com/.../modernizr.min.js\"" nil nil nil "/home/lenz/.config/doom/snippets/slim-mode/cdn-modernizr.min.js" nil nil)))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:45 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:43 2024

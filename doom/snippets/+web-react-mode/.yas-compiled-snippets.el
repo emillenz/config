@@ -19,4 +19,4 @@
                        ("action" "const ${1:$(upcase (s-snake-case yas-text))} = '${1:$(upcase (s-snake-case yas-text))}';\n\nexport const ${1:actionName} = (${2:args}) => ({\n  type: '${1:$(upcase (s-snake-case yas-text))}',\n  payload: {\n    $0\n  },\n});\n" "action" nil nil nil "/home/lenz/.config/doom/snippets/+web-react-mode/action" nil nil)))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:41 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:40 2024

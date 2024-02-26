@@ -1,37 +1,3 @@
-ls | where type == dir | ls  -h | bat
-ls | where type == dir 
-fd .
-fd . -x mv {} ~/journal/
-zellij kill-session  notes
-e
- synctihng
-dnfi emacs
-lf
-ls
-doom install
-ls
-./doom install
-doom sync
-./doom sync
-emacs
-git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
-rm -r ~/.config/emacs
-git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
-~/.config/emacs/bin/doom install
-^emacs --daemon
-starutp
-ps
-ps | find emacs
-ps  -h | bat
-ps  -l | find emacs
-ps  -l | get command | find firefox
-ps  -l | get command | find flameshot
-ps  -l | get command 
-ps  -l | get command | find nm
-ps  -l | get command | find  xauto
-starutup
-startup
-git status
 git add nvim
 git add scripts
 git add zellij
@@ -9998,3 +9964,37 @@ audio
 ls
 ls
 startup
+ps
+ps | select name
+ps | get name
+ps 
+list  --help | bat --plain --language=help
+ls  --help | bat --plain --language=help
+fin  --help | bat --plain --language=help
+find  --help | bat --plain --language=help
+input  --help | bat --plain --language=help
+input list  --help | bat --plain --language=help
+ps | input list --fuzzy --index
+ps | input list 
+ps | get name| input list 
+ps | get name| input list --fuzzy 
+ps | get name | fzf
+psk
+ls
+sys
+ps 
+ps | get name | to text | fzf
+ps | get name | input list --fuzzy
+ls
+input --help
+ls
+psk
+ls
+psk
+killps
+ls
+killps
+ls
+killps
+pk --help | bat --plain --language=help
+pk

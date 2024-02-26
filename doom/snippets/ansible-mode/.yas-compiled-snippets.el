@@ -396,4 +396,4 @@
                        ("win_feature" "- name: ${1:Installs and uninstalls Windows Features}\n  win_feature: name=$2 $0\n" "Installs and uninstalls Windows Features" ansible nil nil "/home/lenz/.config/doom/snippets/ansible-mode/windows/win_feature" nil nil)))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:41 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:40 2024

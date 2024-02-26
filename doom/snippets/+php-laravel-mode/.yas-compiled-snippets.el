@@ -12,4 +12,4 @@
                        ("__" "<?php\n\nnamespace `(+php-laravel-mode--get-namespace)`;\n\nclass `(+php-laravel-mode--get-class-name)`\n{\n    $0\n}" "PHP template" nil nil nil "/home/lenz/.config/doom/snippets/+php-laravel-mode/__" nil nil)))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:41 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:40 2024

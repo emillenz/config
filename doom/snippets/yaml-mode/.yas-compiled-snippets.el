@@ -7,4 +7,4 @@
                        ("entry" "${1:entry}: ${2:value}\n$0" "entry" nil nil nil "/home/lenz/.config/doom/snippets/yaml-mode/entry" nil "entry")))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:45 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:44 2024

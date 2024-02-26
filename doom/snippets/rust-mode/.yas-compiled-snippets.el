@@ -147,4 +147,4 @@
                        ("fo" "File::open(${1:`%`})`(if (eolp) \";\" \"\")`" "File::open(...)" nil nil nil "/home/lenz/.config/doom/snippets/rust-mode/File-open" nil "fo")))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:44 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:43 2024

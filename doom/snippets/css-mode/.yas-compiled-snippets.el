@@ -16,4 +16,4 @@
                        ("imp" "@import \"`(doom-snippets-text nil t)`$0\";" "@import" nil nil nil "/home/lenz/.config/doom/snippets/css-mode/import" nil "imp")))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:42 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:41 2024

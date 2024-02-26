@@ -13,4 +13,4 @@
                        ("browsersync" "const brsync = require(\"browser-sync\").create();\n\ngulp.task(\"serve\", () => {\n    brsync.init({ server: { baseDir: \"./\" } });\n\n    // TODO add browserSync\n    gulp.watch(\"**/*.pug\", [\"pug\"]);\n    gulp.watch(\"sass/**/*.scss\", [\"sass\"]);\n    gulp.watch(\"**/*.html\").on('change', brsync.reload);\n});" "Browsersync task" nil nil nil "/home/lenz/.config/doom/snippets/+javascript-gulp-mode/browsersync" nil nil)))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:41 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:40 2024

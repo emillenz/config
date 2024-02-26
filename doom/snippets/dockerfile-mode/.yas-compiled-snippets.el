@@ -23,4 +23,4 @@
                        ("add" "ADD ${1:src} ${2:dest}" "ADD <src> <dest>" nil nil nil "/home/lenz/.config/doom/snippets/dockerfile-mode/add" nil nil)))
 
 
-;;; Do not edit! File generated at Thu Feb 22 15:51:42 2024
+;;; Do not edit! File generated at Mon Feb 26 13:19:41 2024

@@ -70,7 +70,7 @@
 
 (setq +popup-defaults
       '(:side right
-        :width 0.5
+        :width 0.33
         :select nil
         :quit nil
         :modeline nil))
@@ -629,12 +629,22 @@ This is sensible default behaviour, and integrates it into evil."
 
 ;; [[file:config.org::*capture templates][capture templates:1]]
 (defvar org_journal_dir (file-name-concat "~/Documents/journal/")
-  "Directory for daily journal files.")
+  "directory for daily journal files.")
 (defvar org_literature_dir "~/Documents/literature/notes/"
-  "Directory for literature notes.")
+  "directory for literature notes.")
+(defvar doct_projects '(("cs" :keys "c"
+                         :children (("pp" :keys "p")
+                                    ("as1" :keys "a")
+                                    ("aw" :keys "w")
+                                    ("ddca" :keys "d")
+                                    ("asdf" :keys "t")))
+                        ("personal" :keys "p")
+                        ("config" :keys "f")
+                        ("compass" :keys "o"))
+  "user projects for capture templates.")
 
-(defun doct_projects (projects &optional target ppath)
-  "Generate doct preset for project (standardized).
+(defun doct_expand_projects (projects target &optional ppath)
+  "generate doct preset for project (standardized).
 
 PROJECTS :: all projects with their keys [and children]
 TARGET :: the caputure target file tag (notes / agenda)
@@ -653,15 +663,14 @@ reduces code repetition."
                    path
                    (format "%s.org" target)))
             (self `(,name :keys ,keys :file ,file)))
-
        (append
         self
         (when children
-          `(:children ,(cons self (doct_projects children target path)))))))
+          `(:children ,(cons self (doct_expand_projects children target path)))))))
    projects))
 
 (defun doct_journal_file (&optional time)
-  "Filepath for journal.
+  "filepath for journal.
 
 TIME :: Time of note to return. (default: today)"
   (file-name-concat
@@ -671,7 +680,7 @@ TIME :: Time of note to return. (default: today)"
     (format-time-string "%F" (or time (current-time))))))
 
 (defun org_refile_todos (target_file target_hl)
-  "Refile TODO's in current buffer to given location.
+  "refile TODO's in current buffer to given location.
 
 TARGET_FILE
 TARGET_HL :: to refile HL under
@@ -691,142 +700,132 @@ TARGET_HL :: to refile HL under
 (after! org
   (setq
    org-capture-templates
-   (let ((projects '(("cs" :keys "c"
-                      :children (("pp" :keys "p")
-                                 ("as1" :keys "a")
-                                 ("aw" :keys "w")
-                                 ("ddca" :keys "d")))
-                     ("personal" :keys "p")
-                     ("config" :keys "f")
-                     ("compass" :keys "o"))))
-     (doct
-      `(("task" :keys "t"
-         :headline "inbox"
-         :prepend t :empty-lines-after 1
-         :template ("* [ ] %^{title}%? %^g")
-         :children ,(doct_projects projects "agenda"))
+   (doct
+    `(("task" :keys "t"
+       :headline "inbox"
+       :prepend t :empty-lines-after 1
+       :template ("* [ ] %^{title}%? %^g")
+       :children ,(doct_expand_projects doct_projects "agenda"))
 
-        ("event" :keys "e"
-         :headline "events"
-         :prepend t :empty-lines-after 1
-         :template ("* [#] %^{title}%? %^g"
-                    "%^T"
-                    ":PROPERTIES:"
-                    ":location: %^{location}"
-                    ":material: %^{material}"
-                    ":END:")
-         :children ,(doct_projects projects "agenda"))
+      ("event" :keys "e"
+       :headline "events"
+       :prepend t :empty-lines-after 1
+       :template ("* [#] %^{title}%? %^g"
+                  "%^T"
+                  ":PROPERTIES:"
+                  ":location: %^{location}"
+                  ":material: %^{material}"
+                  ":END:")
+       :children ,(doct_expand_projects doct_projects "agenda"))
 
-        ("note" :keys "n"
-         :prepend t :empty-lines 1
-         :template ("* %^{title} %^g"
-                    ":PROPERTIES:"
-                    ":created: %U"
-                    ":END:"
-                    "%?")
-         :children ,(doct_projects projects "notes"))
+      ("note" :keys "n"
+       :prepend t :empty-lines 1
+       :template ("* %^{title} %^g"
+                  ":PROPERTIES:"
+                  ":created: %U"
+                  ":END:"
+                  "%?")
+       :children ,(doct_expand_projects doct_projects "notes"))
 
-        ("journal" :keys "j"
-         :file (lambda () (doct_journal_file))
-         :children (("begin today" :keys "t"
-                     :type plain
-                     :template ("#+title:  Daily Note: %<%A, %e. %B %Y>"
-                                "#+author: %(user-full-name)"
-                                "#+email:  %(message-user-mail-address)"
-                                "#+date:   %<%F>"
-                                "#+filetags: :journal:"
-                                ""
-                                "* goals"
-                                "- %?"
-                                ""
-                                "* agenda"
-                                "** [ ] "
-                                "SCHEDULED: <%<%F %a>>"))
-                    ("entry" :keys "e"
-                     :empty-lines-before 1
-                     :template ("* %^{title}"
-                                ":PROPERTIES:"
-                                ":created: %U"
-                                ":END:"
-                                "%?"))
+      ("journal" :keys "j"
+       :file (lambda () (doct_journal_file))
+       :children (("begin today" :keys "t"
+                   :type plain
+                   :template ("#+title:  Daily Note: %<%A, %e. %B %Y>"
+                              "#+author: %(user-full-name)"
+                              "#+email:  %(message-user-mail-address)"
+                              "#+date:   %<%F>"
+                              "#+filetags: :journal:"
+                              ""
+                              "* goals"
+                              "- %?"
+                              ""
+                              "* agenda"
+                              "** [ ] "
+                              "SCHEDULED: <%<%F %a>>"))
+                  ("entry" :keys "e"
+                   :empty-lines-before 1
+                   :template ("* %^{title}"
+                              ":PROPERTIES:"
+                              ":created: %U"
+                              ":END:"
+                              "%?"))
 
-                    ("end yesterday" :keys "y"
-                     :empty-lines-before 1
-                     :unnarrowed t
-                     :file (lambda () (doct_journal_file (time-subtract
-                                                          (current-time)
-                                                          (days-to-time 1))))
-                     :template ("* gratitude"
-                                "- %?"
-                                ""
-                                "* reflection"
-                                "-")
-                     :prepare-finalize (lambda () (org_refile_todos "~/Documents/org/personal/agenda.org" "inbox"))
-                     )))
+                  ("end yesterday" :keys "y"
+                   :empty-lines-before 1
+                   :unnarrowed t
+                   :file (lambda () (doct_journal_file (time-subtract
+                                                        (current-time)
+                                                        (days-to-time 1))))
+                   :template ("* gratitude"
+                              "- %?"
+                              ""
+                              "* reflection"
+                              "-")
+                   :prepare-finalize (lambda () (org_refile_todos "~/Documents/org/personal/agenda.org" "inbox"))
+                   )))
 
-        ("literature" :keys "l"
-         :file (lambda () (read-file-name "file: " org_literature_dir))
-         :children (("init" :keys "i"
-                     :file
-                     (lambda ()
-                       (let* ((name (concat
-                                     (replace-regexp-in-string
-                                      " " "_"
-                                      (read-from-minibuffer "short title: "))
-                                     ".org")))
-                         (file-name-concat
-                          literature_notes_dir
-                          name)))
-                     :type plain
-                     :book-author
-                     (lambda () (s-titleized-words (read-from-minibuffer "author: ")))
-                     :template ("#+title:  %^{full title}"
-                                "#+author: %(user-full-name)"
-                                "#+email:  %(message-user-mail-address)"
-                                "#+date:   %<%F>"
-                                "#+filetags: :literature:"
-                                ""
-                                "* [-] %\\1%?"
-                                ":PROPERTIES:"
-                                ":title:  %\\1"
-                                ":author: %^{author}"
-                                ":year:   %^{year}"
-                                ":tags:   %^{tags}"
-                                ":type:   %^{book|ebook|paper|article|audiobook|podcast}"
-                                ":pages:  %^{pages}"
-                                ":END:"
-                                ""
-                                "** excerpts"
-                                "** literature notes"
-                                "** transient notes"
-                                "** summary"))
+      ("literature" :keys "l"
+       :file (lambda () (read-file-name "file: " org_literature_dir))
+       :children (("init" :keys "i"
+                   :file
+                   (lambda ()
+                     (let* ((name (concat
+                                   (replace-regexp-in-string
+                                    " " "_"
+                                    (read-from-minibuffer "short title: "))
+                                   ".org")))
+                       (file-name-concat
+                        literature_notes_dir
+                        name)))
+                   :type plain
+                   :template ("#+title:  %^{full title}"
+                              "#+author: %(user-full-name)"
+                              "#+email:  %(message-user-mail-address)"
+                              "#+date:   %<%F>"
+                              "#+filetags: :literature:"
+                              ""
+                              "* [-] %\\1%?"
+                              ":PROPERTIES:"
+                              ":title:  %\\1"
+                              ":author: %^{author}"
+                              ":year:   %^{year}"
+                              ":tags:   %^{tags}"
+                              ":type:   %^{book|ebook|paper|article|audiobook|podcast}"
+                              ":pages:  %^{pages}"
+                              ":END:"
+                              ""
+                              "** excerpts"
+                              "** literature notes"
+                              "** transient notes"
+                              "** summary"))
 
-                    ("excerpt" :keys "e"
-                     :headline "excerpts"
-                     :empty-lines-after 1
-                     :template ("* %^{title} [p:%^{page}] %^g"
-                                "#+begin_quote"
-                                "%x"
-                                "#+end_quote"))
+                  ("excerpt" :keys "e"
+                   :headline "excerpts"
+                   :empty-lines-after 1
+                   :template ("* %^{title} [p:%^{page}] %^g"
+                              "#+begin_quote"
+                              "%x"
+                              "#+end_quote"))
 
-                    ("note: literary" :keys "l"
-                     :headline "literature notes"
-                     :empty-lines-after 1
-                     :template ("* %^{title} [p:%^{page}] %^g"
-                                "%?"))
+                  ("note: literary" :keys "l"
+                   :headline "literature notes"
+                   :empty-lines-after 1
+                   :template ("* %^{title} [p:%^{page}] %^g"
+                              "%?"))
 
-                    ("note: transient" :keys "t"
-                     :headline "transient notes"
-                     :empty-lines-after 1
-                     :template ("* %^{title} %^g"
-                                "%?"))
+                  ("note: transient" :keys "t"
+                   :headline "transient notes"
+                   :empty-lines-after 1
+                   :template ("* %^{title} %^g"
+                              "%?"))
 
-                    ;; NOTE:: make sure to complete the literature-task-headline in order to log closing time.
-                    ("summarize" :keys "c"
-                     :headline "summary"
-                     :unnarrowed t
-                     :type plain
-                     :template ("%?")))))))))
+                  ;; NOTE :: make sure to complete the literature-task-headline in order to log closing time.
+                  ("summarize" :keys "c"
+                   :headline "summary"
+                   :unnarrowed t
+                   :type plain
+                   :template ("%?"))))))))
 ;; capture templates:1 ends here
 
 ;; [[file:config.org::*latex][latex:1]]

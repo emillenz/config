@@ -2,7 +2,6 @@
 # note :: unused keys
 virtual_modifiers:
   - menu
-  - capslock
 
 modmap:
   - name: global
@@ -11,6 +10,7 @@ modmap:
         alone: backspace
         held: menu
         alone_timeout_millis: 200
+      backspace: capslock
       alt_l: super_l
       alt_r:
         alone: esc
@@ -38,10 +38,10 @@ keymap:
 
   - name: symlayer
     remap:
-      menu-q: apostrophe
+      menu-q: shift-apostrophe
       menu-w: shift-comma
       menu-e: shift-dot
-      menu-r: shift-apostrophe
+      menu-r: dot
       menu-t: grave
 
       menu-a: shift-key_1
@@ -53,11 +53,11 @@ keymap:
       menu-x: shift-key_6
       menu-c: shift-key_8
       menu-v: slash
-      menu-b: shift-grave
+      menu-b: backslash
 
       menu-y: shift-key_7
       menu-h: shift-backslash
-      menu-n: backslash
+      menu-n: shift-grave
 
       menu-u: shift-semicolon
       menu-j: shift-minus

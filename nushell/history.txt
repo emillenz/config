@@ -1,88 +1,3 @@
-git add nvim
-git add scripts
-git add zellij
-git commit -am 'sync'; git push
-e
-doom sync
-startup
-ls
-git status
-fd  -h | bat
-fd  'sync-conflict'
-fd  'sync-conflict' -x rm
-fd  'sync-conflict'
-git status
-git status -h | bat
-git status --long
-git status -v
-git status  -h | bat
-bat .git/index
-ls
-git  -h | bat
-git  show
-git   -h | bat
-git status
-ls -/a
-ls -la
-ls
-git statuts
-git status
-bat readme.org
-git status
-git commit -am 'sync'; git push
-ssh-keygen -t rsa -b 4096 -C "bbotak@protonmail.com"
-xclip -h | bat
-"aaa" | xclpi
-"aaa" | xclip
-cat ~/.ssh/id_rsa.pub
-git commit -am 'sync'; git push
-bash -c eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa<\n>
-git commit -am 'sync'; git push
-gitt commit
-git commit
-git commit  -h | bat
-git commit  -a
-git push
-ssh-add ~/.ssh/id_ed25519
-ssh-keygen -t ed25519 -C "your_email@example.com"
-bash -c eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_ed25519
-ssh-keygen -t ed25519 -C "bbotak@protonmail.com"
-ssh-add ~/.ssh/id_ed25519
-cat ~/.ssh/id_ed25519.pub
-git status
-git git commit -am 'sync'; git push
-git commit -am 'sync'; git push
-git init
-git status
-git add alacritty commands doom fonts htop i3 keepassxc lf mpv nushell nvim packages polybar readme.org rofi scripts starship.toml themes xremap zathura zellij
-git status
-git  -h | bat
-tldr git
-git --help
-man git 
-git remote  -h | bat
-man git remote  
-git remote add  -h | bat
-git remote add master https://github.com/bbotakk/config
-ls
-git status
-git push
-git push -h | bat
-git push --set upstream master master
-git remote -v
-git remote add upstream https://github.com/bbotakk/config
-git push --set-upstream upstream master
-git branch
-git remote -v
-git remote  -h | bat
-git remote  remove upstream
-git remote  -h | bat
-git remote -v
-git branch -h | bat
-man git branch 
-git branch -l
 git branch --show-current
 git remote -h | bat
 git remote -h | bat add -h | bat
@@ -9998,3 +9913,88 @@ ls
 killps
 pk --help | bat --plain --language=help
 pk
+sudo killall eclipse
+sudo killall java
+ls
+cd ..
+ls
+java HelloWorld
+ls bin
+ls bin/assignment1/
+java bin/assignment1/HelloWorld
+java HelloWorld
+java HelloWorld.class
+javac
+ls
+ls **
+ls **/*
+ls **/* | to text
+ls **/* | | get name |to text
+java assignment1.HelloWorld
+java -cp bin assignment1.HelloWorld
+java -cp bin assignment1.HelloWorld.main
+java -cp bin assignment1.HelloWorld
+java --help | bat --plain --language=help
+javac  --help | bat --plain --language=help
+javac -d bin src/assignment1/HelloWorld.java
+ls
+ls bin/assignment1/
+java -cp bin assignment1.HelloWorld
+ls
+git remote add origin git@gitlab.inf.ethz.ch:COURSE-PPROG24/pprog-emlenz.git
+git push --set-upstream origin --all<\n>git push --set-upstream origin --tags
+ls
+yay eclipse
+yay -R eclipse-java
+yay eclipse-java
+ls
+cd ..
+ls
+cd assignment2/
+ls
+ls src
+ls /bin/*.java
+ls /bin/*
+ls bin/*.java
+ls **/*.java
+ls
+javac -d bin src/*.java
+javac -d bin (ls src/*.java)
+ls *l
+javac -d bin src/ethz/ch/pp/assignment2/Main.java
+ls
+ls bin
+ls src
+ls src/ethz/ch/pp/assignment2
+ls **
+ls **/*
+javac -d bin src/ethz/ch/pp/assignment2/Main.java
+java -cp bin ethz.ch.pp.assignment2.Main
+javac -d bin src/ethz/ch/pp/assignment2/*.java ;java -cp bin ethz.ch.pp.assignment2.Main
+javac -d bin src/ethz/ch/pp/assignment2/*.java; java -cp bin ethz.ch.pp.assignment2.HelloWorld
+javac -d bin src/ethz/ch/pp/assignment2/*.java; java -cp bin ethz.ch.pp.assignment2.Main
+ls
+javac -d ~/Code/cs/pp/assignment2/bin *.java; java -cp ~/Code/cs/pp/assignment2/bin ethz.ch.pp.assingment2.Main
+javac -d ~/Code/cs/pp/assignment2/bin *.java; java -cp ~/Code/cs/pp/assignment2/bin/ ethz.ch.pp.assingment2.Main
+ls
+cd ....
+cs ....
+cd ..
+ls
+cd ..
+ls
+javac -d bin src/ethz/ch/pp/assignment2/*.java; java -cp bin ethz.ch.pp.assignment2.Main
+ls
+ls
+jshell
+startup
+xev
+startup
+sudo xremap --watch=device ~/.config/xremap/config.yml
+xev
+sudo xremap --watch=device ~/.config/xremap/config.yml
+xev
+startup
+ls
+sudo xremap --watch=device ~/.config/xremap/config.yml
+startup

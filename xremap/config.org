@@ -30,7 +30,7 @@ I am currently forced to use ~qwerty~ due to writing exam's at my university, ho
 ** Layout
 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 |
 |---+---+---+---+---+---+---+---+---+---|
-| " | < | > | . | ` | & | : | [ | ] | % |
+|   | < | > | " | ` | & | : | [ | ] | % |
 |---+---+---+---+---+---+---+---+---+---|
 | ! | + | = | - | # | ∣ | _ | ( | ) | ? |
 |---+---+---+---+---+---+---+---+---+---|
@@ -61,7 +61,7 @@ We include on this symbol layer all symbols that are accessed with shift and tho
 - Most symbols are double tapped in some use: ~<< == && || ** \\~. So pinky keys are deliberately things that aren’t commonly double tapped
 - Right has all the braces under the powerfingers (ordered by frequency: ~() -> {} -> []~)
 - ~_~ is one of the most frequently used keys for namespacing in programming => under the powerfinger (and on the other hand the counterpart: ~-~, also under powerfinger, but on the operator side).
-- ~C-j, C-k~: up down => navigate completion menus in all apps. (emacs: inbuilt)
+- ~C-j, C-k~: up down => navigate completion menus in all apps.
 
 * Src
 #+begin_src yaml
@@ -99,15 +99,14 @@ keymap:
 
   - name: completion
     remap:
-      c-j: down
-      c-k: up
+      c-n: down
+      c-p: up
 
   - name: symlayer
     remap:
-      menu-q: shift-apostrophe
       menu-w: shift-comma
       menu-e: shift-dot
-      menu-r: dot
+      menu-r: shift-apostrophe
       menu-t: grave
 
       menu-a: shift-key_1
@@ -137,8 +136,8 @@ keymap:
       menu-dot: shift-rightbrace
 
       menu-p: shift-key_2
-      menu-semicolon: shift-key_5
-      menu-slash: shift-slash
+      menu-semicolon: shift-slash
+      menu-slash: shift-key_5
 #+end_src
 
 * Symbol character frequencies

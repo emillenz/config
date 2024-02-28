@@ -70,9 +70,8 @@
 
 (setq +popup-defaults
       '(:side right
-        :width 0.33
-        :select nil
-        :quit nil
+        :select t
+        :quit 'current
         :modeline nil))
 
 (after! org
@@ -80,7 +79,10 @@
   (set-popup-rule! "^\\*Org Src" :ignore t))
 
 (set-popup-rules! `(("^\\*info" :ignore t)
-                    ("^\\*helpful" ,@+popup-defaults)))
+                    ("^\\*helpful" ,@+popup-defaults :width 0.33)))
+
+(after! lsp-mode
+  (set-popup-rules! `(("^\\*lsp-help\\*" :side bottom))))
 ;; window layout & behavior:1 ends here
 
 ;; [[file:config.org::*window layout & behavior][window layout & behavior:2]]
@@ -223,8 +225,8 @@
       :nmv  "go"  #'consult-imenu
       :nmv  "g/"  #'+default/search-buffer)
 
-(map! :nm "C-k" #'evil-backward-section-begin
-      :nm "C-j" #'evil-forward-section-end
+(map! :nm "C-j" #'evil-forward-section-end
+      :nm "C-k" #'evil-backward-section-begin
       :nm "C-l" #'recenter-top-bottom)
 
 (map! :after org :map evil-org-mode-map
@@ -301,8 +303,14 @@ This is sensible default behaviour, and integrates it into evil."
 ;; [[file:config.org::*magit][magit:1]]
 (map! :map magit-mode-map :after magit
       :nm "C-j" #'magit-section-forward-sibling
-      :nm "C-k" #'magit-section-backward-sibling)
+      :nm "C-j" #'magit-section-backward-sibling)
 ;; magit:1 ends here
+
+;; [[file:config.org::*info][info:1]]
+(map! :map Info-mode-map :after Info-mode
+      :nm "C-j" #'Info-forward-node
+      :nm "C-k" #'Info-backward-node)
+;; info:1 ends here
 
 ;; [[file:config.org::*editor][editor:1]]
 (evil-surround-mode 1)
@@ -322,7 +330,7 @@ This is sensible default behaviour, and integrates it into evil."
       evil-snipe-auto-scroll nil)
 ;; editor:1 ends here
 
-;; [[file:config.org::*Jump property][Jump property:1]]
+;; [[file:config.org::*jump property][jump property:1]]
 (dolist (cmd '(flycheck-next-error
                flycheck-previous-error
                +lookup/definition
@@ -334,11 +342,13 @@ This is sensible default behaviour, and integrates it into evil."
 
 (dolist (cmd '(evil-backward-section-begin
                evil-jump-item
+               evil-backward-paragraph
+               evil-forward-paragraph
                evil-forward-section-end))
   (evil-remove-command-properties cmd :jump))
-;; Jump property:1 ends here
+;; jump property:1 ends here
 
-;; [[file:config.org::*Lsp & completion][Lsp & completion:1]]
+;; [[file:config.org::*lsp & completion][lsp & completion:1]]
 (setq company-minimum-prefix-length 1
       company-idle-delay 0.1 ;; NOTE :: setting to 0 => huge lags
       company-tooltip-idle-delay 0.1
@@ -348,11 +358,11 @@ This is sensible default behaviour, and integrates it into evil."
                              eshell-mode
                              org-mode
                              vterm-mode))
-;; Lsp & completion:1 ends here
+;; lsp & completion:1 ends here
 
-;; [[file:config.org::*Templates & snippets][Templates & snippets:1]]
+;; [[file:config.org::*templates & snippets][templates & snippets:1]]
 (setq yas-triggers-in-field t)
-;; Templates & snippets:1 ends here
+;; templates & snippets:1 ends here
 
 ;; [[file:config.org::*dired][dired:1]]
 (add-hook! dired-mode-hook #'display-line-numbers-mode)
@@ -679,24 +689,6 @@ TIME :: Time of note to return. (default: today)"
     "%s__journal.org"
     (format-time-string "%F" (or time (current-time))))))
 
-(defun org_refile_todos (target_file target_hl)
-  "refile TODO's in current buffer to given location.
-
-TARGET_FILE
-TARGET_HL :: to refile HL under
-
-* NOTE :: the TODO keyword must be the same as in the variable `org-todo-keywords'"
-  (let ((pos (save-excursion
-               (find-file target_file)
-               (org-find-exact-headline-in-buffer target_hl))))
-    (org-map-entries (lambda ()
-                       (org-refile nil
-                                   nil
-                                   (list target_hl
-                                         target_file nil pos)))
-                     "[ ]"
-                     'tree)))
-
 (after! org
   (setq
    org-capture-templates
@@ -761,9 +753,7 @@ TARGET_HL :: to refile HL under
                               "- %?"
                               ""
                               "* reflection"
-                              "-")
-                   :prepare-finalize (lambda () (org_refile_todos "~/Documents/org/personal/agenda.org" "inbox"))
-                   )))
+                              "-"))))
 
       ("literature" :keys "l"
        :file (lambda () (read-file-name "file: " org_literature_dir))
@@ -828,10 +818,10 @@ TARGET_HL :: to refile HL under
                    :template ("%?"))))))))
 ;; capture templates:1 ends here
 
-;; [[file:config.org::*latex][latex:1]]
+;; [[file:config.org::*org-latex][org-latex:1]]
 (add-hook! 'org-mode-hook #'laas-mode)
 (setq org-startup-with-latex-preview t)
-;; latex:1 ends here
+;; org-latex:1 ends here
 
 ;; [[file:config.org::*keywords to downcase][keywords to downcase:1]]
 (defun org_convert_keywords_downcase ()

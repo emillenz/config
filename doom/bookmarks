@@ -24,16 +24,16 @@
  (last-modified 25881 15041 53675 50000))
 ("org-refile-last-stored"
  (filename . "~/Documents/org/personal/agenda.org")
- (front-context-string . "** [ ] _\nSCHEDUL")
+ (front-context-string . "** [ ] complete ")
  (rear-context-string . "sonal:\n\n* inbox\n")
  (position . 192)
- (last-modified 26076 25012 670740 90000))
+ (last-modified 26078 57192 10430 153000))
 ("org-capture-last-stored"
- (filename . "~/Documents/org/cs/pp/notes.org")
- (front-context-string . "* examples :thre")
- (rear-context-string)
- (position . 3)
- (last-modified 26076 30524 159997 424000))
+ (filename . "~/Documents/org/config/notes.org")
+ (front-context-string . "* premature opti")
+ (rear-context-string . "tags: :config:\n\n")
+ (position . 207)
+ (last-modified 26078 58032 236405 980000))
 ("cs_todo.org"
  (filename . "~/Documents/org/cs_todo.org")
  (front-context-string . "#+title:    CS T")

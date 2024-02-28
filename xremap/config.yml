@@ -33,15 +33,14 @@ keymap:
 
   - name: completion
     remap:
-      c-j: down
-      c-k: up
+      c-n: down
+      c-p: up
 
   - name: symlayer
     remap:
-      menu-q: shift-apostrophe
       menu-w: shift-comma
       menu-e: shift-dot
-      menu-r: dot
+      menu-r: shift-apostrophe
       menu-t: grave
 
       menu-a: shift-key_1
@@ -71,6 +70,6 @@ keymap:
       menu-dot: shift-rightbrace
 
       menu-p: shift-key_2
-      menu-semicolon: shift-key_5
-      menu-slash: shift-slash
+      menu-semicolon: shift-slash
+      menu-slash: shift-key_5
 # Src:1 ends here

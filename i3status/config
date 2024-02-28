@@ -42,13 +42,15 @@ ethernet _first_ {
 battery all {
   format = "bat: %status%percentage %emptytime"
   integer_battery_capacity = true
+  last_full_capacity = false
+  hide_seconds = true
+  threshold_type = percentage
+  low_threshold = 20
   format_down = ""
   status_full = "="
   status_chr = "+"
   status_bat = "-"
   status_unk = "?"
-  low_threshold = 20
-  threshold_type = time
 }
 
 volume master {

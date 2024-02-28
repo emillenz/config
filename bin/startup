@@ -17,6 +17,7 @@ def main [] {
     "unclutter" # hide cursor
     "xsetroot -solid '#000000'" # solarized_dark bg: #002b36; modus: #000000
     "xset dpms 0 0 0 && xset s off" # never screensave / turn screen off (do manually if needed)
+    "batsignal -bpe -w 50 -c 20 -d 5"
     "syncthing --no-browser" # based file-syncing, no more cloud dependency / suckling on google/microsoft
     "firefox --new-window"
     "firefox --new-window https://chat.openai.com" # chatbot (integrated into workflow)

@@ -1,70 +1,3 @@
-git branch --show-current
-git remote -h | bat
-git remote -h | bat add -h | bat
-git remote add
-git remote add origin -h | bat
-git remote remove master
-git remote -v
-git remote add origin https://github.com/bbotakk/config
-git remote -v
-git commit -am 'sync'; git push
-git commit -am 'sync'; git push --set-upstream origin master
-git remote add origin git@github.com:bbotakk/config.git
-git remote remove origin
-git remote add origin git@github.com:bbotakk/config.git
-git remote -v
-git status
-git git commit -am 'sync'; git push
-git commit -am 'sync'; git push
-git commit -am 'sync'; git push --set-upstream origin master
-git push --help
-git push  -h | bat
-git commit -am 'sync'; git push --set-upstream origin master -f
-dnfs carpace
-git status
-dnfr qualculate-gtk
-dnfs qalculate-gtk
-dnfr qalculate-gtk
-nu
-keepassxc  --help
-man keepassxc 
-man 
-calcurse
-lf
-syncthing
-fd  'sync-conflict'
-^emacs --daemon
-startup
-pandoc
-dnfi pandoc
-pandoc -s -f html -t org https://www.polyphasic.net/adaptation/strictness-of-sleep-times/ -o output.org
-wget -O input.html https://www.polyphasic.net/adaptation/strictness-of-sleep-times/
-pandoc -s -f html -t org input.html -o output.org
-bat output.org
-wget -O input.html https://www.polyphasic.net/adaptation
-pandoc -s -f html -t org input.html -o output.org
-calcurse
-dnfr calcurse
-syncthing
-dired
-emacsclient -c --eval '(delete frame)'
-emacsclient -c --eval '(delete-frame)'
-emacsclient -c 
-ls
-git status
-syncthing
-git status
-fd  'sync-conflict'
-fd  'sync-conflict' -x rm
-git status
-emacs --debug-init
-^emacs --daemon
-^emacs --debug-init
-emacs
-^emacs
-vim .
-vi .
-^emacs --debug-init
 emacs --
 ^emacs --debug-init
 dnfi vi
@@ -9997,4 +9930,71 @@ xev
 startup
 ls
 sudo xremap --watch=device ~/.config/xremap/config.yml
+startup
+sudo killall xremap; sudo xremap --watch=device ~/.config/xremap/config.yml
+startup
+javac --help | bat --plain --language=help
+javap --help | bat --plain --language=help
+ls
+startup
+ls
+sudo killall xremap; sudo xremap --watch=device ~/.config/xremap/config.yml
+startup
+ls
+ls -la
+ls 
+grep
+ls
+ls -la 
+ls
+transpose ls
+cd ..
+ls
+java -cp bin ethz.ch.pp.assignment2.Main
+ls
+jshel
+jshell
+ls
+rm 'Main$ArraySplit.class'
+ls
+javac -d bin Main.class; java -cp bin ethz.ch.pp.assignment2.Main
+javac -d bin Main.java; java -cp bin ethz.ch.pp.assignment2.Main
+ls
+cd ..
+cd ../../../
+ls
+javac -d bin Main.java; java -cp bin ethz.ch.pp.assignment2.Main
+javac -d bin Main.java; java -cp bin ethz.ch.pp.assignment2.Main | xclip -i
+yay batsignal
+startup
+ls
+startup
+batsignal
+batsignal  --help | bat --plain --language=help
+batsignal  -h
+batsignal  -h | -e
+doom sync
+emacs (fd --type=file | fzf --preview='bat {}' | str trim)
+emacs ~/Code/cs/aw/distances/Main.java
+doom sync
+keybindings list 
+keybindings listen
+keybindings default 
+ls
+keybindings list
+ls
+sudo killall xremap; sudo xremap --watch=device ~/.config/xremap/config.yml
+startup
+ls
+fzf
+ls
+startup
+i3bar
+"i3bar" | bash
+"i3bar &" | bash
+ls
+nu
+keybindings list
+ls
+nu
 startup

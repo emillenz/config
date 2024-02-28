@@ -91,6 +91,7 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
 ** window layout & behavior
 - vsplit always :: constrain popup buffers (inevitable) to consistently, and always ~vsplit~, and have a reasonable size.
   - never mix vertical with horizontal splitting => creates mental overhead navigating the windows (+requires another set of totally unneccessary keybindings)
+  - the only reason to hsplit is when you specifically know that a buffer has very few lines.
 - don't focus help buffer's.
 - maximize buffer's that are standalone / proper (ex: manuals, org-src).
 #+begin_src emacs-lisp
@@ -102,9 +103,8 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
 
 (setq +popup-defaults
       '(:side right
-        :width 0.33
-        :select nil
-        :quit nil
+        :select t
+        :quit 'current
         :modeline nil))
 
 (after! org
@@ -112,17 +112,20 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
   (set-popup-rule! "^\\*Org Src" :ignore t))
 
 (set-popup-rules! `(("^\\*info" :ignore t)
-                    ("^\\*helpful" ,@+popup-defaults)))
+                    ("^\\*helpful" ,@+popup-defaults :width 0.33)))
+
+(after! lsp-mode
+  (set-popup-rules! `(("^\\*lsp-help\\*" :side bottom))))
 #+end_src
 
 - centered windows :: better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).
-- narrowed fov yields improved readability & focus of textparagraphs, especially if you stare at the computer for 8h+ a day.
-- compact and coherent data
-- allows the user to keep the entire window in the fov
-- vertical navigation is easier than horizontal
-- reading code/data/formulas is easiest sequentially = top to bottom // vs horizontally
-- take math for example, its easier to read equations if they are on newline
-- coding: typically one statement per line
+  - narrowed fov yields improved readability & focus of textparagraphs, especially if you stare at the computer for 8h+ a day.
+  - compact and coherent data
+  - allows the user to keep the entire window in the fov
+  - vertical navigation is easier than horizontal
+  - reading code/data/formulas is easiest sequentially = top to bottom // vs horizontally
+  - take math for example, its easier to read equations if they are on newline
+  - coding: typically one statement per line
 
 #+begin_src emacs-lisp
 (add-hook! '(text-mode-hook
@@ -310,8 +313,8 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
       :nmv  "go"  #'consult-imenu
       :nmv  "g/"  #'+default/search-buffer)
 
-(map! :nm "C-k" #'evil-backward-section-begin
-      :nm "C-j" #'evil-forward-section-end
+(map! :nm "C-j" #'evil-forward-section-end
+      :nm "C-k" #'evil-backward-section-begin
       :nm "C-l" #'recenter-top-bottom)
 
 (map! :after org :map evil-org-mode-map
@@ -407,7 +410,14 @@ This is sensible default behaviour, and integrates it into evil."
 #+begin_src emacs-lisp
 (map! :map magit-mode-map :after magit
       :nm "C-j" #'magit-section-forward-sibling
-      :nm "C-k" #'magit-section-backward-sibling)
+      :nm "C-j" #'magit-section-backward-sibling)
+#+end_src
+
+** info
+#+begin_src emacs-lisp
+(map! :map Info-mode-map :after Info-mode
+      :nm "C-j" #'Info-forward-node
+      :nm "C-k" #'Info-backward-node)
 #+end_src
 
 * editor
@@ -432,8 +442,8 @@ This is sensible default behaviour, and integrates it into evil."
       evil-snipe-auto-scroll nil)
 #+end_src
 
-** Jump property
-- save position to jumplist only for functions that go out of the current view.
+** jump property
+- jumplist is for functions that jump out of screen
 #+begin_src emacs-lisp
 (dolist (cmd '(flycheck-next-error
                flycheck-previous-error
@@ -446,12 +456,14 @@ This is sensible default behaviour, and integrates it into evil."
 
 (dolist (cmd '(evil-backward-section-begin
                evil-jump-item
+               evil-backward-paragraph
+               evil-forward-paragraph
                evil-forward-section-end))
   (evil-remove-command-properties cmd :jump))
 #+end_src
 
-** Lsp & completion
-- Lsp saves time, hence we want it fast, and enabled everywhere except for prose.
+** lsp & completion
+- lsp saves time, hence we want it fast, and enabled everywhere except for prose.
 #+begin_src emacs-lisp
 (setq company-minimum-prefix-length 1
       company-idle-delay 0.1 ;; NOTE :: setting to 0 => huge lags
@@ -464,8 +476,8 @@ This is sensible default behaviour, and integrates it into evil."
                              vterm-mode))
 #+end_src
 
-** Templates & snippets
-- Nested snippets ared good
+** templates & snippets
+- nested snippets ared good
 #+begin_src emacs-lisp
 (setq yas-triggers-in-field t)
 #+end_src
@@ -923,24 +935,6 @@ TIME :: Time of note to return. (default: today)"
     "%s__journal.org"
     (format-time-string "%F" (or time (current-time))))))
 
-(defun org_refile_todos (target_file target_hl)
-  "refile TODO's in current buffer to given location.
-
-TARGET_FILE
-TARGET_HL :: to refile HL under
-
-,* NOTE :: the TODO keyword must be the same as in the variable `org-todo-keywords'"
-  (let ((pos (save-excursion
-               (find-file target_file)
-               (org-find-exact-headline-in-buffer target_hl))))
-    (org-map-entries (lambda ()
-                       (org-refile nil
-                                   nil
-                                   (list target_hl
-                                         target_file nil pos)))
-                     "[ ]"
-                     'tree)))
-
 (after! org
   (setq
    org-capture-templates
@@ -1005,9 +999,7 @@ TARGET_HL :: to refile HL under
                               "- %?"
                               ""
                               "* reflection"
-                              "-")
-                   :prepare-finalize (lambda () (org_refile_todos "~/Documents/org/personal/agenda.org" "inbox"))
-                   )))
+                              "-"))))
 
       ("literature" :keys "l"
        :file (lambda () (read-file-name "file: " org_literature_dir))
@@ -1072,7 +1064,7 @@ TARGET_HL :: to refile HL under
                    :template ("%?"))))))))
 #+end_src
 
-** latex
+** org-latex
 #+begin_src emacs-lisp
 (add-hook! 'org-mode-hook #'laas-mode)
 (setq org-startup-with-latex-preview t)

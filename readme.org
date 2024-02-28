@@ -167,9 +167,11 @@ I am of the strong opinion that you should minimize things you do repeatedly. Th
  - Additionally it allows you to ssh into your machine from anywhere and attach to these running clients seamlessly and keep processes alive when done.
 
 *** Workflow with emacs
-- The terminal is used to run their own terminal-based programs and commands: htop, nmtui, git, metasploit, transmission-cli, ssh. (and ofc as the system commandline).
-- Extend emacs by writing custom functions for things that you do repetitivly (moving files, manipulating text...)
-  - Write shell-scripts mostly for launching programs & processes.
+- The terminal is used to run their own terminal-based programs and system related commands (mainly tuis and long async-processes) and commands: htop, nmtui, git, metasploit, transmission-cli, ssh. (and ofc as the system commandline).
+  - all other commands, especially one's coupled with programming and file/data manipulation should be run from emacs.
+- Extend emacs by writing custom functions for things that you do repetitivly (moving files, manipulating text...) instead of writing shell aliases / shellscripts 
+  + more extensible and in a proper language
+  + Write shell-scripts (purely) for launching programs & processes.
 - All coding, writing, fileopening, viewing, navigating is done inside emacs (do not leaving the environment), because this makes for a consistent and coherent workflow.
   - Never open a terminal-emulator inside emacs (no layering!), if you need, use single shellcommands (make executeable, etc...). (Things like: compiling...  etc should be done using hotkeys and displaying the output in a buffer)
   - Use inbuilt programs like magit & diff for more speed interactivity and ergonomics than doing it with git command aliases on the command-line.

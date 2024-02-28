@@ -83,7 +83,7 @@ yay --noconfirm --sync clang gdb strace libgccjit
 *** Python
 - I hate python passionately for its inconsitencies and lack of consistency, but it has spread everywhere like a virus so i need support for it.
 #+begin_src sh :tangle no
-yay --noconfirm --sync python pls python-black flake8
+yay --noconfirm --sync python python-black python-pyflakes python-isort
 #+end_src
 
 ** Misc

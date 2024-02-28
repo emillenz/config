@@ -10,3 +10,5 @@
 (package! org-fragtog)
 (package! laas)
 (package! modus-themes)
+(package! nushell-ts-mode
+  :recipe (:host github :repo "herbertjones/nushell-ts-mode"))

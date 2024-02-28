@@ -39,8 +39,7 @@
        ;; nav-flash         ; blink cursor line after big motions
        ;; neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
-       (popup
-        +all)      ; NOTE :: we use our own, saner defaults (instead of +all or +defaults)
+       (popup)      ; NOTE :: we use our own, saner defaults (instead of +all or +defaults)
        ;; tabs              ; a tab bar for Emacs
        ;;treemacs          ; a project drawer, like neotree but cooler
        unicode           ; extended unicode support for various languages

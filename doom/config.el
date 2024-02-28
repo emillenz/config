@@ -70,8 +70,9 @@
 
 (setq +popup-defaults
       '(:side right
-        :select t
-        :quit 'current
+        :select nil
+        :quit nil
+        :width 0.33
         :modeline nil))
 
 (after! org
@@ -79,15 +80,15 @@
   (set-popup-rule! "^\\*Org Src" :ignore t))
 
 (set-popup-rules! `(("^\\*info" :ignore t)
-                    ("^\\*helpful" ,@+popup-defaults :width 0.33)))
+                    ("^\\*helpful" :quit t)))
 
 (after! lsp-mode
-  (set-popup-rules! `(("^\\*lsp-help\\*" :side bottom))))
+  (set-popup-rules! `(("^\\*lsp-help\\*" :side bottom :quit t))))
 ;; window layout & behavior:1 ends here
 
 ;; [[file:config.org::*window layout & behavior][window layout & behavior:2]]
 (add-hook! '(text-mode-hook
-             ;; prog-mode-hook ;; NOTE :: don't use it, breaks with flycheck
+             ;; prog-mode-hook ;; NOTE :: no-use, breaks with flycheck
              dired-mode-hook
              conf-mode-hook
              Info-mode-hook
@@ -866,10 +867,9 @@ Jumps at tangled code from org src block."
     (message "Cannot jump to tangled file because point is not at org src block.")))
 ;; Jump to src file:1 ends here
 
-;; [[file:config.org::*nushell][nushell:1]]
-(load! "user/nushell-mode.el")
-(setq shell-file-name "/usr/bin/bash")  ;; NOTE :: Emacs expects bash for it's internal shellcommands
-;; nushell:1 ends here
+;; [[file:config.org::*shell][shell:1]]
+(setq shell-file-name "/usr/bin/bash")  ;; NOTE :: emacs expects bash for it's internal shellcommands, hence we need bash otherwise plugins will break
+;; shell:1 ends here
 
 ;; [[file:config.org::*latex][latex:1]]
 (setq +latex-viewers '(zathura))

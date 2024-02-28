@@ -91,7 +91,7 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
 ** window layout & behavior
 - vsplit always :: constrain popup buffers (inevitable) to consistently, and always ~vsplit~, and have a reasonable size.
   - never mix vertical with horizontal splitting => creates mental overhead navigating the windows (+requires another set of totally unneccessary keybindings)
-  - the only reason to hsplit is when you specifically know that a buffer has very few lines.
+  - the only reason to hsplit is when you specifically know that a buffer has very few line.
 - don't focus help buffer's.
 - maximize buffer's that are standalone / proper (ex: manuals, org-src).
 #+begin_src emacs-lisp
@@ -103,8 +103,9 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
 
 (setq +popup-defaults
       '(:side right
-        :select t
-        :quit 'current
+        :select nil
+        :quit nil
+        :width 0.33
         :modeline nil))
 
 (after! org
@@ -112,10 +113,10 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
   (set-popup-rule! "^\\*Org Src" :ignore t))
 
 (set-popup-rules! `(("^\\*info" :ignore t)
-                    ("^\\*helpful" ,@+popup-defaults :width 0.33)))
+                    ("^\\*helpful" :quit t)))
 
 (after! lsp-mode
-  (set-popup-rules! `(("^\\*lsp-help\\*" :side bottom))))
+  (set-popup-rules! `(("^\\*lsp-help\\*" :side bottom :quit t))))
 #+end_src
 
 - centered windows :: better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).
@@ -129,7 +130,7 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
 
 #+begin_src emacs-lisp
 (add-hook! '(text-mode-hook
-             ;; prog-mode-hook ;; NOTE :: don't use it, breaks with flycheck
+             ;; prog-mode-hook ;; NOTE :: no-use, breaks with flycheck
              dired-mode-hook
              conf-mode-hook
              Info-mode-hook
@@ -1118,13 +1119,9 @@ Jumps at tangled code from org src block."
     (message "Cannot jump to tangled file because point is not at org src block.")))
 #+end_src
 
-* nushell
-- screw that old posix-standard crap and use a user friendly shell
-- syntax highlighting
-
+* shell
 #+begin_src emacs-lisp
-(load! "user/nushell-mode.el")
-(setq shell-file-name "/usr/bin/bash")  ;; NOTE :: Emacs expects bash for it's internal shellcommands
+(setq shell-file-name "/usr/bin/bash")  ;; NOTE :: emacs expects bash for it's internal shellcommands, hence we need bash otherwise plugins will break
 #+end_src
 
 * latex

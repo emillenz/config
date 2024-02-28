@@ -411,7 +411,7 @@ This is sensible default behaviour, and integrates it into evil."
 #+begin_src emacs-lisp
 (map! :map magit-mode-map :after magit
       :nm "C-j" #'magit-section-forward-sibling
-      :nm "C-j" #'magit-section-backward-sibling)
+      :nm "C-k" #'magit-section-backward-sibling)
 #+end_src
 
 ** info
@@ -1122,6 +1122,11 @@ Jumps at tangled code from org src block."
 * shell
 #+begin_src emacs-lisp
 (setq shell-file-name "/usr/bin/bash")  ;; NOTE :: emacs expects bash for it's internal shellcommands, hence we need bash otherwise plugins will break
+#+end_src
+
+* nushell-ts-mode
+#+begin_src emacs-lisp
+(use-package! nushell-ts-mode)
 #+end_src
 
 * latex

@@ -304,7 +304,7 @@ This is sensible default behaviour, and integrates it into evil."
 ;; [[file:config.org::*magit][magit:1]]
 (map! :map magit-mode-map :after magit
       :nm "C-j" #'magit-section-forward-sibling
-      :nm "C-j" #'magit-section-backward-sibling)
+      :nm "C-k" #'magit-section-backward-sibling)
 ;; magit:1 ends here
 
 ;; [[file:config.org::*info][info:1]]
@@ -870,6 +870,10 @@ Jumps at tangled code from org src block."
 ;; [[file:config.org::*shell][shell:1]]
 (setq shell-file-name "/usr/bin/bash")  ;; NOTE :: emacs expects bash for it's internal shellcommands, hence we need bash otherwise plugins will break
 ;; shell:1 ends here
+
+;; [[file:config.org::*nushell-ts-mode][nushell-ts-mode:1]]
+(use-package! nushell-ts-mode)
+;; nushell-ts-mode:1 ends here
 
 ;; [[file:config.org::*latex][latex:1]]
 (setq +latex-viewers '(zathura))

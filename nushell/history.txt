@@ -1,7 +1,3 @@
-syncthing
-dnfs vterm
-doom sync
-startup
 emacs
 ^emacs
 emacs --debug-init
@@ -9998,3 +9994,7 @@ nu
 nu
 nu
 startup
+emacs --debug-init
+doom sync
+emacs 
+doom sync; emacs

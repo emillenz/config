@@ -104,7 +104,7 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
 (setq +popup-defaults
       '(:side right
         :select nil
-        :quit nil
+        :quit t
         :width 0.33
         :modeline nil))
 
@@ -113,10 +113,10 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
   (set-popup-rule! "^\\*Org Src" :ignore t))
 
 (set-popup-rules! `(("^\\*info" :ignore t)
-                    ("^\\*helpful" :quit t)))
+                    ("^\\*helpful" )))
 
 (after! lsp-mode
-  (set-popup-rules! `(("^\\*lsp-help\\*" :side bottom :quit t))))
+  (set-popup-rules! `(("^\\*lsp-help\\*" :side bottom))))
 #+end_src
 
 - centered windows :: better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).
@@ -147,6 +147,7 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
 #+end_src
 
 ** tabs
+- only open tabs whe you know you need to hotswitch between the individual files.  in all other cases just use buffer searching (faster, less time spent on managing the tabs)
 #+begin_src emacs-lisp
 (tab-bar-mode 1)
 (setq tab-bar-tab-hints t
@@ -413,6 +414,13 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "C-j" #'magit-section-forward-sibling
       :nm "C-k" #'magit-section-backward-sibling)
 #+end_src
+** [ ] vertico
+- bad habits
+#+begin_src emacs-lisp
+(map! :map vertico-map :after vertico
+      :nm "C-j" nil
+      :nm "C-k" nil)
+#+end_src
 
 ** info
 #+begin_src emacs-lisp
@@ -547,7 +555,7 @@ This is sensible default behaviour, and integrates it into evil."
 - Having 8x or 4x indentations makes the code move too far to the right, and makes it really incoherent and spaced out on a 100-character terminal screen.
   - Scanning code horizontally is alot harder than reading it vertically.  Especially when you’ve been looking at your screen for 20 straight hours, you’ll find it a lot easier to read your code if it is compacted and concise.
 - Nesting :: if you need more than 3 levels of indentation, you’re screwed anyway and have nested your functions too deep and should fix your program.
-- Completion :: ~<TAB>~ never autocompletes, confirm the autocompletion with ~<RET>~.  (consistent with all other programs on the os (neovim, nushell, browser...))
+- Completion :: ~<TAB>~ never completes, only starts completion, confirm the autocompletion with ~<RET>~.  (consistent with all other programs on the os (neovim, nushell, browser...))
 
 #+begin_src emacs-lisp
 (advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
@@ -556,9 +564,16 @@ This is sensible default behaviour, and integrates it into evil."
       org-indent-indentation-per-level 2
       evil-shift-width 2
       standard-indent 2
-      ;;      tab-width 2
+      tab-width 2
       evil-indent-convert-tabs t
       indent-tabs-mode nil)
+
+(setq-hook! prog-mode
+  tab-width 2
+  evil-shift-width 2
+  c-basic-offset 2)
+(setq-hook! org-mode-hook
+  tab-width 8) ;; HACK :: org needs 8 to work
 #+end_src
 
 ** Clean Whitespace

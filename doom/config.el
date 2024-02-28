@@ -71,7 +71,7 @@
 (setq +popup-defaults
       '(:side right
         :select nil
-        :quit nil
+        :quit t
         :width 0.33
         :modeline nil))
 
@@ -80,10 +80,10 @@
   (set-popup-rule! "^\\*Org Src" :ignore t))
 
 (set-popup-rules! `(("^\\*info" :ignore t)
-                    ("^\\*helpful" :quit t)))
+                    ("^\\*helpful" )))
 
 (after! lsp-mode
-  (set-popup-rules! `(("^\\*lsp-help\\*" :side bottom :quit t))))
+  (set-popup-rules! `(("^\\*lsp-help\\*" :side bottom))))
 ;; window layout & behavior:1 ends here
 
 ;; [[file:config.org::*window layout & behavior][window layout & behavior:2]]
@@ -307,6 +307,12 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "C-k" #'magit-section-backward-sibling)
 ;; magit:1 ends here
 
+;; [[file:config.org::*\[ \] vertico][[ ] vertico:1]]
+(map! :map vertico-map :after vertico
+      :nm "C-j" nil
+      :nm "C-k" nil)
+;; [ ] vertico:1 ends here
+
 ;; [[file:config.org::*info][info:1]]
 (map! :map Info-mode-map :after Info-mode
       :nm "C-j" #'Info-forward-node
@@ -424,9 +430,16 @@ This is sensible default behaviour, and integrates it into evil."
       org-indent-indentation-per-level 2
       evil-shift-width 2
       standard-indent 2
-      ;;      tab-width 2
+      tab-width 2
       evil-indent-convert-tabs t
       indent-tabs-mode nil)
+
+(setq-hook! prog-mode
+  tab-width 2
+  evil-shift-width 2
+  c-basic-offset 2)
+(setq-hook! org-mode-hook
+  tab-width 8) ;; HACK :: org needs 8 to work
 ;; Indentation: 2 spaces:1 ends here
 
 ;; [[file:config.org::*Clean Whitespace][Clean Whitespace:1]]

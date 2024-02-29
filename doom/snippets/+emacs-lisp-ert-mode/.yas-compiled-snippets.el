@@ -2,11 +2,16 @@
 ;;; Snippet definitions:
 ;;;
 (yas-define-snippets '+emacs-lisp-ert-mode
-                     '(("deftest" "(ert-deftest $1 ()`(doom-snippets-format \"%n%s\")`$0)" "ert-deftest" nil nil nil "/home/lenz/.config/doom/snippets/+emacs-lisp-ert-mode/ert-deftest" nil "deftest")
+                     '(("deftest"
+                        "(ert-deftest $1 ()`(doom-snippets-format \"%n%s\")`$0)"
+                        "ert-deftest" nil nil nil
+                        "/home/lenz/.config/doom/snippets/+emacs-lisp-ert-mode/ert-deftest"
+                        nil "deftest")
                        ("deft"
-                        (progn
-                          (doom-snippets-expand :uuid "ert-deftest"))
-                        "ert-deftest" nil nil nil "/home/lenz/.config/doom/snippets/+emacs-lisp-ert-mode/deft" nil "deft")))
+                        (progn (doom-snippets-expand :uuid "ert-deftest"))
+                        "ert-deftest" nil nil nil
+                        "/home/lenz/.config/doom/snippets/+emacs-lisp-ert-mode/deft"
+                        nil "deft")))
 
 
-;;; Do not edit! File generated at Mon Feb 26 13:19:40 2024
+;;; Do not edit! File generated at Thu Feb 29 06:08:17 2024

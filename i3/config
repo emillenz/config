@@ -40,7 +40,6 @@ $map XF86MonBrightnessDown $cmd sudo light -U 5 && notify-send "󰃟 Light" "$(l
 $map XF86MonBrightnessUp   $cmd sudo light -A 5 && notify-send "󰃟 Light" "$(light)%"
 $map XF86Display           $cmd $bin/output_select
 $map XF86ScreenSaver       $cmd xset dpms force off
-# $map XF86Sleep             $cmd i3lock -e --color 002b36 && systemctl suspend
 $map XF86Sleep             $cmd i3lock -e --color 000000 && systemctl suspend
 
 $map XF86AudioPlay         $cmd playerctl play
@@ -158,16 +157,16 @@ mode "open" {
 }
 # App opener:1 ends here
 
-# [[file:config.org::*Find file][Find file:1]]
+# [[file:config.org::*Find file (per project)][Find file (per project):1]]
 $map $mod+f mode "find"
 
 mode "find" {
-  $map $mod+u $cmd xdg-open "$(fd --extension=pdf . ~/Documents/uni/cs | $rofi)"; $esc
+  $map $mod+c $cmd xdg-open "$(fd --extension=pdf . ~/Documents/uni/cs/s2 | $rofi)"; $esc
   $map $mod+l $cmd xdg-open "$(fd --extension=pdf --extension=epub . ~/Documents/literature | $rofi)"; $esc
-  $map $mod+f $cmd xdg-open "$(fd . ~ | $rofi)"; $esc
+  $map $mod+f $cmd xdg-open "$(fd --type=file . ~ | $rofi)"; $esc
   $map Escape $esc
 }
-# Find file:1 ends here
+# Find file (per project):1 ends here
 
 # [[file:config.org::*Menus][Menus:1]]
 $map $mod+space mode "menus"
@@ -190,7 +189,6 @@ mode "sysact" {
   $map $mod+e $cmd i3-msg exit; $esc
   $map $mod+r $cmd systemctl reboot; $esc
   $map $mod+h $cmd systemctl hibernate; $esc
-  # $map $mod+l $cmd i3lock -e --color 002b36 && systemctl suspend; $esc
   $map $mod+l $cmd i3lock -e --color 000000 && systemctl suspend; $esc
   $map $mod+s $cmd sleep 1 && xset dpms force off; $esc
   $map $mod+p $cmd systemctl poweroff; $esc

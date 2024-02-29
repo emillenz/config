@@ -8,26 +8,29 @@
 # info:   all background processes and commands to be run at startup. additionally runs commands to configure x11 behaviour. starts all programs automatically, that are used in basically every-session (dry).
 # -----
 def main [] {
-  let start_ps = [
+  let run_procs = [
     "sudo xremap --watch=device ~/.config/xremap/config.yml"
     "sleep 1 && xset r off" # HACK sleep :: wait for remaps to take affect
-    "playerctld" # music controls
+    "playerctld"
     "alacritty --class cmd -T cmd -e tmux new-session -A -s cmd" # main cmd-session
-    "emacs --daemon; emacsclient --reuse-frame" # editor
-    "unclutter" # hide cursor
-    "xsetroot -solid '#000000'" # solarized_dark bg: #002b36; modus: #000000
+    "emacs --daemon; emacsclient --reuse-frame"
+    "unclutter"
+    "xsetroot -solid '#000000'"
     "xset dpms 0 0 0 && xset s off" # never screensave / turn screen off (do manually if needed)
     "batsignal -bpe -w 50 -c 20 -d 5"
-    "syncthing --no-browser" # based file-syncing, no more cloud dependency / suckling on google/microsoft
+    "syncthing --no-browser"
     "firefox --new-window"
-    "firefox --new-window https://chat.openai.com" # chatbot (integrated into workflow)
+    "firefox --new-window https://chat.openai.com"
     "keepassxc" # TODO :: replace with pass
   ]
 
-  let pss = (ps | get name)
-  for p in $start_ps {
-    if not ($pss | any {$in =~ ($p | split words | get 0)}) {
-      $"($p) &>/dev/null &" | bash
+  let procs = (ps | get name)
+  for proc in $run_procs {
+    if not ($procs | any {$in =~ ($proc | split words | get 0)}) {
+      $"($proc) &>/dev/null &" | bash
+      print $"start :: ($proc)"
+    } else {
+      print $"- ($proc) :: running"
     }
   }
 }

@@ -3,12 +3,10 @@
 # key: header
 # uuid: header
 # --
-
 `comment-start` ---
-`comment-start` title:  ${2:`(replace-regexp-in-string "[-_.]" " " (file-name-base (or buffer-file-name "title")))`}
+`comment-start` title:  ${2:`(replace-regexp-in-string "[-_.]" " " (file-name-base (or buffer-file-name "full title")))`}
 `comment-start` author: `user-full-name`
 `comment-start` email:  `user-mail-address`
 `comment-start` date:   `(format-time-string "%F")`
-`comment-start` info:   ${3:short description of file/document}
 `comment-start` ---
 $0

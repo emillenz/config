@@ -3,10 +3,9 @@
 # key: header
 # uuid: header
 # --
-#+title:  ${1:`(replace-regexp-in-string "[-_.]" " " (file-name-base (or buffer-file-name "title")))`}
+#+title:  ${1:`(replace-regexp-in-string "[-_.]" " " (file-name-base (or buffer-file-name "full title")))`}
 #+author: `user-full-name`
 #+email:  `user-mail-address`
 #+date:   `(format-time-string "%F")`
-#+info:   ${2:document description}
-#+filetags: ${3:filetags}
+#+filetags: ${2:filetags}
 $0

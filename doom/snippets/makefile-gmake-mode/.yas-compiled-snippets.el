@@ -2,9 +2,16 @@
 ;;; Snippet definitions:
 ;;;
 (yas-define-snippets 'makefile-gmake-mode
-                     '(("wildcard" "$(wildcard $0)\n" "wildcard" nil nil nil "/home/lenz/.config/doom/snippets/makefile-gmake-mode/wildcard" nil nil)
-                       ("phony" ".PHONY = $0\n" "phony" nil nil nil "/home/lenz/.config/doom/snippets/makefile-gmake-mode/phony" nil nil)
-                       ("patsubst" "$(patsubst ${1:from},${2:to},${3:src})\n" "patsubst" nil nil nil "/home/lenz/.config/doom/snippets/makefile-gmake-mode/patsubst" nil nil)))
+                     '(("wildcard" "$(wildcard $0)\n" "wildcard" nil nil nil
+                        "/home/lenz/.config/doom/snippets/makefile-gmake-mode/wildcard"
+                        nil nil)
+                       ("phony" ".PHONY = $0\n" "phony" nil nil nil
+                        "/home/lenz/.config/doom/snippets/makefile-gmake-mode/phony"
+                        nil nil)
+                       ("patsubst" "$(patsubst ${1:from},${2:to},${3:src})\n"
+                        "patsubst" nil nil nil
+                        "/home/lenz/.config/doom/snippets/makefile-gmake-mode/patsubst"
+                        nil nil)))
 
 
-;;; Do not edit! File generated at Mon Feb 26 13:19:42 2024
+;;; Do not edit! File generated at Thu Feb 29 06:08:19 2024

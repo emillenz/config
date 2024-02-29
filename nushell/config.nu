@@ -1,7 +1,7 @@
 # -----
-# title:	Nushell Config
+# title:  Nushell Config
 # author: Emil Lenz
-# email:	emillenz@protonmail.com
+# email:  emillenz@protonmail.com
 # date:	  Wednesday, 23 April, 2023
 # info:	  Nushell conifg with safer defaults, and efficient custom keybindings.
 # -----
@@ -48,9 +48,9 @@ def cp [from: path, to: path] {
 
 # settings ::
 let fish_completer = {|spans|
-    fish --command $'complete "--do-complete=($spans | str join " ")"'
-    | $"value(char tab)description(char newline)" + $in
-    | from tsv --flexible --no-infer
+  fish --command $'complete "--do-complete=($spans | str join " ")"'
+  | $"value(char tab)description(char newline)" + $in
+  | from tsv --flexible --no-infer
 }
 $env.config = {
   show_banner: false

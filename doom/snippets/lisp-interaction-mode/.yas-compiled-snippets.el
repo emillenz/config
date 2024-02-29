@@ -2,7 +2,10 @@
 ;;; Snippet definitions:
 ;;;
 (yas-define-snippets 'lisp-interaction-mode
-                     '(("defun" "(defun ${1:fun} (${2:args})\n       $0\n)" "defun" nil nil nil "/home/lenz/.config/doom/snippets/lisp-interaction-mode/defun" nil "defun")))
+                     '(("defun" "(defun ${1:fun} (${2:args})\n       $0\n)"
+                        "defun" nil nil nil
+                        "/home/lenz/.config/doom/snippets/lisp-interaction-mode/defun"
+                        nil "defun")))
 
 
-;;; Do not edit! File generated at Mon Feb 26 13:19:42 2024
+;;; Do not edit! File generated at Thu Feb 29 06:08:18 2024

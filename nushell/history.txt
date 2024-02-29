@@ -1,21 +1,3 @@
-emacs
-^emacs
-emacs --debug-init
-^emacs --debug-init
-^emacs
-startup
-^emacs
-cargo run
-ls
-starutp
-startup
-syncthing
-git status
-git commit -am 'sync'; git push
-dnfi rust-src
-keybindings list
-emacs
-^emacs
 startup
 ^emacs
 syncthing
@@ -9998,3 +9980,21 @@ emacs --debug-init
 doom sync
 emacs 
 doom sync; emacs
+nvim .config/doom/config.org
+top
+mpstat 
+mpstat
+sar
+free
+top
+htop
+startup
+ls -la --help | bat --plain --language=help
+ls -la  --help | bat --plain --language=help
+ls
+ls -la
+vi (fd --type=file | fzf --preview='bat {}' | str trim)
+ls -la
+nvim (fd --type=file | fzf --preview='bat {}' | str trim)
+ls
+startup

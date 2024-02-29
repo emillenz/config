@@ -414,13 +414,6 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "C-j" #'magit-section-forward-sibling
       :nm "C-k" #'magit-section-backward-sibling)
 #+end_src
-** [ ] vertico
-- bad habits
-#+begin_src emacs-lisp
-(map! :map vertico-map :after vertico
-      :nm "C-j" nil
-      :nm "C-k" nil)
-#+end_src
 
 ** info
 #+begin_src emacs-lisp
@@ -551,7 +544,11 @@ This is sensible default behaviour, and integrates it into evil."
 
 ** Indentation: 2 spaces
 - Consistency :: The only reliable, repeatable, transportable way to ensure that indentation remains consistent across viewing environments is to indent you code using only spaces.
-  - Tabs :: With tabs you will always get some cases where there is spaces where there should be a tab and vice versa, this needs then to be fixed manually.  (eg: evil shift, or evil-align)
+- Using tabs for indentation and spaces for alignment requires extra care, and a
+  carefully tuned editor setup which understands the semantic difference between
+  the tabs and the spaces which follow. In any sizeable team, deviations in
+  formatting will creep in. Enforcing it will just be a big waste of time,
+  compared to the simplicity of banishing tabs.
 - Having 8x or 4x indentations makes the code move too far to the right, and makes it really incoherent and spaced out on a 100-character terminal screen.
   - Scanning code horizontally is alot harder than reading it vertically.  Especially when you’ve been looking at your screen for 20 straight hours, you’ll find it a lot easier to read your code if it is compacted and concise.
 - Nesting :: if you need more than 3 levels of indentation, you’re screwed anyway and have nested your functions too deep and should fix your program.
@@ -571,7 +568,13 @@ This is sensible default behaviour, and integrates it into evil."
 (setq-hook! prog-mode
   tab-width 2
   evil-shift-width 2
-  c-basic-offset 2)
+  c-basic-offset 2
+  nushell-ts-mode-indent-offset 2)
+
+(setq-hook! rustic-mode-hook
+  rustic-indent 2
+  rustic-indent-offset 2)
+
 (setq-hook! org-mode-hook
   tab-width 8) ;; HACK :: org needs 8 to work
 #+end_src
@@ -580,7 +583,7 @@ This is sensible default behaviour, and integrates it into evil."
 - More than 1 empty line is inconsistent and makes things unneccessary hard to read.
 #+begin_src emacs-lisp
 (defun clean_whitespace ()
-  "Deletes consecutive empty lines if > 1, and strips trailing whitespace."
+  "Deletes consecutive empty lines if # > 1, and strips trailing whitespace."
   (interactive)
   (delete-trailing-whitespace)
   (save-excursion
@@ -771,7 +774,7 @@ This is sensible default behaviour, and integrates it into evil."
 #+begin_src emacs-lisp
 (setq org-log-done 'time
       org-log-repeat 'time
-      org-todo-repeat-to-state t
+      org-todo-repeat-to-state "[ ]"
       org-log-redeadline 'time
       org-log-reschedule 'time
       org-log-into-drawer "LOG")
@@ -967,6 +970,7 @@ TIME :: Time of note to return. (default: today)"
        :template ("* [#] %^{title}%? %^g"
                   "%^T"
                   ":PROPERTIES:"
+                  ":REPEAT_TO_STATE: [#]" ; NOTE :: incase is made repeating
                   ":location: %^{location}"
                   ":material: %^{material}"
                   ":END:")

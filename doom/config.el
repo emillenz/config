@@ -307,12 +307,6 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "C-k" #'magit-section-backward-sibling)
 ;; magit:1 ends here
 
-;; [[file:config.org::*\[ \] vertico][[ ] vertico:1]]
-(map! :map vertico-map :after vertico
-      :nm "C-j" nil
-      :nm "C-k" nil)
-;; [ ] vertico:1 ends here
-
 ;; [[file:config.org::*info][info:1]]
 (map! :map Info-mode-map :after Info-mode
       :nm "C-j" #'Info-forward-node
@@ -437,14 +431,20 @@ This is sensible default behaviour, and integrates it into evil."
 (setq-hook! prog-mode
   tab-width 2
   evil-shift-width 2
-  c-basic-offset 2)
+  c-basic-offset 2
+  nushell-ts-mode-indent-offset 2)
+
+(setq-hook! rustic-mode-hook
+  rustic-indent 2
+  rustic-indent-offset 2)
+
 (setq-hook! org-mode-hook
   tab-width 8) ;; HACK :: org needs 8 to work
 ;; Indentation: 2 spaces:1 ends here
 
 ;; [[file:config.org::*Clean Whitespace][Clean Whitespace:1]]
 (defun clean_whitespace ()
-  "Deletes consecutive empty lines if > 1, and strips trailing whitespace."
+  "Deletes consecutive empty lines if # > 1, and strips trailing whitespace."
   (interactive)
   (delete-trailing-whitespace)
   (save-excursion
@@ -571,7 +571,7 @@ This is sensible default behaviour, and integrates it into evil."
 ;; [[file:config.org::*task states][task states:2]]
 (setq org-log-done 'time
       org-log-repeat 'time
-      org-todo-repeat-to-state t
+      org-todo-repeat-to-state "[ ]"
       org-log-redeadline 'time
       org-log-reschedule 'time
       org-log-into-drawer "LOG")
@@ -719,6 +719,7 @@ TIME :: Time of note to return. (default: today)"
        :template ("* [#] %^{title}%? %^g"
                   "%^T"
                   ":PROPERTIES:"
+                  ":REPEAT_TO_STATE: [#]" ; NOTE :: incase is made repeating
                   ":location: %^{location}"
                   ":material: %^{material}"
                   ":END:")

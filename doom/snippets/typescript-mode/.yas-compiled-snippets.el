@@ -2,11 +2,26 @@
 ;;; Snippet definitions:
 ;;;
 (yas-define-snippets 'typescript-mode
-                     '(("let" "let ${1:name} = ${0:`%`};" "let" nil nil nil "/home/lenz/.config/doom/snippets/typescript-mode/let" nil nil)
-                       ("importas" "import * as ${1:`%`} from '$2';" "import * as ..." nil nil nil "/home/lenz/.config/doom/snippets/typescript-mode/importas" nil nil)
-                       ("import" "import ${1:`%`} from '$2';" "import ..." nil nil nil "/home/lenz/.config/doom/snippets/typescript-mode/import" nil nil)
-                       ("const" "const ${1:name} = ${0:`%`};" "const" nil nil nil "/home/lenz/.config/doom/snippets/typescript-mode/const" nil nil)
-                       ("class" "class ${1:Name} {\n    $2\n\n    constructor($3) {\n        `%`$0\n    }\n}" "class" nil nil nil "/home/lenz/.config/doom/snippets/typescript-mode/class" nil nil)))
+                     '(("let" "let ${1:name} = ${0:`%`};" "let" nil nil nil
+                        "/home/lenz/.config/doom/snippets/typescript-mode/let"
+                        nil nil)
+                       ("importas" "import * as ${1:`%`} from '$2';"
+                        "import * as ..." nil nil nil
+                        "/home/lenz/.config/doom/snippets/typescript-mode/importas"
+                        nil nil)
+                       ("import" "import ${1:`%`} from '$2';" "import ..." nil
+                        nil nil
+                        "/home/lenz/.config/doom/snippets/typescript-mode/import"
+                        nil nil)
+                       ("const" "const ${1:name} = ${0:`%`};" "const" nil nil
+                        nil
+                        "/home/lenz/.config/doom/snippets/typescript-mode/const"
+                        nil nil)
+                       ("class"
+                        "class ${1:Name} {\n    $2\n\n    constructor($3) {\n        `%`$0\n    }\n}"
+                        "class" nil nil nil
+                        "/home/lenz/.config/doom/snippets/typescript-mode/class"
+                        nil nil)))
 
 
-;;; Do not edit! File generated at Mon Feb 26 13:19:44 2024
+;;; Do not edit! File generated at Thu Feb 29 06:08:19 2024

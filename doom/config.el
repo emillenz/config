@@ -5,12 +5,10 @@
 
 ;; [[file:config.org::*modus-theme][modus-theme:1]]
 (use-package! modus-themes
-  :config
-  (setq
-   modus-themes-mixed-fonts t
-   modus-themes-italic-constructs t
-   modus-themes-bold-constructs t
-   modus-themes-org-blocks 'gray-background)
+  :config (setq modus-themes-mixed-fonts t
+                modus-themes-italic-constructs t
+                modus-themes-bold-constructs t
+                modus-themes-org-blocks 'gray-background)
 
   (setq modus-themes-common-palette-overrides
         `((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
@@ -23,13 +21,12 @@
 
   ;; HACK :: cannot customize these things with `modus-themes-common-palette-overrides'
   (modus-themes-with-colors
-    (setq
-     evil-insert-state-cursor `(,fg-main bar)
-     evil-normal-state-cursor `(,fg-main box)
-     evil-motion-state-cursor `(,fg-main box)
-     evil-visual-state-cursor `(,yellow box)
-     evil-operator-state-cursor `(,red box)
-     evil-replace-state-cursor `(,red hbar)))
+    (setq evil-insert-state-cursor `(,fg-main bar)
+          evil-normal-state-cursor `(,fg-main box)
+          evil-motion-state-cursor `(,fg-main box)
+          evil-visual-state-cursor `(,yellow box)
+          evil-operator-state-cursor `(,red box)
+          evil-replace-state-cursor `(,red hbar)))
 
   (custom-set-faces!
     `(org-list-dt :inherit modus-themes-heading-1)
@@ -80,7 +77,7 @@
   (set-popup-rule! "^\\*Org Src" :ignore t))
 
 (set-popup-rules! `(("^\\*info" :ignore t)
-                    ("^\\*helpful" )))
+                    ("^\\*helpful")))
 
 (after! lsp-mode
   (set-popup-rules! `(("^\\*lsp-help\\*" :side bottom))))
@@ -781,22 +778,22 @@ TIME :: Time of note to return. (default: today)"
                                     (read-from-minibuffer "short title: "))
                                    ".org")))
                        (file-name-concat
-                        literature_notes_dir
+                        org_literature_dir
                         name)))
                    :type plain
+                   :short-title (lambda ())
                    :template ("#+title:  %^{full title}"
                               "#+author: %(user-full-name)"
                               "#+email:  %(message-user-mail-address)"
                               "#+date:   %<%F>"
-                              "#+filetags: :literature:"
+                              "#+filetags: :literature:%^g"
                               ""
                               "* [-] %\\1%?"
                               ":PROPERTIES:"
                               ":title:  %\\1"
                               ":author: %^{author}"
                               ":year:   %^{year}"
-                              ":tags:   %^{tags}"
-                              ":type:   %^{book|ebook|paper|article|audiobook|podcast}"
+                              ":type:   %^{book|textbook|ebook|paper|article|audiobook|podcast}"
                               ":pages:  %^{pages}"
                               ":END:"
                               ""
@@ -808,7 +805,7 @@ TIME :: Time of note to return. (default: today)"
                   ("excerpt" :keys "e"
                    :headline "excerpts"
                    :empty-lines-after 1
-                   :template ("* %^{title} [p:%^{page}] %^g"
+                   :template ("* %^{title} [pg:%^{page}] %^g"
                               "#+begin_quote"
                               "%x"
                               "#+end_quote"))
@@ -816,7 +813,7 @@ TIME :: Time of note to return. (default: today)"
                   ("note: literary" :keys "l"
                    :headline "literature notes"
                    :empty-lines-after 1
-                   :template ("* %^{title} [p:%^{page}] %^g"
+                   :template ("* %^{title} [pg:%^{page}] %^g"
                               "%?"))
 
                   ("note: transient" :keys "t"

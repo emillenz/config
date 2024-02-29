@@ -29,12 +29,10 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
  - custom-set-faces :: make org more consistent.
 #+begin_src emacs-lisp
 (use-package! modus-themes
-  :config
-  (setq
-   modus-themes-mixed-fonts t
-   modus-themes-italic-constructs t
-   modus-themes-bold-constructs t
-   modus-themes-org-blocks 'gray-background)
+  :config (setq modus-themes-mixed-fonts t
+                modus-themes-italic-constructs t
+                modus-themes-bold-constructs t
+                modus-themes-org-blocks 'gray-background)
 
   (setq modus-themes-common-palette-overrides
         `((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
@@ -47,13 +45,12 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
 
   ;; HACK :: cannot customize these things with `modus-themes-common-palette-overrides'
   (modus-themes-with-colors
-    (setq
-     evil-insert-state-cursor `(,fg-main bar)
-     evil-normal-state-cursor `(,fg-main box)
-     evil-motion-state-cursor `(,fg-main box)
-     evil-visual-state-cursor `(,yellow box)
-     evil-operator-state-cursor `(,red box)
-     evil-replace-state-cursor `(,red hbar)))
+    (setq evil-insert-state-cursor `(,fg-main bar)
+          evil-normal-state-cursor `(,fg-main box)
+          evil-motion-state-cursor `(,fg-main box)
+          evil-visual-state-cursor `(,yellow box)
+          evil-operator-state-cursor `(,red box)
+          evil-replace-state-cursor `(,red hbar)))
 
   (custom-set-faces!
     `(org-list-dt :inherit modus-themes-heading-1)
@@ -113,7 +110,7 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
   (set-popup-rule! "^\\*Org Src" :ignore t))
 
 (set-popup-rules! `(("^\\*info" :ignore t)
-                    ("^\\*helpful" )))
+                    ("^\\*helpful")))
 
 (after! lsp-mode
   (set-popup-rules! `(("^\\*lsp-help\\*" :side bottom))))
@@ -289,9 +286,10 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
   - if you know roughly what you are looking for, then use ~m-x~ and fuzzy search for the command and it will show you the binding for next time. fuzzy finding is more efficient.
   - we remove annoying unwanted popup's and reduce visual sugar (=> distractionless, focused workflow).
   - this idea correlates with the insight that you should use a keyboard with blank keycaps. which will force you to learn to type, without ever taking the focus off the screen. (reduced context switching, no speed bottleneck, increased continuity).
-- control bindings :: for screen movements
+- control bindings :: for screen movements and editing
   - ~c-j, c-k~ moves by syntactical sections implemented in all relevant modes (org, magit..)
   - ~c-l~ does the same as ~c-l~ in the shell. is quicker & more mnemonic than ~zz~.
+  - learn them all (also the one's in insert mode) for seizing vim's full power.
 
 #+begin_src emacs-lisp
 (map! :nmvo "j"   #'evil-next-visual-line
@@ -900,9 +898,6 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
   - per-file-tags :: use ~filetags~ for project's agenda files
 - daily journal ::
   - use for reflection and personal development / tracking and loggin in on long/short term goals
-  - end of day ::
-    - reflect :: on the goals and check off what you achived and what not.  if not, why, and what needs to happen for it to get done next time?
-    - gratitude :: list things that you were grateful for / appreciate and relive nice experiences/moments you want to remember and cherish.
 
 #+begin_src emacs-lisp
 (defvar org_journal_dir (file-name-concat "~/Documents/journal/")
@@ -1034,22 +1029,22 @@ TIME :: Time of note to return. (default: today)"
                                     (read-from-minibuffer "short title: "))
                                    ".org")))
                        (file-name-concat
-                        literature_notes_dir
+                        org_literature_dir
                         name)))
                    :type plain
+                   :short-title (lambda ())
                    :template ("#+title:  %^{full title}"
                               "#+author: %(user-full-name)"
                               "#+email:  %(message-user-mail-address)"
                               "#+date:   %<%F>"
-                              "#+filetags: :literature:"
+                              "#+filetags: :literature:%^g"
                               ""
                               "* [-] %\\1%?"
                               ":PROPERTIES:"
                               ":title:  %\\1"
                               ":author: %^{author}"
                               ":year:   %^{year}"
-                              ":tags:   %^{tags}"
-                              ":type:   %^{book|ebook|paper|article|audiobook|podcast}"
+                              ":type:   %^{book|textbook|ebook|paper|article|audiobook|podcast}"
                               ":pages:  %^{pages}"
                               ":END:"
                               ""
@@ -1061,7 +1056,7 @@ TIME :: Time of note to return. (default: today)"
                   ("excerpt" :keys "e"
                    :headline "excerpts"
                    :empty-lines-after 1
-                   :template ("* %^{title} [p:%^{page}] %^g"
+                   :template ("* %^{title} [pg:%^{page}] %^g"
                               "#+begin_quote"
                               "%x"
                               "#+end_quote"))
@@ -1069,7 +1064,7 @@ TIME :: Time of note to return. (default: today)"
                   ("note: literary" :keys "l"
                    :headline "literature notes"
                    :empty-lines-after 1
-                   :template ("* %^{title} [p:%^{page}] %^g"
+                   :template ("* %^{title} [pg:%^{page}] %^g"
                               "%?"))
 
                   ("note: transient" :keys "t"

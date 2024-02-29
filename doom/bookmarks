@@ -29,11 +29,11 @@
  (position . 192)
  (last-modified 26078 57192 10430 153000))
 ("org-capture-last-stored"
- (filename . "~/Documents/org/personal/notes.org")
- (front-context-string . "* experiment wit")
- (rear-context-string . "gs: :personal:\n\n")
- (position . 167)
- (last-modified 26079 17829 640721 233000))
+ (filename . "~/Documents/literature/notes/introduction_to_computing_systems.org")
+ (front-context-string . "#+title:  introd")
+ (rear-context-string)
+ (position . 1)
+ (last-modified 26080 23342 827414 903000))
 ("cs_todo.org"
  (filename . "~/Documents/org/cs_todo.org")
  (front-context-string . "#+title:    CS T")

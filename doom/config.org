@@ -900,7 +900,9 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
   - per-file-tags :: use ~filetags~ for project's agenda files
 - daily journal ::
   - use for reflection and personal development / tracking and loggin in on long/short term goals
-  - the goals for the day are refiled into personal task's inbox automatically, to keep track of them if not done at the end of the day
+  - end of day ::
+    - reflect :: on the goals and check off what you achived and what not.  if not, why, and what needs to happen for it to get done next time?
+    - gratitude :: list things that you were grateful for / appreciate and relive nice experiences/moments you want to remember and cherish.
 
 #+begin_src emacs-lisp
 (defvar org_journal_dir (file-name-concat "~/Documents/journal/")
@@ -996,7 +998,7 @@ TIME :: Time of note to return. (default: today)"
                               "#+filetags: :journal:"
                               ""
                               "* goals"
-                              "- %?"
+                              "- [ ] %?"
                               ""
                               "* agenda"
                               "** [ ] "

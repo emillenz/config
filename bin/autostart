@@ -1,5 +1,7 @@
 #!/usr/bin/env nu
 
+use ~/.config/nushell/user/utils.nu
+
 # -----
 # title:  autostart
 # author: emil lenz
@@ -13,8 +15,8 @@
 def main [] {
   let run_procs = [
     "sudo xremap --watch=device ~/.config/xremap/config.yml && sleep 1 && xset r off"
+    "alacritty --class $cmd --title cmd --command tmux new-session -A -s cmd"
     "playerctld"
-    "alacritty --class cmd --title cmd --command tmux new-session -A -s cmd" # main cmd-session
     "emacs --daemon && emacsclient --reuse-frame"
     "unclutter"
     "xsetroot -solid '#000000'"
@@ -27,13 +29,20 @@ def main [] {
     "autorandr --change"
   ]
 
-  let procs = (ps | get name)
-  for proc in $run_procs {
-    if not ($procs | any {$in =~ ($proc | split words | get 0)}) {
-      $"($proc) &>/dev/null &" | bash
-      print $"- run    :: ($proc)"
-    } else {
-      print $"- exists :: ($proc)"
-    }
+  let processes = (ps)
+  tmux_setup cmd
+  for process in $run_procs {
+    $processes | ensure_running $process
+  }
+}
+
+def ensure_running [process: string] {
+  let pss = (if $in == null {ps | get name} else {$in | get name})
+
+  if not ($pss | any {|i| $i =~ ($process | split words | get 0)}) {
+    utils async $process
+    print $"- run    :: ($process)"
+  } else {
+    print $"- exists :: ($process)"
   }
 }

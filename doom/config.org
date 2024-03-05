@@ -203,14 +203,12 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
 
 #+begin_src emacs-lisp
 (map! :map 'override
-      :inmv "M-w" #'next-window-any-frame
+      :inmv "M-TAB" #'next-window-any-frame
       :inmv "M-q" #'kill-buffer-and-window
-      :inmv "M-1" (cmd! (tab-bar-select-tab 1))
-      :inmv "M-2" (cmd! (tab-bar-select-tab 2))
-      :inmv "M-3" (cmd! (tab-bar-select-tab 3))
-      :inmv "M-4" (cmd! (tab-bar-select-tab 4))
-      :inmv "M-5" (cmd! (tab-bar-select-tab 5))
-      :inmv "M-6" (cmd! (tab-bar-select-tab 6))
+      :inmv "M-1" (cmd! (tab-bar-select-tab-by-name "1"))
+      :inmv "M-2" (cmd! (tab-bar-select-tab-by-name "2"))
+      :inmv "M-3" (cmd! (tab-bar-select-tab-by-name "3"))
+      :inmv "M-4" (cmd! (tab-bar-select-tab-by-name "4"))
       :inmv "M-o" #'find-file
       :inmv "M-f" #'consult-find
       :inmv "M-F" (cmd! (consult-find "~"))
@@ -224,18 +222,12 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
 #+end_src
 
 ** tabs
-- assign buffers to tabs in order to hotswitch between them (say you are in a project and need to hop between multiple files alot).
-- tabs stay alive, only the buffer's in them change
-- if working on miscelaneous things just use buffer searching (faster, less time spent on managing the tabs)
-- we don't visual indication for tabs.  instead the switching should be muscle memory => truly be fast and have no mental overhead when context switching.
-- we initilize 4 tabs for assignments.  this is the optimum size for most projects.
+- open buffers in specific tabs in order to hotswitch between them. (ex: working on 3 project files) => one maximized buffer open per tab
+- we never want visual indication for tabs.  instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.
+- auto-create a tab if it doesn't exist (~tab-by-name~)
 
 #+begin_src emacs-lisp
 (tab-bar-mode 0)
-
-(dotimes (i 3)
-  (tab-bar-new-tab))
-(tab-bar-select-tab 1)
 #+end_src
 
 ** evil

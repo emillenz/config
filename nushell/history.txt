@@ -1,228 +1,3 @@
-$data | where { str starts-with "\d" } 
-$data | where { str starts-with "8" } 
-$data
-$data
-str contains  -h | bat
-$data | where  -h | bat
-$data | where {|x| $x =~ "^\d.*"}
-$data | where {|x| $x =~ "^.*"}
-$data | where {|x| $x =~ "^2.*"}
-$data | where {|x| $x =~ "^.*"}
-$data | where str starts-with "PORT"
-str starts-with  -h | bat
-where -h | bat
-$data | where {$in str starts-with "PORT"}
-$data | where {$in | str starts-with "PORT"}
-$data 
-$data | str starts-with "2"
-$data 
-$data | find -h | bat
-$data | find -r "^2"
-$data | find -r "^\d"
-$data | find -r "^\\d"
-$data | find -r "^\\d" | parse
-$data | find -r "^\\d" | parse "{port} {state} {type}"
-parse -h | bat
-columns -h | bat
-$data | find -r "^\\d" | split column
-$data | find -r "^\\d" | split column '\s'
-$data | find -r "^\\d" | split column "\s"
-$data | find -r "^\\d" | split column "\\s"
-$data | find -r "^\\d" | split words
-$data | find -r "^\\d" | split column -c ' '
-$data | find -r "^\\d" | split column -c '   '
-$data | find -r "^\\d" | split column -c ' '
-parse  -h | bat
-head -h | bat
-header -h | bat
-columns -h | bat
-$data | find -r "^\\d" | split column -c ' ' | get column1 
-$data
-$data | find -r "^\\d" | split column -c ' ' 
-$data | find -r "^\\d" 
-$data | find -r "^\\d" | parse -r "{port}\\s{state}\\s{type}"
-$data | find -r "^\\d" | parse -r "{port}\s{state} {type}"
-$data | find -r "^\\d" | parse -r "{port}{state} {type}"
-$data | find -r "^\\d" | parse -r "{port} {state} {type}"
-$data | find -r "^\\d" | parse "{port} {state} {type}"
-$data | find -r "^\\d" | parse "(.*)\s(.*)\s(.*)"
-$data | find -r "^\\d" | parse "(.*)\s*(.*)\s*(.*)"
-$data | find -r "^\\d" | parse '(.*)\s*(.*)\s*(.*)'
-$data | find -r "^\\d" | parse '{a}\s*'
-$data | find -r "^\\d" | parse -'{a}\s*'
-$data | find -r "^\\d" | parse -r '{a}\s*'
-$data | find -r "^\\d" | parse '{a}'
-$data | find -r "^\\d" | parse -r '{a}'
-$data | find -r "^\\d" | parse -r '.*'
-$data | find -r "^\\d" | parse -regex '.*'
-$data | find -r "^\\d" | parse --regex '.*'
-$data | find -r "^\\d" | parse --regex '(.*)'
-$data | find -r "^\\d" | parse --regex '(.*)\s (.*)'
-$data | find -r "^\\d" | parse --regex '(.*)\s(.*)'
-$data | find -r "^\\d" | parse --regex '(.*)\s(.*)\s(.*)'
-$data | find -r "^\\d" | parse --regex '(.*)\s*(.*)\s*(.*)'
-$data | find -r "^\\d" | parse --regex '(.*)\s(.*)\s(.*)'
-$data | find -r "^\\d" | split column -c ' ' 
-$data | find -r "^\\d" | split column -c ' '
-$data | find -r "^\\d" | detect columns 
-$data | find -r "^\\d" 
-let data_raw = (sudo nmap -sT 192.168.1.108/24)
-$data_raw
-parse  -h | bat
-$data_raw | find -rm "^\\d"
-$data_raw | find -mr "^\\d"
-$data_raw | find -mr "^\d"
-$data_raw | find -mr "^22"
-$data_raw | lines | find -mr "^22"
-$data_raw | lines | find -mr "^"
-$data_raw | lines | find -mr "^\\d"
-$data_raw | lines | find -mr "^\\d" | split column -c ' '
-find -h | bat
-split  -h | bat
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | each {column1 | split column -c '/'}
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | each {$in.column1 | split column -c '/'}
-ls
-ls | update  -h | bat
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' 
-split column  -h | bat
-rename
-rename -h | bat
-insert
-insert -h | bat
-str substring  -h | bat
-str -h | bat
-str trim  -h | bat
-spilt  -h | bat
-split -h | bat
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|| split column -c '/' | get column2}
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|| split column -c '/' }
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | split column -c '/' }
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | split column -c '/' | get column2}
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | split column -c '/' | get column2 | flatten}
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | split column -c '/' | get column2.0}
-str replace  -h | bat
-path -h | bat
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename}
-update  -h | bat
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname}
-$data_raw 
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} 
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocel\
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol\
-$data_raw | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol
-(nmap -p -sT (ip a)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol
-(nmap -sT (ip a)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol
-ip a
-ipaddr
-ip addr
-ip  -h | bat
-ip address-
-ip address
-ip -h
-ip a -h
-ip -h a
-ip -h a | line
-ip -h a | lines
-ip -h a | lines | get 8 | split words | get 2
-ip -h a | lines | get 8 | split words
-ip -h a | lines | get 8 
-ip -h a | lines | get 8 | split words
-ip -h a | lines | get 8 | split column
-ip -h a | lines | get 8 | split column ' '
-ip -h a | lines | get 8 | split column -c ' '
-ip -h a | lines | get 8 | split column  -h | bat
-ip -h a | lines | get 8 | split column -c ' '
-str trim
-str trim -h | bat
-(nmap -p -sT (ip a | lines | get 8 | split column -c ' ' | get column2 | str trim)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol
-(nmap -sT (ip a | lines | get 8 | split column -c ' ' | get column2 | str trim)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol
-(nmap -sT (ip a | lines | get 8 | split column -c ' ' | get column2 | str trim)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol | save scanned.txt
-let $table = ((nmap -sT (ip a | lines | get 8 | split column -c ' ' | get column2 | str trim)) | lines | find -mr "^\\d" | split column -c ' ' | insert protocol {|x| $x.column1 | path basename} | update column1 {path dirname} | rename port state service protocol )
-dnfs vbox
-dnfs oracle
-dnfi VirtualBox-7.0.8_156879_fedora36-1.x86_64.rpm
-ls
-dnfi VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64.rpm
-sudo /sbin/vboxconfig
-dnfi kernel-devel kernel-devel-6.3.6-200.fc38.x86_6
-dnfs devel
-sudo dnf -y install @development-tools
-sudo dnf install kernel-headers kernel-devel dkms  -y
-/sbin/vboxconfig
-sudo /sbin/vboxconfig
-sudo dnf install kernel-devel
-sudo /sbin/vboxconfig
-sudo dnf install kernel-devel kernel-devel-6.3.6-200.fc38.x86_64
-uname -r
-sudo dnf install kernel-devel kernel-devel-6.3.6-200.fc38.x86_64
-sudo dnf update
-arp-scan -l
-dnfs arp-scan
-dnfi arp-scan
-sudo /sbin/vboxconfig
-dnfi kernel-devel
-dnfi kernel-devel-6.3.6-200.fc38.x86_64
-dnfs kernel-devel
-dnfs kernel-devel-matched
-dnfi kernel-devel-matched
-sudo dnf install kernel-headers
-sudo /sbin/vboxconfig
-sudo dnf install @development-tools
-sudo dnf install kernel-headers kernel-devel dkms
-"[virtualbox]<\n>name=Fedora $releasever - $basearch - VirtualBox<\n>baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch<\n>enabled=1<\n>gpgcheck=1<\n>repo_gpgcheck=1<\n>gpgkey=https://www.virtualbox.org/download/oracle_vbox_2016.asc!" | save /etc/yum.repos.d/virtualbox.repo
-sudo "[virtualbox]<\n>name=Fedora $releasever - $basearch - VirtualBox<\n>baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch<\n>enabled=1<\n>gpgcheck=1<\n>repo_gpgcheck=1<\n>gpgkey=https://www.virtualbox.org/download/oracle_vbox_2016.asc!" | save /etc/yum.repos.d/virtualbox.repo
-"[virtualbox]<\n>name=Fedora $releasever - $basearch - VirtualBox<\n>baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch<\n>enabled=1<\n>gpgcheck=1<\n>repo_gpgcheck=1<\n>gpgkey=https://www.virtualbox.org/download/oracle_vbox_2016.asc!" | sud osave /etc/yum.repos.d/virtualbox.repo
-"[virtualbox]<\n>name=Fedora $releasever - $basearch - VirtualBox<\n>baseurl=http://download.virtualbox.org/virtualbox/rpm/fedora/$releasever/$basearch<\n>enabled=1<\n>gpgcheck=1<\n>repo_gpgcheck=1<\n>gpgkey=https://www.virtualbox.org/download/oracle_vbox_2016.asc!" | sudo save /etc/yum.repos.d/virtualbox.repo
-sudo su
-dnfi VirtualBox-7.0.8_156879_fedora36-1.x86_64.rpm
-dnfr VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64.rpm
-dnfr VirtualBox
-dnfs Virtualbox
-dnfr VirtualBox-7.0.x86_64
-dnfr VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64
-dnfs VirtualBox
-dnfi VirtualBox-7.0.x86_64
-dnfr VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64
-dnfr -f VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64
-dnfr -y VirtualBox-7.0-7.0.8_156879_fedora36-1.x86_64
-dnfi netdiscover
-dnfs netdiscover
-netdiscover
-dnfs kernel header
-dnfs kernel-headers
-dnfi kernel-headers
-sudo dnf upgrade
-sudo dnf update
-sudo dnf upgrade --refresh
-sudo dnf install kernel-headers
-sudo vmware
-dnfi kernel-headers
-sudo dnfi dkms
-do dnfi dkms
-dnfi dkms
-sudo dnf install gcc kernel-devel kernel-headers make<\n>
-ls
-bsash
-ls
-dnfs oracle
-dnfs VirtualBox
-dnfi VirtualBox-7.0.x86_64
-dnfr VirtualBox-7.0.x86_64
-dnfi VirtualBox-7.0.x86_64
-arp-scan -l
-sudo arp-scan -l
-ls
-arp-scan -l
-ls
-sudo arp-scan -l
-dnfs arp-scan
-dnfs nikto
-dnfi nikto
-sudo arp-scan -l
-sudo arp-scan -l | lines
-let data = (sudo arp-scan -l | lines)
-mut data = ($data |lines)
-mut d = ($data |lines)
 $data
 mut data = (sudo arp-scan -l |lines)
 $data
@@ -9998,3 +9773,228 @@ emacs
 man nu
 man emacs
 ls
+tmux -t cmd new-window
+tmux  --help | bat --plain --language=help
+tmux new-window -t cmd
+ls
+^man tmux
+man tmux | bat
+man tmux | less
+tmux new-session -t foo
+tmux new-session -s foo
+tmux new-session -h
+async --help | bat --plain --language=help
+format  --help | bat --plain --language=help
+let x = true
+match $x {<\n>true => "a",<\n>false => "b",<\n>}
+match false {<\n>true => "a",<\n>false => "b",<\n>}
+help modules
+$env | find lib
+find  --help | bat --plain --language=help
+$env.NU_LIB_DIRS
+ls
+which md
+md --help | bat --plain --language=help
+mkd  --help | bat --plain --language=help
+mv --help | bat --plain --language=help
+which mv
+which async
+async  --help | bat --plain --language=help
+utils async  --help | bat --plain --language=help
+utils async --help | bat --plain --language=help
+mv  --help | bat --plain --language=help
+ls
+modus_theme 
+const  --help | bat --plain --language=help
+help const 
+ls
+which ip 
+ip --color
+for i in ..10 {print f}
+for i in ..10 {print i}
+for i in ..10 {print $i}
+tmux list-sessions
+tmux new-window -t cmd
+ls
+for _ in ..10 {print $i}
+for _ in ..10 {print $_}
+for  --help | bat --plain --language=help
+help for 
+help loop
+ls
+autostart
+ls
+k
+ls
+$env.NU_LIB_DIRS
+autostart
+let x = {a, b}
+$x
+let x = {a: 1 , b: 2}
+$x
+if $x {print f}
+if $x == null {print f}
+if $x == null {print f} else {print t}
+def process_running_p [proc: string, processes?: list] {<\n>  (match $processes {null => (ps | get name), _ => $processes}) | any {$in =~ ($proc | split words | get 0) }<\n>}
+process_running_p emacs
+process_running_p vi
+pgrep vi
+process_running_p tmux
+process_running_p hsaldfkj
+process_running_p hsaldfkj (ps)
+def process_running_p [proc: string] {<\n>  $in | get name | any {$in =~ ($proc | split words | get 0) }<\n>}<\n>
+ps | process_running_p 
+ps | process_running_p emacs
+ps | process_running_p al;sdkfj
+ps | process_running_p alsdkfj
+ps
+ps | find tmux
+ps --long  | find tmux
+def f [] {print $in ==null}
+f
+def f [] {print ($in == null)}
+f
+"a" | f
+def process_running_p [proc: string] {<\n>  if $in == null {ps --long} else {$in} | get command | any {$in =~ $proc}<\n>}<\n>
+process_running_p hsaldfkj
+process_running_p vim
+process_running_p emacs
+tmux has-session cmd
+tmux has-session -t cmd
+tmux has-session -t casdf
+autostart
+def process_running_p [proc: string] {<\n>  if $in == null {ps --long} else {$in} | get command | any {$in =~ $proc}<\n>}
+process_running_p emacs --daemon
+process_running_p "emacs --daemon"
+if (echo) {print f}
+if  --help | bat --plain --language=help
+tmux has-session -t 
+tmux has-session -t cmd
+tmux has-session -t cmd | complete
+(tmux has-session -t cmd | complete | get exit_code)
+(tmux has-session -t cmd | complete | get exit_code) == -
+(tmux has-session -t cmd | complete | get exit_code) == 0
+(tmux has-session -t md | complete | get exit_code) == 0
+(tmux has-session -t  | complete | get exit_code) == 0
+(tmux has-session -t)
+(tmux has-session -t a)
+(tmux has-session -t a | complete )
+autostart
+split words 
+"a b c && " | split words 
+"a b c && " | split words | get 0
+autostart
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+autostart
+use utils
+utils async alacritty
+alacritty --class cmd --title cmd --command tmux attach-session -A -s cmd
+tmux attach-session -A -s cmd
+tmux attach-session -a -s cmd
+tmux attach-session -s cmd
+autostart
+ps
+alacritty --class cmd --title cmd --command tmux attach-session cmd
+"alacritty --class cmd --title cmd --command tmux attach-session cmd" | bash
+tmux attach-session cmd
+tmux attach-session -s cmd
+autostart
+alacritty --class cmd --title cmd --command tmux attach-session -t cmd
+ls
+autostart
+ls
+autostart
+def tmux_setup [name: string] {<\n>  if (tmux has-session -t $name | complete | get exit_code) == 1  {<\n>    utils async $"tmux new-session -s ($name)"<\n>    # init windows<\n>    for _ in 1..3 {<\n>      tmux new-window -t $name<\n>    }<\n>  }<\n>  ensure_running $"alacritty --class ($name) --title ($name) --command tmux attach-session -t ($name)"<\n>}<\n>
+tmux_setup cmd
+use utils
+tmux_setup cmd
+tmux has-session -t cmd | complete
+tmux has-session -t cmd | complete | print $in
+ls
+tmux kill-s
+tmux new-session -s cmd 
+def tmux_setup [name: string] {<\n>  if (tmux has-session -t $name | complete | get exit_code) == 1  {<\n>     $"tmux new-session -s ($name) &" | bash<\n>    # init windows<\n>    for _ in 1..3 {<\n>      tmux new-window -t $name<\n>    }<\n>  }<\n>  ensure_running $"alacritty --class ($name) --title ($name) --command tmux attach-session -t ($name)"<\n>}<\n>
+tmux_setup 
+tmux_setup cmd
+autostart
+ls
+tmux kill-server
+autostart
+tmux kill-server
+autostart
+sleep --help | bat --plain --language=help
+autostart
+ls
+man my ass
+ls
+tmux new-session -s test 
+tmux detach
+tmux kill-session -s test
+tmux kill-session -t test
+tmux new-session -s test 
+tmux kill-session -t test
+tmux new-session 
+tmux new-session\; new-window
+tmux new-session\\; new-window
+tmux new-session \; new-window
+"tmux new-session \; new-window"
+tmux kill-session -t test
+tmux new-session
+tmux -t cmd select-window 2
+tmux select-window 2 -t cmd
+tmux select-window -t cmd
+man tmux | less
+tmux new-
+tmux select-window -t 2
+tmux select-window -t 1
+tmux kill-session -t test
+tmux new-session
+ls
+tmux kill-server
+tmux new-session
+ls
+tmux new-session
+tmux new-session
+man tmux | less
+tmux select-window -t 1
+tmux select-window -t 3
+tmux kill-server
+tmux new-session
+tmux kill-server
+tmux new-session
+emacs
+nvim .
+ls
+ls
+cd .config
+nvim (fd --type=file | fzf --preview='bat {}' | str trim)
+ls
+(fd --type=file | fzf --preview='bat {}' | str trim)
+cls
+emacs
+cd ..
+nvim (fd --type=file | fzf --preview='bat {}' | str trim)
+emacs
+doom sync
+eamcs
+emacs
+nvim doom/config.orgh
+nvim doom/config.org
+doom sync; emacs
+mv doom/config.org doom/_config.org
+emacs
+ls
+rm doom/config.el
+emacss
+sudo killall emacs
+doom sync

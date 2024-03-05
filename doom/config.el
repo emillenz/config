@@ -144,14 +144,12 @@
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:1]]
 (map! :map 'override
-      :inmv "M-w" #'next-window-any-frame
+      :inmv "M-TAB" #'next-window-any-frame
       :inmv "M-q" #'kill-buffer-and-window
-      :inmv "M-1" (cmd! (tab-bar-select-tab 1))
-      :inmv "M-2" (cmd! (tab-bar-select-tab 2))
-      :inmv "M-3" (cmd! (tab-bar-select-tab 3))
-      :inmv "M-4" (cmd! (tab-bar-select-tab 4))
-      :inmv "M-5" (cmd! (tab-bar-select-tab 5))
-      :inmv "M-6" (cmd! (tab-bar-select-tab 6))
+      :inmv "M-1" (cmd! (tab-bar-select-tab-by-name "1"))
+      :inmv "M-2" (cmd! (tab-bar-select-tab-by-name "2"))
+      :inmv "M-3" (cmd! (tab-bar-select-tab-by-name "3"))
+      :inmv "M-4" (cmd! (tab-bar-select-tab-by-name "4"))
       :inmv "M-o" #'find-file
       :inmv "M-f" #'consult-find
       :inmv "M-F" (cmd! (consult-find "~"))
@@ -166,10 +164,6 @@
 
 ;; [[file:config.org::*tabs][tabs:1]]
 (tab-bar-mode 0)
-
-(dotimes (i 3)
-  (tab-bar-new-tab))
-(tab-bar-select-tab 1)
 ;; tabs:1 ends here
 
 ;; [[file:config.org::*evil][evil:1]]

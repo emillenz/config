@@ -1,27 +1,17 @@
 # -----
-# title:  Nushell Config
-# author: Emil Lenz
+# title:  nushell config
+# author: emil lenz
 # email:  emillenz@protonmail.com
-# date:	  Wednesday, 23 April, 2023
-# info:	  Nushell conifg with safer defaults, and efficient custom keybindings.
+# date:	  wednesday, 23 april, 2023
+# info:	  nushell conifg with safer defaults, and efficient custom keybindings.
 # -----
 
-# NOTE: When programming in nushell non-interactively, use full-length-flags in order to make the code more readeable and easier to maintain in the future.
+# NOTE: when programming in nushell non-interactively, ALWAYS use '--long-flags' in order to make the code more readeable and easier to maintain in the future.
 
 # theme ::
-source modus_vivendi.nu
-
-alias ip = ip -color=auto
-alias yay = yay --noconfirm
-alias rm = rm --recursive --verbose --trash --interactive-once
-alias cp = cp --recursive --verbose --progress --interactive
-alias mv = mv --verbose
-alias fzf = fzf --reverse --height=15 --color=dark --scheme=path # os-consistent completion (rofi, emacs, fzf ..)
-alias psk = sudo killall
-
-alias e = emacsclient -nw
-alias g = emacsclient -nw --eval "(magit-status)"
-alias d = emacsclient -nw --eval "(dired-jump)"
+source modus_theme.nu
+source commands.nu
+use utils.nu *
 
 $env.PATH = ($env.PATH | append ["~/.config/bin", "~/.cargo/bin", "~/.config/emacs/bin"] | uniq)
 $env.EDITOR = "-nw"
@@ -30,23 +20,6 @@ $env.BROWSER = "firefox"
 $env.MANPAGER = "bat --plain --language=man"
 $env.PAGER = "bat "
 
-# mv :: automatically create missing destination dir's.
-def mv [from: path, to: path] {
-  if not ($to | path exists) {
-    mkdir --verbose ($to | path dirname)
-  }
-  ^mv --verbose $from $to
-}
-
-# cp :: automatically create missing destination dir's.
-def cp [from: path, to: path] {
-  if not ($to | path exists) {
-    mkdir --verbose ($to | path dirname)
-  }
-  ^cp --verbose --progress --interactive $from $to
-}
-
-# settings ::
 let fish_completer = {|spans|
   fish --command $'complete "--do-complete=($spans | str join " ")"'
   | $"value(char tab)description(char newline)" + $in
@@ -144,7 +117,7 @@ $env.config = {
     vi_normal: block
   }
 
-  color_config: (modus_vivendi)
+  color_config: $modus_theme
   use_grid_icons: false
   footer_mode: "25"
   float_precision: 2

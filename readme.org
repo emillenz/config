@@ -95,23 +95,22 @@ Iosevka Nerd Font optimises for inter-glyph and inter-style consistency within t
 - Inside Applications: Alt => in order to minimize conflict with existing shortcuts.
   - Alt acts as the navigational-layer above the applications normal keybindings (chars, ctrl, shift), it condenses down a minimal set of universal, efficient navigational commands.
   - Alt is available in (almost) every program, leadermode is not.
+- to make working with tabs more efficient, create the tab on the index if it does not exist
 
-| Mod - | Action                      | Consistency           |
-|-------+-----------------------------+-----------------------|
-| T     | new tab                     | Vim/Mnemonic/standard |
-| tab   | cycle window/tab            | Vim, ergonomic        |
-| 1-6   | Switch to tab by index      | Logic / stardard      |
-| G     | search tabs/buffers         | vim: goto             |
-| Q     | Quit (window=>tab=>program) | Mnemonic / standard   |
-| E     | edit file / editor          | Mnemonic              |
-| C     | Command-line (shell)        | Emacs/Mnemonic        |
-| F     | Find (program/file)         | Mnemonic / Standard   |
-| X     | Execute command (in-app)    | Emacs: M-x            |
-| C     | command-line                | Standard              |
-| E     | Editor                      | Vim: e <- edit        |
-| W     | Web (browser)               | WWW                   |
-| O     | open (file/program)         | mnemonic              |
-| SPC   | Leader-key                  | Vim / ergonomic       |
+| Mod - | Action                   | Consistency           |
+|-------+--------------------------+-----------------------|
+| 1-4   | Switch to tab by index   | Logic / stardard      |
+| G     | search tabs/buffers      | vim: goto             |
+| Q     | Quit (buffer/program)    | Mnemonic / standard   |
+| E     | edit file / editor       | Mnemonic              |
+| C     | Command-line (shell)     | Emacs/Mnemonic        |
+| F     | Find (program/file)      | Mnemonic / Standard   |
+| X     | Execute command (in-app) | Emacs: M-x            |
+| C     | command-line             | Standard              |
+| E     | Editor                   | Vim: e <- edit        |
+| W     | Web (browser)            | WWW                   |
+| O     | open (file/program)      | mnemonic              |
+| SPC   | Leader-key               | Vim / ergonomic       |
 
 * Software
 The aim is to be able to run software for years without it breaking or bugging.

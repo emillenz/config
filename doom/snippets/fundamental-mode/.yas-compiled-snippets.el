@@ -20,7 +20,7 @@
                         "/home/lenz/.config/doom/snippets/fundamental-mode/localvar"
                         nil "elvar")
                        ("header"
-                        "${1:`(or comment-start \"?\")`} ---\n$1 title:  ${2:`(replace-regexp-in-string \"[-_.]\" \" \" (file-name-base (or buffer-file-name \"full title\")))`}\n$1 author: `user-full-name`\n$1 email:  `user-mail-address`\n$1 date:   `(format-time-string \"%F\")`\n$1 ---\n$0\n"
+                        "${1:`(or comment-start \"?\")`} ---\n$1 title:  ${2:`(replace-regexp-in-string \"[-_.]\" \" \" (file-name-base (or buffer-file-name \"full title\")))`}\n$1 author: `user-full-name`\n$1 email:  `user-mail-address`\n$1 date:   `(format-time-string \"%F\")`\n$1 info:\n$1   - ${3:document info}\n$1 ---\n$0\n"
                         "header" nil nil nil
                         "/home/lenz/.config/doom/snippets/fundamental-mode/header"
                         nil "header")
@@ -34,4 +34,4 @@
                         nil "#!")))
 
 
-;;; Do not edit! File generated at Thu Feb 29 06:08:18 2024
+;;; Do not edit! File generated at Sun Mar  3 22:48:42 2024

@@ -22,8 +22,8 @@ yay --noconfirm --sync alacritty curl libtool fzf fd ripgrep xclip xdg-utils cma
 
 Set nushell to loginshell
 #+begin_src sh
-sudo chsh -s /usr/bin/nu root
-chsh -s /usr/bin/nu
+sudo chsh --shell /usr/bin/nu root
+chsh --shell /usr/bin/nu
 #+end_src
 
 ** Never sudo-password-prompt
@@ -34,7 +34,7 @@ echo "$USER ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/$USER"
 
 ** Make system-scripts executeable
 #+begin_src sh
-fd . ~/.config/bin -tf -x chmod +x {}
+fd . ~/.config/bin --type file --exec chmod +x {}
 #+end_src
 
 * Editor: doom emacs
@@ -48,7 +48,7 @@ git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 
 * Gui apps & packages
 #+begin_src sh
-yay --noconfirm --sync i3 i3lock zathura zathura-pdf-mupdf arandr mpv rofi light sxiv unclutter firefox pavucontrol pasystray playerctl blueman xorg-xprop xremap-x11-bin light networkmanager mpd dunst notify-send nsxiv maim pulsemixer xorg-xset xorg-xsetroot batsignal
+yay --noconfirm --sync i3 i3lock zathura zathura-pdf-mupdf arandr mpv yt-dlp rofi brightnessctl sxiv unclutter firefox pavucontrol pasystray playerctl blueman xorg-xprop xremap-x11-bin light networkmanager mpd dunst notify-send nsxiv maim pulsemixer xorg-xset xorg-xsetroot batsignal autorandr pamixer
 #+end_src
 
 ** Enable daemons
@@ -89,14 +89,14 @@ yay --noconfirm --sync python python-black python-pyflakes python-isort
 ** Misc
 - I have multiple laptops, and i want all my files to be in perfect sync, so no matter on which device i am, i have all my files.
 #+begin_src sh :tangle no
-yay --noconfirm --sync syncthing transmission-cli
+yay --noconfirm --sync syncthing transmission-cli spotify-launcher
 #+end_src
 
 ** Blackarch repo
 - For pentesting
 #+begin_src sh :tangle no
 # Run https://blackarch.org/strap.sh as root and follow the instructions.
-curl -O https://blackarch.org/strap.sh
+curl --remote-name https://blackarch.org/strap.sh
 
 # Set execute bit
 chmod +x strap.sh

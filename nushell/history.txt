@@ -1,491 +1,3 @@
-^emacs --debug-init
-^emacs
-startup
-^emacs
-startup
-doom sync
-ls
-^emacs
-doom sync
-startup
-emacs  -h | bat
-^emacs  -h | bat
-^emacs  --help
-startup
-emacs -nw
-uptime
-dnfi pandoc
-dnfi rust-src
-^emacs --debug-init
-startup
-^emacs --debug-init
-emacs
-^emacs
-^emacs --debug-init
-nvim ~/.config/doom/config.el
-^emacs --debug-init
-cd .config/doom/
-bat packages.el
-nvim ~/.config/doom/config.el
-^emacs --debug-init
-nvim ~/.config/doom/config.el
-^emacs --debug-init
-nvim ~/.config/doom/config.org
-cd .config/doom/
-mv config.org ~
-^emacs 
-nvim config.el
-mv config.el ~
-^emacs 
-mv ~/config.org .
-mv config.org ~
-mv ~/config.el .
-^emacs --debug-init
-nvim config.el
-ls ~
-mv ~/config.org .
-nvim config.org
-emacs
-startup
-^emacs --debug-init
-^emacs
-bat config.el
-^emacs
-cd ~/Books/
-^emacs booklist.org
-startup
-^emacs booklist.org
-startup
-^emacs booklist.org
-^emacs
-^emacs booklist.orgc
-^emacs booklist.org
-^emacs --eval '(dired-jump)'
-^emacs 
-startup
-^emacs
-startup4
-startup
-emacsclient -c 
-startup
-emacsclient -c 
-^emacs
-doom sync
-^emacs
-doom sync
-^emacs
-ps -l | get command | find ema
-ps -l | get command | find emacs
-startup
-emacsclient -c 
-wmctrl emacs 
-wmctrl -xa emacs 
-sudo dnfs nuview
-dnfs nuview
-ls 
-ls | nuview
-^emacs
-ps 
-ps | find syncthing
-syncthing
-"syncthing &" 
-"syncthing &" | bash
-syncthing -h | bat
-man syncthing 
-startup
-starutp
-emacs --daemon
-startup
-setxkbmap us dvorak
-tsnahoeu
-startup
-keepassxc  --help
-man keepass
-man keepassxc
-man keepassxc-cli
-startup
-emacsclient --eval '(emacs-everywhere)'
-xwininfo
-dnfi xwininfo
-dnfi xdotool
-dnfi xprop
-sudo dnf -y --allowerasing install tldr i3 i3status i3lock bc alacritty zathura zathura-pdf-mupdf arandr htop mpv curl libtool xset flameshot ripgrep fzf rofi light xclip xdg-utils xdotool wmctrl cmake sxiv fd-find npm bat unclutter firefox pavucontrol pamix pasystray polybar ffmpeg-free syncthing clementine playerctl keepassxc blueman lxappearance git gcc gcc-g++ make pkgconfig libX11-devel libXtst-devel libXi-devel texlive-scheme-basic latexmk cargo flatpak xautolock autofs emacs pandoc rust-src xwininfo xdotool xprop xclip<\n>
-dnfi xclip xdotool xprop xwininfo
-startup
-sudo xremap ~/.config/xremap/config.yml
-xremap ~/.config/xremap/config.yml
-sode xremap ~/.config/xremap/config.yml
-sudo xremap ~/.config/xremap/config.yml
-xremap ~/.config/xremap/config.yml
-sudo ~/.cargo/bin/xremap ~/.config/xremap/config.yml
-keepassxc  --help
-sudo ~/.cargo/bin/xremap ~/.config/xremap/config.yml
-vim .
-vi .
-sudo ~/.cargo/bin/xremap ~/.config/xremap/config.yml
-startup
-emacs -h | bat
-emacs -e '(emacs-everywhere)'
-dnfs xdotool
-dnfi xdotool
-dnfi xprop
-dnfi xwininfo
-'emacsclient -c --eval "(emacs-everywhere)"' | bash
-emacs --eval "(emacs-everywhere)"
-emacs -h
-emacsclient -h
-dnfs xbindkeys
-dnfi xbindkeys
-touch ~/.xbindkeysrc
-xbindkey
-xbindkeys
-xbindkeys -h | bat
-dnfr xbindkeys 
-startup
-doom sync
-ls
-git status
-git add i3
-syncthing
-syncthing  -h | bat
-man syncthing  
-syncthing -h | bat
-syncthing -h | bat cli  -h | bat
-syncthing cli  -h | bat
-syncthing-cli  -h | bat
-man syncthing cli 
-sycthing continue
-syncthing --paused
-date
-date now
-doom sync
-emacs  -h | bat
-man emacs 
-emacs --daemon
-^emacs --daemon
-git status
-syncthing
-^emacs --daemon
-ls
-ls -la
-strartup
-startup
-cd doom/
-emacs config.org
-doom sync
-startup
-^emacs
-^emacs
-startup
-doom sync
-startup
-ps | find syncthing
-killall syncthing
-syncthing 
-ps | find syncthing
-kill -h | bat
-killall -h | bat
-man killall -h | bat
-sleep 5min; print aaaa
-sleep 5sec; print aaaa
-sync_config
-$env.PATH
-sync_config
-dnfi xournalpp
-dnfi libreoffice
-dnfs wacom
-dnfi xorg-x11-drv-wacom
-focus tui 'bc -l'
-starutp
-startup
-"" 
-"" == nothing
-"" == Nothing
-"" == null
-sync_config 
-syncthing
-killall syncthing
-killall emacs
-emacs --daemon
-^emacs --daemon
-doom sync
-git status=
-git status
-cd doom/
-ls
-git status
-git add snippets
-git status
-git commit -am 'sync'; git push
-syncthing
-ipa
-ip a
-route 
-route
-emacs --daemon
-^emacs --daemon
-sync_config 
-ls
-^emacs --daemon
-sync_config 
-^emacs --daemon
-xprop
-startup
-setxkbmap us dvorak
-startup
-^emacs --daemon
-sync_config 
-^emacs --daemon
-sync_config 
-killall syncthing
-syncthing
-pandoc  -h | bat
-tldr pandoc
-pandoc ~/.config/i3/config.org -o /tmp/config.html; firefox /tmp/config.html
-pandoc ~/.config/i3/config.org -o /tmp/config.pdf; firefox /tmp/config.html
-pandoc ~/.config/i3/config.org -o /tmp/config.pdf; firefox /tmp/config.pdf
-~/.config/i3/config | less
-open ~/.config/i3/config | less
-open ~/.config/i3/config.org | less
-open ~/.config/i3/config.org | bat
-tldr bat
-bat --list-languages
-open ~/.config/i3/config.org | bat  -h | bat
-open ~/.config/i3/config.org | bat  -l org
-tldr pandoc
-pandoc  -h | bat
-pandoc ~/.config/i3/config.org -o /tmp/config.pdf --toc; firefox /tmp/config.pdf
-pandoc ~/.config/i3/config.org -o /tmp/config.html --toc; firefox /tmp/config.html
-rm -f /tmp/config.html; pandoc ~/.config/i3/config.org -o /tmp/config.html --toc; firefox /tmp/config.html
-rm -f /tmp/config.html; pandoc ~/.config/i3/config.org -o --toc /tmp/config.html ; firefox /tmp/config.html
-rm -f /tmp/config.html; pandoc ~/.config/i3/config.org --toc -o /tmp/config.html ; firefox /tmp/config.html
-emacs ~/.config/i3/config.org
-startup
-ls
-starutp
-startup
-sync_config 
-syncthing
-startup
-^emacs --daemon
-git status
-sync_config 
-killall syncthing
-syncthing
-6emacs --daemon
-^emacs --daemon
-doom sync
-dnfi xournalpp
-dnfi libreoffice
-dnfs obs
-sudo dnf install kmod-v4l2loopback
-flatpak search
-flatpak search --help
-flatpak search obs
-flatpak  -h | bat
-flatpak search open broadcast
-flatpak install flathub com.obsproject.Studio
-ps | find syncthing
-"syncthing &" | bash
-^emacs --daemon
-tree
-vi .
-vi booklist.org
-firefox -h | bat
-ps -l 
-firefox google.com
-ps -l | find google
-ps -l | find fier
-ps -l | find fire
-oracel
-oracle
-dnfs vm
-go install -v github.com/owasp-amass/amass/v3/...@master
-extract (fd --hidden -E 'Music/*' -E 'Videos/*' -E 'Pictures/*' -E 'Documents/*' | fzf)
-extract amass_Linux_amd64.zip
-ls
-bat readme.md
-bat README.md
-./amass
-cd amass_Linux_amd64/
-mv amass /usr/bin
-sudo mv amass /usr/bin
-ls /usr/bin
-ls /usr/bin _
-ls /usr/bin | find amass
-amass
-amass -h | bat
-man amass 
-amass -h
-syncthing
-^emacs --daemon
-syncthing
-ps | find syncthing=
-startup
-syncthing=
-syncthing
-startup
-^emacs --daemon
-emacs
-^\emacs
-^emacs
-^emacs --daemon
-emacs --debug-init
-^emacs --debug-init
-ps syncthing
-ps |find syncthing
-syncthing
-killall emacs
-killall emacsdaemon
-^emacs --daemon
-startup
-^^emacs --daemon
-^emacs --daemon
-ps -l 
-ps -l | get command | find firefox
-startup
-syncthing
-killall syncthing
-firefox google.com 
-syncthing
-startup
-starutp
-startup
-syncthing
-tre
-ls
-cd bo
-dnfs oracle vm
-dnfs whatweb
-dnfi whatweb
-whatweb rust.com
-whatweb https://rust.com
-whatweb https://www.rust.com
-whatweb https://www.google.com
-whatweb https://www.tesla.com
-whatweb http://www.tesla.com
-whatweb http://tesla.com
-oraclevm
-dnfs oraclevm
-dnfs vmware
-dnfs virtualbox
-git clone https://github.com/sudodus/tarballs.git
-cd tarballs && tar -xf dus.tar.xz
-cd ..
-ls
-cd dus-tmp/
-dus
-sudo dus
-sudo ./dus
-./dus
-dnfs mkusb
-dnfs do usb
-cd ..
-bot README.md
-bat README.md
-ls
-cd ..
-ls
-rm -r org tarballs
-git clone https://github.com/sudodus/tarballs.git
-ls
-./dus-installer
-./dus-installer i
-dnfs mkusb
-cd ..
-ls
-./dus-installer i
-sudo ./dus-installer i
-dnfs xterm
-dnfi xterm
-dnfs pv
-dnfi pv
-dnfs dialog
-sudo ./dus-installer i
-dnfs xdialog
-dnfs dialog
-dnfd dialog
-dnfi dialog
-sudo ./dus-installer i
-dus
-ip a
-dnfs usb-pack
-git clone https://github.com/andreyv/usb-pack-efi.git<\n>
-sudo dnf install livecd-tools liveusb-creator<\n>
-sudo fdisk -l
-^ls
-sudo livecd-iso-to-disk --overlay-size-mb 15000 ./Parrot-security-5.3_amd.iso /dev/sdb<\n>
-sudo livecd-iso-to-disk --overlay-size-mb 15000 ./Parrot-security-5.3_amd64.iso /dev/sdb<\n>
-sudo livecd-iso-to-disk --overlay-size-mb 15000 ./Parrot-security-5.3_amd64.iso /dev/sdb1
-sudo fdisk -l
-sudo umount /dev/sdX
-sudo umount /dev/sdb
-sudo mkfs.fat -F32 /dev/sdb
-sudo fdisk -l
-lsblk -a
-sudo mkfs.fat -F32 /dev/sdb1
-sudo fdisk /dev/sdb
-sudo fdisk -l
-sudo mkfs.fat -F32 /dev/sdb1
-sudo fdisk /dev/sdX
-sudo fdisk /dev/sdb
-sudo mkfs.fat -F32 /dev/sdb1
-sudo livecd-iso-to-disk --overlay-size-mb 15000 ./Parrot-security-5.3_amd64.iso /dev/sdb1
-sudo livecd-iso-to-disk --overlay-size-mb 4096 ./Parrot-security-5.3_amd64.iso /dev/sdb1
-sudo livecd-iso-to-disk --overlay-size-mb 4096 Parrot-security-5.3_amd64.iso /dev/sdb1
-./dus-installer i
-sudo ./dus-installer i
-sudo fdisk -l
-dnfs nmap
-nmap
-dnfi nmap
-man nmap 
-man nmap | less
-startup
-man man nmap
-man nmap
-dd if=kali-linux-2023.2-live-amd64.iso of=/dev/sdb1 conv=fsync bs=4M status=progress
-ls
-sudo dd if=kali-linux-2023.2-live-amd64.iso of=/dev/sdb1 conv=fsync bs=4M status=progress
-tldr nmap
-ip a
-ls
-ip a
-man nmap
-nmap -h | bat
-nmap -sL
-man nmap
-nmap -sn 192.168.1.108
-nmap -sn 192.168.1.108/21
-ip a
-nmap -sn 192.168.1.108/24
-nmap -h | bat
-tldr nmap
-man nmap
-man nmap 
-man nmap | less
-nmap -v -p- 192.168.1.108/24
-nmap -v -p- -sU 192.168.1.108/24
-sudo nmap -v -p- -sU 192.168.1.108/24
-sudo nmap -v -p -sU 192.168.1.108/24
-nmap  -h | bat
-man nmap
-bash -c sudo su
-sudo nmap -v --top-ports 1000 -sU 192.168.1.108/24
-sudo nmap -v -sT 192.168.1.108/24
-sudo nmap -sT 192.168.1.108/24
-let data = (sudo nmap -sT 192.168.1.108/24)
-ls
-$data
-$data 
-$data | where str starts-with "\d"
-$data | where str starts-with '\d'
-let mut data = (data |lines)
-let mut data = ($data |lines)
-mut data = ($data |lines)
-$data
-$data | where str starts-with '\d'
-$data | where { str starts-with '\d'} 
 $data | where { str starts-with "\d" } 
 $data | where { str starts-with "8" } 
 $data
@@ -4066,6 +3578,8 @@ ls
 git status
 git add fonts rofi
 git add readme.org 
+git status
+dme.org 
 git status
 transmission-cli magnet:?xt=urn:btih:B222CD28598D816681223917FAB69E32CC5D307E&dn=Das+Leben+der+Anderen+aka+The+Lives+of+Others+%282006%29+-+1080p+x26&tr=http%3A%2F%2Fp4p.arenabg.com%3A1337%2Fannounce&tr=udp%3A%2F%2F47.ip-51-68-199.eu%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.me%3A2780%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2730%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2920%2Fannounce&tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&tr=udp%3A%2F%2Fopentracker.i2p.rocks%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.cyberia.is%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.dler.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.openbittorrent.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337&tr=udp%3A%2F%2Ftracker.pirateparty.gr%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.tiny-vps.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.torrent.eu.org%3A451%2Fannounce
 ls
@@ -9997,4 +9511,490 @@ scrot
 ls
 rm 2024-02-29-101255_2048x1152_scrot.png
 screenshot 
+ls
+nvim .config/nushell/history.txt
+ls
+bat .config/nushell/history.txt
+mpv https://www.youtube.com/watch?v=M-8KpveWi5M&list=PL5Q2soXY2Zi-EImKxYYY1SZuGiOAOBKaf&index=3
+yay youtube-dl
+mpv https://www.youtube.com/watch?v=M-8KpveWi5M&list=PL5Q2soXY2Zi-EImKxYYY1SZuGiOAOBKaf&index=3
+"i3-status &" | bash
+"i3status &" | bash
+nvim .config/doom/config.or
+nvim .config/doom/config.org
+doom sync
+startup
+doomync
+doom sync
+startup
+pulsemixer 
+startup
+ls
+yay clx
+yay stumpwm
+yay 3i
+yay i3
+which stumpwm
+which --help | bat --plain --language=help
+which --all ls
+/bin/ls
+/usr/bin/ls
+ls
+which ls
+dunstify  --help | bat --plain --language=help
+dunstify   --help | bat --plain --language=help
+ls
+dunstify --help | bat --plain --language=help
+dunstify "hello" "ass"
+doom sync
+doom doctor
+emacs
+yay sbcl
+yay clx
+yay alexandria
+doom sync
+startup
+quicklisp
+yay quicklisp
+yay -R quicklisp
+stumpwm
+i3 --help | bat --plain --language=help
+i3 exit
+ls
+firefox
+firre --help | bat --plain --language=help
+e --help | bat --plain --language=help
+stumpwm --help | bat --plain --language=help
+sudo killall sump --help | bat --plain --language=help
+yay stumpwm
+emacs
+alacritty --help | bat --plain --language=help
+yay awiki
+rofi-mount
+flameshot gui
+flameshot gui -d 3000
+mdp
+mpd
+mpd  --help | bat --plain --language=help
+playerctl play
+dunstify --help | bat --plain --language=help
+dunstify --icon=a a b 
+dunstify --icon="A" a b 
+pamixer
+pamixer -i 10
+light -U 5
+sudo light -U 5
+light  --help | bat --plain --language=help
+light
+sudo light -U 5
+light  --help | bat --plain --language=help
+sudo light -U 5 -v 3
+yay plock
+yay slock
+slock --help | bat --plain --language=help
+slock  --help | bat --plain --language=help
+man slock
+slock
+yay pcmanfm
+mpv
+firefox --help | bat --plain --language=help
+firefox --search chat
+find --help | bat --plain --language=help
+^find --help | bat --plain --language=help
+nu --help | bat --plain --language=help
+man nu
+light --help | bat --plain --language=help
+pamixer --help | bat --plain --language=help
+autorandr
+ls
+yay autorandr
+autorandr --help | bat --plain --language=help
+tldr autorandr
+autorandr
+autorandr --save hp_home
+autorandr
+brightnessctl
+yay brightnessctl
+brightnessctl
+brightnessctl  --help | bat --plain --language=help
+startup
+quicklisp
+yay quicklisp
+$env.SHELL
+backlightctl --help | bat --plain --language=help
+yay backlightctl
+spotify-tui
+spotifyd 
+spt
+spotifyd  --help | bat --plain --language=help
+yay spotify
+xev
+xprop
+fd  --help | bat --plain --language=help
+chsh --help | bat --plain --language=help
+curl --help | bat --plain --language=help
+yay spotify
+nu
+nu
+spotify-launcher
+pamixer  --help | bat --plain --language=help
+tldr pamixer
+pamixer -i 100
+pamixer --get-volume-human
+which bash
+scrot  --help | bat --plain --language=help
+i3 exit
+exit
+sudo killass --help | bat --plain --language=help
+sudo killall stumpwm
+alact q --help | bat --plain --language=help
+exit
+ls
+quicklist
+ql
+ls /usr/share/quicklisp/quicklisp.lisp
+sbcl --load /usr/share/quicklisp/quicklisp.lisp
+i3 exit
+sudo killall stumpwm
+xprop
+i3 exit
+ls
+sudo killall stumpwm
+ls
+sudo killall stumpwm
+ls
+xprop
+ls
+autorandr --help | bat --plain --language=help
+autorandr --curretn
+autorandr --current
+autorandr --change
+ls
+sudo killall stumpwm
+ls
+autorandr --change
+ls
+xprop
+ls
+sl
+ls
+sudo killall stumpwm
+ls
+stumpwm
+i3 exit
+ls
+sudo killall stumpwm
+ls
+ls .config/bin/
+firefox --help | bat --plain --language=help
+sudo killall emacs
+emacs
+startup
+firefox 
+firefox --new-window chatgpt.com
+xprop
+firefox --class "a"
+xprop
+firefox --class=a
+xprop
+ls
+sudo killall emacs
+pamixer  --help | bat --plain --language=help
+tldr pamixer 
+scrot --help | bat --plain --language=help
+sly
+sbcl
+emacs
+ls
+i3 exit
+ls
+emacs
+emacs 
+startup
+ls
+sudo killall emacs
+ls
+sudo killall stumpwm
+ls
+sudo killall stumpwm
+yay wmctrl
+wmctrl  --help | bat --plain --language=help
+dunstify --help | bat --plain --language=help
+ls
+wmctrl -xar firefox -N bot
+pacman -Syu roswell
+(ql:add-to-init-file)
+sbcl
+bat .sbclrc
+e .sbclrc
+ls
+bat .sbclrc
+sudo pacman -Syu roswell
+ls
+rosls
+i3 exit
+xprop
+zathuraa
+zathura
+emacs
+ls
+sudo killall stumpwm
+brightnessctl  --help | bat --plain --language=help
+dunstify --help | bat --plain --language=help
+pamixer --get-volume-human
+pamixer --toggle-mute
+pamixer --get-volume-human
+pamixer --decrease 5 && dunstify --replace 69 --icon "" (pamixer --get-volume-human)
+pamixer --decrease 5; dunstify --replace 69 --icon "" (pamixer --get-volume-human)
+dunstify  --help | bat --plain --language=help
+pamixer --decrease 5; dunstify --replace 69 --raw-icon "" (pamixer --get-volume-human)
+pamixer --decrease 5; dunstify --replace 69 --raw_icon "" (pamixer --get-volume-human)
+pamixer --help | bat --plain --language=help
+pamixer --list-sinks
+ls
+$sinks
+$sinks | split row " "
+$sinks | lines | each {split row " "}
+parse  --help | bat --plain --language=help
+$sinks | split column " "
+$sinks | lines | each {split column " "}
+split column  --help | bat --plain --language=help
+$sinks | lines | each {split column --regex '\"()"'}
+ls
+$sinks
+$sinks | lines | each {split column '(\d+) ()' id nam}
+$sinks
+$sinks | lines | skip 1 
+$sinks | lines | skip 1 | each {split column --regex '.+ ".+" ".+" ".+"' id sink status name}
+$sinks | lines | skip 1 | each {split column --regex '(.+)' id sink status name}
+$sinks | lines | skip 1 | each {split column --regex '.+' id sink status name}
+$sinks | lines | skip 1 | each {split column --regex '.*' id sink status name}
+$sinks | lines | skip 1 | each {split column '.*' id sink status name}
+$sinks | lines | skip 1 | each {split column '.* ".*"' id sink status name}
+$sinks | lines | skip 1 | each {split column -r '.* ".*"' id sink status name}
+$sinks | lines | skip 1 | each {split column '" ' id sink status name}
+$sinks | lines | skip 1 | each {split column ' "' id sink status name}
+$sinks | lines | skip 1 | each {split column '" "' id sink status name}
+str trim --help | bat --plain --language=help
+$sinks | lines | skip 1 | each { str trim '"' | split column ' ' id sink status name}
+$sinks | lines | skip 1 | each { str trim --char '"' | split column ' ' id sink status name}
+$sinks | lines | skip 1 | each { str trim --char '"' }
+$sinks | lines | skip 1 | each { str trim --char 'a' }
+$sinks | lines | skip 1 | each { str trim '"' | split column ' ' id sink status name}
+$sinks | lines | skip 1 | each { str trim --char '"' | split column ' ' id sink status name}
+$sinks | lines | skip 1 | each { str replace --all '"' ' ' | split column ' ' id sink status name}
+$sinks | lines | skip 1 | each { str replace --all '"' ' ' }
+$sinks | lines | skip 1 | each { str replace --all '"' '' }
+$sinks | lines | skip 1 | each { str replace --all '"' '' | split column ' '}
+$sinks | lines | skip 1 | each { str replace --all '"' '' | split column ' ' nr id status name}
+str replace  --help | bat --plain --language=help
+split column  --help | bat --plain --language=help
+i3 restart
+ls
+yay i3status
+yay -R i3status
+scrot 
+ls
+scrot --help | bat --plain --language=help
+mkdir ~/Pictures/screenshots
+ls
+rm 2024-03-03-233503_3840x1200_scrot.png 20240303-233525.png
+ls
+ls Pictures/screenshots/
+scrot --select '%Y-%m-%d_%H%M%S.png' -q 100 -e 'mv $f ~/Pictures/screenshots/'
+ls
+scrot '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' $esc
+scrot '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' 
+scrot '%Y-%m-%d_T%H-%M.png' -q 100
+scrot --select '%Y-%m-%d_T%H-%M.png' -q 100
+pamixer --decrease 5 && dunstify --replace 69 "󰝝  vol: dn" "$(pamixer --get-volume-human)"
+bash
+ls
+autorandr --change
+ls
+autorandr  --help | bat --plain --language=help
+autorandr --)ist
+autorandr --list
+bash
+autorandr --change
+autorandr --save hp_home2
+ls
+scrot
+scrot --help | bat --plain --language=help
+ls
+git clone https://github.com/stumpwm/stumpwm stumpsrc
+doom reload
+doom sync
+pamixer --get-volume
+dunstify  --help | bat --plain --language=help
+sudo killall stumpwm
+sudo killall i3
+autorandr --change
+ls
+nu -c startup
+nu --help | bat --plain --language=help
+md .config/stumpwm/modules
+mkd .config/stumpwm/modules
+mkdir .config/stumpwm/modules
+git clone https://github.com/stumpwm/stumpwm-contrib .config/stumpwm/modules/
+sudo killall stumpwm
+startup
+ps
+^ps aux
+^ps
+^ps a
+^ps x
+tldr ps
+ps auxww
+^ps auxwqw
+^ps auxww
+^ps axww
+sbcl
+emacs --daemon
+nm-applet
+ps | find nm-applet
+nm-applet
+playerctl
+ps | find player
+sudo killall playerctld
+playerctl
+playerctld
+playerctld
+sudo xremap --watch=device ~/.config/xremap/config.yml && sleep 1 && xset r off
+sudo xremap --watch=device ~/.config/xremap/config.yml
+ps | find xremap
+ps | find unclutter
+nu --commands autostart
+autostart
+nu --commands autostart
+ls
+scrot
+ls
+rm 2024-03-03_T23-42.png 2024-03-03_T23-42_000.png 2024-03-04-073428_3840x1200_scrot.png 2024-03-04-094715_3840x1200_scrot.png
+ls
+sudo killall stumpw
+sudo killall stumpwm
+ls
+autostart
+sasl;dfkj
+alacritty --class cmd --title cmd --execute tmux new-session -A -s cmd
+alacritty  --help | bat --plain --language=help
+pamixer  --help | bat --plain --language=help
+pamixer --get-mute
+pamixer --mute
+pamixer --get-mute
+pamixer -ui 10
+pamixer --get-mute
+playerctl
+playerctl metadate
+playerctl metadata
+autostart
+ls
+playerctl position +21
+playerctl position +1
+pgrep
+ggrep xremap
+pgrep xremap
+pgrep emacs
+pgrep sudo xremap
+pgrep "sudo xremap"
+pgrep "xremap"
+pgrep nm-applet
+pgrep tmux
+pgrep alacritty
+pgrep cmd
+pgrep batsignal
+pgrep sudo
+ps | find sudo
+ls
+ps | find xrem
+ps --long  | find xrem
+sudo killall xremap
+ps
+ps | find xremap
+xremap --watch=device ~/.config/xremap/config.yml
+sudo xremap --watch=device ~/.config/xremap/config.yml
+startup
+autostart
+ls
+pamixer  --help | bat --plain --language=help
+pamixer --list-sinks
+sudo killall emacs
+emacs
+sudo killall stumpwm
+pamixer  --help | bat --plain --language=help
+brightnessctl  --help | bat --plain --language=help
+brightnessctl set 10%+
+brightnessctl set 10%-
+sudo brightnessctl set 10%-
+sudo brightnessctl set 10
+sudo brightnessctl set 10+
+sudo brightnessctl set 50+
+sudo brightnessctl set +50
+sudo brightnessctl set 1--
+sudo brightnessctl set 100
+sudo brightnessctl set 20
+brightnessctl set 50
+brightnessctl set 100
+brightnessctl set 10000
+brightnessctl set 50%+
+brightnessctl set 50%-
+brightnessctl set 10%+
+brightnessctl set 10%!
+brightnessctl set 10%-
+brightnessctl set 10%+
+brightnessctl set 10%-
+pamixer  --help | bat --plain --language=help
+pamixer --list-sources
+i3lock
+ps | find batsig
+batsignal;
+batsignal
+batsignal  --help | bat --plain --language=help
+batsignal -o
+batsignal -O
+ls
+yay stumpish
+sly
+sbcl
+htop
+autostart
+ls;
+ls
+pgrep autorandr
+pgrep emacs
+pgrep  --help | bat --plain --language=help
+which pgrep 
+pgrep -f emacs
+pgrep -a emascs
+pgrep -a emacs
+pgrep -a sync
+ps
+pgrep emacs | lines
+pgrep -al emacs | lines
+ls
+ps | sort-by mem
+ps | sort-by cpu
+dmenu
+ls | dmenu
+ls | to text | dmenu
+ls | to text | dmenu -ibl
+ls | to text | dmenu -ib -l -p "choose:"
+ls | to text | dmenu -bi -l -p "choose:"
+ls | to text | dmenu -l
+ls | to text | dmenu 
+ls | to text | dmenu -l
+ls | to text | dmenu -l 15
+ls | to text | dmenu -bi -l 15 -p "choose:"
+ls | to text | dmenu -l 15 -p "choose:"
+ls | to text | dmenu -l 5 -p "choose:"
+ls
+NVIM
+nvim
+pgrep "emacs --daemon && emacsclient --reuse-frame"
+pgrep -f "emacs --daemon && emacsclient --reuse-frame"
+pgrep -f "emacs --daemon"
+emacs
+man nu
+man emacs
 ls

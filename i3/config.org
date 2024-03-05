@@ -2,7 +2,6 @@
 #+author:   Emil Lenz
 #+email:    emillenz@protonmail.com
 #+date:     2023-05-15
-
 #+property: header-args:conf :tangle config :comments link
 
 * About
@@ -24,8 +23,8 @@
 * Abbreviations of (freq. used) long commands
 - Expand before parsing 1:1 into the config.
 #+begin_src conf
-set $rofi rofi -dmenu -i -no-custom -p ' '
-set $esc mode "default"
+set $rofi rofi -dmenu -i -no-custom -p '  find-file: '
+set $esc ; mode "default"
 set $bin ~/.config/bin
 set $mv move container to workspace
 set $map bindsym
@@ -35,14 +34,14 @@ set $cmd exec --no-startup-id
 * Startup automation
 [[file:~/.config/bin/startup][Startup]] Launches processes and daemons i need for my workflow.
 #+begin_src conf
-$cmd $bin/startup
+$cmd $bin/autostart
 #+end_src
 
 * Options
 #+begin_src conf
 workspace_auto_back_and_forth no
 workspace_layout tabbed
-force_focus_wrapping no
+force_focus_wrapping yes
 default_orientation horizontal
 default_border pixel 1
 hide_edge_borders smart
@@ -74,59 +73,48 @@ $map button5 nop
 #+end_src
 
 ** System & Media controls
-- System & media controls with inbuilt keys
+- control everything mnemonically and consistently via keyboard-menus (no overlapping mappings)
+- brightness is hardware => done through XF86
 #+begin_src conf
-$map XF86MonBrightnessDown $cmd sudo light -U 5 && notify-send "󰃟 Light" "$(light)%"
-$map XF86MonBrightnessUp   $cmd sudo light -A 5 && notify-send "󰃟 Light" "$(light)%"
-$map XF86Display           $cmd $bin/output_select
-$map XF86ScreenSaver       $cmd xset dpms force off
-$map XF86Sleep             $cmd i3lock -e --color 000000 && systemctl suspend
-
-$map XF86AudioPlay         $cmd playerctl play
-$map XF86AudioPause        $cmd playerctl pause
+$map XF86MonBrightnessDown $cmd brightnessctl set 5%-
+$map XF86MonBrightnessUp   $cmd brightnessctl set 5%+
+$map XF86Display           $cmd autorandr --change
+$map XF86ScreenSaver       $cmd i3lock -e --color 000000 && systemctl suspend
+$map XF86Sleep             $cmd i3lock -e --color 002b36 && systemctl suspend
+$map XF86AudioPlay         $cmd playerctl play-pause
+$map XF86AudioPause        $cmd playerctl play-pause
 $map XF86AudioNext         $cmd playerctl next
 $map XF86AudioPrev         $cmd playerctl previous
-$map XF86AudioRaiseVolume  $cmd pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
-$map XF86AudioLowerVolume  $cmd pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
-$map XF86AudioMute         $cmd pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)"
-#+end_src
+$map XF86AudioForward      $cmd playerctl position +5
+$map XF86AudioBackward     $cmd playerctl position -5
+$map XF86AudioRaiseVolume  $cmd pamixer --unmute --increase 5 && dunstify --replace 69 "󰝝  vol: up" "$(pamixer --get-volume-human)"
+$map XF86AudioLowerVolume  $cmd pamixer --unmute --decrease 5 && dunstify --replace 69 "󰝞  vol: dn" "$(pamixer --get-volume-human)"
+$map XF86AudioMute         $cmd pamixer --toggle-mute && dunstify --replace 69 "󰖁  toggle-mute" "$(pamixer --get-volume-human)" $esc
 
-- Keyboard only
-#+begin_src conf
-$map Print             $cmd $bin/screenshot
-$map $mod+backslash    $cmd playerctl play-pause
-$map $mod+bracketright $cmd playerctl next
-$map $mod+bracketleft  $cmd playerctl previous
-$map $mod+equal        $cmd pactl set-sink-volume @DEFAULT_SINK@ +5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
-$map $mod+minus        $cmd pactl set-sink-volume @DEFAULT_SINK@ -5% && notify-send " Vol [$(pactl get-sink-mute @DEFAULT_SINK@)]" "$(pactl get-sink-volume @DEFAULT_SINK@ | rg -o '\d+%' | head -n 1)"
-$map $mod+0            $cmd pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send " Mute toggle" "$(pactl get-sink-mute @DEFAULT_SINK@)"
-#+end_src
-
-Xbacklight doesnt work for my hardware => using light instead.
-Incase you use xbacklight, substitute the bindings with the following:
-#+begin_src conf :tangle no
-$map XF86MonBrightnessUp   $cmd sudo xbacklight +5 && notify-send "󰃟 Light" "$(light)%"
-$map XF86MonBrightnessDown $cmd sudo xbacklight -5 && notify-send "󰃟 Light" "$(light)%"
+mode "media" {
+  $map $mod+t $cmd playerctl play-pause $esc
+  $map $mod+k $cmd playerctl previous
+  $map $mod+j $cmd playerctl next
+  $map $mod+h $cmd playerctl position -5
+  $map $mod+l $cmd playerctl position +5
+  $map $mod+d $cmd pamixer --unmute --decrease 5 && dunstify --replace 69 "󰝞  vol: dn" "$(pamixer --get-volume-human)"
+  $map $mod+u $cmd pamixer --unmute --increase 5 && dunstify --replace 69 "󰝝  vol: up" "$(pamixer --get-volume-human)"
+  $map $mod+m $cmd pamixer --toggle-mute && dunstify --replace 69 "󰖁  toggle-mute" "$(pamixer --get-volume-human)" $esc
+  $map Escape mode "default"
+}
 #+end_src
 
 ** Core navigation
 - Do not remap these keybindings to other keys. The bindings are universal and used in many apps so they should keep their function.
-- ~j~ / ~k~  are the main navigational keys, this is superior to using all ~hjkl~ keys for navigating windows:
-  + frees up ~hl~ for other bindings.
-  + reduces mental overhead: the window focus will only move horizontally, and in my opinion splitting a window horizontally is useless on regular aspect monitors.
-  + why not just ~hl~? => The keys are adjacent to each other on dvorak and qwerty.
 - If you absolutely need to use a split toggle it.
   + Without splits we need no keybindings for resizing, for splitting (less complexity and overhead)...
 #+begin_src conf
-$map $mod+j          focus prev
-$map $mod+shift+j    move left
-$map $mod+k          focus next
-$map $mod+shift+k    move right
-$map $mod+q          kill
-$map $mod+g          $cmd rofi -show window
-$map $mod+semicolon  $cmd rofi -show drun
-$map $mod+t          layout toggle tabbed splith
-$map $mod+Return     move workspace to output next
+$map $mod+q   kill
+$map $mod+g   $cmd rofi -show window
+$map $mod+x   $cmd rofi -show drun
+$map $mod+t   layout toggle tabbed splith
+$map $mod+Tab focus next
+$map $mod+Return move workspace to output next
 #+end_src
 
 ** Workspaces Assignments
@@ -142,11 +130,7 @@ $map $mod+Return     move workspace to output next
 for_window [urgent="latest"] focus
 for_window [all] title_window_icon yes
 
-set $ws_xyz "xyz"
-workspace $ws_xyz output primary
-$map $mod+x workspace $ws_xyz
-$map $mod+shift+x $mv $ws_xyz; workspace $ws_xyz
-for_window [all] $mv $ws_xyz, focus
+for_window [all] $mv 1, focus
 
 set $ws_cmd "cmd"
 workspace $ws_cmd output primary
@@ -188,7 +172,7 @@ set $ws_music "music"
 workspace $ws_music output primary
 $map $mod+m workspace $ws_music
 $map $mod+shift+m $mv $ws_music; workspace $ws_music
-for_window [class="(?i)firefox" title="(?i)Spotify"] $mv $ws_music, focus
+for_window [class="(?i)spotify"] $mv $ws_music, focus
 #+end_src
 
 ** Scratch workspaces
@@ -209,19 +193,14 @@ $map $mod+shift+4 $mv 4; workspace 4
 $map $mod+o mode "open"
 
 mode "open" {
-  $map $mod+c       $cmd alacritty --class cmd -T cmd -e tmux new-session -A -s cmd; $esc
-  $map --release    $mod+shift+e $cmd emacsclient --eval '(emacs-everywhere)'; $esc
-  $map $mod+d       $cmd xdg-open "$(fd -e=pdf . ~ | $rofi)"; $esc
-  $map $mod+e       $cmd emacsclient --reuse-frame || emacs --daemon; $esc
-  $map $mod+w       $cmd firefox; $esc
-  $map $mod+v       $cmd mpv $(xclip -o); $esc
-  $map $mod+s       $cmd keepassxc; $esc
-  $map $mod+m       $cmd firefox --new-window https://open.spotify.com; $esc
-  $map $mod+shift+m $cmd alacritty --class 'pulsemixer' -T 'audio' -e pulsemixer; $esc
-  $map $mod+b       $cmd firefox --new-window https://chat.openai.com; $esc
-  $map $mod+p       $cmd alacritty --class 'htop' -T 'htop' -e htop --tree; $esc
-  $map $mod+n       $cmd alacritty --class 'nmtui' -T 'nmtui' -e nmtui; $esc
-  $map Escape $esc
+  $map $mod+c       $cmd alacritty --class cmd --title cmd --command tmux new-session -A -s cmd $esc
+  $map --release    $mod+shift+e $cmd emacsclient --eval '(emacs-everywhere)' $esc
+  $map $mod+e       $cmd emacsclient --reuse-frame || emacs --daemon $esc
+  $map $mod+v       $cmd mpv "$(xclip -o)" $esc
+  $map $mod+b       $cmd firefox --new-window https://chat.openai.com $esc
+  $map $mod+w       $cmd firefox $esc
+  $map $mod+m       $cmd spotify-launcher $esc
+  $map Escape mode "default"
 }
 #+end_src
 
@@ -233,10 +212,10 @@ mode "open" {
 $map $mod+f mode "find"
 
 mode "find" {
-  $map $mod+c $cmd xdg-open "$(fd --extension=pdf . ~/Documents/uni/cs/s2 | $rofi)"; $esc
-  $map $mod+l $cmd xdg-open "$(fd --extension=pdf --extension=epub . ~/Documents/literature | $rofi)"; $esc
-  $map $mod+f $cmd xdg-open "$(fd --type=file . ~ | $rofi)"; $esc
-  $map Escape $esc
+  $map $mod+c $cmd xdg-open "$(fd --extension=pdf . ~/Documents/uni/cs/s2 | $rofi)" $esc
+  $map $mod+l $cmd xdg-open "$(fd . ~/Documents/literature/source | $rofi)" $esc
+  $map $mod+f $cmd xdg-open "$(fd --type=file . ~ | $rofi)" $esc
+  $map Escape mode "default"
 }
 #+end_src
 
@@ -245,29 +224,27 @@ mode "find" {
 $map $mod+space mode "menus"
 
 mode "menus" {
-  $map $mod+a       $cmd $bin/audio; $esc
-  $map $mod+o       $cmd $bin/layout; $esc
-  $map $mod+shift+o $cmd $bin/output; $esc
-  $map $mod+s       $cmd $bin/screenshot; $esc
-  $map $mod+b       $cmd $bin/btcon; $esc
-  $map $mod+p       $cmd $bin/killproc; $esc
-  $map $mod+q       mode "sysact";
-  $map Escape $esc
+  $map $mod+a           $cmd $bin/audio $esc
+  $map $mod+o           $cmd autorandr --change
+  $map --release $mod+s $cmd scrot --select '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' && dunstify "󰹑  scrot" "saved in: ~/Pictures/screenshots" $esc
+  $map $mod+shift+s     $cmd scrot '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' $esc
+  $map $mod+k           $cmd $bin/killprocess $esc
+  $map $mod+q           mode "quit"
+  $map $mod+m           mode "media"
+  $map Escape           mode "default"
 }
 #+end_src
 
 ** Systemact
-- Always hibernate and never poweroff => Preserves the state inbetween reboots => keeps workflow DRY.
 #+begin_src conf
-mode "sysact" {
-  $map $mod+i $cmd i3-msg restart; $esc
-  $map $mod+e $cmd i3-msg exit; $esc
-  $map $mod+r $cmd systemctl reboot; $esc
-  $map $mod+h $cmd systemctl hibernate; $esc
-  $map $mod+l $cmd i3lock -e --color 000000 && systemctl suspend; $esc
-  $map $mod+s $cmd sleep 1 && xset dpms force off; $esc
-  $map $mod+p $cmd systemctl poweroff; $esc
-  $map Escape $esc
+mode "quit" {
+  $map $mod+q           $cmd i3-msg exit $esc
+  $map $mod+shift+q     $cmd systemctl poweroff $esc
+  $map $mod+r           $cmd i3-msg restart $esc
+  $map $mod+shift+r     $cmd systemctl reboot $esc
+  $map $mod+s           $cmd i3lock -e --color 000000 && systemctl suspend $esc
+  $map --release $mod+o $cmd xset dpms force off $esc
+  $map Escape           mode "default"
 }
 #+end_src
 
@@ -291,21 +268,17 @@ client.background       $bg
 #+end_src
 
 * Statusbar
-- Only used as a mode indicator.
-- Off in all other situations in order not to distract.
+- only used for mode indicator
+- i3 is configured to send notifications for things like wifi, volume and battery (see status only when needed)
 #+begin_src conf
 bar {
   mode hide
-  hidden_state hide
   workspace_buttons no
+  hidden_state hide
   modifier none
-  status_command i3status
   tray_output primary
-  separator_symbol " | "
   colors {
     background $bg_alt
-    statusline $fg
-    separator  $fg
     # class      $border $backg $text
     binding_mode $focus  $focus $fg
   }

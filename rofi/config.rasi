@@ -8,12 +8,12 @@ configuration {
   modi: "drun,run,window,windowcd,ssh,filebrowser,keys";
 
   show-icons          : true;
-  display-drun        : " ";
-  display-run         : " ";
-  display-filebrowser : " ";
-  display-window      : " ";
+  display-drun        : "󰏋  run:";
+  display-run         : "  run:";
+  display-filebrowser : "  files:";
+  display-window      : "  window:";
 
-  window-format    : "{w} | {c} | {t} ";
+  window-format    : "{c}  |  {t}";
   window-command   : "wmctrl -i -R {window}";
   window-thumbnail : false;
 

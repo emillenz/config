@@ -10,10 +10,10 @@
                         nil nil
                         "/home/lenz/.config/doom/snippets/org-mode/verse" nil
                         "verse")
-                       ("uni_course"
-                        "#+title:  ${1:`(replace-regexp-in-string \"[-_.]\" \" \" (file-name-base (or buffer-file-name \"title\")))`} course agenda\n#+author: `user-full-name`\n#+email:  `user-mail-address`\n#+date:   `(format-time-string \"%F\")`\n#+filetags: :cs:${3:course tag}:\n\n* info$0\n- lecturer :: ${4:lecturer}\n- semester :: ${5:semester}\n- homepage :: ${6:homepage}\n- textbook :: ${7:textbook}\n\n* inbox\n* events\n* exercises\n* lectures\n* exercises"
+                       ("uni_course_agenda"
+                        "#+title:  ${1:`(replace-regexp-in-string \"[-_.]\" \" \" (file-name-base (or buffer-file-name \"title\")))`} course agenda\n#+author: `user-full-name`\n#+email:  `user-mail-address`\n#+date:   `(format-time-string \"%F\")`\n#+filetags: :cs:${3:course tag}:\n\n* info$0\n- lecturer :: ${4:lecturer}\n- semester :: ${5:semester}\n- homepage :: ${6:homepage}\n- textbook :: ${7:textbook}\n\n* inbox\n* events\n* exercises\n* lectures"
                         "uni_course_agenda" nil nil nil
-                        "/home/lenz/.config/doom/snippets/org-mode/uni_course"
+                        "/home/lenz/.config/doom/snippets/org-mode/uni_course_agenda"
                         nil nil)
                        ("todo" "TODO ${1:task description}" "TODO item" nil nil
                         nil "/home/lenz/.config/doom/snippets/org-mode/todo" nil
@@ -50,7 +50,7 @@
                         "/home/lenz/.config/doom/snippets/org-mode/img" nil
                         "img")
                        ("header"
-                        "#+title:  ${1:`(replace-regexp-in-string \"[-_.]\" \" \" (file-name-base (or buffer-file-name \"full title\")))`}\n#+author: `user-full-name`\n#+email:  `user-mail-address`\n#+date:   `(format-time-string \"%F\")`\n#+filetags: ${2:filetags}\n$0\n"
+                        "#+title:  ${1:`(replace-regexp-in-string \"[-_.]\" \" \" (file-name-base (or buffer-file-name \"full title\")))`}\n#+author: `user-full-name`\n#+email:  `user-mail-address`\n#+date:   `(format-time-string \"%F\")`\n#+info:   ${3:document info}\n#+filetags: ${3:filetags}\n$0\n"
                         "header" nil nil nil
                         "/home/lenz/.config/doom/snippets/org-mode/header" nil
                         "header")
@@ -153,4 +153,4 @@
                         "begin")))
 
 
-;;; Do not edit! File generated at Thu Feb 29 06:08:19 2024
+;;; Do not edit! File generated at Sun Mar  3 22:48:43 2024

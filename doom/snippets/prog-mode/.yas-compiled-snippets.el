@@ -42,7 +42,7 @@ Otherwise the reversed output of function `yas-trimmed-comment-start' is returne
 ;;;
 (yas-define-snippets 'prog-mode
                      '(("header"
-                        "`comment-start` ---\n`comment-start` title:  ${2:`(replace-regexp-in-string \"[-_.]\" \" \" (file-name-base (or buffer-file-name \"full title\")))`}\n`comment-start` author: `user-full-name`\n`comment-start` email:  `user-mail-address`\n`comment-start` date:   `(format-time-string \"%F\")`\n`comment-start` ---\n$0\n"
+                        "`comment-start` ---\n`comment-start` title:  ${2:`(replace-regexp-in-string \"[-_.]\" \" \" (file-name-base (or buffer-file-name \"full title\")))`}\n`comment-start` author: `user-full-name`\n`comment-start` email:  `user-mail-address`\n`comment-start` date:   `(format-time-string \"%F\")`\n`comment-start` info:\n`comment-start`   - ${3:document info}\n`comment-start` ---\n$0\n"
                         "header" nil nil nil
                         "/home/lenz/.config/doom/snippets/prog-mode/header" nil
                         "header")
@@ -58,4 +58,4 @@ Otherwise the reversed output of function `yas-trimmed-comment-start' is returne
                         nil "cob")))
 
 
-;;; Do not edit! File generated at Thu Feb 29 06:08:19 2024
+;;; Do not edit! File generated at Sun Mar  3 22:48:43 2024

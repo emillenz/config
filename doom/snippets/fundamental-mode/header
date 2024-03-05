@@ -8,5 +8,7 @@ $1 title:  ${2:`(replace-regexp-in-string "[-_.]" " " (file-name-base (or buffer
 $1 author: `user-full-name`
 $1 email:  `user-mail-address`
 $1 date:   `(format-time-string "%F")`
+$1 info:
+$1   - ${3:document info}
 $1 ---
 $0

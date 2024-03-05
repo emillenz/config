@@ -29,7 +29,7 @@ git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 # Editor: doom emacs:1 ends here
 
 # [[file:setup.org::*Gui apps & packages][Gui apps & packages:1]]
-yay --noconfirm --sync i3 i3lock zathura zathura-pdf-mupdf arandr mpv rofi light sxiv unclutter firefox pavucontrol pasystray playerctl blueman xorg-xprop xremap-x11-bin light networkmanager mpd dunst notify-send nsxiv maim pulsemixer xorg-xset xorg-xsetroot batsignal
+yay --noconfirm --sync i3 i3lock zathura zathura-pdf-mupdf arandr mpv yt-dlp rofi light sxiv unclutter firefox pavucontrol pasystray playerctl blueman xorg-xprop xremap-x11-bin light networkmanager mpd dunst notify-send nsxiv maim pulsemixer xorg-xset xorg-xsetroot batsignal
 # Gui apps & packages:1 ends here
 
 # [[file:setup.org::*Enable daemons][Enable daemons:1]]

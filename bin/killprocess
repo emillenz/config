@@ -8,8 +8,15 @@
 # info:   utility script using rofi, to kill a specific process by name.
 # -----
 def main []  {
-  let $icon = " "
-  let ps = (ps | get name | to text | rofi -dmenu -i -no-custom -p $"($icon)" | str trim | if $in == "" {exit 1} else {$in})
+  let $icon = "  kill:"
+  let ps = (
+    ps
+    | get name
+    | to text
+    | rofi -dmenu -i -no-custom -p $"($icon)"
+    | str trim
+    | if $in == "" {exit 1} else {$in}
+  )
   sudo killall $ps
-  notify-send $"($icon) killprocess" $ps
+  dunstify $"($icon) killprocess" $ps
 }

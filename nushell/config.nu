@@ -244,13 +244,13 @@ $env.config = {
       event: {send: HistoryHintComplete}
     }
 
-    {
-      name: help_menu
-      modifier: shift_control
-      keycode: char_h
-      mode: [vi_normal vi_insert]
-      event: {send: menu name: help_menu}
-    }
+    # {
+    #   name: help_menu
+    #   modifier: shift_control
+    #   keycode: char_h
+    #   mode: [vi_normal vi_insert]
+    #   event: {send: menu name: help_menu}
+    # }
 
     {
       name: recent_cmds_menu
@@ -284,13 +284,13 @@ $env.config = {
     }
 
     {
-      name: manpage
-      modifier: shift_control
-      keycode: char_m
+      name: womanpage
+      modifier: control
+      keycode: char_w
       mode: [vi_normal vi_insert]
       event: [
         {edit: MoveToLineStart}
-        {edit: InsertString, value: " man"}
+        {edit: InsertString, value: " man "}
         {send: Enter}
       ]
     }

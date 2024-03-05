@@ -12,11 +12,6 @@
 
   (setq modus-themes-common-palette-overrides
         `((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
-
-          (bg-tab-bar bg-main)
-          (bg-tab-other bg-inactive)
-          (bg-tab-current bg-completion)
-
           (fg-heading-1 fg-heading-0)))
 
   ;; HACK :: cannot customize these things with `modus-themes-common-palette-overrides'
@@ -67,10 +62,10 @@
 
 (setq +popup-defaults
       '(:side right
-        :select nil
-        :quit t
-        :width 0.33
-        :modeline nil))
+        :select t
+        :quit nil
+        :width 0.5
+        :modeline t))
 
 (after! org
   (setq org-src-window-setup 'current-window)
@@ -100,14 +95,6 @@
       visual-fill-column-width 100
       fill-column 100)
 ;; window layout & behavior:2 ends here
-
-;; [[file:config.org::*tabs][tabs:1]]
-(tab-bar-mode 1)
-(setq tab-bar-tab-hints t
-      tab-bar-new-button-show nil
-      tab-bar-new-tab-to 'rightmost
-      tab-bar-close-button-show nil)
-;; tabs:1 ends here
 
 ;; [[file:config.org::*misc options][misc options:1]]
 (setq bookmark-default-file "~/.config/doom/bookmarks"
@@ -143,7 +130,7 @@
                "V" #'visual-fill-column-mode
                "C" #'company-mode)
       (:prefix "c"
-               "w" #'clean_whitespace)
+               "w" #'z/clean-whitespace)
 
       (:prefix "o"
                "c" #'eshell)
@@ -157,52 +144,37 @@
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:1]]
 (map! :map 'override
-      :inmv "M-j"   #'previous-window-any-frame
-      :inmv "M-k"   #'next-window-any-frame
-      :inmv "M-t"   #'tab-bar-new-tab-to
-      :inmv "M-q"   #'evil-quit
-      :inmv "M-1"   (cmd! (tab-bar-select-tab 1))
-      :inmv "M-2"   (cmd! (tab-bar-select-tab 2))
-      :inmv "M-3"   (cmd! (tab-bar-select-tab 3))
-      :inmv "M-4"   (cmd! (tab-bar-select-tab 4))
-      :inmv "M-o"   #'find-file
-      :inmv "M-f"   #'consult-find
-      :inmv "M-F"   (cmd! (consult-find "~"))
-      :inmv "M-g"   #'consult-buffer
-      :inmv "M-r"   #'consult-recent-file
-      :inmv "M-c"   #'async-shell-command
-      :inmv "M-w"   #'+lookup/online
-      :inmv "M-;"   #'execute-extended-command
-      :inmv "M-'"   #'consult-bookmark
+      :inmv "M-w" #'next-window-any-frame
+      :inmv "M-q" #'kill-buffer-and-window
+      :inmv "M-1" (cmd! (tab-bar-select-tab 1))
+      :inmv "M-2" (cmd! (tab-bar-select-tab 2))
+      :inmv "M-3" (cmd! (tab-bar-select-tab 3))
+      :inmv "M-4" (cmd! (tab-bar-select-tab 4))
+      :inmv "M-5" (cmd! (tab-bar-select-tab 5))
+      :inmv "M-6" (cmd! (tab-bar-select-tab 6))
+      :inmv "M-o" #'find-file
+      :inmv "M-f" #'consult-find
+      :inmv "M-F" (cmd! (consult-find "~"))
+      :inmv "M-g" #'consult-buffer
+      :inmv "M-r" #'consult-recent-file
+      :inmv "M-c" #'async-shell-command
 
-      :inmv "C--"   #'doom/decrease-font-size
-      :inmv "C-="   #'doom/increase-font-size
-      :inmv "C-0"   #'doom/reset-font-size)
+      :inmv "C--" #'doom/decrease-font-size
+      :inmv "C-=" #'doom/increase-font-size
+      :inmv "C-0" #'doom/reset-font-size)
 ;; global navigation scheme:1 ends here
 
-;; [[file:config.org::*global navigation scheme][global navigation scheme:2]]
-(defadvice! evil_quit (&optional force)
-  "Close current tab before closing current frame (more sensible)."
-  :override #'evil-quit
-  (condition-case nil
-      (evil-window-delete)
-    (error
-     (if (and (bound-and-true-p server-buffer-clients)
-              (fboundp 'server-edit)
-              (fboundp 'server-buffer-done))
-         (if force
-             (server-buffer-done (current-buffer))
-           (server-edit))
-       (condition-case nil
-           (delete-frame)
-         (error
-          (if force
-              (kill-emacs)
-            (save-buffers-kill-emacs))))))))
-;; global navigation scheme:2 ends here
+;; [[file:config.org::*tabs][tabs:1]]
+(tab-bar-mode 0)
+
+(dotimes (i 3)
+  (tab-bar-new-tab))
+(tab-bar-select-tab 1)
+;; tabs:1 ends here
 
 ;; [[file:config.org::*evil][evil:1]]
-(map! :nmvo "j"   #'evil-next-visual-line
+(map! :inmv "C-s" #'basic-save-buffer
+      :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
 
       :nm   "TAB" #'+fold/toggle
@@ -233,7 +205,7 @@
 ;; evil:1 ends here
 
 ;; [[file:config.org::*evil][evil:2]]
-(defadvice! update_evil_search_reg ()
+(defadvice! z/update-evil-search-reg ()
   "Update evil search register after jumping to a line with
   `+default/search-buffer' to be able to jump to next/prev matches.
 This is sensible default behaviour, and integrates it into evil."
@@ -270,7 +242,7 @@ This is sensible default behaviour, and integrates it into evil."
       ","  #'org-ctrl-c-ctrl-c
       (:prefix-map ("`" . "org-src")
                    "`" #'org-edit-special
-                   "g" #'org_goto_src
+                   "g" #'z/org-goto-src
                    "t" #'org-babel-tangle))
 ;; org:1 ends here
 
@@ -295,7 +267,7 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "E" #'dired-create-directory)
 
 (map! :map dired-mode-map :localleader :after dired
-      :nm "a" #'dired_archive)
+      :nm "a" #'z/dired-archive)
 ;; dired (keybindings):1 ends here
 
 ;; [[file:config.org::*magit][magit:1]]
@@ -394,20 +366,21 @@ This is sensible default behaviour, and integrates it into evil."
 ;; dired:1 ends here
 
 ;; [[file:config.org::*Archive file][Archive file:1]]
-(defvar archive_dir "~/Archive/"
+(defvar z/archive-dir "~/Archive/"
   "User's archive directory.")
 
-(defun dired_archive ()
+(defun z/dired-archive ()
   (interactive)
   (let ((files (dired-get-marked-files nil nil)))
     (dolist (f files)
       (let* ((dest (file-name-concat
-                    archive_dir
+                    z/archive-dir
                     (file-relative-name f "~/")))
              (dir (file-name-directory dest)))
         (unless (file-exists-p dir)
           (make-directory dir t))
-        (rename-file f dest 1)))))
+        (rename-file f dest 1)))
+    (revert-buffer)))
 ;; Archive file:1 ends here
 
 ;; [[file:config.org::*programming][programming:1]]
@@ -421,7 +394,7 @@ This is sensible default behaviour, and integrates it into evil."
       org-indent-indentation-per-level 2
       evil-shift-width 2
       standard-indent 2
-      tab-width 2
+      tab-width 8 ;; required by org-mode
       evil-indent-convert-tabs t
       indent-tabs-mode nil)
 
@@ -434,13 +407,10 @@ This is sensible default behaviour, and integrates it into evil."
 (setq-hook! rustic-mode-hook
   rustic-indent 2
   rustic-indent-offset 2)
-
-(setq-hook! org-mode-hook
-  tab-width 8) ;; HACK :: org needs 8 to work
 ;; Indentation: 2 spaces:1 ends here
 
 ;; [[file:config.org::*Clean Whitespace][Clean Whitespace:1]]
-(defun clean_whitespace ()
+(defun z/clean-whitespace ()
   "Deletes consecutive empty lines if # > 1, and strips trailing whitespace."
   (interactive)
   (delete-trailing-whitespace)
@@ -509,7 +479,8 @@ This is sensible default behaviour, and integrates it into evil."
 ;; options:1 ends here
 
 ;; [[file:config.org::*symbols][symbols:1]]
-(add-hook! 'org-mode-hook '(org-superstar-mode prettify-symbols-mode))
+(add-hook! 'org-mode-hook '(org-superstar-mode
+                            prettify-symbols-mode))
 
 (setq org-superstar-headline-bullets-list
       '("◉" "◯" "▣" "□" "◈" "◇"))
@@ -540,18 +511,16 @@ This is sensible default behaviour, and integrates it into evil."
 ;; [[file:config.org::*task states][task states:1]]
 (after! org
   (setq org-todo-keywords
-        '((type
-           "[#](#)")
-          (sequence
-           "[ ](t)" ;; HACK :: cannot use " " => [T]odo
-           "[?](?!)"
-           "[-](-@)"
-           "[=](=@)"
-           "[&](&@)"
-           "|"
-           "[x](x!)"
-           "[@](d@)" ;; HACK :: cannot use"@" => [D]elegated
-           "[\\](\\@)")))
+        '((type "[#](#)")
+          (sequence "[ ](t)" ;; HACK :: cannot use " " => [T]odo
+                    "[?](?!)"
+                    "[-](-@)"
+                    "[=](=@)"
+                    "[&](&@)"
+                    "|"
+                    "[x](x!)"
+                    "[@](d@)" ;; HACK :: cannot use"@" => [D]elegated
+                    "[\\](\\@)")))
 
   (setq org-todo-keyword-faces
         '(("[#]"  . '(bold +org-todo-project))
@@ -649,22 +618,23 @@ This is sensible default behaviour, and integrates it into evil."
 ;; clock:1 ends here
 
 ;; [[file:config.org::*capture templates][capture templates:1]]
-(defvar org_journal_dir (file-name-concat "~/Documents/journal/")
+(defvar z/org-journal-dir (file-name-concat "~/Documents/journal/")
   "directory for daily journal files.")
-(defvar org_literature_dir "~/Documents/literature/notes/"
+(defvar z/org-literature-dir "~/Documents/literature/notes/"
   "directory for literature notes.")
-(defvar doct_projects '(("cs" :keys "c"
-                         :children (("pp" :keys "p")
-                                    ("as1" :keys "a")
-                                    ("aw" :keys "w")
-                                    ("ddca" :keys "d")
-                                    ("asdf" :keys "t")))
-                        ("personal" :keys "p")
-                        ("config" :keys "f")
-                        ("compass" :keys "o"))
+(defvar z/doct-projects
+  '(("cs" :keys "c"
+     :children (("pp" :keys "p")
+                ("as1" :keys "a")
+                ("aw" :keys "w")
+                ("ddca" :keys "d")
+                ("asdf" :keys "t")))
+    ("personal" :keys "p")
+    ("config" :keys "f")
+    ("compass" :keys "o"))
   "user projects for capture templates.")
 
-(defun doct_expand_projects (projects target &optional ppath)
+(defun z/doct-expand-projects (projects target &optional ppath)
   "generate doct preset for project (standardized).
 
 PROJECTS :: all projects with their keys [and children]
@@ -687,147 +657,142 @@ reduces code repetition."
        (append
         self
         (when children
-          `(:children ,(cons self (doct_expand_projects children target path)))))))
+          `(:children ,(cons self
+                             (z/doct-expand-projects children target path)))))))
    projects))
 
-(defun doct_journal_file (&optional time)
+(defun z/doct-journal-file (&optional time)
   "filepath for journal.
 
 TIME :: Time of note to return. (default: today)"
-  (file-name-concat
-   org_journal_dir
-   (format
-    "%s__journal.org"
-    (format-time-string "%F" (or time (current-time))))))
+  (file-name-concat z/org-journal-dir
+                    (format "%s__journal.org"
+                            (format-time-string "%F" (or time (current-time))))))
 
 (after! org
-  (setq
-   org-capture-templates
-   (doct
-    `(("task" :keys "t"
-       :headline "inbox"
-       :prepend t :empty-lines-after 1
-       :template ("* [ ] %^{title}%? %^g")
-       :children ,(doct_expand_projects doct_projects "agenda"))
+  (setq org-capture-templates
+        (doct `(("task" :keys "t"
+                 :headline "inbox"
+                 :prepend t :empty-lines-after 1
+                 :template ("* [ ] %^{title}%? %^g")
+                 :children ,(z/doct-expand-projects z/doct-projects "agenda"))
 
-      ("event" :keys "e"
-       :headline "events"
-       :prepend t :empty-lines-after 1
-       :template ("* [#] %^{title}%? %^g"
-                  "%^T"
-                  ":PROPERTIES:"
-                  ":REPEAT_TO_STATE: [#]" ; NOTE :: incase is made repeating
-                  ":location: %^{location}"
-                  ":material: %^{material}"
-                  ":END:")
-       :children ,(doct_expand_projects doct_projects "agenda"))
+                ("event" :keys "e"
+                 :headline "events"
+                 :prepend t :empty-lines-after 1
+                 :template ("* [#] %^{title}%? %^g"
+                            "%^T"
+                            ":PROPERTIES:"
+                            ":REPEAT_TO_STATE: [#]" ; NOTE :: incase is made repeating
+                            ":location: %^{location}"
+                            ":material: %^{material}"
+                            ":END:")
+                 :children ,(z/doct-expand-projects z/doct-projects "agenda"))
 
-      ("note" :keys "n"
-       :prepend t :empty-lines 1
-       :template ("* %^{title} %^g"
-                  ":PROPERTIES:"
-                  ":created: %U"
-                  ":END:"
-                  "%?")
-       :children ,(doct_expand_projects doct_projects "notes"))
+                ("note" :keys "n"
+                 :prepend t :empty-lines 1
+                 :template ("* %^{title} %^g"
+                            ":PROPERTIES:"
+                            ":created: %U"
+                            ":END:"
+                            "%?")
+                 :children ,(z/doct-expand-projects z/doct-projects "notes"))
 
-      ("journal" :keys "j"
-       :file (lambda () (doct_journal_file))
-       :children (("begin today" :keys "t"
-                   :type plain
-                   :template ("#+title:  Daily Note: %<%A, %e. %B %Y>"
-                              "#+author: %(user-full-name)"
-                              "#+email:  %(message-user-mail-address)"
-                              "#+date:   %<%F>"
-                              "#+filetags: :journal:"
-                              ""
-                              "* goals"
-                              "- [ ] %?"
-                              ""
-                              "* agenda"
-                              "** [ ] "
-                              "SCHEDULED: <%<%F %a>>"))
-                  ("entry" :keys "e"
-                   :empty-lines-before 1
-                   :template ("* %^{title}"
-                              ":PROPERTIES:"
-                              ":created: %U"
-                              ":END:"
-                              "%?"))
+                ("journal" :keys "j"
+                 :file (lambda () (z/doct-journal-file))
+                 :children (("begin today" :keys "t"
+                             :type plain
+                             :template ("#+title:  Daily Note: %<%A, %e. %B %Y>"
+                                        "#+author: %(user-full-name)"
+                                        "#+email:  %(message-user-mail-address)"
+                                        "#+date:   %<%F>"
+                                        "#+filetags: :journal:"
+                                        ""
+                                        "* goals"
+                                        "- [ ] %?"
+                                        ""
+                                        "* agenda"
+                                        "** [ ] "
+                                        "SCHEDULED: <%<%F %a>>"))
+                            ("entry" :keys "e"
+                             :empty-lines-before 1
+                             :template ("* %^{title}"
+                                        ":PROPERTIES:"
+                                        ":created: %U"
+                                        ":END:"
+                                        "%?"))
 
-                  ("end yesterday" :keys "y"
-                   :empty-lines-before 1
-                   :unnarrowed t
-                   :file (lambda () (doct_journal_file (time-subtract
-                                                        (current-time)
-                                                        (days-to-time 1))))
-                   :template ("* gratitude"
-                              "- %?"
-                              ""
-                              "* reflection"
-                              "-"))))
+                            ("end yesterday" :keys "y"
+                             :empty-lines-before 1
+                             :unnarrowed t
+                             :file (lambda () (z/doct-journal-file (time-subtract (current-time)
+                                                                                  (days-to-time 1))))
+                             :template ("* gratitude"
+                                        "- %?"
+                                        ""
+                                        "* reflection"
+                                        "-"))))
 
-      ("literature" :keys "l"
-       :file (lambda () (read-file-name "file: " org_literature_dir))
-       :children (("init" :keys "i"
-                   :file
-                   (lambda ()
-                     (let* ((name (concat
-                                   (replace-regexp-in-string
-                                    " " "_"
-                                    (read-from-minibuffer "short title: "))
-                                   ".org")))
-                       (file-name-concat
-                        org_literature_dir
-                        name)))
-                   :type plain
-                   :short-title (lambda ())
-                   :template ("#+title:  %^{full title}"
-                              "#+author: %(user-full-name)"
-                              "#+email:  %(message-user-mail-address)"
-                              "#+date:   %<%F>"
-                              "#+filetags: :literature:%^g"
-                              ""
-                              "* [-] %\\1%?"
-                              ":PROPERTIES:"
-                              ":title:  %\\1"
-                              ":author: %^{author}"
-                              ":year:   %^{year}"
-                              ":type:   %^{book|textbook|ebook|paper|article|audiobook|podcast}"
-                              ":pages:  %^{pages}"
-                              ":END:"
-                              ""
-                              "** excerpts"
-                              "** literature notes"
-                              "** transient notes"
-                              "** summary"))
+                ("literature" :keys "l"
+                 :file (lambda () (read-file-name "file: " z/org-literature-dir))
+                 :children (("init" :keys "i"
+                             :file
+                             (lambda ()
+                               (let* ((name (concat
+                                             (replace-regexp-in-string
+                                              " " "_"
+                                              (read-from-minibuffer "short title: "))
+                                             ".org")))
+                                 (file-name-concat z/org-literature-dir
+                                                   name)))
+                             :type plain
+                             :short-title (lambda ())
+                             :template ("#+title:  %^{full title}"
+                                        "#+author: %(user-full-name)"
+                                        "#+email:  %(message-user-mail-address)"
+                                        "#+date:   %<%F>"
+                                        "#+filetags: :literature:%^g"
+                                        ""
+                                        "* [-] %\\1%?"
+                                        ":PROPERTIES:"
+                                        ":title:  %\\1"
+                                        ":author: %^{author}"
+                                        ":year:   %^{year}"
+                                        ":type:   %^{book|textbook|ebook|paper|article|audiobook|podcast}"
+                                        ":pages:  %^{pages}"
+                                        ":END:"
+                                        ""
+                                        "** excerpts"
+                                        "** literature notes"
+                                        "** transient notes"
+                                        "** summary"))
 
-                  ("excerpt" :keys "e"
-                   :headline "excerpts"
-                   :empty-lines-after 1
-                   :template ("* %^{title} [pg:%^{page}] %^g"
-                              "#+begin_quote"
-                              "%x"
-                              "#+end_quote"))
+                            ("excerpt" :keys "e"
+                             :headline "excerpts"
+                             :empty-lines-after 1
+                             :template ("* %^{title} [pg:%^{page}] %^g"
+                                        "#+begin_quote"
+                                        "%x"
+                                        "#+end_quote"))
 
-                  ("note: literary" :keys "l"
-                   :headline "literature notes"
-                   :empty-lines-after 1
-                   :template ("* %^{title} [pg:%^{page}] %^g"
-                              "%?"))
+                            ("note: literary" :keys "l"
+                             :headline "literature notes"
+                             :empty-lines-after 1
+                             :template ("* %^{title} [pg:%^{page}] %^g"
+                                        "%?"))
 
-                  ("note: transient" :keys "t"
-                   :headline "transient notes"
-                   :empty-lines-after 1
-                   :template ("* %^{title} %^g"
-                              "%?"))
+                            ("note: transient" :keys "t"
+                             :headline "transient notes"
+                             :empty-lines-after 1
+                             :template ("* %^{title} %^g"
+                                        "%?"))
 
-                  ;; NOTE :: make sure to complete the literature-task-headline in order to log closing time.
-                  ("summarize" :keys "c"
-                   :headline "summary"
-                   :unnarrowed t
-                   :type plain
-                   :template ("%?"))))))))
+                            ;; NOTE :: make sure to complete the literature-task-headline in order to log closing time.
+                            ("summarize" :keys "c"
+                             :headline "summary"
+                             :unnarrowed t
+                             :type plain
+                             :template ("%?"))))))))
 ;; capture templates:1 ends here
 
 ;; [[file:config.org::*org-latex][org-latex:1]]
@@ -836,7 +801,7 @@ TIME :: Time of note to return. (default: today)"
 ;; org-latex:1 ends here
 
 ;; [[file:config.org::*keywords to downcase][keywords to downcase:1]]
-(defun org_convert_keywords_downcase ()
+(defun z/org-convert-keywords-downcase ()
   "Convert all #+KEYWORDS => #+keywords && :keyword: => :keyword:"
   (interactive)
   (save-excursion
@@ -847,7 +812,7 @@ TIME :: Time of note to return. (default: today)"
 ;; keywords to downcase:1 ends here
 
 ;; [[file:config.org::*Jump to src file][Jump to src file:1]]
-(defun org_goto_src ()
+(defun z/org-goto-src ()
   "The opposite of `org-babel-tangle-jump-to-org'.
 Jumps at tangled code from org src block."
   (interactive)

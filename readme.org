@@ -96,21 +96,22 @@ Iosevka Nerd Font optimises for inter-glyph and inter-style consistency within t
   - Alt acts as the navigational-layer above the applications normal keybindings (chars, ctrl, shift), it condenses down a minimal set of universal, efficient navigational commands.
   - Alt is available in (almost) every program, leadermode is not.
 
-| Mod - | Action                       | Consistency            |
-|-------+------------------------------+------------------------|
-| T     | new tab                      | Vim/Mnemonic/standard  |
-| J,K   | prev/next window (!not tabs) | Vim, ergonomic         |
-| 1-4   | Switch to tab by index       | Logic / stardard       |
-| G     | search tabs/buffers          | vim: goto              |
-| Q     | Quit (window=>tab=>program)  | Mnemonic / standard    |
-| E     | edit file / editor           | Mnemonic               |
-| C     | Command-line (shell)         | Emacs/Mnemonic         |
-| F     | Find (program/file)          | Mnemonic / Standard    |
-| ;     | Execute command (in-app)     | Programming: statement |
-| SPC   | Leader-key                   | Vim / ergonomic        |
-| C     | command-line                 | Standard               |
-| E     | Editor                       | Vim: e <- edit         |
-| W     | Web (browser)                | WWW                    |
+| Mod - | Action                      | Consistency           |
+|-------+-----------------------------+-----------------------|
+| T     | new tab                     | Vim/Mnemonic/standard |
+| tab   | cycle window/tab            | Vim, ergonomic        |
+| 1-6   | Switch to tab by index      | Logic / stardard      |
+| G     | search tabs/buffers         | vim: goto             |
+| Q     | Quit (window=>tab=>program) | Mnemonic / standard   |
+| E     | edit file / editor          | Mnemonic              |
+| C     | Command-line (shell)        | Emacs/Mnemonic        |
+| F     | Find (program/file)         | Mnemonic / Standard   |
+| X     | Execute command (in-app)    | Emacs: M-x            |
+| C     | command-line                | Standard              |
+| E     | Editor                      | Vim: e <- edit        |
+| W     | Web (browser)               | WWW                   |
+| O     | open (file/program)         | mnemonic              |
+| SPC   | Leader-key                  | Vim / ergonomic       |
 
 * Software
 The aim is to be able to run software for years without it breaking or bugging.
@@ -120,6 +121,7 @@ I'm very opinionated and have high standards regarding design process and the ph
 
 ** Windowmanager: I3
 - The windowmanager follows the philosopy of eliminating mental overhead and the neccessety to arrange windows or layouts.
+- The wm is directly coupled to the system, hence it makes sense to run shell-commands and scripts instead of something such as ~stumpwm~.
 
 ** Constrain text width & center text
  - Center text windows for better ergonomics & less eye travel (distance - switching from left to middle from eg: terminal to webpage).
@@ -140,6 +142,7 @@ I'm very opinionated and have high standards regarding design process and the ph
   - You always know what window you are looking at by its contents.
   - You don't need visual indication of how to navigate to tabs, nor interact with the statusbar (ex: click something) => each specific tab is always on the same keybind.
 - The aestetic and efficiency of a decluttered and maximized screen is (imo) unmatched.
+- the theory is to make switching so ergonomic and instantaneous, engrained into muscle memory, that you are faster that people using, say 2 monitors.
 
 ** Shell: Nushell
 *** Why? Because bash sucks.
@@ -224,6 +227,9 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - Distraction free, no unneccessary features.
 - Vi-keybindings
 - Allows for viewing the document/book in solarized theme to keep it inline with the os.
+
+** video-player: mpv
+- allows all types of video to be played (media, yt..) => less distractions and don't get lost in recommended video's by succumbing to the algorithm
 
 ** Webbrowser: Firefox
 *** Install & configure extensions manually

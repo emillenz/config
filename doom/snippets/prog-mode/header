@@ -8,5 +8,7 @@
 `comment-start` author: `user-full-name`
 `comment-start` email:  `user-mail-address`
 `comment-start` date:   `(format-time-string "%F")`
+`comment-start` info:
+`comment-start`   - ${3:document info}
 `comment-start` ---
 $0

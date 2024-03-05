@@ -7,5 +7,6 @@
 #+author: `user-full-name`
 #+email:  `user-mail-address`
 #+date:   `(format-time-string "%F")`
-#+filetags: ${2:filetags}
+#+info:   ${3:document info}
+#+filetags: ${3:filetags}
 $0

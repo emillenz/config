@@ -1,5 +1,7 @@
 #!/usr/bin/env nu
 
+use utils.nu
+
 # -----
 # title:  layoutselect
 # author: emil lenz
@@ -10,9 +12,10 @@
 def main [
   --directory(-d): string = "~/.screenlayout" # specify custom directory // default: ~/.screenlayout
 ] {
-  let icon = "󰍹 "
-  let layout = (ls $directory | get name | path basename | to text | rofi -dmenu -i -no-custom -p $"($icon) layout: " | str trim | if $in == "" {exit 1} else {$in})
+  let icon = "󰍹"
+  let layouts = (ls $directory | get name | path basename)
+  let layout = (utils rofi $layouts "layout" $icon)
 
-  nu -c ($directory | path join $layout); # HACK: is in bash
-  dustify  $"($icon)layoutselect" $"switched to:\n ($layout)"
+  nu -c ($directory | path join $layout)
+  dustify  $"($icon)  layoutselect" $"switched to:\n ($layout)"
 }

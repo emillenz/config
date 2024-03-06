@@ -34,7 +34,7 @@
 (setq doom-font                (font-spec :family "Iosevka Nerd Font" :size 14)
       doom-variable-pitch-font (font-spec :family "Iosevka Nerd Font" :size 14)
       doom-serif-font          (font-spec :family "Iosevka Nerd Font" :size 14)
-      doom-big-font            (font-spec :family "Iosevka Nerd Font" :size 24))
+      doom-big-font            (font-spec :family "Iosevka Nerd Font" :size 28))
 
 (custom-set-faces!
   '(font-lock-keyword-face :slant normal :weight bold)
@@ -128,7 +128,8 @@
 (map! :leader
       (:prefix "t"
                "V" #'visual-fill-column-mode
-               "C" #'company-mode)
+               "C" #'company-mode
+               "m" #'global-hide-mode-line-mode)
       (:prefix "c"
                "w" #'z/clean-whitespace)
 
@@ -144,7 +145,8 @@
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:1]]
 (map! :map 'override
-      :inmv "M-TAB" #'next-window-any-frame
+      :inmv "M-n" #'next-window-any-frame
+      :inmv "M-p" #'previous-window-any-frame
       :inmv "M-q" #'kill-buffer-and-window
       :inmv "M-1" (cmd! (tab-bar-select-tab-by-name "1"))
       :inmv "M-2" (cmd! (tab-bar-select-tab-by-name "2"))
@@ -163,7 +165,7 @@
 ;; global navigation scheme:1 ends here
 
 ;; [[file:config.org::*tabs][tabs:1]]
-(tab-bar-mode 0)
+(setq tab-bar-show nil)
 ;; tabs:1 ends here
 
 ;; [[file:config.org::*evil][evil:1]]
@@ -234,6 +236,10 @@ This is sensible default behaviour, and integrates it into evil."
 (map! :localleader :map org-mode-map
       "\\" #'org-latex-preview
       ","  #'org-ctrl-c-ctrl-c
+      "-"  (cmd! (let ((current-prefix-arg '(16)))
+                   (call-interactively #'org-toggle-checkbox)))
+      "["  (cmd! (let ((current-prefix-arg '(4)))
+                   (call-interactively #'org-toggle-checkbox)))
       (:prefix-map ("`" . "org-src")
                    "`" #'org-edit-special
                    "g" #'z/org-goto-src

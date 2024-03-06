@@ -2,7 +2,7 @@ use std
 
 # Directories to search for scripts when calling source or use
 $env.NU_LIB_DIRS = [
-	($nu.default-config-dir | path join 'user')
+	($nu.default-config-dir | path join 'scripts')
 ]
 
 # Directories to search for plugin binaries when calling register
@@ -59,12 +59,9 @@ def create_left_prompt [] {
   return ([$fill, $modules, "\n", $path, $last_exit_code] | str join " ")
 }
 
-# Use nushell functions to define your right and left prompt
 $env.PROMPT_COMMAND = {|| create_left_prompt }
 $env.PROMPT_COMMAND_RIGHT = ""
 
-# The prompt indicators are environmental variables that represent
-# the state of the prompt
 $env.PROMPT_INDICATOR = {|| $"(ansi blue_bold)::(ansi reset)  " }
 $env.PROMPT_INDICATOR_VI_INSERT = {|| $"(ansi blue_bold)::(ansi reset)  " }
 $env.PROMPT_INDICATOR_VI_NORMAL = {|| $"(ansi green_bold)::(ansi reset)  " }

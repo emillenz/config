@@ -1,6 +1,6 @@
 #!/usr/bin/env nu
 
-use ~/.config/nushell/user/utils.nu
+use utils.nu
 
 # -----
 # title:  autostart
@@ -30,19 +30,20 @@ def main [] {
   ]
 
   let processes = (ps)
-  tmux_setup cmd
   for process in $run_procs {
     $processes | ensure_running $process
   }
 }
 
+# IN :: $(ps) | for efficiency if we don't need to query processes each time
 def ensure_running [process: string] {
   let pss = (if $in == null {ps | get name} else {$in | get name})
-
+  mut active = []
+  mut started = []
   if not ($pss | any {|i| $i =~ ($process | split words | get 0)}) {
     utils async $process
-    print $"- run    :: ($process)"
+    print $"- exec    :: ($process)"
   } else {
-    print $"- exists :: ($process)"
+    print $"- running :: ($process)"
   }
 }

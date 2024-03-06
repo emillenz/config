@@ -1,5 +1,5 @@
 # [[file:config.org::*Abbreviations of (freq. used) long commands][Abbreviations of (freq. used) long commands:1]]
-set $rofi rofi -dmenu -i -no-custom -p '  find-file: '
+set $rofi rofi -dmenu -i -no-custom -p '  find-file ::'
 set $esc ; mode "default"
 set $bin ~/.config/bin
 set $mv move container to workspace
@@ -40,7 +40,7 @@ $map XF86MonBrightnessDown $cmd brightnessctl set 5%-
 $map XF86MonBrightnessUp   $cmd brightnessctl set 5%+
 $map XF86Display           $cmd autorandr --change
 $map XF86ScreenSaver       $cmd i3lock -e --color 000000 && systemctl suspend
-$map XF86Sleep             $cmd i3lock -e --color 002b36 && systemctl suspend
+$map XF86Sleep             $cmd i3lock -e --color 000000 && systemctl suspend
 $map XF86AudioPlay         $cmd playerctl play-pause
 $map XF86AudioPause        $cmd playerctl play-pause
 $map XF86AudioNext         $cmd playerctl next
@@ -51,7 +51,7 @@ $map XF86AudioRaiseVolume  $cmd pamixer --unmute --increase 5 && dunstify --repl
 $map XF86AudioLowerVolume  $cmd pamixer --unmute --decrease 5 && dunstify --replace 69 "󰝞  vol: dn" "$(pamixer --get-volume-human)"
 $map XF86AudioMute         $cmd pamixer --toggle-mute && dunstify --replace 69 "󰖁  toggle-mute" "$(pamixer --get-volume-human)" $esc
 
-mode "media" {
+mode "— media —" {
   $map $mod+t $cmd playerctl play-pause $esc
   $map $mod+k $cmd playerctl previous
   $map $mod+j $cmd playerctl next
@@ -60,11 +60,14 @@ mode "media" {
   $map $mod+d $cmd pamixer --unmute --decrease 5 && dunstify --replace 69 "󰝞  vol: dn" "$(pamixer --get-volume-human)"
   $map $mod+u $cmd pamixer --unmute --increase 5 && dunstify --replace 69 "󰝝  vol: up" "$(pamixer --get-volume-human)"
   $map $mod+m $cmd pamixer --toggle-mute && dunstify --replace 69 "󰖁  toggle-mute" "$(pamixer --get-volume-human)" $esc
+  $map space  mode "default"
   $map Escape mode "default"
 }
 # System & Media controls:1 ends here
 
 # [[file:config.org::*Core navigation][Core navigation:1]]
+$map $mod+n   focus next
+$map $mod+p   focus prev
 $map $mod+q   kill
 $map $mod+g   $cmd rofi -show window
 $map $mod+x   $cmd rofi -show drun
@@ -134,9 +137,9 @@ $map $mod+shift+4 $mv 4; workspace 4
 # Scratch workspaces:1 ends here
 
 # [[file:config.org::*App opener][App opener:1]]
-$map $mod+o mode "open"
+$map $mod+o mode "— open —"
 
-mode "open" {
+mode "— open —" {
   $map $mod+c       $cmd alacritty --class cmd --title cmd --command tmux new-session -A -s cmd $esc
   $map --release    $mod+shift+e $cmd emacsclient --eval '(emacs-everywhere)' $esc
   $map $mod+e       $cmd emacsclient --reuse-frame || emacs --daemon $esc
@@ -144,61 +147,64 @@ mode "open" {
   $map $mod+b       $cmd firefox --new-window https://chat.openai.com $esc
   $map $mod+w       $cmd firefox $esc
   $map $mod+m       $cmd spotify-launcher $esc
+  $map space  mode "default"
   $map Escape mode "default"
 }
 # App opener:1 ends here
 
 # [[file:config.org::*Find file][Find file:1]]
-$map $mod+f mode "find"
+$map $mod+f mode "— find —"
 
-mode "find" {
+mode "— find —" {
   $map $mod+c $cmd xdg-open "$(fd --extension=pdf . ~/Documents/uni/cs/s2 | $rofi)" $esc
   $map $mod+l $cmd xdg-open "$(fd . ~/Documents/literature/source | $rofi)" $esc
   $map $mod+f $cmd xdg-open "$(fd --type=file . ~ | $rofi)" $esc
+  $map space  mode "default"
   $map Escape mode "default"
 }
 # Find file:1 ends here
 
 # [[file:config.org::*Menus][Menus:1]]
-$map $mod+space mode "menus"
+$map $mod+space mode "— menus —"
 
-mode "menus" {
+mode "— menus —" {
   $map $mod+a           $cmd $bin/audio $esc
   $map $mod+o           $cmd autorandr --change
   $map --release $mod+s $cmd scrot --select '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' && dunstify "󰹑  scrot" "saved in: ~/Pictures/screenshots" $esc
   $map $mod+shift+s     $cmd scrot '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' $esc
   $map $mod+k           $cmd $bin/killprocess $esc
-  $map $mod+q           mode "quit"
-  $map $mod+m           mode "media"
+  $map $mod+q           mode "— quit —"
+  $map $mod+m           mode "— media —"
+  $map space            mode "default"
   $map Escape           mode "default"
 }
 # Menus:1 ends here
 
 # [[file:config.org::*Systemact][Systemact:1]]
-mode "quit" {
+mode "— quit —" {
   $map $mod+q           $cmd i3-msg exit $esc
   $map $mod+shift+q     $cmd systemctl poweroff $esc
   $map $mod+r           $cmd i3-msg restart $esc
   $map $mod+shift+r     $cmd systemctl reboot $esc
   $map $mod+s           $cmd i3lock -e --color 000000 && systemctl suspend $esc
   $map --release $mod+o $cmd xset dpms force off $esc
+  $map space            mode "default"
   $map Escape           mode "default"
 }
 # Systemact:1 ends here
 
 # [[file:config.org::*Modus vivendi][Modus vivendi:1]]
-set $bg         #000000
-set $bg_alt     #303030
-set $fg         #ffffff
-set $focus      #2f447f
-set $urgent     #ff5f59
+set $bg     #000000
+set $bg_dim #303030
+set $fg     #ffffff
+set $accent #2f447f
 
-# class                 $border    $bg        $text $indicator $child_border
-client.focused          $focus     $focus     $fg   $fg        $focus
-client.focused_inactive $focus     $bg_alt    $fg   $bg        $bg
-client.unfocused        $bg_alt    $bg_alt    $fg   $bg        $bg
-client.urgent           $urgent    $urgent    $bg   $bg        $bg
-client.placeholder      $bg_alt    $bg_alt    $fg   $bg        $bg
+# class                 $border    $bg        $text   $indicator $child_border
+client.focused          $accent    $accent    $fg     $fg        $accent
+client.focused_inactive $fg        $bg        $fg     $bg        $bg
+client.unfocused        $bg        $bg        $fg     $bg        $bg
+client.urgent           $accent    $accent    $fg     $bg        $bg
+client.placeholder      $bg_dim    $bg_dim    $fg     $bg        $bg
 client.background       $bg
 # Modus vivendi:1 ends here
 
@@ -210,9 +216,9 @@ bar {
   modifier none
   tray_output primary
   colors {
-    background $bg_alt
-    # class      $border $backg $text
-    binding_mode $focus  $focus $fg
+    background $bg_dim
+    # class      $border $backg  $text
+    binding_mode $accent $accent $fg
   }
 }
 # Statusbar:1 ends here

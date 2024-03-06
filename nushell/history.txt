@@ -1,143 +1,3 @@
-$data
-mut data = (sudo arp-scan -l |lines)
-$data
-$data | drop 1
-$data | range 2..9
-$data | range 2..8
-$data 
-$data range 2..8
-$data | range 2..8
-$data | range 2..8 | parse "{c1} {c2} {c3}"
-$data | range 2..8 | parse "{c1}(.*){c2}(.*){c3}"
-$data | range 2..8 | split column ' '
-$data | range 2..8 | split column -c ' '
-$data | range 2..8 | split words
-$data | range 2..8
-$data | range 2..8 | split column -c "\s"
-$data | range 2..8 | split column -c "\\s"
-$data | range 2..8 | split column  -h | bat
-$data | range 2..8 | split column  -r "\\s*"
-$data | range 2..8 | split column  -r "\\s"
-$data | range 2..8 | split column  " "
-$data | range 2..8 | split column  -r "\\s"
-data = ($data | range 2..8 | split column  -r "\\s" )
-$data = ($data | range 2..8 | split column  -r "\\s" )
-$data 
-for x in $data.column1 { nikto -h $in}
-let d = $data
-for x in $d {print $in}
-$d
-for x in $d.colummn1 {nikto -h $x}
-for x in $d.column1 {nikto -h $x}
-nikto -h 192.168.1.112
-nikto -h https://192.168.1.112
-nikto -h http://192.168.1.112
-nikto -h http://192.168.1.10
-nikto -h https://192.168.1.10
-nikto -h https://192.168.1.102
-nikto -h https://192.168.1.103
-nikto -h https://192.168.1.124
-sudo arp-scan -l | lines
-nmap
-nmap -sT
-dnfs dirbuster
-dnfs gobuster
-dnfi gobuster
-ip a
-netwdiscover -h
-netdiscover -h
-nmap -sT 192.168.1.108/24
-dnfs netdiscover
-ls
-extract kali-linux-2023.2-vmware-amd64.7z
-extract kali-linux-2023.2-virtualbox-amd64(1).7z
-dnfs 7z
-dnfs p7z
-dnfi p7zip
-extract kali-linux-2023.2-virtualbox-amd64.7z
-extract kali-linux-2023.2-virtualbox-amd64(1).7z
-dnfs p7z
-dnfi p7zip-gui 
-tldr 7z
-7z x kali-linux-2023.2-virtualbox-amd64(1).7z\
-arp a
-arg -h | bat
-arp -h | bat
-arp
-arp | parse "{aaa} {b}"
-arp | lines |parse "{aaa} {b}"
-arp | lines |parse "{aaa} {b} {c} {d}"
-arp | lines |parse "{aaa} {b} {c} "
-arp | lines |parse "{aaa} {b} {c}"
-arp | lines | parse -r "\\s*(.*)\\s*(.*)"
-arp | lines | parse -r "\\s*(.*)"
-arp | lines | parse -r "(.*)"
-arp | lines | parse -r "(.*)(.*)"
-arp | lines | parse -r "(.*) (.*)"
-arp | lines | parse -r "(.*) (.*) (.*)"
-arp | lines | parse -r "(.*)\\s*(.*) (.*)"
-arp | lines | parse -r "(.*)\\s*(.*)\\s*(.*)"
-arp | detect columns
-arp | detect columns | drop Mask
-arp | detect columns 
-arp | detect columns | drop Mask
-arp | detect columns | drop "Mask"\
-arp | detect columns | drop 6
-arp | detect columns | drop column Mask
-arp | detect columns | drop column 6
-arp | detect columns | drop column  -h | bat
-arp | detect columns | reject Masks
-arp | detect columns | reject Mask
-$d
-$data
-ip a
-arp a
-arg
-arp
-sudo arp-scan -l
-nmap -h | bat
-ip a
-nmap -sn 192.168.1.108/24
-gobuster
-tldr gobuster
-gobuster https://www.google.com
-gobuster dir "https://www.google.com"
-man gobuster 
-gobuster --help
-rustup
-dnfs rustup
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-ls
-setxkbmap us dvorak
-startup
-sudo light -S 20
-startup
-ls
-ls | skip 3 | drop 2
-ps 
-sudo fdisk -l\
-sudo fdisk -l
-sudo fdisk -l | lines
-sudo fdisk -l | lines | drop 7 | skip  -h | bat
-sudo fdisk -l | lines | enumerate
-drop -h | bat
-get  -h | bat
-sudo fdisk -l | lines | get 8..11
-sudo fdisk -l | lines | get 8.11
-sudo fdisk -l | lines | range 7.. 12
-sudo fdisk -l | lines | range 7..12
-sudo fdisk -l | lines 
-sudo fdisk -l | lines | range 8..11
-split
-split -h | bat
-sudo fdisk -l | lines | range 8..11 | split column
-sudo fdisk -l | lines | range 8..11 | split column ' '
-sudo fdisk -l | lines | range 8..11 | split column -c' '
-sudo fdisk -l | lines | range 8..11 | split column -c ' '
-sudo fdisk -l | lines | range 8..11 | split words
-sudo fdisk -l | lines | range 8..11 | split row
-sudo fdisk -l | lines | range 8..11 | split row ' '
-sudo fdisk -l | lines | range 8..11 | split list
 sudo fdisk -l | lines | range 8..11 | split list ' '
 sudo fdisk -l | lines | range 8..11 | split column -cr "\s*"
 sudo fdisk -l | lines | range 8..11 | split column -cr "\\s*"
@@ -9998,3 +9858,143 @@ rm doom/config.el
 emacss
 sudo killall emacs
 doom sync
+ls
+emacs
+autostart
+nvim bin/autostart
+autostart
+append --help | bat --plain --language=help
+appennd
+append
+autostart
+mut x = 1
+$x = 1 + 1
+$x
+autostart
+$env.EDITOR
+emacsclient  --help | bat --plain --language=help
+$env.EDITOR
+emacsclient  --help | bat --plain --language=help
+for
+emacsclient -nw
+emacsclient  --help | bat --plain --language=help
+asdf
+print "myasss"
+ls
+for i in ..10 {print $i}
+for i in ..9 {<\n>  print $i<\n>  print $env.EDITOR<\n>}
+nu
+nu
+nu
+nu
+nu 
+nu
+nu
+nu
+nu
+bash
+this is quite con --help | bat --plain --language=help
+ls
+man nu
+man nushell
+ls
+top
+htop
+ls
+man emacs | less
+man emacs
+less  --help | bat --plain --language=help
+man emacs | less --use-color
+man emacs | less --wordwrap 80
+man emacs | less  --help | bat --plain --language=help
+htop
+xprop
+for i in ..9 {<\n>  print $i<\n>  print $env.EDITOR<\n>}
+ls
+tmux d
+tmux display-menu
+ls
+lc
+ls
+vi
+^ps auxww | find emsc
+^ps auxww | find emacs
+^ps auxww | find emacs | get 0
+fin  --help | bat --plain --language=help
+find --help | bat --plain --language=help
+ls
+lsls
+ls
+ls -la
+ps
+nu
+nu
+ls
+l;s
+ls
+ps
+hello world asshole
+ls -la
+sbcl
+ls
+rm stumpsrc/
+rm .stumpwm.d/
+ls
+rm quicklisp/
+yay quicklistp
+yay quicklisp
+yay quicklisp -R
+als
+ls
+ls -la
+ls
+ls
+ls -la
+ls
+ls -la
+i3 exti
+i3 restart
+ls
+ls is my name
+ls
+print "hello world asshole"
+cargo build --release
+nvim .config/doom/config.org
+htop
+nvim
+ls
+bash
+exit
+bash
+exit
+help exit
+vi .
+vim
+ls
+ls --long
+ls --long --all
+$env.NU_LIB_DIRS
+autostart
+ls | rofi
+ls | rofi -dmenu
+bluetoothctl devices | lines | parse '{cat} {addr} {name}'
+yay bluetoothctl
+yay bluetooth
+audoi
+audio
+use utils.nu
+nu
+$choice
+$sinks
+use utils
+use utils.nu
+nu
+$sinks
+use utils.nu
+nu
+ls
+audio
+$sinks.description 
+audio
+date now
+date now | format date "%Y-%m-%d %H:%M:%S"

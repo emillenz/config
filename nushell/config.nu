@@ -14,10 +14,10 @@ source commands.nu
 use utils.nu *
 
 $env.PATH = ($env.PATH | append ["~/.config/bin", "~/.cargo/bin", "~/.config/emacs/bin"] | uniq)
-$env.EDITOR = "-nw"
+$env.EDITOR = "emacsclient" # HACK :: cannot use --tty flag with nushell
 $env.VISUAL = "emacsclient --reuse-frame"
 $env.BROWSER = "firefox"
-$env.MANPAGER = "bat --plain --language=man"
+$env.MANPAGER = "bat --plain"
 $env.PAGER = "bat "
 
 let fish_completer = {|spans|

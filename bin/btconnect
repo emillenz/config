@@ -1,5 +1,6 @@
 #!/usr/bin/env nu
 
+use utils.nu
 
 # -----
 # title:  bluetoothconnect
@@ -9,11 +10,11 @@
 # info:   connect to a bluetooth device.
 # -----
 def main [] {
-  let icon = ""
+  let icon = ""
 
   bluetoothctl power on
   let devs = (bluetoothctl devices | lines | parse '{cat} {addr} {name}')
-  let dev = ($devs | get name | to text | rofi -dmenu -i -no-custom -p $"($icon) bluetooth" | str trim | if $in == "" {exit 1} else {$in})
+  let dev = (utils rofi ($devs | get name) "bluetooth" $icon)
   let dev_addr = ($devs | where name == $dev | get addr)
   bluetoothctl connect $dev_addr
 }

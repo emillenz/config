@@ -34,7 +34,7 @@ It may looks ridiculous to the outside observer, but efficiency it’s about eli
   - Filemanager's have their place only if the file is in proximity / you need an overview.
 - UI :: Think of the ui as a  hud
   - Remove all distractions and think critically if this feature is implemented just because it is possible/showoff/"cool" or because it is a detrimental part of the workflow that enhances the ergongomics/efficiency/possibilities/workflow of the tool.
-  - Window/tabbars at the top, statusbars generally on the bottom. (if neccessary)
+  - prompts & statusbars on bottom (if neccessary?)
   - Completion-menu's / promts are an extensions of the statusbar
     - do not block view
     - consistently on the same spot across all apps (terminal, emacs, rofi)
@@ -95,22 +95,26 @@ Iosevka Nerd Font optimises for inter-glyph and inter-style consistency within t
 - Inside Applications: Alt => in order to minimize conflict with existing shortcuts.
   - Alt acts as the navigational-layer above the applications normal keybindings (chars, ctrl, shift), it condenses down a minimal set of universal, efficient navigational commands.
   - Alt is available in (almost) every program, leadermode is not.
-- to make working with tabs more efficient, create the tab on the index if it does not exist
+- tabs ::
+  - use them as hotkey workspace inside an app (ex: emacs / tmux)
+  - avoid manual tab creation if possible => auto-create a tab if it doesn't exist upon focusing it
+  - we never want visual indication for tabs.  instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.
 
-| Mod - | Action                   | Consistency           |
-|-------+--------------------------+-----------------------|
-| 1-4   | Switch to tab by index   | Logic / stardard      |
-| G     | search tabs/buffers      | vim: goto             |
-| Q     | Quit (buffer/program)    | Mnemonic / standard   |
-| E     | edit file / editor       | Mnemonic              |
-| C     | Command-line (shell)     | Emacs/Mnemonic        |
-| F     | Find (program/file)      | Mnemonic / Standard   |
-| X     | Execute command (in-app) | Emacs: M-x            |
-| C     | command-line             | Standard              |
-| E     | Editor                   | Vim: e <- edit        |
-| W     | Web (browser)            | WWW                   |
-| O     | open (file/program)      | mnemonic              |
-| SPC   | Leader-key               | Vim / ergonomic       |
+| Mod - | Action                     | Consistency         |
+|-------+----------------------------+---------------------|
+| N/P   | next/previous split | vim, ergonomics     |
+| 1-4   | Switch to tab by index     | Logic / stardard    |
+| G     | search tabs/buffers        | vim: goto           |
+| Q     | Quit (buffer/program)      | Mnemonic / standard |
+| E     | edit file / editor         | Mnemonic            |
+| C     | Command-line (shell)       | Emacs/Mnemonic      |
+| F     | Find (program/file)        | Mnemonic / Standard |
+| X     | Execute command (in-app)   | Emacs: M-x          |
+| C     | command-line               | Standard            |
+| E     | Editor                     | Vim: e <- edit      |
+| W     | Web (browser)              | WWW                 |
+| O     | open (file/program)        | mnemonic            |
+| SPC   | Leader-key                 | Vim / ergonomic     |
 
 * Software
 The aim is to be able to run software for years without it breaking or bugging.

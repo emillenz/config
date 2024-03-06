@@ -253,5 +253,5 @@ error-message {
   selected:       #2f447f;
   active:         #44bc44;
   urgent:         #ff5f59;
-  prompt:         #00d3d0;
+  prompt:         #6ae4b9;
 }

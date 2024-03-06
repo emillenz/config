@@ -1,7 +1,6 @@
 #!/usr/bin/env nu
 
 const icon = "󰍹 "
-alias rofi = rofi -dmenu -i -no-custom -p
 
 # -----
 # title:  outputselect

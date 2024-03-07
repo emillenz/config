@@ -47,10 +47,7 @@
 (setq display-battery-mode nil
       display-time-mode nil
       doom-modeline-height 15
-      doom-modeline-bar-width 5
-      doom-modeline-enable-word-count t
-      doom-modeline-persp-name t
-      doom-modeline-major-mode-icon t)
+      doom-modeline-bar-width 5)
 ;; modeline:1 ends here
 
 ;; [[file:config.org::*window layout & behavior][window layout & behavior:1]]
@@ -145,8 +142,8 @@
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:1]]
 (map! :map 'override
-      :inmv "M-n" #'next-window-any-frame
-      :inmv "M-p" #'previous-window-any-frame
+      :inmv "M-j" #'next-window-any-frame
+      :inmv "M-k" #'previous-window-any-frame
       :inmv "M-q" #'kill-buffer-and-window
       :inmv "M-1" (cmd! (tab-bar-select-tab-by-name "1"))
       :inmv "M-2" (cmd! (tab-bar-select-tab-by-name "2"))
@@ -191,13 +188,13 @@
       :nmv  "go"  #'consult-imenu
       :nmv  "g/"  #'+default/search-buffer)
 
-(map! :nm "C-j" #'evil-forward-section-end
-      :nm "C-k" #'evil-backward-section-begin
+(map! :nm "C-f" #'evil-forward-section-end
+      :nm "C-b" #'evil-backward-section-begin
       :nm "C-l" #'recenter-top-bottom)
 
 (map! :after org :map evil-org-mode-map
-      :nmv "C-j"  #'org-forward-element
-      :nmv "C-k"  #'org-backward-element)
+      :nmv "C-f"  #'org-forward-element
+      :nmv "C-b"  #'org-backward-element)
 ;; evil:1 ends here
 
 ;; [[file:config.org::*evil][evil:2]]
@@ -272,14 +269,14 @@ This is sensible default behaviour, and integrates it into evil."
 
 ;; [[file:config.org::*magit][magit:1]]
 (map! :map magit-mode-map :after magit
-      :nm "C-j" #'magit-section-forward-sibling
-      :nm "C-k" #'magit-section-backward-sibling)
+      :nm "C-f" #'magit-section-forward-sibling
+      :nm "C-b" #'magit-section-backward-sibling)
 ;; magit:1 ends here
 
 ;; [[file:config.org::*info][info:1]]
-(map! :map Info-mode-map :after Info-mode
-      :nm "C-j" #'Info-forward-node
-      :nm "C-k" #'Info-backward-node)
+(map! :map Info-mode-map :after info
+      :nm "C-f" #'Info-forward-node
+      :nm "C-b" #'Info-backward-node)
 ;; info:1 ends here
 
 ;; [[file:config.org::*editor][editor:1]]

@@ -32,9 +32,11 @@ keymap:
       M-shift-n: c-shift-g
 
   - name: completion
+    application:
+      not: Emacs # NOTE :: already bound
     remap:
-      c-n: down
-      c-p: up
+      c-j: down
+      c-k: up
 
   - name: symlayer
     remap:

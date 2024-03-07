@@ -1,5 +1,7 @@
 #!/usr/bin/env nu
 
+use utils.nu
+
 # -----
 # title:  rofi menu to kill a running process.
 # author: emil lenz
@@ -8,15 +10,8 @@
 # info:   utility script using rofi, to kill a specific process by name.
 # -----
 def main []  {
-  let $icon = "  kill:"
-  let ps = (
-    ps
-    | get name
-    | to text
-    | rofi -dmenu -i -no-custom -p $"($icon)"
-    | str trim
-    | if $in == "" {exit 1} else {$in}
-  )
+  let $icon = ""
+  let ps = (utils rofi (ps | get name) "killprocess" $icon)
   sudo killall $ps
-  dunstify $"($icon) killprocess" $ps
+  utils dunstify "killprocess" $ps $icon
 }

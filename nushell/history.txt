@@ -1,67 +1,3 @@
-sudo fdisk -l | lines | range 8..11 | split list ' '
-sudo fdisk -l | lines | range 8..11 | split column -cr "\s*"
-sudo fdisk -l | lines | range 8..11 | split column -cr "\\s*"
-sudo fdisk -l | lines | range 8..11 | split column -cr "\\s"
-sudo fdisk -l | lines | range 8..11 | split column -c "\\s"
-sudo fdisk -l | lines | range 8..11 | split column -c " "
-sudo fdisk -l | lines | range 8..11 | parse
-sudo fdisk -l | lines | range 8..11 | detect columns
-sudo fdisk -l | lines | range 8..11 | str join
-sudo fdisk -l | lines | range 8..11 | str join "\n"
-sudo fdisk -l | lines | range 8..11 | str join "\n" | detect columns
-sudo fdisk -l | lines | range 8..11 | split column " "
-sudo fdisk -l | lines | range 8..11 | split column -c " "
-sudo fdisk -l | lines | range 8..11 
-table -h | bat
-sudo fdisk -l | lines | range 8..11 | table
-sudo fdisk -l | lines | range 8..11 
-column 
-column  -h | bat
-sudo fdisk -l | lines | range 8..11 | column 
-sudo fdisk -l | lines | range 8..11 | column -t
-sudo fdisk -l | lines | range 8..11 | columns
-sudo fdisk -l | lines | range 8..11 | headers
-"a b c | 1 2 3" | split row "|"
-"a b c |<\n>1 2 3" | split row "|"
-"a b c |1 2 3" | split row "|"
-"a b c |1 2 3" | split row "|" | split column 
-"a b c |1 2 3" | split row "|" | split column " "
-"a b c |1 2 3" | split row "|" | split column -c  " "
-"a b c |1 2 3" | split row "|" | split column -c " "
-"a b c |1 2 3" | split row "|" | split column -c " " | header
-"a b c |1 2 3" | split row "|" | split column -c " " | headers
-sudo fdisk -l | lines | range 8..11 
-sudo fdisk -l | lines | range 8..11 | split column -c " "
-sudo fdisk -l | lines | range 8..11 | split column -c " " |headers
-sudo fdisk -l
-sudo fdisk -l |lines 
-sudo fdisk -l |lines | range 8..1
-sudo fdisk -l |lines | range 8..11
-sudo fdisk -l |lines | range 8..11 | split column -c " "
-sudo fdisk -l |lines | range 8..11 | split column -c " " | headers
-dnfs vmware
-vmware-uninstall
-vmware-uninstall -l
-vmware-installer -l
-dnfr vmware-player
-vmware-uninstall vmware-player
-vmware-installer -u vmware-player
-sudo vmware-installer -u vmware-player
-killall emacs
-^emacs --daemon
-dnfs virtualbox
-dnfs oracle vm
-sudo dnf -y install @development-tools<\n>sudo dnf -y install kernel-headers kernel-devel dkms elfutils-libelf-devel qt5-qtx11extras
-wget -q https://www.virtualbox.org/download/oracle_vbox.asc<\n>sudo rpm --import oracle_vbox.asc
-sudo vi /etc/yum.repos.d/virtualbox.repo
-sudo dnf -y install VirtualBox-6.1
-sudo dnf -y install VirtualBox
-dnfs virtualbox
-sudo vi /etc/yum.repos.d/virtualbox.repo
-sudo rm /etc/yum.repos.d/virtualbox.repo
-ls
-dnfs virtualbox
-sudo dnf install VirtualBox-7.0
 yum install VirtualBox-6.1
 sudo yum install VirtualBox-6.1
 sudo rpm --import oracle_vbox_2016.asc
@@ -9998,3 +9934,67 @@ $sinks.description
 audio
 date now
 date now | format date "%Y-%m-%d %H:%M:%S"
+emacs
+doom sync
+nvim .config/doom/config.org
+sudo killall emacs
+doom sync
+emacs
+htop
+autostart
+rofi -dump-config conf.rasi
+^rofi -dump-config conf.rasi
+^rofi -dump-config 
+autostart
+sudo killall xremap; autostart
+ls
+batsignal -o
+bat
+battery
+sys
+sys | find battery
+sys | fin battery
+ps | find battery
+sys | rg battery
+sys | rg bat
+sys | rg bt
+sys | rg b
+sys
+syncthing
+autostart
+vi .config/doom/config.el
+nvim .config/doom/config.org
+nvim .config/doom/config.el
+spotify-launcher
+yay -Sspotify-launcher
+yay -S spotify-launcher
+yay  spotify
+yay  --help | bat --plain --language=help
+yay S --help | bat --plain --language=help
+yay -S  --help | bat --plain --language=help
+yay -syu spotify-launcher
+yay -Syu spotify-launcher
+rofi --help | bat --plain --language=help
+rofi  --help | bat --plain --language=help
+rofi -show combi
+rofi -show windowcd
+rofi -show filebrowser
+rofi -show keys
+rofi -modes "windows,drun,run" -show combi
+rofi -modes "window,drun,run" -show combi
+rofi -combi-modes "window,drun,run" -show combi
+rofi -show filebrowser
+rofi -show kes
+rofi -show keys
+str  --help | bat --plain --language=help
+str join  --help | bat --plain --language=help
+[a, null] | str join
+[a, null, b] | str join
+$"a(if true {"b"})a"
+$"a(if false {"b"})a"
+if $x != null {print $x}
+if null != null {print a}
+if null == null {print a}
+let x = null
+if $x {print f}
+i3 restart

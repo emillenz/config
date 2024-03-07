@@ -15,8 +15,8 @@ use utils.nu
 def main [] {
   let run_procs = [
     "sudo xremap --watch=device ~/.config/xremap/config.yml && sleep 1 && xset r off"
-    "alacritty --class $cmd --title cmd --command tmux new-session -A -s cmd"
     "playerctld"
+    "alacritty --class cmd --title cmd --command tmux new-session -A -s cmd"
     "emacs --daemon && emacsclient --reuse-frame"
     "unclutter"
     "xsetroot -solid '#000000'"

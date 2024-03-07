@@ -15,8 +15,9 @@ use utils.nu
 #     - dunst
 # -----
 def main [] {
+  let icon = "󱀞"
   let sinks = (pactl --format json list sinks | from json)
-  let choice = (utils rofi $sinks.description "sink" "󱀞" )
+  let choice = (utils rofi $sinks.description "sink" $icon)
   let sink = ($sinks | where description == $choice)
   pactl set-default-sink $sink.name.0
 
@@ -24,5 +25,5 @@ def main [] {
   for s in $sink_inputs {
     pactl move-sink-input $s.index $sink.name.0
   }
-  dunstify "󱀞  audio" $"changed output\n($choice)"
+  utils dunstify "audio" $"changed output\n($choice)" $icon
 }

@@ -100,21 +100,21 @@ Iosevka Nerd Font optimises for inter-glyph and inter-style consistency within t
   - avoid manual tab creation if possible => auto-create a tab if it doesn't exist upon focusing it
   - we never want visual indication for tabs.  instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.
 
-| Mod - | Action                     | Consistency         |
-|-------+----------------------------+---------------------|
-| N/P   | next/previous split | vim, ergonomics     |
-| 1-4   | Switch to tab by index     | Logic / stardard    |
-| G     | search tabs/buffers        | vim: goto           |
-| Q     | Quit (buffer/program)      | Mnemonic / standard |
-| E     | edit file / editor         | Mnemonic            |
-| C     | Command-line (shell)       | Emacs/Mnemonic      |
-| F     | Find (program/file)        | Mnemonic / Standard |
-| X     | Execute command (in-app)   | Emacs: M-x          |
-| C     | command-line               | Standard            |
-| E     | Editor                     | Vim: e <- edit      |
-| W     | Web (browser)              | WWW                 |
-| O     | open (file/program)        | mnemonic            |
-| SPC   | Leader-key                 | Vim / ergonomic     |
+| mod+key | action                      | consistency         |
+|---------+-----------------------------+---------------------|
+| k/j     | prev/next window (!not tab) | vim, ergonomics     |
+| 1-4     | switch to tab by index      | logic / stardard    |
+| g       | search tabs/buffers         | vim: goto           |
+| q       | quit (buffer/program)       | mnemonic / standard |
+| e       | edit file / editor          | mnemonic            |
+| c       | command-line (shell)        | emacs/mnemonic      |
+| f       | find (program/file)         | mnemonic / standard |
+| x       | command-prompt (program)    | emacs: m-x          |
+| c       | command-line (shell)        | standard            |
+| e       | editor                      | vim: e <- edit      |
+| w       | web (browser)               | www                 |
+| o       | open (file/program)         | mnemonic            |
+| spc     | leader-key                  | vim / ergonomic     |
 
 * Software
 The aim is to be able to run software for years without it breaking or bugging.

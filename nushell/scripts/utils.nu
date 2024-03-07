@@ -9,13 +9,10 @@
 
 # async :: launch async bash command
 export def async [cmd: string, --output (-o)] {
-  let out = (match $output {
-    true => "",
-    false => " &>/dev/null",
-  })
-  $"($cmd)($out) &" | bash
+  $"($cmd)(if $out {" &>/dev/null"}) &" | bash
 }
 
+# rofi integrated with nushell ::
 export def rofi [input: list, menu_name: string, icon?: string] {
   let prompt = if ($icon == null) {$"($menu_name) ::"} else {$"($icon)  ($menu_name) ::"}
   $input
@@ -27,4 +24,8 @@ export def rofi [input: list, menu_name: string, icon?: string] {
   } else {
     $in
   }
+}
+
+export def dunstify [title: string, msg?: string, icon?: string ] {
+  dunstify $"(if $icon != null {$"($icon)"})($title)" $msg
 }

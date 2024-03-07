@@ -74,10 +74,7 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
 (setq display-battery-mode nil
       display-time-mode nil
       doom-modeline-height 15
-      doom-modeline-bar-width 5
-      doom-modeline-enable-word-count t
-      doom-modeline-persp-name t
-      doom-modeline-major-mode-icon t)
+      doom-modeline-bar-width 5)
 #+end_src
 
 ** window layout & behavior
@@ -205,8 +202,8 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
 
 #+begin_src emacs-lisp
 (map! :map 'override
-      :inmv "M-n" #'next-window-any-frame
-      :inmv "M-p" #'previous-window-any-frame
+      :inmv "M-j" #'next-window-any-frame
+      :inmv "M-k" #'previous-window-any-frame
       :inmv "M-q" #'kill-buffer-and-window
       :inmv "M-1" (cmd! (tab-bar-select-tab-by-name "1"))
       :inmv "M-2" (cmd! (tab-bar-select-tab-by-name "2"))
@@ -256,7 +253,7 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
   - we remove annoying unwanted popup's and reduce visual sugar (=> distractionless, focused workflow).
   - this idea correlates with the insight that you should use a keyboard with blank keycaps. which will force you to learn to type, without ever taking the focus off the screen. (reduced context switching, no speed bottleneck, increased continuity).
 - control bindings :: for screen movements and editing
-  - ~c-j, c-k~ moves by syntactical sections implemented in all relevant modes (org, magit..)
+  - ~c-f, c-b~ moves by syntactical sections implemented in all relevant modes (org, magit..) (since ~C-f C-b~ is useless (always use ~c-d c-u~ instead))
   - ~c-l~ does the same as ~c-l~ in the shell. is quicker & more mnemonic than ~zz~.
   - learn them all (also the one's in insert mode) for seizing vim's full power.
 - managing buffers ::
@@ -287,13 +284,13 @@ last revision on: {{{last-revision}}} with a total of {{{loc}}} lines of code.
       :nmv  "go"  #'consult-imenu
       :nmv  "g/"  #'+default/search-buffer)
 
-(map! :nm "C-j" #'evil-forward-section-end
-      :nm "C-k" #'evil-backward-section-begin
+(map! :nm "C-f" #'evil-forward-section-end
+      :nm "C-b" #'evil-backward-section-begin
       :nm "C-l" #'recenter-top-bottom)
 
 (map! :after org :map evil-org-mode-map
-      :nmv "C-j"  #'org-forward-element
-      :nmv "C-k"  #'org-backward-element)
+      :nmv "C-f"  #'org-forward-element
+      :nmv "C-b"  #'org-backward-element)
 #+end_src
 
 #+begin_src emacs-lisp
@@ -387,15 +384,15 @@ This is sensible default behaviour, and integrates it into evil."
 ** magit
 #+begin_src emacs-lisp
 (map! :map magit-mode-map :after magit
-      :nm "C-j" #'magit-section-forward-sibling
-      :nm "C-k" #'magit-section-backward-sibling)
+      :nm "C-f" #'magit-section-forward-sibling
+      :nm "C-b" #'magit-section-backward-sibling)
 #+end_src
 
 ** info
 #+begin_src emacs-lisp
-(map! :map Info-mode-map :after Info-mode
-      :nm "C-j" #'Info-forward-node
-      :nm "C-k" #'Info-backward-node)
+(map! :map Info-mode-map :after info
+      :nm "C-f" #'Info-forward-node
+      :nm "C-b" #'Info-backward-node)
 #+end_src
 
 * editor

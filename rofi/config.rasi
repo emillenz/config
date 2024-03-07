@@ -5,13 +5,13 @@ configuration {
   terminal : "alacritty";
   font     : "Iosevka Nerd Font 10";
 
-  modi: "drun,run,window,windowcd,ssh,filebrowser,keys";
+  modi: "drun,run,window,windowcd,filebrowser";
 
   show-icons          : true;
-  display-drun        : "󰏋  run:";
-  display-run         : "  run:";
-  display-filebrowser : "  files:";
-  display-window      : "  window:";
+  display-drun        : "󰏋  run ::";
+  display-run         : "  run ::";
+  display-filebrowser : "  files ::";
+  display-window      : "  window ::";
 
   window-format    : "{c}  |  {t}";
   window-command   : "wmctrl -i -R {window}";
@@ -34,6 +34,12 @@ configuration {
   run-command:       "{cmd}";
   run-list-command:  "";
   run-shell-command: "{terminal} -e {cmd}";
+
+  // unbind C-j, C-k => use for completion
+  kb-accept-entry: "Return,KP_Enter";
+  kb-remove-to-eol: "";
+  kb-row-up: "Control+k,Up";
+  kb-row-down: "Control+j,Down";
 }
 
 window {

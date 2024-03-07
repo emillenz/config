@@ -2,7 +2,7 @@
 #+author:   Emil Lenz
 #+email:    emillenz@protonmail.com
 #+date:     2023-05-15
-#+property: header-args:conf :tangle config :comments link
+#+property: header-args :tangle config :comments link
 
 * About
 - All the packages (and more) required for the full setup are found under:
@@ -23,7 +23,7 @@
 * Abbreviations of (freq. used) long commands
 - Expand before parsing 1:1 into the config.
 #+begin_src conf
-set $rofi rofi -dmenu -i -no-custom -p '  find-file ::'
+set $rofi rofi -dmenu -i -no-custom -p ' find-file ::'
 set $esc ; mode "default"
 set $bin ~/.config/bin
 set $mv move container to workspace
@@ -32,7 +32,7 @@ set $cmd exec --no-startup-id
 #+end_src
 
 * Startup automation
-[[file:~/.config/bin/startup][Startup]] Launches processes and daemons i need for my workflow.
+[[file:~/.config/bin/autostart][autostart]] Launches processes and daemons i need for my workflow.
 #+begin_src conf
 $cmd $bin/autostart
 #+end_src
@@ -76,31 +76,37 @@ $map button5 nop
 - control everything mnemonically and consistently via keyboard-menus (no overlapping mappings)
 - brightness is hardware => done through XF86
 #+begin_src conf
+set $vol_up pamixer --unmute --increase 5 && dunstify --replace 69 "󰝝 vol: up" "$(pamixer --get-volume-human)"
+set $vol_dn pamixer --unmute --decrease 5 && dunstify --replace 69 "󰝞 vol: dn" "$(pamixer --get-volume-human)"
+set $vol_mute pamixer --toggle-mute && dunstify --replace 69 "󰖁 toggle-mute" "$(pamixer --get-volume-human)" $esc
+set $sys_sleep i3lock -e --color 000000 && systemctl suspend
+set $sys_screenoff sleep 1 && xset dpms force off
+
 $map XF86MonBrightnessDown $cmd brightnessctl set 5%-
 $map XF86MonBrightnessUp   $cmd brightnessctl set 5%+
 $map XF86Display           $cmd autorandr --change
-$map XF86ScreenSaver       $cmd i3lock -e --color 000000 && systemctl suspend
-$map XF86Sleep             $cmd i3lock -e --color 000000 && systemctl suspend
+$map XF86ScreenSaver       $cmd $sys_screenoff
+$map XF86Sleep             $cmd $sys_sleep
 $map XF86AudioPlay         $cmd playerctl play-pause
 $map XF86AudioPause        $cmd playerctl play-pause
 $map XF86AudioNext         $cmd playerctl next
 $map XF86AudioPrev         $cmd playerctl previous
 $map XF86AudioForward      $cmd playerctl position +5
 $map XF86AudioBackward     $cmd playerctl position -5
-$map XF86AudioRaiseVolume  $cmd pamixer --unmute --increase 5 && dunstify --replace 69 "󰝝  vol: up" "$(pamixer --get-volume-human)"
-$map XF86AudioLowerVolume  $cmd pamixer --unmute --decrease 5 && dunstify --replace 69 "󰝞  vol: dn" "$(pamixer --get-volume-human)"
-$map XF86AudioMute         $cmd pamixer --toggle-mute && dunstify --replace 69 "󰖁  toggle-mute" "$(pamixer --get-volume-human)" $esc
+$map XF86AudioLowerVolume  $cmd $vol_dn
+$map XF86AudioRaiseVolume  $cmd $vol_up
+$map XF86AudioMute         $cmd $vol_mute
 
-mode "— media —" {
+set $mode_media "— media —"
+mode $mode_media {
   $map $mod+t $cmd playerctl play-pause $esc
   $map $mod+k $cmd playerctl previous
   $map $mod+j $cmd playerctl next
   $map $mod+h $cmd playerctl position -5
   $map $mod+l $cmd playerctl position +5
-  $map $mod+d $cmd pamixer --unmute --decrease 5 && dunstify --replace 69 "󰝞  vol: dn" "$(pamixer --get-volume-human)"
-  $map $mod+u $cmd pamixer --unmute --increase 5 && dunstify --replace 69 "󰝝  vol: up" "$(pamixer --get-volume-human)"
-  $map $mod+m $cmd pamixer --toggle-mute && dunstify --replace 69 "󰖁  toggle-mute" "$(pamixer --get-volume-human)" $esc
-  $map space  mode "default"
+  $map $mod+d $cmd $vol_dn
+  $map $mod+u $cmd $vol_up
+  $map $mod+m $cmd $vol_mute
   $map Escape mode "default"
 }
 #+end_src
@@ -110,25 +116,25 @@ mode "— media —" {
 - If you absolutely need to use a split toggle it.
   + Without splits we need no keybindings for resizing, for splitting (less complexity and overhead)...
 #+begin_src conf
-$map $mod+n   focus next
-$map $mod+p   focus prev
-$map $mod+q   kill
-$map $mod+g   $cmd rofi -show window
-$map $mod+x   $cmd rofi -show drun
-$map $mod+t   layout toggle tabbed splith
-$map $mod+Tab focus next
+$map $mod+j      focus next
+$map $mod+k      focus prev
+$map $mod+q      kill
+$map $mod+g      $cmd rofi -show window
+$map $mod+x      $cmd rofi -show drun
+$map $mod+t      layout toggle tabbed splith
 $map $mod+Return move workspace to output next
 #+end_src
 
 ** Workspaces Assignments
 - Main/important apps :: assigned their own workspaces and keys (statistically)
-- Rest :: sent to the scratch workspace: xyz (for a lack of a better name and emacs using ~X~ for the scratchbuffer)
-- temporary workspaces :: 1-4, for moving windows to, viewing things side by side (scratchpads).
+- rest :: all sent mixed to ws1 => if neccessary assign them to their own by putting a window into 1-4 to be able to hotkey to it.
+- scratch workspaces :: 1-4, for moving windows to, viewing things side by side
 - Upon opening new windows, automatically focus them (regardless of workspace. (sensible)
 - order of ws assignments is relevant: abstract -> detail
 - The idea is to bind to the abstract function of the program, and not to the specific instance itself => if a different program is used, the functionality remains the same.
 - When sending a program to a ws, goto that workspace (sensible).
-- Restart i3 to send all windows back to their assigned workspaces.
+- these main apps have a dedicated open shortcut, all other apps are bette to be opened via find (~rofi~)
+
 #+begin_src conf
 for_window [urgent="latest"] focus
 for_window [all] title_window_icon yes
@@ -176,10 +182,7 @@ workspace $ws_music output primary
 $map $mod+m workspace $ws_music
 $map $mod+shift+m $mv $ws_music; workspace $ws_music
 for_window [class="(?i)spotify"] $mv $ws_music, focus
-#+end_src
 
-** Scratch workspaces
-#+begin_src conf
 $map $mod+1       workspace 1
 $map $mod+shift+1 $mv 1; workspace 1
 $map $mod+2       workspace 2
@@ -188,14 +191,10 @@ $map $mod+3       workspace 3
 $map $mod+shift+3 $mv 3; workspace 3
 $map $mod+4       workspace 4
 $map $mod+shift+4 $mv 4; workspace 4
-#+end_src
 
-** App opener
-- Use ~doom-everywhere~ to use emacs for anything that is more than just a simple textfield.
-#+begin_src  conf
-$map $mod+o mode "— open —"
-
-mode "— open —" {
+set $mode_open "— open —"
+$map $mod+o mode $mode_open
+mode $mode_open {
   $map $mod+c       $cmd alacritty --class cmd --title cmd --command tmux new-session -A -s cmd $esc
   $map --release    $mod+shift+e $cmd emacsclient --eval '(emacs-everywhere)' $esc
   $map $mod+e       $cmd emacsclient --reuse-frame || emacs --daemon $esc
@@ -203,7 +202,6 @@ mode "— open —" {
   $map $mod+b       $cmd firefox --new-window https://chat.openai.com $esc
   $map $mod+w       $cmd firefox $esc
   $map $mod+m       $cmd spotify-launcher $esc
-  $map space  mode "default"
   $map Escape mode "default"
 }
 #+end_src
@@ -213,44 +211,46 @@ mode "— open —" {
 - graphical files are 99% of time a pdf for me (customize if needed)
 - all other filenavigation is internally emacs
 #+begin_src conf
-$map $mod+f mode "— find —"
-
-mode "— find —" {
-  $map $mod+c $cmd xdg-open "$(fd --extension=pdf . ~/Documents/uni/cs/s2 | $rofi)" $esc
+set $mode_find  "— find —"
+$map $mod+f mode $mode_find
+mode $mode_find {
+  $map $mod+c $cmd xdg-open "$(fd --extension pdf . ~/Documents/uni/cs/s2 | $rofi)" $esc
   $map $mod+l $cmd xdg-open "$(fd . ~/Documents/literature/source | $rofi)" $esc
-  $map $mod+f $cmd xdg-open "$(fd --type=file . ~ | $rofi)" $esc
-  $map space  mode "default"
+  $map $mod+f $cmd xdg-open "$(fd --type file . ~ | $rofi)" $esc
+  $map $mod+d $cmd xdg-open "$(fd --extension pdf . ~/Downloads | $rofi)" $esc
   $map Escape mode "default"
 }
 #+end_src
 
 ** Menus
 #+begin_src conf
-$map $mod+space mode "— menus —"
+set $mode_leader "——"
+$map $mod+space mode $mode_leader
 
-mode "— menus —" {
+set $screenshot_full scrot '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' && dunstify "󰹑  scrot" "saved in: ~/Pictures/screenshots"
+set $screenshot_sel scrot --select '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' && dunstify "󰹑  scrot" "saved in: ~/Pictures/screenshots"
+mode $mode_leader {
   $map $mod+a           $cmd $bin/audio $esc
   $map $mod+o           $cmd autorandr --change
-  $map --release $mod+s $cmd scrot --select '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' && dunstify "󰹑  scrot" "saved in: ~/Pictures/screenshots" $esc
-  $map $mod+shift+s     $cmd scrot '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' $esc
+  $map --release $mod+s $cmd $screenshot_sel $esc
+  $map $mod+shift+s     $cmd $screenshot_full $esc
   $map $mod+k           $cmd $bin/killprocess $esc
-  $map $mod+q           mode "— quit —"
-  $map $mod+m           mode "— media —"
-  $map space            mode "default"
+  $map $mod+q           mode $mode_quit
+  $map $mod+m           mode $mode_media
   $map Escape           mode "default"
 }
 #+end_src
 
 ** Systemact
 #+begin_src conf
-mode "— quit —" {
+set $mode_quit "— quit —"
+mode $mode_quit {
   $map $mod+q           $cmd i3-msg exit $esc
   $map $mod+shift+q     $cmd systemctl poweroff $esc
   $map $mod+r           $cmd i3-msg restart $esc
   $map $mod+shift+r     $cmd systemctl reboot $esc
-  $map $mod+s           $cmd i3lock -e --color 000000 && systemctl suspend $esc
-  $map --release $mod+o $cmd xset dpms force off $esc
-  $map space            mode "default"
+  $map $mod+s           $cmd $sys_sleep $esc
+  $map $mod+o           $cmd $sys_screenoff $esc
   $map Escape           mode "default"
 }
 #+end_src
@@ -267,7 +267,7 @@ set $accent #2f447f
 
 # class                 $border    $bg        $text   $indicator $child_border
 client.focused          $accent    $accent    $fg     $fg        $accent
-client.focused_inactive $fg        $bg        $fg     $bg        $bg
+client.focused_inactive $bg_dim    $bg_dim    $fg     $bg        $bg_dim
 client.unfocused        $bg        $bg        $fg     $bg        $bg
 client.urgent           $accent    $accent    $fg     $bg        $bg
 client.placeholder      $bg_dim    $bg_dim    $fg     $bg        $bg

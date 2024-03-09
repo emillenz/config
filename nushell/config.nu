@@ -17,7 +17,7 @@ $env.PATH = ($env.PATH | append ["~/.config/bin", "~/.cargo/bin", "~/.config/ema
 $env.EDITOR = "emacsclient" # HACK :: cannot use --tty flag with nushell
 $env.VISUAL = "emacsclient --reuse-frame"
 $env.BROWSER = "firefox"
-$env.MANPAGER = "bat --plain"
+$env.MANPAGER = "bat"
 $env.PAGER = "bat "
 
 let fish_completer = {|spans|
@@ -170,10 +170,10 @@ $env.config = {
     {
       name: help_menu
       only_buffer_difference: true
-      marker: "> "
+      marker: "? "
       type: {
         layout: description
-        columns: 4
+        columns: 1
         col_width: 20
         col_padding: 2
         selection_rows: 4
@@ -219,7 +219,7 @@ $env.config = {
 
     # {
     #   name: help_menu
-    #   modifier: shift_control
+    #   modifier: control
     #   keycode: char_h
     #   mode: [vi_normal vi_insert]
     #   event: {send: menu name: help_menu}
@@ -234,13 +234,13 @@ $env.config = {
     }
 
     {
-      name: insert_file
-      modifier: control
+      name: insert_file_root
+      modifier: shift_control
       keycode: char_f
       mode: [emacs, vi_normal, vi_insert]
       event: [
-        {edit: InsertString, value: "(fd --type=file | fzf --preview='bat {}' | str trim)"},
-        {send: enter}
+        {send: executehostcommand, cmd: "tmux send-keys $\"(fd --type=file . ~ | fzf --preview='bat {}')\""},
+        {send: Enter}
       ]
     }
 
@@ -250,9 +250,9 @@ $env.config = {
       keycode: char_h
       mode: [vi_normal vi_insert]
       event: [
-        {edit: MoveToLineEnd}
-        {edit: InsertString, value: " --help | bat --plain --language=help"}
-        {send: Enter}
+        { edit: movetolineend }
+        { edit: insertstring, value: " --help | bat -lhelp" } # note :: using shortflag because shows up in history => less clutter
+        { send: enter }
       ]
     }
 
@@ -262,18 +262,32 @@ $env.config = {
       keycode: char_w
       mode: [vi_normal vi_insert]
       event: [
-        {edit: MoveToLineStart}
-        {edit: InsertString, value: " man "}
-        {send: Enter}
+        { edit: movetolinestart }
+        { edit: insertstring, value: "man " }
+        { send: enter }
       ]
     }
 
     {
-      name: goto_dir
+      name: insert_dir
       modifier: control
       keycode: char_g
       mode: [emacs, vi_normal, vi_insert]
-      event: {send: executehostcommand, cmd: "cd (fd --type=directory | fzf --preview='^ls --color=always {}' | str trim)"}
+      event: {
+        send: executehostcommand,
+        cmd: "tmux send-keys $\"(fd --type=directory | fzf --preview='^ls --color {}')\"" # NOTE :: terrible hack, but atm there is no other way to eval an expression at runtim and then insert the result
+      }
+    }
+
+    {
+      name: insert_dir_root
+      modifier: shift_control
+      keycode: char_g
+      mode: [emacs, vi_normal, vi_insert]
+      event: {
+        send: executehostcommand,
+        cmd: "tmux send-keys $\"(fd --type=directory . ~ | fzf --preview='^ls --color {}')\"" # NOTE :: terrible hack, but atm there is no other way to eval an expression at runtim and then insert the result
+      }
     }
 
     {
@@ -294,14 +308,5 @@ $env.config = {
       mode: vi_normal
       event: {edit: redo}
     }
-
-    {
-      name: clear
-      modifier: none
-      keycode: char_z
-      mode: vi_normal
-      event: {send: clearscreen}
-    }
-
   ]
 }

@@ -13,5 +13,5 @@ def main []  {
   let $icon = ""
   let ps = (utils rofi (ps | get name) "killprocess" $icon)
   sudo killall $ps
-  utils dunstify "killprocess" $ps $icon
+  dunstify $"($icon)  killprocess" $ps
 }

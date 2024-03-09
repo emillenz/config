@@ -17,7 +17,7 @@ sudo pacman --syncyyu
 * Core tools
 ** Terminal, Nushell
 #+begin_src sh
-yay --noconfirm --sync alacritty curl libtool fzf fd ripgrep xclip xdg-utils cmake npm bat git gcc make xdotool tldr htop fish ttf-iosevka-nerd nushell tmux
+yay --noconfirm --sync alacritty curl libtool fzf fd ripgrep xclip xdg-utils cmake bat git gcc make xdotool tldr htop fish ttf-iosevka-nerd nushell tmux
 #+end_src
 
 Set nushell to loginshell
@@ -48,7 +48,7 @@ git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 
 * Gui apps & packages
 #+begin_src sh
-yay --noconfirm --sync i3 i3lock zathura zathura-pdf-mupdf arandr mpv yt-dlp rofi brightnessctl sxiv unclutter firefox pavucontrol pasystray playerctl blueman xorg-xprop xremap-x11-bin light networkmanager mpd dunst notify-send nsxiv maim pulsemixer xorg-xset xorg-xsetroot batsignal autorandr pamixer
+yay --noconfirm --sync i3 i3lock zathura zathura-pdf-mupdf arandr autorandr mpv yt-dlp rofi brightnessctl unclutter firefox playerctl blueman xorg-xprop xremap-x11-bin mpd dunst nsxiv maim pulsemixer xorg-xset xorg-xsetroot batsignal pamixer
 #+end_src
 
 ** Enable daemons
@@ -89,7 +89,7 @@ yay --noconfirm --sync python python-black python-pyflakes python-isort
 ** Misc
 - I have multiple laptops, and i want all my files to be in perfect sync, so no matter on which device i am, i have all my files.
 #+begin_src sh :tangle no
-yay --noconfirm --sync syncthing transmission-cli spotify-launcher
+yay --noconfirm --sync syncthing transmission-cli
 #+end_src
 
 ** Blackarch repo

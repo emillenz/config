@@ -106,11 +106,14 @@
       scroll-margin 0
       enable-recursive-minibuffers t
       display-line-numbers-type 'visual
-      shell-command-prompt-show-cwd t)
+      shell-command-prompt-show-cwd t
+      shell-file-name "/usr/bin/sh")
 
 (save-place-mode 1)
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
+
+
 
 (setq calc-angle-mode 'rad
       calc-symbolic-mode t)
@@ -127,11 +130,13 @@
                "V" #'visual-fill-column-mode
                "C" #'company-mode
                "m" #'global-hide-mode-line-mode)
-      (:prefix "c"
-               "w" #'z/clean-whitespace)
 
-      (:prefix "o"
-               "c" #'eshell)
+      (:prefix "c"
+               "w" #'z/clean-whitespace
+               (:prefix-map ("'" . "org-src")
+                            "t" #'org-babel-tangle
+                            "T" #'org-babel-detangle))
+
       (:prefix "s"
                (:prefix-map ("t" . "dictionary")
                             "d" #'+lookup/dictionary-definition
@@ -236,11 +241,7 @@ This is sensible default behaviour, and integrates it into evil."
       "-"  (cmd! (let ((current-prefix-arg '(16)))
                    (call-interactively #'org-toggle-checkbox)))
       "["  (cmd! (let ((current-prefix-arg '(4)))
-                   (call-interactively #'org-toggle-checkbox)))
-      (:prefix-map ("`" . "org-src")
-                   "`" #'org-edit-special
-                   "g" #'z/org-goto-src
-                   "t" #'org-babel-tangle))
+                   (call-interactively #'org-toggle-checkbox))))
 ;; org:1 ends here
 
 ;; [[file:config.org::*dired (keybindings)][dired (keybindings):1]]
@@ -297,7 +298,7 @@ This is sensible default behaviour, and integrates it into evil."
       evil-snipe-auto-scroll nil)
 ;; editor:1 ends here
 
-;; [[file:config.org::*jump property][jump property:1]]
+;; [[file:config.org::*jumplist][jumplist:1]]
 (dolist (cmd '(flycheck-next-error
                flycheck-previous-error
                +lookup/definition
@@ -313,9 +314,9 @@ This is sensible default behaviour, and integrates it into evil."
                evil-forward-paragraph
                evil-forward-section-end))
   (evil-remove-command-properties cmd :jump))
-;; jump property:1 ends here
+;; jumplist:1 ends here
 
-;; [[file:config.org::*lsp & completion][lsp & completion:1]]
+;; [[file:config.org::*completion][completion:1]]
 (setq company-minimum-prefix-length 1
       company-idle-delay 0.1 ;; NOTE :: setting to 0 => huge lags
       company-tooltip-idle-delay 0.1
@@ -325,11 +326,17 @@ This is sensible default behaviour, and integrates it into evil."
                              eshell-mode
                              org-mode
                              vterm-mode))
-;; lsp & completion:1 ends here
+;; completion:1 ends here
 
-;; [[file:config.org::*templates & snippets][templates & snippets:1]]
+;; [[file:config.org::*snippets][snippets:1]]
 (setq yas-triggers-in-field t)
-;; templates & snippets:1 ends here
+;; snippets:1 ends here
+
+;; [[file:config.org::*file templates][file templates:1]]
+(set-file-template!
+  ('org-mode :trigger "header")
+  ('prog-mode :trigger "header"))
+;; file templates:1 ends here
 
 ;; [[file:config.org::*dired][dired:1]]
 (add-hook! dired-mode-hook #'display-line-numbers-mode)
@@ -471,8 +478,9 @@ This is sensible default behaviour, and integrates it into evil."
         ("1." . "1)")
         ("1)" . "a)")))
 
-(setq org-blank-before-new-entry '((heading         . t)
-                                   (plain-list-item . nil)))
+(setq org-blank-before-new-entry
+      '((heading         . t)
+        (plain-list-item . nil)))
 ;; options:1 ends here
 
 ;; [[file:config.org::*symbols][symbols:1]]
@@ -615,91 +623,102 @@ This is sensible default behaviour, and integrates it into evil."
 ;; clock:1 ends here
 
 ;; [[file:config.org::*capture templates][capture templates:1]]
-(defvar z/org-journal-dir (file-name-concat "~/Documents/journal/")
-  "directory for daily journal files.")
-(defvar z/org-literature-dir "~/Documents/literature/notes/"
-  "directory for literature notes.")
-(defvar z/doct-projects
-  '(("cs" :keys "c"
-     :children (("pp" :keys "p")
-                ("as1" :keys "a")
-                ("aw" :keys "w")
-                ("ddca" :keys "d")
-                ("asdf" :keys "t")))
-    ("personal" :keys "p")
-    ("config" :keys "f")
-    ("compass" :keys "o"))
-  "user projects for capture templates.")
+(defvar z/org-literature-dir "~/Documents/literature/notes/")
 
-(defun z/doct-expand-projects (projects target &optional ppath)
-  "generate doct preset for project (standardized).
-
-PROJECTS :: all projects with their keys [and children]
-TARGET :: the caputure target file tag (notes / agenda)
-PPATH :: always omit (used for internal recursive purposes)
-
-This approach to doct ensures all keys for one project use the same prefix and
-reduces code repetition."
-  (mapcar
-   (lambda (proj)
-     (let* ((name (car proj))
-            (path (file-name-concat ppath name))
-            (keys (plist-get (cdr proj) :keys))
-            (children (plist-get (cdr proj) :children))
-            (file (file-name-concat
-                   org-directory
-                   path
-                   (format "%s.org" target)))
-            (self `(,name :keys ,keys :file ,file)))
-       (append
-        self
-        (when children
-          `(:children ,(cons self
-                             (z/doct-expand-projects children target path)))))))
-   projects))
+(defvar z/org-journal-dir (file-name-concat "~/Documents/journal/"))
 
 (defun z/doct-journal-file (&optional time)
-  "filepath for journal.
-
-TIME :: Time of note to return. (default: today)"
+  "TIME :: Time of note to return. (default: today)"
   (file-name-concat z/org-journal-dir
                     (format "%s__journal.org"
                             (format-time-string "%F" (or time (current-time))))))
 
+(defvar z/doct-projects
+  '(("cs" :keys "c" :children
+     (("pp" :keys "p")
+      ("as1" :keys "a")
+      ("aw" :keys "w")
+      ("ddca" :keys "d")))
+    ("personal" :keys "p")
+    ("config" :keys "f")
+    ("compass" :keys "o")))
+
+(defun z/doct-projects-file (type path)
+  (file-name-concat org-directory
+                    path
+                    (format "%s.org" (symbol-name type))))
+
+(defun z/doct-task-template (path)
+  (list "task"
+        :keys "t"
+        :file (z/doct-projects-file 'agenda path)
+        :headline "inbox"
+        :prepend t
+        :empty-lines-after 1
+        :template '("* [ ] %^{title}%? %^g")))
+
+(defun z/doct-event-template (path)
+  (list "event"
+        :keys "e"
+        :file (z/doct-projects-file 'agenda path)
+        :headline "events"
+        :prepend t
+        :empty-lines-after 1
+        :template '("* [#] %^{title}%? %^g"
+                    "%^T"
+                    ":PROPERTIES:"
+                    ":REPEAT_TO_STATE: [#]" ; NOTE :: incase is made repeating
+                    ":location: %^{location}"
+                    ":material: %^{material}"
+                    ":END:")))
+
+(defun z/doct-note-template (path)
+  (list "note"
+        :keys "n"
+        :file (z/doct-projects-file 'notes path)
+        :prepend t
+        :empty-lines 1
+        :template '("* %^{title} %^g"
+                    ":PROPERTIES:"
+                    ":created: %U"
+                    ":END:"
+                    "%?")))
+
+(defun z/doct-expand-projects (&optional projects parent-path)
+  "PROJECTS :: nil | used for recursion
+PARENT-PATH :: nil | used for recursion"
+  (mapcar (lambda (project)
+            (let* ((props (cdr project))
+                   (tag (car project))
+                   (key (plist-get props :keys))
+                   (self `(,tag :keys ,key))
+                   (children (plist-get props :children))
+                   (path (file-name-concat parent-path tag)))
+              (append self
+                      (if children
+                          (list :children (append (z/doct-expand-projects children ;; NOTE :: don't create subdir again for parent-project
+                                                                          path)
+                                                  (z/doct-expand-projects (list self)
+                                                                          nil)))
+                        (list :children (list (z/doct-task-template path)
+                                              (z/doct-event-template path)
+                                              (z/doct-note-template path)))))
+              ))
+          (or projects
+              z/doct-projects)))
+
 (after! org
   (setq org-capture-templates
-        (doct `(("task" :keys "t"
-                 :headline "inbox"
-                 :prepend t :empty-lines-after 1
-                 :template ("* [ ] %^{title}%? %^g")
-                 :children ,(z/doct-expand-projects z/doct-projects "agenda"))
+        (doct `(,@(z/doct-expand-projects)
 
-                ("event" :keys "e"
-                 :headline "events"
-                 :prepend t :empty-lines-after 1
-                 :template ("* [#] %^{title}%? %^g"
-                            "%^T"
-                            ":PROPERTIES:"
-                            ":REPEAT_TO_STATE: [#]" ; NOTE :: incase is made repeating
-                            ":location: %^{location}"
-                            ":material: %^{material}"
-                            ":END:")
-                 :children ,(z/doct-expand-projects z/doct-projects "agenda"))
-
-                ("note" :keys "n"
-                 :prepend t :empty-lines 1
-                 :template ("* %^{title} %^g"
-                            ":PROPERTIES:"
-                            ":created: %U"
-                            ":END:"
-                            "%?")
-                 :children ,(z/doct-expand-projects z/doct-projects "notes"))
-
-                ("journal" :keys "j"
+                ("journal"
+                 :keys "j"
                  :file (lambda () (z/doct-journal-file))
-                 :children (("begin today" :keys "t"
+                 :title (lambda () (downcase (format-time-string "daily note: %A, %e. %B %Y")))
+                 :children (("begin today"
+                             :keys "t"
                              :type plain
-                             :template ("#+title:  Daily Note: %<%A, %e. %B %Y>"
+                             :template ("#+title:  %{title}"
                                         "#+author: %(user-full-name)"
                                         "#+email:  %(message-user-mail-address)"
                                         "#+date:   %<%F>"
@@ -708,10 +727,14 @@ TIME :: Time of note to return. (default: today)"
                                         "* goals"
                                         "- [ ] %?"
                                         ""
+                                        "* notes"
+                                        ""
                                         "* agenda"
                                         "** [ ] "
                                         "SCHEDULED: <%<%F %a>>"))
-                            ("entry" :keys "e"
+                            ("note"
+                             :keys "n"
+                             :headline "notes"
                              :empty-lines-before 1
                              :template ("* %^{title}"
                                         ":PROPERTIES:"
@@ -719,20 +742,31 @@ TIME :: Time of note to return. (default: today)"
                                         ":END:"
                                         "%?"))
 
-                            ("end yesterday" :keys "y"
+                            ("end yesterday"
+                             :keys "y"
                              :empty-lines-before 1
                              :unnarrowed t
-                             :file (lambda () (z/doct-journal-file (time-subtract (current-time)
-                                                                                  (days-to-time 1))))
+                             :file (lambda ()
+                                     (z/doct-journal-file (time-subtract (current-time)
+                                                                         (days-to-time 1))))
                              :template ("* gratitude"
                                         "- %?"
                                         ""
                                         "* reflection"
                                         "-"))))
 
-                ("literature" :keys "l"
+                ("literature"
+                 :keys "l"
                  :file (lambda () (read-file-name "file: " z/org-literature-dir))
-                 :children (("init" :keys "i"
+                 :children (("to read"
+                             :keys "r"
+                             :file ,(file-name-concat z/org-literature-dir "readlist.org")
+                             :prepend t
+                             :empty-lines-after 1
+                             :template ("* [ ] %^{title}%? %^g"))
+
+                            ("init"
+                             :keys "i"
                              :file
                              (lambda ()
                                (let* ((name (concat
@@ -764,7 +798,8 @@ TIME :: Time of note to return. (default: today)"
                                         "** transient notes"
                                         "** summary"))
 
-                            ("excerpt" :keys "e"
+                            ("excerpt"
+                             :keys "e"
                              :headline "excerpts"
                              :empty-lines-after 1
                              :template ("* %^{title} [pg:%^{page}] %^g"
@@ -772,20 +807,23 @@ TIME :: Time of note to return. (default: today)"
                                         "%x"
                                         "#+end_quote"))
 
-                            ("note: literary" :keys "l"
+                            ("note: literary"
+                             :keys "l"
                              :headline "literature notes"
                              :empty-lines-after 1
                              :template ("* %^{title} [pg:%^{page}] %^g"
                                         "%?"))
 
-                            ("note: transient" :keys "t"
+                            ("note: transient"
+                             :keys "t"
                              :headline "transient notes"
                              :empty-lines-after 1
                              :template ("* %^{title} %^g"
                                         "%?"))
 
                             ;; NOTE :: make sure to complete the literature-task-headline in order to log closing time.
-                            ("summarize" :keys "c"
+                            ("summarize"
+                             :keys "c"
                              :headline "summary"
                              :unnarrowed t
                              :type plain
@@ -796,53 +834,6 @@ TIME :: Time of note to return. (default: today)"
 (add-hook! 'org-mode-hook #'laas-mode)
 (setq org-startup-with-latex-preview t)
 ;; org-latex:1 ends here
-
-;; [[file:config.org::*keywords to downcase][keywords to downcase:1]]
-(defun z/org-convert-keywords-downcase ()
-  "Convert all #+KEYWORDS => #+keywords && :keyword: => :keyword:"
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (let ((case-fold-search nil))
-      (while (re-search-forward "^[ \t]*#\\+[A-Z_]*" nil t)
-        (replace-match (downcase (match-string 0)) t)))))
-;; keywords to downcase:1 ends here
-
-;; [[file:config.org::*Jump to src file][Jump to src file:1]]
-(defun z/org-goto-src ()
-  "The opposite of `org-babel-tangle-jump-to-org'.
-Jumps at tangled code from org src block."
-  (interactive)
-  (basic-save-buffer)
-  (org-babel-tangle)
-  (if (org-in-src-block-p)
-      (let* ((header (car
-                      (org-babel-tangle-single-block 1 'only-this-block)))
-             (tangle (car header))
-             (lang (caadr header))
-             (buffer (nth 2 (cadr header)))
-             (org-id (nth 3 (cadr header)))
-             (source-name (nth 4 (cadr header)))
-             (search-comment (org-fill-template
-                              org-babel-tangle-comment-format-beg
-                              `(("link" . ,org-id)
-                                ("source-name" . ,source-name))))
-             (file (expand-file-name
-                    (org-babel-effective-tangled-filename
-                     buffer
-                     lang
-                     tangle))))
-        (if (not (file-exists-p file))
-            (message "File does not exist. 'org-babel-tangle' first to create file.")
-          (find-file file)
-          (goto-char (point-min))
-          (search-forward search-comment)))
-    (message "Cannot jump to tangled file because point is not at org src block.")))
-;; Jump to src file:1 ends here
-
-;; [[file:config.org::*shell][shell:1]]
-(setq shell-file-name "/usr/bin/bash")  ;; NOTE :: emacs expects bash for it's internal shellcommands, hence we need bash otherwise plugins will break
-;; shell:1 ends here
 
 ;; [[file:config.org::*nushell-ts-mode][nushell-ts-mode:1]]
 (use-package! nushell-ts-mode)

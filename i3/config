@@ -1,5 +1,5 @@
 # [[file:config.org::*Abbreviations of (freq. used) long commands][Abbreviations of (freq. used) long commands:1]]
-set $rofi rofi -dmenu -i -no-custom -p ' find-file ::'
+set $rofi rofi -dmenu -i -no-custom -p '  find-file ::'
 set $esc ; mode "default"
 set $bin ~/.config/bin
 set $mv move container to workspace
@@ -36,9 +36,10 @@ $map button5 nop
 # Mouse:1 ends here
 
 # [[file:config.org::*System & Media controls][System & Media controls:1]]
-set $vol_up pamixer --unmute --increase 5 && dunstify --replace 69 "󰝝 vol: up" "$(pamixer --get-volume-human)"
-set $vol_dn pamixer --unmute --decrease 5 && dunstify --replace 69 "󰝞 vol: dn" "$(pamixer --get-volume-human)"
-set $vol_mute pamixer --toggle-mute && dunstify --replace 69 "󰖁 toggle-mute" "$(pamixer --get-volume-human)" $esc
+set $vol_inc pamixer --unmute --increase 5 && dunstify --replace 69 "  vol: $(pamixer --get-volume-human)"
+set $vol_dec pamixer --unmute --decrease 5 && dunstify --replace 69 "  vol: $(pamixer --get-volume-human)"
+set $vol_mute pamixer --toggle-mute && dunstify --replace 69 "  vol: $(pamixer --get-volume-human)" $esc
+set $vol_mic_mute pamixer --default-source --toggle-mute && dunstify --replace 69 "  mic mute: $(pamixer --default-source --get-mute)" $esc
 set $sys_sleep i3lock -e --color 000000 && systemctl suspend
 set $sys_screenoff sleep 1 && xset dpms force off
 
@@ -53,9 +54,10 @@ $map XF86AudioNext         $cmd playerctl next
 $map XF86AudioPrev         $cmd playerctl previous
 $map XF86AudioForward      $cmd playerctl position +5
 $map XF86AudioBackward     $cmd playerctl position -5
-$map XF86AudioLowerVolume  $cmd $vol_dn
-$map XF86AudioRaiseVolume  $cmd $vol_up
+$map XF86AudioLowerVolume  $cmd $vol_dec
+$map XF86AudioRaiseVolume  $cmd $vol_inc
 $map XF86AudioMute         $cmd $vol_mute
+$map XF86AudioMicMute      $cmd $vol_mic_mute
 
 set $mode_media "— media —"
 mode $mode_media {
@@ -64,9 +66,10 @@ mode $mode_media {
   $map $mod+j $cmd playerctl next
   $map $mod+h $cmd playerctl position -5
   $map $mod+l $cmd playerctl position +5
-  $map $mod+d $cmd $vol_dn
-  $map $mod+u $cmd $vol_up
+  $map $mod+d $cmd $vol_dec
+  $map $mod+u $cmd $vol_inc
   $map $mod+m $cmd $vol_mute
+  $map $mod+shift+m $cmd $vol_mic_mute
   $map Escape mode "default"
 }
 # System & Media controls:1 ends here
@@ -81,9 +84,9 @@ $map $mod+t      layout toggle tabbed splith
 $map $mod+Return move workspace to output next
 # Core navigation:1 ends here
 
-# [[file:config.org::*Workspaces Assignments][Workspaces Assignments:1]]
+# [[file:config.org::*workspaces assignments][workspaces assignments:1]]
 for_window [urgent="latest"] focus
-for_window [all] title_window_icon yes
+for_window [all] title_window_icon no
 
 for_window [all] $mv 1, focus
 
@@ -117,17 +120,11 @@ $map $mod+v workspace $ws_vid
 $map $mod+shift+v $mv $ws_vid; workspace $ws_vid
 for_window [class="(?i)mpv"] $mv $ws_vid, focus
 
-set $ws_bot "bot"
-workspace $ws_bot output primary
-$map $mod+b workspace $ws_bot
-$map $mod+shift+b $mv $ws_bot; workspace $ws_bot
-for_window [class="(?i)firefox" title="(?i)ChatGPT"] $mv $ws_bot, focus
-
-set $ws_music "music"
-workspace $ws_music output primary
-$map $mod+m workspace $ws_music
-$map $mod+shift+m $mv $ws_music; workspace $ws_music
-for_window [class="(?i)spotify"] $mv $ws_music, focus
+set $ws_assistant "assistant"
+workspace $ws_assistant output primary
+$map $mod+a workspace $ws_assistant
+$map $mod+shift+a $mv $ws_assistant; workspace $ws_assistant
+for_window [class="(?i)firefox" title="(?i)ChatGPT"] $mv $ws_assistant, focus
 
 $map $mod+1       workspace 1
 $map $mod+shift+1 $mv 1; workspace 1
@@ -143,14 +140,13 @@ $map $mod+o mode $mode_open
 mode $mode_open {
   $map $mod+c       $cmd alacritty --class cmd --title cmd --command tmux new-session -A -s cmd $esc
   $map --release    $mod+shift+e $cmd emacsclient --eval '(emacs-everywhere)' $esc
-  $map $mod+e       $cmd emacsclient --reuse-frame || emacs --daemon $esc
+  $map $mod+e       $cmd emacsclient --reuse-frame || emacs --daemon && emacsclient --reuse-frame $esc
   $map $mod+v       $cmd mpv "$(xclip -o)" $esc
-  $map $mod+b       $cmd firefox --new-window https://chat.openai.com $esc
-  $map $mod+w       $cmd firefox $esc
-  $map $mod+m       $cmd spotify-launcher $esc
+  $map $mod+a       $cmd firefox --new-window https://chat.openai.com $esc
+  $map $mod+w       $cmd firefox --new-window $esc
   $map Escape mode "default"
 }
-# Workspaces Assignments:1 ends here
+# workspaces assignments:1 ends here
 
 # [[file:config.org::*Find file][Find file:1]]
 set $mode_find  "— find —"
@@ -185,11 +181,11 @@ mode $mode_leader {
 # [[file:config.org::*Systemact][Systemact:1]]
 set $mode_quit "— quit —"
 mode $mode_quit {
-  $map $mod+q           $cmd i3-msg exit $esc
+  $map $mod+e           $cmd i3-msg exit $esc
+  $map $mod+q           $cmd $sys_sleep $esc
   $map $mod+shift+q     $cmd systemctl poweroff $esc
   $map $mod+r           $cmd i3-msg restart $esc
   $map $mod+shift+r     $cmd systemctl reboot $esc
-  $map $mod+s           $cmd $sys_sleep $esc
   $map $mod+o           $cmd $sys_screenoff $esc
   $map Escape           mode "default"
 }

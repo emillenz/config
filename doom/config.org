@@ -4,7 +4,7 @@
 #+date:   2022-11-01
 #+info:   heavily opinionated config, with a principle-focused approach on: consistency, quality, efficiency & extensibility.
 #+macro: last-revision (eval (format-time-string "%F") )
-#+macro: src-len (eval (save-excursion (find-file (file-name-concat doom-user-dir "config.el")) (count-lines (point-min) (point-max))))
+#+macro: src-len (eval (save-excursion (find-file doom-module-config-file) (count-lines (point-min) (point-max))))
 #+property: header-args:emacs-lisp tangle config.el :comments link :results silent
 
 last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of code.
@@ -94,15 +94,14 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       '(:side right
         :select t
         :quit nil
-        :width 0.5
+        :width 0.33
         :modeline t))
 
 (after! org
   (setq org-src-window-setup 'current-window)
   (set-popup-rule! "^\\*Org Src" :ignore t))
 
-(set-popup-rules! `(("^\\*info" :ignore t)
-                    ("^\\*helpful")))
+(set-popup-rules! `(("^\\*info" :ignore t)))
 
 (after! lsp-mode
   (set-popup-rules! `(("^\\*lsp-help\\*" :side bottom))))
@@ -196,9 +195,15 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 
 ** global navigation scheme
 - follows the os-consistent keymap, using alt for the only & essential navigational commands (there may better ones for what you want to achive => inside leadermode)
-- projects :: when you are working in a project with multiple different files, open each file in a new tab. this-way you can hotkey to that exact file instantly.
+- tabs ::
   - only do this for buffers you know you want to come back to later.  (doesn't become cluttered with all other buffers)
-  - maxtabs: 6, this is the optimal size and if you are using more that this you should refactor
+  - open buffers in specific tabs in order to hotswitch between them. (ex: working on 3 project files) => one maximized buffer open per tab
+  - 1 ::
+    - scratch workspace, where you'll be working if not inside a project.  does not need to be associated with a specific buffer.
+  - 2-4 ::
+    - when you are working in a project with multiple different files, open each file in a new tab.
+    - then you can hotkey to that exact file instantly.
+    - 3 simultaneous files are enough for all projects, if we enable more, the overhead becomes too large. (you would't open and manage 5 splits either, would you?)
 - efficiency :: they are the most efficient way of navigating between multiple different files/buffer at the same time (most efficient way i have found to introduce little overhead when context-switching and remaining distractionfree)
 - splits :: never create splits for buffers, prefer the full screen, full focus, no distractions - workflow. (no multitasking, no clutter)
   - when emacs creates splits we must handle them (includes minimal bindings for switching and closing splits)
@@ -210,10 +215,10 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       :inmv "M-j" #'next-window-any-frame
       :inmv "M-k" #'previous-window-any-frame
       :inmv "M-q" #'kill-buffer-and-window
-      :inmv "M-1" (cmd! (tab-bar-select-tab-by-name "1"))
-      :inmv "M-2" (cmd! (tab-bar-select-tab-by-name "2"))
-      :inmv "M-3" (cmd! (tab-bar-select-tab-by-name "3"))
-      :inmv "M-4" (cmd! (tab-bar-select-tab-by-name "4"))
+      :inmv "M-1" (cmd! (tab-bar-select-tab 1))
+      :inmv "M-2" (cmd! (tab-bar-select-tab 2))
+      :inmv "M-3" (cmd! (tab-bar-select-tab 3))
+      :inmv "M-4" (cmd! (tab-bar-select-tab 4))
       :inmv "M-o" #'find-file
       :inmv "M-f" #'consult-find
       :inmv "M-F" (cmd! (consult-find "~"))
@@ -226,13 +231,21 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       :inmv "C-0" #'doom/reset-font-size)
 #+end_src
 
-** tabs
-- open buffers in specific tabs in order to hotswitch between them. (ex: working on 3 project files) => one maximized buffer open per tab
-- we never want visual indication for tabs.  instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.
-- auto-create a tab if it doesn't exist (~tab-by-name~)
+ - we never want visual indication for tabs.  instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.
+ - tabs should never be created manually (already available, like workspaces, to assign things to)
 #+begin_src emacs-lisp
 (setq tab-bar-show nil)
+
+(defadvice! z/ensure-tab (&optional tab-nr)
+  "when selecting a tab by index, create it, if it doesn't exist yet (efficient)"
+  :before #'tab-bar-select-tab
+  (let ((tab-len (length (tab-bar-tabs))))
+    (when (and tab-nr
+               (< tab-len tab-nr))
+      (dotimes (_ (- tab-nr tab-len))
+        (tab-bar-new-tab)))))
 #+end_src
+
 
 ** evil
 *goal* :: make vim's bindings even more mnemonic/sane/sensible/efficient and improve consistency of implementation. maximize the keyboard real-estate usage.
@@ -483,9 +496,9 @@ this is automated using a snippet
 [[file:snippets/org-mode/header][org-mode-header]]
 
 #+begin_src emacs-lisp
-(set-file-template!
-  ('org-mode :trigger "header")
-  ('prog-mode :trigger "header"))
+(set-file-templates!
+ '(org-mode :trigger "header")
+ '(prog-mode :trigger "header"))
 #+end_src
 
 * dired
@@ -922,6 +935,7 @@ Org-agenda by default is a clusterfuck. This will clean it up: cleanly align eve
     ("compass" :keys "o")))
 
 (defun z/doct-projects-file (type path)
+  "TYPE :: [ 'agenda, 'notes ]"
   (file-name-concat org-directory
                     path
                     (format "%s.org" (symbol-name type))))
@@ -1123,7 +1137,3 @@ PARENT-PATH :: nil | used for recursion"
 #+begin_src emacs-lisp
 (setq +latex-viewers '(zathura))
 #+end_src
-
-* computing workflow principles
-following these principles will greatly improve the quality, longevity and consistency of your computing workflow. since these are things that cannot be standardized through the config, they are the user's responsibility to implement.
-

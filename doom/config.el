@@ -61,15 +61,14 @@
       '(:side right
         :select t
         :quit nil
-        :width 0.5
+        :width 0.33
         :modeline t))
 
 (after! org
   (setq org-src-window-setup 'current-window)
   (set-popup-rule! "^\\*Org Src" :ignore t))
 
-(set-popup-rules! `(("^\\*info" :ignore t)
-                    ("^\\*helpful")))
+(set-popup-rules! `(("^\\*info" :ignore t)))
 
 (after! lsp-mode
   (set-popup-rules! `(("^\\*lsp-help\\*" :side bottom))))
@@ -150,10 +149,10 @@
       :inmv "M-j" #'next-window-any-frame
       :inmv "M-k" #'previous-window-any-frame
       :inmv "M-q" #'kill-buffer-and-window
-      :inmv "M-1" (cmd! (tab-bar-select-tab-by-name "1"))
-      :inmv "M-2" (cmd! (tab-bar-select-tab-by-name "2"))
-      :inmv "M-3" (cmd! (tab-bar-select-tab-by-name "3"))
-      :inmv "M-4" (cmd! (tab-bar-select-tab-by-name "4"))
+      :inmv "M-1" (cmd! (tab-bar-select-tab 1))
+      :inmv "M-2" (cmd! (tab-bar-select-tab 2))
+      :inmv "M-3" (cmd! (tab-bar-select-tab 3))
+      :inmv "M-4" (cmd! (tab-bar-select-tab 4))
       :inmv "M-o" #'find-file
       :inmv "M-f" #'consult-find
       :inmv "M-F" (cmd! (consult-find "~"))
@@ -166,9 +165,18 @@
       :inmv "C-0" #'doom/reset-font-size)
 ;; global navigation scheme:1 ends here
 
-;; [[file:config.org::*tabs][tabs:1]]
+;; [[file:config.org::*global navigation scheme][global navigation scheme:2]]
 (setq tab-bar-show nil)
-;; tabs:1 ends here
+
+(defadvice! z/ensure-tab (&optional tab-nr)
+  "when selecting a tab by index, create it, if it doesn't exist yet (efficient)"
+  :before #'tab-bar-select-tab
+  (let ((tab-len (length (tab-bar-tabs))))
+    (when (and tab-nr
+               (< tab-len tab-nr))
+      (dotimes (_ (- tab-nr tab-len))
+        (tab-bar-new-tab)))))
+;; global navigation scheme:2 ends here
 
 ;; [[file:config.org::*evil][evil:1]]
 (map! :inmv "C-s" #'basic-save-buffer
@@ -333,9 +341,9 @@ This is sensible default behaviour, and integrates it into evil."
 ;; snippets:1 ends here
 
 ;; [[file:config.org::*file templates][file templates:1]]
-(set-file-template!
-  ('org-mode :trigger "header")
-  ('prog-mode :trigger "header"))
+(set-file-templates!
+ '(org-mode :trigger "header")
+ '(prog-mode :trigger "header"))
 ;; file templates:1 ends here
 
 ;; [[file:config.org::*dired][dired:1]]
@@ -644,6 +652,7 @@ This is sensible default behaviour, and integrates it into evil."
     ("compass" :keys "o")))
 
 (defun z/doct-projects-file (type path)
+  "TYPE :: [ 'agenda, 'notes ]"
   (file-name-concat org-directory
                     path
                     (format "%s.org" (symbol-name type))))

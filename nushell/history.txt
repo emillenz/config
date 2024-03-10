@@ -294,3 +294,16 @@ doom sycn
 doom sync
 emacs
 which /usr/bin/sh
+ls
+yay ant
+ls ./.ssh/
+ls ./.ssh/id_ed25519
+cd .ssh
+ls
+git --config --edit
+man git
+man ant
+ant  --help | bat -lhelp
+tldr ant
+ls
+man 

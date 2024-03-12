@@ -325,7 +325,7 @@ This is sensible default behaviour, and integrates it into evil."
 
 ;; [[file:config.org::*completion][completion:1]]
 (setq
- company-minimum-prefix-length 1
+ company-minimum-prefix-length 3
  company-idle-delay nil
  company-tooltip-idle-delay 0.2
  company-show-quick-access t
@@ -335,7 +335,8 @@ This is sensible default behaviour, and integrates it into evil."
                         org-mode
                         vterm-mode))
 
-(map! :i "TAB" #'company-complete-common-or-cycle)
+(map! :map 'company-active-map
+      :i "C-j" #'company-complete-common)
 ;; completion:1 ends here
 
 ;; [[file:config.org::*snippets][snippets:1]]

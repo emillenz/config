@@ -546,3 +546,17 @@ ls -la
 cd .local/
 ls
 rm cache
+cd \
+cd ~
+ls
+cd .config/
+fd sync-conflict
+fd sync-conflict -x rm {}
+fd sync-conflict 
+cd ~
+cd Documents/
+ls **/*sync-conflict
+ls **/*sync
+ls **/*org
+each  --help | bat --paging always --language help
+doom doctor

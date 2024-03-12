@@ -191,8 +191,8 @@ $env.config = {
     {
       name: completion_menu
       modifier: none
-      keycode: tab
-      mode: [vi_normal vi_insert]
+      keycode: Down # NOTE :: C-j, C-k systemwide bound to up/down for completion menus
+      mode: vi_insert
       event: {
         until: [
           {send: menu name: completion_menu}
@@ -201,13 +201,13 @@ $env.config = {
       }
     }
 
-    {
-      name: completion_previous
-      modifier: shift
-      keycode: backtab
-      mode: [vi_normal vi_insert]
-      event: {send: menuprevious}
-    }
+    # {
+    #   name: completion_previous
+    #   modifier: shift
+    #   keycode: backtab
+    #   mode: [vi_normal vi_insert]
+    #   event: {send: menuprevious}
+    # }
 
     {
       name: complete_hint

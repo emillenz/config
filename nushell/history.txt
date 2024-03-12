@@ -307,3 +307,242 @@ ant  --help | bat -lhelp
 tldr ant
 ls
 man 
+make --help | bat -lhelp
+bat  --help | bat -lhelp
+bat  --help | bat -Plhelp
+bat  --help | bat -P lhelp
+bat  --help | bat -P -lhelp
+bat  --help | bat -Palways -lhelp
+bat  --help | bat -P always -lhelp
+bat  --help | bat --paging always -lhelp
+bat  --help | bat --P=always -lhelp
+bat  --help | bat -P=always -lhelp
+bat  --help | bat -P always -lhelp
+bat  --help | bat --paging always --language help
+ls  --help | bat --paging always --language help
+ls  --help | bat --paging always --style default --language help
+ls  --help | bat --paging always --language help
+man  --help | bat --paging always --language help
+man hello 
+man help 
+he
+e
+ls
+n
+keybindings listen
+keybindi
+keybindings list
+ls
+keybindings listen
+man make 
+info make
+man java  
+java  --help | bat --paging always --language help
+cd ..
+cd Code/cs/pp/assignment3/assignment3/assignment3
+ant run
+nu
+nu
+nu
+nu
+nu
+cd Code/cs/pp/assignment3/assignment3/assignment3
+ls
+ant run
+ls
+cd Code/cs/pp/assignment3/assignment3/assignment3
+ant run
+man python 
+ls
+man python
+bat $nu.history-path
+open $nu.history-path 
+open $nu.history-path | drop 1
+open  --help | bat --paging always --language help
+lines --help | bat --paging always --language help
+lines  --help | bat --paging always --language help
+open $nu.history-path | lines | drop 1
+open $nu.history-path | lines | drop 1 #
+open $nu.history-path | lines | drop 1 # a
+open $nu.history-path | lines | drop 1 # 
+open $nu.history-path | lines 
+man python
+ls
+ls --help | bat --paging always --language help
+grep --help | bat --paging always --language help
+grep --help | bat --paging always --style default --language help
+grep --help | bat --paging always --pager nvim --language help
+grep --help | bat --paging always --language help
+rg --help | bat --paging always --language help
+rg -h
+help rg
+ant run
+ps
+tabbed --help | bat --paging always --language help
+yay tabbed --help | bat --paging always --language help
+yay tabbed 
+ls
+nvim
+cd Documents/compass/ls
+cd Documents/compass
+ls
+ls **/*org
+ls **/*org | length
+fd -e org | length
+fd -e org 
+fd -e org | wc -l
+ls **/*org | length
+ls **/*org | get name
+filter  --help | bat --paging always --language help
+help_menu
+collect  --help | bat --paging always --language help
+ls **/*org | reduce {|i, sum| $i + $sum}<\n>
+reduce  --help | bat --paging always --language help
+ls **/*org | open --raw | lines reduce {|i, sum| $i + $sum}<\n>
+ls **/*org | open <\n>
+ls **/*org | get name| open <\n>
+ls **/*org | get name | open <\n>
+ls **/*org | get name | each {open}<\n>
+fd -t f -e org<\n>
+fd -t f -e org |lines |each {open}
+fd -t f -e org |lines | each {open | reduce {|i, sum| $i + $sum}}
+fd -t f -e org |lines | each {open | lines | reduce {|i, sum| $i + $sum}}
+fd -t f -e org |lines | each {open} 
+fd -t f -e org |lines | each {open | length}
+fd -t f -e org |lines | each {open | length} | reduce {|i, sum| $i + $sum}
+cd  --help | bat --paging always --language help
+cd Documents/compass
+ls
+fd -t f -e org 
+fd -t f -e org | each {open}
+fd -t f -e org | lines | each {open}
+fd -t f -e org | lines | each {open | lines }
+fd -t f -e org | lines | each {open | lines | reduce {|i, sum| $i + $sum}}
+fd -t f -e org | lines | each {open | lines | length}
+re
+reduce  --help | bat --paging always --language help
+math sum 
+fd -t f -e org | lines | each {open | lines | length} | math sum
+fd -t f -e org | lines | each {open | lines | reduce {|i, sum| $i | (split words | length) + $sum}}
+fd -t f -e org | lines | each {open | lines | each {split words | length}}
+fd -t f -e org | lines | each {open | lines | each {split words | length} | math sum}
+fd -t f -e org | lines | each {open | lines | each {split words | length} | math sum} | math sum
+fd -t f -e org | wc -w
+wc  --help | bat --paging always --language help
+fd -t f -e org -x 'wc -w'
+fd -t f -e org -x wc -w {}
+fd  --help | bat --paging always --language help
+fd -t f -e org -x wc -w {}
+fd -t f -e org -x wc -w {} | awk 'print $1'
+wc  --help | bat --paging always --language help
+tldr awk
+cut  --help | bat --paging always --language help
+fd -t f -e org -x wc -w {} | cut -d ' ' -f1
+fd -t f -e org -x wc -w {} | cut -d ' ' -f1 | lines | math sum
+fd -t f -e org -x wc -w {} | cut -d ' ' -f1 | lines | into int
+fd -t f -e org -x wc -w {} | cut -d ' ' -f1 | lines | into int | math sum
+fd -t f -e org -x wc -w {} | cut -d ' ' -f1 
+fd -t f -e org -x wc -w {} | awk {print $1}
+fd -t f -e org -x wc -w {} | awk '{print $1}'
+fd -t f -e org -x wc -w {} | awk 'sum+=$1 END print sum'
+fd -t f -e org -x wc -w {} | awk '{sum+=$1} END {print sum}'
+awk  --help | bat --paging always --language help
+man awk 
+ls
+fd -t f -e org -x wc -w {} | awk '{sum+=$1} END {print sum}'
+fd -t f -e org | lines | each {open | lines | each {split words | length} | math sum} | math sum
+fd -t f -e org -x wc -w {}
+fd -t f -e org -x wc -w {} | split words
+fd -t f -e org -x wc -w {} | split column ' '
+fd -t f -e org -x wc -w {} | split row
+fd -t f -e org -x wc -w {} | split row ' '
+fd -t f -e org -x wc -w {} | parse 
+fd -t f -e org -x wc -w {} | parse '{words} {_}'
+fd -t f -e org -x wc -w {} | ls
+fd -t f -e org -x wc -w {} 
+fd -t f -e org -x wc -w {} | lines | split columns
+fd -t f -e org -x wc -w {} | lines | split column
+fd -t f -e org -x wc -w {} | lines | split column ' '
+fd -t f -e org -x wc -w {} | lines | split words
+fd -t f -e org -x wc -w {} | lines | split row 
+fd -t f -e org -x wc -w {} | lines | split row ' '
+fd -t f -e org -x wc -w {} | parse '1 2'
+fd -t f -e org -x wc -w {} | parse '{1} {2}'
+fd -t f -e org -x wc -w {} | lines | parse '{1} {2}'
+fd -t f -e org -x wc -w {} | lines | parse '{1} {2}' | get 1 | math sum
+fd -t f -e org -x wc -w {} | lines | parse '{1} {2}' | get 1 | into int
+fd -t f -e org -x wc -w {} | lines | parse '{1} {2}' | get 1 | from int
+fd -t f -e org -x wc -w {} | lines | parse '{1} {2}' | get 1 
+fd -t f -e org -x wc -w {} | lines | parse '{1} {2}' 
+fd -t f -e org -x wc -w {} | lines | parse '{a} {b}' | get a
+fd -t f -e org -x wc -w {} | lines | parse '{a} {b}' | get a | into int
+fd -t f -e org -x wc -w {} | lines | parse '{a} {b}' | get a | into int | math sum
+fd -t f -e org -x wc -w {} | lines | parse '{a} {b}' | get a | math sum
+fd -t f -e org -x wc -w {} | lines | parse '{a} {b}' | get a | into int| math sum
+fd -t f -e org -x wc -w {} | awk '{acc+=$1} {print sam}'
+fd -t f -e org -x wc -w {} | awk '{acc+=$1} END {print sam}'
+fd -t f -e org -x wc -w {} | awk '{sum+=$1} END {print sam}'
+fd -t f -e org -x wc -w {} | awk '{acc+=$1} {print acc}'
+fd -t f -e org -x wc -w {} | awk '{acc+=$1} END {print acc}'
+ls
+hello
+ps
+fd -t f -e org -x wc -w {} | awk '{acc+=$1} END {print acc}'
+fd -t f -e org -x wc -w {} | awk '{acc+=$1} {print acc}'
+ls
+fd -t f -e org -x wc -w {} | awk '{acc+=$1} {print acc}'
+ls
+ls -la
+fd -t f -e org -x wc -w {} | awk '{acc+=$1} {print acc}'
+ls
+ls -la
+ps
+ls
+nui
+ls
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+syncthing
+e
+convert --help | bat --paging always --language help
+autorandr --save tp_lib
+autostart
+autorandr --save tp_lib
+autorandr -sf tp_lib
+autorandr -rf-
+autorandr -rf
+autorandr -s tp_lib
+autorandr -f -s tp_lib
+autorandr --force -s tp_lib
+autorandr -c
+jshell
+java --help | bat --paging always --language help
+javac  --help | bat --paging always --language help
+java  --help | bat --paging always --language help
+e
+e Code/cs/aw/password/Main.java
+pgrep autostart
+pgrep chat
+pgrep 'emacs --daeon'
+pgrep 'emacs'
+pgrep daem
+pgrep -f
+pgrep -f 'emacs --daemon'
+pamixer
+pamixer --list-sinks
+emacs
+emacs --debug-init
+cd .config
+ls
+cd emacs
+ls
+ls -la
+cd .local/
+ls
+rm cache

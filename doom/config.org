@@ -156,8 +156,6 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
 
-
-
 (setq calc-angle-mode 'rad
       calc-symbolic-mode t)
 #+end_src
@@ -197,15 +195,15 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 - follows the os-consistent keymap, using alt for the only & essential navigational commands (there may better ones for what you want to achive => inside leadermode)
 - tabs ::
   - only do this for buffers you know you want to come back to later.  (doesn't become cluttered with all other buffers)
-  - open buffers in specific tabs in order to hotswitch between them. (ex: working on 3 project files) => one maximized buffer open per tab
+  - open buffers in specific tabs in order to hotswitch between them.  (ex: working on 3 project files) => one maximized buffer open per tab
   - 1 ::
     - scratch workspace, where you'll be working if not inside a project.  does not need to be associated with a specific buffer.
   - 2-4 ::
     - when you are working in a project with multiple different files, open each file in a new tab.
     - then you can hotkey to that exact file instantly.
-    - 3 simultaneous files are enough for all projects, if we enable more, the overhead becomes too large. (you would't open and manage 5 splits either, would you?)
+    - 3 simultaneous files are enough for all projects, if we enable more, the overhead becomes too large.  (you would't open and manage 5 splits either, would you?)
 - efficiency :: they are the most efficient way of navigating between multiple different files/buffer at the same time (most efficient way i have found to introduce little overhead when context-switching and remaining distractionfree)
-- splits :: never create splits for buffers, prefer the full screen, full focus, no distractions - workflow. (no multitasking, no clutter)
+- splits :: never create splits for buffers, prefer the full screen, full focus, no distractions - workflow.  (no multitasking, no clutter)
   - when emacs creates splits we must handle them (includes minimal bindings for switching and closing splits)
 - terminal :: we never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...)
   - instead if needed we can execute oneliners with ~(async-shell-command)~
@@ -246,10 +244,9 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
         (tab-bar-new-tab)))))
 #+end_src
 
-
 ** evil
-*goal* :: make vim's bindings even more mnemonic/sane/sensible/efficient and improve consistency of implementation. maximize the keyboard real-estate usage.
-- see [[file:~/.config/xremap/config.org][global keyboard remaps]] for additional details.
+goal :: make vim's bindings even more mnemonic/sane/sensible/efficient and improve consistency of implementation.  maximize the keyboard real-estate usage.
+see [[file:~/.config/xremap/config.org][global keyboard remaps]] for additional details.
 
 - relative lines ::
   - more sensible default
@@ -263,21 +260,20 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
   - ~m~: save point to jumplist (save pos -> do edits elsewhere -> jump back to saved pos: ~c-o~)
     - this has basically replaced my need for vim's marks as i mostly alternate between two positions for quick edits, and if i need two separate positions.
   - ~&~: allows for same usage as normal: ~&~, but more powerful (repeat any last ~ex~ command)
-  - ~tab~: folding. inspired by org-modes folding functionality. (smart/simple one-key folding))
+  - ~tab~: folding.  inspired by org-modes folding functionality.  (smart/simple one-key folding))
   - ~()~ for quickly jumping out of code delimiters (and when coding in lisp, especially useful)
 - whichkey :: removed on purpose
   - the concept of ~whichkey~ is creating the bad habit of searching through a menu to find a keybindings (the exact opposite of what a keybind is for, to be executed instantaneously, engrained in memory)
-  - if you know roughly what you are looking for, then use ~m-x~ and fuzzy search for the command and it will show you the binding for next time. fuzzy finding is more efficient.
+  - if you know roughly what you are looking for, then use ~m-x~ and fuzzy search for the command and it will show you the binding for next time.  fuzzy finding is more efficient.
   - we remove annoying unwanted popup's and reduce visual sugar (=> distractionless, focused workflow).
-  - this idea correlates with the insight that you should use a keyboard with blank keycaps. which will force you to learn to type, without ever taking the focus off the screen. (reduced context switching, no speed bottleneck, increased continuity).
+  - this idea correlates with the insight that you should use a keyboard with blank keycaps.  which will force you to learn to type, without ever taking the focus off the screen.  (reduced context switching, no speed bottleneck, increased continuity).
 - control bindings :: for screen movements and editing
   - ~c-f, c-b~ moves by syntactical sections implemented in all relevant modes (org, magit..) (since ~C-f C-b~ is useless (always use ~c-d c-u~ instead))
-  - ~c-l~ does the same as ~c-l~ in the shell. is quicker & more mnemonic than ~zz~.
+  - ~c-l~ does the same as ~c-l~ in the shell.  is quicker & more mnemonic than ~zz~.
   - learn them all (also the one's in insert mode) for seizing vim's full power.
 - managing buffers ::
-  - ~save-buffer~ & ~kill-buffer~ are statistically in the same usage-frequency-class as editing commands, and exist fundamentalally in all editing programs.
-    + recieve top-level intuitive mappings.
-  - we kill buffer's when not used anymore => stop accumulating them
+  - ~save-buffer~ & ~kill-buffer~ are statistically in the same usage-frequency-class as editing commands, and exist fundamentally in all programs in some disguise.
+    + are mapped top-level
 
 #+begin_src emacs-lisp
 (map! :inmv "C-s" #'basic-save-buffer
@@ -324,18 +320,18 @@ This is sensible default behaviour, and integrates it into evil."
     (setq evil-ex-search-pattern (list str t t))))
 #+end_src
 
-*** Instant jumping
-- Emacs's answer to the mouse (even more efficient)
-- Override the otherwise useless ~s~ key with a precise char jump. No more relative line jumping and then ~f~ or ~t~ jumping inline, or spamming ~ewbhl~. Instead just jump to the exact position you need to get to immediately without the mental overhead (of doing both steps).
+*** instant jumping
+- emacs's answer to the mouse (even more efficient)
+- override the otherwise useless ~s~ key with a precise char jump.  no more relative line jumping and then ~f~ or ~t~ jumping inline, or spamming ~hjkl~.  instead just jump to the exact position you need to get to immediately without the mental overhead (of doing both steps).
 #+begin_src emacs-lisp
 (map! :map evil-snipe-local-mode-map ;; HACK :: need to override evil-snipe
       :nmvo "s" #'evil-avy-goto-char-2-below
       :nmvo "S" #'evil-avy-goto-char-2-above)
 #+end_src
 
-*** Evil surround operator
-- For adding delimiters around objects.
-- Very frequently used => gets a first-level-mapping.
+*** evil surround operator
+- for adding delimiters around objects.
+- very frequently used => gets a first-level-mapping.
 #+begin_src emacs-lisp
 (map! :map evil-operator-state-map
       "`" #'evil-surround-edit)
@@ -423,6 +419,7 @@ This is sensible default behaviour, and integrates it into evil."
       evil-move-beyond-eol nil
       evil-kill-on-visual-paste nil
       evil-want-C-i-jump t
+      evil-disable-insert-state-bindings t
       evil-want-minibuffer t)
 
 (setq evil-snipe-scope 'visible
@@ -452,17 +449,23 @@ This is sensible default behaviour, and integrates it into evil."
 #+end_src
 
 ** completion
-- completion saves time, hence we want it fast, and enabled everywhere except for prose.
+- i don't want company to show up and distract me when i am typing.
+  + only popup when i specifically request it (with ~tab~)
+  + this enforces more thoughtful coding, evaluating what the function actually does and let's you see what is really happening underneath.
+  + for repetetive coding it of course may make sense to disable it.
 #+begin_src emacs-lisp
-(setq company-minimum-prefix-length 1
-      company-idle-delay 0.1 ;; NOTE :: setting to 0 => huge lags
-      company-tooltip-idle-delay 0.1
-      company-show-quick-access t
-      company-global-modes '(not
-                             help-mode
-                             eshell-mode
-                             org-mode
-                             vterm-mode))
+(setq
+ company-minimum-prefix-length 1
+ company-idle-delay nil
+ company-tooltip-idle-delay 0.2
+ company-show-quick-access t
+ company-global-modes '(not
+                        help-mode
+                        eshell-mode
+                        org-mode
+                        vterm-mode))
+
+(map! :i "TAB" #'company-complete-common-or-cycle)
 #+end_src
 
 ** snippets
@@ -564,8 +567,8 @@ this is automated using a snippet
 - Consistency :: The only reliable, repeatable, transportable way to ensure that indentation remains consistent across viewing environments is to indent you code using only spaces.
 - Using tabs for indentation and spaces for alignment requires extra care, and a
   carefully tuned editor setup which understands the semantic difference between
-  the tabs and the spaces which follow. In any sizeable team, deviations in
-  formatting will creep in. Enforcing it will just be a big waste of time,
+  the tabs and the spaces which follow.  In any sizeable team, deviations in
+  formatting will creep in.  Enforcing it will just be a big waste of time,
   compared to the simplicity of banishing tabs.
 - Having 8x or 4x indentations makes the code move too far to the right, and makes it really incoherent and spaced out on a 100-character terminal screen.
   - Scanning code horizontally is alot harder than reading it vertically.  Especially when you’ve been looking at your screen for 20 straight hours, you’ll find it a lot easier to read your code if it is compacted and concise.
@@ -576,22 +579,23 @@ this is automated using a snippet
 (advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
 
 (setq tab-always-indent t
-      org-indent-indentation-per-level 2
-      evil-shift-width 2
       standard-indent 2
-      tab-width 8 ;; required by org-mode
+      org-indent-indentation-per-level standard-indent
+      evil-shift-width standard-indent
       evil-indent-convert-tabs t
       indent-tabs-mode nil)
 
+(setq-hook! org-mode tab-width 8) ;; required by org-mode
+
 (setq-hook! prog-mode
-  tab-width 2
-  evil-shift-width 2
-  c-basic-offset 2
-  nushell-ts-mode-indent-offset 2)
+  tab-width standard-indent
+  evil-shift-width standard-indent
+  c-basic-offset standard-indent
+  nushell-ts-mode-indent-offset standard-indent)
 
 (setq-hook! rustic-mode-hook
-  rustic-indent 2
-  rustic-indent-offset 2)
+  rustic-indent standard-indent
+  rustic-indent-offset standard-indent)
 #+end_src
 
 ** Clean Whitespace
@@ -631,8 +635,8 @@ this is automated using a snippet
   - ex: ~- [ ] change keybindings :config:emacs:~
 - never mention the location/project of the task, instead specify it as a task hierarchy (scope resolution, flexible querying) (same as in programming var-names should never include the typee / functions don't have module-name in their name, instead the location is specified via module)
   - ~[ ] fix bugs in emacs config for the org mode module~ => ~[ ] fix bugs :config:emacs:org:~
-  - this is a clear and highly structured, data orientated approach. (all the benefits of data follow: querying, extensibility...)
-- org-agenda :: filter for all headings with that specific tag across all files (eg. sort class specific todos w tags)
+  - this is a clear and highly structured, data orientated approach.  (all the benefits of data follow: querying, extensibility...)
+- org-agenda :: filter for all headings with that specific tag across all files (eg.  sort class specific todos w tags)
 
 ** options
 - archive all done tasks in current file/headings with org-agenda bulk action.
@@ -805,7 +809,7 @@ this is automated using a snippet
   - Shorter & more sensible than default: ~LOGBOOK~
 - Explain myself if i can't meet a deadline.
   - Take responsibility
-- Make org-log messages more data orientated and functional. (less verbose and literate)
+- Make org-log messages more data orientated and functional.  (less verbose and literate)
 #+begin_src emacs-lisp
 (setq org-log-done 'time
       org-log-repeat 'time
@@ -849,8 +853,8 @@ this is automated using a snippet
 #+end_src
 
 ** agenda
-- multi-day-todo-events: add multiple timestamps on the same line => same task shows scheduled on different days. ex:
-  - track which university lectures you have watched & reviewed. => even if they are spread out onto multiple days => log all completions / review-notes under the same task.
+- multi-day-todo-events: add multiple timestamps on the same line => same task shows scheduled on different days.  ex:
+  - track which university lectures you have watched & reviewed.  => even if they are spread out onto multiple days => log all completions / review-notes under the same task.
 #+begin_src emacs-lisp
 (add-hook! 'org-agenda-mode-hook
            #'org-super-agenda-mode)
@@ -877,7 +881,7 @@ this is automated using a snippet
         (0.0 . org-upcoming-distant-deadline)))
 #+end_src
 
-Org-agenda by default is a clusterfuck. This will clean it up: cleanly align everything into columns & group items.
+Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align everything into columns & group items.
 + achieve a nce and consistent readeable data-orinetated view
 + all task-states have the same length, otherwise there is no task-keyword alignment.
 + Set more concise & informing ~deadline~ & ~scheduled~ strings
@@ -1095,6 +1099,9 @@ PARENT-PATH :: nil | used for recursion"
                              :headline "excerpts"
                              :empty-lines-after 1
                              :template ("* %^{title} [pg:%^{page}] %^g"
+                                        ":PROPERTIES:"
+                                        ":created: %U"
+                                        ":END:"
                                         "#+begin_quote"
                                         "%x"
                                         "#+end_quote"))
@@ -1104,6 +1111,9 @@ PARENT-PATH :: nil | used for recursion"
                              :headline "literature notes"
                              :empty-lines-after 1
                              :template ("* %^{title} [pg:%^{page}] %^g"
+                                        ":PROPERTIES:"
+                                        ":created: %U"
+                                        ":END:"
                                         "%?"))
 
                             ("note: transient"
@@ -1111,6 +1121,9 @@ PARENT-PATH :: nil | used for recursion"
                              :headline "transient notes"
                              :empty-lines-after 1
                              :template ("* %^{title} %^g"
+                                        ":PROPERTIES:"
+                                        ":created: %U"
+                                        ":END:"
                                         "%?"))
 
                             ;; NOTE :: make sure to complete the literature-task-headline in order to log closing time.

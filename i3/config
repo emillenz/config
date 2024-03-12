@@ -59,9 +59,8 @@ $map XF86AudioRaiseVolume  $cmd $vol_inc
 $map XF86AudioMute         $cmd $vol_mute
 $map XF86AudioMicMute      $cmd $vol_mic_mute
 
-set $mode_media "— media —"
-mode $mode_media {
-  $map $mod+t $cmd playerctl play-pause $esc
+mode "media" {
+  $map $mod+p $cmd playerctl play-pause $esc
   $map $mod+k $cmd playerctl previous
   $map $mod+j $cmd playerctl next
   $map $mod+h $cmd playerctl position -5
@@ -88,7 +87,7 @@ $map $mod+Return move workspace to output next
 for_window [urgent="latest"] focus
 for_window [all] title_window_icon no
 
-for_window [all] $mv 1, focus
+for_window [tiling] $mv 1, focus
 
 set $ws_cmd "cmd"
 workspace $ws_cmd output primary
@@ -135,9 +134,8 @@ $map $mod+shift+3 $mv 3; workspace 3
 $map $mod+4       workspace 4
 $map $mod+shift+4 $mv 4; workspace 4
 
-set $mode_open "— open —"
-$map $mod+o mode $mode_open
-mode $mode_open {
+$map $mod+o mode "open"
+mode "open" {
   $map $mod+c       $cmd alacritty --class cmd --title cmd --command tmux new-session -A -s cmd $esc
   $map --release    $mod+shift+e $cmd emacsclient --eval '(emacs-everywhere)' $esc
   $map $mod+e       $cmd emacsclient --reuse-frame || emacs --daemon && emacsclient --reuse-frame $esc
@@ -149,9 +147,8 @@ mode $mode_open {
 # workspaces assignments:1 ends here
 
 # [[file:config.org::*Find file][Find file:1]]
-set $mode_find  "— find —"
-$map $mod+f mode $mode_find
-mode $mode_find {
+$map $mod+f mode "find"
+mode "find" {
   $map $mod+c $cmd xdg-open "$(fd --extension pdf . ~/Documents/uni/cs/s2 | $rofi)" $esc
   $map $mod+l $cmd xdg-open "$(fd . ~/Documents/literature/source | $rofi)" $esc
   $map $mod+f $cmd xdg-open "$(fd --type file . ~ | $rofi)" $esc
@@ -161,26 +158,24 @@ mode $mode_find {
 # Find file:1 ends here
 
 # [[file:config.org::*Menus][Menus:1]]
-set $mode_leader "——"
-$map $mod+space mode $mode_leader
+$map $mod+space mode "leader"
 
 set $screenshot_full scrot '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' && dunstify "󰹑  scrot" "saved in: ~/Pictures/screenshots"
 set $screenshot_sel scrot --select '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' && dunstify "󰹑  scrot" "saved in: ~/Pictures/screenshots"
-mode $mode_leader {
+mode "leader" {
   $map $mod+a           $cmd $bin/audio $esc
   $map $mod+o           $cmd autorandr --change
   $map --release $mod+s $cmd $screenshot_sel $esc
   $map $mod+shift+s     $cmd $screenshot_full $esc
   $map $mod+k           $cmd $bin/killprocess $esc
-  $map $mod+q           mode $mode_quit
-  $map $mod+m           mode $mode_media
+  $map $mod+q           mode "quit"
+  $map $mod+m           mode "media"
   $map Escape           mode "default"
 }
 # Menus:1 ends here
 
 # [[file:config.org::*Systemact][Systemact:1]]
-set $mode_quit "— quit —"
-mode $mode_quit {
+mode "quit" {
   $map $mod+e           $cmd i3-msg exit $esc
   $map $mod+q           $cmd $sys_sleep $esc
   $map $mod+shift+q     $cmd systemctl poweroff $esc
@@ -192,17 +187,17 @@ mode $mode_quit {
 # Systemact:1 ends here
 
 # [[file:config.org::*Modus vivendi][Modus vivendi:1]]
-set $bg     #000000
-set $bg_dim #303030
-set $fg     #ffffff
-set $accent #2f447f
+set $bg       #000000
+set $modeline #505050
+set $fg       #ffffff
+set $accent   #2f447f
 
-# class                 $border    $bg        $text   $indicator $child_border
-client.focused          $accent    $accent    $fg     $fg        $accent
-client.focused_inactive $bg_dim    $bg_dim    $fg     $bg        $bg_dim
-client.unfocused        $bg        $bg        $fg     $bg        $bg
-client.urgent           $accent    $accent    $fg     $bg        $bg
-client.placeholder      $bg_dim    $bg_dim    $fg     $bg        $bg
+# class                 $border   $bg       $text $indicator $child_border
+client.focused          $accent   $accent   $fg   $fg        $accent
+client.focused_inactive $modeline $modeline $fg   $bg        $modeline
+client.unfocused        $bg       $bg       $fg   $bg        $bg
+client.urgent           $accent   $accent   $fg   $bg        $bg
+client.placeholder      $modeline $modeline $fg   $bg        $bg
 client.background       $bg
 # Modus vivendi:1 ends here
 
@@ -210,13 +205,13 @@ client.background       $bg
 bar {
   mode hide
   workspace_buttons no
+  binding_mode_indicator yes
   hidden_state hide
   modifier none
   tray_output primary
   colors {
-    background $bg_dim
-    # class      $border $backg  $text
+    background   $modeline
     binding_mode $accent $accent $fg
-  }
+    }
 }
 # Statusbar:1 ends here

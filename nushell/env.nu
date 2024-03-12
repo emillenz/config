@@ -51,12 +51,20 @@ def create_left_prompt [] {
   let fill_len = ((term size | get columns) - ($modules | ansi strip | str length) - 1)
   let fill = ([
     (ansi reset)
-    (' '),
+    "\n "
     ('─' | std repeat $fill_len | str join),
     ] | str join
   )
 
-  return ([$fill, $modules, "\n", $path, $last_exit_code] | str join " ")
+  return (
+    [$fill,
+      $modules,
+      "\n",
+      $path,
+      $last_exit_code
+    ]
+    | str join " "
+  )
 }
 
 $env.PROMPT_COMMAND = {|| create_left_prompt }

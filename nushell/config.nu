@@ -18,7 +18,7 @@ $env.EDITOR = "emacsclient" # HACK :: cannot use --tty flag with nushell
 $env.VISUAL = "emacsclient --reuse-frame"
 $env.BROWSER = "firefox"
 $env.MANPAGER = "bat"
-$env.PAGER = "bat "
+$env.PAGER = "bat"
 
 let fish_completer = {|spans|
   fish --command $'complete "--do-complete=($spans | str join " ")"'
@@ -212,18 +212,10 @@ $env.config = {
     {
       name: complete_hint
       modifier: control
-      keycode: char_a
+      keycode: char_t
       mode: [vi_normal vi_insert]
-      event: {send: HistoryHintComplete}
+      event: {send: historyhintcomplete}
     }
-
-    # {
-    #   name: help_menu
-    #   modifier: control
-    #   keycode: char_h
-    #   mode: [vi_normal vi_insert]
-    #   event: {send: menu name: help_menu}
-    # }
 
     {
       name: recent_cmds_menu
@@ -234,12 +226,23 @@ $env.config = {
     }
 
     {
+      name: insert_file
+      modifier: control
+      keycode: char_f
+      mode: [vi_normal, vi_insert]
+      event: [
+        {send: executehostcommand, cmd: "tmux send-keys $\"(fd --type file . | fzf --preview 'bat {}')\""},
+        {send: Enter}
+      ]
+    }
+
+    {
       name: insert_file_root
       modifier: shift_control
       keycode: char_f
-      mode: [emacs, vi_normal, vi_insert]
+      mode: [vi_normal, vi_insert]
       event: [
-        {send: executehostcommand, cmd: "tmux send-keys $\"(fd --type=file . ~ | fzf --preview='bat {}')\""},
+        {send: executehostcommand, cmd: "tmux send-keys $\"(fd --type file . ~ | fzf --preview 'bat {}')\""},
         {send: Enter}
       ]
     }
@@ -251,7 +254,7 @@ $env.config = {
       mode: [vi_normal vi_insert]
       event: [
         { edit: movetolineend }
-        { edit: insertstring, value: " --help | bat -lhelp" } # note :: using shortflag because shows up in history => less clutter
+        { edit: insertstring, value: " --help | bat --paging always --language help" }
         { send: enter }
       ]
     }
@@ -275,7 +278,7 @@ $env.config = {
       mode: [emacs, vi_normal, vi_insert]
       event: {
         send: executehostcommand,
-        cmd: "tmux send-keys $\"(fd --type=directory | fzf --preview='^ls --color {}')\"" # NOTE :: terrible hack, but atm there is no other way to eval an expression at runtim and then insert the result
+        cmd: "tmux send-keys $\"(fd --type directory | fzf --preview '^ls --color {}')\"" # NOTE :: terrible hack, but atm there is no other way to eval an expression at runtim and then insert the result
       }
     }
 
@@ -286,7 +289,7 @@ $env.config = {
       mode: [emacs, vi_normal, vi_insert]
       event: {
         send: executehostcommand,
-        cmd: "tmux send-keys $\"(fd --type=directory . ~ | fzf --preview='^ls --color {}')\"" # NOTE :: terrible hack, but atm there is no other way to eval an expression at runtim and then insert the result
+        cmd: "tmux send-keys $\"(fd --type directory . ~ | fzf --preview '^ls --color {}')\"" # NOTE :: terrible hack, but atm there is no other way to eval an expression at runtim and then insert the result
       }
     }
 
@@ -297,7 +300,7 @@ $env.config = {
       mode: [vi_normal vi_insert]
       event: [
         {send: openeditor}
-        {send: Enter}
+        {send: enter}
       ]
     }
 

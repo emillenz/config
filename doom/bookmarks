@@ -1,0 +1,11 @@
+;;;; Emacs Bookmark Format Version 1;;;; -*- coding: utf-8-emacs; mode: lisp-data -*-
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("org-capture-last-stored"
+ (filename . "~/Documents/org/compass/notes.org")
+ (front-context-string . "* NASA on redund")
+ (rear-context-string . "ags: :compass:\n\n")
+ (position . 213)
+ (last-modified 26095 64103 79043 958000))
+)

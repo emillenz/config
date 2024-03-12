@@ -112,8 +112,6 @@
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
 
-
-
 (setq calc-angle-mode 'rad
       calc-symbolic-mode t)
 ;; misc options:1 ends here
@@ -223,19 +221,19 @@ This is sensible default behaviour, and integrates it into evil."
     (setq evil-ex-search-pattern (list str t t))))
 ;; evil:2 ends here
 
-;; [[file:config.org::*Instant jumping][Instant jumping:1]]
+;; [[file:config.org::*instant jumping][instant jumping:1]]
 (map! :map evil-snipe-local-mode-map ;; HACK :: need to override evil-snipe
       :nmvo "s" #'evil-avy-goto-char-2-below
       :nmvo "S" #'evil-avy-goto-char-2-above)
-;; Instant jumping:1 ends here
+;; instant jumping:1 ends here
 
-;; [[file:config.org::*Evil surround operator][Evil surround operator:1]]
+;; [[file:config.org::*evil surround operator][evil surround operator:1]]
 (map! :map evil-operator-state-map
       "`" #'evil-surround-edit)
 
 (map! :nmv "`" #'evil-surround-region
       :nmv "`" #'evil-surround-region)
-;; Evil surround operator:1 ends here
+;; evil surround operator:1 ends here
 
 ;; [[file:config.org::*Alignment][Alignment:1]]
 (map! :nmv "g<" #'evil-lion-left
@@ -298,6 +296,7 @@ This is sensible default behaviour, and integrates it into evil."
       evil-move-beyond-eol nil
       evil-kill-on-visual-paste nil
       evil-want-C-i-jump t
+      evil-disable-insert-state-bindings t
       evil-want-minibuffer t)
 
 (setq evil-snipe-scope 'visible
@@ -325,15 +324,18 @@ This is sensible default behaviour, and integrates it into evil."
 ;; jumplist:1 ends here
 
 ;; [[file:config.org::*completion][completion:1]]
-(setq company-minimum-prefix-length 1
-      company-idle-delay 0.1 ;; NOTE :: setting to 0 => huge lags
-      company-tooltip-idle-delay 0.1
-      company-show-quick-access t
-      company-global-modes '(not
-                             help-mode
-                             eshell-mode
-                             org-mode
-                             vterm-mode))
+(setq
+ company-minimum-prefix-length 1
+ company-idle-delay nil
+ company-tooltip-idle-delay 0.2
+ company-show-quick-access t
+ company-global-modes '(not
+                        help-mode
+                        eshell-mode
+                        org-mode
+                        vterm-mode))
+
+(map! :i "TAB" #'company-complete-common-or-cycle)
 ;; completion:1 ends here
 
 ;; [[file:config.org::*snippets][snippets:1]]
@@ -403,22 +405,23 @@ This is sensible default behaviour, and integrates it into evil."
 (advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
 
 (setq tab-always-indent t
-      org-indent-indentation-per-level 2
-      evil-shift-width 2
       standard-indent 2
-      tab-width 8 ;; required by org-mode
+      org-indent-indentation-per-level standard-indent
+      evil-shift-width standard-indent
       evil-indent-convert-tabs t
       indent-tabs-mode nil)
 
+(setq-hook! org-mode tab-width 8) ;; required by org-mode
+
 (setq-hook! prog-mode
-  tab-width 2
-  evil-shift-width 2
-  c-basic-offset 2
-  nushell-ts-mode-indent-offset 2)
+  tab-width standard-indent
+  evil-shift-width standard-indent
+  c-basic-offset standard-indent
+  nushell-ts-mode-indent-offset standard-indent)
 
 (setq-hook! rustic-mode-hook
-  rustic-indent 2
-  rustic-indent-offset 2)
+  rustic-indent standard-indent
+  rustic-indent-offset standard-indent)
 ;; Indentation: 2 spaces:1 ends here
 
 ;; [[file:config.org::*Clean Whitespace][Clean Whitespace:1]]
@@ -812,6 +815,9 @@ PARENT-PATH :: nil | used for recursion"
                              :headline "excerpts"
                              :empty-lines-after 1
                              :template ("* %^{title} [pg:%^{page}] %^g"
+                                        ":PROPERTIES:"
+                                        ":created: %U"
+                                        ":END:"
                                         "#+begin_quote"
                                         "%x"
                                         "#+end_quote"))
@@ -821,6 +827,9 @@ PARENT-PATH :: nil | used for recursion"
                              :headline "literature notes"
                              :empty-lines-after 1
                              :template ("* %^{title} [pg:%^{page}] %^g"
+                                        ":PROPERTIES:"
+                                        ":created: %U"
+                                        ":END:"
                                         "%?"))
 
                             ("note: transient"
@@ -828,6 +837,9 @@ PARENT-PATH :: nil | used for recursion"
                              :headline "transient notes"
                              :empty-lines-after 1
                              :template ("* %^{title} %^g"
+                                        ":PROPERTIES:"
+                                        ":created: %U"
+                                        ":END:"
                                         "%?"))
 
                             ;; NOTE :: make sure to complete the literature-task-headline in order to log closing time.

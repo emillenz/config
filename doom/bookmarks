@@ -2,10 +2,16 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("org-capture-last-stored"
- (filename . "~/Documents/org/compass/notes.org")
- (front-context-string . "* focused minima")
- (rear-context-string . "ags: :compass:\n\n")
- (position . 213)
- (last-modified 26096 2490 363872 211000))
+(("org-refile-last-stored"
+ (filename . "~/Documents/org/personal/notes.org")
+ (front-context-string . "* climbing\n** cl")
+ (rear-context-string . "gs: :personal:\n\n")
+ (position . 166)
+ (last-modified 26105 23319 872336 672000))
+("org-capture-last-stored"
+ (filename . "~/Documents/journal/2024-03-19__journal.org")
+ (front-context-string . "#+title:  daily ")
+ (rear-context-string)
+ (position . 2)
+ (last-modified 26105 27928 664854 418000))
 )

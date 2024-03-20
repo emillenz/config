@@ -40,7 +40,7 @@ set $vol_inc pamixer --unmute --increase 5 && dunstify --replace 69 "  vol: $
 set $vol_dec pamixer --unmute --decrease 5 && dunstify --replace 69 "  vol: $(pamixer --get-volume-human)"
 set $vol_mute pamixer --toggle-mute && dunstify --replace 69 "  vol: $(pamixer --get-volume-human)" $esc
 set $vol_mic_mute pamixer --default-source --toggle-mute && dunstify --replace 69 "  mic mute: $(pamixer --default-source --get-mute)" $esc
-set $sys_sleep i3lock -e --color 000000 && systemctl suspend
+set $sys_sleep i3lock --color 000000 && systemctl suspend
 set $sys_screenoff sleep 1 && xset dpms force off
 
 $map XF86MonBrightnessDown $cmd brightnessctl set 5%-
@@ -60,16 +60,16 @@ $map XF86AudioMute         $cmd $vol_mute
 $map XF86AudioMicMute      $cmd $vol_mic_mute
 
 mode "media" {
-  $map $mod+p $cmd playerctl play-pause $esc
-  $map $mod+k $cmd playerctl previous
-  $map $mod+j $cmd playerctl next
-  $map $mod+h $cmd playerctl position -5
-  $map $mod+l $cmd playerctl position +5
-  $map $mod+d $cmd $vol_dec
-  $map $mod+u $cmd $vol_inc
-  $map $mod+m $cmd $vol_mute
-  $map $mod+shift+m $cmd $vol_mic_mute
-  $map Escape mode "default"
+        $map $mod+p $cmd playerctl play-pause $esc
+        $map $mod+k $cmd playerctl previous
+        $map $mod+j $cmd playerctl next
+        $map $mod+h $cmd playerctl position -5
+        $map $mod+l $cmd playerctl position +5
+        $map $mod+d $cmd $vol_dec
+        $map $mod+u $cmd $vol_inc
+        $map $mod+m $cmd $vol_mute
+        $map $mod+shift+m $cmd $vol_mic_mute
+        $map Escape mode "default"
 }
 # System & Media controls:1 ends here
 
@@ -85,9 +85,7 @@ $map $mod+Return move workspace to output next
 
 # [[file:config.org::*workspaces assignments][workspaces assignments:1]]
 for_window [urgent="latest"] focus
-for_window [all] title_window_icon no
-
-for_window [tiling] $mv 1, focus
+for_window [all] $mv 1, focus, title_window_icon no
 
 set $ws_cmd "cmd"
 workspace $ws_cmd output primary
@@ -136,24 +134,24 @@ $map $mod+shift+4 $mv 4; workspace 4
 
 $map $mod+o mode "open"
 mode "open" {
-  $map $mod+c       $cmd alacritty --class cmd --title cmd --command tmux new-session -A -s cmd $esc
-  $map --release    $mod+shift+e $cmd emacsclient --eval '(emacs-everywhere)' $esc
-  $map $mod+e       $cmd emacsclient --reuse-frame || emacs --daemon && emacsclient --reuse-frame $esc
-  $map $mod+v       $cmd mpv "$(xclip -o)" $esc
-  $map $mod+a       $cmd firefox --new-window https://chat.openai.com $esc
-  $map $mod+w       $cmd firefox --new-window $esc
-  $map Escape mode "default"
+        $map $mod+c       $cmd alacritty --class cmd --title cmd --command tmux new-session -A -s cmd $esc
+        $map --release    $mod+shift+e $cmd emacsclient --eval '(emacs-everywhere)' $esc
+        $map $mod+e       $cmd emacsclient --reuse-frame || emacs --daemon && emacsclient --reuse-frame $esc
+        $map $mod+v       $cmd mpv "$(xclip -o)" $esc
+        $map $mod+a       $cmd firefox --new-window https://chat.openai.com $esc
+        $map $mod+w       $cmd firefox --new-window $esc
+        $map Escape mode "default"
 }
 # workspaces assignments:1 ends here
 
 # [[file:config.org::*Find file][Find file:1]]
 $map $mod+f mode "find"
 mode "find" {
-  $map $mod+c $cmd xdg-open "$(fd --extension pdf . ~/Documents/uni/cs/s2 | $rofi)" $esc
-  $map $mod+l $cmd xdg-open "$(fd . ~/Documents/literature/source | $rofi)" $esc
-  $map $mod+f $cmd xdg-open "$(fd --type file . ~ | $rofi)" $esc
-  $map $mod+d $cmd xdg-open "$(fd --extension pdf . ~/Downloads | $rofi)" $esc
-  $map Escape mode "default"
+        $map $mod+c $cmd xdg-open "$(fd --extension pdf . ~/Documents/uni/cs/s2 | $rofi)" $esc
+        $map $mod+l $cmd xdg-open "$(fd . ~/Documents/literature/source | $rofi)" $esc
+        $map $mod+f $cmd xdg-open "$(fd --type file . ~ | $rofi)" $esc
+        $map $mod+d $cmd xdg-open "$(fd --extension pdf . ~/Downloads | $rofi)" $esc
+        $map Escape mode "default"
 }
 # Find file:1 ends here
 
@@ -163,26 +161,26 @@ $map $mod+space mode "leader"
 set $screenshot_full scrot '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' && dunstify "󰹑  scrot" "saved in: ~/Pictures/screenshots"
 set $screenshot_sel scrot --select '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' && dunstify "󰹑  scrot" "saved in: ~/Pictures/screenshots"
 mode "leader" {
-  $map $mod+a           $cmd $bin/audio $esc
-  $map $mod+o           $cmd autorandr --change
-  $map --release $mod+s $cmd $screenshot_sel $esc
-  $map $mod+shift+s     $cmd $screenshot_full $esc
-  $map $mod+k           $cmd $bin/killprocess $esc
-  $map $mod+q           mode "quit"
-  $map $mod+m           mode "media"
-  $map Escape           mode "default"
+        $map $mod+a           $cmd $bin/audio $esc
+        $map $mod+o           $cmd autorandr --change
+        $map --release $mod+s $cmd $screenshot_sel $esc
+        $map $mod+shift+s     $cmd $screenshot_full $esc
+        $map $mod+k           $cmd $bin/killprocess $esc
+        $map $mod+q           mode "quit"
+        $map $mod+m           mode "media"
+        $map Escape           mode "default"
 }
 # Menus:1 ends here
 
 # [[file:config.org::*Systemact][Systemact:1]]
 mode "quit" {
-  $map $mod+e           $cmd i3-msg exit $esc
-  $map $mod+q           $cmd $sys_sleep $esc
-  $map $mod+shift+q     $cmd systemctl poweroff $esc
-  $map $mod+r           $cmd i3-msg restart $esc
-  $map $mod+shift+r     $cmd systemctl reboot $esc
-  $map $mod+o           $cmd $sys_screenoff $esc
-  $map Escape           mode "default"
+        $map $mod+e           $cmd i3-msg exit $esc
+        $map $mod+q           $cmd $sys_sleep $esc
+        $map $mod+shift+q     $cmd systemctl poweroff $esc
+        $map $mod+r           $cmd i3-msg restart $esc
+        $map $mod+shift+r     $cmd systemctl reboot $esc
+        $map $mod+o           $cmd $sys_screenoff $esc
+        $map Escape           mode "default"
 }
 # Systemact:1 ends here
 
@@ -203,15 +201,21 @@ client.background       $bg
 
 # [[file:config.org::*Statusbar][Statusbar:1]]
 bar {
-  mode hide
-  workspace_buttons no
-  binding_mode_indicator yes
-  hidden_state hide
-  modifier none
-  tray_output primary
-  colors {
-    background   $modeline
-    binding_mode $accent $accent $fg
-    }
+        mode hide
+        hidden_state hide
+        workspace_buttons no
+        binding_mode_indicator yes
+        modifier none
+        tray_output primary
+        status_command i3status
+        separator_symbol " | "
+
+        colors {
+                background $modeline
+                statusline $fg
+                separator  $fg
+                # class      $border $backg  $text
+                binding_mode $accent $accent $fg
+        }
 }
 # Statusbar:1 ends here

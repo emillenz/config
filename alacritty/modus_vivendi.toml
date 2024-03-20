@@ -11,9 +11,9 @@ red =     "#ff5f59"
 green =   "#44bc44"
 yellow =  "#d0bc00"
 blue =    "#2fafff"
-magenta = "#b6a0ff"
+magenta = "#feacd0"
 cyan =    "#00d3d0"
-white =   "#989898" # NOTE :: fg-dim
+white =   "#ffffff" # NOTE :: fg-dim
 
 [colors.cursor]
 cursor     = "#ffffff"

@@ -24,7 +24,6 @@ map z snap_to_page
 map t toggle_page_mode
 map r reload
 map R rotate
-map 0 adjust_window best-fit
 map = zoom in
 map - zoom out
 map v recolor

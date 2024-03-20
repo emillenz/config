@@ -22,7 +22,7 @@ keymap:
     application:
       only: firefox
     remap:
-      M-t: [c-t, esc] # HACK :: needs esc (hides popup menu)
+      M-t: c-t
       M-i: c-l
       M-o: c-o
       M-q: c-w
@@ -40,6 +40,7 @@ keymap:
 
   - name: symlayer
     remap:
+      menu-q: apostrophe
       menu-w: shift-comma
       menu-e: shift-dot
       menu-r: shift-apostrophe

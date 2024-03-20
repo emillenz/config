@@ -28,10 +28,11 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
  - custom-set-faces :: make org more consistent.
 #+begin_src emacs-lisp
 (use-package! modus-themes
-  :config (setq modus-themes-mixed-fonts t
-                modus-themes-italic-constructs t
-                modus-themes-bold-constructs t
-                modus-themes-org-blocks 'gray-background)
+  :config
+  (setq modus-themes-mixed-fonts t
+        modus-themes-italic-constructs t
+        modus-themes-bold-constructs t
+        modus-themes-org-blocks 'gray-background)
 
   (setq modus-themes-common-palette-overrides
         `((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
@@ -50,6 +51,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
     `(org-list-dt :inherit modus-themes-heading-1)
     `(org-block-begin-line :foreground ,(modus-themes-get-color-value 'prose-metadata))
     `(org-quote :slant italic))
+
   (setq doom-theme 'modus-vivendi))
 #+end_src
 
@@ -194,14 +196,12 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 ** global navigation scheme
 - follows the os-consistent keymap, using alt for the only & essential navigational commands (there may better ones for what you want to achive => inside leadermode)
 - tabs ::
-  - only do this for buffers you know you want to come back to later.  (doesn't become cluttered with all other buffers)
   - open buffers in specific tabs in order to hotswitch between them.  (ex: working on 3 project files) => one maximized buffer open per tab
-  - 1 ::
-    - scratch workspace, where you'll be working if not inside a project.  does not need to be associated with a specific buffer.
-  - 2-4 ::
-    - when you are working in a project with multiple different files, open each file in a new tab.
-    - then you can hotkey to that exact file instantly.
-    - 3 simultaneous files are enough for all projects, if we enable more, the overhead becomes too large.  (you would't open and manage 5 splits either, would you?)
+    - 1 :: scratch workspace, where you'll be working if not inside a project.  is never associated with a specific buffer.
+    - 2-4 ::
+      - when you are working in a project with multiple different files, open each file in a new tab.
+      - then you can hotkey to that exact file instantly.
+      - 3 simultaneous files are enough for all projects, if we enable more, the overhead becomes too large.  (you would't open and manage 5 splits either, would you?)
 - efficiency :: they are the most efficient way of navigating between multiple different files/buffer at the same time (most efficient way i have found to introduce little overhead when context-switching and remaining distractionfree)
 - splits :: never create splits for buffers, prefer the full screen, full focus, no distractions - workflow.  (no multitasking, no clutter)
   - when emacs creates splits we must handle them (includes minimal bindings for switching and closing splits)
@@ -230,12 +230,12 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 #+end_src
 
  - we never want visual indication for tabs.  instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.
- - tabs should never be created manually (already available, like workspaces, to assign things to)
+ - tabs are already available, like workspaces, to assign things to.
 #+begin_src emacs-lisp
 (setq tab-bar-show nil)
 
 (defadvice! z/ensure-tab (&optional tab-nr)
-  "when selecting a tab by index, create it, if it doesn't exist yet (efficient)"
+  "when selecting a tab by index, create it, if it doesn't exist yet (efficient & overheadfree)"
   :before #'tab-bar-select-tab
   (let ((tab-len (length (tab-bar-tabs))))
     (when (and tab-nr
@@ -449,26 +449,26 @@ This is sensible default behaviour, and integrates it into evil."
 #+end_src
 
 ** completion
-- system :: use ~C-j, C-k~ for completion (more ergonomic & faster than tab)
-  - activate completion: ~C-j~
+- system :: use ~C-j, C-k~ for completion (more ergonomic, faster and universal than ~tab~ and ~s-tab~)
+  - show/complete: ~C-j~
   - confirm: ~Return~
 - i don't want company to show up and distract me when i am typing.
   + only popup when i specifically request it (with ~tab~)
   + this enforces more thoughtful coding, evaluating what the function actually does and let's you see what is really happening underneath.
   + for repetetive coding it of course may make sense to disable it.
 #+begin_src emacs-lisp
-(setq
- company-minimum-prefix-length 3
- company-idle-delay nil
- company-tooltip-idle-delay 0.2
- company-show-quick-access t
- company-global-modes '(not
-                        help-mode
-                        eshell-mode
-                        org-mode
-                        vterm-mode))
+(setq company-minimum-prefix-length 3
+      company-idle-delay nil
+      company-tooltip-idle-delay 0.2
+      company-show-quick-access t
+      company-global-modes
+      '(not
+        help-mode
+        eshell-mode
+        org-mode
+        vterm-mode))
 
-(map! :map 'company-active-map
+(map! :map 'company-mode-map
       :i "C-j" #'company-complete-common)
 #+end_src
 
@@ -511,16 +511,16 @@ this is automated using a snippet
 * dired
 - always open media files externally (emacs bad at graphical stuff)
 #+begin_src emacs-lisp
-(add-hook! dired-mode-hook #'display-line-numbers-mode)
+(add-hook! 'dired-mode-hook #'dired-hide-details-mode)
 
 ;; NOTE:: this is the elegant && extensible way to do regex.
 (setq dired-omit-files
       (rx (or (seq bol (? ".") "#")
               (seq bol "." (not (any ".")))
               (seq "~" eol)
-              (seq bol "CVS" eol))))
+              (seq bol "CVS" eol)))
 
-(setq dired-open-extensions
+      dired-open-extensions
       '(("mkv"  . "mpv")
         ("mp4"  . "mpv")
         ("mp3"  . "mpv")
@@ -532,11 +532,9 @@ this is automated using a snippet
         ("odt"  . "libreoffice")
         ("odf"  . "libreoffice")
         ("epub" . "zathura")
-        ("pdf"  . "zathura")))
+        ("pdf"  . "zathura"))
 
-(add-hook! 'dired-mode-hook #'dired-hide-details-mode)
-
-(setq dired-recursive-copies 'always
+      dired-recursive-copies 'always
       dired-recursive-deletes 'top
       global-auto-revert-non-file-buffers t)
 #+end_src
@@ -567,23 +565,17 @@ this is automated using a snippet
 (add-hook! 'prog-mode-hook #'rainbow-delimiters-mode)
 #+end_src
 
-** Indentation: 2 spaces
-- Consistency :: The only reliable, repeatable, transportable way to ensure that indentation remains consistent across viewing environments is to indent you code using only spaces.
-- Using tabs for indentation and spaces for alignment requires extra care, and a
-  carefully tuned editor setup which understands the semantic difference between
-  the tabs and the spaces which follow.  In any sizeable team, deviations in
-  formatting will creep in.  Enforcing it will just be a big waste of time,
-  compared to the simplicity of banishing tabs.
-- Having 8x or 4x indentations makes the code move too far to the right, and makes it really incoherent and spaced out on a 100-character terminal screen.
-  - Scanning code horizontally is alot harder than reading it vertically.  Especially when you’ve been looking at your screen for 20 straight hours, you’ll find it a lot easier to read your code if it is compacted and concise.
-- Nesting :: if you need more than 3 levels of indentation, you’re screwed anyway and have nested your functions too deep and should fix your program.
-- Completion :: ~<TAB>~ never completes, only starts completion, confirm the autocompletion with ~<RET>~.  (consistent with all other programs on the os (neovim, nushell, browser...))
+** indentation
+- Completion ::
+  - use ~C-j, C-k~
+  - confirm the autocompletion with ~<RET>~.  (consistent with all other programs on the os (neovim, nushell, browser...))
 
 #+begin_src emacs-lisp
 (advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
 
-(setq tab-always-indent t
-      standard-indent 2
+(setq standard-indent 8
+      tab-always-indent t
+      tab-width standard-indent
       org-indent-indentation-per-level standard-indent
       evil-shift-width standard-indent
       evil-indent-convert-tabs t
@@ -600,10 +592,36 @@ this is automated using a snippet
 (setq-hook! rustic-mode-hook
   rustic-indent standard-indent
   rustic-indent-offset standard-indent)
+
+(setq-hook! verilog-mode-hook
+  verilog-case-indent standard-indent
+  verilog-cexp-indent standard-indent
+  verilog-indent-level standard-indent
+  verilog-indent-level-behavioral standard-indent
+  verilog-indent-level-declaration standard-indent
+  verilog-indent-level-module standard-indent)
 #+end_src
 
+*** why 8 space indentation
+A useful time for a quote from the Linux Kernel coding standards [1] - exactly the first item in fact:
+
+#+begin_quote
+Tabs are 8 characters, and thus indentations are also 8 characters. There are heretic movements that try to make indentations 4 (or even 2!) characters deep, and that is akin to trying to define the value of PI to be 3.  If you need more than 4 levels of indentation within a function, you’re screwed anyway, and should fix your program.
+#+end_quote
+
+The 8 space indent cannot exist in isolation.  It has to be coupled with a right-hand side limit of 100 columns.  Otherwise, you could just indent yourself off to infinity and there would be no consequences.  An 100 column limit forces you to keep your code within reasonable limits.
+
+The whole idea behind indentation is to clearly define where a block of control starts and ends.  This is the same philosophy applied in ~modus-theme~, where we clearly want to separate elements and enhace legibility & accessibility.  Especially when you’ve been looking at your screen for 20 straight hours, you’ll find it a lot easier to see how the indentation works if you have large indentations.  You can look at a function definition from afar and tell easily where it begins & ends even though you cannot read the actual code.  It facilitates reading through a codebase in a more tree-like fashion.
+
+Every level of indentation represents a piece of program state the reader has to keep in their head to understand a function.  “In this line, I know line points to the nth line as long as X is not true, but Y > Z.” 8-character indentations, internal spacing, and the 100-column rule effectively limits you to 4 levels of indentation in a function.  This effectively limits the internal complexity of any give function, which makes the code easier to understand and debug!  So the underlying functionality remains minimal and concise.
+
+In short, 8-char indents make things easier to read, and have the added benefit of warning you when you’re nesting your functions too deep. Heed that warning.
+
+- consistency :: the only reliable, repeatable, transportable way to ensure that indentation remains consistent across viewing environments is to indent you code using only spaces.
+  - Using tabs for indentation and spaces for alignment requires extra care, and a carefully tuned editor setup which understands the semantic difference between the tabs and the spaces which follow.  In any sizeable team, deviations in formatting will creep in.  Enforcing it will just be a big waste of time, compared to the simplicity of banishing tabs.
+
 ** Clean Whitespace
-- More than 1 empty line is inconsistent and makes things unneccessary hard to read.
+ - More than 1 empty line is inconsistent and makes things unneccessary hard to read.
 #+begin_src emacs-lisp
 (defun z/clean-whitespace ()
   "Deletes consecutive empty lines if # > 1, and strips trailing whitespace."
@@ -653,50 +671,48 @@ this is automated using a snippet
              +org-pretty-mode
              org-appear-mode))
 
-(setq org-directory "~/Documents/org/"
-      org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
-      org-use-property-inheritance t
-      org-reverse-note-order t
-      org-startup-with-inline-images t
-      org-startup-indented t
-      org-startup-numerated t
-      org-startup-align-all-tables t
-      org-list-allow-alphabetical t
-      org-tags-column 0
-      org-fold-catch-invisible-edits 'smart
-      org-export-headline-levels 5
-      org-refile-use-outline-path 'full-file-path
-      org-refile-allow-creating-parent-nodes 'confirm
-      org-use-sub-superscripts '{}
-      org-export-with-sub-superscripts '{}
-      org-fontify-quote-and-verse-blocks t
-      org-fontify-whole-block-delimiter-line t
-      doom-themes-org-fontify-special-tags t
-      org-ellipsis "…"
-      org-num-max-level 3
-      org-hide-leading-stars t
-      org-appear-autoemphasis t
-      org-appear-autosubmarkers t
-      org-appear-autolinks t
-      org-appear-autoentities t
-      org-appear-autokeywords t
-      org-appear-inside-latex nil
-      org-hide-emphasis-markers t)
-
-(setq org-pretty-entities t
-      org-pretty-entities-include-sub-superscripts t)
-
-(setq org-list-demote-modify-bullet
-      '(("-"  . "-")
-        ("+"  . "+")
-        ("*"  . "-")
-        ("a." . "a)")
-        ("1." . "1)")
-        ("1)" . "a)")))
-
-(setq org-blank-before-new-entry
-      '((heading         . t)
-        (plain-list-item . nil)))
+(after! org
+  (setq org-directory "~/Documents/org/"
+        org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
+        org-use-property-inheritance t
+        org-reverse-note-order t
+        org-startup-with-inline-images t
+        org-startup-indented t
+        org-startup-numerated t
+        org-startup-align-all-tables t
+        org-list-allow-alphabetical t
+        org-tags-column 0
+        org-fold-catch-invisible-edits 'smart
+        org-export-headline-levels 5
+        org-refile-use-outline-path 'full-file-path
+        org-refile-allow-creating-parent-nodes 'confirm
+        org-use-sub-superscripts '{}
+        org-export-with-sub-superscripts '{}
+        org-fontify-quote-and-verse-blocks t
+        org-fontify-whole-block-delimiter-line t
+        doom-themes-org-fontify-special-tags t
+        org-ellipsis "…"
+        org-num-max-level 3
+        org-hide-leading-stars t
+        org-appear-autoemphasis t
+        org-appear-autosubmarkers t
+        org-appear-autolinks t
+        org-appear-autoentities t
+        org-appear-autokeywords t
+        org-appear-inside-latex nil
+        org-hide-emphasis-markers t
+        org-pretty-entities t
+        org-pretty-entities-include-sub-superscripts t
+        org-list-demote-modify-bullet
+        '(("-"  . "-")
+          ("+"  . "+")
+          ("*"  . "-")
+          ("a." . "a)")
+          ("1." . "1)")
+          ("1)" . "a)"))
+        org-blank-before-new-entry
+        '((heading . t)
+          (plain-list-item . nil))))
 #+end_src
 
 ** symbols
@@ -736,7 +752,7 @@ this is automated using a snippet
 - these are task states are used for personal daily organization & studying at university (keeping track of lectures, assignments, events)
 - using symbols instead of words to represent states => less clutter, more concise, readeable & structured.
 - order them with priorities to assign order of execution if there are many tasks
-- states with ~@~ prompt for note | if want to do manually: ~org-add-note~
+- when changing state add a note to the state-change if needed
   - reflecting
   - log/track
   - progress
@@ -746,13 +762,13 @@ this is automated using a snippet
   - steps taken to complete task
   - reason: why task was moved to that state
   - seamlessly pick up work at a later time
-  - ~[ ] watch lecture~ -> ~[~] watch lecture~ | annotate time: where the task was last left off: "@25min"
+  - ~[ ] watch lecture~ -> ~[~] watch lecture~ | annotate time: where the task was last left off: "01:25:23h"
 
-~[#]~: event | calendar icon
+~[@]~: event
 - useful if you have to take steps after the event
-- ~[#] attend lecture~
+- ~[@] attend lecture~
 
-~[ ]~: outstanding item | checkbox
+~[ ]~: outstanding item
 - ~[ ] assignment~
 
 ~[?]~: optional
@@ -763,7 +779,7 @@ this is automated using a snippet
 - item being worked on
 - ~[-] watch lecture [00:57h]~
 
-~[=]~: on-hold | pause symbol
+~[=]~: on-hold
 - unfinished item waiting for smthing, before can be finished / continued
 - ~[=] correct assignment~
 
@@ -772,48 +788,46 @@ this is automated using a snippet
 - post completion: review performance, asess effort...
 - ~[&] assingnment~
 
-~[\]~: cancelled | math:settheory: excluding operator; math: negation, crossing the =op=
+~[>]~: delegated/assigned to someone
+- waiting for it to be finished to resume
+- check up on them
+
+~[\]~: cancelled
 - no longer neccessary
 - ~[\] assignment~
 
-~[@]~: delegated
-- delegated to someone (needs follow-up) | addressing-operator
-- ~[@] create powerpoint @johndoe~
-
-~[x]~: completed | cross-out sign
+~[x]~: completed
 - ~[x] assignment~
 
 #+begin_src emacs-lisp
 (after! org
   (setq org-todo-keywords
-        '((type "[#](#)")
-          (sequence "[ ](t)" ;; HACK :: cannot use " " => [T]odo
+        '((sequence "[ ](t)"
+                    "[@](e)"
                     "[?](?!)"
-                    "[-](-@)"
-                    "[=](=@)"
-                    "[&](&@)"
+                    "[-](-!)"
+                    "[>](>!)"
+                    "[=](=!)"
+                    "[&](&!)"
                     "|"
                     "[x](x!)"
-                    "[@](d@)" ;; HACK :: cannot use"@" => [D]elegated
-                    "[\\](\\@)")))
+                    "[\\](\\!)")))
 
   (setq org-todo-keyword-faces
-        '(("[#]"  . '(bold +org-todo-project))
+        '(("[@]"  . '(bold +org-todo-project))
           ("[ ]"  . '(bold org-todo))
           ("[-]"  . '(bold +org-todo-active))
+          ("[>]"  . '(bold +org-todo-onhold))
           ("[?]"  . '(bold +org-todo-onhold))
           ("[=]"  . '(bold +org-todo-onhold))
           ("[&]"  . '(bold +org-todo-onhold))
-          ("[@]"  . '(bold +org-todo-onhold))
           ("[\\]" . '(bold org-done))
           ("[x]"  . '(bold org-done)))))
 #+end_src
 
 - Log to drawer: ~LOG~
   - Shorter & more sensible than default: ~LOGBOOK~
-- Explain myself if i can't meet a deadline.
-  - Take responsibility
-- Make org-log messages more data orientated and functional.  (less verbose and literate)
+- Make org-log messages more data orientated and functional.  (less verbose and literate, easier to parse)
 #+begin_src emacs-lisp
 (setq org-log-done 'time
       org-log-repeat 'time
@@ -825,19 +839,14 @@ this is automated using a snippet
 (setq org-priority-highest 1
       org-priority-lowest 3)
 
-(setq org-priority-faces
-      '((?1 . 'all-the-icons-red)
-        (?2 . 'all-the-icons-orange)
-        (?3 . 'all-the-icons-yellow)))
-
 (setq org-log-note-headings
-      '((done        . "done note: %t")
-        (state       . "state: %-3S -> %-3s %t") ;; NOTE :: DON'T change this?; my task-statuses are all 3x wide -> formatting needs adjustment if not in order to align them.
+      '((done        . "note-done: %t")
+        (state       . "state: %-3S -> %-3s %t") ;; NOTE :: the custom task-statuses are all 3- wide
         (note        . "note: %t")
         (reschedule  . "re-schedule: %S, %t")
-        (delschedule . "rm-schedule: %S, %t")
+        (delschedule . "del-schedule: %S, %t")
         (redeadline  . "re-deadline: %S, %t")
-        (deldeadline . "rm-deadline: %S, %t")
+        (deldeadline . "del-deadline: %S, %t")
         (refile      . "refile: %t")
         (clock-out   . "")))
 #+end_src
@@ -863,26 +872,27 @@ this is automated using a snippet
 (add-hook! 'org-agenda-mode-hook
            #'org-super-agenda-mode)
 
-(setq org-agenda-files
-      (directory-files-recursively org-directory ".*\.org" t)
-      org-agenda-skip-scheduled-if-done t
-      org-agenda-sticky t
-      org-agenda-skip-deadline-if-done t
-      org-agenda-include-deadlines t
-      org-agenda-tags-column 0
-      org-agenda-block-separator ?─
-      org-agenda-breadcrumbs-separator "…"
-      org-agenda-compact-blocks nil
-      org-agenda-show-future-repeats nil
-      org-deadline-warning-days 3
-      org-agenda-time-grid nil
-      org-capture-use-agenda-date t)
+(after! org
+  (setq org-agenda-files
+        (directory-files-recursively org-directory
+                                     ".*\.org" t)
+        org-agenda-skip-scheduled-if-done t
+        org-agenda-sticky t
+        org-agenda-skip-deadline-if-done t
+        org-agenda-include-deadlines t
+        org-agenda-tags-column 0
+        org-agenda-block-separator ?─
+        org-agenda-breadcrumbs-separator "…"
+        org-agenda-compact-blocks nil
+        org-agenda-show-future-repeats nil
+        org-deadline-warning-days 3
+        org-agenda-time-grid nil
+        org-capture-use-agenda-date t))
 
-(setq org-agenda-deadline-faces
-      '((1.0 . error)
-        (1.0 . org-warning)
-        (0.5 . org-upcoming-deadline)
-        (0.0 . org-upcoming-distant-deadline)))
+(defadvice! z/add-newline (fn &rest args)
+  "Separate dates in 'org-agenda' with newline."
+  :around #'org-agenda-format-date-aligned
+  (concat "\n" (apply fn args) ))
 #+end_src
 
 Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align everything into columns & group items.
@@ -891,12 +901,12 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
 + Set more concise & informing ~deadline~ & ~scheduled~ strings
 #+begin_src emacs-lisp
 (setq org-agenda-todo-keyword-format "%-3s"
-      org-agenda-scheduled-leaders '("─────" "<-%2dd") ;; NOTE :: unicode is not fixed width => breaks formatting => cannot use it.
-      org-agenda-deadline-leaders '("━━━━━" "=>%2dd" "<=%2dd")
-      org-agenda-prefix-format '((agenda . "%-12c%-6s%-12t")
-                                 (todo .   "%-12c%-6s%-12t")
-                                 (tags .   "%-12c%-6s%-12t")
-                                 (search . "%-12c%-6s%-12t")))
+      org-agenda-scheduled-leaders '("──────" "<- %2dd") ;; NOTE :: unicode is not fixed width => breaks formatting => cannot use it.
+      org-agenda-deadline-leaders '("━━━━━━" "=> %2dd" "<= %2dd")
+      org-agenda-prefix-format '((agenda . "%-12c%-7s%-12t")
+                                 (todo .   "%-12c%-7s%-12t")
+                                 (tags .   "%-12c%-7s%-12t")
+                                 (search . "%-12c%-7s%-12t")))
 #+end_src
 
 ** clock
@@ -920,7 +930,8 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
 - daily journal ::
   - use for reflection and personal development / tracking and loggin in on long/short term goals
   - use for random thoughts and ideas during the day that you want to capture and preserve (be able to look back on)
-
+- prepending :: if recent item's are of higher relevance
+- appending :: for hierarchical order eg. book-quotes ordered from begin -> end
 #+begin_src emacs-lisp
 (defvar z/org-literature-dir "~/Documents/literature/notes/")
 
@@ -955,7 +966,7 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
         :headline "inbox"
         :prepend t
         :empty-lines-after 1
-        :template '("* [ ] %^{title}%? %^g")))
+        :template '("* [ ] %^{title}%?")))
 
 (defun z/doct-event-template (path)
   (list "event"
@@ -964,10 +975,10 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
         :headline "events"
         :prepend t
         :empty-lines-after 1
-        :template '("* [#] %^{title}%? %^g"
+        :template '("* [@] %^{title}%?"
                     "%^T"
                     ":PROPERTIES:"
-                    ":REPEAT_TO_STATE: [#]" ; NOTE :: incase is made repeating
+                    ":REPEAT_TO_STATE: [@]" ; NOTE :: in case is made repeating
                     ":location: %^{location}"
                     ":material: %^{material}"
                     ":END:")))
@@ -977,7 +988,7 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
         :keys "n"
         :file (z/doct-projects-file 'notes path)
         :prepend t
-        :empty-lines 1
+        :empty-lines-after 1
         :template '("* %^{title} %^g"
                     ":PROPERTIES:"
                     ":created: %U"
@@ -1015,6 +1026,7 @@ PARENT-PATH :: nil | used for recursion"
                  :keys "j"
                  :file (lambda () (z/doct-journal-file))
                  :title (lambda () (downcase (format-time-string "daily note: %A, %e. %B %Y")))
+                 :empty-lines-before 1
                  :children (("begin today"
                              :keys "t"
                              :type plain
@@ -1026,8 +1038,6 @@ PARENT-PATH :: nil | used for recursion"
                                         ""
                                         "* goals"
                                         "- [ ] %?"
-                                        ""
-                                        "* notes"
                                         ""
                                         "* agenda"
                                         "** [ ] "
@@ -1044,7 +1054,6 @@ PARENT-PATH :: nil | used for recursion"
 
                             ("end yesterday"
                              :keys "y"
-                             :empty-lines-before 1
                              :unnarrowed t
                              :file (lambda ()
                                      (z/doct-journal-file (time-subtract (current-time)
@@ -1067,17 +1076,15 @@ PARENT-PATH :: nil | used for recursion"
 
                             ("init"
                              :keys "i"
-                             :file
-                             (lambda ()
-                               (let* ((name (concat
-                                             (replace-regexp-in-string
-                                              " " "_"
-                                              (read-from-minibuffer "short title: "))
-                                             ".org")))
-                                 (file-name-concat z/org-literature-dir
-                                                   name)))
+                             :file (lambda ()
+                                     (let* ((name (concat
+                                                   (replace-regexp-in-string
+                                                    " " "_"
+                                                    (read-from-minibuffer "short title: "))
+                                                   ".org")))
+                                       (file-name-concat z/org-literature-dir
+                                                         name)))
                              :type plain
-                             :short-title (lambda ())
                              :template ("#+title:  %^{full title}"
                                         "#+author: %(user-full-name)"
                                         "#+email:  %(message-user-mail-address)"
@@ -1089,20 +1096,15 @@ PARENT-PATH :: nil | used for recursion"
                                         ":title:  %\\1"
                                         ":author: %^{author}"
                                         ":year:   %^{year}"
-                                        ":type:   %^{book|textbook|ebook|paper|article|audiobook|podcast}"
+                                        ":type:   %^{ |book|textbook|paper|article|audiobook|podcast}"
                                         ":pages:  %^{pages}"
-                                        ":END:"
-                                        ""
-                                        "** excerpts"
-                                        "** literature notes"
-                                        "** transient notes"
-                                        "** summary"))
+                                        ":END:"))
 
                             ("excerpt"
                              :keys "e"
                              :headline "excerpts"
-                             :empty-lines-after 1
-                             :template ("* %^{title} [pg:%^{page}] %^g"
+                             :empty-lines-before 1
+                             :template ("* %^{title} [pg:%^{page}]"
                                         ":PROPERTIES:"
                                         ":created: %U"
                                         ":END:"
@@ -1113,7 +1115,7 @@ PARENT-PATH :: nil | used for recursion"
                             ("note: literary"
                              :keys "l"
                              :headline "literature notes"
-                             :empty-lines-after 1
+                             :empty-lines-before 1
                              :template ("* %^{title} [pg:%^{page}] %^g"
                                         ":PROPERTIES:"
                                         ":created: %U"
@@ -1123,7 +1125,7 @@ PARENT-PATH :: nil | used for recursion"
                             ("note: transient"
                              :keys "t"
                              :headline "transient notes"
-                             :empty-lines-after 1
+                             :empty-lines-before 1
                              :template ("* %^{title} %^g"
                                         ":PROPERTIES:"
                                         ":created: %U"
@@ -1134,6 +1136,7 @@ PARENT-PATH :: nil | used for recursion"
                             ("summarize"
                              :keys "c"
                              :headline "summary"
+                             :empty-lines-before 1
                              :unnarrowed t
                              :type plain
                              :template ("%?"))))))))

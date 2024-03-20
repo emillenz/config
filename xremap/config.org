@@ -30,7 +30,7 @@ I am currently forced to use ~qwerty~ due to writing exam's at my university, ho
 ** Layout
 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 |
 |---+---+---+---+---+---+---+---+---+---|
-|   | < | > | " | ` | & | : | [ | ] | % |
+| ' | < | > | " | ` | & | : | [ | ] | % |
 |---+---+---+---+---+---+---+---+---+---|
 | ! | + | = | - | # | ∣ | _ | ( | ) | ? |
 |---+---+---+---+---+---+---+---+---+---|
@@ -88,7 +88,7 @@ keymap:
     application:
       only: firefox
     remap:
-      M-t: [c-t, esc] # HACK :: needs esc (hides popup menu)
+      M-t: c-t
       M-i: c-l
       M-o: c-o
       M-q: c-w
@@ -99,13 +99,14 @@ keymap:
 
   - name: completion
     application:
-      not: Emacs # NOTE :: already bound => sometimes need actual C-k, C-j
+      not: Emacs # NOTE :: already bound
     remap:
       c-j: down
       c-k: up
 
   - name: symlayer
     remap:
+      menu-q: apostrophe
       menu-w: shift-comma
       menu-e: shift-dot
       menu-r: shift-apostrophe

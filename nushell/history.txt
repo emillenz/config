@@ -560,3 +560,109 @@ ls **/*sync
 ls **/*org
 each  --help | bat --paging always --language help
 doom doctor
+batsignal
+batsignah --help | bat --paging always --language help
+batsignal --help | bat --paging always --language help
+batsignal -h
+nm-applet
+emacs
+2 ** 6
+pgrep -f "emacs --daemon"
+pgrep -f "unclutter"
+pgrep  --help | bat --paging always --language help
+pgrep -f keepassxc
+if (pgrep -f keepassxc) {"t"}
+pgrep -f keepassxk
+if (pgrep -f keepassxk != "") {"f"}
+if (pgrep -f keepassxk) != "" {"f"}
+if (pgrep -f keepassxk) != "" {"f"} else {"g"}
+if (pgrep -f keepassxk) == "" {"f"} else {"t"}
+complete --help | bat --paging always --language help
+autostart
+pgrep -f syncthing --no-browser
+pgrep -f "syncthing --no-browser"
+pgrep -f "emacs"
+autostart
+pgrep -f "emacs --daemon && emacsclient --reuse-frame"
+ls
+autostart
+autostarut
+syncthing
+jshell
+cdCode/cs/aw/dining_table/
+cd Code/cs/aw/dining_table/
+ls
+javac -d bin Main.java; java -cp bin Main
+javac -d bin Main.java Out.java; java -cp bin Main
+javac -d bin Main.java Out.java
+javac -d bin Main.java Out.java In.java
+javac -d bin Main.java Out.java In.java; java -cp bin Main
+tmux send-keys $"(fd --type directory . ~ | fzf --preview '^ls --color {}')"
+cd aw/dining_table/
+cd Code/cs/aw/dining_table
+ansi purple
+ls
+ls -la
+htop
+sudo killall xremap; autostart
+autostart
+sudo killall xremap
+autostart
+ls
+xev
+sudo killall xremap; 
+autostart
+autostat
+autostart
+sudo killall xremap; autostart
+ls-
+ls
+autostart
+batsignal
+batsignal  --help | bat --paging always --language help
+batsignal  -h | bat --paging always --language help
+batsignal -p
+batsignal -h
+yay batify
+yay -R batify2
+yay batify
+batify --help | bat --paging always --language help
+udevadm control --reload-rules
+sudo udevadm control --reload-rules
+ls
+i3status
+brightnessctl  --help | bat --paging always --language help
+brightnessctl --help | bat --paging always --language help
+brightnessctl --help | bat 
+brightnessctl --help | bat --paging always 
+brightnessctl get
+brightnessctl info
+brightnessctl  --help | bat --paging always --language help
+i3lock --help | bat --paging always --language help
+i3lock -h 
+man i3lock
+htop
+syncthing
+syncthin
+autorandr
+yay i3
+yay -S i3status
+autorandr
+autorandr --change
+ls -la
+syncthing
+yay iveril
+ls
+jshell
+syncthing
+emacs --debug-init
+autorandr
+autorandr --change
+emacs --debug-init
+emacs
+ls
+autorandr --save tp_lib
+autorandr -f --save tp_lib
+autorandr --force --save tp_lib
+autorandr --change
+math  --help | bat --paging always --language help

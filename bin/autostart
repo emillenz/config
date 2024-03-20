@@ -13,37 +13,33 @@ use utils.nu
 #   - starts all programs automatically, that are used in basically every-session (dry).
 # -----
 def main [] {
-  let run_procs = [
-    "sudo xremap --watch=device ~/.config/xremap/config.yml && sleep 1 && xset r off"
-    "playerctld"
-    "alacritty --class cmd --title cmd --command tmux new-session -A -s cmd"
-    "emacs --daemon && emacsclient --reuse-frame"
-    "unclutter"
-    "xsetroot -solid '#000000'"
-    "xset dpms 0 0 0 && xset s off" # never screensave / turn screen off (do manually if needed)
-    "batsignal -bpe -w 50 -c 20 -d 5"
-    "syncthing --no-browser"
-    "firefox"
-    "firefox --new-window https://chat.openai.com"
-    "keepassxc" # TODO :: replace with pass
-    "autorandr --change"
-  ]
+        let run_procs = [
+                "sudo xremap --watch=device ~/.config/xremap/config.yml && sleep 1 && xset r off"
+                "playerctld"
+                "alacritty --class cmd --title cmd --command tmux new-session -A -s cmd"
+                "emacs --daemon && emacsclient --reuse-frame"
+                "unclutter"
+                "xsetroot -solid '#000000'"
+                "xset dpms 0 0 0 && xset s off" # never screensave / turn screen off (do manually if needed)
+                "batsignal -bpe -w 50 -c 20 -d 5"
+                "firefox"
+                "firefox --new-window https://chat.openai.com"
+                "keepassxc" # TODO :: replace with pass
+                "autorandr --change"
+        ]
 
-  let processes = (ps)
-  for process in $run_procs {
-    $processes | ensure_running $process
-  }
+        let processes = (ps)
+        for process in $run_procs {
+                $processes | ensure_running $process
+        }
 }
 
-# IN :: $(ps) | for efficiency if we don't need to query processes each time
 def ensure_running [process: string] {
-  let pss = (if $in == null {ps | get name} else {$in | get name})
-  mut active = []
-  mut started = []
-  if not ($pss | any {|i| $i =~ ($process | split words | get 0)}) {
-    utils async $process
-    print $"- exec    :: ($process)"
-  } else {
-    print $"- running :: ($process)"
-  }
+        let pss = (if $in == null {ps | get name} else {$in | get name})
+        if not ($pss | any {|i| $i =~ ($process | split words | get 0)}) {
+                utils async $process
+                print $"- exec    :: ($process)"
+        } else {
+                print $"- running :: ($process)"
+        }
 }

@@ -10,12 +10,12 @@ use utils.nu
 # info:   select one of your saved output layouts.
 # -----
 def main [
-  --directory(-d): string = "~/.screenlayout" # specify custom directory // default: ~/.screenlayout
+        --directory(-d): string = "~/.screenlayout" # specify custom directory // default: ~/.screenlayout
 ] {
-  let icon = "󰍹"
-  let layouts = (ls $directory | get name | path basename)
-  let layout = (utils rofi $layouts "layout" $icon)
+        let icon = "󰍹"
+        let layouts = (ls $directory | get name | path basename)
+        let layout = (utils rofi $layouts "layout" $icon)
 
-  nu -c ($directory | path join $layout)
-  dustify  $"($icon)  layoutselect" $"switched to:\n ($layout)"
+        nu -c ($directory | path join $layout)
+        dustify  $"($icon)  layoutselect" $"switched to:\n ($layout)"
 }

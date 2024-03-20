@@ -10,5 +10,6 @@
 (package! org-fragtog)
 (package! laas)
 (package! modus-themes)
+(package! verilog-mode)
 (package! nushell-ts-mode ;; treesit-install-language-grammar -> Select "nu" -> Use URL https://github.com/nushell/tree-sitter-nu
   :recipe (:host github :repo "herbertjones/nushell-ts-mode"))

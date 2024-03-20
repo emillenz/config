@@ -10,11 +10,11 @@ use utils.nu
 # info:   connect to a bluetooth device.
 # -----
 def main [] {
-  let icon = ""
+        let icon = ""
 
-  bluetoothctl power on
-  let devs = (bluetoothctl devices | lines | parse '{cat} {addr} {name}')
-  let dev = (utils rofi ($devs | get name) "bluetooth" $icon)
-  let dev_addr = ($devs | where name == $dev | get addr)
-  bluetoothctl connect $dev_addr
+        bluetoothctl power on
+        let devs = (bluetoothctl devices | lines | parse '{cat} {addr} {name}')
+        let dev = (utils rofi ($devs | get name) "bluetooth" $icon)
+        let dev_addr = ($devs | where name == $dev | get addr)
+        bluetoothctl connect $dev_addr
 }

@@ -15,15 +15,15 @@ use utils.nu
 #     - dunst
 # -----
 def main [] {
-  let icon = "󱀞"
-  let sinks = (pactl --format json list sinks | from json)
-  let choice = (utils rofi $sinks.description "sink" $icon)
-  let sink = ($sinks | where description == $choice)
-  pactl set-default-sink $sink.name.0
+        let icon = "󱀞"
+        let sinks = (pactl --format json list sinks | from json)
+        let choice = (utils rofi $sinks.description "sink" $icon)
+        let sink = ($sinks | where description == $choice)
+        pactl set-default-sink $sink.name.0
 
-  let sink_inputs =  (pactl -f json list sink-inputs | from json)
-  for s in $sink_inputs {
-    pactl move-sink-input $s.index $sink.name.0
-  }
-  dunstify $"($icon)  audio" $"changed output\n($choice)"
+        let sink_inputs =  (pactl -f json list sink-inputs | from json)
+        for s in $sink_inputs {
+                pactl move-sink-input $s.index $sink.name.0
+        }
+        dunstify $"($icon)  audio" $"changed output\n($choice)"
 }

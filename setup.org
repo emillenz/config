@@ -11,7 +11,7 @@
 
 * Setup
 #+begin_src sh
-sudo pacman --syncyyu
+sudo pacman -Syyu
 #+end_src
 
 * Core tools
@@ -40,7 +40,6 @@ fd . ~/.config/bin --type file --exec chmod +x {}
 * Editor: doom emacs
 #+begin_src sh
 yay --noconfirm --sync emacs-nativecomp
-yay --noconfirm --sync wordnet-cli # NOTE :: dictionary dependency
 
 git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 ~/.config/emacs/bin/doom install
@@ -48,7 +47,7 @@ git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 
 * Gui apps & packages
 #+begin_src sh
-yay --noconfirm --sync i3 i3lock zathura zathura-pdf-mupdf arandr autorandr mpv yt-dlp rofi brightnessctl unclutter firefox playerctl blueman xorg-xprop xremap-x11-bin mpd dunst nsxiv maim pulsemixer xorg-xset xorg-xsetroot batsignal pamixer
+yay --noconfirm --sync i3 i3lock zathura zathura-pdf-mupdf arandr autorandr mpv yt-dlp rofi brightnessctl unclutter firefox playerctl blueman xorg-xprop xremap-x11-bin mpd dunst nsxiv maim pulsemixer xorg-xset xorg-xsetroot batsignal pamixer tlp
 #+end_src
 
 ** Enable daemons
@@ -56,56 +55,7 @@ yay --noconfirm --sync i3 i3lock zathura zathura-pdf-mupdf arandr autorandr mpv 
 sudo systemctl enable sshd
 sudo systemctl enable mpd
 sudo systemctl enable bluetooth
-#+end_src
-
-* Personal packages
-- These packages are needed for my work, but not necessary for the workflow of this config.
-** languages
-*** latex
-- For writing papers
-#+begin_src sh :tangle no
-yay --noconfirm --sync texlive-latexextra latex-mk pandoc
-#+end_src
-
-*** Rust
-- The main language for anything that is a program and not a script.
-#+begin_src sh :tangle no
-yay --noconfirm --sync rustup
-rustup component add rustfmt
-#+end_src
-
-*** C
-- When you like bare bones
-#+begin_src sh :tangle no
-yay --noconfirm --sync clang gdb strace libgccjit
-#+end_src
-
-*** Python
-- I hate python passionately for its inconsitencies and lack of consistency, but it has spread everywhere like a virus so i need support for it.
-#+begin_src sh :tangle no
-yay --noconfirm --sync python python-black python-pyflakes python-isort
-#+end_src
-
-** Misc
-- I have multiple laptops, and i want all my files to be in perfect sync, so no matter on which device i am, i have all my files.
-#+begin_src sh :tangle no
-yay --noconfirm --sync syncthing transmission-cli
-#+end_src
-
-** Blackarch repo
-- For pentesting
-#+begin_src sh :tangle no
-# Run https://blackarch.org/strap.sh as root and follow the instructions.
-curl --remote-name https://blackarch.org/strap.sh
-
-# Set execute bit
-chmod +x strap.sh
-
-# Run strap.sh
-sudo ./strap.sh
-
-# Enable multilib following https://wiki.archlinux.org/index.php/Official_repositories#Enabling_multilib and run:
-yay --noconfirm --syncyu
+sudo systemctl enable tlp.service
 #+end_src
 
 ** Obs & Nvidia drivers

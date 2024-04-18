@@ -1,4 +1,4 @@
-# [[file:config.org::*Src][Src:1]]
+# [[file:config.org::*src][src:1]]
 # note :: unused keys
 virtual_modifiers:
   - menu
@@ -26,17 +26,6 @@ keymap:
       M-i: c-l
       M-o: c-o
       M-q: c-w
-      M-slash: c-f
-      M-question: shift-f3
-      M-n: c-g
-      M-shift-n: c-shift-g
-
-  - name: completion
-    application:
-      not: Emacs # NOTE :: already bound
-    remap:
-      c-j: down
-      c-k: up
 
   - name: symlayer
     remap:
@@ -75,4 +64,4 @@ keymap:
       menu-p: shift-key_2
       menu-semicolon: shift-slash
       menu-slash: shift-key_5
-# Src:1 ends here
+# src:1 ends here

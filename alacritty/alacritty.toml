@@ -5,7 +5,7 @@
 # date:   2022-02-25
 # info:   minimal, coinsistent and fast config
 # ---
-import = ["~/.config/alacritty/modus_vivendi.toml"]
+import = ["~/.config/alacritty/modus_operandi.toml"]
 ipc_socket = true
 live_config_reload = true
 working_directory = "None"

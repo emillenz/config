@@ -5,28 +5,41 @@ width = 370
 height = 350
 frame_width = 1
 origin = bottom-right
-offset = 8x8
+offset = 16x16
 padding = 8
 horizontal_padding = 8
 transparency = 0
 font = Iosevka Nerd Font 10
 format = "<b>%s %p</b>\n%b"
 
-# modus vivendi
+# MODUS VIVENDI THEME
+# [urgency_low]
+#     background = "#000000"
+#     foreground = "#ffffff"
+#     frame_color = "#79a8ff"
+
+# [urgency_normal]
+#     background = "#000000"
+#     foreground = "#ffffff"
+#     frame_color = "#79a8ff"
+
+# [urgency_critical]
+#     background = "#000000"
+#     foreground = "#ff7f9f"
+#     frame_color = "#ff7f9f"
+
+# MODUS OPERANDI THEME
 [urgency_low]
-background = "#303030"
-foreground = "#ffffff"
-frame_color = "#2f447f"
-timeout = 2
+    background = "#ffffff"
+    foreground = "#000000"
+    frame_color = "#9f9f9f"
 
 [urgency_normal]
-background = "#303030"
-foreground = "#ffffff"
-frame_color = "#2f447f"
-timeout = 2
+    background = "#ffffff"
+    foreground = "#000000"
+    frame_color = "#9f9f9f"
 
 [urgency_critical]
-background = "#ff5f59"
-foreground = "#000000"
-frame_color = "#000000"
-timeout = 10
+    background = "#ffffff"
+    foreground = "#a60000"
+    frame_color = "#a60000"

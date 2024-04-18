@@ -34,12 +34,6 @@ configuration {
   run-command:       "{cmd}";
   run-list-command:  "";
   run-shell-command: "{terminal} -e {cmd}";
-
-  // unbind C-j, C-k => use for completion
-  kb-accept-entry: "Return,KP_Enter";
-  kb-remove-to-eol: "";
-  kb-row-up: "Control+k,Up";
-  kb-row-down: "Control+j,Down";
 }
 
 window {
@@ -55,7 +49,7 @@ window {
   margin           : 0px;
   padding          : 0px;
   border           : 1px 1px 1px 1px;
-  border-color     : @bg-alt;
+  border-color     : @border;
   cursor           : "default";
   background-color : @bg;
 }
@@ -163,11 +157,11 @@ element selected.normal {
   text-color       : @foreground;
 }
 element selected.urgent {
-  background-color : @active;
+  background-color : @selected;
   text-color       : @bg;
 }
 element selected.active {
-  background-color : @urgent;
+  background-color : @active;
   text-color       : @bg;
 }
 element alternate.normal {
@@ -252,12 +246,23 @@ error-message {
 }
 
 // modus-vivendi theme ::
+// * {
+//   bg:             #000000;
+//   border:         #646464;
+//   foreground:     #ffffff;
+//   selected:       #2f447f;
+//   active:         #f78fe7;
+//   urgent:         #fec43f;
+//   prompt:         #6ae4b9;
+// }
+
+// modus-operandi theme ::
 * {
-  bg:     #000000;
-  bg-alt:         #535353;
-  foreground:     #ffffff;
-  selected:       #2f447f;
-  active:         #44bc44;
-  urgent:         #ff5f59;
-  prompt:         #6ae4b9;
+  bg:             #ffffff;
+  border:         #595959;
+  foreground:     #000000;
+  selected:       #c0deff;
+  active:         #0031a9;
+  urgent:         #a60000;
+  prompt:         #005e8b;
 }

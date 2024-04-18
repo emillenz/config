@@ -1,82 +1,82 @@
-;; [[file:config.org::*user][user:1]]
+;; [[file:config.org::+begin_src emacs-lisp][No heading:1]]
 (setq user-full-name "emil lenz"
-      user-mail-address "emillenz@protonmail.com")
-;; user:1 ends here
+ user-mail-address "emillenz@protonmail.com")
+;; No heading:1 ends here
 
-;; [[file:config.org::*modus-theme][modus-theme:1]]
+;; [[file:config.org::+begin_src emacs-lisp][No heading:2]]
 (use-package! modus-themes
-  :config
-  (setq modus-themes-mixed-fonts t
-        modus-themes-italic-constructs t
-        modus-themes-bold-constructs t
-        modus-themes-org-blocks 'gray-background)
+ :config
+ (setq modus-themes-mixed-fonts t
+  modus-themes-italic-constructs t
+  modus-themes-bold-constructs t
+  modus-themes-org-blocks 'gray-background
 
-  (setq modus-themes-common-palette-overrides
-        `((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
-          (fg-heading-1 fg-heading-0)))
+  modus-themes-common-palette-overrides
+  `((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
+    (fg-heading-1 fg-heading-0)))
 
-  ;; HACK :: cannot customize these things with `modus-themes-common-palette-overrides'
-  (modus-themes-with-colors
-    (setq evil-insert-state-cursor `(,fg-main bar)
-          evil-normal-state-cursor `(,fg-main box)
-          evil-motion-state-cursor `(,fg-main box)
-          evil-visual-state-cursor `(,yellow box)
-          evil-operator-state-cursor `(,red box)
-          evil-replace-state-cursor `(,red hbar)))
+ ;; HACK :: cannot customize these things with `modus-themes-common-palette-overrides'
+ (modus-themes-with-colors
+  (setq evil-insert-state-cursor `(,fg-main bar)
+   evil-normal-state-cursor `(,fg-main box)
+   evil-motion-state-cursor `(,fg-main box)
+   evil-visual-state-cursor `(,yellow box)
+   evil-operator-state-cursor `(,red box)
+   evil-replace-state-cursor `(,red hbar)))
 
-  (custom-set-faces!
-    `(org-list-dt :inherit modus-themes-heading-1)
-    `(org-block-begin-line :foreground ,(modus-themes-get-color-value 'prose-metadata))
-    `(org-quote :slant italic))
+ (custom-set-faces!
+  `(org-list-dt :inherit modus-themes-heading-1)
+  `(org-block-begin-line :foreground ,(modus-themes-get-color-value 'prose-metadata))
+  `(org-quote :slant italic))
 
-  (setq doom-theme 'modus-vivendi))
-;; modus-theme:1 ends here
+ (setq doom-theme 'modus-operandi))
+;; No heading:2 ends here
 
-;; [[file:config.org::*font][font:1]]
+;; [[file:config.org::+begin_src emacs-lisp][No heading:3]]
 (setq doom-font                (font-spec :family "Iosevka Nerd Font" :size 14)
-      doom-variable-pitch-font (font-spec :family "Iosevka Nerd Font" :size 14)
-      doom-serif-font          (font-spec :family "Iosevka Nerd Font" :size 14)
-      doom-big-font            (font-spec :family "Iosevka Nerd Font" :size 28))
+ doom-variable-pitch-font (font-spec :family "Iosevka Nerd Font" :size 14)
+ doom-serif-font          (font-spec :family "Iosevka Nerd Font" :size 14)
+ doom-big-font            (font-spec :family "Iosevka Nerd Font" :size 28))
 
 (custom-set-faces!
-  '(font-lock-keyword-face :slant normal :weight bold)
-  '(font-lock-type-face    :slant normal)
-  '(font-lock-comment-face :slant italic)
-  '(font-lock-string-face  :slant italic))
-;; font:1 ends here
+ '(font-lock-keyword-face :slant normal :weight bold)
+ '(font-lock-type-face    :slant normal)
+ '(font-lock-comment-face :slant italic)
+ '(font-lock-string-face  :slant italic))
+;; No heading:3 ends here
 
-;; [[file:config.org::*modeline][modeline:1]]
+;; [[file:config.org::+begin_src emacs-lisp][No heading:4]]
 (setq display-battery-mode nil
-      display-time-mode nil
-      doom-modeline-height 15
-      doom-modeline-bar-width 5)
-;; modeline:1 ends here
+ display-time-mode nil
+ doom-modeline-height 15
+ doom-modeline-bar-width 5)
+;; No heading:4 ends here
 
-;; [[file:config.org::*window layout & behavior][window layout & behavior:1]]
+;; [[file:config.org::+begin_src emacs-lisp][No heading:5]]
 (setq evil-vsplit-window-right t
-      even-window-sizes 'width-only
-      window-combination-resize t
-      split-height-threshold nil
-      split-width-threshold 0)
+ even-window-sizes 'width-only
+ window-combination-resize t
+ split-height-threshold nil
+ split-width-threshold 0)
 
 (setq +popup-defaults
-      '(:side right
-        :select t
-        :quit nil
-        :width 0.33
-        :modeline t))
+ '(:side right
+   :select t
+   :quit nil
+   :width 0.33
+   :modeline t))
 
-(after! org
-  (setq org-src-window-setup 'current-window)
-  (set-popup-rule! "^\\*Org Src" :ignore t))
+  (after! org
+   (setq org-src-window-setup 'current-window)
+   (set-popup-rule! "^\\*Org Src" :ignore t))
 
-(set-popup-rules! `(("^\\*info" :ignore t)))
+  (set-popup-rules! `(("^\\*info" :ignore t)))
 
-(after! lsp-mode
-  (set-popup-rules! `(("^\\*lsp-help\\*" :side bottom))))
-;; window layout & behavior:1 ends here
+    (after! lsp-mode
+     (set-popup-rules! `(("^\\*lsp-help\\*" :side bottom))))
+;; No heading:5 ends here
 
-;; [[file:config.org::*window layout & behavior][window layout & behavior:2]]
+;; [[file:config.org::+begin_src emacs-lisp][No heading:6]]
 (add-hook! '(text-mode-hook
              ;; prog-mode-hook ;; NOTE :: no-use, breaks with flycheck
              dired-mode-hook
@@ -92,7 +92,7 @@
       visual-fill-column-center-text t
       visual-fill-column-width 100
       fill-column 100)
-;; window layout & behavior:2 ends here
+;; No heading:6 ends here
 
 ;; [[file:config.org::*misc options][misc options:1]]
 (setq bookmark-default-file "~/.config/doom/bookmarks"
@@ -132,6 +132,7 @@
 
       (:prefix "c"
                "w" #'z/clean-whitespace
+               "r" #'lsp-rename
                (:prefix-map ("'" . "org-src")
                             "t" #'org-babel-tangle
                             "T" #'org-babel-detangle))
@@ -249,7 +250,8 @@ This is sensible default behaviour, and integrates it into evil."
       "-"  (cmd! (let ((current-prefix-arg '(16)))
                    (call-interactively #'org-toggle-checkbox)))
       "["  (cmd! (let ((current-prefix-arg '(4)))
-                   (call-interactively #'org-toggle-checkbox))))
+                   (call-interactively #'org-toggle-checkbox)))
+      "z"  #'org-add-note)
 ;; org:1 ends here
 
 ;; [[file:config.org::*dired (keybindings)][dired (keybindings):1]]
@@ -326,9 +328,10 @@ This is sensible default behaviour, and integrates it into evil."
 ;; jumplist:1 ends here
 
 ;; [[file:config.org::*completion][completion:1]]
-(setq company-minimum-prefix-length 3
+(setq company-minimum-prefix-length 0
+      vertico-flat-mode nil ;; maybe?
       company-idle-delay nil
-      company-tooltip-idle-delay 0.2
+      company-tooltip-idle-delay 0.1
       company-show-quick-access t
       company-global-modes
       '(not
@@ -338,7 +341,14 @@ This is sensible default behaviour, and integrates it into evil."
         vterm-mode))
 
 (map! :map 'company-mode-map
-      :i "C-j" #'company-complete-common)
+      :i "TAB" #'company-complete-common)
+
+;; make vertico behavior consistent with company
+(map! :after vertico :map 'vertico-map
+      :inm "TAB" #'vertico-next
+      :inm "<backtab>" #'vertico-previous
+      :im  "," #'vertico-insert
+      :inm "RET" #'vertico-exit)
 ;; completion:1 ends here
 
 ;; [[file:config.org::*snippets][snippets:1]]
@@ -377,7 +387,8 @@ This is sensible default behaviour, and integrates it into evil."
 
       dired-recursive-copies 'always
       dired-recursive-deletes 'top
-      global-auto-revert-non-file-buffers t)
+      global-auto-revert-non-file-buffers t
+      dired-no-confirm '(uncompress move copy))
 ;; dired:1 ends here
 
 ;; [[file:config.org::*Archive file][Archive file:1]]
@@ -413,19 +424,13 @@ This is sensible default behaviour, and integrates it into evil."
       evil-indent-convert-tabs t
       indent-tabs-mode nil)
 
-(setq-hook! org-mode tab-width 8) ;; required by org-mode
-
+;; note need to set some options again
 (setq-hook! prog-mode
-  tab-width standard-indent
   evil-shift-width standard-indent
   c-basic-offset standard-indent
-  nushell-ts-mode-indent-offset standard-indent)
-
-(setq-hook! rustic-mode-hook
+  nushell-ts-mode-indent-offset standard-indent
   rustic-indent standard-indent
-  rustic-indent-offset standard-indent)
-
-(setq-hook! verilog-mode-hook
+  rustic-indent-offset standard-indent
   verilog-case-indent standard-indent
   verilog-cexp-indent standard-indent
   verilog-indent-level standard-indent
@@ -536,15 +541,15 @@ This is sensible default behaviour, and integrates it into evil."
 (after! org
   (setq org-todo-keywords
         '((sequence "[ ](t)"
-                    "[@](e)"
-                    "[?](?!)"
-                    "[-](-!)"
-                    "[>](>!)"
-                    "[=](=!)"
-                    "[&](&!)"
-                    "|"
-                    "[x](x!)"
-                    "[\\](\\!)")))
+           "[@](e)"
+           "[?](?!)"
+           "[-](-!)"
+           "[>](>!)"
+           "[=](=!)"
+           "[&](&!)"
+           "|"
+           "[x](x!)"
+           "[\\](\\!)")))
 
   (setq org-todo-keyword-faces
         '(("[@]"  . '(bold +org-todo-project))
@@ -599,9 +604,7 @@ This is sensible default behaviour, and integrates it into evil."
            #'org-super-agenda-mode)
 
 (after! org
-  (setq org-agenda-files
-        (directory-files-recursively org-directory
-                                     ".*\.org" t)
+  (setq org-agenda-files (directory-files-recursively org-directory ".*\.org" t)
         org-agenda-skip-scheduled-if-done t
         org-agenda-sticky t
         org-agenda-skip-deadline-if-done t
@@ -643,9 +646,9 @@ This is sensible default behaviour, and integrates it into evil."
 (defvar z/org-journal-dir (file-name-concat "~/Documents/journal/"))
 
 (defun z/doct-journal-file (&optional time)
-  "TIME :: Time of note to return. (default: today)"
+  "TIME :: time in day of note to return. (default: today)"
   (file-name-concat z/org-journal-dir
-                    (format "%s__journal.org"
+                    (format "%s_journal.org"
                             (format-time-string "%F" (or time (current-time))))))
 
 (defvar z/doct-projects
@@ -693,7 +696,7 @@ This is sensible default behaviour, and integrates it into evil."
         :keys "n"
         :file (z/doct-projects-file 'notes path)
         :prepend t
-        :empty-lines-after 1
+        :empty-lines 1
         :template '("* %^{title} %^g"
                     ":PROPERTIES:"
                     ":created: %U"
@@ -702,7 +705,7 @@ This is sensible default behaviour, and integrates it into evil."
 
 (defun z/doct-expand-projects (&optional projects parent-path)
   "PROJECTS :: nil | used for recursion
-PARENT-PATH :: nil | used for recursion"
+    PARENT-PATH :: nil | used for recursion"
   (mapcar (lambda (project)
             (let* ((props (cdr project))
                    (tag (car project))
@@ -731,33 +734,33 @@ PARENT-PATH :: nil | used for recursion"
                  :keys "j"
                  :file (lambda () (z/doct-journal-file))
                  :title (lambda () (downcase (format-time-string "daily note: %A, %e. %B %Y")))
-                 :empty-lines-before 1
-                 :children (("begin today"
-                             :keys "t"
+                 :children (("journal init"
+                             :keys "j"
                              :type plain
-                             :template ("#+title:  %{title}"
-                                        "#+author: %(user-full-name)"
-                                        "#+email:  %(message-user-mail-address)"
-                                        "#+date:   %<%F>"
-                                        "#+filetags: :journal:"
-                                        ""
-                                        "* goals"
-                                        "- [ ] %?"
-                                        ""
-                                        "* agenda"
-                                        "** [ ] "
-                                        "SCHEDULED: <%<%F %a>>"))
+                             :template  ("#+title:  %{title}"
+                                         "#+author: %(user-full-name)"
+                                         "#+email:  %(message-user-mail-address)"
+                                         "#+date:   %<%F>"
+                                         "#+filetags: :journal:"
+                                         ""
+                                         "* goals"
+                                         "- [ ] %?"
+                                         ""
+                                         "* agenda"
+                                         "** [ ]"))
+
                             ("note"
                              :keys "n"
                              :headline "notes"
-                             :empty-lines-before 1
+                             :prepent t
+                             :empty-lines-after 1
                              :template ("* %^{title}"
                                         ":PROPERTIES:"
                                         ":created: %U"
                                         ":END:"
                                         "%?"))
 
-                            ("end yesterday"
+                            ("yesterday review"
                              :keys "y"
                              :unnarrowed t
                              :file (lambda ()
@@ -776,7 +779,6 @@ PARENT-PATH :: nil | used for recursion"
                              :keys "r"
                              :file ,(file-name-concat z/org-literature-dir "readlist.org")
                              :prepend t
-                             :empty-lines-after 1
                              :template ("* [ ] %^{title}%? %^g"))
 
                             ("init"
@@ -801,7 +803,7 @@ PARENT-PATH :: nil | used for recursion"
                                         ":title:  %\\1"
                                         ":author: %^{author}"
                                         ":year:   %^{year}"
-                                        ":type:   %^{ |book|textbook|paper|article|audiobook|podcast}"
+                                        ":type:   %^{ |book|textbook|ebook|paper|article|audiobook|podcast}"
                                         ":pages:  %^{pages}"
                                         ":END:"))
 
@@ -841,7 +843,6 @@ PARENT-PATH :: nil | used for recursion"
                             ("summarize"
                              :keys "c"
                              :headline "summary"
-                             :empty-lines-before 1
                              :unnarrowed t
                              :type plain
                              :template ("%?"))))))))
@@ -852,10 +853,16 @@ PARENT-PATH :: nil | used for recursion"
 (setq org-startup-with-latex-preview t)
 ;; org-latex:1 ends here
 
-;; [[file:config.org::*nushell-ts-mode][nushell-ts-mode:1]]
+;; [[file:config.org::*nushell][nushell:1]]
 (use-package! nushell-ts-mode)
-;; nushell-ts-mode:1 ends here
+;; nushell:1 ends here
 
 ;; [[file:config.org::*latex][latex:1]]
 (setq +latex-viewers '(zathura))
 ;; latex:1 ends here
+
+;; [[file:config.org::*verilog][verilog:1]]
+(map! :map verilog-mode-map
+      :localleader
+:nm "f" #'verilog-indent-buffer)
+;; verilog:1 ends here

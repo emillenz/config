@@ -80,7 +80,7 @@ set $vol_inc pamixer --unmute --increase 5 && dunstify --replace 69 "  vol: $
 set $vol_dec pamixer --unmute --decrease 5 && dunstify --replace 69 "  vol: $(pamixer --get-volume-human)"
 set $vol_mute pamixer --toggle-mute && dunstify --replace 69 "  vol: $(pamixer --get-volume-human)" $esc
 set $vol_mic_mute pamixer --default-source --toggle-mute && dunstify --replace 69 "  mic mute: $(pamixer --default-source --get-mute)" $esc
-set $sys_sleep i3lock --color 000000 && systemctl suspend
+set $sys_sleep i3lock --color ffffff && systemctl suspend
 set $sys_screenoff sleep 1 && xset dpms force off
 
 $map XF86MonBrightnessDown $cmd brightnessctl set 5%-
@@ -221,7 +221,6 @@ set $screenshot_full scrot '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/scr
 set $screenshot_sel scrot --select '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' && dunstify "󰹑  scrot" "saved in: ~/Pictures/screenshots"
 mode "leader" {
         $map $mod+a           $cmd $bin/audio $esc
-        $map $mod+o           $cmd autorandr --change
         $map --release $mod+s $cmd $screenshot_sel $esc
         $map $mod+shift+s     $cmd $screenshot_full $esc
         $map $mod+k           $cmd $bin/killprocess $esc
@@ -246,18 +245,29 @@ mode "quit" {
 
 * Theme
 ** Modus vivendi
-#+begin_src conf
+#+begin_src conf :tangle no
 set $bg       #000000
 set $modeline #505050
 set $fg       #ffffff
 set $accent   #2f447f
+#+end_src
 
+** modus operandi
+#+begin_src conf
+set $bg       #ffffff
+set $modeline #c8c8c8
+set $fg       #000000
+set $active   #e0f2fa
+#+end_src
+
+** opts
+#+begin_src conf
 # class                 $border   $bg       $text $indicator $child_border
-client.focused          $accent   $accent   $fg   $fg        $accent
-client.focused_inactive $modeline $modeline $fg   $bg        $modeline
-client.unfocused        $bg       $bg       $fg   $bg        $bg
-client.urgent           $accent   $accent   $fg   $bg        $bg
-client.placeholder      $modeline $modeline $fg   $bg        $bg
+client.focused          $active   $active   $fg   $fg        $active
+client.focused_inactive $bg       $bg       $fg   $bg        $bg
+client.unfocused        $modeline $modeline $fg   $modeline  $bg
+client.urgent           $active   $active   $fg   $bg        $active
+client.placeholder      $modeline $modeline $fg   $bg        $modeline
 client.background       $bg
 #+end_src
 
@@ -279,7 +289,7 @@ bar {
                 statusline $fg
                 separator  $fg
                 # class      $border $backg  $text
-                binding_mode $accent $accent $fg
+                binding_mode $active $active $fg
         }
 }
 #+end_src

@@ -666,3 +666,277 @@ autorandr -f --save tp_lib
 autorandr --force --save tp_lib
 autorandr --change
 math  --help | bat --paging always --language help
+0.9 * 0.9
+0.5 * 0.7 = 0.9
+0.5 * 0.7 + 0.9
+0.5 * 0.7 + 0.3 ** 2
+0.5 * 0.7 + 0.3 * 0.3
+5 / 8
+7 / 8
+autorandr  --help | bat --paging always --language help
+autorandr  --list
+autorandr --save tp_int
+autorandr --change
+htop
+syncthing
+autorandr --change
+autorandr  --help | bat --paging always --language help
+autorandr  --list
+autorandr --list
+auto
+autorandr --list
+autorandr --change tp_lib
+doom upgrade
+ls
+emacs
+emacs --debug-init
+emacs
+doom synct
+doom sync
+emacs
+$layouts
+utils rofi [a b] "hehe"
+use utils
+utils rofi
+utils rofi "a" "b"
+utils rofi ["a"] "b"
+let l = autorandr --list | lines
+$l
+utils rofi $l "a"
+layouts
+layout
+dunstify
+layout
+tldr autorandr
+man xrandr
+yay dunstify
+yay dunst
+yay tlp
+man power-profiles-daemon 
+yay tlp
+^yay tlp
+man tlp
+tlp start
+systemctl enable tlp.service
+tlp start
+sudo tlp start
+ls
+systemctl enable tlp.service
+cd Code/cs/pp/assignment5/
+ls
+fd sync-conflict 
+fd sync-conflict -x rm {}
+fd sync-conflict 
+syncthing
+autorandr --change
+autorandr --change tp_lib
+layout
+autorandr --save tp
+autorandr  --help | bat --paging always --language help
+autorandr  --remove tp_lib tp_int
+autorandr  --remove tp_int
+autorandr --list
+autorandr --lis
+autorandr --save tp
+autorandr --forces --save tp
+autorandr -f -s tp
+autorandr --force -s tp
+autorandr --save tp_library
+autorandr --load tp
+autorandr --change top
+autorandr --change tp
+autorandr --change tp_lib
+autorandr --change tp_library
+autorandr --force --save tp_library
+ls
+sudo killall emacs
+autostart
+ls
+yay tlp
+^yay tlp
+autostart
+ltp
+tlp
+sudo tlp start
+sudo systemctl enable tlp.service
+autostart
+hell
+4 / 3
+syncthing
+syncthing 
+ls
+ls -la
+ls
+ls -la
+ls
+ls -la
+man hell
+man man
+ls
+as;df
+adsf
+ls
+ls -la
+ls
+ls -la
+ls
+ls -la
+ls
+1 + 2 + 43
+ls
+lsnu
+ls
+ls -la
+1 + 2 + 3
+ls
+1 + 2 + 3 + 4
+ls
+ls -la
+1 + 2 + 3
+ps 
+jshell
+3 / 4
+man math
+mat --help | bat --paging always --language help
+math --help | bat --paging always --language help
+10000 / 16000000
+16000000 / 10000
+64 / 2
+2 / 64
+syncthing
+htop
+emacs -nw
+emacsclient --tty
+doom sync
+emacsclient --tty
+emacsclient
+emacsclient  --help | bat --paging always --language help
+emacsclient  -n
+emacsclient  -t
+2 ** 4
+emacs -t
+emacs -n
+emacs -nw
+thunar
+syncthing 
+sudo syncthing
+synthing
+ls
+-la
+autostart
+ls
+ls -la
+syncthing
+autostart
+ls
+ps
+ls
+ls -la
+ls
+ansi
+help ansi
+ansi -l
+ls
+ls -la
+ls
+jshell
+nvim .bashrc
+ls
+ls -la
+ps
+nm-applet
+neofetch
+emacsclient -nw
+doom  --help | bat --paging always --language help
+doom info
+htop
+cmatri
+cmatrix
+yay cmatrix
+doom upgrade
+32min
+32min * 52
+into duration
+into duration --help | bat --paging always --language help
+duration --help | bat --paging always --language help
+32m * 52 | format duration ]
+32m * 52 | format duration 
+32m * 52 
+32min * 52 | format duration hr
+32min * 52 | format duration h
+32min * 52 | format duration hr
+yay chomper
+autostart
+autorandr --chnage
+autorandr --change
+autorandr hp
+autorandr --savehp
+autorandr --save hp
+autorandr --change
+autorandr
+autorandr  --help | bat --paging always --language help
+autorandr  --remove hp_home hp_home2
+autorandr  --remove hp_home2
+autorandr --list
+ls
+autorandr --save hp_home
+autorandr
+autorandr --list
+autorandr 
+autorandr --change hp_hpme\
+autorandr --change hp_home
+autorandr -sf hp_home
+autorandr -r f
+autorandr - --help | bat --paging always --language help
+autorandr --help | bat --paging always --language help
+autorandr -s hp_home
+autorandr --force-s hp_home
+autorandr --force -s hp_home
+ls
+autorandr
+batsignal
+batsignal  --help | bat --paging always --language help
+batsignal  -help
+batsignal  -h
+autorandr --change hp
+man nsxiv 
+man mpv
+autorandr --change hp_home
+autorandr --change hp
+autorandr --change hp_home
+autorandr --)ist
+autorandr --list
+autorandr
+autorandr --change
+man autorandr
+autorandr --change
+autorandr
+autorandr --force -s hp_hpme
+autorandr --force -s hp_home
+autorandr --remove hp_hpme
+autostart
+yay protonvpn
+man protosint 
+protosint  --help | bat --paging always --language help
+syncthing 
+protosint
+autovpn
+yay autovpn
+man autovpn
+autovpn  --help | bat --paging always --language help
+autovpn -h
+autovpn 
+sudo autovpn
+autovpn EG
+autovpn IN
+ip
+ip address
+ip addr show
+sudo autovpn IN
+autovpn US
+nm-applet
+cd Downloads/
+git clone https://github.com/anhsirk0/alacritty-themes/tree/main/themes
+git clone https://github.com/anhsirk0/alacritty-themes
+cd alacritty-themes/
+ls

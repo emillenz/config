@@ -19,7 +19,7 @@ def main [] {
                 "alacritty --class cmd --title cmd --command tmux new-session -A -s cmd"
                 "emacs --daemon && emacsclient --reuse-frame"
                 "unclutter"
-                "xsetroot -solid '#000000'"
+                "xsetroot -solid '#ffffff'"
                 "xset dpms 0 0 0 && xset s off" # never screensave / turn screen off (do manually if needed)
                 "batsignal -bpe -w 50 -c 20 -d 5"
                 "firefox"

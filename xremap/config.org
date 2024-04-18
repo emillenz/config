@@ -1,33 +1,33 @@
-#+title:  Keyboard Layering & Remaps
-#+author: Emil Lenz
+#+title:  keyboard layering & remaps
+#+author: emil lenz
 #+email:  emillenz@protonmail.com
 #+date:   2024-01-19
-#+info:   Global keyboard remapping scheme. With a focus on speed, ergonomics and accuracy.
+#+info:   global keyboard remapping scheme. with a focus on speed, ergonomics and accuracy.
 
 #+property: header-args:yaml :tangle config.yml :comments link
 
-* General notes
-- Key-repetition :: Disable it.
-  - This causes bad habits of you holding down a key instead of moving intelligently and fast using the appropriate motion (not holding down ~j~, istead using ~C-d~. Not spamming delete, instead using ~d...~).
-- Backspace :: Original position forces one to leave the homerow and thus interrupts flow, speed and is just plain annoying for a highly frequent key. It needs to be comfortably pressed in rapid succession. The most optial placement is: ~capslock~.
-  - Symbollayer mod-key :: it's ergonomic to hold it down and allows full range of motion for all other fingers. Needs to be backspace as symbollayer is very frequently used.
-- Vim layer :: If you do more than just typing something into a prompt you should really be using ~emacs-everywhere~ instead.
-- Esc :: remapped ergonomically as a thumbkey to: ~alt_l~, since original position is atrocious for speed in vim motions (and uncomfortable too).
-- Thumbs :: super & alt (since the have analogous functionality) => wm and in app navigation. (remapped super, since it is unergonomical to hold down)
-- Ctrl-keys :: Get in the habit of pressing the control key's with the palm of your wrists for maximum comfort. (assuming you have a mechanical keyboard).
-  - we use C-j/k for vertical completion-menus globally (better than tab && shift/tab)
-- Browser :: Remap shorcuts to be consistent with global navigation scheme (use ~alt~ instead of ~ctrl~)
+* general notes
+- key-repetition :: disable it.
+  - this causes bad habits of you holding down a key instead of moving intelligently and fast using the appropriate motion (not holding down ~j~, istead using ~c-d~. not spamming delete, instead using ~d...~).
+- backspace :: original position forces one to leave the homerow and thus interrupts flow, speed and is just plain annoying for a highly frequent key. it needs to be comfortably pressed in rapid succession. the most optial placement is: ~capslock~.
+  - symbollayer mod-key :: it's ergonomic to hold it down and allows full range of motion for all other fingers. needs to be backspace as symbollayer is very frequently used.
+- vim layer :: if you do more than just typing something into a prompt you should really be using ~emacs-everywhere~ instead.
+- esc :: remapped ergonomically as a thumbkey to: ~alt_l~, since original position is atrocious for speed in vim motions (and uncomfortable too).
+- thumbs :: super & alt (since the have analogous functionality) => wm and in app navigation. (remapped super, since it is unergonomical to hold down)
+- ctrl-keys :: get in the habit of pressing the control key's with the palm of your wrists for maximum comfort. (assuming you have a mechanical keyboard).
+  - we use c-j/k for vertical completion-menus globally (better than tab && shift/tab)
+- browser :: remap shorcuts to be consistent with global navigation scheme (use ~alt~ instead of ~ctrl~)
 
-* Layout
-I am currently forced to use ~qwerty~ due to writing exam's at my university, however once this requirement has ceeded i will return back to dvorak. Dvorak is the superior layout, since it is the only ergo-layout where ~jk~ are adjacent (for vim) and it is widely available. Additionally it is more pure, not considering ~zxcv-hotkeys~ and placing the punctuation sensibly (for programming).
+* layout
+i am currently forced to use ~qwerty~ due to writing exam's at my university, however once this requirement has ceeded i will return back to dvorak. dvorak is the superior layout, since it is the only ergo-layout where ~jk~ are adjacent (for vim) and it is widely available. additionally it is more pure, not considering ~zxcv-hotkeys~ and placing the punctuation sensibly (for programming).
 
-* Symbols Layer
-- This greatly increases precision, typing accuracy (and speed) when typing sybols.
-- Typing mistakes are worse than typing slow. Since you now have to interrupt your flow, delete and then resume again.
-- The most qualitative and longterm efficient typing style is with consistent speed with a focus on avoiding typos (Getting things right the first time). There is no shortcut to typing fast, you must learn first to type correct, only then should you start to speed up (and will do so naturally). If you don't focus on correctness, you will encourage and develop bad habits and mistakes into your typing that would have been easily avoideable.
-- And since programmers use symbols super-frequently this makes complete and total sense to have them accessible and not having reach across the entire keyboard every second word, just to type some ~()~ or a ~_~.
+* symbols layer
+- this greatly increases precision, typing accuracy (and speed) when typing sybols.
+- typing mistakes are worse than typing slow. since you now have to interrupt your flow, delete and then resume again.
+- the most qualitative and longterm efficient typing style is with consistent speed with a focus on avoiding typos (getting things right the first time). there is no shortcut to typing fast, you must learn first to type correct, only then should you start to speed up (and will do so naturally). if you don't focus on correctness, you will encourage and develop bad habits and mistakes into your typing that would have been easily avoideable.
+- and since programmers use symbols super-frequently this makes complete and total sense to have them accessible and not having reach across the entire keyboard every second word, just to type some ~()~ or a ~_~.
 
-** Layout
+** layout
 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 |
 |---+---+---+---+---+---+---+---+---+---|
 | ' | < | > | " | ` | & | : | [ | ] | % |
@@ -37,33 +37,33 @@ I am currently forced to use ~qwerty~ due to writing exam's at my university, ho
 |   | ^ | * | / | \ | ~ | $ | { | } | @ |
 |---+---+---+---+---+---+---+---+---+---|
 
-** Design principles
-Symbols are not like alpha characters, they occur less often, and they tend to occur in isolation or in short bigrams (in C code, things like ~#~ and ~!=~). We can learn nevertheless from work on optimizing alpha key layouts and apply some of those findings to symbol layouts.
+** design principles
+symbols are not like alpha characters, they occur less often, and they tend to occur in isolation or in short bigrams (in c code, things like ~#~ and ~!=~). we can learn nevertheless from work on optimizing alpha key layouts and apply some of those findings to symbol layouts.
 
-It’s a good idea to put the most used keys on home row and rare keys toward the corners.
-Avoid the pinkies for keys that are often double tapped (~== ++ // \\~). Or you might like a Repeat Key to circumvent double tapping.
+it’s a good idea to put the most used keys on home row and rare keys toward the corners.
+avoid the pinkies for keys that are often double tapped (~== ++ // \\~). or you might like a repeat key to circumvent double tapping.
 
-Make common bigrams (~!= <= += ->~) comfortable to type. Ideally they are “inward rolls”. An inward roll is a pattern typed on one hand with successive keys moving toward the center of the keyboard ("inward"), like drumming your fingers from pinky to index finger.
+make common bigrams (~!= <= += ->~) comfortable to type. ideally they are “inward rolls”. an inward roll is a pattern typed on one hand with successive keys moving toward the center of the keyboard ("inward"), like drumming your fingers from pinky to index finger.
 
-While each principle above is reasonable for an isolated key, they will easily conflict when getting into the design. Obviously, not all keys can be on the home row and not all bigrams can be inward rolls. We need to make compromises.
+while each principle above is reasonable for an isolated key, they will easily conflict when getting into the design. obviously, not all keys can be on the home row and not all bigrams can be inward rolls. we need to make compromises.
 
-In order to increase the ergonomics, typing accuracy and finger travel distance we remap all symbols from the top row onto the base layer using ~capslock~ as the layer-modifier.
+in order to increase the ergonomics, typing accuracy and finger travel distance we remap all symbols from the top row onto the base layer using ~capslock~ as the layer-modifier.
 
-Using vim motions also greatly benefits from using a symbol layer, since many useful keybinds such as ~{}, $, ^~ are frequently used but unergonomic.
+using vim motions also greatly benefits from using a symbol layer, since many useful keybinds such as ~{}, $, ^~ are frequently used but unergonomic.
 
-We include on this symbol layer all symbols that are accessed with shift and those who are not located on that main typing layer (ie. hard to reach, ex: ~backslash~).
+we include on this symbol layer all symbols that are accessed with shift and those who are not located on that main typing layer (ie. hard to reach, ex: ~backslash~).
 
-** Features:
-- The left hand has mathematical operators mainly (if you use dvorak, then this overlaps).
-  - Comparisons ~!= ~<= >= =~~
-  - Assignment operators ~-~+= ~/= *=~
-  - Arrow operators: ~-> =>~
-- Most symbols are double tapped in some use: ~<< == && || ** \\~. So pinky keys are deliberately things that aren’t commonly double tapped
-- Right has all the braces under the powerfingers (ordered by frequency: ~() -> {} -> []~)
+** features:
+- the left hand has mathematical operators mainly (if you use dvorak, then this overlaps).
+  - comparisons ~!= ~<= >= =~~
+  - assignment operators ~-~+= ~/= *=~
+  - arrow operators: ~-> =>~
+- most symbols are double tapped in some use: ~<< == && || ** \\~. so pinky keys are deliberately things that aren’t commonly double tapped
+- right has all the braces under the powerfingers (ordered by frequency: ~() -> {} -> []~)
 - ~_~ is one of the most frequently used keys for namespacing in programming => under the powerfinger (and on the other hand the counterpart: ~-~, also under powerfinger, but on the operator side).
-- ~C-j, C-k~: up down => navigate completion menus in all apps.
+- ~c-j, c-k~: up down => navigate completion menus in all apps.
 
-* Src
+* src
 #+begin_src yaml
 # note :: unused keys
 virtual_modifiers:
@@ -92,17 +92,6 @@ keymap:
       M-i: c-l
       M-o: c-o
       M-q: c-w
-      M-slash: c-f
-      M-question: shift-f3
-      M-n: c-g
-      M-shift-n: c-shift-g
-
-  - name: completion
-    application:
-      not: Emacs # NOTE :: already bound
-    remap:
-      c-j: down
-      c-k: up
 
   - name: symlayer
     remap:
@@ -143,13 +132,13 @@ keymap:
       menu-slash: shift-key_5
 #+end_src
 
-* Symbol character frequencies
-This section is on measuring character frequencies, which helps optimize the layout for the programming languages you use. Some symbols occur much more often than others. It’s helpful to know the distribution so that we can prioritize the layout for more frequent symbols.
+* symbol character frequencies
+this section is on measuring character frequencies, which helps optimize the layout for the programming languages you use. some symbols occur much more often than others. it’s helpful to know the distribution so that we can prioritize the layout for more frequent symbols.
 
-[[https://getreuer.info/posts/keyboards/symbol-layer/index.html][Pascal Getreuer]] counted how often each symbol occurs in his files. Below are character frequencies counted on six different kinds of text, each column counted on at least 40K of data. Units are percentages. “Prose” is a mix of email and other plain text files. “Mixed” is a mixed corpus.
+[[https://getreuer.info/posts/keyboards/symbol-layer/index.html][pascal getreuer]] counted how often each symbol occurs in his files. below are character frequencies counted on six different kinds of text, each column counted on at least 40k of data. units are percentages. “prose” is a mix of email and other plain text files. “mixed” is a mixed corpus.
 
 #+begin_example
-|     | Prose    | C/C++    | Python   | Shell    | LaTeX    | Mixed    |
+|     | prose    | c/c++    | python   | shell    | latex    | mixed    |
 |-----+----------+----------+----------+----------+----------+----------|
 | #1  | .  1.249 | _  1.369 | _  2.213 | "  2.792 | \  2.254 | ,  1.416 |
 | #2  | ,  0.952 | *  1.238 | .  2.183 | -  2.430 | {  1.327 | .  1.067 |
@@ -183,5 +172,5 @@ This section is on measuring character frequencies, which helps optimize the lay
 | #30 | ~  0.017 | \  0.186 | {  0.057 | }  0.187 | 8  0.071 | >  0.079 |
 #+end_example
 
-- Caveat :: What we actually care about are keys typed. But considering editor hotkeys, that’s not necessarily the same as characters written, which is what the above counts. For instance in Vim, many symbol keys are hotkeys in normal mode, like ~/~ for search.
-- Digits :: My conclusion is digits better go on the base layer, even for coding, contrary to “programmer” layout variants. Since we need number's frequently numbered arguments to vim's commands, and sometimes for heavy data entry (calculator's, spreadsheets, etc...).
+- caveat :: what we actually care about are keys typed. but considering editor hotkeys, that’s not necessarily the same as characters written, which is what the above counts. for instance in vim, many symbol keys are hotkeys in normal mode, like ~/~ for search.
+- digits :: my conclusion is digits better go on the base layer, even for coding, contrary to “programmer” layout variants. since we need number's frequently numbered arguments to vim's commands, and sometimes for heavy data entry (calculator's, spreadsheets, etc...).

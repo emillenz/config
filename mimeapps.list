@@ -1,5 +1,5 @@
 [Default Applications]
-image/jpeg=gimp.desktop;nsxiv.desktop;
+image/jpeg=nsxiv.desktop
 application/octet-stream=emacsclient.desktop
 application/pdf=org.pwmt.zathura.desktop
 application/mp4=mpv.desktop
@@ -19,3 +19,4 @@ application/rtf=libreoffice-writer.desktop;emacsclient.desktop;
 text/plain=emacsclient.desktop;
 application/epub+zip=org.pwmt.zathura-pdf-mupdf.desktop;
 image/png=nsxiv.desktop;
+image/jpeg=nsxiv.desktop;org.gnome.gThumb.desktop;feh.desktop;

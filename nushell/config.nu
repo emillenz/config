@@ -117,7 +117,7 @@ $env.config = {
                 vi_normal: block
         }
 
-        color_config: $modus_theme
+        color_config: $modus_operandi
         use_grid_icons: false
         footer_mode: "25"
         float_precision: 2
@@ -191,7 +191,7 @@ $env.config = {
                 {
                 name: completion_menu
                 modifier: none
-                keycode: Down # NOTE :: C-j, C-k systemwide bound to up/down for completion menus
+                keycode: tab
                 mode: vi_insert
                 event: {
                         until: [
@@ -201,18 +201,10 @@ $env.config = {
                 }
                 }
 
-                # {
-                # name: completion_previous
-                # modifier: shift
-                # keycode: backtab
-                # mode: [vi_normal vi_insert]
-                # event: {send: menuprevious}
-                # }
-
                 {
                 name: complete_hint
-                modifier: none
-                keycode: tab
+                modifier: control
+                keycode: char_t
                 mode: [vi_normal vi_insert]
                 event: {send: historyhintcomplete}
                 }

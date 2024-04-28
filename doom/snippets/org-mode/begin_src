@@ -1,7 +1,7 @@
 # -*- mode: snippet -*-
 # name: #+begin_src
-# uuid: src
 # key: src
+# uuid: src
 # --
 #+begin_src ${1:`(or (save-excursion
     (beginning-of-line)

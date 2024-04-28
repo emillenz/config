@@ -1,84 +1,91 @@
-;; [[file:config.org::+begin_src emacs-lisp][No heading:1]]
+;; [[file:config.org::*user][user:1]]
 (setq user-full-name "emil lenz"
- user-mail-address "emillenz@protonmail.com")
-;; No heading:1 ends here
+        user-mail-address "emillenz@protonmail.com")
+;; user:1 ends here
 
-;; [[file:config.org::+begin_src emacs-lisp][No heading:2]]
+;; [[file:config.org::*misc][misc:1]]
+(add-hook! '(prog-mode-hook conf-mode-hook) #'rainbow-delimiters-mode)
+;; misc:1 ends here
+
+;; [[file:config.org::*modus-theme][modus-theme:1]]
 (use-package! modus-themes
- :config
- (setq modus-themes-mixed-fonts t
-  modus-themes-italic-constructs t
-  modus-themes-bold-constructs t
-  modus-themes-org-blocks 'gray-background
+  :config
+  (setq modus-themes-mixed-fonts t
+        modus-themes-italic-constructs t
+        modus-themes-bold-constructs t
+        modus-themes-org-blocks 'gray-background
 
-  modus-themes-common-palette-overrides
-  `((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
-    (fg-heading-1 fg-heading-0)))
+        modus-themes-common-palette-overrides
+        `((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
+          (fg-heading-1 fg-heading-0)))
 
- ;; HACK :: cannot customize these things with `modus-themes-common-palette-overrides'
- (modus-themes-with-colors
-  (setq evil-insert-state-cursor `(,fg-main bar)
-   evil-normal-state-cursor `(,fg-main box)
-   evil-motion-state-cursor `(,fg-main box)
-   evil-visual-state-cursor `(,yellow box)
-   evil-operator-state-cursor `(,red box)
-   evil-replace-state-cursor `(,red hbar)))
+  ;; HACK :: cannot customize these things with `modus-themes-common-palette-overrides'
+  (modus-themes-with-colors
+    (setq evil-insert-state-cursor `(,fg-main bar)
+          evil-normal-state-cursor `(,fg-main box)
+          evil-motion-state-cursor `(,fg-main box)
+          evil-visual-state-cursor `(,yellow box)
+          evil-operator-state-cursor `(,red box)
+          evil-replace-state-cursor `(,red hbar)))
 
- (custom-set-faces!
-  `(org-list-dt :inherit modus-themes-heading-1)
-  `(org-block-begin-line :foreground ,(modus-themes-get-color-value 'prose-metadata))
-  `(org-quote :slant italic))
+  (custom-set-faces!
+    `(org-list-dt :inherit modus-themes-heading-1)
+    `(org-block-begin-line :foreground ,(modus-themes-get-color-value 'prose-metadata))
+    `(org-quote :slant italic))
 
- (setq doom-theme 'modus-operandi))
-;; No heading:2 ends here
+  (setq doom-theme 'modus-operandi))
+;; modus-theme:1 ends here
 
-;; [[file:config.org::+begin_src emacs-lisp][No heading:3]]
+;; [[file:config.org::*font][font:1]]
 (setq doom-font                (font-spec :family "Iosevka Nerd Font" :size 14)
- doom-variable-pitch-font (font-spec :family "Iosevka Nerd Font" :size 14)
- doom-serif-font          (font-spec :family "Iosevka Nerd Font" :size 14)
- doom-big-font            (font-spec :family "Iosevka Nerd Font" :size 28))
+      doom-variable-pitch-font (font-spec :family "Iosevka Nerd Font" :size 14)
+      doom-serif-font          (font-spec :family "Iosevka Nerd Font" :size 14)
+      doom-big-font            (font-spec :family "Iosevka Nerd Font" :size 28))
 
 (custom-set-faces!
- '(font-lock-keyword-face :slant normal :weight bold)
- '(font-lock-type-face    :slant normal)
- '(font-lock-comment-face :slant italic)
- '(font-lock-string-face  :slant italic))
-;; No heading:3 ends here
+  '(font-lock-keyword-face :slant normal :weight bold)
+  '(font-lock-type-face    :slant normal)
+  '(font-lock-comment-face :slant italic)
+  '(font-lock-string-face  :slant italic))
+;; font:1 ends here
 
-;; [[file:config.org::+begin_src emacs-lisp][No heading:4]]
+;; [[file:config.org::*modeline][modeline:1]]
 (setq display-battery-mode nil
- display-time-mode nil
- doom-modeline-height 15
- doom-modeline-bar-width 5)
-;; No heading:4 ends here
+      display-time-mode nil
+      doom-modeline-height 15
+      doom-modeline-bar-width 5)
+;; modeline:1 ends here
 
-;; [[file:config.org::+begin_src emacs-lisp][No heading:5]]
+;; [[file:config.org::*window layout & behavior][window layout & behavior:1]]
 (setq evil-vsplit-window-right t
- even-window-sizes 'width-only
- window-combination-resize t
- split-height-threshold nil
- split-width-threshold 0)
+      even-window-sizes 'width-only
+      window-combination-resize t
+      split-height-threshold nil
+      split-width-threshold 0)
 
-(setq +popup-defaults
- '(:side right
-   :select t
-   :quit nil
-   :width 0.33
-   :modeline t))
+(setq-default +popup-defaults
+              '(:side right
+                :select t
+                :quit nil
+                :width 0.5
+                :modeline t))
 
-  (after! org
-   (setq org-src-window-setup 'current-window)
-   (set-popup-rule! "^\\*Org Src" :ignore t))
+(after! org
+  (setq org-src-window-setup 'current-window
+        org-agenda-window-setup 'current-window)
+  (set-popup-rules! `(("^\\*Org Src" :ignore t)
+                      ("^CAPTURE" :ignore t))))
 
-  (set-popup-rules! `(("^\\*info" :ignore t)))
+(after! info
+  (set-popup-rule! "^\\*info" :ignore t))
 
-    (after! lsp-mode
-     (set-popup-rules! `(("^\\*lsp-help\\*" :side bottom))))
-;; No heading:5 ends here
+(after! lsp-mode
+  (set-popup-rule! "^\\*lsp-help" :side 'bottom))
+;; window layout & behavior:1 ends here
 
-;; [[file:config.org::+begin_src emacs-lisp][No heading:6]]
+;; [[file:config.org::*window layout & behavior][window layout & behavior:2]]
 (add-hook! '(text-mode-hook
-             ;; prog-mode-hook ;; NOTE :: no-use, breaks with flycheck
+             ;; prog-mode-hook ;; NOTE :: breaks with flycheck
              dired-mode-hook
              conf-mode-hook
              Info-mode-hook
@@ -88,11 +95,11 @@
 
 (global-display-fill-column-indicator-mode 0)
 
-(setq visual-fill-column-enable-sensible-window-split t
-      visual-fill-column-center-text t
-      visual-fill-column-width 100
-      fill-column 100)
-;; No heading:6 ends here
+(setq-default visual-fill-column-enable-sensible-window-split t
+              visual-fill-column-center-text t
+              visual-fill-column-width 100
+              fill-column 100)
+;; window layout & behavior:2 ends here
 
 ;; [[file:config.org::*misc options][misc options:1]]
 (setq bookmark-default-file "~/.config/doom/bookmarks"
@@ -101,21 +108,17 @@
       auto-save-default t
       confirm-kill-emacs nil
       undo-limit 80000000
-      history-length 1000
       consult-async-min-input 0
       hscroll-margin 0
       scroll-margin 0
-      enable-recursive-minibuffers t
+      enable-recursive-minibuffers nil
       display-line-numbers-type 'visual
       shell-command-prompt-show-cwd t
-      shell-file-name "/usr/bin/sh")
+      shell-file-name "/usr/bin/sh") ;; HACK :: i have set NUSHELL systemwide, emacs expects SH
 
 (save-place-mode 1)
 (+global-word-wrap-mode 1)
 (global-subword-mode 1)
-
-(setq calc-angle-mode 'rad
-      calc-symbolic-mode t)
 ;; misc options:1 ends here
 
 ;; [[file:config.org::*leader][leader:1]]
@@ -125,24 +128,14 @@
       doom-leader-alt-key "M-,")
 
 (map! :leader
-      (:prefix "t"
-               "V" #'visual-fill-column-mode
-               "C" #'company-mode
-               "m" #'global-hide-mode-line-mode)
+      (:prefix "s" "t" #'dictionary-search)
 
       (:prefix "c"
                "w" #'z/clean-whitespace
                "r" #'lsp-rename
                (:prefix-map ("'" . "org-src")
                             "t" #'org-babel-tangle
-                            "T" #'org-babel-detangle))
-
-      (:prefix "s"
-               (:prefix-map ("t" . "dictionary")
-                            "d" #'+lookup/dictionary-definition
-                            "s" #'+lookup/synonyms
-                            "w" #'ispell-word
-                            "t" #'dictionary-search)))
+                            "T" #'org-babel-detangle)))
 ;; leader:1 ends here
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:1]]
@@ -199,16 +192,11 @@
       :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
       :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
 
+      :nmv  "gk"  #'devdocs-lookup
       :nmv  "go"  #'consult-imenu
       :nmv  "g/"  #'+default/search-buffer)
 
-(map! :nm "C-f" #'evil-forward-section-end
-      :nm "C-b" #'evil-backward-section-begin
-      :nm "C-l" #'recenter-top-bottom)
-
-(map! :after org :map evil-org-mode-map
-      :nmv "C-f"  #'org-forward-element
-      :nmv "C-b"  #'org-backward-element)
+(map! :nm "C-l" #'recenter-top-bottom)
 ;; evil:1 ends here
 
 ;; [[file:config.org::*evil][evil:2]]
@@ -243,8 +231,8 @@ This is sensible default behaviour, and integrates it into evil."
       :nmv "g>" #'evil-lion-right)
 ;; Alignment:1 ends here
 
-;; [[file:config.org::*org][org:1]]
-(map! :localleader :map org-mode-map
+;; [[file:config.org::*org (keybindings)][org (keybindings):1]]
+(map! :localleader :map org-mode-map :after org
       "\\" #'org-latex-preview
       ","  #'org-ctrl-c-ctrl-c
       "-"  (cmd! (let ((current-prefix-arg '(16)))
@@ -252,7 +240,7 @@ This is sensible default behaviour, and integrates it into evil."
       "["  (cmd! (let ((current-prefix-arg '(4)))
                    (call-interactively #'org-toggle-checkbox)))
       "z"  #'org-add-note)
-;; org:1 ends here
+;; org (keybindings):1 ends here
 
 ;; [[file:config.org::*dired (keybindings)][dired (keybindings):1]]
 (map! :map dired-mode-map :after dired
@@ -260,7 +248,6 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "l" #'dired-open-file
       :nm "f" #'dired-goto-file
       :nm "c" #'dired-do-copy
-      :nm "C" #'dired-do-compress
       :nm "r" #'dired-do-rename
       :nm "R" #'dired-do-redisplay
       :nm "d" #'dired-do-delete
@@ -271,24 +258,17 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "y" #'dired-copy-filename-as-kill
       :nm "z" #'dired-do-compress
       :nm "." #'dired-omit-mode
-      :nm "e" #'dired-create-empty-file
-      :nm "E" #'dired-create-directory)
+      :nm "+" #'dired-create-directory)
 
 (map! :map dired-mode-map :localleader :after dired
       :nm "a" #'z/dired-archive)
 ;; dired (keybindings):1 ends here
 
-;; [[file:config.org::*magit][magit:1]]
-(map! :map magit-mode-map :after magit
-      :nm "C-f" #'magit-section-forward-sibling
-      :nm "C-b" #'magit-section-backward-sibling)
-;; magit:1 ends here
-
-;; [[file:config.org::*info][info:1]]
-(map! :map Info-mode-map :after info
-      :nm "C-f" #'Info-forward-node
-      :nm "C-b" #'Info-backward-node)
-;; info:1 ends here
+;; [[file:config.org::*verilog (bindings)][verilog (bindings):1]]
+(map! :map verilog-mode-map :after verilog-mode
+      :localleader
+      :nm "f" #'verilog-indent-buffer)
+;; verilog (bindings):1 ends here
 
 ;; [[file:config.org::*editor][editor:1]]
 (evil-surround-mode 1)
@@ -297,16 +277,10 @@ This is sensible default behaviour, and integrates it into evil."
       evil-want-fine-undo nil
       evil-ex-substitute-global t
       evil-move-cursor-back t
-      evil-move-beyond-eol nil
-      evil-kill-on-visual-paste nil
       evil-want-C-i-jump t
       evil-disable-insert-state-bindings t
-      evil-want-minibuffer t)
-
-(setq evil-snipe-scope 'visible
-      evil-snipe-repeat-keys t
-      evil-snipe-override-evil-repeat-keys t
-      evil-snipe-auto-scroll nil)
+      evil-want-minibuffer t
+      evil-snipe-scope 'visible)
 ;; editor:1 ends here
 
 ;; [[file:config.org::*jumplist][jumplist:1]]
@@ -328,23 +302,27 @@ This is sensible default behaviour, and integrates it into evil."
 ;; jumplist:1 ends here
 
 ;; [[file:config.org::*completion][completion:1]]
-(setq company-minimum-prefix-length 0
-      vertico-flat-mode nil ;; maybe?
-      company-idle-delay nil
-      company-tooltip-idle-delay 0.1
-      company-show-quick-access t
-      company-global-modes
-      '(not
-        help-mode
-        eshell-mode
-        org-mode
-        vterm-mode))
+(after! company
+  (setq company-minimum-prefix-length 0
+        company-tooltip-limit 16
+        company-idle-delay nil
+        company-tooltip-idle-delay 0.1
+        company-show-quick-access t
+        company-global-modes
+        '(not
+          help-mode
+          eshell-mode
+          org-mode
+          vterm-mode)))
 
-(map! :map 'company-mode-map
+(after! vertico
+  (setq vertico-count 16))
+
+(map! :map 'company-mode-map :after company
       :i "TAB" #'company-complete-common)
 
 ;; make vertico behavior consistent with company
-(map! :after vertico :map 'vertico-map
+(map! :map 'vertico-map :after vertico
       :inm "TAB" #'vertico-next
       :inm "<backtab>" #'vertico-previous
       :im  "," #'vertico-insert
@@ -362,33 +340,34 @@ This is sensible default behaviour, and integrates it into evil."
 ;; file templates:1 ends here
 
 ;; [[file:config.org::*dired][dired:1]]
-(add-hook! 'dired-mode-hook #'dired-hide-details-mode)
+(after! dired
+ (add-hook! 'dired-mode-hook #'dired-hide-details-mode)
 
-;; NOTE:: this is the elegant && extensible way to do regex.
-(setq dired-omit-files
-      (rx (or (seq bol (? ".") "#")
-              (seq bol "." (not (any ".")))
-              (seq "~" eol)
-              (seq bol "CVS" eol)))
+ ;; NOTE:: this is the elegant && extensible way to do regex.
+ (setq dired-omit-files
+       (rx (or (seq bol (? ".") "#")
+               (seq bol "." (not (any ".")))
+               (seq "~" eol)
+               (seq bol "CVS" eol)))
 
-      dired-open-extensions
-      '(("mkv"  . "mpv")
-        ("mp4"  . "mpv")
-        ("mp3"  . "mpv")
-        ("gif"  . "nsxiv")
-        ("jpeg" . "nsxiv")
-        ("jpg"  . "nsxiv")
-        ("png"  . "nsxiv")
-        ("docx" . "libreoffice")
-        ("odt"  . "libreoffice")
-        ("odf"  . "libreoffice")
-        ("epub" . "zathura")
-        ("pdf"  . "zathura"))
+       dired-open-extensions
+       '(("mkv"  . "mpv")
+         ("mp4"  . "mpv")
+         ("mp3"  . "mpv")
+         ("gif"  . "nsxiv")
+         ("jpeg" . "nsxiv")
+         ("jpg"  . "nsxiv")
+         ("png"  . "nsxiv")
+         ("docx" . "libreoffice")
+         ("odt"  . "libreoffice")
+         ("odf"  . "libreoffice")
+         ("epub" . "zathura")
+         ("pdf"  . "zathura"))
 
-      dired-recursive-copies 'always
-      dired-recursive-deletes 'top
-      global-auto-revert-non-file-buffers t
-      dired-no-confirm '(uncompress move copy))
+       dired-recursive-copies 'always
+       dired-recursive-deletes 'top
+       global-auto-revert-non-file-buffers t
+       dired-no-confirm '(compress uncompress move copy touch)))
 ;; dired:1 ends here
 
 ;; [[file:config.org::*Archive file][Archive file:1]]
@@ -409,28 +388,33 @@ This is sensible default behaviour, and integrates it into evil."
     (revert-buffer)))
 ;; Archive file:1 ends here
 
-;; [[file:config.org::*programming][programming:1]]
-(add-hook! 'prog-mode-hook #'rainbow-delimiters-mode)
-;; programming:1 ends here
-
 ;; [[file:config.org::*indentation][indentation:1]]
 (advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
 
-(setq standard-indent 8
-      tab-always-indent t
-      tab-width standard-indent
-      org-indent-indentation-per-level standard-indent
-      evil-shift-width standard-indent
-      evil-indent-convert-tabs t
-      indent-tabs-mode nil)
+(setq-default standard-indent 8
+              tab-width standard-indent
+              fill-column 100
+              tab-always-indent t
+              tab-width standard-indent
+              org-indent-indentation-per-level standard-indent
+              evil-shift-width standard-indent
+              evil-indent-convert-tabs t
+              indent-tabs-mode nil)
 
-;; note need to set some options again
-(setq-hook! prog-mode
-  evil-shift-width standard-indent
-  c-basic-offset standard-indent
-  nushell-ts-mode-indent-offset standard-indent
+(setq-hook! 'prog-mode-hook
+  standard-indent 8)
+
+(setq-hook! 'java-mode-hook
+  c-basic-offset standard-indent)
+
+(setq-hook! 'c-mode-hook
+  c-basic-offset standard-indent)
+
+(setq-hook! 'rustic-mode-hook
   rustic-indent standard-indent
-  rustic-indent-offset standard-indent
+  rustic-indent-offset standard-indent)
+
+(setq-hook! 'verilog-mode-hook
   verilog-case-indent standard-indent
   verilog-cexp-indent standard-indent
   verilog-indent-level standard-indent
@@ -439,7 +423,7 @@ This is sensible default behaviour, and integrates it into evil."
   verilog-indent-level-module standard-indent)
 ;; indentation:1 ends here
 
-;; [[file:config.org::*Clean Whitespace][Clean Whitespace:1]]
+;; [[file:config.org::*clean whitespace][clean whitespace:1]]
 (defun z/clean-whitespace ()
   "Deletes consecutive empty lines if # > 1, and strips trailing whitespace."
   (interactive)
@@ -449,62 +433,63 @@ This is sensible default behaviour, and integrates it into evil."
     (while (re-search-forward "\n\n+" nil t)
       (replace-match "\n\n")))
   (basic-save-buffer))
-;; Clean Whitespace:1 ends here
+;; clean whitespace:1 ends here
 
-;; [[file:config.org::*conf-mode][conf-mode:1]]
-(add-hook! 'conf-mode-hook #'rainbow-mode)
-;; conf-mode:1 ends here
+;; [[file:config.org::*org][org:1]]
+(after! org
+;; org:1 ends here
 
 ;; [[file:config.org::*options][options:1]]
 (add-hook! 'org-mode-hook
            '(visual-line-mode
              org-fragtog-mode
              rainbow-mode
+             laas-mode
              +org-pretty-mode
              org-appear-mode))
 
-(after! org
-  (setq org-directory "~/Documents/org/"
-        org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
-        org-use-property-inheritance t
-        org-reverse-note-order t
-        org-startup-with-inline-images t
-        org-startup-indented t
-        org-startup-numerated t
-        org-startup-align-all-tables t
-        org-list-allow-alphabetical t
-        org-tags-column 0
-        org-fold-catch-invisible-edits 'smart
-        org-export-headline-levels 5
-        org-refile-use-outline-path 'full-file-path
-        org-refile-allow-creating-parent-nodes 'confirm
-        org-use-sub-superscripts '{}
-        org-export-with-sub-superscripts '{}
-        org-fontify-quote-and-verse-blocks t
-        org-fontify-whole-block-delimiter-line t
-        doom-themes-org-fontify-special-tags t
-        org-ellipsis "…"
-        org-num-max-level 3
-        org-hide-leading-stars t
-        org-appear-autoemphasis t
-        org-appear-autosubmarkers t
-        org-appear-autolinks t
-        org-appear-autoentities t
-        org-appear-autokeywords t
-        org-appear-inside-latex nil
-        org-hide-emphasis-markers t
-        org-pretty-entities t
-        org-pretty-entities-include-sub-superscripts t
-        org-list-demote-modify-bullet
-        '(("-"  . "-")
-          ("+"  . "+")
-          ("*"  . "-")
-          ("a." . "a)")
-          ("1." . "1)")
-          ("1)" . "a)"))
-        org-blank-before-new-entry
-        '((heading . t)
-          (plain-list-item . nil))))
+(setq org-directory "~/Documents/org/"
+      org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
+      org-use-property-inheritance t
+      org-reverse-note-order t
+      org-startup-with-latex-preview t
+      org-startup-with-inline-images t
+      org-startup-indented t
+      org-startup-numerated t
+      org-startup-align-all-tables t
+      org-list-allow-alphabetical t
+      org-tags-column 0
+      org-fold-catch-invisible-edits 'smart
+      org-export-headline-levels 5
+      org-refile-use-outline-path 'full-file-path
+      org-refile-allow-creating-parent-nodes 'confirm
+      org-use-sub-superscripts '{}
+      org-export-with-sub-superscripts '{}
+      org-fontify-quote-and-verse-blocks t
+      org-fontify-whole-block-delimiter-line t
+      doom-themes-org-fontify-special-tags t
+      org-ellipsis "…"
+      org-num-max-level 3
+      org-hide-leading-stars t
+      org-appear-autoemphasis t
+      org-appear-autosubmarkers t
+      org-appear-autolinks t
+      org-appear-autoentities t
+      org-appear-autokeywords t
+      org-appear-inside-latex nil
+      org-hide-emphasis-markers t
+      org-pretty-entities t
+      org-pretty-entities-include-sub-superscripts t
+      org-list-demote-modify-bullet
+      '(("-"  . "-")
+        ("+"  . "+")
+        ("*"  . "-")
+        ("a." . "a)")
+        ("1." . "1)")
+        ("1)" . "a)"))
+      org-blank-before-new-entry
+      '((heading . t)
+        (plain-list-item . nil)))
 ;; options:1 ends here
 
 ;; [[file:config.org::*symbols][symbols:1]]
@@ -538,50 +523,49 @@ This is sensible default behaviour, and integrates it into evil."
 ;; symbols:1 ends here
 
 ;; [[file:config.org::*task states][task states:1]]
-(after! org
-  (setq org-todo-keywords
+(setq org-todo-keywords
         '((sequence "[ ](t)"
-           "[@](e)"
-           "[?](?!)"
-           "[-](-!)"
-           "[>](>!)"
-           "[=](=!)"
-           "[&](&!)"
-           "|"
-           "[x](x!)"
-           "[\\](\\!)")))
+        "[@](e)"
+        "[?](?!)"
+        "[-](-!)"
+        "[>](>!)"
+        "[=](=!)"
+        "[&](&!)"
+        "|"
+        "[x](x!)"
+        "[\\](\\!)")))
 
-  (setq org-todo-keyword-faces
+(setq org-todo-keyword-faces
         '(("[@]"  . '(bold +org-todo-project))
-          ("[ ]"  . '(bold org-todo))
-          ("[-]"  . '(bold +org-todo-active))
-          ("[>]"  . '(bold +org-todo-onhold))
-          ("[?]"  . '(bold +org-todo-onhold))
-          ("[=]"  . '(bold +org-todo-onhold))
-          ("[&]"  . '(bold +org-todo-onhold))
-          ("[\\]" . '(bold org-done))
-          ("[x]"  . '(bold org-done)))))
+        ("[ ]"  . '(bold org-todo))
+        ("[-]"  . '(bold +org-todo-active))
+        ("[>]"  . '(bold +org-todo-onhold))
+        ("[?]"  . '(bold +org-todo-onhold))
+        ("[=]"  . '(bold +org-todo-onhold))
+        ("[&]"  . '(bold +org-todo-onhold))
+        ("[\\]" . '(bold org-done))
+        ("[x]"  . '(bold org-done))))
 ;; task states:1 ends here
 
 ;; [[file:config.org::*task states][task states:2]]
 (setq org-log-done 'time
-      org-log-repeat 'time
-      org-todo-repeat-to-state "[ ]"
-      org-log-redeadline 'time
-      org-log-reschedule 'time
-      org-log-into-drawer "LOG")
+        org-log-repeat 'time
+        org-todo-repeat-to-state "[ ]"
+        org-log-redeadline 'time
+        org-log-reschedule 'time
+        org-log-into-drawer "LOG")
 
 (setq org-priority-highest 1
-      org-priority-lowest 3)
+        org-priority-lowest 3)
 
 (setq org-log-note-headings
-      '((done        . "note-done: %t")
+        '((done        . "note-done: %t")
         (state       . "state: %-3S -> %-3s %t") ;; NOTE :: the custom task-statuses are all 3- wide
         (note        . "note: %t")
-        (reschedule  . "re-schedule: %S, %t")
-        (delschedule . "del-schedule: %S, %t")
-        (redeadline  . "re-deadline: %S, %t")
-        (deldeadline . "del-deadline: %S, %t")
+        (reschedule  . "reschedule: %S, %t")
+        (delschedule . "noschedule: %S, %t")
+        (redeadline  . "deadline: %S, %t")
+        (deldeadline . "nodeadline: %S, %t")
         (refile      . "refile: %t")
         (clock-out   . "")))
 ;; task states:2 ends here
@@ -603,7 +587,6 @@ This is sensible default behaviour, and integrates it into evil."
 (add-hook! 'org-agenda-mode-hook
            #'org-super-agenda-mode)
 
-(after! org
   (setq org-agenda-files (directory-files-recursively org-directory ".*\.org" t)
         org-agenda-skip-scheduled-if-done t
         org-agenda-sticky t
@@ -616,7 +599,7 @@ This is sensible default behaviour, and integrates it into evil."
         org-agenda-show-future-repeats nil
         org-deadline-warning-days 3
         org-agenda-time-grid nil
-        org-capture-use-agenda-date t))
+        org-capture-use-agenda-date t)
 
 (defadvice! z/add-newline (fn &rest args)
   "Separate dates in 'org-agenda' with newline."
@@ -726,143 +709,137 @@ This is sensible default behaviour, and integrates it into evil."
           (or projects
               z/doct-projects)))
 
-(after! org
-  (setq org-capture-templates
-        (doct `(,@(z/doct-expand-projects)
+(setq org-capture-templates
+      (doct `(,@(z/doct-expand-projects)
 
-                ("journal"
-                 :keys "j"
-                 :file (lambda () (z/doct-journal-file))
-                 :title (lambda () (downcase (format-time-string "daily note: %A, %e. %B %Y")))
-                 :children (("journal init"
-                             :keys "j"
-                             :type plain
-                             :template  ("#+title:  %{title}"
-                                         "#+author: %(user-full-name)"
-                                         "#+email:  %(message-user-mail-address)"
-                                         "#+date:   %<%F>"
-                                         "#+filetags: :journal:"
-                                         ""
-                                         "* goals"
-                                         "- [ ] %?"
-                                         ""
-                                         "* agenda"
-                                         "** [ ]"))
+              ("journal"
+               :keys "j"
+               :file (lambda () (z/doct-journal-file))
+               :title (lambda () (downcase (format-time-string "daily note: %A, %e. %B %Y")))
+               :children (("journal init"
+                           :keys "j"
+                           :type plain
+                           :template  ("#+title:  %{title}"
+                                       "#+author: %(user-full-name)"
+                                       "#+email:  %(message-user-mail-address)"
+                                       "#+date:   %<%F>"
+                                       "#+filetags: :journal:"
+                                       ""
+                                       "* goals"
+                                       "- [ ] %?"
+                                       ""
+                                       "* agenda"
+                                       "** [ ] "))
 
-                            ("note"
-                             :keys "n"
-                             :headline "notes"
-                             :prepent t
-                             :empty-lines-after 1
-                             :template ("* %^{title}"
-                                        ":PROPERTIES:"
-                                        ":created: %U"
-                                        ":END:"
-                                        "%?"))
+                          ("note"
+                           :keys "n"
+                           :headline "notes"
+                           :prepent t
+                           :empty-lines-after 1
+                           :template ("* %^{title}"
+                                      ":PROPERTIES:"
+                                      ":created: %U"
+                                      ":END:"
+                                      "%?"))
 
-                            ("yesterday review"
-                             :keys "y"
-                             :unnarrowed t
-                             :file (lambda ()
-                                     (z/doct-journal-file (time-subtract (current-time)
-                                                                         (days-to-time 1))))
-                             :template ("* gratitude"
-                                        "- %?"
-                                        ""
-                                        "* reflection"
-                                        "-"))))
+                          ("yesterday review"
+                           :keys "y"
+                           :unnarrowed t
+                           :file (lambda ()
+                                   (z/doct-journal-file (time-subtract (current-time)
+                                                                       (days-to-time 1))))
+                           :template ("* gratitude"
+                                      "- %?"
+                                      ""
+                                      "* reflection"
+                                      "-"))))
 
-                ("literature"
-                 :keys "l"
-                 :file (lambda () (read-file-name "file: " z/org-literature-dir))
-                 :children (("to read"
-                             :keys "r"
-                             :file ,(file-name-concat z/org-literature-dir "readlist.org")
-                             :prepend t
-                             :template ("* [ ] %^{title}%? %^g"))
+              ("literature"
+               :keys "l"
+               :file (lambda () (read-file-name "file: " z/org-literature-dir))
+               :children (("to read"
+                           :keys "r"
+                           :file ,(file-name-concat z/org-literature-dir "readlist.org")
+                           :prepend t
+                           :template ("* [ ] %^{title}%? %^g"))
 
-                            ("init"
-                             :keys "i"
-                             :file (lambda ()
-                                     (let* ((name (concat
-                                                   (replace-regexp-in-string
-                                                    " " "_"
-                                                    (read-from-minibuffer "short title: "))
-                                                   ".org")))
-                                       (file-name-concat z/org-literature-dir
-                                                         name)))
-                             :type plain
-                             :template ("#+title:  %^{full title}"
-                                        "#+author: %(user-full-name)"
-                                        "#+email:  %(message-user-mail-address)"
-                                        "#+date:   %<%F>"
-                                        "#+filetags: :literature:%^g"
-                                        ""
-                                        "* [-] %\\1%?"
-                                        ":PROPERTIES:"
-                                        ":title:  %\\1"
-                                        ":author: %^{author}"
-                                        ":year:   %^{year}"
-                                        ":type:   %^{ |book|textbook|ebook|paper|article|audiobook|podcast}"
-                                        ":pages:  %^{pages}"
-                                        ":END:"))
+                          ("init"
+                           :keys "i"
+                           :file (lambda ()
+                                   (let* ((name (concat
+                                                 (replace-regexp-in-string
+                                                  " " "_"
+                                                  (read-from-minibuffer "short title: "))
+                                                 ".org")))
+                                     (file-name-concat z/org-literature-dir
+                                                       name)))
+                           :type plain
+                           :template ("#+title:  %^{full title}"
+                                      "#+author: %(user-full-name)"
+                                      "#+email:  %(message-user-mail-address)"
+                                      "#+date:   %<%F>"
+                                      "#+filetags: :literature:%^g"
+                                      ""
+                                      "* [-] %\\1%?"
+                                      ":PROPERTIES:"
+                                      ":title:  %\\1"
+                                      ":author: %^{author}"
+                                      ":year:   %^{year}"
+                                      ":type:   %^{ |book|textbook|ebook|paper|article|audiobook|podcast}"
+                                      ":pages:  %^{pages}"
+                                      ":END:"))
 
-                            ("excerpt"
-                             :keys "e"
-                             :headline "excerpts"
-                             :empty-lines-before 1
-                             :template ("* %^{title} [pg:%^{page}]"
-                                        ":PROPERTIES:"
-                                        ":created: %U"
-                                        ":END:"
-                                        "#+begin_quote"
-                                        "%x"
-                                        "#+end_quote"))
+                          ("excerpt"
+                           :keys "e"
+                           :headline "excerpts"
+                           :empty-lines-before 1
+                           :template ("* %^{title} [pg:%^{page}]"
+                                      ":PROPERTIES:"
+                                      ":created: %U"
+                                      ":END:"
+                                      "#+begin_quote"
+                                      "%x"
+                                      "#+end_quote"))
 
-                            ("note: literary"
-                             :keys "l"
-                             :headline "literature notes"
-                             :empty-lines-before 1
-                             :template ("* %^{title} [pg:%^{page}] %^g"
-                                        ":PROPERTIES:"
-                                        ":created: %U"
-                                        ":END:"
-                                        "%?"))
+                          ("note: literary"
+                           :keys "l"
+                           :headline "literature notes"
+                           :empty-lines-before 1
+                           :template ("* %^{title} [pg:%^{page}] %^g"
+                                      ":PROPERTIES:"
+                                      ":created: %U"
+                                      ":END:"
+                                      "%?"))
 
-                            ("note: transient"
-                             :keys "t"
-                             :headline "transient notes"
-                             :empty-lines-before 1
-                             :template ("* %^{title} %^g"
-                                        ":PROPERTIES:"
-                                        ":created: %U"
-                                        ":END:"
-                                        "%?"))
+                          ("note: transient"
+                           :keys "t"
+                           :headline "transient notes"
+                           :empty-lines-before 1
+                           :template ("* %^{title} %^g"
+                                      ":PROPERTIES:"
+                                      ":created: %U"
+                                      ":END:"
+                                      "%?"))
 
-                            ;; NOTE :: make sure to complete the literature-task-headline in order to log closing time.
-                            ("summarize"
-                             :keys "c"
-                             :headline "summary"
-                             :unnarrowed t
-                             :type plain
-                             :template ("%?"))))))))
+                          ;; NOTE :: make sure to complete the literature-task-headline in order to log closing time.
+                          ("summarize"
+                           :keys "c"
+                           :headline "summary"
+                           :unnarrowed t
+                           :type plain
+                           :template ("%?")))))))
 ;; capture templates:1 ends here
 
-;; [[file:config.org::*org-latex][org-latex:1]]
-(add-hook! 'org-mode-hook #'laas-mode)
-(setq org-startup-with-latex-preview t)
-;; org-latex:1 ends here
-
-;; [[file:config.org::*nushell][nushell:1]]
-(use-package! nushell-ts-mode)
-;; nushell:1 ends here
+;; [[file:config.org::*capture templates][capture templates:2]]
+)
+;; capture templates:2 ends here
 
 ;; [[file:config.org::*latex][latex:1]]
 (setq +latex-viewers '(zathura))
 ;; latex:1 ends here
 
-;; [[file:config.org::*verilog][verilog:1]]
-(map! :map verilog-mode-map
-      :localleader
-:nm "f" #'verilog-indent-buffer)
-;; verilog:1 ends here
+;; [[file:config.org::*verilog-mode][verilog-mode:1]]
+(after! verilog-mode
+  (add-hook! 'verilog-mode-hook (ligature-mode -1)) ;; don't display: <= as \leq
+  (setq verilog-auto-newline nil))
+;; verilog-mode:1 ends here

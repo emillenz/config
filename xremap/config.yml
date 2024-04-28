@@ -23,8 +23,6 @@ keymap:
       only: firefox
     remap:
       M-t: c-t
-      M-i: c-l
-      M-o: c-o
       M-q: c-w
 
   - name: symlayer

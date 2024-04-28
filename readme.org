@@ -57,14 +57,15 @@ There is a special ring in Dante's inferno for the inventor of the mouse and for
 #+end_quote
 
 * modus-theme
-the modus-themes are designed in accordance with the wcag aaa standard for colour contrast, which represents a minimum contrast ratio of 7:1 in relative luminance between any given combination of background and foreground colour values. in simple terms, the themes are designed to be highly legible.
-additionally the light/dark themes are designed to only invert the background/foreground relations, but maintaining consistency throughout everything else.
-most of today's themes are an angry fruit-salad: using as many hues as possible without considering if they fit in context and are even needed.
-
-we use the light theme, if at night, ensure you have enough ambient light for usability ergonomics.  studies & research have found the following advantages of using a light-theme over a dark-theme ::
-- significantly better proofreading (catch more errors)
+[[https://protesilaos.com/emacs/modus-themes][modus-themes rationale]]
+[[https://protesilaos.com/codelog/2023-01-06-re-modus-questions-disability/][modus-themes legibility theory]]
+the purpose of a theme is to optimise the presentation of any given interface.
+after extensive testing i found to use the light theme always & everywhere.  studies & research have found the following advantages of using a light-theme over a dark-theme ::
+- significantly better proofreading (catch more errors in code, misread less)
 - high legibility at low brightness / in direct sunlight => less eyestrain, more efficient battery usage
-- no astigmatism (bloom of the letter's cause them to blur)
+- no astigmatism (bloom of the letter's which causes them to appear blurry & strains the eyes)
+- #ffffff and #000000 as the base are minimalist colors and are the least limiting on the range of different colors that can be use while maintaining stark contrast.
+the display brightness must be adjusted align with the ambient brightness.  thus in dim light (night), an additional source of light other than that of the monitor is required to reduce eye strain.  the eyes are more relaxed (strain less) when they do not have to focus on one point to gather light.
 
 * font: iosevka nerd font
 - it is incredibly compact in width to allow a lot of code on screen, especially when viewing content side by side.
@@ -126,7 +127,25 @@ i'm very opinionated and have high standards regarding design process and the ph
 
 ** windowmanager: i3
 - the windowmanager follows the philosopy of eliminating mental overhead and the neccessety to arrange windows or layouts.
-- the wm is directly coupled to the system, hence it makes sense to run shell-commands and scripts instead of something such as ~stumpwm~.
+  - eliminate mental overhead and reduce computational steps to get to where you need to be.
+  - finetuned to automate the workflow as much as possible.
+  - accessing a program is as efficient as possible and always consistent, no matter where in your desktop you are (different monitor/workspace/app order) you will not alt+tab through apps to get to the one you are thinking of. instead the app is always bound to the same mnemonical keybind.
+    + we do not use a per-app workspace workflow
+      + no additional layering
+      + all apps of the same class in the same "container", clear structure...
+  - minimal keystrokes to get from where you are to the app you want to be.
+  - keyboard driven workflow only. (vi-mnemonic bindings)
+  - strictly avoid multitasking => always work in maximized-mode to never have to resize a window => one workspace per window, to not get distracted by other open windows.
+
+*** using workspaces
+- workstation apps :: assigned their own workspaces and keys
+  - these are apps that you use frequently (statistically) and need hotkey access to (application switching)
+  - each assigned workspace is specific.  ex: having ~assistant~ in its own workspace even though it is accessed throught the browser. )
+- rest :: all sent mixed to ws1 => if neccessary assign them to their own by putting a window into 1-4 to be able to hotkey to it.
+- scratch workspaces :: 1-4, for moving windows to, viewing things side by side
+- Order of ws assignments is relevant: abstract -> detail
+- The idea is to bind to the abstract function of the program, and not to the specific instance itself => if a different program is used, the functionality remains the same. (eg: 'doc' instead of 'zathura')
+- these main apps have a dedicated open shortcut, all other apps are better to be opened via ~M-x~
 
 ** constrain text width & center text
  - center text windows for better ergonomics & less eye travel (distance - switching from left to middle from eg: terminal to webpage).

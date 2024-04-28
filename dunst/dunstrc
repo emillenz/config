@@ -17,29 +17,35 @@ format = "<b>%s %p</b>\n%b"
 #     background = "#000000"
 #     foreground = "#ffffff"
 #     frame_color = "#79a8ff"
+# timeout = 4
 
 # [urgency_normal]
 #     background = "#000000"
 #     foreground = "#ffffff"
 #     frame_color = "#79a8ff"
+# timeout = 4
 
 # [urgency_critical]
 #     background = "#000000"
 #     foreground = "#ff7f9f"
 #     frame_color = "#ff7f9f"
+# timeout = 8
 
 # MODUS OPERANDI THEME
 [urgency_low]
-    background = "#ffffff"
-    foreground = "#000000"
-    frame_color = "#9f9f9f"
+background = "#e0e0e0"
+foreground = "#000000"
+frame_color = "#9f9f9f"
+timeout = 4
 
 [urgency_normal]
-    background = "#ffffff"
-    foreground = "#000000"
-    frame_color = "#9f9f9f"
+background = "#e0e0e0"
+foreground = "#000000"
+frame_color = "#9f9f9f"
+timeout = 4
 
 [urgency_critical]
-    background = "#ffffff"
-    foreground = "#a60000"
-    frame_color = "#a60000"
+background = "#e0e0e0"
+foreground = "#a60000"
+frame_color = "#9f9f9f"
+timeout = 8

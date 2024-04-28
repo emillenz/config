@@ -20,3 +20,4 @@ text/plain=emacsclient.desktop;
 application/epub+zip=org.pwmt.zathura-pdf-mupdf.desktop;
 image/png=nsxiv.desktop;
 image/jpeg=nsxiv.desktop;org.gnome.gThumb.desktop;feh.desktop;
+application/pdf=firefox.desktop;

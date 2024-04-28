@@ -37,7 +37,7 @@ echo "$USER ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/$USER"
 fd . ~/.config/bin --type file --exec chmod +x {}
 #+end_src
 
-* Editor: doom emacs
+* editor: doom emacs
 #+begin_src sh
 yay --noconfirm --sync emacs-nativecomp
 
@@ -47,7 +47,7 @@ git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 
 * Gui apps & packages
 #+begin_src sh
-yay --noconfirm --sync i3 i3lock zathura zathura-pdf-mupdf arandr autorandr mpv yt-dlp rofi brightnessctl unclutter firefox playerctl blueman xorg-xprop xremap-x11-bin mpd dunst nsxiv maim pulsemixer xorg-xset xorg-xsetroot batsignal pamixer tlp
+yay --noconfirm --sync i3 i3lock zathura zathura-pdf-mupdf arandr mpv yt-dlp rofi brightnessctl unclutter firefox playerctl bluetoothctl xorg-xprop xremap-x11-bin mpd dunst nsxiv maim pulsemixer xorg-xset xorg-xsetroot batsignal pamixer tlp
 #+end_src
 
 ** Enable daemons

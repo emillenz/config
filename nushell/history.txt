@@ -840,103 +840,286 @@ ls
 ls -la
 ls
 jshell
-nvim .bashrc
+syncthing
+nmcli
+nmtui
+man nmtui
+syncthing
+sudo systemctl enable bluetooth
+bluez
+nm-applet
+bluetoothctl 
 ls
-ls -la
+bluetoothctl 
+sudo systemctl disable bluetooth
+ls
+man bluetoothctl 
+tldr bluetoothctl 
+man bluetoothctl 
+bluetoothctl 
+las
+ls
+bluetoothctl 
+bluetoothctl 
+pamixer
+pactl 
+amixer
+pamixer
+bluetoothctl 
+bluetooth-player 
+yay -Syyu 
+yay zathura
+bash
+man zathura
+zathura
+yay -R zathura
+yay -R zathura-pdf-mupdf zathura
+yay zathura-pdf-mupdf zathura
+zathura
+sudo yay -Syyu
+sudo yay xremap
+^yay xremap
+yay brave
+hello world
+blutoothctl
+bluetoothctl
+nvim
+ls
 ps
-nm-applet
-neofetch
-emacsclient -nw
-doom  --help | bat --paging always --language help
-doom info
+sudo killall tmux
+tmux kill-server
+emacs
+emacs --tty
+emacs --debug-init
+emacs
+emacs --tty
+syncthing
+autorandr --list
+autorandr --force --save tp_library
+autorandr --list
+autorandr
+autorandr --change tp
+autorandr --change tp_library
+autorandr --save tp
+autorandr --force --save tp
+autorandr tp
+autorandr tp_lib
+(ls ~/.screenlayout | rofi -dmenu)
+(ls ~/.screenlayout | rofi -show dmenu)
+rofi 
+(ls ~/.screenlayout | rofi  -dmenu)
+(ls ~/.screenlayout | ^rofi -dmenu)
+man rofi 
+man ls 
+man ls
+^ls -l
+bash; 
+yay -R autorandr
+emacs -nw 
+emacs --tty
+emacs -nw
+bat ~/.config/nushell/config.nu
+emacs -nw
+emacs --tty
+man emacs 
+emacs -nw
+ls 
+ls -la
+ls -)a
+ls -la
+cd Code/cs/pp/assignment6/
+ls
+ant compile 
+ant test
+ant compile
+ant test
+ant t
+ant ttest
+ant test
+ant compile
+ant test
+ant tets
+ant test
+syncthing
+yay brave
+yay -Syyu
+cd Code/cs/pp/assignment6/
+ant test
+free -m
+top
 htop
-cmatri
-cmatrix
-yay cmatrix
+mpstat
+mpstat 1 1 
+man mpstat 
+tldr mpstat
+mpstat 2
+mpstat
+emacs -nw
+mpstat
+mpstat 2
+xev
+xprop
+man emacs 
+emacs -q
+man feh
+zathura
+man zathura
+man zathurarc
+man zathura
+man zathurarc
+syncthing
+1 / 1947792
+yay gnome-tweak-tool
+yay gnome-tweak
+gnome-tweaks
+yay -R gnome-tweak
+yay -R gnome-tweaks
+gsettings set org.gnome.desktop.interface gtk-key-theme "Emacs"
+i3msg exit
+i3-msg exit
+ls
+rm a.out ex.txt.save
+rm pepe
+10 / 4
+cd .config
+nvim nushell/scripts/commands.nu
+cd ~
+nvim nushell/scripts/commands.nu
+cd .config
+cd nu
+nvim nushell/scripts/commands.nu
+cd ~
+cd
+cd Code/cs/pp/assignment6/src/
+cd 
+nvim .config/nushell/scripts/commands.nu
+yay -R spotify-launcher
+cd Documents/org/
+sed 's/^#\+startup: folded/#+startup: content/g'
+ls
+ls **/*org
+ls **/*org | get name | each {open}<\n>
+fd 'agenda.org'<\n>
+math log 1
+1 | math log
+1 | math log 10
+0 | math log 10
+inf
+inf\
+1 - inf
+help inf
+inf -h
+man fd 
+man gcc 
+gcc  --help | bat --paging always --language help
+tldr gcc
+ls
+man gcc 
+man gcc
+strace
+yay strace
+bat Code/tmp/asm
+bat Code/tmp/asm.c
+*bat Code/tmp/asm.c
+^bat Code/tmp/asm.c
+bat Code/tmp/asm.c
+ls
+vi Code/tmp/asm.c
+vim Code/tmp/asm.c
+nvim Code/tmp/asm.c
+man bat 
+cd .config
+nvim nushell/config.nu
+bat Code/tmp/asm.c
+bat ~/Code/tmp/asm.c
+fd 
+fd --absolute-path
+fd --relative-path
+cd .config
+ls
+man iostream 
+man std::iostream
+jshell
+yay -Q emacs
+synctung
+nvim tmp
+man tar 
+bash
+man emacs 
+emacsclient --eval '(+default/man-or-woman)'
+emacsclient -nw --eval '(+default/man-or-woman)'
+emacs -nw
+emacs -nw --eval '(+default/man-or-woman)'
+emacs -nw --eval '(man)'
+emacs -nw --eval '(woman)'
+$env.M
+$env.MANWIDTH
+let $env.MANWIDTH = 100;
+let $MANWIDTH = 100;
+bash
+man man 
+man man
+nvim .config/nushell/env.nu
+cd .config/nvim/
+nvim .
+cd ..
+cd nushell
+nvim config.nu
+term size --help | bat --plain --paging always --language help
+$env
+ls
+man emacs
+ls
+nu
+nvim .
+man man
+nvim
+man man
+man emacs 
+emacs -q
+emacs -nw
+nvim
+bash
+cargo --search-shells
+cargo search-shells
+cargo search shells
+cargo search shells | parse '{shell} = {v} #{desc}'
+cargo search shells | lines | parse '{shell} = {v} #{desc}'
+cargo search shells | lines | parse '{shell} = {vers} #{desc}'
+2 ** 4
+2 ** 8
+2 ** 3
+2 ** 24
+2 ** 12
+vim
+nvim
+cd Documents/uni/cs/s2/aw/
+fd 'lab'
+fd 'lab' .
+jshell
+nvim
+nvim tmp
+ps
+syncthing
+cd 
+autostart
+emacs -nw
+doom sync
+doom doctor
 doom upgrade
-32min
-32min * 52
-into duration
-into duration --help | bat --paging always --language help
-duration --help | bat --paging always --language help
-32m * 52 | format duration ]
-32m * 52 | format duration 
-32m * 52 
-32min * 52 | format duration hr
-32min * 52 | format duration h
-32min * 52 | format duration hr
-yay chomper
-autostart
-autorandr --chnage
-autorandr --change
-autorandr hp
-autorandr --savehp
-autorandr --save hp
-autorandr --change
-autorandr
-autorandr  --help | bat --paging always --language help
-autorandr  --remove hp_home hp_home2
-autorandr  --remove hp_home2
-autorandr --list
+cd Documents/
 ls
-autorandr --save hp_home
-autorandr
-autorandr --list
-autorandr 
-autorandr --change hp_hpme\
-autorandr --change hp_home
-autorandr -sf hp_home
-autorandr -r f
-autorandr - --help | bat --paging always --language help
-autorandr --help | bat --paging always --language help
-autorandr -s hp_home
-autorandr --force-s hp_home
-autorandr --force -s hp_home
+fd sync-conflict 
+fd sync-conflict -x rm {}
+fd sync-conflict 
+139.0 / 3
+139.0 / 4
+doom build
+doom sync
+emacs -nw
+emacs -~w
+emacs -nw
+ps
+ps | sort-by cpu
 ls
-autorandr
-batsignal
-batsignal  --help | bat --paging always --language help
-batsignal  -help
-batsignal  -h
-autorandr --change hp
-man nsxiv 
-man mpv
-autorandr --change hp_home
-autorandr --change hp
-autorandr --change hp_home
-autorandr --)ist
-autorandr --list
-autorandr
-autorandr --change
-man autorandr
-autorandr --change
-autorandr
-autorandr --force -s hp_hpme
-autorandr --force -s hp_home
-autorandr --remove hp_hpme
-autostart
-yay protonvpn
-man protosint 
-protosint  --help | bat --paging always --language help
-syncthing 
-protosint
-autovpn
-yay autovpn
-man autovpn
-autovpn  --help | bat --paging always --language help
-autovpn -h
-autovpn 
-sudo autovpn
-autovpn EG
-autovpn IN
-ip
-ip address
-ip addr show
-sudo autovpn IN
-autovpn US
-nm-applet
-cd Downloads/
-git clone https://github.com/anhsirk0/alacritty-themes/tree/main/themes
-git clone https://github.com/anhsirk0/alacritty-themes
-cd alacritty-themes/
-ls
+ps | sort-by cpu

@@ -6,7 +6,7 @@
 # info:   nushell conifg with safer defaults, and efficient custom keybindings.
 # -----
 
-# NOTE: when programming in nushell non-interactively, ALWAYS use '--long-flags' in order to make the code more readeable and easier to maintain in the future.
+# NOTE: when programming in nushell non-interactively, ALWAYS use '--long-flags' in order to make the code more readeable and easier to maintain. (its programming, not interactive use)
 
 # theme ::
 source modus_theme.nu
@@ -14,11 +14,17 @@ source commands.nu
 use utils.nu *
 
 $env.PATH = ($env.PATH | append ["~/.config/bin", "~/.cargo/bin", "~/.config/emacs/bin"] | uniq)
-$env.EDITOR = "emacsclient" # HACK :: cannot use --tty flag with nushell
+$env.EDITOR = "emacsclient" # HACK :: cannot use -nw flag with nushell
 $env.VISUAL = "emacsclient --reuse-frame"
 $env.BROWSER = "firefox"
-$env.MANPAGER = "bat"
-$env.PAGER = "bat"
+$env.MANPAGER = "bat --plain"
+$env.PAGER = "bat --plain"
+$env.MANWIDTH = 100
+
+alias ip = ip -color=auto
+alias yay = yay --noconfirm
+alias rm = rm --recursive --verbose --trash --interactive-once
+alias fzf = fzf --bind 'shift-tab:up,tab:down' --reverse --height=16 --color=dark --scheme=path # os-consistent completion (rofi, emacs, fzf ..)
 
 let fish_completer = {|spans|
         fish --command $'complete "--do-complete=($spans | str join " ")"'
@@ -223,7 +229,7 @@ $env.config = {
                 keycode: char_f
                 mode: [vi_normal, vi_insert]
                 event: [
-                        {send: executehostcommand, cmd: "tmux send-keys $\"(fd --type file . | fzf --preview 'bat {}')\""},
+                        {send: executehostcommand, cmd: "tmux send-keys $\"(fd --type file . | fzf --preview 'bat {}')\""}, # # NOTE :: terrible hack, but atm there is no other way to eval an expression at runtim and then insert the result
                         {send: Enter}
                 ]
                 }
@@ -235,7 +241,7 @@ $env.config = {
                 mode: [vi_normal vi_insert]
                 event: [
                         { edit: movetolineend }
-                        { edit: insertstring, value: " --help | bat --paging always --language help" }
+                        { edit: insertstring, value: " --help | bat --plain --paging always --language help" }
                         { send: enter }
                 ]
                 }
@@ -259,7 +265,7 @@ $env.config = {
                 mode: [vi_normal, vi_insert]
                 event: {
                         send: executehostcommand,
-                        cmd: "tmux send-keys $\"(fd --type directory | fzf --preview '^ls --color {}')\"" # NOTE :: terrible hack, but atm there is no other way to eval an expression at runtim and then insert the result
+                        cmd: "tmux send-keys $\"(fd --type directory | fzf --preview '^ls --color {}')\""
                 }
                 }
 

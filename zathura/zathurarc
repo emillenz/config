@@ -13,12 +13,10 @@ set recolor-keephue true
 
 map u scroll half-up
 map d scroll half-down
-map C-u scroll half-up
-map C-d scroll half-down
+map f scroll full-down
+map b scroll full-up
 map i jumplist forward
 map o jumplist backward
-map C-i jumplist forward
-map C-o jumplist backward
 map z snap_to_page
 map t toggle_page_mode
 map r reload
@@ -26,6 +24,10 @@ map R rotate
 map = zoom in
 map - zoom out
 map v recolor
+map w adjust_window best-fit
+map W adjust_window width
+unmap a
+unmap s
 
 # # MODUS VIVENDI THEME
 # set recolor true
@@ -62,12 +64,12 @@ map v recolor
 set notification-error-bg       "#c8c8c8"
 set notification-error-fg       "#7f0000"
 set notification-warning-bg     "#c8c8c8"
-set notification-warning-fg     "#884900"
+set notification-warning-fg     "#5f0070"
 set notification-bg             "#c8c8c8"
-set notification-fg             "#005f5f"
-set completion-group-bg         "#c0deff"
+set notification-fg             "#002580"
+set completion-group-bg         "#f2f2f2"
 set completion-group-fg         "#000000"
-set completion-bg               "#c8c8c8"
+set completion-bg               "#ffffff"
 set completion-fg               "#000000"
 set completion-highlight-bg     "#c0deff"
 set completion-highlight-fg     "#000000"
@@ -75,11 +77,11 @@ set index-bg                    "#ffffff"
 set index-fg                    "#000000"
 set index-active-bg             "#c0deff"
 set index-active-fg             "#000000"
-set inputbar-bg                 "#c8c8c8"
+set inputbar-bg                 "#ffffff"
 set inputbar-fg                 "#000000"
 set statusbar-bg                "#c8c8c8"
 set statusbar-fg                "#000000"
-# set highlight-color             "#a4d5f9" # TODO :: currently broken
+# set highlight-color             "#a4d5f9"
 # set highlight-active-color      "#f3d000"
 set default-bg                  "#ffffff"
 set default-fg                  "#000000"

@@ -2,7 +2,7 @@
 
 use utils.nu
 
-# -----
+# ---
 # title:  autostart
 # author: emil lenz
 # email:  emillenz@protonmail.com
@@ -11,7 +11,7 @@ use utils.nu
 #   - all background processes and commands to be run at startup.
 #   - additionally runs commands to configure x11 behaviour.
 #   - starts all programs automatically, that are used in basically every-session (dry).
-# -----
+# ---
 def main [] {
         let run_procs = [
                 "sudo xremap --watch=device ~/.config/xremap/config.yml && sleep 1 && xset r off"
@@ -24,7 +24,7 @@ def main [] {
                 "batsignal -bpe -w 50 -c 20 -d 5"
                 "firefox"
                 "firefox --new-window https://chat.openai.com"
-                "keepassxc" # TODO :: replace with pass
+                "keepassxc"
                 "autorandr --change"
         ]
 

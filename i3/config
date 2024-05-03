@@ -72,7 +72,7 @@ $map $mod+k      focus prev
 $map $mod+q      kill
 $map $mod+g      $cmd rofi -show window
 $map $mod+x      $cmd rofi -show drun
-$map $mod+t      layout toggle tabbed splith
+$map $mod+s      layout toggle tabbed splith
 $map $mod+Return move workspace to output next
 
 # WORKSPACES
@@ -159,7 +159,7 @@ mode "leader" {
 mode "quit" {
         $map $mod+e           $cmd i3-msg exit $esc
         $map $mod+q           $cmd $sys_sleep $esc
-        $map $mod+shift+q     $cmd systemctl poweroff $esc
+        $map $mod+shift+q     $cmd systemctl hibernate $esc
         $map $mod+r           $cmd i3-msg restart $esc
         $map $mod+shift+r     $cmd systemctl reboot $esc
         $map $mod+o           $cmd $sys_screenoff $esc

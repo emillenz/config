@@ -1123,3 +1123,114 @@ ps
 ps | sort-by cpu
 ls
 ps | sort-by cpu
+emacs -nw
+emacs -nwQ
+emacs -Q
+autostart
+sudo killall xremap; autostart
+bash
+exit
+conda install
+yay conda
+sudo pacman --)ist
+sudo pacman --list
+sudo pacman list
+sudo pacman -h
+sudo pacman -Qs
+man emacs
+man ls 
+ls --help | bat --plain --paging always --language help
+autostart
+bash
+autostart
+nvim
+nvim tmp
+rm tmp
+man wmctrl
+emacs -nw
+man clang-format 
+man clang
+clang-format  --help | bat --plain --paging always --language help
+fd  --help | bat --plain --paging always --language help
+clang-format  --help | bat --plain --paging always --language help
+zathurarc
+zathura
+man zathura
+man zathurarc
+emac -Q
+emacs -Q
+xterm
+xterm bash
+syncthing
+nvim
+bash
+autostart
+xev
+autstart
+autostart
+sudo killall xremap
+autostart
+emacs --no-init-file --no--window-system
+emacs --no-init-file --no-window-system
+emacs -Q
+emacs -nw
+sudo killall xremap; autostart
+man ant 
+ant  --help | bat --plain --paging always --language help
+ex
+man ex
+man ed
+ls
+ed .bashrc
+man ed
+yay ed
+vi 
+man nano
+nano .bashrc
+1.3**2
+1.3 ^ 2
+1.3 ** 2
+1.5 ** 2
+1.4 ** 2
+man vim 
+nvim
+vim
+yay vim
+nvim
+yay vim
+vim
+ivm
+^yay vim
+nvim
+sudo pacman -Syyu
+nvoim
+nvim
+vim
+nvim
+yay -S vim
+vim
+vi
+exo-open 
+firefox
+zathura Documents/work/codora/pdf_wochenplan.pdf
+man zathurarc
+sudo killall xremap; "autostart &" | bash
+hellloo --help | bat --plain --paging always --language help
+asdlkfj --help | bat --plain --paging always --language help
+xev
+sudo killall xremap
+autostart
+a;ldskfhjka fdska sdf --help | bat --plain --paging always --language help
+emacs -Q
+emacs -nw
+syncthing
+ls
+ls -las
+ls -la
+ls -)a
+cd
+bash
+man emacs 
+autostart
+man 
+emacs -Q

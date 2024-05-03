@@ -6,28 +6,25 @@ set selection-clipboard clipboard
 set window-title-basename true
 set statusbar-basename true
 set font "Iosevka Nerd Font 10"
-set adjust-open "width"
+set adjust-open "best-fit"
 set window-title-page true
 set render-loading true
 set recolor-keephue true
 
+# more ergonomic top layer mappings
 map u scroll half-up
 map d scroll half-down
 map f scroll full-down
 map b scroll full-up
 map i jumplist forward
 map o jumplist backward
-map z snap_to_page
-map t toggle_page_mode
-map r reload
-map R rotate
+map z snap_to_page # vim
+map s toggle_page_mode # mnemonic: split
 map = zoom in
 map - zoom out
-map v recolor
-map w adjust_window best-fit
-map W adjust_window width
+map w adjust_window best-fit # mnemonic: width/window
+map W adjust_window width # mnemonic: width/window
 unmap a
-unmap s
 
 # # MODUS VIVENDI THEME
 # set recolor true

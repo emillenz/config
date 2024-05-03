@@ -63,18 +63,20 @@
       split-height-threshold nil
       split-width-threshold 0)
 
-(setq-default +popup-defaults
-              '(:side right
-                :select t
-                :quit nil
-                :width 0.5
-                :modeline t))
+(setq +popup-defaults
+      '(:side right
+        :select nil
+        :quit nil
+        :width 0.5
+        :modeline t))
+(apply #'set-popup-rule! "\\*" +popup-defaults) ;; HACK :: apply defaults to all
 
 (after! org
   (setq org-src-window-setup 'current-window
         org-agenda-window-setup 'current-window)
   (set-popup-rules! `(("^\\*Org Src" :ignore t)
-                      ("^CAPTURE" :ignore t))))
+                      ("^CAPTURE" :ignore t)
+                      ("^\\*Org Select" :side bottom))))
 
 (after! info
   (set-popup-rule! "^\\*info" :ignore t))
@@ -128,8 +130,6 @@
       doom-leader-alt-key "M-,")
 
 (map! :leader
-      (:prefix "s" "t" #'dictionary-search)
-
       (:prefix "c"
                "w" #'z/clean-whitespace
                "r" #'lsp-rename
@@ -173,30 +173,30 @@
 ;; global navigation scheme:2 ends here
 
 ;; [[file:config.org::*evil][evil:1]]
-(map! :inmv "C-s" #'basic-save-buffer
-      :nmvo "j"   #'evil-next-visual-line
-      :nmvo "k"   #'evil-previous-visual-line
+(map! :inv "C-s" #'basic-save-buffer
+      :n   "C-l" #'recenter-top-bottom
+      :nvo "j"   #'evil-next-visual-line
+      :nvo "k"   #'evil-previous-visual-line
 
-      :nm   "TAB" #'+fold/toggle
+      :n   "TAB" #'+fold/toggle
 
-      :nmv  "("   #'sp-beginning-of-sexp
-      :nmv  ")"   #'sp-end-of-sexp
+      :nv  "("   #'sp-beginning-of-sexp
+      :nv  ")"   #'sp-end-of-sexp
 
-      :nmv  "U"   #'evil-redo
-      :nmv  "Q"   #'evil-execute-last-recorded-macro
-      :nmv  "&"   #'evil-ex-repeat
-      :nm   "M"   (cmd! (evil-set-jump))
+      :nv  "U"   #'evil-redo
+      :nv  "Q"   #'evil-execute-last-recorded-macro
+      :nv  "&"   #'evil-ex-repeat
+      :n   "M"   (cmd! (evil-set-jump))
 
-      :nmv  "+"   #'evil-numbers/inc-at-pt
-      :nmv  "-"   #'evil-numbers/dec-at-pt
-      :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
-      :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
+      :nv  "+"   #'evil-numbers/inc-at-pt
+      :nv  "-"   #'evil-numbers/dec-at-pt
+      :nv  "g+"  #'evil-numbers/inc-at-pt-incremental
+      :nv  "g-"  #'evil-numbers/dec-at-pt-incremental
 
-      :nmv  "gk"  #'devdocs-lookup
-      :nmv  "go"  #'consult-imenu
-      :nmv  "g/"  #'+default/search-buffer)
-
-(map! :nm "C-l" #'recenter-top-bottom)
+      :nv  "gt"  #'dictionary-search
+      :nv  "gk"  (cmd! (devdocs-lookup nil (current-word t)))
+      :nv  "go"  #'consult-imenu
+      :nv  "g/"  #'+default/search-buffer)
 ;; evil:1 ends here
 
 ;; [[file:config.org::*evil][evil:2]]
@@ -843,3 +843,9 @@ This is sensible default behaviour, and integrates it into evil."
   (add-hook! 'verilog-mode-hook (ligature-mode -1)) ;; don't display: <= as \leq
   (setq verilog-auto-newline nil))
 ;; verilog-mode:1 ends here
+
+;; [[file:config.org::*dictionary][dictionary:1]]
+(after! dictionary
+  (setq dictionary-server "dict.org"
+        dictionary-default-dictionary "*")) ;; no confirmation prompt which server to use
+;; dictionary:1 ends here

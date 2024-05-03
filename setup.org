@@ -1,38 +1,38 @@
 #+title:     Setup
-#+author:    Emil Lenz
+#+author:    emil lenz
 #+email:     emillenz@protonmail.com
 #+date:      2023-05-28
 #+property:  header-args:sh :tangle yes :shebang #!/bin/bash
 
-* Info
-- These packages are for arch based distributions, using yay to also install packages which are found in the AUR.
-- If you use a different packagemanager you must ensure to install these programs on your own in order to get my workflow to work.
-- Run this script as root -> get no prompts
+* info
+- these packages are for arch based distributions, using yay to also install packages which are found in the aur.
+- if you use a different packagemanager you must ensure to install these programs on your own in order to get my workflow to work.
+- run this script as root -> get no prompts
 
-* Setup
+* setup
 #+begin_src sh
 sudo pacman -Syyu
 #+end_src
 
-* Core tools
-** Terminal, Nushell
+* core tools
+** terminal, nushell
 #+begin_src sh
 yay --noconfirm --sync alacritty curl libtool fzf fd ripgrep xclip xdg-utils cmake bat git gcc make xdotool tldr htop fish ttf-iosevka-nerd nushell tmux
 #+end_src
 
-Set nushell to loginshell
+set nushell to loginshell
 #+begin_src sh
 sudo chsh --shell /usr/bin/nu root
 chsh --shell /usr/bin/nu
 #+end_src
 
-** Never sudo-password-prompt
-- Neccessarry for the [[file:bin/startup][Startup]] script
+** never sudo-password-prompt
+- neccessarry for the [[file:bin/autostart][autostart]] script
 #+begin_src sh
 echo "$USER ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee "/etc/sudoers.d/$USER"
 #+end_src
 
-** Make system-scripts executeable
+** make system-scripts executeable
 #+begin_src sh
 fd . ~/.config/bin --type file --exec chmod +x {}
 #+end_src
@@ -45,12 +45,12 @@ git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 ~/.config/emacs/bin/doom install
 #+end_src
 
-* Gui apps & packages
+* gui apps & packages
 #+begin_src sh
 yay --noconfirm --sync i3 i3lock zathura zathura-pdf-mupdf arandr mpv yt-dlp rofi brightnessctl unclutter firefox playerctl bluetoothctl xorg-xprop xremap-x11-bin mpd dunst nsxiv maim pulsemixer xorg-xset xorg-xsetroot batsignal pamixer tlp
 #+end_src
 
-** Enable daemons
+** enable daemons
 #+begin_src sh
 sudo systemctl enable sshd
 sudo systemctl enable mpd
@@ -58,7 +58,7 @@ sudo systemctl enable bluetooth
 sudo systemctl enable tlp.service
 #+end_src
 
-** Obs & Nvidia drivers
+** obs & nvidia drivers
 #+begin_src sh :tangle no
 yay --noconfirm --sync obs-studio
 yay --noconfirm --sync nvidia nvidia-utils lib32-nvidia-utils nvidia-settings

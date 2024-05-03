@@ -11,7 +11,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 
 * preface
 - i use: ~z/~ (lenZ) in user defined functions and variables to distinguish them clearly from package related ones.
-- lazyload packages using ~after!~.  this keeps emacs efficent, since it now only loads the settings & packages when they are actually needed.  (no emacs bankruptcy)
+- lazyload packages using ~after!~.  this keeps emacs efficent, since it now only loads the settings & packages when they are actually needed (no emacs bankruptcy).
 
 * user
 #+begin_src emacs-lisp
@@ -89,6 +89,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
     - don't focus help buffer's.
     - maximize buffer's that are standalone / proper (ex: info-mode, org-src).
 - we are not in a position to presume what content will be displayed in the popup-buffer for the defaut settings, hence we give it equal width (50%) to accomodate for most possible cases.
+- popups :: Popups ought to be the second class citizens of my editor; spawned off to the side, discarded with the push of a button (e.g. [[kbd:][ESC]]]), and easily restored if I want to see them again.
 #+begin_src emacs-lisp
 (setq evil-vsplit-window-right t
       even-window-sizes 'width-only
@@ -96,18 +97,20 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       split-height-threshold nil
       split-width-threshold 0)
 
-(setq-default +popup-defaults
-              '(:side right
-                :select t
-                :quit nil
-                :width 0.5
-                :modeline t))
+(setq +popup-defaults
+      '(:side right
+        :select nil
+        :quit nil
+        :width 0.5
+        :modeline t))
+(apply #'set-popup-rule! "\\*" +popup-defaults) ;; HACK :: apply defaults to all
 
 (after! org
   (setq org-src-window-setup 'current-window
         org-agenda-window-setup 'current-window)
   (set-popup-rules! `(("^\\*Org Src" :ignore t)
-                      ("^CAPTURE" :ignore t))))
+                      ("^CAPTURE" :ignore t)
+                      ("^\\*Org Select" :side bottom))))
 
 (after! info
   (set-popup-rule! "^\\*info" :ignore t))
@@ -177,8 +180,6 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       doom-leader-alt-key "M-,")
 
 (map! :leader
-      (:prefix "s" "t" #'dictionary-search)
-
       (:prefix "c"
                "w" #'z/clean-whitespace
                "r" #'lsp-rename
@@ -198,7 +199,8 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
   - then you can hotkey to that exact file instantly.
   - 3 simultaneous files are enough for all projects, if we enable more, the overhead becomes too large.  (you would't open and manage 5 splits either, would you?)
 - buffers ::
-  - use last-buffer (C-^) to alternate/go-back to last and find-buffer (M-g) for pulling up arbitrary buffers
+  - use last-buffer [[kbd:C-^][C-^]]  to alternate/go-back to last and find-buffer [[kbd:M-g][M-g
+]] for pulling up arbitrary buffers
 - efficiency :: they are the most efficient way of navigating between multiple different files/buffer at the same time (most efficient way i have found to introduce little overhead when context-switching and remaining distractionfree)
 - splits :: never create splits for buffers, prefer the full screen, full focus, no distractions - workflow.  (no multitasking, no clutter)
   - when emacs creates splits we must handle them (includes minimal bindings for switching and closing splits)
@@ -248,55 +250,53 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
 
 - relative lines ::
 - more sensible default
-- minimizes mental overhead (and spamming of ~gj~ / ~gk~)
+- minimizes mental overhead (and spamming of [[kbd:gj][gj]] / [[kbd:gk][gk]] )
 - splits ::
-- at most have 2 splits => toggle between windows with single key (instead of mental overhead for directional navigation ex: c-hjkl)
+- at most have 2 splits => toggle between windows with single key (instead of mental overhead for directional navigation ex: [[kbd:c-hjkl][c-hjkl]] )
 - this is for navigating and controlling some inevitable popup-buffers.
 - avoid splits at all costs and use tabs instead
 - useless default mappings :: remap underused/useless keys to statistically frequently used commands
-- ~q~: shortcut to ~@@~ (def macro with ~qq~, execute with ~@q~ in 99% of cases)
-- ~m~: save point to jumplist (save pos -> do edits elsewhere -> jump back to saved pos: ~c-o~)
+- [[kbd:q][q]] :: shortcut to [[kbd:@@][@@]] (def macro with [[kbd:qq][qq]], execute with [[kbd:@q][@q]] in 99% of cases)
+- [[kbd:m][m]] :: save point to jumplist (save pos -> do edits elsewhere -> jump back to saved pos: ~c-o~)
 - this has basically replaced my need for vim's marks as i mostly alternate between two positions for quick edits, and if i need two separate positions.
-- ~&~: allows for same usage as normal: ~&~, but more powerful (repeat any last ~ex~ command)
-- ~tab~: folding.  inspired by org-modes folding functionality.  (smart/simple one-key folding))
-- ~()~ for quickly jumping out of code delimiters (and when coding in lisp, especially useful)
+- [[kbd:&][&]] :: allows for same usage as normal: [[kbd:&][&]], but more powerful (repeat any last ~ex~ command)
+- [[kbd:tab][tab]] :: folding.  inspired by org-modes folding functionality.  (smart/simple one-key folding))
 - whichkey :: removed on purpose
 - the concept of ~whichkey~ is creating the bad habit of searching through a menu to find a keybindings (the exact opposite of what a keybind is for, to be executed instantaneously, engrained in memory)
-- if you know roughly what you are looking for, then use ~m-x~ and fuzzy search for the command and it will show you the binding for next time.  fuzzy finding is more efficient.
+- if you know roughly what you are looking for, then use [[kbd:m-x][m-x]] and fuzzy search for the command and it will show you the binding for next time.  fuzzy finding is more efficient.
 - we remove annoying unwanted popup's and reduce visual sugar (=> distractionless, focused workflow).
 - this idea correlates with the insight that you should use a keyboard with blank keycaps.  which will force you to learn to type, without ever taking the focus off the screen.  (reduced context switching, no speed bottleneck, increased continuity).
 - control bindings :: for screen movements and editing
-- ~][~ moves by syntactical sections implemented in all relevant modes (org, magit..)
-- ~c-l~ does the same as ~c-l~ in the shell.  is quicker & more mnemonic than ~zz~.
+- [[kbd:c-l][c-l]] does the same as [[kbd:c-l][c-l]] in the shell.  is quicker & more mnemonic than [[kbd:zz][zz]]
 - learn them all (also the one's in insert mode) for seizing vim's full power.
 - managing buffers ::
-- ~save-buffer~ & ~kill-buffer~ are statistically in the same usage-frequency-class as editing commands, and exist fundamentally in all programs in some disguise. => mapped to consisten ~C-s~
+- ~save-buffer~ & ~kill-buffer~ are statistically in the same usage-frequency-class as editing commands, and exist fundamentally in all programs in some disguise. => mapped to consisten [[kbd:C-s][C-s]]
 
 #+begin_src emacs-lisp
-(map! :inmv "C-s" #'basic-save-buffer
-      :nmvo "j"   #'evil-next-visual-line
-      :nmvo "k"   #'evil-previous-visual-line
+(map! :inv "C-s" #'basic-save-buffer
+      :n   "C-l" #'recenter-top-bottom
+      :nvo "j"   #'evil-next-visual-line
+      :nvo "k"   #'evil-previous-visual-line
 
-      :nm   "TAB" #'+fold/toggle
+      :n   "TAB" #'+fold/toggle
 
-      :nmv  "("   #'sp-beginning-of-sexp
-      :nmv  ")"   #'sp-end-of-sexp
+      :nv  "("   #'sp-beginning-of-sexp
+      :nv  ")"   #'sp-end-of-sexp
 
-      :nmv  "U"   #'evil-redo
-      :nmv  "Q"   #'evil-execute-last-recorded-macro
-      :nmv  "&"   #'evil-ex-repeat
-      :nm   "M"   (cmd! (evil-set-jump))
+      :nv  "U"   #'evil-redo
+      :nv  "Q"   #'evil-execute-last-recorded-macro
+      :nv  "&"   #'evil-ex-repeat
+      :n   "M"   (cmd! (evil-set-jump))
 
-      :nmv  "+"   #'evil-numbers/inc-at-pt
-      :nmv  "-"   #'evil-numbers/dec-at-pt
-      :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
-      :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
+      :nv  "+"   #'evil-numbers/inc-at-pt
+      :nv  "-"   #'evil-numbers/dec-at-pt
+      :nv  "g+"  #'evil-numbers/inc-at-pt-incremental
+      :nv  "g-"  #'evil-numbers/dec-at-pt-incremental
 
-      :nmv  "gk"  #'devdocs-lookup
-      :nmv  "go"  #'consult-imenu
-      :nmv  "g/"  #'+default/search-buffer)
-
-(map! :nm "C-l" #'recenter-top-bottom)
+      :nv  "gt"  #'dictionary-search
+      :nv  "gk"  (cmd! (devdocs-lookup nil (current-word t)))
+      :nv  "go"  #'consult-imenu
+      :nv  "g/"  #'+default/search-buffer)
 #+end_src
 
 #+begin_src emacs-lisp
@@ -314,8 +314,8 @@ This is sensible default behaviour, and integrates it into evil."
 
 *** instant jumping
 - emacs's answer to the mouse (even more efficient)
-- override the otherwise useless ~s~ key with a precise char jump.  no more relative line jumping and then ~f~ or ~t~ jumping inline, or spamming ~hjkl~.  instead just jump to the exact position you need to get to immediately without the mental overhead (of doing both steps).
-- use ~f/t~ inline and ~s/S~ when jumping inter-line
+- override the otherwise useless [[kbd:s][s]] key with a precise char jump.  no more relative line jumping and then [[kbd:f][f]] or [[kbd:t][t]] jumping inline, or spamming [[kbd:hjkl][hjkl]]  instead just jump to the exact position you need to get to immediately without the mental overhead (of doing both steps).
+- use [[kbd:f/t][f/t]] inline and [[kbd:s/S][s/S]] when jumping inter-line
 #+begin_src emacs-lisp
 (map! :map evil-snipe-local-mode-map ;; HACK :: need to override evil-snipe
       :nmvo "s" #'evil-avy-goto-char-2-below
@@ -354,7 +354,7 @@ This is sensible default behaviour, and integrates it into evil."
 ** dired (keybindings)
 - filemanagers :: avoid using integrated filemanagers (such as dired / ranger / lf) whenever possible replace them with shell commands and finding (fzf: recent-files, root, current dir..)
 - in most cases it is more extensible and faster using tools such as emac's find-file in combination with fuzzy finding and using global bookmarks for frequently used projects/files.
-- ~:e~ & ~:w~ for creating and opening files in the same dir from the vim-cmd-line
+- ~:e & ~:w~ for creating and opening files in the same dir from the vim-cmd-line
 - ~:%!~ & ~:'<,'>!~ for processing the buffer with external shell-tools.
 - ~:!~ for all other commands such as ~cp~, ~mv~, ~rm~, ~chmod~...
 - use fuzzyfinding of files that exist
@@ -429,8 +429,8 @@ This is sensible default behaviour, and integrates it into evil."
 #+end_src
 
 ** completion
-- show/cycle: ~TAB~
-- confirm/exit: ~RET~
+- show/cycle: [[kbd:TAB][TAB]]
+- confirm/exit: [[kbd:RET][RET]]
 - i don't want company to show up and distract me when i already know exactly what i want.
 + use it when its a long keyword/snippet,  when you don't know the exact keyword name / function signature.
 + this enforces more thoughtful coding, evaluating what the function actually does and let's you see what is really happening underneath.
@@ -558,8 +558,8 @@ this is automated using a snippet
 * programming
 ** indentation
 - Completion ::
-- use ~C-j, C-k~
-- confirm the autocompletion with ~<RET>~.  (consistent with all other programs on the os (neovim, nushell, browser...))
+- use [[kbd:TAB][TAB]]
+- confirm the autocompletion with [[kbd:RET][RET]]  (consistent with all other programs on the os (neovim, nushell, browser...))
 - formatting :: configure language formatters externally (config-file) to use 8 spaces indentation.
 
 #+begin_src emacs-lisp
@@ -1143,4 +1143,11 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
 (after! verilog-mode
   (add-hook! 'verilog-mode-hook (ligature-mode -1)) ;; don't display: <= as \leq
   (setq verilog-auto-newline nil))
+#+end_src
+
+* dictionary
+#+begin_src emacs-lisp
+(after! dictionary
+  (setq dictionary-server "dict.org"
+        dictionary-default-dictionary "*")) ;; no confirmation prompt which server to use
 #+end_src

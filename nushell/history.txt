@@ -1256,3 +1256,64 @@ asdlfkhj lk --help | bat --plain --paging always --language help
 man sdf law
 sudo xremap --watch=device ~/.config/xremap/config.yml 
 autostart
+<<<<<<< Updated upstream
+=======
+sudo killall xremap; autostart
+man autsotart
+autostart
+cd .conffig
+cd .config
+ls
+cd .config
+keybindings lsit
+keybindings list
+keybindings default 
+fd sync-conflict 
+fd sync-conflict -x rm {}
+bash
+ls -la
+man git 
+man git 
+man git
+man tmux
+nu
+nu
+nu
+nu
+nu
+autostart
+ls 
+ps
+os
+nvim
+nvim .bashrc
+ls
+autostart
+man git 
+autostart
+man git
+man git-whatchanged
+man git-lgo
+git-lgo
+git-log
+git log
+cd .config
+git log
+man git log 
+man git-log
+git log  --help | bat --plain --paging always --language help
+git log  --help 
+git log -h
+man bat 
+git log  -h | bat -pp -l help
+git logh -h | bat -p -l help
+git log  -h | bat -p -l help
+git log  -h | bat -l help
+git lgo  -h | bat -l help
+git log -h | bat -l help
+git show
+cd .config
+git show
+man git show 
+ls
+>>>>>>> Stashed changes

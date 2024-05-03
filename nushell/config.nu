@@ -196,8 +196,8 @@ $env.config = {
         keybindings: [
                 {
                 name: completion_menu
-                modifier: none
-                keycode: tab
+                modifier: control
+                keycode: char_j
                 mode: vi_insert
                 event: {
                         until: [
@@ -209,8 +209,8 @@ $env.config = {
 
                 {
                 name: complete_hint
-                modifier: control
-                keycode: char_t
+                modifier: none
+                keycode: tab
                 mode: [vi_normal vi_insert]
                 event: {send: historyhintcomplete}
                 }
@@ -266,17 +266,6 @@ $env.config = {
                 event: {
                         send: executehostcommand,
                         cmd: "tmux send-keys $\"(fd --type directory | fzf --preview '^ls --color {}')\""
-                }
-                }
-
-                {
-                name: prevdir
-                modifier: control
-                keycode: char_p
-                mode: [vi_normal, vi_insert]
-                event: {
-                        send: executehostcommand,
-                        cmd: "cd .."
                 }
                 }
 

@@ -43,6 +43,12 @@ configuration {
         run-command:       "{cmd}";
         run-list-command:  "";
         run-shell-command: "{terminal} -e {cmd}";
+
+        // unbind C-j, C-k => use for completion
+        kb-accept-entry: "Return";
+        kb-remove-to-eol: "";
+        kb-row-up: "Control+k,Up";
+        kb-row-down: "Control+j,Down";
 }
 
 window {

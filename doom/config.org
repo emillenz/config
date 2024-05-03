@@ -243,7 +243,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
         (tab-bar-new-tab)))))
 #+end_src
 
-** evil
+** vim editing
 goal :: make vim's bindings even more mnemonic/sane/sensible/efficient and improve consistency of implementation.  maximize the keyboard real-estate usage.
 see [[file:~/.config/xremap/config.org][global keyboard remaps]] for additional details.
 frequently used & coding/editing related functions are mapped to ~g+~ (ex: lookup full documentation with ~gk~)
@@ -271,14 +271,14 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
 - learn them all (also the one's in insert mode) for seizing vim's full power.
 - managing buffers ::
 - ~save-buffer~ & ~kill-buffer~ are statistically in the same usage-frequency-class as editing commands, and exist fundamentally in all programs in some disguise. => mapped to consisten [[kbd:C-s][C-s]]
+- completion :: select & activate: [[kbd:C-j/k][C-j/k]], superior to [[kbd:TAB][TAB]] since it is faster & to navigate between entries.  confirm/exit: [[kbd:RET][RET]]
 
 #+begin_src emacs-lisp
 (map! :inv "C-s" #'basic-save-buffer
       :n   "C-l" #'recenter-top-bottom
+
       :nvo "j"   #'evil-next-visual-line
       :nvo "k"   #'evil-previous-visual-line
-
-      :n   "TAB" #'+fold/toggle
 
       :nv  "("   #'sp-beginning-of-sexp
       :nv  ")"   #'sp-end-of-sexp
@@ -286,7 +286,7 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
       :nv  "U"   #'evil-redo
       :nv  "Q"   #'evil-execute-last-recorded-macro
       :nv  "&"   #'evil-ex-repeat
-      :n   "M"   (cmd! (evil-set-jump))
+      :n   "M"   #'evil-set-jump
 
       :nv  "+"   #'evil-numbers/inc-at-pt
       :nv  "-"   #'evil-numbers/dec-at-pt
@@ -297,6 +297,15 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
       :nv  "gk"  (cmd! (devdocs-lookup nil (current-word t)))
       :nv  "go"  #'consult-imenu
       :nv  "g/"  #'+default/search-buffer)
+
+(map! :after minibuffer
+      :map minibuffer-mode-map
+      :im "C-j"  #'next-line-or-history-element
+      :im "C-k"  #'previous-line-or-history-element)
+
+(map! :after company
+      :map company-mode-map
+      :i "C-j" #'company-complete-common)
 #+end_src
 
 #+begin_src emacs-lisp
@@ -429,13 +438,11 @@ This is sensible default behaviour, and integrates it into evil."
 #+end_src
 
 ** completion
-- show/cycle: [[kbd:TAB][TAB]]
-- confirm/exit: [[kbd:RET][RET]]
 - i don't want company to show up and distract me when i already know exactly what i want.
-+ use it when its a long keyword/snippet,  when you don't know the exact keyword name / function signature.
-+ this enforces more thoughtful coding, evaluating what the function actually does and let's you see what is really happening underneath.
-+ it actually makes you faster, since it removes the mental overhead and interruption that arises from the distracting completion menu, where you will choose the option from.
-+ greatly improves overall typing speed.
+- use it when its a long keyword/snippet,  when you don't know the exact keyword name / function signature.
+- this enforces more thoughtful coding, evaluating what the function actually does and let's you see what is really happening underneath.
+- it actually makes you faster, since it removes the mental overhead and interruption that arises from the distracting completion menu, where you will choose the option from.
+- greatly improves overall typing speed.
 - limit the showing of number of completion candidates (can't view more than ~8 at a glance anyways)
 #+begin_src emacs-lisp
 (after! company
@@ -454,15 +461,9 @@ This is sensible default behaviour, and integrates it into evil."
 (after! vertico
   (setq vertico-count 16))
 
-(map! :map 'company-mode-map :after company
-      :i "TAB" #'company-complete-common)
-
-;; make vertico behavior consistent with company
-(map! :map 'vertico-map :after vertico
-      :inm "TAB" #'vertico-next
-      :inm "<backtab>" #'vertico-previous
-      :im  "," #'vertico-insert
-      :inm "RET" #'vertico-exit)
+(map! :map minibuffer-mode-map
+      :im "C-j" #'next-line-or-history-element
+      :im "C-k" #'previous-line-or-history-element)
 #+end_src
 
 ** snippets
@@ -707,7 +708,8 @@ In short, 8-char indents make things easier to read, and have the added benefit 
           ("1)" . "a)"))
         org-blank-before-new-entry
         '((heading . t)
-          (plain-list-item . nil)))
+          (plain-list-item . nil))
+        org-src-ask-before-returning-to-edit-buffer nil)
 #+end_src
 
 ** symbols

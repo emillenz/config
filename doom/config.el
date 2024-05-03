@@ -172,13 +172,12 @@
         (tab-bar-new-tab)))))
 ;; global navigation scheme:2 ends here
 
-;; [[file:config.org::*evil][evil:1]]
+;; [[file:config.org::*vim editing][vim editing:1]]
 (map! :inv "C-s" #'basic-save-buffer
       :n   "C-l" #'recenter-top-bottom
+
       :nvo "j"   #'evil-next-visual-line
       :nvo "k"   #'evil-previous-visual-line
-
-      :n   "TAB" #'+fold/toggle
 
       :nv  "("   #'sp-beginning-of-sexp
       :nv  ")"   #'sp-end-of-sexp
@@ -186,7 +185,7 @@
       :nv  "U"   #'evil-redo
       :nv  "Q"   #'evil-execute-last-recorded-macro
       :nv  "&"   #'evil-ex-repeat
-      :n   "M"   (cmd! (evil-set-jump))
+      :n   "M"   #'evil-set-jump
 
       :nv  "+"   #'evil-numbers/inc-at-pt
       :nv  "-"   #'evil-numbers/dec-at-pt
@@ -197,9 +196,18 @@
       :nv  "gk"  (cmd! (devdocs-lookup nil (current-word t)))
       :nv  "go"  #'consult-imenu
       :nv  "g/"  #'+default/search-buffer)
-;; evil:1 ends here
 
-;; [[file:config.org::*evil][evil:2]]
+(map! :after minibuffer
+      :map minibuffer-mode-map
+      :im "C-j"  #'next-line-or-history-element
+      :im "C-k"  #'previous-line-or-history-element)
+
+(map! :after company
+      :map company-mode-map
+      :i "C-j" #'company-complete-common)
+;; vim editing:1 ends here
+
+;; [[file:config.org::*vim editing][vim editing:2]]
 (defadvice! z/update-evil-search-reg ()
   "Update evil search register after jumping to a line with
   `+default/search-buffer' to be able to jump to next/prev matches.
@@ -210,7 +218,7 @@ This is sensible default behaviour, and integrates it into evil."
               (car consult--line-history))))
     (push str evil-ex-search-history)
     (setq evil-ex-search-pattern (list str t t))))
-;; evil:2 ends here
+;; vim editing:2 ends here
 
 ;; [[file:config.org::*instant jumping][instant jumping:1]]
 (map! :map evil-snipe-local-mode-map ;; HACK :: need to override evil-snipe
@@ -318,15 +326,9 @@ This is sensible default behaviour, and integrates it into evil."
 (after! vertico
   (setq vertico-count 16))
 
-(map! :map 'company-mode-map :after company
-      :i "TAB" #'company-complete-common)
-
-;; make vertico behavior consistent with company
-(map! :map 'vertico-map :after vertico
-      :inm "TAB" #'vertico-next
-      :inm "<backtab>" #'vertico-previous
-      :im  "," #'vertico-insert
-      :inm "RET" #'vertico-exit)
+(map! :map minibuffer-mode-map
+      :im "C-j" #'next-line-or-history-element
+      :im "C-k" #'previous-line-or-history-element)
 ;; completion:1 ends here
 
 ;; [[file:config.org::*snippets][snippets:1]]
@@ -489,7 +491,8 @@ This is sensible default behaviour, and integrates it into evil."
         ("1)" . "a)"))
       org-blank-before-new-entry
       '((heading . t)
-        (plain-list-item . nil)))
+        (plain-list-item . nil))
+      org-src-ask-before-returning-to-edit-buffer nil)
 ;; options:1 ends here
 
 ;; [[file:config.org::*symbols][symbols:1]]

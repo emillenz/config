@@ -1234,3 +1234,25 @@ man emacs
 autostart
 man 
 emacs -Q
+nvim
+emacs -nw
+emac -nw
+emacs -nw
+emacs -new
+emacs -nw
+sudo killall xremap; "autostart &" | bash
+cccllcccc --help | bat --plain --paging always --language help
+autostart
+ls
+alksdf --help | bat --plain --paging always --language help
+sudo killall xremap; autostart
+ls
+sudo xremap --watch=device ~/.config/xremap/config.yml && sleep 1 && xset r off
+sudo xremap --watch=device ~/.config/xremap/config.yml && sleep 1 && xset r off --help | bat --plain --paging always --language help
+sudo xremap --watch=device ~/.config/xremap/config.yml
+sudo killall xremap; sudo xremap --watch=device ~/.config/xremap/config.yml 
+sudo xremap --watch=device ~/.config/xremap/config.yml 
+asdlfkhj lk --help | bat --plain --paging always --language help
+man sdf law
+sudo xremap --watch=device ~/.config/xremap/config.yml 
+autostart

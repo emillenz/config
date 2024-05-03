@@ -22,24 +22,19 @@ keymap:
     application:
       only: firefox
     remap:
-      m-t: c-t
-      m-q: c-w
-      m-f: c-l # find
-      m-i: home
-      m-a: end
-      m-e: c-right
-      m-b: c-left
-      m-h: left
-      m-l: right
-      m-j: down
-      m-k: up
-      m-d: c-delete
-      m-x: delete
-      m-o: [end, enter]
-
-  - name: ergo
-    remap:
-      shift-backspace: c-backspace
+      M-t: c-t
+      M-q: c-w
+      M-i: home
+      M-a: end
+      M-e: c-right
+      M-b: c-left
+      M-h: left
+      M-l: right
+      M-j: down
+      M-k: up
+      M-d: c-delete
+      M-x: delete
+      M-o: [end, enter]
 
   - name: symlayer
     remap:

@@ -173,8 +173,13 @@
 ;; global navigation scheme:2 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:1]]
+<<<<<<< Updated upstream
 (map! :inv "C-s" #'basic-save-buffer
       :n   "C-l" #'recenter-top-bottom
+=======
+(map! :inv  "C-s" (cmd! (evil-normal-state) (basic-save-buffer))
+      :nm   "C-l" #'recenter-top-bottom
+>>>>>>> Stashed changes
 
       :nvo "j"   #'evil-next-visual-line
       :nvo "k"   #'evil-previous-visual-line

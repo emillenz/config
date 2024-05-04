@@ -1317,3 +1317,49 @@ git show
 man git show 
 ls
 >>>>>>> Stashed changes
+<<<<<<< Updated upstream
+=======
+sudo killall xremap
+autostart
+sudo killall xremap
+autstart
+autostart
+bluetoothctl
+bash
+keybindings default 
+keybindings list
+man key 
+man 
+ls
+man man 
+man man
+man man 
+cd ..
+hello world asshoel  --help | bat --plain --paging always --language help
+hello world asshole, what are you doing  --help | bat --plain --paging always --language help
+nu
+nu
+nu
+sudo killall xremap; autostart
+sudo xremap --watch=device ~/.config/xremap/config.yml 
+autostart
+sudo killall xremap; sudo xremap --watch=device ~/.config/xremap/config.yml 
+sudo xremap --watch=device ~/.config/xremap/config.yml
+k
+nvim
+asldkfj  --help | bat --plain --paging always --language help
+nvium
+nvim
+sudo xremap --watch=device ~/.config/xremap/config.yml
+autostart
+nvim
+autstso --help | bat --plain --paging always --language help
+autostart
+emacs -nw
+ls
+nu
+nu
+nu
+bash
+ls 
+>>>>>>> Stashed changes

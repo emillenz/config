@@ -14,8 +14,16 @@
 - vim layer :: implementing a rudimentary vim layer in the browser for quick editing inside prompts (if you need more power you should really be switching to emacs for the writing entirely)
 - esc :: remapped ergonomically as a thumbkey to: ~alt_l~, since original position is atrocious for speed in vim motions (and uncomfortable too).
 - thumbs :: super & alt (since the have analogous functionality) => wm and in app navigation. (remapped super, since it is unergonomical to hold down)
+<<<<<<< Updated upstream
 - ctrl-keys :: get in the habit of pressing the control key's with the palm of your wrists for maximum comfort. (assuming you have a mechanical keyboard).
 - browser :: remap shorcuts to be consistent with global navigation scheme (use ~alt~ instead of ~ctrl~)
+=======
+- ctrl-keys :: make it a habit to press the control key's with the palm of your wrists for maximum comfort.
+- webbrowser :: remap to make consistent with global navigation & completion scheme.
+- insert-mode :: make using [[kbd:c-u][c-u]], [[kbd:c-w][c-w]], [[kbd:c-h][c-h]] a habit.  it is more ergonomic and faster than using the incredibly unergonomic and hard to reach [[kbd:backspace][backspace]].
+- completion menus :: navigate: [[kbd:c-j][c-j]] [[kbd:c-k][c-k]], confirm: [[kbd:RET][RET]], next-field: [[kbd:TAB][TAB]]
+- vim layer :: we purposefully do not implement a vim-navigation layer globally, since if you are doing more than just typing something into a prompt, you should just use ~emacs-everywhere~ instead.  the implemented keybinds are consistent with vim's insert state and provide the most useful deletion commands when typing into a prompt.
+>>>>>>> Stashed changes
 
 * layout
 i am currently forced to use ~qwerty~ due to writing exam's at my university, however once this requirement has ceeded i will return back to dvorak. dvorak is the superior layout, since it is the only ergo-layout where ~jk~ are adjacent (for vim) and it is widely available. additionally it is more pure, not considering ~zxcv-hotkeys~ and placing the punctuation sensibly (for programming).

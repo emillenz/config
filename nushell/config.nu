@@ -195,6 +195,7 @@ $env.config = {
 
         keybindings: [
                 {
+<<<<<<< Updated upstream
                 name: completion_menu
                 modifier: control
                 keycode: char_j
@@ -203,6 +204,52 @@ $env.config = {
                         until: [
                                 {send: menu name: completion_menu}
                                 {send: menunext}
+=======
+                        name: completion_next
+                        modifier: control
+                        keycode: char_j
+                        mode: [vi_insert, vi_normal]
+                        event: {
+                                until: [
+                                        {send: menu name: completion_menu}
+                                        {send: menunext}
+                                ]
+                        }
+                }
+
+                {
+                        name: completion_prev
+                        modifier: control
+                        keycode: char_k
+                        mode: [vi_insert, vi_normal]
+                        event: {send: menuprevious}
+                }
+
+                {
+                        name: complete_hint
+                        modifier: none
+                        keycode: tab
+                        mode: [vi_normal vi_insert]
+                        event: {send: historyhintcomplete}
+                }
+
+                {
+                        name: recent_cmds_menu
+                        modifier: control
+                        keycode: char_r
+                        mode: [vi_normal vi_insert]
+                        event: {send: menu name: recent_cmds_menu}
+                }
+
+                {
+                        name: insert_file
+                        modifier: control
+                        keycode: char_f
+                        mode: [vi_normal, vi_insert]
+                        event: [
+                                {send: executehostcommand, cmd: "tmux send-keys $\"(fd --type file . | fzf --preview 'bat {}')\""}, # # NOTE :: terrible hack, but atm there is no other way to eval an expression at runtim and then insert the result
+                                {send: Enter}
+>>>>>>> Stashed changes
                         ]
                 }
                 }

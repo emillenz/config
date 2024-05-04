@@ -21,16 +21,19 @@ $env.MANPAGER = "bat --plain"
 $env.PAGER = "bat --plain"
 $env.MANWIDTH = 100
 
+alias e = emacsclient -nw --alternate-editor="emacs -nw"
+alias cat = bat
 alias ip = ip -color=auto
 alias yay = yay --noconfirm
 alias rm = rm --recursive --verbose --trash --interactive-once
-alias fzf = fzf --bind 'shift-tab:up,tab:down' --reverse --height=16 --color=dark --scheme=path # os-consistent completion (rofi, emacs, fzf ..)
+alias fzf = fzf --reverse --height=16 --color=dark --scheme=path # os-consistent completion (rofi, emacs, fzf ..)
 
 let fish_completer = {|spans|
         fish --command $'complete "--do-complete=($spans | str join " ")"'
         | $"value(char tab)description(char newline)" + $in
         | from tsv --flexible --no-infer
 }
+
 $env.config = {
         show_banner: false
         ls: {
@@ -38,6 +41,7 @@ $env.config = {
                 clickable_links: true
         }
         rm: {always_trash: true}
+
         table: {
                 mode: rounded
                 index_mode: always
@@ -145,51 +149,51 @@ $env.config = {
 
         menus: [
                 {
-                name: completion_menu
-                only_buffer_difference: false
-                marker: "> "
-                type: {
-                        layout: columnar
-                        columns: 1
-                        col_width: 20
-                        col_padding: 2
-                }
-                style: {
-                        text: blue
-                        selected_text: blue_reverse
-                        description_text: blue
-                }
-                }
-
-                {
-                name: recent_cmds_menu
-                only_buffer_difference: true
-                marker: "> "
-                type: {layout: list, page_size: 100}
-                style: {
-                        text: blue
-                        selected_text: blue_reverse
-                        description_text: yellow
-                }
+                        name: completion_menu
+                        only_buffer_difference: false
+                        marker: "> "
+                        type: {
+                                layout: columnar
+                                columns: 1
+                                col_width: 20
+                                col_padding: 2
+                        }
+                        style: {
+                                text: blue
+                                selected_text: blue_reverse
+                                description_text: blue
+                        }
                 }
 
                 {
-                name: help_menu
-                only_buffer_difference: true
-                marker: "? "
-                type: {
-                        layout: description
-                        columns: 1
-                        col_width: 20
-                        col_padding: 2
-                        selection_rows: 4
-                        description_rows: 10
+                        name: recent_cmds_menu
+                        only_buffer_difference: true
+                        marker: "> "
+                        type: {layout: list, page_size: 100}
+                        style: {
+                                text: blue
+                                selected_text: blue_reverse
+                                description_text: yellow
+                        }
                 }
-                style: {
-                        text: blue
-                        selected_text: blue_reverse
-                        description_text: yellow
-                }
+
+                {
+                        name: help_menu
+                        only_buffer_difference: true
+                        marker: "? "
+                        type: {
+                                layout: description
+                                columns: 1
+                                col_width: 20
+                                col_padding: 2
+                                selection_rows: 4
+                                description_rows: 10
+                        }
+                        style: {
+                                text: blue
+                                selected_text: blue_reverse
+                                description_text: yellow
+                        }
                 }
         ]
 
@@ -201,6 +205,7 @@ $env.config = {
                         mode: vi_insert
                         event: {edit: cutfromstart}
                 }
+
                 {
                         name: completion_menu
                         modifier: control
@@ -213,6 +218,7 @@ $env.config = {
                                 ]
                         }
                 }
+
                 {
                         name: completion_prev
                         modifier: control
@@ -220,6 +226,7 @@ $env.config = {
                         mode: vi_insert
                         event: {send: menuprevious}
                 }
+
                 {
                         name: complete_hint
                         modifier: none
@@ -227,6 +234,7 @@ $env.config = {
                         mode: vi_insert
                         event: {send: historyhintcomplete}
                 }
+
                 {
                         name: recent_cmds_menu
                         modifier: control
@@ -234,6 +242,7 @@ $env.config = {
                         mode: vi_insert
                         event: {send: menu name: recent_cmds_menu}
                 }
+
                 {
                         name: tldr
                         modifier: control
@@ -241,10 +250,11 @@ $env.config = {
                         mode: [vi_normal vi_insert]
                         event: [
                                 { edit: movetolineend }
-                                { edit: insertstring, value: " --help | bat -l=help" }
+                                { edit: insertstring, value: " --help | bat --plain --paging=always --language=help" }
                                 { send: enter }
                         ]
                 }
+
                 {
                         name: manpage
                         modifier: control
@@ -256,6 +266,7 @@ $env.config = {
                                 { send: enter }
                         ]
                 }
+
                 {
                         name: insert_file
                         modifier: control
@@ -266,6 +277,7 @@ $env.config = {
                                 {send: Enter}
                         ]
                 }
+
                 {
                         name: insert_dir
                         modifier: control
@@ -276,6 +288,7 @@ $env.config = {
                                 cmd: "tmux send-keys $\"(fd --type directory | fzf --preview '^ls --color {}')\""
                         }
                 }
+
                 {
                         name: open_editor
                         modifier: control
@@ -286,6 +299,7 @@ $env.config = {
                                 {send: enter}
                         ]
                 }
+
                 {
                         name: redo_change
                         modifier: shift

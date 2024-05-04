@@ -1374,3 +1374,73 @@ man grep
 man e
 emac s
 ls
+cd 
+ls
+save  --help | bat -l=help
+nu\
+ls
+save --help | bat -pp -l=help
+man bat 
+man save 
+save  --help | bat -p --paging -l=help
+save  --help | bat -p --paging=always -l=help
+save nu
+save  --help | bat -p -l=help
+man bat 
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+save  --help | bat --paging=always --language=help
+keybindings lsit
+keybindings kist
+man 
+keybindings list
+save  --help | bat --paging=always --language=help
+save  --help | bat --paging=always --language=help
+autostart
+ls
+save --help | bat --paging=always --language=help
+man tmux 
+man tmux
+man tmux 
+man tmux
+autostart
+tmux kill-server
+autostart
+nvim
+nvim .bashrc
+ls  --help | bat --plain --paging=always --language=help
+keybindings list
+save  --help | bat --plain --paging=always --language=help
+"print('hello world)'" | save  --help | bat --plain --paging=always --language=help
+"print('hello world)'" | save tmp.py
+ls
+ls tmp.py
+cat tst.py
+cat tmp.py
+python tmp.py
+"print('hello world')" | save tmp.py
+"print('hello world')" | save --force tmp.py
+py tmp.py
+python tmp.py
+cat tmp.py
+man emacsclient 
+emacs --tty
+man emacs
+man emacsclient 
+emacs -nw
+e .bashrc
+e
+e  .bashrc

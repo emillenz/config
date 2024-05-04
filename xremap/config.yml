@@ -6,7 +6,7 @@ virtual_modifiers:
 modmap:
   - name: global
     remap:
-      capslock: menu
+      capslock:
         alone: esc
         held: capslock
         alone_timeout_millis: 200

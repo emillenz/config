@@ -10,8 +10,9 @@
 last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of code.
 
 * preface
-- i use: ~z/~ (lenZ) in user defined functions and variables to distinguish them clearly from package related ones.
+- i use: ~z-~ (lenZ) in user defined functions and variables to distinguish them clearly from package related ones.
 - lazyload packages using ~after!~.  this keeps emacs efficent, since it now only loads the settings & packages when they are actually needed (no emacs bankruptcy).
+- i encourage you to master the tool that you are using.  this means reading the documentation, keybinding cheatsheets for the tools you are using (ex: vertico).  additionally when something is repetetive / unefficcient, look up if there exists a command to do what you need to get done.
 
 * user
 #+begin_src emacs-lisp
@@ -181,11 +182,13 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 
 (map! :leader
       (:prefix "c"
-               "w" #'z/clean-whitespace
+               "w" #'z-clean-whitespace
                "r" #'lsp-rename
                (:prefix-map ("'" . "org-src")
                             "t" #'org-babel-tangle
-                            "T" #'org-babel-detangle)))
+                            "T" #'org-babel-detangle))
+      (:prefix "t"
+               "c" #'global-visual-fill-column-mode))
 #+end_src
 
 ** global navigation scheme
@@ -199,8 +202,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
   - then you can hotkey to that exact file instantly.
   - 3 simultaneous files are enough for all projects, if we enable more, the overhead becomes too large.  (you would't open and manage 5 splits either, would you?)
 - buffers ::
-  - use last-buffer [[kbd:C-^][C-^]]  to alternate/go-back to last and find-buffer [[kbd:M-g][M-g
-]] for pulling up arbitrary buffers
+  - use last-buffer [[kbd:C-^][C-^]]  to alternate/go-back to last and find-buffer.  [[kbd:M-g][M-g]] for pulling up arbitrary buffers
 - efficiency :: they are the most efficient way of navigating between multiple different files/buffer at the same time (most efficient way i have found to introduce little overhead when context-switching and remaining distractionfree)
 - splits :: never create splits for buffers, prefer the full screen, full focus, no distractions - workflow.  (no multitasking, no clutter)
   - when emacs creates splits we must handle them (includes minimal bindings for switching and closing splits)
@@ -233,14 +235,11 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 #+begin_src emacs-lisp
 (setq tab-bar-show nil)
 
-(defadvice! z/ensure-tab (&optional tab-nr)
+(defadvice! z-ensure-tab (&optional tab-nr)
   "when selecting a tab by index, create it, if it doesn't exist yet (efficient & overheadfree)"
   :before #'tab-bar-select-tab
-  (let ((tab-len (length (tab-bar-tabs))))
-    (when (and tab-nr
-               (< tab-len tab-nr))
-      (dotimes (_ (- tab-nr tab-len))
-        (tab-bar-new-tab)))))
+  (when (and tab-nr (< (length (tab-bar-tabs)) tab-nr))
+    (z-ensure-tab (1- tab-nr))))
 #+end_src
 
 ** vim editing
@@ -257,7 +256,7 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
 - avoid splits at all costs and use tabs instead
 - useless default mappings :: remap underused/useless keys to statistically frequently used commands
 - [[kbd:q][q]] :: shortcut to [[kbd:@@][@@]] (def macro with [[kbd:qq][qq]], execute with [[kbd:@q][@q]] in 99% of cases)
-- [[kbd:m][m]] :: save point to jumplist (save pos -> do edits elsewhere -> jump back to saved pos: ~c-o~)
+- [[kbd:m][m]] :: save point to jumplist (save pos -> do edits elsewhere -> jump back to saved pos: [[kbd:c-o][c-o]])
 - this has basically replaced my need for vim's marks as i mostly alternate between two positions for quick edits, and if i need two separate positions.
 - [[kbd:&][&]] :: allows for same usage as normal: [[kbd:&][&]], but more powerful (repeat any last ~ex~ command)
 - [[kbd:tab][tab]] :: folding.  inspired by org-modes folding functionality.  (smart/simple one-key folding))
@@ -266,12 +265,11 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
 - if you know roughly what you are looking for, then use [[kbd:m-x][m-x]] and fuzzy search for the command and it will show you the binding for next time.  fuzzy finding is more efficient.
 - we remove annoying unwanted popup's and reduce visual sugar (=> distractionless, focused workflow).
 - this idea correlates with the insight that you should use a keyboard with blank keycaps.  which will force you to learn to type, without ever taking the focus off the screen.  (reduced context switching, no speed bottleneck, increased continuity).
-- control bindings :: for screen movements and editing
-- [[kbd:c-l][c-l]] does the same as [[kbd:c-l][c-l]] in the shell.  is quicker & more mnemonic than [[kbd:zz][zz]]
+- [[kbd:c-l][c-l]] :: same as [[kbd:c-l][c-l]] in the shell.  is quicker & more mnemonic than [[kbd:zz][zz]].  additionally is consistent with the other screen movement commands ([[kbd:c-u/d][c-u/d..]]) being mapped on the control layer.
 - learn them all (also the one's in insert mode) for seizing vim's full power.
 - managing buffers ::
-- ~save-buffer~ & ~kill-buffer~ are statistically in the same usage-frequency-class as editing commands, and exist fundamentally in all programs in some disguise. => mapped to consisten [[kbd:C-s][C-s]]
-- completion :: select & activate: [[kbd:C-j/k][C-j/k]], superior to [[kbd:TAB][TAB]] since it is faster & to navigate between entries.  confirm/exit: [[kbd:RET][RET]]
+- ~save-buffer~ is frequently used => mapped to system-wide-default: [[kbd:C-s][C-s]]
+- completion :: select & activate: [[kbd:C-j/k][C-j/k]], superior to [[kbd:TAB][TAB]] since it is faster & more ergonomic to navigate between entries.  confirm/exit: [[kbd:RET][RET]]
 
 #+begin_src emacs-lisp
 (map! :inv  "C-s" (cmd! (evil-normal-state) (basic-save-buffer))
@@ -298,18 +296,18 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
       :nv  "go"  #'consult-imenu
       :nv  "g/"  #'+default/search-buffer)
 
-(map! :after minibuffer
-      :map minibuffer-mode-map
+(map! :after minibuffer :map minibuffer-mode-map
       :im "C-j"  #'next-line-or-history-element
       :im "C-k"  #'previous-line-or-history-element)
 
-(map! :after company
-      :map company-mode-map
+(map! :after company :map company-mode-map
       :i "C-j" #'company-complete-common)
+
+(map! :after company :map company-active-map "C-h" nil) ;; HACK :: make c-h work
 #+end_src
 
 #+begin_src emacs-lisp
-(defadvice! z/update-evil-search-reg ()
+(defadvice! z-update-evil-search-reg ()
   "Update evil search register after jumping to a line with
   `+default/search-buffer' to be able to jump to next/prev matches.
 This is sensible default behaviour, and integrates it into evil."
@@ -389,7 +387,7 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "+" #'dired-create-directory)
 
 (map! :map dired-mode-map :localleader :after dired
-      :nm "a" #'z/dired-archive)
+      :nm "a" #'z-dired-archive)
 #+end_src
 
 ** verilog (bindings)
@@ -404,14 +402,15 @@ This is sensible default behaviour, and integrates it into evil."
 - evil-mode :: need it everywhere => enable evil mode in minibuffers.
 - very helpful when editing complex search & replace patterns etc...
 - very-magic-mode :: easier regex, more consistency with other tools & syntax.
+- evil extends vim with useful [[file:~/.config/emacs/modules/editor/evil/README.org][commands & motions]]
 #+begin_src emacs-lisp
 (evil-surround-mode 1)
 
 (setq evil-magic 'very-magic
       evil-want-fine-undo nil
       evil-ex-substitute-global t
-      evil-move-cursor-back t
       evil-want-C-i-jump t
+      evil-want-C-h-delete t
       evil-disable-insert-state-bindings t
       evil-want-minibuffer t
       evil-snipe-scope 'visible)
@@ -464,6 +463,10 @@ This is sensible default behaviour, and integrates it into evil."
 (map! :map minibuffer-mode-map
       :im "C-j" #'next-line-or-history-element
       :im "C-k" #'previous-line-or-history-element)
+
+(map! :map vertico-map
+      :im "C-d" #'consult-dir
+      :im "C-f" #'consult-dir-jump-file)
 #+end_src
 
 ** snippets
@@ -539,15 +542,15 @@ this is automated using a snippet
 - Archive all things that were once written or created by you (instead of deleting them) => digital content cost's little to no space.  And you will be grateful later in life to have recorded data (that can be analyzed & crunched) what you were thinking and how you configured your tools etc...
 - This is a consistent archiving scheme (archive to original path under Archive)
 #+begin_src emacs-lisp
-(defvar z/archive-dir "~/Archive/"
+(defvar z-archive-dir "~/Archive/"
   "User's archive directory.")
 
-(defun z/dired-archive ()
+(defun z-dired-archive ()
   (interactive)
   (let ((files (dired-get-marked-files nil nil)))
     (dolist (f files)
       (let* ((dest (file-name-concat
-                    z/archive-dir
+                    z-archive-dir
                     (file-relative-name f "~/")))
              (dir (file-name-directory dest)))
         (unless (file-exists-p dir)
@@ -619,7 +622,7 @@ In short, 8-char indents make things easier to read, and have the added benefit 
 ** clean whitespace
 - more than 1 empty line is inconsistent and makes things unneccessary hard to read.
 #+begin_src emacs-lisp
-(defun z/clean-whitespace ()
+(defun z-clean-whitespace ()
   "Deletes consecutive empty lines if # > 1, and strips trailing whitespace."
   (interactive)
   (delete-trailing-whitespace)
@@ -882,7 +885,7 @@ In short, 8-char indents make things easier to read, and have the added benefit 
         org-agenda-time-grid nil
         org-capture-use-agenda-date t)
 
-(defadvice! z/add-newline (fn &rest args)
+(defadvice! z-add-newline (fn &rest args)
   "Separate dates in 'org-agenda' with newline."
   :around #'org-agenda-format-date-aligned
   (concat "\n" (apply fn args) ))
@@ -923,17 +926,17 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
 - prepending :: if recent item's are of higher relevance
 - appending :: for hierarchical order eg. book-quotes ordered from begin -> end
       #+begin_src emacs-lisp
-(defvar z/org-literature-dir "~/Documents/literature/notes/")
+(defvar z-org-literature-dir "~/Documents/literature/notes/")
 
-(defvar z/org-journal-dir (file-name-concat "~/Documents/journal/"))
+(defvar z-org-journal-dir (file-name-concat "~/Documents/journal/"))
 
-(defun z/doct-journal-file (&optional time)
+(defun z-doct-journal-file (&optional time)
   "TIME :: time in day of note to return. (default: today)"
-  (file-name-concat z/org-journal-dir
+  (file-name-concat z-org-journal-dir
                     (format "%s_journal.org"
                             (format-time-string "%F" (or time (current-time))))))
 
-(defvar z/doct-projects
+(defvar z-doct-projects
   '(("cs" :keys "c" :children
      (("pp" :keys "p")
       ("as1" :keys "a")
@@ -943,25 +946,25 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
     ("config" :keys "f")
     ("compass" :keys "o")))
 
-(defun z/doct-projects-file (type path)
+(defun z-doct-projects-file (type path)
   "TYPE :: [ 'agenda, 'notes ]"
   (file-name-concat org-directory
                     path
                     (format "%s.org" (symbol-name type))))
 
-(defun z/doct-task-template (path)
+(defun z-doct-task-template (path)
   (list "task"
         :keys "t"
-        :file (z/doct-projects-file 'agenda path)
+        :file (z-doct-projects-file 'agenda path)
         :headline "inbox"
         :prepend t
         :empty-lines-after 1
         :template '("* [ ] %^{title}%?")))
 
-(defun z/doct-event-template (path)
+(defun z-doct-event-template (path)
   (list "event"
         :keys "e"
-        :file (z/doct-projects-file 'agenda path)
+        :file (z-doct-projects-file 'agenda path)
         :headline "events"
         :prepend t
         :empty-lines-after 1
@@ -973,10 +976,10 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
                     ":material: %^{material}"
                     ":END:")))
 
-(defun z/doct-note-template (path)
+(defun z-doct-note-template (path)
   (list "note"
         :keys "n"
-        :file (z/doct-projects-file 'notes path)
+        :file (z-doct-projects-file 'notes path)
         :prepend t
         :empty-lines 1
         :template '("* %^{title} %^g"
@@ -985,7 +988,7 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
                     ":END:"
                     "%?")))
 
-(defun z/doct-expand-projects (&optional projects parent-path)
+(defun z-doct-expand-projects (&optional projects parent-path)
   "PROJECTS :: nil | used for recursion
     PARENT-PATH :: nil | used for recursion"
   (mapcar (lambda (project)
@@ -997,23 +1000,23 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
                    (path (file-name-concat parent-path tag)))
               (append self
                       (if children
-                          (list :children (append (z/doct-expand-projects children ;; NOTE :: don't create subdir again for parent-project
+                          (list :children (append (z-doct-expand-projects children ;; NOTE :: don't create subdir again for parent-project
                                                                           path)
-                                                  (z/doct-expand-projects (list self)
+                                                  (z-doct-expand-projects (list self)
                                                                           nil)))
-                        (list :children (list (z/doct-task-template path)
-                                              (z/doct-event-template path)
-                                              (z/doct-note-template path)))))
+                        (list :children (list (z-doct-task-template path)
+                                              (z-doct-event-template path)
+                                              (z-doct-note-template path)))))
               ))
           (or projects
-              z/doct-projects)))
+              z-doct-projects)))
 
 (setq org-capture-templates
-      (doct `(,@(z/doct-expand-projects)
+      (doct `(,@(z-doct-expand-projects)
 
               ("journal"
                :keys "j"
-               :file (lambda () (z/doct-journal-file))
+               :file (lambda () (z-doct-journal-file))
                :title (lambda () (downcase (format-time-string "daily note: %A, %e. %B %Y")))
                :children (("journal init"
                            :keys "j"
@@ -1045,7 +1048,7 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
                            :keys "y"
                            :unnarrowed t
                            :file (lambda ()
-                                   (z/doct-journal-file (time-subtract (current-time)
+                                   (z-doct-journal-file (time-subtract (current-time)
                                                                        (days-to-time 1))))
                            :template ("* gratitude"
                                       "- %?"
@@ -1055,10 +1058,10 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
 
               ("literature"
                :keys "l"
-               :file (lambda () (read-file-name "file: " z/org-literature-dir))
+               :file (lambda () (read-file-name "file: " z-org-literature-dir))
                :children (("to read"
                            :keys "r"
-                           :file ,(file-name-concat z/org-literature-dir "readlist.org")
+                           :file ,(file-name-concat z-org-literature-dir "readlist.org")
                            :prepend t
                            :template ("* [ ] %^{title}%? %^g"))
 
@@ -1070,7 +1073,7 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
                                                   " " "_"
                                                   (read-from-minibuffer "short title: "))
                                                  ".org")))
-                                     (file-name-concat z/org-literature-dir
+                                     (file-name-concat z-org-literature-dir
                                                        name)))
                            :type plain
                            :template ("#+title:  %^{full title}"

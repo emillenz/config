@@ -131,11 +131,13 @@
 
 (map! :leader
       (:prefix "c"
-               "w" #'z/clean-whitespace
+               "w" #'z-clean-whitespace
                "r" #'lsp-rename
                (:prefix-map ("'" . "org-src")
                             "t" #'org-babel-tangle
-                            "T" #'org-babel-detangle)))
+                            "T" #'org-babel-detangle))
+      (:prefix "t"
+               "c" #'global-visual-fill-column-mode))
 ;; leader:1 ends here
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:1]]
@@ -162,14 +164,11 @@
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:2]]
 (setq tab-bar-show nil)
 
-(defadvice! z/ensure-tab (&optional tab-nr)
+(defadvice! z-ensure-tab (&optional tab-nr)
   "when selecting a tab by index, create it, if it doesn't exist yet (efficient & overheadfree)"
   :before #'tab-bar-select-tab
-  (let ((tab-len (length (tab-bar-tabs))))
-    (when (and tab-nr
-               (< tab-len tab-nr))
-      (dotimes (_ (- tab-nr tab-len))
-        (tab-bar-new-tab)))))
+  (when (and tab-nr (< (length (tab-bar-tabs)) tab-nr))
+    (z-ensure-tab (1- tab-nr))))
 ;; global navigation scheme:2 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:1]]
@@ -197,18 +196,18 @@
       :nv  "go"  #'consult-imenu
       :nv  "g/"  #'+default/search-buffer)
 
-(map! :after minibuffer
-      :map minibuffer-mode-map
+(map! :after minibuffer :map minibuffer-mode-map
       :im "C-j"  #'next-line-or-history-element
       :im "C-k"  #'previous-line-or-history-element)
 
-(map! :after company
-      :map company-mode-map
+(map! :after company :map company-mode-map
       :i "C-j" #'company-complete-common)
+
+(map! :after company :map company-active-map "C-h" nil) ;; HACK :: make c-h work
 ;; vim editing:1 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:2]]
-(defadvice! z/update-evil-search-reg ()
+(defadvice! z-update-evil-search-reg ()
   "Update evil search register after jumping to a line with
   `+default/search-buffer' to be able to jump to next/prev matches.
 This is sensible default behaviour, and integrates it into evil."
@@ -269,7 +268,7 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "+" #'dired-create-directory)
 
 (map! :map dired-mode-map :localleader :after dired
-      :nm "a" #'z/dired-archive)
+      :nm "a" #'z-dired-archive)
 ;; dired (keybindings):1 ends here
 
 ;; [[file:config.org::*verilog (bindings)][verilog (bindings):1]]
@@ -284,8 +283,8 @@ This is sensible default behaviour, and integrates it into evil."
 (setq evil-magic 'very-magic
       evil-want-fine-undo nil
       evil-ex-substitute-global t
-      evil-move-cursor-back t
       evil-want-C-i-jump t
+      evil-want-C-h-delete t
       evil-disable-insert-state-bindings t
       evil-want-minibuffer t
       evil-snipe-scope 'visible)
@@ -329,6 +328,10 @@ This is sensible default behaviour, and integrates it into evil."
 (map! :map minibuffer-mode-map
       :im "C-j" #'next-line-or-history-element
       :im "C-k" #'previous-line-or-history-element)
+
+(map! :map vertico-map
+      :im "C-d" #'consult-dir
+      :im "C-f" #'consult-dir-jump-file)
 ;; completion:1 ends here
 
 ;; [[file:config.org::*snippets][snippets:1]]
@@ -373,15 +376,15 @@ This is sensible default behaviour, and integrates it into evil."
 ;; dired:1 ends here
 
 ;; [[file:config.org::*Archive file][Archive file:1]]
-(defvar z/archive-dir "~/Archive/"
+(defvar z-archive-dir "~/Archive/"
   "User's archive directory.")
 
-(defun z/dired-archive ()
+(defun z-dired-archive ()
   (interactive)
   (let ((files (dired-get-marked-files nil nil)))
     (dolist (f files)
       (let* ((dest (file-name-concat
-                    z/archive-dir
+                    z-archive-dir
                     (file-relative-name f "~/")))
              (dir (file-name-directory dest)))
         (unless (file-exists-p dir)
@@ -426,7 +429,7 @@ This is sensible default behaviour, and integrates it into evil."
 ;; indentation:1 ends here
 
 ;; [[file:config.org::*clean whitespace][clean whitespace:1]]
-(defun z/clean-whitespace ()
+(defun z-clean-whitespace ()
   "Deletes consecutive empty lines if # > 1, and strips trailing whitespace."
   (interactive)
   (delete-trailing-whitespace)
@@ -604,7 +607,7 @@ This is sensible default behaviour, and integrates it into evil."
         org-agenda-time-grid nil
         org-capture-use-agenda-date t)
 
-(defadvice! z/add-newline (fn &rest args)
+(defadvice! z-add-newline (fn &rest args)
   "Separate dates in 'org-agenda' with newline."
   :around #'org-agenda-format-date-aligned
   (concat "\n" (apply fn args) ))
@@ -627,17 +630,17 @@ This is sensible default behaviour, and integrates it into evil."
 ;; clock:1 ends here
 
 ;; [[file:config.org::*capture templates][capture templates:1]]
-(defvar z/org-literature-dir "~/Documents/literature/notes/")
+(defvar z-org-literature-dir "~/Documents/literature/notes/")
 
-(defvar z/org-journal-dir (file-name-concat "~/Documents/journal/"))
+(defvar z-org-journal-dir (file-name-concat "~/Documents/journal/"))
 
-(defun z/doct-journal-file (&optional time)
+(defun z-doct-journal-file (&optional time)
   "TIME :: time in day of note to return. (default: today)"
-  (file-name-concat z/org-journal-dir
+  (file-name-concat z-org-journal-dir
                     (format "%s_journal.org"
                             (format-time-string "%F" (or time (current-time))))))
 
-(defvar z/doct-projects
+(defvar z-doct-projects
   '(("cs" :keys "c" :children
      (("pp" :keys "p")
       ("as1" :keys "a")
@@ -647,25 +650,25 @@ This is sensible default behaviour, and integrates it into evil."
     ("config" :keys "f")
     ("compass" :keys "o")))
 
-(defun z/doct-projects-file (type path)
+(defun z-doct-projects-file (type path)
   "TYPE :: [ 'agenda, 'notes ]"
   (file-name-concat org-directory
                     path
                     (format "%s.org" (symbol-name type))))
 
-(defun z/doct-task-template (path)
+(defun z-doct-task-template (path)
   (list "task"
         :keys "t"
-        :file (z/doct-projects-file 'agenda path)
+        :file (z-doct-projects-file 'agenda path)
         :headline "inbox"
         :prepend t
         :empty-lines-after 1
         :template '("* [ ] %^{title}%?")))
 
-(defun z/doct-event-template (path)
+(defun z-doct-event-template (path)
   (list "event"
         :keys "e"
-        :file (z/doct-projects-file 'agenda path)
+        :file (z-doct-projects-file 'agenda path)
         :headline "events"
         :prepend t
         :empty-lines-after 1
@@ -677,10 +680,10 @@ This is sensible default behaviour, and integrates it into evil."
                     ":material: %^{material}"
                     ":END:")))
 
-(defun z/doct-note-template (path)
+(defun z-doct-note-template (path)
   (list "note"
         :keys "n"
-        :file (z/doct-projects-file 'notes path)
+        :file (z-doct-projects-file 'notes path)
         :prepend t
         :empty-lines 1
         :template '("* %^{title} %^g"
@@ -689,7 +692,7 @@ This is sensible default behaviour, and integrates it into evil."
                     ":END:"
                     "%?")))
 
-(defun z/doct-expand-projects (&optional projects parent-path)
+(defun z-doct-expand-projects (&optional projects parent-path)
   "PROJECTS :: nil | used for recursion
     PARENT-PATH :: nil | used for recursion"
   (mapcar (lambda (project)
@@ -701,23 +704,23 @@ This is sensible default behaviour, and integrates it into evil."
                    (path (file-name-concat parent-path tag)))
               (append self
                       (if children
-                          (list :children (append (z/doct-expand-projects children ;; NOTE :: don't create subdir again for parent-project
+                          (list :children (append (z-doct-expand-projects children ;; NOTE :: don't create subdir again for parent-project
                                                                           path)
-                                                  (z/doct-expand-projects (list self)
+                                                  (z-doct-expand-projects (list self)
                                                                           nil)))
-                        (list :children (list (z/doct-task-template path)
-                                              (z/doct-event-template path)
-                                              (z/doct-note-template path)))))
+                        (list :children (list (z-doct-task-template path)
+                                              (z-doct-event-template path)
+                                              (z-doct-note-template path)))))
               ))
           (or projects
-              z/doct-projects)))
+              z-doct-projects)))
 
 (setq org-capture-templates
-      (doct `(,@(z/doct-expand-projects)
+      (doct `(,@(z-doct-expand-projects)
 
               ("journal"
                :keys "j"
-               :file (lambda () (z/doct-journal-file))
+               :file (lambda () (z-doct-journal-file))
                :title (lambda () (downcase (format-time-string "daily note: %A, %e. %B %Y")))
                :children (("journal init"
                            :keys "j"
@@ -749,7 +752,7 @@ This is sensible default behaviour, and integrates it into evil."
                            :keys "y"
                            :unnarrowed t
                            :file (lambda ()
-                                   (z/doct-journal-file (time-subtract (current-time)
+                                   (z-doct-journal-file (time-subtract (current-time)
                                                                        (days-to-time 1))))
                            :template ("* gratitude"
                                       "- %?"
@@ -759,10 +762,10 @@ This is sensible default behaviour, and integrates it into evil."
 
               ("literature"
                :keys "l"
-               :file (lambda () (read-file-name "file: " z/org-literature-dir))
+               :file (lambda () (read-file-name "file: " z-org-literature-dir))
                :children (("to read"
                            :keys "r"
-                           :file ,(file-name-concat z/org-literature-dir "readlist.org")
+                           :file ,(file-name-concat z-org-literature-dir "readlist.org")
                            :prepend t
                            :template ("* [ ] %^{title}%? %^g"))
 
@@ -774,7 +777,7 @@ This is sensible default behaviour, and integrates it into evil."
                                                   " " "_"
                                                   (read-from-minibuffer "short title: "))
                                                  ".org")))
-                                     (file-name-concat z/org-literature-dir
+                                     (file-name-concat z-org-literature-dir
                                                        name)))
                            :type plain
                            :template ("#+title:  %^{full title}"

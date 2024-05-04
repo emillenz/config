@@ -274,13 +274,8 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
 - completion :: select & activate: [[kbd:C-j/k][C-j/k]], superior to [[kbd:TAB][TAB]] since it is faster & to navigate between entries.  confirm/exit: [[kbd:RET][RET]]
 
 #+begin_src emacs-lisp
-<<<<<<< Updated upstream
-(map! :inv "C-s" #'basic-save-buffer
-      :n   "C-l" #'recenter-top-bottom
-=======
 (map! :inv  "C-s" (cmd! (evil-normal-state) (basic-save-buffer))
       :nm   "C-l" #'recenter-top-bottom
->>>>>>> Stashed changes
 
       :nvo "j"   #'evil-next-visual-line
       :nvo "k"   #'evil-previous-visual-line

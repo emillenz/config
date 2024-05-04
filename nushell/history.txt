@@ -1363,3 +1363,14 @@ nu
 bash
 ls 
 >>>>>>> Stashed changes
+keybindings list
+ls
+grep --help | bat --plain --paging always --language help
+grep -h | bat -l=help
+grep --help | bat -l=help
+ls  --help | bat -l=help
+ls 
+man grep 
+man e
+emac s
+ls

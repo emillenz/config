@@ -195,20 +195,17 @@ $env.config = {
 
         keybindings: [
                 {
-<<<<<<< Updated upstream
-                name: completion_menu
-                modifier: control
-                keycode: char_j
-                mode: vi_insert
-                event: {
-                        until: [
-                                {send: menu name: completion_menu}
-                                {send: menunext}
-=======
-                        name: completion_next
+                        name: kill_upto_start
+                        modifier: control
+                        keycode: char_u
+                        mode: vi_insert
+                        event: {edit: cutfromstart}
+                }
+                {
+                        name: completion_menu
                         modifier: control
                         keycode: char_j
-                        mode: [vi_insert, vi_normal]
+                        mode: vi_insert
                         event: {
                                 until: [
                                         {send: menu name: completion_menu}
@@ -216,123 +213,85 @@ $env.config = {
                                 ]
                         }
                 }
-
                 {
                         name: completion_prev
                         modifier: control
                         keycode: char_k
-                        mode: [vi_insert, vi_normal]
+                        mode: vi_insert
                         event: {send: menuprevious}
                 }
-
                 {
                         name: complete_hint
                         modifier: none
                         keycode: tab
-                        mode: [vi_normal vi_insert]
+                        mode: vi_insert
                         event: {send: historyhintcomplete}
                 }
-
                 {
                         name: recent_cmds_menu
                         modifier: control
                         keycode: char_r
-                        mode: [vi_normal vi_insert]
+                        mode: vi_insert
                         event: {send: menu name: recent_cmds_menu}
                 }
-
+                {
+                        name: tldr
+                        modifier: control
+                        keycode: char_t
+                        mode: [vi_normal vi_insert]
+                        event: [
+                                { edit: movetolineend }
+                                { edit: insertstring, value: " --help | bat -l=help" }
+                                { send: enter }
+                        ]
+                }
+                {
+                        name: manpage
+                        modifier: control
+                        keycode: char_p
+                        mode: [vi_normal vi_insert]
+                        event: [
+                                { edit: movetolinestart }
+                                { edit: insertstring, value: "man " }
+                                { send: enter }
+                        ]
+                }
                 {
                         name: insert_file
                         modifier: control
                         keycode: char_f
-                        mode: [vi_normal, vi_insert]
+                        mode: vi_insert
                         event: [
                                 {send: executehostcommand, cmd: "tmux send-keys $\"(fd --type file . | fzf --preview 'bat {}')\""}, # # NOTE :: terrible hack, but atm there is no other way to eval an expression at runtim and then insert the result
                                 {send: Enter}
->>>>>>> Stashed changes
                         ]
                 }
-                }
-
                 {
-                name: complete_hint
-                modifier: none
-                keycode: tab
-                mode: [vi_normal vi_insert]
-                event: {send: historyhintcomplete}
+                        name: insert_dir
+                        modifier: control
+                        keycode: char_g
+                        mode: vi_insert
+                        event: {
+                                send: executehostcommand,
+                                cmd: "tmux send-keys $\"(fd --type directory | fzf --preview '^ls --color {}')\""
+                        }
                 }
-
                 {
-                name: recent_cmds_menu
-                modifier: control
-                keycode: char_r
-                mode: [vi_normal vi_insert]
-                event: {send: menu name: recent_cmds_menu}
+                        name: open_editor
+                        modifier: control
+                        keycode: char_e
+                        mode: [vi_normal vi_insert]
+                        event: [
+                                {send: openeditor}
+                                {send: enter}
+                        ]
                 }
-
                 {
-                name: insert_file
-                modifier: control
-                keycode: char_f
-                mode: [vi_normal, vi_insert]
-                event: [
-                        {send: executehostcommand, cmd: "tmux send-keys $\"(fd --type file . | fzf --preview 'bat {}')\""}, # # NOTE :: terrible hack, but atm there is no other way to eval an expression at runtim and then insert the result
-                        {send: Enter}
-                ]
-                }
-
-                {
-                name: help
-                modifier: control
-                keycode: char_h
-                mode: [vi_normal vi_insert]
-                event: [
-                        { edit: movetolineend }
-                        { edit: insertstring, value: " --help | bat --plain --paging always --language help" }
-                        { send: enter }
-                ]
-                }
-
-                {
-                name: womanpage
-                modifier: control
-                keycode: char_w
-                mode: [vi_normal vi_insert]
-                event: [
-                        { edit: movetolinestart }
-                        { edit: insertstring, value: "man " }
-                        { send: enter }
-                ]
-                }
-
-                {
-                name: insert_dir
-                modifier: control
-                keycode: char_g
-                mode: [vi_normal, vi_insert]
-                event: {
-                        send: executehostcommand,
-                        cmd: "tmux send-keys $\"(fd --type directory | fzf --preview '^ls --color {}')\""
-                }
-                }
-
-                {
-                name: open_editor
-                modifier: control
-                keycode: char_e
-                mode: [vi_normal vi_insert]
-                event: [
-                        {send: openeditor}
-                        {send: enter}
-                ]
-                }
-
-                {
-                name: redo_change
-                modifier: shift
-                keycode: char_u
-                mode: vi_normal
-                event: {edit: redo}
+                        name: redo_change
+                        modifier: shift
+                        keycode: char_u
+                        mode: vi_normal
+                        event: {edit: redo}
                 }
         ]
 }

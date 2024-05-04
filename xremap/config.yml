@@ -1,76 +1,68 @@
 # [[file:config.org::*src][src:1]]
 # note :: unused keys
 virtual_modifiers:
-  - menu
+  - capslock
 
 modmap:
   - name: global
     remap:
-      capslock:
-        alone: backspace
-        held: menu
-        alone_timeout_millis: 200
-      backspace: capslock
-      alt_l: super_l
-      alt_r:
+      capslock: menu
         alone: esc
-        held: alt_r
+        held: capslock
         alone_timeout_millis: 200
+      alt_l: super_l
 
 keymap:
   - name: browser
     application:
       only: firefox
     remap:
+      # NAVIGATION
       M-t: c-t
       M-q: c-w
-      M-i: home
-      M-a: end
-      M-e: c-right
-      M-b: c-left
-      M-h: left
-      M-l: right
-      M-j: down
-      M-k: up
-      M-d: c-delete
-      M-x: delete
-      M-o: [end, enter]
+      # EDITING
+      C-h: backspace
+      C-w: c-backspace
+      C-u: [shift-home, delete]
+      # COMPLETION
+      C-j: down
+      C-k: up
 
   - name: symlayer
     remap:
-      menu-q: apostrophe
-      menu-w: shift-comma
-      menu-e: shift-dot
-      menu-r: shift-apostrophe
-      menu-t: grave
+      capslock-q: apostrophe
+      capslock-w: shift-comma
+      capslock-e: shift-dot
+      capslock-r: shift-apostrophe
+      capslock-t: grave
 
-      menu-a: shift-key_1
-      menu-s: shift-equal
-      menu-d: equal
-      menu-f: minus
-      menu-g: shift-key_3
+      capslock-a: shift-key_1
+      capslock-s: shift-equal
+      capslock-d: equal
+      capslock-f: minus
+      capslock-g: shift-key_3
 
-      menu-x: shift-key_6
-      menu-c: shift-key_8
-      menu-v: slash
-      menu-b: backslash
+      capslock-x: shift-key_6
+      capslock-c: shift-key_8
+      capslock-v: slash
+      capslock-b: backslash
 
-      menu-y: shift-key_7
-      menu-h: shift-backslash
-      menu-n: shift-grave
+      capslock-y: shift-key_7
+      capslock-h: shift-backslash
+      capslock-n: shift-grave
 
-      menu-u: shift-semicolon
-      menu-j: shift-minus
-      menu-m: shift-key_4
+      capslock-u: shift-semicolon
+      capslock-j: shift-minus
+      capslock-m: shift-key_4
 
-      menu-i: leftbrace
-      menu-o: rightbrace
-      menu-k: shift-key_9
-      menu-l: shift-key_0
-      menu-comma: shift-leftbrace
-      menu-dot: shift-rightbrace
+      capslock-i: leftbrace
+      capslock-o: rightbrace
+      capslock-k: shift-key_9
+      capslock-l: shift-key_0
+      capslock-comma: shift-leftbrace
+      capslock-dot: shift-rightbrace
 
-      menu-p: shift-key_2
-      menu-semicolon: shift-slash
-      menu-slash: shift-key_5
+      capslock-p: shift-key_2
+      capslock-semicolon: shift-slash
+      capslock-slash: shift-key_5
 # src:1 ends here

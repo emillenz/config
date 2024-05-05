@@ -17,14 +17,19 @@ sudo pacman -Syyu
 * core tools
 ** terminal, nushell
 #+begin_src sh
-yay --noconfirm --sync alacritty curl libtool fzf fd ripgrep xclip xdg-utils cmake bat git gcc make xdotool tldr htop fish ttf-iosevka-nerd nushell tmux
+yay --noconfirm --sync alacritty curl libtool fzf fd ripgrep xclip xdg-utils cmake bat git gcc make xdotool htop fish ttf-iosevka-nerd tmux
 #+end_src
 
-set nushell to loginshell
 #+begin_src sh
-sudo chsh --shell /usr/bin/nu root
-chsh --shell /usr/bin/nu
+sudo chsh --shell /usr/bin/fish root
+chsh --shell /usr/bin/fish
 #+end_src
+
+*** fish shell
+#+begin_src sh
+fisher install jorgebucaran/autopair.fish patrickf1/fzf.fish
+#+end_src
+
 
 ** never sudo-password-prompt
 - neccessarry for the [[file:bin/autostart][autostart]] script

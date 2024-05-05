@@ -1,29 +1,26 @@
-#!/usr/bin/env nu
-
-use utils.nu
-
+#!/usr/bin/env fish
 # -----
 # title:    audioselect
 # author:   emil lenz
 # email:    emillenz@protonmail.com
 # date:     2023-08-07
-# info:
-#   - lets you select the default audio output channel
-#   - dependencies ::
-#     - pactl
-#     - rofi
-#     - dunst
 # -----
-def main [] {
-        let icon = "󱀞"
-        let sinks = (pactl --format json list sinks | from json)
-        let choice = (utils rofi $sinks.description "sink" $icon)
-        let sink = ($sinks | where description == $choice)
-        pactl set-default-sink $sink.name.0
 
-        let sink_inputs =  (pactl -f json list sink-inputs | from json)
-        for s in $sink_inputs {
-                pactl move-sink-input $s.index $sink.name.0
-        }
-        dunstify $"($icon)  audio" $"changed output\n($choice)"
-}
+function main
+    set -l icon "󱀞"
+    set -l sinks (pactl --format json list sinks)
+    set -l choice (echo $sinks | jq '.[] | .description' | rofi -dmenu -i -no-custom -p "$icon  audio :: " )
+    if test -z $choice
+        exit 1
+    end
+    set -l sink (echo $sinks | jq ".[] | select(.description == $choice) | .name")
+    pactl set-default-sink $sink
+
+    set -l sink_ids (pactl -f json list sink-inputs | jq ".[] | .index")
+    for id in $sink_ids
+        pactl move-sink-input $id $sink
+    end
+    dunstify "$icon  audio" "changed output\n$choice"
+end
+
+main

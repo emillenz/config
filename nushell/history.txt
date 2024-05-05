@@ -1444,3 +1444,419 @@ emacs -nw
 e .bashrc
 e
 e  .bashrc
+ls
+rm tmp.py
+emacs -nw
+emacs --deb --help | bat --plain --paging=always --language=help
+emacs --debug-init
+emacs -nw
+nu
+emacs FNW
+autostart
+emacs -nw
+e
+nvim
+wmctlr --help | bat --plain --paging=always --language=help
+wmctrl
+wmctrl --help | bat --plain --paging=always --language=help
+wmctrl -xl
+man parse 
+parse  --help | bat --plain --paging=always --language=help
+keybindings list
+/
+cd 
+keybindings default
+ls
+man 
+man man 
+bash
+autostart
+parse --help | bat --plain --paging=always --language=help
+bat  --help | bat --plain --paging=always --language=help
+bat  --help | bat --style=plain --paging=always --language=help
+parse --help | bat --style=plain --paging=always --language=help
+parse  --help | bat --plain --paging=always --language=help
+parse  --help | bat --plain --language=help
+man bat 
+batgrep
+yay batgrep
+man man
+yay bat-extra
+yay -Syyu bat-extras
+man bat 
+bat --help | bat --style=auto 
+bat --help | bat --style=plain,header
+bat --help | bat --style=grid
+bat --help | bat --style=numbers
+man bat 
+ls
+batgrep
+bat  --help | bat --language=help
+man bat 
+bat  --help | bat --language=help
+man less
+yay electron
+yay -Qs electrol\
+yay -Qs electron
+yay -Qs electron | lines
+yay -R electron electron22 electron25 electron28
+pacman -Sy
+sudo!!
+yay -Sy
+yay bat- --help | bat --language=help
+yay bat-extra
+batman
+batman
+batman --help | bat --language=help
+batman --config=~/.config/bat
+batman --config-file=~/.config/bat
+batman 
+man bat 
+batman
+batman grep
+batgrep sync
+with-env  --help | bat --language=help
+batgrep 
+rg sync | bat
+batgrep sync 
+man bat
+nui
+batman grep
+man bat
+batgrep sy
+man bat
+batgrep sy
+rg sy
+rg  sync ~/Documents
+rg  sync ~/Documents | bat
+batgrep  sync ~/Documents 
+rg  sync ~/Documents 
+ls
+man emacs 
+man emacs
+emacs  --help | bat --language=help
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+ls --help | bat --language=help
+grep --help | bat --language=help
+rg
+man rg
+autostart
+man 
+man emacs -e rg 
+emacs --eval="rg"
+emacs --eval='(man "rg")'
+emacs -nw --eval='(man "rg")'
+man emac s
+man emacs
+emacs  --help | bat --language=help
+ls
+rg  sync ~/Documents | cat
+rg  sync ~/Documents | lees
+rg  sync ~/Documents | bat
+rg  sync ~/Documents 
+rg  sync ~/Documents | less
+rg  sync ~/Documents 
+ls
+rg  sync ~/Documents 
+with-env [BAT_THEME ansi] {batman }
+with-env {BAT_STYLE: "full"} {batman rg}
+with-env [BAT_STYLE "full"] {batman rg}
+with-env --help | bat --language=help
+with-env [BAT_STYLE "plain"] {batman rg}
+man bat 
+batman --language=man man
+yay -R bat-extras
+bat  --help | bat --language=help
+ls
+ls | bat
+ls
+asdlkfj
+keybindings list
+ls
+keybindings list
+ls 
+grep ass
+rg ass
+cd Documents/
+cd ..
+cd Documents/
+ls
+$env.config
+$env.config.hooks
+ls
+cd ..
+ls
+cd Documents/
+cd ..
+cd Documents/
+ls
+cd ..
+nui
+ls
+cd Documents/
+ls
+cd ..
+ls
+ls  --help | bat --language=help
+rg ass
+ls  --help | bat --language=help
+rg ass
+man bat 
+man nman 
+rg ass
+rg ass | bat
+table --help | bat --language=help
+rg ass
+ps 
+ps
+cd Documents/
+rg ass | bat 
+fd ass | bat 
+fd ass 
+ls
+nu
+emacs  --help | bat --language=help
+keybindings list
+xclip
+xclip --help | bat --language=help
+xclip -h| bat --language=help
+xclip -h | bat --language=help
+xclip
+xclip -h
+xclip -o
+batman 
+ls
+man man
+man  --help | bat --language=help
+yay fish
+ls
+ls -la
+cd Pictures/albums/
+man bat 
+fish
+ls
+ls -las
+man ls 
+ls
+ls -lla
+ls -la
+fish /
+keybindings list
+open
+open .bashrc
+help open 
+help load
+ls
+Code/go/hello_world.go
+ls
+ll
+ls
+ls | get name
+ls
+l
+help ls 
+ls --all --
+ls -l
+ls -la
+cd (fd --type directory | fzf --preview '^ls --color {}')
+cd 
+ls
+man ls -la 
+man man ls -la 
+man man man ls -la 
+man man man 
+man man
+man man 
+keybindings list 
+fish
+ls
+nu
+man 
+ls
+man en 
+man rg 
+man nu 
+man rg 
+man
+:w
+man man 
+(fzf (open ~/.config/nushell/history.txt))
+fzf (open ~/.config/nushell/history.txt)
+open ~/.config/nushell/history.txt
+open ~/.config/nushell/history.txt | fzf
+to text 
+open ~/.config/nushell/history.txt | lines | uniq
+open ~/.config/nushell/history.txt | lines | uniq | to tex 
+open ~/.config/nushell/history.txt | lines | uniq | to text
+man fzf 
+man fzf
+keybindings list 
+rg ass  out> | bat
+rg ass out>| bat
+rg ass o>| bat
+rg ass o>| less
+rg ass >| bat
+fd ass >| bat
+fd ass o>| bat
+fd ass o>| tmp.txt
+fd ass o+e>| tmp.txt
+fd ass o> tmp.txt
+cat tmp.txt
+rm tmp.txt
+ls
+man rm 
+help rm
+help ^rm
+sudo su
+cd /
+cd
+cd .local/
+ls
+ls tmp.txt
+cat tmp.txt
+*bat Code/tmp/asm.c
+print $"(open --raw ~/.config/nushell/history.txt | lines | uniq | to text | fzf)"
+print $"[(open --raw ~/.config/nushell/history.txt | lines | uniq | to text | fzf)]"
+print $"[(open --raw ~/.config/nushell/history.txt | lines | uniq | to text | fzf | str trim)]"
+fd 
+print $"[(open --raw ~/.config/nushell/history.txt | ^uniq | fzf | str trim)]"
+man ^uniq
+man uniq
+"a\na" | ^uniq
+open --raw ~/.config/nushell/history.txt | uniq | fzf | str trim
+open ~/.config/nushell/history.txt | uniq | fzf | str trim
+open ~/.config/nushell/history.txt | uniq | to text | fzf | str trim
+open --raw ~/.config/nushell/history.txt | uniq | to text | fzf | str trim
+open ~/.config/nushell/history.txt 
+open ~/.config/nushell/history.txt | ^uniq
+open ~/.config/nushell/history.txt | ^uniq | rg ls
+open 
+help open
+man read
+open  --help | bat --language help
+ls
+ls Code/go/hello_world.go
+systemctl enable bluetooth
+ls
+cd 
+fih
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+fish 
+fish
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+fish
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+nu
+autostart
+systemctl enable bluetooth
+l
+auostart
+autostart
+ls
+ls -la
+ls -ll
+man pgrep 
+man black 
+black -h
+cd .config
+ls
+_autostart
+fish
+ls -)a
+ls -la
+ls -)a
+ls -la
+-ls -la
+ls -la
+ls -l
+bru
+ls 
+ls -)a
+ls -la
+ls
+ls -)a
+ls -la
+ls -)a
+ls -la
+fish
+ls
+ls -la
+autostat
+autostart
+cls
+ls
+hello world asshoel  
+fish
+ls -la
+exit
+man pactl
+fish
+ish
+fish
+function tmp; echo $argv[1] end
+ls
+man man
+ls

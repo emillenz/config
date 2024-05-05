@@ -32,7 +32,7 @@ multiplier = 10
 save_to_clipboard = true
 
 [shell]
-program = "/usr/bin/nu"
+program = "/usr/bin/fish"
 args = ["--login"]
 
 [window]

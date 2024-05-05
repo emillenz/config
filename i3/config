@@ -6,8 +6,7 @@
 # ---
 
 # ALIASES
-set $rofi_file rofi -dmenu -i -no-custom -p '  find-file ::'
-set $rofi_display rofi -dmenu -i -no-custom -p '󰍹  display-layout ::'
+set $rofi rofi -dmenu -i -no-custom -p
 set $esc ; mode "default"
 set $bin ~/.config/bin
 set $mv move container to workspace
@@ -116,15 +115,12 @@ $map $mod+a workspace $ws_assistant
 $map $mod+shift+a $mv $ws_assistant; workspace $ws_assistant
 for_window [class="(?i)firefox" title="(?i)chatgpt"] $mv $ws_assistant, focus
 
-<<<<<<< Updated upstream
-=======
 set $ws_music "music"
 workspace $ws_music output primary
 $map $mod+m workspace $ws_music
 $map $mod+shift+m $mv $ws_music; workspace $ws_music
 for_window [class="(?i)firefox" title="(?i)spotify"] $mv $ws_music, focus
 
->>>>>>> Stashed changes
 $map $mod+1       workspace 1
 $map $mod+shift+1 $mv 1; workspace 1
 $map $mod+2       workspace 2
@@ -141,16 +137,17 @@ mode "open" {
         $map $mod+e       $cmd emacsclient --reuse-frame || emacs --daemon && emacsclient --reuse-frame $esc
         $map $mod+v       $cmd mpv "$(xclip -o)" $esc
         $map $mod+a       $cmd firefox --new-window https://chat.openai.com $esc
+        $map $mod+m       $cmd firefox --new-window https://spotify.com $esc
         $map $mod+w       $cmd firefox --new-window $esc
         $map Escape mode "default"
 }
 
 $map $mod+f mode "find"
 mode "find" {
-        $map $mod+c $cmd xdg-open "$(fd --extension pdf . ~/Documents/uni/cs/s2 | $rofi_file)" $esc
-        $map $mod+l $cmd xdg-open "$(fd . ~/Documents/literature/source | $rofi_file)" $esc
-        $map $mod+f $cmd xdg-open "$(fd --type file . ~ | $rofi_file)" $esc
-        $map $mod+d $cmd xdg-open "$(fd --extension pdf . ~/Downloads | $rofi_file)" $esc
+        $map $mod+c $cmd xdg-open "$(fd --extension pdf . ~/Documents/uni/cs/s2 | $rofi '  find-file ::')" $esc
+        $map $mod+l $cmd xdg-open "$(fd . ~/Documents/literature/source | $rofi '  find-file ::')" $esc
+        $map $mod+f $cmd xdg-open "$(fd --type file . ~ | $rofi '  find-file ::')" $esc
+        $map $mod+d $cmd xdg-open "$(fd --extension pdf . ~/Downloads | $rofi '  find-file ::')" $esc
         $map Escape mode "default"
 }
 
@@ -160,7 +157,7 @@ mode "leader" {
         $map --release $mod+s $cmd $screenshot_sel $esc
         $map $mod+shift+s     $cmd $screenshot_full $esc
         $map $mod+k           $cmd $bin/killprocess $esc
-        $map $mod+d           $cmd fd . ~/.screenlayout | $rofi_display | bash $esc
+        $map $mod+d           $cmd fd . ~/.screenlayout | $rofi '󰍹  display-layout ::' | bash $esc
         $map $mod+q           mode "quit"
         $map Escape           mode "default"
 }

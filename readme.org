@@ -188,7 +188,7 @@ when writing scripts one should always use the long options of flags in order to
 *** shellscripts
 all shellscripts are written in nushell.  i refuse to use something such as bash because do not want to improvise and find a hacky solution.  i believe in using a proper, consistent and extensible scripting language.  (alternative: python)
 
-** terminal: alacritty & zellij
+** terminal: alacritty & tmux
 i am of the strong opinion that you should minimize things you do repeatedly.  thus when closing the terminal by accident => can be restored instead of redoing everything.  launching emacs on every startup? => just run the daemon in the background => always accessible & no waiting time.
  - terminal applications can be made persistent through tmux sessions => thus closing the terminal window has no effect on the program, bc when you open another terminal, it will attach right back into the session allowing you to continue where left off.
  - additionally it allows you to ssh into your machine from anywhere and attach to these running clients seamlessly and keep processes alive when done.

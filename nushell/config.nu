@@ -2,8 +2,7 @@
 # title:  nushell config
 # author: emil lenz
 # email:  emillenz@protonmail.com
-# date:   wednesday, 23 april, 2023
-# info:   nushell conifg with safer defaults, and efficient custom keybindings.
+# date:   2023-04-23
 # -----
 
 # NOTE: when programming in nushell non-interactively, ALWAYS use '--long-flags' in order to make the code more readeable and easier to maintain. (its programming, not interactive use)
@@ -17,16 +16,14 @@ $env.PATH = ($env.PATH | append ["~/.config/bin", "~/.cargo/bin", "~/.config/ema
 $env.EDITOR = "emacsclient" # HACK :: cannot use -nw flag with nushell
 $env.VISUAL = "emacsclient --reuse-frame"
 $env.BROWSER = "firefox"
-$env.MANPAGER = "bat --plain"
+$env.MANPAGER = "bat --plain --language man"
 $env.PAGER = "bat --plain"
 $env.MANWIDTH = 100
 
-alias e = emacsclient -nw --alternate-editor="emacs -nw"
+alias e = emacsclient -nw
 alias cat = bat
-alias ip = ip -color=auto
-alias yay = yay --noconfirm
 alias rm = rm --recursive --verbose --trash --interactive-once
-alias fzf = fzf --reverse --height=16 --color=dark --scheme=path # os-consistent completion (rofi, emacs, fzf ..)
+alias fzf = fzf --reverse --height 16 --color light --scheme path # os-consistent completion (rofi, emacs, fzf ..)
 
 let fish_completer = {|spans|
         fish --command $'complete "--do-complete=($spans | str join " ")"'
@@ -141,9 +138,9 @@ $env.config = {
                 pre_prompt: [ {|| null} ]
                 pre_execution: [ {|| null} ]
                 env_change: {
-                        PWD: [ {|before, after| ls | get name } ]
+                        # PWD: {|before, after| print $"(ls $after | table)" }
                 }
-                display_output: {|| if (term size).columns >= 100 {table -e} else {table -e}}
+                display_output: {|| table -e}
                 command_not_found: {||}
         }
 
@@ -155,44 +152,13 @@ $env.config = {
                         type: {
                                 layout: columnar
                                 columns: 1
-                                col_width: 20
+                                col_width: 16
                                 col_padding: 2
                         }
                         style: {
                                 text: blue
                                 selected_text: blue_reverse
                                 description_text: blue
-                        }
-                }
-
-                {
-                        name: recent_cmds_menu
-                        only_buffer_difference: true
-                        marker: "> "
-                        type: {layout: list, page_size: 100}
-                        style: {
-                                text: blue
-                                selected_text: blue_reverse
-                                description_text: yellow
-                        }
-                }
-
-                {
-                        name: help_menu
-                        only_buffer_difference: true
-                        marker: "? "
-                        type: {
-                                layout: description
-                                columns: 1
-                                col_width: 20
-                                col_padding: 2
-                                selection_rows: 4
-                                description_rows: 10
-                        }
-                        style: {
-                                text: blue
-                                selected_text: blue_reverse
-                                description_text: yellow
                         }
                 }
         ]
@@ -210,7 +176,7 @@ $env.config = {
                         name: completion_menu
                         modifier: control
                         keycode: char_j
-                        mode: vi_insert
+                        mode: [vi_insert, vi_normal]
                         event: {
                                 until: [
                                         {send: menu name: completion_menu}
@@ -223,75 +189,96 @@ $env.config = {
                         name: completion_prev
                         modifier: control
                         keycode: char_k
-                        mode: vi_insert
-                        event: {send: menuprevious}
+                        mode: [vi_insert, vi_normal]
+                        event: {
+                                until:[
+                                        {send: menuprevious}
+                                        {send: up}
+                                ]
+                        }
                 }
 
                 {
                         name: complete_hint
                         modifier: none
                         keycode: tab
-                        mode: vi_insert
+                        mode: [vi_insert, vi_normal]
                         event: {send: historyhintcomplete}
                 }
 
                 {
-                        name: recent_cmds_menu
+                        name: recent_cmds
                         modifier: control
                         keycode: char_r
-                        mode: vi_insert
-                        event: {send: menu name: recent_cmds_menu}
-                }
-
-                {
-                        name: tldr
-                        modifier: control
-                        keycode: char_t
-                        mode: [vi_normal vi_insert]
+                        mode: [vi_insert, vi_normal]
                         event: [
-                                { edit: movetolineend }
-                                { edit: insertstring, value: " --help | bat --plain --paging=always --language=help" }
-                                { send: enter }
+                                {edit: clear}
+                                {send: executehostcommand, cmd: "tmux send-keys (open --raw ~/.config/nushell/history.txt | lines | uniq | to text | fzf | str trim)"}
                         ]
                 }
 
                 {
-                        name: manpage
-                        modifier: control
-                        keycode: char_p
-                        mode: [vi_normal vi_insert]
+                        name: documentation
+                        modifier: shift
+                        keycode: char_k
+                        mode: vi_normal
                         event: [
-                                { edit: movetolinestart }
-                                { edit: insertstring, value: "man " }
-                                { send: enter }
+                                {edit: movetolinestart }
+                                {edit: insertstring, value: "man " }
+                                {send: enter }
                         ]
                 }
 
                 {
-                        name: insert_file
+                        name: help
+                        modifier: shift
+                        keycode: char_H
+                        mode: vi_normal
+                        event: [
+                                {edit: movetolineend }
+                                {edit: insertstring, value: " --help | bat --language help" }
+                                {send: enter }
+                        ]
+                }
+
+                {
+                        name: find_file
                         modifier: control
                         keycode: char_f
-                        mode: vi_insert
+                        mode: [vi_insert, vi_normal]
                         event: [
-                                {send: executehostcommand, cmd: "tmux send-keys $\"(fd --type file . | fzf --preview 'bat {}')\""}, # # NOTE :: terrible hack, but atm there is no other way to eval an expression at runtim and then insert the result
+                                {send: executehostcommand,
+                                 cmd: "tmux send-keys (fd | fzf --preview 'bat {}')"} # NOTE :: terrible hack, but atm there is no other way to eval an expression at runtime and then insert the result
                                 {send: Enter}
                         ]
                 }
 
                 {
-                        name: insert_dir
+                        name: page
+                        modifier: control
+                        keycode: char_p
+                        mode: [vi_insert, vi_normal]
+                        event: [
+                                {edit: movetolineend}
+                                {edit: insertstring, value: " out>| bat"}
+                                {send: enter}
+                        ]
+                }
+
+                {
+                        name: cd
                         modifier: control
                         keycode: char_g
-                        mode: vi_insert
+                        mode: [vi_insert, vi_normal]
                         event: {
                                 send: executehostcommand,
-                                cmd: "tmux send-keys $\"(fd --type directory | fzf --preview '^ls --color {}')\""
+                                cmd: "cd (fd --type directory | fzf --preview '^ls --color {}')"
                         }
                 }
 
                 {
                         name: open_editor
-                        modifier: control
+                        modifier: alt
                         keycode: char_e
                         mode: [vi_normal vi_insert]
                         event: [

@@ -20,6 +20,7 @@ keymap:
       # NAVIGATION
       M-t: c-t
       M-q: c-w
+      M-e: c-l
       # EDITING
       C-h: backspace
       C-w: c-backspace

@@ -5,5 +5,5 @@
 # condition: (not (sp-point-in-string-or-comment))
 # --
 if (${1:true}) {
-   $0
+   `%`$0
 }

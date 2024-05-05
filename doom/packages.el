@@ -1,6 +1,6 @@
 ;; -*- no-byte-compile: t; -*-
 
-(disable-packages! evil-escape which-key solaire-mode)
+(disable-packages! evil-escape which-key solaire-mode) ;; bloat
 
 (package! dired-open)
 (package! rainbow-mode)
@@ -11,6 +11,6 @@
 (package! laas)
 (package! modus-themes)
 (package! verilog-mode)
-(package! nushell-mode :recipe (:host github :repo "mrkkrp/nushell-mode"))
 (package! devdocs)
-(package! wolfram)
+(package! nushell-ts-mode :recipe '(:host github :repo "herbertjones/nushell-ts-mode"))
+(package! fish-mode)

@@ -1,6 +1,6 @@
 ;; [[file:config.org::*user][user:1]]
 (setq user-full-name "emil lenz"
-        user-mail-address "emillenz@protonmail.com")
+      user-mail-address "emillenz@protonmail.com")
 ;; user:1 ends here
 
 ;; [[file:config.org::*misc][misc:1]]
@@ -115,8 +115,8 @@
       scroll-margin 0
       enable-recursive-minibuffers nil
       display-line-numbers-type 'visual
-      shell-command-prompt-show-cwd t
-      shell-file-name "/usr/bin/sh") ;; HACK :: i have set NUSHELL systemwide, emacs expects SH
+      shell-command-prompt-show-cwd t)
+;; shell-file-name "/usr/bin/fish" ;; HACK :: i have set NUSHELL systemwide, emacs expects SH
 
 (save-place-mode 1)
 (+global-word-wrap-mode 1)
@@ -168,42 +168,46 @@
   "when selecting a tab by index, create it, if it doesn't exist yet (efficient & overheadfree)"
   :before #'tab-bar-select-tab
   (when (and tab-nr (< (length (tab-bar-tabs)) tab-nr))
+    (tab-bar-new-tab)
     (z-ensure-tab (1- tab-nr))))
 ;; global navigation scheme:2 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:1]]
-(map! :inv  "C-s" (cmd! (evil-normal-state) (basic-save-buffer))
-      :nm   "C-l" #'recenter-top-bottom
+(map! :inmv "C-s" (cmd! (evil-normal-state) (basic-save-buffer))
+      :inm  "C-l" #'recenter-top-bottom
+      :im  "C-h" #'backward-delete-char
 
-      :nvo "j"   #'evil-next-visual-line
-      :nvo "k"   #'evil-previous-visual-line
+      :nmvo "j"   #'evil-next-visual-line
+      :nmvo "k"   #'evil-previous-visual-line
 
-      :nv  "("   #'sp-beginning-of-sexp
-      :nv  ")"   #'sp-end-of-sexp
+      :nmv  "("   #'sp-beginning-of-sexp
+      :nmv  ")"   #'sp-end-of-sexp
 
-      :nv  "U"   #'evil-redo
-      :nv  "Q"   #'evil-execute-last-recorded-macro
-      :nv  "&"   #'evil-ex-repeat
-      :n   "M"   #'evil-set-jump
+      :nmv  "U"   #'evil-redo
+      :nmv  "Q"   #'evil-execute-last-recorded-macro
+      :nmv  "&"   #'evil-ex-repeat
+      :nm   "M"   #'evil-set-jump
 
-      :nv  "+"   #'evil-numbers/inc-at-pt
-      :nv  "-"   #'evil-numbers/dec-at-pt
-      :nv  "g+"  #'evil-numbers/inc-at-pt-incremental
-      :nv  "g-"  #'evil-numbers/dec-at-pt-incremental
+      :nmv  "+"   #'evil-numbers/inc-at-pt
+      :nmv  "-"   #'evil-numbers/dec-at-pt
+      :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
+      :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
 
-      :nv  "gt"  #'dictionary-search
-      :nv  "gk"  (cmd! (devdocs-lookup nil (current-word t)))
-      :nv  "go"  #'consult-imenu
-      :nv  "g/"  #'+default/search-buffer)
+      :nmv  "gt"  #'dictionary-search
+      :nmv  "gk"  (cmd! (devdocs-lookup nil (current-word t)))
+      :nmv  "go"  #'consult-imenu
+      :nmv  "g/"  #'+default/search-buffer)
 
 (map! :after minibuffer :map minibuffer-mode-map
       :im "C-j"  #'next-line-or-history-element
       :im "C-k"  #'previous-line-or-history-element)
 
 (map! :after company :map company-mode-map
-      :i "C-j" #'company-complete-common)
+      :im "C-j" #'company-complete-common)
 
-(map! :after company :map company-active-map "C-h" nil) ;; HACK :: make c-h work
+;; HACK :: make c-h work everywhere
+(map! :after company :map company-active-map "C-h" #'backward-delete-char)
+(map! :after evil-org :map evil-org-mode-map :im "C-h" #'backward-delete-char)
 ;; vim editing:1 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:2]]
@@ -285,7 +289,7 @@ This is sensible default behaviour, and integrates it into evil."
       evil-ex-substitute-global t
       evil-want-C-i-jump t
       evil-want-C-h-delete t
-      evil-disable-insert-state-bindings t
+      evil-org-use-additional-insert nil
       evil-want-minibuffer t
       evil-snipe-scope 'visible)
 ;; editor:1 ends here
@@ -346,33 +350,33 @@ This is sensible default behaviour, and integrates it into evil."
 
 ;; [[file:config.org::*dired][dired:1]]
 (after! dired
- (add-hook! 'dired-mode-hook #'dired-hide-details-mode)
+  (add-hook! 'dired-mode-hook #'dired-hide-details-mode)
 
- ;; NOTE:: this is the elegant && extensible way to do regex.
- (setq dired-omit-files
-       (rx (or (seq bol (? ".") "#")
-               (seq bol "." (not (any ".")))
-               (seq "~" eol)
-               (seq bol "CVS" eol)))
+  ;; NOTE:: this is the elegant && extensible way to do regex.
+  (setq dired-omit-files
+        (rx (or (seq bol (? ".") "#")
+                (seq bol "." (not (any ".")))
+                (seq "~" eol)
+                (seq bol "CVS" eol)))
 
-       dired-open-extensions
-       '(("mkv"  . "mpv")
-         ("mp4"  . "mpv")
-         ("mp3"  . "mpv")
-         ("gif"  . "nsxiv")
-         ("jpeg" . "nsxiv")
-         ("jpg"  . "nsxiv")
-         ("png"  . "nsxiv")
-         ("docx" . "libreoffice")
-         ("odt"  . "libreoffice")
-         ("odf"  . "libreoffice")
-         ("epub" . "zathura")
-         ("pdf"  . "zathura"))
+        dired-open-extensions
+        '(("mkv"  . "mpv")
+          ("mp4"  . "mpv")
+          ("mp3"  . "mpv")
+          ("gif"  . "nsxiv")
+          ("jpeg" . "nsxiv")
+          ("jpg"  . "nsxiv")
+          ("png"  . "nsxiv")
+          ("docx" . "libreoffice")
+          ("odt"  . "libreoffice")
+          ("odf"  . "libreoffice")
+          ("epub" . "zathura")
+          ("pdf"  . "zathura"))
 
-       dired-recursive-copies 'always
-       dired-recursive-deletes 'top
-       global-auto-revert-non-file-buffers t
-       dired-no-confirm '(compress uncompress move copy touch)))
+        dired-recursive-copies 'always
+        dired-recursive-deletes 'top
+        global-auto-revert-non-file-buffers t
+        dired-no-confirm '(compress uncompress move copy touch)))
 ;; dired:1 ends here
 
 ;; [[file:config.org::*Archive file][Archive file:1]]
@@ -414,6 +418,9 @@ This is sensible default behaviour, and integrates it into evil."
 
 (setq-hook! 'c-mode-hook
   c-basic-offset standard-indent)
+
+(setq-hook! 'nushell-ts-mode-hook
+  nushell-ts-mode-indent-offset 8)
 
 (setq-hook! 'rustic-mode-hook
   rustic-indent standard-indent
@@ -530,19 +537,19 @@ This is sensible default behaviour, and integrates it into evil."
 
 ;; [[file:config.org::*task states][task states:1]]
 (setq org-todo-keywords
-        '((sequence "[ ](t)"
-        "[@](e)"
-        "[?](?!)"
-        "[-](-!)"
-        "[>](>!)"
-        "[=](=!)"
-        "[&](&!)"
-        "|"
-        "[x](x!)"
-        "[\\](\\!)")))
+      '((sequence "[ ](t)"
+         "[@](e)"
+         "[?](?!)"
+         "[-](-!)"
+         "[>](>!)"
+         "[=](=!)"
+         "[&](&!)"
+         "|"
+         "[x](x!)"
+         "[\\](\\!)")))
 
 (setq org-todo-keyword-faces
-        '(("[@]"  . '(bold +org-todo-project))
+      '(("[@]"  . '(bold +org-todo-project))
         ("[ ]"  . '(bold org-todo))
         ("[-]"  . '(bold +org-todo-active))
         ("[>]"  . '(bold +org-todo-onhold))
@@ -555,17 +562,17 @@ This is sensible default behaviour, and integrates it into evil."
 
 ;; [[file:config.org::*task states][task states:2]]
 (setq org-log-done 'time
-        org-log-repeat 'time
-        org-todo-repeat-to-state "[ ]"
-        org-log-redeadline 'time
-        org-log-reschedule 'time
-        org-log-into-drawer "LOG")
+      org-log-repeat 'time
+      org-todo-repeat-to-state "[ ]"
+      org-log-redeadline 'time
+      org-log-reschedule 'time
+      org-log-into-drawer "LOG")
 
 (setq org-priority-highest 1
-        org-priority-lowest 3)
+      org-priority-lowest 3)
 
 (setq org-log-note-headings
-        '((done        . "note-done: %t")
+      '((done        . "note-done: %t")
         (state       . "state: %-3S -> %-3s %t") ;; NOTE :: the custom task-statuses are all 3- wide
         (note        . "note: %t")
         (reschedule  . "reschedule: %S, %t")
@@ -593,19 +600,19 @@ This is sensible default behaviour, and integrates it into evil."
 (add-hook! 'org-agenda-mode-hook
            #'org-super-agenda-mode)
 
-  (setq org-agenda-files (directory-files-recursively org-directory ".*\.org" t)
-        org-agenda-skip-scheduled-if-done t
-        org-agenda-sticky t
-        org-agenda-skip-deadline-if-done t
-        org-agenda-include-deadlines t
-        org-agenda-tags-column 0
-        org-agenda-block-separator ?─
-        org-agenda-breadcrumbs-separator "…"
-        org-agenda-compact-blocks nil
-        org-agenda-show-future-repeats nil
-        org-deadline-warning-days 3
-        org-agenda-time-grid nil
-        org-capture-use-agenda-date t)
+(setq org-agenda-files (directory-files-recursively org-directory ".*\.org" t)
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-sticky t
+      org-agenda-skip-deadline-if-done t
+      org-agenda-include-deadlines t
+      org-agenda-tags-column 0
+      org-agenda-block-separator ?─
+      org-agenda-breadcrumbs-separator "…"
+      org-agenda-compact-blocks nil
+      org-agenda-show-future-repeats nil
+      org-deadline-warning-days 3
+      org-agenda-time-grid nil
+      org-capture-use-agenda-date t)
 
 (defadvice! z-add-newline (fn &rest args)
   "Separate dates in 'org-agenda' with newline."
@@ -694,7 +701,7 @@ This is sensible default behaviour, and integrates it into evil."
 
 (defun z-doct-expand-projects (&optional projects parent-path)
   "PROJECTS :: nil | used for recursion
-    PARENT-PATH :: nil | used for recursion"
+PARENT-PATH :: nil | used for recursion"
   (mapcar (lambda (project)
             (let* ((props (cdr project))
                    (tag (car project))
@@ -849,6 +856,10 @@ This is sensible default behaviour, and integrates it into evil."
   (add-hook! 'verilog-mode-hook (ligature-mode -1)) ;; don't display: <= as \leq
   (setq verilog-auto-newline nil))
 ;; verilog-mode:1 ends here
+
+;; [[file:config.org::*nushell-mode][nushell-mode:1]]
+(use-package! nushell-ts-mode)
+;; nushell-mode:1 ends here
 
 ;; [[file:config.org::*dictionary][dictionary:1]]
 (after! dictionary

@@ -17,17 +17,16 @@ sudo pacman -Syyu
 * core tools
 ** terminal, nushell
 #+begin_src sh
-yay --noconfirm --sync alacritty curl libtool fzf fd ripgrep xclip xdg-utils cmake bat git gcc make xdotool htop fish ttf-iosevka-nerd tmux
-#+end_src
-
-#+begin_src sh
-sudo chsh --shell /usr/bin/fish root
-chsh --shell /usr/bin/fish
+yay --noconfirm --sync alacritty curl libtool fzf fd ripgrep xclip xdg-utils cmake bat git gcc make xdotool htop ttf-iosevka-nerd tmux
 #+end_src
 
 *** fish shell
 #+begin_src sh
+yay --noconfirm --sync fish fisher zoxide
 fisher install jorgebucaran/autopair.fish patrickf1/fzf.fish
+sudo chsh --shell /usr/bin/fish root
+chsh --shell /usr/bin/fish
+zoxide init fish | source
 #+end_src
 
 

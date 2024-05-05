@@ -1860,3 +1860,6 @@ function tmp; echo $argv[1] end
 ls
 man man
 ls
+fish
+exit
+fish

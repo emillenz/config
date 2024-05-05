@@ -9,7 +9,7 @@
 function main
     set -l icon "󱀞"
     set -l sinks (pactl --format json list sinks)
-    set -l choice (echo $sinks | jq '.[] | .description' | rofi -dmenu -i -no-custom -p "$icon  audio :: " )
+    set -l choice (echo $sinks | jq '.[] | .description' | rofi -dmenu -i -no-custom -p "$icon  audio >" )
     if test -z $choice
         exit 1
     end

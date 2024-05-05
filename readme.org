@@ -168,25 +168,12 @@ i'm very opinionated and have high standards regarding design process and the ph
 - the aestetic and efficiency of a decluttered and maximized screen is (imo) unmatched.
 - the theory is to make switching so ergonomic and instantaneous, engrained into muscle memory, that you are faster that people using, say 2 monitors.
 
-** shell: nushell
-*** why? because bash sucks.
-these are some of the things i hate about bash (and stream utils such as find etc...)
-- syntax soup.  e.g.  for printing version, you have these variations: ~-v~ ~-v~ ~-version~ ~--version~.  sometimes options can be combined, sometimes not.  some option takes a argument, with many different syntax, some arg separated by space, some require equal sign.  order of options may or may not matter.  many options effect other options in complex way.  these tools should all adhere to the gnu standard.
-- semantic noodle.  e.g.  some command has recursive option ~-r~, others requires calling ~find~ ~xargs~
-- randomish and cryptic command names and syntax.  part of which are juvenile humor.  ~tac~, ~head~, ~tail~, ~esac~ ~fi~.
-  - unneccessary verbose syntax in other places: ~do~, ~done~
-- some command are part of the shell as function, some are independent tools.  e.g.  ~ls~, ~kill~, ~ps~.  try to find if they are part of bash.  and if so, is bash calling it or the independent command.
-- 40 years of baggage with ~.bashrc~, ~.bash_profile~ which are not put into ~.config~ (yes, ik what symlinks are, but still)
-- sea of islands.  each command or tool is written on its own.  no coherence and hacks needed to make them work with each other, ex: ~find~,  ~xargs~
-- incredibly error prone and unsafe behavior by default.  ex: string splitting and globbing.
-
-this is why the shell of choice and in which i see the future, is *nushell*.  because it approaches the shell fundamentally different from bash.  even though it may have a steeper learning curve and requires a more structured and less hacky approach to scripting.  but once learned, it smoothly bridges the gap between compiled highly efficient languages such as rust or c and the interactive nature of a shell.
-i highly believe that any scripting away from interactive use should be done in a proper language (nushell or eg.  python).
-when writing scripts one should always use the long options of flags in order to increase code readability and maintaineability (not needing to keep this gayillion of abbreviationsin your memory for each individual program).  this makes understanding the script for people who may not be familiar with the programs easier to understand and modify (reduce elitism in free software).
-(this does not slow you down at all, this is what an lsp and codecompletion is for).
-
-*** shellscripts
-all shellscripts are written in nushell.  i refuse to use something such as bash because do not want to improvise and find a hacky solution.  i believe in using a proper, consistent and extensible scripting language.  (alternative: python)
+** shell: fish / python
+a shell only exists for simple system management (launching processes, etc) and interactive use (filtering, text, redirections, etc, not for heavy data processing).  for any scripting beyond that you should always opt towards a proper scripting language (python).  i highly believe that any scripting away from interactive use should be done in a proper language (python).
+even though it may have a steeper learning curve and requires a more structured and less hacky approach to scripting.  but once fluent in it, it smoothly bridges the gap between compiled highly efficient languages such as rust or c and the interactive nature of a shell.
+when writing scripts one should always use the long options of flags in order to increase code readability and maintaineability (not needing to keep this gazillion of abbreviations in your memory for each individual program).  this makes understanding the script for people who may not be familiar with the programs easier to understand and modify (reduce elitism in free software).  (this does not slow you down at all, this is what an lsp and codecompletion is for).
+bash is a steaming pile of inconsistent user-unfrienly shit.  fish has consistent syntax, inbuilt autocompletion and is configured with keybindings to make navigation efficient & overheadfree.
+On the command line, I don't really need a full language with a repl-like interface. I want a fast and quick way to interface with the OS. Anything beyond that should be written in a proper language that will inherently bring more benefits.
 
 ** terminal: alacritty & tmux
 i am of the strong opinion that you should minimize things you do repeatedly.  thus when closing the terminal by accident => can be restored instead of redoing everything.  launching emacs on every startup? => just run the daemon in the background => always accessible & no waiting time.

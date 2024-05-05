@@ -144,10 +144,10 @@ mode "open" {
 
 $map $mod+f mode "find"
 mode "find" {
-        $map $mod+c $cmd xdg-open "$(fd --extension pdf . ~/Documents/uni/cs/s2 | $rofi '  find-file ::')" $esc
-        $map $mod+l $cmd xdg-open "$(fd . ~/Documents/literature/source | $rofi '  find-file ::')" $esc
-        $map $mod+f $cmd xdg-open "$(fd --type file . ~ | $rofi '  find-file ::')" $esc
-        $map $mod+d $cmd xdg-open "$(fd --extension pdf . ~/Downloads | $rofi '  find-file ::')" $esc
+        $map $mod+c $cmd xdg-open "$(fd --extension pdf . ~/Documents/uni/cs/s2 | $rofi '  find-file >')" $esc
+        $map $mod+l $cmd xdg-open "$(fd . ~/Documents/literature/source | $rofi '  find-file >')" $esc
+        $map $mod+f $cmd xdg-open "$(fd --type file . ~ | $rofi '  find-file >')" $esc
+        $map $mod+d $cmd xdg-open "$(fd --extension pdf . ~/Downloads | $rofi '  find-file >')" $esc
         $map Escape mode "default"
 }
 
@@ -157,7 +157,7 @@ mode "leader" {
         $map --release $mod+s $cmd $screenshot_sel $esc
         $map $mod+shift+s     $cmd $screenshot_full $esc
         $map $mod+k           $cmd $bin/killprocess $esc
-        $map $mod+d           $cmd fd . ~/.screenlayout | $rofi '󰍹  display-layout ::' | bash $esc
+        $map $mod+d           $cmd fd . ~/.screenlayout | $rofi '󰍹  display-layout >' | bash $esc
         $map $mod+q           mode "quit"
         $map Escape           mode "default"
 }

@@ -14,8 +14,6 @@ function main
         unclutter \
         "batsignal -bpe -w 50 -c 20 -d 5" \
         firefox \
-        "firefox --new-window https://chat.openai.com" \
-        "firefox --new-window https://spotify.com" \
         keepassxc
 
     for ps in $pss
@@ -34,4 +32,5 @@ function main
     xset dpms 0 0 0 && xset s off # never screensave / turn screen off (do manually if needed)
     xset r off &
 end
+
 main

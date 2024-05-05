@@ -8,7 +8,7 @@
 
 function main
     set -l icon ""
-    set -l ps (ps -e | awk '{print $4}' | rofi -dmenu -i -no-custom -p "$icon  killprocess ::")
+    set -l ps (ps -e | awk '{print $4}' | rofi -dmenu -i -no-custom -p "$icon  killprocess >")
     if test -z $ps
         exit 1
     end

@@ -66,7 +66,7 @@
 (setq +popup-defaults
       '(:side right
         :select nil
-        :quit nil
+        :quit t
         :width 0.5
         :modeline t))
 (apply #'set-popup-rule! "\\*" +popup-defaults) ;; HACK :: apply defaults to all
@@ -78,11 +78,8 @@
                       ("^CAPTURE" :ignore t)
                       ("^\\*Org Select" :side bottom))))
 
-(after! info
-  (set-popup-rule! "^\\*info" :ignore t))
-
-(after! lsp-mode
-  (set-popup-rule! "^\\*lsp-help" :side 'bottom))
+(set-popup-rules! '(("^\\*lsp-help" :side bottom)
+                    ("^\\*info" :ignore t)))
 ;; window layout & behavior:1 ends here
 
 ;; [[file:config.org::*window layout & behavior][window layout & behavior:2]]
@@ -115,8 +112,9 @@
       scroll-margin 0
       enable-recursive-minibuffers nil
       display-line-numbers-type 'visual
-      shell-command-prompt-show-cwd t)
-;; shell-file-name "/usr/bin/fish" ;; HACK :: i have set NUSHELL systemwide, emacs expects SH
+      shell-command-prompt-show-cwd t
+      async-shell-command-width 100
+      shell-file-name "/usr/bin/fish")
 
 (save-place-mode 1)
 (+global-word-wrap-mode 1)
@@ -131,7 +129,6 @@
 
 (map! :leader
       (:prefix "c"
-               "w" #'z-clean-whitespace
                "r" #'lsp-rename
                (:prefix-map ("'" . "org-src")
                             "t" #'org-babel-tangle
@@ -175,7 +172,8 @@
 ;; [[file:config.org::*vim editing][vim editing:1]]
 (map! :inmv "C-s" (cmd! (evil-normal-state) (basic-save-buffer))
       :inm  "C-l" #'recenter-top-bottom
-      :im  "C-h" #'backward-delete-char
+      :im   "C-h" #'backward-delete-char
+      :im   "C-v" (cmd! (evil-paste-from-register ?\"))
 
       :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
@@ -334,6 +332,7 @@ This is sensible default behaviour, and integrates it into evil."
       :im "C-k" #'previous-line-or-history-element)
 
 (map! :map vertico-map
+      :im "C-w" #'vertico-directory-delete-word
       :im "C-d" #'consult-dir
       :im "C-f" #'consult-dir-jump-file)
 ;; completion:1 ends here
@@ -401,51 +400,34 @@ This is sensible default behaviour, and integrates it into evil."
 (advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
 
 (setq-default standard-indent 8
+              evil-shift-width standard-indent
               tab-width standard-indent
               fill-column 100
               tab-always-indent t
               tab-width standard-indent
               org-indent-indentation-per-level standard-indent
-              evil-shift-width standard-indent
               evil-indent-convert-tabs t
               indent-tabs-mode nil)
 
-(setq-hook! 'prog-mode-hook
-  standard-indent 8)
+(after! cc-mode
+  (setq c-basic-offset standard-indent))
 
-(setq-hook! 'java-mode-hook
-  c-basic-offset standard-indent)
+(after! ruby-mode
+  (setq evil-shift-width standard-indent
+        ruby-indent-level standard-indent))
 
-(setq-hook! 'c-mode-hook
-  c-basic-offset standard-indent)
+(after! rustic
+  (setq rustic-indent standard-indent
+        rustic-indent-offset standard-indent))
 
-(setq-hook! 'nushell-ts-mode-hook
-  nushell-ts-mode-indent-offset 8)
-
-(setq-hook! 'rustic-mode-hook
-  rustic-indent standard-indent
-  rustic-indent-offset standard-indent)
-
-(setq-hook! 'verilog-mode-hook
-  verilog-case-indent standard-indent
-  verilog-cexp-indent standard-indent
-  verilog-indent-level standard-indent
-  verilog-indent-level-behavioral standard-indent
-  verilog-indent-level-declaration standard-indent
-  verilog-indent-level-module standard-indent)
+(after! verilog-mode
+  (setq verilog-case-indent standard-indent
+        verilog-cexp-indent standard-indent
+        verilog-indent-level standard-indent
+        verilog-indent-level-behavioral standard-indent
+        verilog-indent-level-declaration standard-indent
+        verilog-indent-level-module standard-indent))
 ;; indentation:1 ends here
-
-;; [[file:config.org::*clean whitespace][clean whitespace:1]]
-(defun z-clean-whitespace ()
-  "Deletes consecutive empty lines if # > 1, and strips trailing whitespace."
-  (interactive)
-  (delete-trailing-whitespace)
-  (save-excursion
-    (goto-char (point-min))
-    (while (re-search-forward "\n\n+" nil t)
-      (replace-match "\n\n")))
-  (basic-save-buffer))
-;; clean whitespace:1 ends here
 
 ;; [[file:config.org::*org][org:1]]
 (after! org
@@ -639,208 +621,208 @@ This is sensible default behaviour, and integrates it into evil."
 ;; [[file:config.org::*capture templates][capture templates:1]]
 (defvar z-org-literature-dir "~/Documents/literature/notes/")
 
-(defvar z-org-journal-dir (file-name-concat "~/Documents/journal/"))
+  (defvar z-org-journal-dir (file-name-concat "~/Documents/journal/"))
 
-(defun z-doct-journal-file (&optional time)
-  "TIME :: time in day of note to return. (default: today)"
-  (file-name-concat z-org-journal-dir
-                    (format "%s_journal.org"
-                            (format-time-string "%F" (or time (current-time))))))
+  (defun z-doct-journal-file (&optional time)
+    "TIME :: time in day of note to return. (default: today)"
+    (file-name-concat z-org-journal-dir
+                      (format "%s_journal.org"
+                              (format-time-string "%F" (or time (current-time))))))
 
-(defvar z-doct-projects
-  '(("cs" :keys "c" :children
-     (("pp" :keys "p")
-      ("as1" :keys "a")
-      ("aw" :keys "w")
-      ("ddca" :keys "d")))
-    ("personal" :keys "p")
-    ("config" :keys "f")
-    ("compass" :keys "o")))
+  (defvar z-doct-projects
+    '(("cs" :keys "c" :children
+       (("pp" :keys "p")
+        ("as1" :keys "a")
+        ("aw" :keys "w")
+        ("ddca" :keys "d")))
+      ("personal" :keys "p")
+      ("config" :keys "f")
+      ("compass" :keys "o")))
 
-(defun z-doct-projects-file (type path)
-  "TYPE :: [ 'agenda, 'notes ]"
-  (file-name-concat org-directory
-                    path
-                    (format "%s.org" (symbol-name type))))
+  (defun z-doct-projects-file (type path)
+    "TYPE :: [ 'agenda, 'notes ]"
+    (file-name-concat org-directory
+                      path
+                      (format "%s.org" (symbol-name type))))
 
-(defun z-doct-task-template (path)
-  (list "task"
-        :keys "t"
-        :file (z-doct-projects-file 'agenda path)
-        :headline "inbox"
-        :prepend t
-        :empty-lines-after 1
-        :template '("* [ ] %^{title}%?")))
+  (defun z-doct-task-template (path)
+    (list "task"
+          :keys "t"
+          :file (z-doct-projects-file 'agenda path)
+          :headline "inbox"
+          :prepend t
+          :empty-lines-after 1
+          :template '("* [ ] %^{title}%?")))
 
-(defun z-doct-event-template (path)
-  (list "event"
-        :keys "e"
-        :file (z-doct-projects-file 'agenda path)
-        :headline "events"
-        :prepend t
-        :empty-lines-after 1
-        :template '("* [@] %^{title}%?"
-                    "%^T"
-                    ":PROPERTIES:"
-                    ":REPEAT_TO_STATE: [@]" ; NOTE :: in case is made repeating
-                    ":location: %^{location}"
-                    ":material: %^{material}"
-                    ":END:")))
+  (defun z-doct-event-template (path)
+    (list "event"
+          :keys "e"
+          :file (z-doct-projects-file 'agenda path)
+          :headline "events"
+          :prepend t
+          :empty-lines-after 1
+          :template '("* [@] %^{title}%?"
+                      "%^T"
+                      ":PROPERTIES:"
+                      ":REPEAT_TO_STATE: [@]" ; NOTE :: in case is made repeating
+                      ":location: %^{location}"
+                      ":material: %^{material}"
+                      ":END:")))
 
-(defun z-doct-note-template (path)
-  (list "note"
-        :keys "n"
-        :file (z-doct-projects-file 'notes path)
-        :prepend t
-        :empty-lines 1
-        :template '("* %^{title} %^g"
-                    ":PROPERTIES:"
-                    ":created: %U"
-                    ":END:"
-                    "%?")))
+  (defun z-doct-note-template (path)
+    (list "note"
+          :keys "n"
+          :file (z-doct-projects-file 'notes path)
+          :prepend t
+          :empty-lines 1
+          :template '("* %^{title} %^g"
+                      ":PROPERTIES:"
+                      ":created: %U"
+                      ":END:"
+                      "%?")))
 
-(defun z-doct-expand-projects (&optional projects parent-path)
-  "PROJECTS :: nil | used for recursion
+  (defun z-doct-expand-projects (&optional projects parent-path)
+    "PROJECTS :: nil | used for recursion
 PARENT-PATH :: nil | used for recursion"
-  (mapcar (lambda (project)
-            (let* ((props (cdr project))
-                   (tag (car project))
-                   (key (plist-get props :keys))
-                   (self `(,tag :keys ,key))
-                   (children (plist-get props :children))
-                   (path (file-name-concat parent-path tag)))
-              (append self
-                      (if children
-                          (list :children (append (z-doct-expand-projects children ;; NOTE :: don't create subdir again for parent-project
-                                                                          path)
-                                                  (z-doct-expand-projects (list self)
-                                                                          nil)))
-                        (list :children (list (z-doct-task-template path)
-                                              (z-doct-event-template path)
-                                              (z-doct-note-template path)))))
-              ))
-          (or projects
-              z-doct-projects)))
+    (mapcar (lambda (project)
+              (let* ((props (cdr project))
+                     (tag (car project))
+                     (key (plist-get props :keys))
+                     (self `(,tag :keys ,key))
+                     (children (plist-get props :children))
+                     (path (file-name-concat parent-path tag)))
+                (append self
+                        (if children
+                            (list :children (append (z-doct-expand-projects children ;; NOTE :: don't create subdir again for parent-project
+                                                                            path)
+                                                    (z-doct-expand-projects (list self)
+                                                                            nil)))
+                          (list :children (list (z-doct-task-template path)
+                                                (z-doct-event-template path)
+                                                (z-doct-note-template path)))))
+                ))
+            (or projects
+                z-doct-projects)))
 
-(setq org-capture-templates
-      (doct `(,@(z-doct-expand-projects)
+  (setq org-capture-templates
+        (doct `(,@(z-doct-expand-projects)
 
-              ("journal"
-               :keys "j"
-               :file (lambda () (z-doct-journal-file))
-               :title (lambda () (downcase (format-time-string "daily note: %A, %e. %B %Y")))
-               :children (("journal init"
-                           :keys "j"
-                           :type plain
-                           :template  ("#+title:  %{title}"
-                                       "#+author: %(user-full-name)"
-                                       "#+email:  %(message-user-mail-address)"
-                                       "#+date:   %<%F>"
-                                       "#+filetags: :journal:"
-                                       ""
-                                       "* goals"
-                                       "- [ ] %?"
-                                       ""
-                                       "* agenda"
-                                       "** [ ] "))
+                ("journal"
+                 :keys "j"
+                 :file (lambda () (z-doct-journal-file))
+                 :title (lambda () (downcase (format-time-string "daily note: %A, %e. %B %Y")))
+                 :children (("journal init"
+                             :keys "j"
+                             :type plain
+                             :template  ("#+title:  %{title}"
+                                         "#+author: %(user-full-name)"
+                                         "#+email:  %(message-user-mail-address)"
+                                         "#+date:   %<%F>"
+                                         "#+filetags: :journal:"
+                                         ""
+                                         "* goals"
+                                         "- [ ] %?"
+                                         ""
+                                         "* agenda"
+                                         "** [ ] "))
 
-                          ("note"
-                           :keys "n"
-                           :headline "notes"
-                           :prepent t
-                           :empty-lines-after 1
-                           :template ("* %^{title}"
-                                      ":PROPERTIES:"
-                                      ":created: %U"
-                                      ":END:"
-                                      "%?"))
+                            ("note"
+                             :keys "n"
+                             :headline "notes"
+                             :prepent t
+                             :empty-lines-after 1
+                             :template ("* %^{title}"
+                                        ":PROPERTIES:"
+                                        ":created: %U"
+                                        ":END:"
+                                        "%?"))
 
-                          ("yesterday review"
-                           :keys "y"
-                           :unnarrowed t
-                           :file (lambda ()
-                                   (z-doct-journal-file (time-subtract (current-time)
-                                                                       (days-to-time 1))))
-                           :template ("* gratitude"
-                                      "- %?"
-                                      ""
-                                      "* reflection"
-                                      "-"))))
+                            ("yesterday review"
+                             :keys "y"
+                             :unnarrowed t
+                             :file (lambda ()
+                                     (z-doct-journal-file (time-subtract (current-time)
+                                                                         (days-to-time 1))))
+                             :template ("* gratitude"
+                                        "- %?"
+                                        ""
+                                        "* reflection"
+                                        "-"))))
 
-              ("literature"
-               :keys "l"
-               :file (lambda () (read-file-name "file: " z-org-literature-dir))
-               :children (("to read"
-                           :keys "r"
-                           :file ,(file-name-concat z-org-literature-dir "readlist.org")
-                           :prepend t
-                           :template ("* [ ] %^{title}%? %^g"))
+                ("literature"
+                 :keys "l"
+                 :file (lambda () (read-file-name "file: " z-org-literature-dir))
+                 :children (("to read"
+                             :keys "r"
+                             :file ,(file-name-concat z-org-literature-dir "readlist.org")
+                             :prepend t
+                             :template ("* [ ] %^{title}%? %^g"))
 
-                          ("init"
-                           :keys "i"
-                           :file (lambda ()
-                                   (let* ((name (concat
-                                                 (replace-regexp-in-string
-                                                  " " "_"
-                                                  (read-from-minibuffer "short title: "))
-                                                 ".org")))
-                                     (file-name-concat z-org-literature-dir
-                                                       name)))
-                           :type plain
-                           :template ("#+title:  %^{full title}"
-                                      "#+author: %(user-full-name)"
-                                      "#+email:  %(message-user-mail-address)"
-                                      "#+date:   %<%F>"
-                                      "#+filetags: :literature:%^g"
-                                      ""
-                                      "* [-] %\\1%?"
-                                      ":PROPERTIES:"
-                                      ":title:  %\\1"
-                                      ":author: %^{author}"
-                                      ":year:   %^{year}"
-                                      ":type:   %^{ |book|textbook|ebook|paper|article|audiobook|podcast}"
-                                      ":pages:  %^{pages}"
-                                      ":END:"))
+                            ("init"
+                             :keys "i"
+                             :file (lambda ()
+                                     (let* ((name (concat
+                                                   (replace-regexp-in-string
+                                                    " " "_"
+                                                    (read-from-minibuffer "short title: "))
+                                                   ".org")))
+                                       (file-name-concat z-org-literature-dir
+                                                         name)))
+                             :type plain
+                             :template ("#+title:  %^{full title}"
+                                        "#+author: %(user-full-name)"
+                                        "#+email:  %(message-user-mail-address)"
+                                        "#+date:   %<%F>"
+                                        "#+filetags: :literature:%^g"
+                                        ""
+                                        "* [-] %\\1%?"
+                                        ":PROPERTIES:"
+                                        ":title:  %\\1"
+                                        ":author: %^{author}"
+                                        ":year:   %^{year}"
+                                        ":type:   %^{ |book|textbook|ebook|paper|article|audiobook|podcast}"
+                                        ":pages:  %^{pages}"
+                                        ":END:"))
 
-                          ("excerpt"
-                           :keys "e"
-                           :headline "excerpts"
-                           :empty-lines-before 1
-                           :template ("* %^{title} [pg:%^{page}]"
-                                      ":PROPERTIES:"
-                                      ":created: %U"
-                                      ":END:"
-                                      "#+begin_quote"
-                                      "%x"
-                                      "#+end_quote"))
+                            ("excerpt"
+                             :keys "e"
+                             :headline "excerpts"
+                             :empty-lines-before 1
+                             :template ("* %^{title} [pg:%^{page}]"
+                                        ":PROPERTIES:"
+                                        ":created: %U"
+                                        ":END:"
+                                        "#+begin_quote"
+                                        "%x"
+                                        "#+end_quote"))
 
-                          ("note: literary"
-                           :keys "l"
-                           :headline "literature notes"
-                           :empty-lines-before 1
-                           :template ("* %^{title} [pg:%^{page}] %^g"
-                                      ":PROPERTIES:"
-                                      ":created: %U"
-                                      ":END:"
-                                      "%?"))
+                            ("note: literary"
+                             :keys "l"
+                             :headline "literature notes"
+                             :empty-lines-before 1
+                             :template ("* %^{title} [pg:%^{page}] %^g"
+                                        ":PROPERTIES:"
+                                        ":created: %U"
+                                        ":END:"
+                                        "%?"))
 
-                          ("note: transient"
-                           :keys "t"
-                           :headline "transient notes"
-                           :empty-lines-before 1
-                           :template ("* %^{title} %^g"
-                                      ":PROPERTIES:"
-                                      ":created: %U"
-                                      ":END:"
-                                      "%?"))
+                            ("note: transient"
+                             :keys "t"
+                             :headline "transient notes"
+                             :empty-lines-before 1
+                             :template ("* %^{title} %^g"
+                                        ":PROPERTIES:"
+                                        ":created: %U"
+                                        ":END:"
+                                        "%?"))
 
-                          ;; NOTE :: make sure to complete the literature-task-headline in order to log closing time.
-                          ("summarize"
-                           :keys "c"
-                           :headline "summary"
-                           :unnarrowed t
-                           :type plain
-                           :template ("%?")))))))
+                            ;; NOTE :: make sure to complete the literature-task-headline in order to log closing time.
+                            ("summarize"
+                             :keys "c"
+                             :headline "summary"
+                             :unnarrowed t
+                             :type plain
+                             :template ("%?")))))))
 ;; capture templates:1 ends here
 
 ;; [[file:config.org::*capture templates][capture templates:2]]
@@ -856,10 +838,6 @@ PARENT-PATH :: nil | used for recursion"
   (add-hook! 'verilog-mode-hook (ligature-mode -1)) ;; don't display: <= as \leq
   (setq verilog-auto-newline nil))
 ;; verilog-mode:1 ends here
-
-;; [[file:config.org::*nushell-mode][nushell-mode:1]]
-(use-package! nushell-ts-mode)
-;; nushell-mode:1 ends here
 
 ;; [[file:config.org::*dictionary][dictionary:1]]
 (after! dictionary

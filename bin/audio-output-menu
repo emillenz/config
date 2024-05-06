@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+# ---
+# title:    audio output selection menu
+# author:   emil lenz
+# email:    emillenz@protonmail.com
+# date:     2023-05-07
+# ---
+
+require 'json'
+
+def main
+        icon = '󱀞'
+        sinks = JSON.parse(`pactl --format json list sinks`)
+
+        rofi_opts = sinks.map { |sink| sink['description'] }.join("\n")
+        sink_selected = `echo "#{rofi_opts}" | rofi -dmenu -i -no-custom -p "#{icon}  audio-output >"`.strip
+        exit(1) if sink_selected == ''
+
+        sink_id = sinks.find { |s| s['description'] == sink_selected }['index']
+        `pactl set-default-sink #{sink_id}`
+
+        JSON.parse(`pactl --format json list sink-inputs`).map do |sink|
+                `pactl move-sink-input #{sink['index']} #{sink_id}`
+        end
+
+        `dunstify "#{icon}  audio-output" "changed output device\n#{choice}"`
+end
+
+main if __FILE__ == $PROGRAM_NAME

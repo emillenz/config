@@ -17,10 +17,10 @@ configuration {
         modi: "drun,run,window,windowcd,filebrowser";
 
         show-icons          : true;
-        display-drun        : "󰏋  run ::";
-        display-run         : "  run ::";
-        display-filebrowser : "  files ::";
-        display-window      : "  window ::";
+        display-drun        : "󰏋  run >";
+        display-run         : "  run >";
+        display-filebrowser : "  files >";
+        display-window      : "  window >";
 
         window-format    : "{c}  |  {t}";
         window-command   : "wmctrl -i -R {window}";

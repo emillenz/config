@@ -101,7 +101,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 (setq +popup-defaults
       '(:side right
         :select nil
-        :quit nil
+        :quit t
         :width 0.5
         :modeline t))
 (apply #'set-popup-rule! "\\*" +popup-defaults) ;; HACK :: apply defaults to all
@@ -113,11 +113,8 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
                       ("^CAPTURE" :ignore t)
                       ("^\\*Org Select" :side bottom))))
 
-(after! info
-  (set-popup-rule! "^\\*info" :ignore t))
-
-(after! lsp-mode
-  (set-popup-rule! "^\\*lsp-help" :side 'bottom))
+(set-popup-rules! '(("^\\*lsp-help" :side bottom)
+                    ("^\\*info" :ignore t)))
 #+end_src
 
 - centered windows :: better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).
@@ -161,8 +158,9 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       scroll-margin 0
       enable-recursive-minibuffers nil
       display-line-numbers-type 'visual
-      shell-command-prompt-show-cwd t)
-;; shell-file-name "/usr/bin/fish" ;; HACK :: i have set NUSHELL systemwide, emacs expects SH
+      shell-command-prompt-show-cwd t
+      async-shell-command-width 100
+      shell-file-name "/usr/bin/fish")
 
 (save-place-mode 1)
 (+global-word-wrap-mode 1)
@@ -182,7 +180,6 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 
 (map! :leader
       (:prefix "c"
-               "w" #'z-clean-whitespace
                "r" #'lsp-rename
                (:prefix-map ("'" . "org-src")
                             "t" #'org-babel-tangle
@@ -275,7 +272,8 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
 #+begin_src emacs-lisp
 (map! :inmv "C-s" (cmd! (evil-normal-state) (basic-save-buffer))
       :inm  "C-l" #'recenter-top-bottom
-      :im  "C-h" #'backward-delete-char
+      :im   "C-h" #'backward-delete-char
+      :im   "C-v" (cmd! (evil-paste-from-register ?\"))
 
       :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
@@ -469,6 +467,7 @@ This is sensible default behaviour, and integrates it into evil."
       :im "C-k" #'previous-line-or-history-element)
 
 (map! :map vertico-map
+      :im "C-w" #'vertico-directory-delete-word
       :im "C-d" #'consult-dir
       :im "C-f" #'consult-dir-jump-file)
 #+end_src
@@ -565,47 +564,40 @@ this is automated using a snippet
 
 * programming
 ** indentation
-- Completion ::
-- use [[kbd:TAB][TAB]]
-- confirm the autocompletion with [[kbd:RET][RET]]  (consistent with all other programs on the os (neovim, nushell, browser...))
-- formatting :: configure language formatters externally (config-file) to use 8 spaces indentation.
+- formatting :: always configure language formatters externally (config-file) to use 8 spaces indentation.
 
+we need to re-setq some variables in the respective ~mode~ in order for them to take effect.
 #+begin_src emacs-lisp
 (advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
 
 (setq-default standard-indent 8
+              evil-shift-width standard-indent
               tab-width standard-indent
               fill-column 100
               tab-always-indent t
               tab-width standard-indent
               org-indent-indentation-per-level standard-indent
-              evil-shift-width standard-indent
               evil-indent-convert-tabs t
               indent-tabs-mode nil)
 
-(setq-hook! 'prog-mode-hook
-  standard-indent 8)
+(after! cc-mode
+  (setq c-basic-offset standard-indent))
 
-(setq-hook! 'java-mode-hook
-  c-basic-offset standard-indent)
+(after! ruby-mode
+  (setq evil-shift-width standard-indent
+        ruby-indent-level standard-indent))
 
-(setq-hook! 'c-mode-hook
-  c-basic-offset standard-indent)
+(after! rustic
+  (setq rustic-indent standard-indent
+        rustic-indent-offset standard-indent))
 
-(setq-hook! 'nushell-ts-mode-hook
-  nushell-ts-mode-indent-offset 8)
-
-(setq-hook! 'rustic-mode-hook
-  rustic-indent standard-indent
-  rustic-indent-offset standard-indent)
-
-(setq-hook! 'verilog-mode-hook
-  verilog-case-indent standard-indent
-  verilog-cexp-indent standard-indent
-  verilog-indent-level standard-indent
-  verilog-indent-level-behavioral standard-indent
-  verilog-indent-level-declaration standard-indent
-  verilog-indent-level-module standard-indent)
+(after! verilog-mode
+  (setq verilog-case-indent standard-indent
+        verilog-cexp-indent standard-indent
+        verilog-indent-level standard-indent
+        verilog-indent-level-behavioral standard-indent
+        verilog-indent-level-declaration standard-indent
+        verilog-indent-level-module standard-indent))
 #+end_src
 
 *** rationale
@@ -625,20 +617,6 @@ In short, 8-char indents make things easier to read, and have the added benefit 
 
 - consistency :: the only reliable, repeatable, transportable way to ensure that indentation remains consistent across viewing environments is to indent you code using only spaces.
 - Using tabs for indentation and spaces for alignment requires extra care, and a carefully tuned editor setup which understands the semantic difference between the tabs and the spaces which follow.  In any sizeable team, deviations in formatting will creep in.  Enforcing it will just be a big waste of time, compared to the simplicity of banishing tabs.
-
-** clean whitespace
-- more than 1 empty line is inconsistent and makes things unneccessary hard to read.
-#+begin_src emacs-lisp
-(defun z-clean-whitespace ()
-  "Deletes consecutive empty lines if # > 1, and strips trailing whitespace."
-  (interactive)
-  (delete-trailing-whitespace)
-  (save-excursion
-    (goto-char (point-min))
-    (while (re-search-forward "\n\n+" nil t)
-      (replace-match "\n\n")))
-  (basic-save-buffer))
-#+end_src
 
 * org
 #+begin_src emacs-lisp
@@ -997,7 +975,7 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
 
   (defun z-doct-expand-projects (&optional projects parent-path)
     "PROJECTS :: nil | used for recursion
-  PARENT-PATH :: nil | used for recursion"
+PARENT-PATH :: nil | used for recursion"
     (mapcar (lambda (project)
               (let* ((props (cdr project))
                      (tag (car project))
@@ -1144,7 +1122,6 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
   )
 #+end_src
 
-
 * latex
 #+begin_src emacs-lisp
 (setq +latex-viewers '(zathura))
@@ -1155,11 +1132,6 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
 (after! verilog-mode
   (add-hook! 'verilog-mode-hook (ligature-mode -1)) ;; don't display: <= as \leq
   (setq verilog-auto-newline nil))
-#+end_src
-
-* nushell-mode
-#+begin_src emacs-lisp
-(use-package! nushell-ts-mode)
 #+end_src
 
 * dictionary

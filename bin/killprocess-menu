@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+# ---
+# title:  killprocess
+# author: emil lenz
+# email:  emillenz@protonmail.com
+# date:   2023-05-08
+# ---
+
+def main
+        icon = ''
+        ps_data = `ps -e`.lines.drop(1)
+
+        pss = {}
+        ps_data.each do |line|
+                columns = line.split(/\s+/)
+                name = columns[4..].join(' ').strip
+                id = columns[1]
+                pss[name] = id
+                # puts pss
+        end
+
+        ps_selected = `echo "#{pss.keys.join("\n")}" | rofi -dmenu -i -no-custom -p "#{icon}  killprocess >"`.strip
+        exit 1 if ps_selected == ''
+
+        `sudo kill #{pss[ps_selected]}`
+
+        `dunstify "#{icon}  killprocess" #{ps_selected}`
+end
+
+main if __FILE__ == $PROGRAM_NAME

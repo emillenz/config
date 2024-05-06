@@ -153,11 +153,11 @@ mode "find" {
 
 $map $mod+space mode "leader"
 mode "leader" {
-        $map $mod+a           $cmd $bin/audio $esc
+        $map $mod+a           $cmd $bin/audio-output-menu $esc
         $map --release $mod+s $cmd $screenshot_sel $esc
         $map $mod+shift+s     $cmd $screenshot_full $esc
-        $map $mod+k           $cmd $bin/killprocess $esc
-        $map $mod+d           $cmd fd . ~/.screenlayout | $rofi '󰍹  display-layout >' | bash $esc
+        $map $mod+k           $cmd $bin/killprocess-menu $esc
+        $map $mod+d           $cmd fd . ~/.screenlayout | $rofi '󰍹  display-layout >' | sh $esc
         $map $mod+q           mode "quit"
         $map Escape           mode "default"
 }

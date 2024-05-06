@@ -55,8 +55,7 @@
         +everywhere); come to the dark side, we have cookies
        file-templates    ; auto-snippets for empty files
        fold              ; (nigh) universal code folding
-       (format
-        +onsave)  ; automated prettiness
+       (format +onsave)   ; automated prettiness with +onsave
        ;; god               ; run Emacs commands without modifier keys
        lispy             ; vim for lisp, for people who don't like vim
        ;; multiple-cursors  ; editing in many places at once
@@ -193,15 +192,11 @@
        ;;raku              ; the artist formerly known as perl6
        ;;rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
-       ;; (ruby
-       ;;  +lsp)
-       ;; +rails
-                                        ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       (rust
-        +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       (ruby +lsp +tree-sitter) ;; +rails 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
+       (rust +lsp)       ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;(scheme +guile)   ; a fully conniving family of lisps
-       ;; sh                ; she sells {ba,z,fi}sh shells on the C xor
+       (sh +fish +lsp +tree-sitter)                ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
        ;;solidity          ; do you need a blockchain? No.
        ;; (swift +lsp)             ; who asked for emoji variables?

@@ -28,7 +28,7 @@ set -gx PATH $PATH ~/.config/{bin, emacs/bin} ~/.cargo/bin
 set -gx EDITOR "emacsclient -nw"
 set -gx VISUAL "emacsclient -nw"
 set -gx BROWSER firefox
-set -gx PAGER bat
+set -gx PAGER "bat"
 set -gx MANPAGER "bat --language man"
 set -gx MANWIDTH 100
 set -gx FZF_DEFAULT_OPTS "--reverse --height 16 --color light --scheme path" # os-consistent completion (rofi, emacs, fzf ..)
@@ -36,6 +36,8 @@ set -gx FZF_DEFAULT_OPTS "--reverse --height 16 --color light --scheme path" # o
 alias e="emacsclient -nw"
 alias rm="rm --recursive --verbose --interactive=once"
 alias yay="yay --noconfirm"
+
+abbr set set -l
 
 # KEYBINDINGS
 fzf_configure_bindings --history=\cr --directory=\cf --git_log= --git_status= --variables= --processes= # disable unused

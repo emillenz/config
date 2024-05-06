@@ -168,12 +168,20 @@ i'm very opinionated and have high standards regarding design process and the ph
 - the aestetic and efficiency of a decluttered and maximized screen is (imo) unmatched.
 - the theory is to make switching so ergonomic and instantaneous, engrained into muscle memory, that you are faster that people using, say 2 monitors.
 
-** shell: fish / python
-a shell only exists for simple system management (launching processes, etc) and interactive use (filtering, text, redirections, etc, not for heavy data processing).  for any scripting beyond that you should always opt towards a proper scripting language (python).  i highly believe that any scripting away from interactive use should be done in a proper language (python).
+** shell: fish / ruby
+a shell only exists for simple system management (launching processes, etc) and interactive use (filtering, text, redirections, etc, not for heavy data processing).  for any scripting beyond that you should always opt towards a proper scripting language.  i highly believe that any scripting away from interactive use should be done in a proper language.
+bash is coherent with respect to the mind of certain benevolent dictator.  bash is a steaming pile of inconsistent user-unfrienly shit.
+fish has consistent syntax, inbuilt autocompletion and is configured with keybindings to make navigation efficient & overheadfree.
+On the command line, I don't really need a full language with a repl-like interface. I want a fast and quick way to interface with the OS. Anything beyond that should be written in a proper language (ruby) that will inherently bring more benefits.
+
+*** ruby rationale
 even though it may have a steeper learning curve and requires a more structured and less hacky approach to scripting.  but once fluent in it, it smoothly bridges the gap between compiled highly efficient languages such as rust or c and the interactive nature of a shell.
 when writing scripts one should always use the long options of flags in order to increase code readability and maintaineability (not needing to keep this gazillion of abbreviations in your memory for each individual program).  this makes understanding the script for people who may not be familiar with the programs easier to understand and modify (reduce elitism in free software).  (this does not slow you down at all, this is what an lsp and codecompletion is for).
-bash is a steaming pile of inconsistent user-unfrienly shit.  fish has consistent syntax, inbuilt autocompletion and is configured with keybindings to make navigation efficient & overheadfree.
-On the command line, I don't really need a full language with a repl-like interface. I want a fast and quick way to interface with the OS. Anything beyond that should be written in a proper language that will inherently bring more benefits.
+
+choosen over python since it is well designed, has a very minimal, clean, consistent syntax.  close interconnectedness with ~sh~ by running ~sh~-commands with ~``~.
+i love the fact that everything is a expression (has a value). This means, it's a extreme joy for functional programers.
+
+Python is pretty badly designed, lots inconsistencies. Its syntax is a syntax soup, and its semantics a semantics soup.
 
 ** terminal: alacritty & tmux
 i am of the strong opinion that you should minimize things you do repeatedly.  thus when closing the terminal by accident => can be restored instead of redoing everything.  launching emacs on every startup? => just run the daemon in the background => always accessible & no waiting time.

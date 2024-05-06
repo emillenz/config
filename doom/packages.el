@@ -12,5 +12,3 @@
 (package! modus-themes)
 (package! verilog-mode)
 (package! devdocs)
-(package! nushell-ts-mode :recipe '(:host github :repo "herbertjones/nushell-ts-mode"))
-(package! fish-mode)

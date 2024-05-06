@@ -172,8 +172,8 @@
 ;; [[file:config.org::*vim editing][vim editing:1]]
 (map! :inmv "C-s" (cmd! (evil-normal-state) (basic-save-buffer))
       :inm  "C-l" #'recenter-top-bottom
-      :im   "C-h" #'backward-delete-char
-      :im   "C-v" (cmd! (evil-paste-from-register ?\"))
+      :i    "C-h" #'backward-delete-char
+      :i    "C-v" (cmd! (evil-paste-from-register ?\"))
 
       :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
@@ -197,15 +197,15 @@
       :nmv  "g/"  #'+default/search-buffer)
 
 (map! :after minibuffer :map minibuffer-mode-map
-      :im "C-j"  #'next-line-or-history-element
-      :im "C-k"  #'previous-line-or-history-element)
+      :i "C-j"  #'next-line-or-history-element
+      :i "C-k"  #'previous-line-or-history-element)
 
 (map! :after company :map company-mode-map
-      :im "C-j" #'company-complete-common)
+      :i "C-j" #'company-complete-common)
 
 ;; HACK :: make c-h work everywhere
 (map! :after company :map company-active-map "C-h" #'backward-delete-char)
-(map! :after evil-org :map evil-org-mode-map :im "C-h" #'backward-delete-char)
+(map! :after evil-org :map evil-org-mode-map :i "C-h" #'backward-delete-char)
 ;; vim editing:1 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:2]]

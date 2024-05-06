@@ -1,9 +1,10 @@
 #!/usr/bin/env ruby
 # ---
-# title:    audio output selection menu
-# author:   emil lenz
-# email:    emillenz@protonmail.com
-# date:     2023-05-07
+# title:  audio output selection menu
+# author: emil lenz
+# email:  emillenz@protonmail.com
+# date:   2023-05-07
+# dependencies: rofi, pactl, dunst
 # ---
 
 require 'json'

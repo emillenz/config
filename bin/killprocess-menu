@@ -4,6 +4,7 @@
 # author: emil lenz
 # email:  emillenz@protonmail.com
 # date:   2023-05-08
+# dependencies: rofi, dunst
 # ---
 
 def main

@@ -17,7 +17,7 @@ fish_color_cwd             '#005f5f'
 fish_color_cwd_root        '#a60000'
 fish_color_status          '#a60000'
 fish_color_cancel          '#721045' --reverse
-fish_color_search_match    --background='#c0deff'
+fish_color_search_match    --background='#f3d000' --bold
 fish_color_history_current '#c0deff' --bold
 
 fish_pager_color_prefix '#0031a9' --bold --underline

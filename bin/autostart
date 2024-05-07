@@ -13,29 +13,25 @@ def main
                 'emacs --daemon && emacsclient --reuse-frame',
                 'unclutter',
                 'batsignal -bpe -w 50 -c 20 -d 5',
-                'firefox',
-                'firefox --new-window https://chat.openai.com',
-                'firefox --new-window https://spotify.com',
-                'keepassxc'
+                'keepassxc',
+                'firefox ; firefox --new-window https://chat.openai.com ; firefox --new-window https://spotify.com',
+                'sudo xremap --watch=device ~/.config/xremap/config.yml'
         ]
 
         ps_data = `ps -e`.lines.drop(1)
 
+        # get running ps names
         ps_running = ps_data.map do |line|
-                line.split(/\s+/) [4..]
-                    .join(' ')
-                    .strip
+                line.split(/\s+/) [4..].join(' ').strip
         end
 
         processes.each do |prog|
-                `#{prog} &` unless ps_running.include?(prog.split[0])
+                `#{prog} &>/dev/null & disown` unless ps_running.include?(prog.split[0])
         end
 
-        `pgrep xremap || sudo xremap --watch=device ~/.config/xremap/config.yml &>/dev/null &`
-
         `xsetroot -solid '#ffffff'`
-        `xset dpms 0 0 0 && xset s off` # never screensave / turn screen off (do manually if needed)
-        `xset r off`
+        `xset dpms 0 0 0; xset s off`
+        `sleep 1 && xset r off` # HACK: wait for xremap
 end
 
 main if __FILE__ == $PROGRAM_NAME

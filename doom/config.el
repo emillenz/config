@@ -78,8 +78,11 @@
                       ("^CAPTURE" :ignore t)
                       ("^\\*Org Select" :side bottom))))
 
-(set-popup-rules! '(("^\\*lsp-help" :side bottom)
-                    ("^\\*info" :ignore t)))
+(after! info
+  (set-popup-rule! "^\\*info" :ignore t))
+
+(after! lsp-mode
+  (set-popup-rule! "^\\*lsp-help" :side 'bottom))
 ;; window layout & behavior:1 ends here
 
 ;; [[file:config.org::*window layout & behavior][window layout & behavior:2]]

@@ -113,8 +113,11 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
                       ("^CAPTURE" :ignore t)
                       ("^\\*Org Select" :side bottom))))
 
-(set-popup-rules! '(("^\\*lsp-help" :side bottom)
-                    ("^\\*info" :ignore t)))
+(after! info
+  (set-popup-rule! "^\\*info" :ignore t))
+
+(after! lsp-mode
+  (set-popup-rule! "^\\*lsp-help" :side 'bottom))
 #+end_src
 
 - centered windows :: better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).

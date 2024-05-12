@@ -5,21 +5,62 @@
 #+property: header-args:yaml :tangle config.yml :comments link
 
 * general notes
-- key-repetition :: disable it.
-  - this causes bad habits of you holding down a key instead of moving intelligently and fast using the appropriate motion (not holding down [[kbd:j][j]], istead using ~c-d~. not spamming delete, instead using ~d...~).
+- key-repetition :: disable it.  it causes bad habits of you holding down a key instead of moving intelligently and fast using the appropriate motion (not holding down [[kbd:j][j]], istead using ~c-d~. not spamming delete, instead using ~d...~).
 - esc :: remapped ergonomically to [[kbd:capslock][capslock]]
-- thumbs :: super & alt (since the have analogous functionality) => wm and in app navigation. (remapped super, since it is unergonomical to hold down)
-- ctrl-keys :: get in the habit of pressing the control key's with the palm of your wrists for maximum comfort. (assuming you have a mechanical keyboard).
-- ctrl-keys :: make it a habit to press the control key's with the palm of your wrists for maximum comfort.
-- webbrowser :: remap to make consistent with global navigation & completion scheme.
-- insert-mode :: make using [[kbd:c-u][c-u]], [[kbd:c-w][c-w]], [[kbd:c-h][c-h]] a habit.  it is more ergonomic and faster than using the incredibly unergonomic and hard to reach [[kbd:backspace][backspace]].
-- completion menus :: navigate: [[kbd:c-j][c-j]], [[kbd:c-k][c-k]], confirm: [[kbd:RET][RET]], next-field: [[kbd:TAB][TAB]]
+- super :: remapped [[kbd:super][super]] to duplicate [[kbd:alt][alt]] key for more ergonomics
+- ctrl-keys :: mapped to otherwise useless [[kbd:caps]].  this is ergonomic and allows fast control key chording.  (you can also press ctrl with the palm of your wrist, however this is not possible on laptops and generally slower)
+- webbrowser :: remaped to make consistent with global navigation & completion scheme.
+- insert-mode :: make using [[kbd:c-u][c-u]], [[kbd:c-w][c-w]], [[kbd:c-h][c-h]] a habit and ditch the terribly placed [[kbd:backspace][backspace]].  it is more ergonomic and faster than using the incredibly unergonomic and hard to reach [[kbd:backspace][backspace]].
+- completion menus :: navigate: [[kbd:c-j][c-j]], [[kbd:c-k][c-k]], confirm/complete: [[kbd:TAB/RET][TAB/RET]]
 - vim layer :: we purposefully do not implement a vim-navigation layer globally, since if you are doing more than just typing something into a prompt, you should just use ~emacs-everywhere~ instead.  the implemented keybinds are consistent with vim's insert state and provide the most useful deletion commands when typing into a prompt.
 
 * layout
 i am currently forced to use ~qwerty~ due to writing exam's at my university, however once this requirement has ceeded i will return back to dvorak. dvorak is the superior layout, since it is the only ergo-layout where [[kbd:j/k][j/k]] are adjacent (for vim) and it is widely available. additionally it is more pure, not considering [[kbd:zxcv][zxcv]]-hotkeys and placing the punctuation sensibly (for programming).
 
-* symbols layer
+* minimalist ergonomic symbol layer
+- remaps the unergonomic & hard to reach symbols from the left pinky to more ergonomic   & unused keys using the control layer (ergonomic since [[kbd:ctrl][ctrl]] is mapped to [[kbd:caps][caps]])
+- greatly increases programming speed and precision (removing the hand from the homerow to type [[kbd:|][|]] or [[kbd:{}][{}]], just to make a mistake is super frustrating and slow) when typing operators (never look down at keyboard again when typing symbols. )
+  
+#+begin_src yaml
+modmap:
+  - name: global
+    remap:
+      capslock:
+        alone: esc
+        held: ctrl_l
+        alone_timeout_millis: 200
+      alt_l: super_l
+
+keymap:
+  - name: browser
+    application:
+      only: firefox
+    remap:
+      # NAVIGATION
+      C-q: c-w
+      C-s: c-l
+      # EDITING
+      C-h: backspace
+      C-w: c-backspace
+      C-u: [shift-home, delete]
+      # COMPLETION
+      C-j: down
+      C-k: up
+
+  - name: symlayer
+    remap:
+      C-7: shift-leftbrace
+      C-8: shift-rightbrace
+      C-9: leftbrace
+      C-0: rightbrace
+      C-comma: equal
+      C-dot: shift-equal
+      C-slash: backslash
+      C-semicolon: shift-backslash
+      C-space: space # NOTE :: don't interrupt fast typed command sequences by any binding
+#+end_src
+
+* full symbols layer (deprecated)
 - this greatly increases precision, typing accuracy (and speed) when typing sybols.
 - typing mistakes are worse than typing slow. since you now have to interrupt your flow, delete and then resume again.
 - the most qualitative and longterm efficient typing style is with consistent speed with a focus on avoiding typos (getting things right the first time). there is no shortcut to typing fast, you must learn first to type correct, only then should you start to speed up (and will do so naturally). if you don't focus on correctness, you will encourage and develop bad habits and mistakes into your typing that would have been easily avoideable.
@@ -60,9 +101,8 @@ we include on this symbol layer all symbols that are accessed with shift and tho
 - right has all the braces under the powerfingers (ordered by frequency: ~() -> {} -> []~)
 - ~_~ is one of the most frequently used keys for namespacing in programming => under the powerfinger (and on the other hand the counterpart: ~-~, also under powerfinger, but on the operator side).
 
-* src
-#+begin_src yaml
-# note :: unused keys
+** src
+#+begin_src yaml :tangle no
 virtual_modifiers:
   - capslock
 
@@ -131,7 +171,7 @@ keymap:
       capslock-slash: shift-key_5
 #+end_src
 
-* symbol character frequencies
+** symbol character frequencies
 this section is on measuring character frequencies, which helps optimize the layout for the programming languages you use. some symbols occur much more often than others. it’s helpful to know the distribution so that we can prioritize the layout for more frequent symbols.
 
 [[https://getreuer.info/posts/keyboards/symbol-layer/index.html][pascal getreuer]] counted how often each symbol occurs in his files. below are character frequencies counted on six different kinds of text, each column counted on at least 40k of data. units are percentages. “prose” is a mix of email and other plain text files. “mixed” is a mixed corpus.

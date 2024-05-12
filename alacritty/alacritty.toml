@@ -41,4 +41,3 @@ dynamic_padding = true
 dynamic_title = true
 startup_mode = "Maximized"
 opacity = 1.0
-class = { general = "cmd", instance = "cmd" }

@@ -46,7 +46,7 @@ $map button5 nop
 
 $map XF86MonBrightnessDown $cmd brightnessctl set 5%-
 $map XF86MonBrightnessUp   $cmd brightnessctl set 5%+
-$map XF86Display           $cmd autorandr --change
+$map XF86Display           $cmd xrandr --auto
 $map XF86ScreenSaver       $cmd $sys_screenoff
 $map XF86Sleep             $cmd $sys_sleep
 $map XF86AudioPlay         $cmd playerctl play-pause
@@ -66,12 +66,12 @@ $map $mod+period $cmd playerctl next
 $map $mod+comma  $cmd playerctl previous
 $map $mod+slash  $cmd playerctl play-pause
 
-$map $mod+j      focus next
-$map $mod+k      focus prev
+$map $mod+l      focus next
+$map $mod+h      focus prev
 $map $mod+q      kill
 $map $mod+g      $cmd rofi -show window
 $map $mod+x      $cmd rofi -show drun
-$map $mod+s      layout toggle tabbed splith
+$map $mod+t      layout toggle tabbed splith
 $map $mod+Return move workspace to output next
 
 # WORKSPACES
@@ -82,71 +82,53 @@ for_window [all] $mv 1, focus, title_window_icon no
 set $ws_cmd "cmd"
 workspace $ws_cmd output primary
 $map $mod+c workspace $ws_cmd
-$map $mod+shift+c $mv $ws_cmd; workspace $ws_cmd
+$map $mod+shift+c $cmd alacritty --class cmd --title cmd --command tmux new-session -A -s cmd $esc
 for_window [class="(?i)cmd"] $mv $ws_cmd, focus
 
 set $ws_doc "doc"
 workspace $ws_doc output primary
-$map $mod+d workspace $ws_doc
-$map $mod+shift+d $mv $ws_doc; workspace $ws_doc
+$map $mod+d workspace $ws_viewer
+$map $mod+shift+d $cmd xdg-open "$(fd --type file . ~ | $rofi '  find-file >')"
 for_window [class="(?i)zathura"] $mv $ws_doc, focus
 
 set $ws_web "web"
 workspace $ws_web output primary
 $map $mod+w workspace $ws_web
-$map $mod+shift+w $mv $ws_web; workspace $ws_web
+$map $mod+shift+w $cmd firefox --new-window
 for_window [class="(?i)firefox"] $mv $ws_web, focus
 
 set $ws_edit "edit"
 workspace $ws_edit output primary
 $map $mod+e workspace $ws_edit
-$map $mod+shift+e $mv $ws_edit; workspace $ws_edit
+$map $mod+shift+e $cmd emacsclient --reuse-frame || emacs --daemon && emacsclient --reuse-frame
 for_window [class="(?i)emacs|(?i)eclipse"] $mv $ws_edit, focus
 
 set $ws_vid "vid"
 workspace $ws_vid output primary
 $map $mod+v workspace $ws_vid
-$map $mod+shift+v $mv $ws_vid; workspace $ws_vid
+# NOTE :: copy link to clipboard > open mpv with binding to view there
+$map $mod+shift+v $cmd mpv "$(xclip -out)"
 for_window [class="(?i)mpv"] $mv $ws_vid, focus
 
 set $ws_assistant "assistant"
 workspace $ws_assistant output primary
 $map $mod+a workspace $ws_assistant
-$map $mod+shift+a $mv $ws_assistant; workspace $ws_assistant
+$map $mod+shift+a $cmd firefox --new-window https://chat.openai.com
 for_window [class="(?i)firefox" title="(?i)chatgpt"] $mv $ws_assistant, focus
 
 set $ws_music "music"
 workspace $ws_music output primary
 $map $mod+m workspace $ws_music
-$map $mod+shift+m $mv $ws_music; workspace $ws_music
+$map $mod+shift+m $cmd firefox --new-window https://spotify.com
 for_window [class="(?i)firefox" title="(?i)spotify"] $mv $ws_music, focus
 
-$map $mod+1       workspace 1
-$map $mod+shift+1 $mv 1; workspace 1
-$map $mod+2       workspace 2
-$map $mod+shift+2 $mv 2; workspace 2
-$map $mod+3       workspace 3
-$map $mod+shift+3 $mv 3; workspace 3
-$map $mod+4       workspace 4
-$map $mod+shift+4 $mv 4; workspace 4
+$map $mod+1 workspace 1
 
-$map $mod+o mode "open"
-mode "open" {
-        $map $mod+c       $cmd alacritty --class cmd --title cmd --command tmux new-session -A -s cmd $esc
-        $map --release    $mod+shift+e $cmd emacsclient --eval '(emacs-everywhere)' $esc
-        $map $mod+e       $cmd emacsclient --reuse-frame || emacs --daemon && emacsclient --reuse-frame $esc
-        $map $mod+v       $cmd mpv "$(xclip -o)" $esc
-        $map $mod+a       $cmd firefox --new-window https://chat.openai.com $esc
-        $map $mod+m       $cmd firefox --new-window https://spotify.com $esc
-        $map $mod+w       $cmd firefox --new-window $esc
-        $map Escape mode "default"
-}
-
-$map $mod+f mode "find"
-mode "find" {
+$map $mod+s mode "search_file"
+mode "search_file" {
         $map $mod+c $cmd xdg-open "$(fd --extension pdf . ~/Documents/uni/cs/s2 | $rofi '  find-file >')" $esc
         $map $mod+l $cmd xdg-open "$(fd . ~/Documents/literature/source | $rofi '  find-file >')" $esc
-        $map $mod+f $cmd xdg-open "$(fd --type file . ~ | $rofi '  find-file >')" $esc
+        $map $mod+s $cmd xdg-open "$(fd --type file . ~ | $rofi '  find-file >')" $esc
         $map $mod+d $cmd xdg-open "$(fd --extension pdf . ~/Downloads | $rofi '  find-file >')" $esc
         $map Escape mode "default"
 }
@@ -165,7 +147,7 @@ mode "leader" {
 mode "quit" {
         $map $mod+e           $cmd i3-msg exit $esc
         $map $mod+q           $cmd $sys_sleep $esc
-        $map $mod+shift+q     $cmd systemctl hibernate $esc
+        $map $mod+shift+q     $cmd systemctl poweroff $esc
         $map $mod+r           $cmd i3-msg restart $esc
         $map $mod+shift+r     $cmd systemctl reboot $esc
         $map $mod+o           $cmd $sys_screenoff $esc

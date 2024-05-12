@@ -13,6 +13,9 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 - i use: ~z-~ (lenZ) in user defined functions and variables to distinguish them clearly from package related ones.
 - lazyload packages using ~after!~.  this keeps emacs efficent, since it now only loads the settings & packages when they are actually needed (no emacs bankruptcy).
 - i encourage you to master the tool that you are using.  this means reading the documentation, keybinding cheatsheets for the tools you are using (ex: vertico).  additionally when something is repetetive / unefficcient, look up if there exists a command to do what you need to get done.
+  + try to first fundamentally understand & master the functionality your tool offers.  then you can assess and see if a extension really provides value to you, or wether that functionality is already included.
+    + eg: all the plugins like vim easymotion, avy-goto-char etc. are bloat and not needed, since a faster, more powerful, inter-line function already exitsts: incremental-search: [[kbd:/, ?][/, ?]]
+
 
 * user
 #+begin_src emacs-lisp
@@ -177,9 +180,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 ** leader
 #+begin_src emacs-lisp
 (setq doom-leader-key "SPC"
-      doom-leader-alt-key "M-SPC"
-      doom-localleader-key ","
-      doom-leader-alt-key "M-,")
+      doom-localleader-key ",")
 
 (map! :leader
       (:prefix "c"
@@ -193,6 +194,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 
 ** global navigation scheme
 - simplified, fast window & buffer navigation (vim makes it overly complex: window-left/right/up/down, kill-buffer/close-window -> next/prev, quit)
+  - c-w is all you need, since if you have more than 2 splits open at a time you are doing something wrong anyways
 - follows the os-consistent keymap, using alt for the only & essential navigational commands (there may better ones for what you want to achive => inside leadermode)
 - tabs ::
   - open buffers in specific tabs in order to hotswitch between them.  (ex: working on 3 project files) => one maximized buffer open per tab
@@ -202,32 +204,23 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
   - then you can hotkey to that exact file instantly.
   - 3 simultaneous files are enough for all projects, if we enable more, the overhead becomes too large.  (you would't open and manage 5 splits either, would you?)
 - buffers ::
-  - use last-buffer [[kbd:C-^][C-^]]  to alternate/go-back to last and find-buffer.  [[kbd:M-g][M-g]] for pulling up arbitrary buffers
+  - use last-buffer [[kbd:C-^][C-^]]  to alternate/go-back to last and find-buffer.  [[kbd:C-g][C-g]] for pulling up arbitrary buffers
 - efficiency :: they are the most efficient way of navigating between multiple different files/buffer at the same time (most efficient way i have found to introduce little overhead when context-switching and remaining distractionfree)
 - splits :: never create splits for buffers, prefer the full screen, full focus, no distractions - workflow.  (no multitasking, no clutter)
   - when emacs creates splits we must handle them (includes minimal bindings for switching and closing splits)
-- terminal :: we never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...)
-  - instead if needed we can execute oneliners with ~(async-shell-command)~
+- terminal :: we never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...).  instead all we do is use [[kbd:M-!, M-&, M-|]] if more is needed than that we should switch over to the proper shell anyway.
 
 #+begin_src emacs-lisp
-(map! :map 'override
-      :inmv "M-j" #'next-window-any-frame
-      :inmv "M-k" #'previous-window-any-frame
-      :inmv "M-q" #'kill-buffer-and-window
-      :inmv "M-1" (cmd! (tab-bar-select-tab 1))
-      :inmv "M-2" (cmd! (tab-bar-select-tab 2))
-      :inmv "M-3" (cmd! (tab-bar-select-tab 3))
-      :inmv "M-4" (cmd! (tab-bar-select-tab 4))
-      :inmv "M-o" #'find-file
-      :inmv "M-f" #'consult-find
-      :inmv "M-F" (cmd! (consult-find "~"))
-      :inmv "M-g" #'consult-buffer
-      :inmv "M-r" #'consult-recent-file
-      :inmv "M-c" #'async-shell-command
-
-      :inmv "C--" #'doom/decrease-font-size
-      :inmv "C-=" #'doom/increase-font-size
-      :inmv "C-0" #'doom/reset-font-size)
+(map! :nm "C-w" #'next-window-any-frame
+      :nm "C-q" #'kill-buffer-and-window
+      :nm "C-1" (cmd! (tab-bar-select-tab 1))
+      :nm "C-2" (cmd! (tab-bar-select-tab 2))
+      :nm "C-3" (cmd! (tab-bar-select-tab 3))
+      :nm "C-4" (cmd! (tab-bar-select-tab 4))
+      :nm "C-f" #'find-file
+      :nm "C-s" #'consult-find          ;; search (file)
+      :nm "C-r" #'consult-recent-file   ;; recent file
+      :nm "C-g" #'consult-buffer)       ;; goto
 #+end_src
 
 - we never want visual indication for tabs.  instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.
@@ -273,8 +266,7 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
 - completion :: select & activate: [[kbd:C-j/k][C-j/k]], superior to [[kbd:TAB][TAB]] since it is faster & more ergonomic to navigate between entries.  confirm/exit: [[kbd:RET][RET]]
 
 #+begin_src emacs-lisp
-(map! :inmv "C-s" (cmd! (evil-normal-state) (basic-save-buffer))
-      :inm  "C-l" #'recenter-top-bottom
+(map! :nm   "C-l" #'recenter-top-bottom
       :i    "C-h" #'backward-delete-char
       :i    "C-v" (cmd! (evil-paste-from-register ?\"))
 
@@ -304,6 +296,7 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
       :i "C-k"  #'previous-line-or-history-element)
 
 (map! :after company :map company-mode-map
+      :i "TAB" #'company-complete-common
       :i "C-j" #'company-complete-common)
 
 ;; HACK :: make c-h work everywhere
@@ -324,25 +317,14 @@ This is sensible default behaviour, and integrates it into evil."
     (setq evil-ex-search-pattern (list str t t))))
 #+end_src
 
-*** instant jumping
-- emacs's answer to the mouse (even more efficient)
-- override the otherwise useless [[kbd:s][s]] key with a precise char jump.  no more relative line jumping and then [[kbd:f][f]] or [[kbd:t][t]] jumping inline, or spamming [[kbd:hjkl][hjkl]]  instead just jump to the exact position you need to get to immediately without the mental overhead (of doing both steps).
-- use [[kbd:f/t][f/t]] inline and [[kbd:s/S][s/S]] when jumping inter-line
-#+begin_src emacs-lisp
-(map! :map evil-snipe-local-mode-map ;; HACK :: need to override evil-snipe
-      :nmvo "s" #'evil-avy-goto-char-2-below
-      :nmvo "S" #'evil-avy-goto-char-2-above)
-#+end_src
-
 *** evil surround operator
 - for adding delimiters around objects.
 - very frequently used => gets a first-level-mapping.
 #+begin_src emacs-lisp
 (map! :map evil-operator-state-map
-      "`" #'evil-surround-edit)
+      "gs" #'evil-surround-edit)
 
-(map! :nmv "`" #'evil-surround-region
-      :nmv "`" #'evil-surround-region)
+(map! :nmv "gs" #'evil-surround-region)
 #+end_src
 
 *** Alignment
@@ -384,11 +366,12 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "d" #'dired-do-delete
       :nm "x" #'dired-do-chmod
       :nm "s" #'dired-sort-toggle-or-edit
-      :nm "o" #'find-file
+      :nm "o" #'dired-open-xdg
       :nm "p" #'dired-do-print
       :nm "y" #'dired-copy-filename-as-kill
       :nm "z" #'dired-do-compress
       :nm "." #'dired-omit-mode
+      :nm "e" #'dired-create-empty-file
       :nm "+" #'dired-create-directory)
 
 (map! :map dired-mode-map :localleader :after dired
@@ -502,7 +485,7 @@ in each new file systematically insert heading metadata (as comments) with the f
 - track your coding/writing progress over the years and just generally it is important to document the timing of things, to analyze/order/reconstruct them.
 - info :: short document description/summary, think of it as a docstring for the file with this the reader should know what the document is about in one line.
 
-this is automated using a snippet 
+this is automated using a snippet
 [[file:snippets/org-mode/header][org-mode-header]]
 
 #+begin_src emacs-lisp

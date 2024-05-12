@@ -3,7 +3,9 @@
 #  author: emil lenz
 #  email:  emillenz@protonmail.com
 #  date:   2024-05-05
-#  info:   we color prompt-background & add a newline in order to make the prompts visually distictive from command output.
+#  info:   we color prompt-background & add a newline in order to make the prompts visually
+#  distictive from command output.  (newline separation allows for tmux copy-mode navigation between
+#  commands using: }{ )
 #  ---
 
 function fish_prompt

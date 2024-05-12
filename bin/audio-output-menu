@@ -4,7 +4,7 @@
 # author: emil lenz
 # email:  emillenz@protonmail.com
 # date:   2023-05-07
-# dependencies: rofi, pactl, dunst
+# dependencies: rofi, pamixer, dunst
 # ---
 
 require 'json'

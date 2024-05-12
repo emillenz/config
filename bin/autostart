@@ -14,7 +14,9 @@ def main
                 'unclutter',
                 'batsignal -bpe -w 50 -c 20 -d 5',
                 'keepassxc',
-                'firefox ; firefox --new-window https://chat.openai.com ; firefox --new-window https://spotify.com',
+                'firefox',
+                'firefox --new-window https://chat.openai.com',
+                'firefox --new-window https://spotify.com',
                 'sudo xremap --watch=device ~/.config/xremap/config.yml'
         ]
 

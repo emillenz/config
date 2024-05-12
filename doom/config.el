@@ -126,9 +126,7 @@
 
 ;; [[file:config.org::*leader][leader:1]]
 (setq doom-leader-key "SPC"
-      doom-leader-alt-key "M-SPC"
-      doom-localleader-key ","
-      doom-leader-alt-key "M-,")
+      doom-localleader-key ",")
 
 (map! :leader
       (:prefix "c"
@@ -141,24 +139,16 @@
 ;; leader:1 ends here
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:1]]
-(map! :map 'override
-      :inmv "M-j" #'next-window-any-frame
-      :inmv "M-k" #'previous-window-any-frame
-      :inmv "M-q" #'kill-buffer-and-window
-      :inmv "M-1" (cmd! (tab-bar-select-tab 1))
-      :inmv "M-2" (cmd! (tab-bar-select-tab 2))
-      :inmv "M-3" (cmd! (tab-bar-select-tab 3))
-      :inmv "M-4" (cmd! (tab-bar-select-tab 4))
-      :inmv "M-o" #'find-file
-      :inmv "M-f" #'consult-find
-      :inmv "M-F" (cmd! (consult-find "~"))
-      :inmv "M-g" #'consult-buffer
-      :inmv "M-r" #'consult-recent-file
-      :inmv "M-c" #'async-shell-command
-
-      :inmv "C--" #'doom/decrease-font-size
-      :inmv "C-=" #'doom/increase-font-size
-      :inmv "C-0" #'doom/reset-font-size)
+(map! :nm "C-w" #'next-window-any-frame
+      :nm "C-q" #'kill-buffer-and-window
+      :nm "C-1" (cmd! (tab-bar-select-tab 1))
+      :nm "C-2" (cmd! (tab-bar-select-tab 2))
+      :nm "C-3" (cmd! (tab-bar-select-tab 3))
+      :nm "C-4" (cmd! (tab-bar-select-tab 4))
+      :nm "C-f" #'find-file
+      :nm "C-s" #'consult-find          ;; search (file)
+      :nm "C-r" #'consult-recent-file   ;; recent file
+      :nm "C-g" #'consult-buffer)       ;; goto
 ;; global navigation scheme:1 ends here
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:2]]
@@ -173,8 +163,7 @@
 ;; global navigation scheme:2 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:1]]
-(map! :inmv "C-s" (cmd! (evil-normal-state) (basic-save-buffer))
-      :inm  "C-l" #'recenter-top-bottom
+(map! :nm   "C-l" #'recenter-top-bottom
       :i    "C-h" #'backward-delete-char
       :i    "C-v" (cmd! (evil-paste-from-register ?\"))
 
@@ -204,6 +193,7 @@
       :i "C-k"  #'previous-line-or-history-element)
 
 (map! :after company :map company-mode-map
+      :i "TAB" #'company-complete-common
       :i "C-j" #'company-complete-common)
 
 ;; HACK :: make c-h work everywhere
@@ -224,18 +214,11 @@ This is sensible default behaviour, and integrates it into evil."
     (setq evil-ex-search-pattern (list str t t))))
 ;; vim editing:2 ends here
 
-;; [[file:config.org::*instant jumping][instant jumping:1]]
-(map! :map evil-snipe-local-mode-map ;; HACK :: need to override evil-snipe
-      :nmvo "s" #'evil-avy-goto-char-2-below
-      :nmvo "S" #'evil-avy-goto-char-2-above)
-;; instant jumping:1 ends here
-
 ;; [[file:config.org::*evil surround operator][evil surround operator:1]]
 (map! :map evil-operator-state-map
-      "`" #'evil-surround-edit)
+      "gs" #'evil-surround-edit)
 
-(map! :nmv "`" #'evil-surround-region
-      :nmv "`" #'evil-surround-region)
+(map! :nmv "gs" #'evil-surround-region)
 ;; evil surround operator:1 ends here
 
 ;; [[file:config.org::*Alignment][Alignment:1]]
@@ -265,11 +248,12 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "d" #'dired-do-delete
       :nm "x" #'dired-do-chmod
       :nm "s" #'dired-sort-toggle-or-edit
-      :nm "o" #'find-file
+      :nm "o" #'dired-open-xdg
       :nm "p" #'dired-do-print
       :nm "y" #'dired-copy-filename-as-kill
       :nm "z" #'dired-do-compress
       :nm "." #'dired-omit-mode
+      :nm "e" #'dired-create-empty-file
       :nm "+" #'dired-create-directory)
 
 (map! :map dired-mode-map :localleader :after dired

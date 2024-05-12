@@ -38,13 +38,13 @@ alias rm="rm --recursive --verbose --interactive=once"
 alias yay="yay --noconfirm"
 
 # KEYBINDINGS
-fzf_configure_bindings --history=\cr --directory=\cf --git_log= --git_status= --variables= --processes= # NOTE :: disable unused
+fzf_configure_bindings --history=\er --directory=\ef --git_log= --git_status= --variables= --processes= # NOTE :: disable useless
 bind -M normal U redo
 bind -M normal K __fish_man_page
-bind -M insert \ct accept-autosuggestion
+bind -M insert \ca accept-autosuggestion
 bind -M insert \t complete
 bind -M insert \ck up-or-search
 bind -M default \ee edit_command_buffer
-bind -M default \ep __fish_paginate
+bind -M insert \ee edit_command_buffer
+bind -M default V __fish_preview_current_file
 bind -M default \el __fish_list_current_token
-bind -M default \ev __fish_preview_current_file

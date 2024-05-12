@@ -1,13 +1,10 @@
-# [[file:config.org::*src][src:1]]
-virtual_modifiers:
-  - capslock
-
+# [[file:config.org::*layout][layout:1]]
 modmap:
   - name: global
     remap:
       capslock:
         alone: esc
-        held: capslock
+        held: ctrl_l
         alone_timeout_millis: 200
       alt_l: super_l
 
@@ -27,40 +24,4 @@ keymap:
       # COMPLETION
       C-j: down
       C-k: up
-
-  - name: symlayer
-    remap:
-      capslock-w: shift-comma
-      capslock-e: shift-dot
-      capslock-r: slash
-      capslock-t: grave
-
-      capslock-s: shift-equal
-      capslock-d: equal
-      capslock-f: minus
-      capslock-g: shift-key_3
-
-      capslock-x: shift-key_1
-      capslock-c: shift-key_6
-      capslock-v: slash
-      capslock-b: shift-grave
-
-      capslock-y: shift-key_7
-      capslock-h: shift-backslash
-      capslock-n: backslash
-
-      capslock-u: shift-semicolon
-      capslock-j: shift-minus
-      capslock-m: shift-key_4
-
-      capslock-i: leftbrace
-      capslock-o: rightbrace
-      capslock-k: shift-key_9
-      capslock-l: shift-key_0
-      capslock-comma: shift-leftbrace
-      capslock-dot: shift-rightbrace
-
-      capslock-p: shift-key_2
-      capslock-semicolon: shift-slash
-      capslock-slash: shift-key_5
-# src:1 ends here
+# layout:1 ends here

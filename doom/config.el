@@ -137,18 +137,18 @@
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:1]]
 (map! :map 'override
-      :inmv "M-w" #'next-window-any-frame
-      :inmv "M-q" #'kill-buffer-and-window
-      :inmv "M-1" (cmd! (tab-bar-select-tab 1))
-      :inmv "M-2" (cmd! (tab-bar-select-tab 2))
-      :inmv "M-3" (cmd! (tab-bar-select-tab 3))
-      :inmv "M-4" (cmd! (tab-bar-select-tab 4))
-      :inmv "M-o" #'find-file
-      :inmv "M-f" #'consult-find
-      :inmv "M-F" (cmd! (consult-find "~"))
-      :inmv "M-g" #'consult-buffer
-      :inmv "M-r" #'consult-recent-file
-      :inmv "M-c" #'async-shell-command)
+      :nm "M-w" #'next-window-any-frame
+      :nm "M-q" #'kill-buffer-and-window
+      :nm "M-1" (cmd! (tab-bar-select-tab 1))
+      :nm "M-2" (cmd! (tab-bar-select-tab 2))
+      :nm "M-3" (cmd! (tab-bar-select-tab 3))
+      :nm "M-4" (cmd! (tab-bar-select-tab 4))
+      :nm "M-e" #'find-file
+      :nm "M-f" #'consult-find
+      :nm "M-F" (cmd! (consult-find "~"))
+      :nm "M-g" #'consult-buffer
+      :nm "M-r" #'consult-recent-file
+      :nm "M-c" #'async-shell-command)
 ;; global navigation scheme:1 ends here
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:2]]
@@ -314,7 +314,8 @@ This is sensible default behaviour, and integrates it into evil."
           vterm-mode)))
 
 (after! vertico
-  (setq vertico-count 16))
+  (setq vertico-count 16)
+  (vertico-flat-mode))
 
 (map! :map minibuffer-mode-map
       :im "C-j" #'next-line-or-history-element
@@ -322,8 +323,8 @@ This is sensible default behaviour, and integrates it into evil."
 
 (map! :map vertico-map
       :im "C-w" #'vertico-directory-delete-word
-      :im "C-d" #'consult-dir
-      :im "C-f" #'consult-dir-jump-file)
+      :im "M-d" #'consult-dir
+      :im "M-f" #'consult-dir-jump-file)
 ;; completion:1 ends here
 
 ;; [[file:config.org::*snippets][snippets:1]]

@@ -177,11 +177,8 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 - ~helpful-key~ and are crucial to understanding what your tools can do for you (ex: magit, dired, org-mode)
 - always keep on exploring, learning new, efficient keybindings and break your old routines for newer, more effcient one's after evaluating wether they are faster or not.
 
-** leader
+** leader ([[kbd:SPC][SPC]], [[kbd:,][,]])
 #+begin_src emacs-lisp
-(setq doom-leader-key "SPC"
-      doom-localleader-key ",")
-
 (map! :leader
       (:prefix "c"
                "r" #'lsp-rename
@@ -211,16 +208,19 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 - terminal :: we never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...).  instead all we do is use [[kbd:M-!, M-&, M-|]] if more is needed than that we should switch over to the proper shell anyway.
 
 #+begin_src emacs-lisp
-(map! :nm "C-w" #'next-window-any-frame
-      :nm "C-q" #'kill-buffer-and-window
-      :nm "C-1" (cmd! (tab-bar-select-tab 1))
-      :nm "C-2" (cmd! (tab-bar-select-tab 2))
-      :nm "C-3" (cmd! (tab-bar-select-tab 3))
-      :nm "C-4" (cmd! (tab-bar-select-tab 4))
-      :nm "C-f" #'find-file
-      :nm "C-s" #'consult-find          ;; search (file)
-      :nm "C-r" #'consult-recent-file   ;; recent file
-      :nm "C-g" #'consult-buffer)       ;; goto
+(map! :map 'override
+      :inmv "M-w" #'next-window-any-frame
+      :inmv "M-q" #'kill-buffer-and-window
+      :inmv "M-1" (cmd! (tab-bar-select-tab 1))
+      :inmv "M-2" (cmd! (tab-bar-select-tab 2))
+      :inmv "M-3" (cmd! (tab-bar-select-tab 3))
+      :inmv "M-4" (cmd! (tab-bar-select-tab 4))
+      :inmv "M-o" #'find-file
+      :inmv "M-f" #'consult-find
+      :inmv "M-F" (cmd! (consult-find "~"))
+      :inmv "M-g" #'consult-buffer
+      :inmv "M-r" #'consult-recent-file
+      :inmv "M-c" #'async-shell-command)
 #+end_src
 
 - we never want visual indication for tabs.  instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.
@@ -268,6 +268,8 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
 #+begin_src emacs-lisp
 (map! :nm   "C-l" #'recenter-top-bottom
       :i    "C-h" #'backward-delete-char
+      :m    "C-s" #'write-file
+      :in   "C-s" (cmd! (evil-force-normal-state) (basic-save-buffer))
       :i    "C-v" (cmd! (evil-paste-from-register ?\"))
 
       :nmvo "j"   #'evil-next-visual-line

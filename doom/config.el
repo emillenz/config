@@ -124,10 +124,7 @@
 (global-subword-mode 1)
 ;; misc options:1 ends here
 
-;; [[file:config.org::*leader][leader:1]]
-(setq doom-leader-key "SPC"
-      doom-localleader-key ",")
-
+;; [[file:config.org::*leader (\[\[kbd:SPC\]\[SPC\]\], \[\[kbd:,\]\[,\]\])][leader ([[kbd:SPC][SPC]], [[kbd:,][,]]):1]]
 (map! :leader
       (:prefix "c"
                "r" #'lsp-rename
@@ -136,19 +133,22 @@
                             "T" #'org-babel-detangle))
       (:prefix "t"
                "c" #'global-visual-fill-column-mode))
-;; leader:1 ends here
+;; leader ([[kbd:SPC][SPC]], [[kbd:,][,]]):1 ends here
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:1]]
-(map! :nm "C-w" #'next-window-any-frame
-      :nm "C-q" #'kill-buffer-and-window
-      :nm "C-1" (cmd! (tab-bar-select-tab 1))
-      :nm "C-2" (cmd! (tab-bar-select-tab 2))
-      :nm "C-3" (cmd! (tab-bar-select-tab 3))
-      :nm "C-4" (cmd! (tab-bar-select-tab 4))
-      :nm "C-f" #'find-file
-      :nm "C-s" #'consult-find          ;; search (file)
-      :nm "C-r" #'consult-recent-file   ;; recent file
-      :nm "C-g" #'consult-buffer)       ;; goto
+(map! :map 'override
+      :inmv "M-w" #'next-window-any-frame
+      :inmv "M-q" #'kill-buffer-and-window
+      :inmv "M-1" (cmd! (tab-bar-select-tab 1))
+      :inmv "M-2" (cmd! (tab-bar-select-tab 2))
+      :inmv "M-3" (cmd! (tab-bar-select-tab 3))
+      :inmv "M-4" (cmd! (tab-bar-select-tab 4))
+      :inmv "M-o" #'find-file
+      :inmv "M-f" #'consult-find
+      :inmv "M-F" (cmd! (consult-find "~"))
+      :inmv "M-g" #'consult-buffer
+      :inmv "M-r" #'consult-recent-file
+      :inmv "M-c" #'async-shell-command)
 ;; global navigation scheme:1 ends here
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:2]]
@@ -165,6 +165,8 @@
 ;; [[file:config.org::*vim editing][vim editing:1]]
 (map! :nm   "C-l" #'recenter-top-bottom
       :i    "C-h" #'backward-delete-char
+      :m    "C-s" #'write-file
+      :in   "C-s" (cmd! (evil-force-normal-state) (basic-save-buffer))
       :i    "C-v" (cmd! (evil-paste-from-register ?\"))
 
       :nmvo "j"   #'evil-next-visual-line

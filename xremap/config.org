@@ -8,72 +8,31 @@
 - key-repetition :: disable it.  it causes bad habits of you holding down a key instead of moving intelligently and fast using the appropriate motion (not holding down [[kbd:j][j]], istead using ~c-d~. not spamming delete, instead using ~d...~).
 - esc :: remapped ergonomically to [[kbd:capslock][capslock]]
 - super :: remapped [[kbd:super][super]] to duplicate [[kbd:alt][alt]] key for more ergonomics
-- ctrl-keys :: mapped to otherwise useless [[kbd:caps]].  this is ergonomic and allows fast control key chording.  (you can also press ctrl with the palm of your wrist, however this is not possible on laptops and generally slower)
+- ctrl-keys :: get in the habit of pressing down [[kbd:ctrl][ctrl]] using the palm of the wrist.  this is much more ergonomic, and you will never strain again (except when using laptop keyboards).
 - webbrowser :: remaped to make consistent with global navigation & completion scheme.
 - insert-mode :: make using [[kbd:c-u][c-u]], [[kbd:c-w][c-w]], [[kbd:c-h][c-h]] a habit and ditch the terribly placed [[kbd:backspace][backspace]].  it is more ergonomic and faster than using the incredibly unergonomic and hard to reach [[kbd:backspace][backspace]].
 - completion menus :: navigate: [[kbd:c-j][c-j]], [[kbd:c-k][c-k]], confirm/complete: [[kbd:TAB/RET][TAB/RET]]
 - vim layer :: we purposefully do not implement a vim-navigation layer globally, since if you are doing more than just typing something into a prompt, you should just use ~emacs-everywhere~ instead.  the implemented keybinds are consistent with vim's insert state and provide the most useful deletion commands when typing into a prompt.
+- you must learn to code blindly, this also includes all symbols and especially brackets & braces.
 
 * layout
 i am currently forced to use ~qwerty~ due to writing exam's at my university, however once this requirement has ceeded i will return back to dvorak. dvorak is the superior layout, since it is the only ergo-layout where [[kbd:j/k][j/k]] are adjacent (for vim) and it is widely available. additionally it is more pure, not considering [[kbd:zxcv][zxcv]]-hotkeys and placing the punctuation sensibly (for programming).
 
-* minimalist ergonomic symbol layer
-- remaps the unergonomic & hard to reach symbols from the left pinky to more ergonomic   & unused keys using the control layer (ergonomic since [[kbd:ctrl][ctrl]] is mapped to [[kbd:caps][caps]])
-- greatly increases programming speed and precision (removing the hand from the homerow to type [[kbd:|][|]] or [[kbd:{}][{}]], just to make a mistake is super frustrating and slow) when typing operators (never look down at keyboard again when typing symbols. )
-  
-#+begin_src yaml
-modmap:
-  - name: global
-    remap:
-      capslock:
-        alone: esc
-        held: ctrl_l
-        alone_timeout_millis: 200
-      alt_l: super_l
-
-keymap:
-  - name: browser
-    application:
-      only: firefox
-    remap:
-      # NAVIGATION
-      C-q: c-w
-      C-s: c-l
-      # EDITING
-      C-h: backspace
-      C-w: c-backspace
-      C-u: [shift-home, delete]
-      # COMPLETION
-      C-j: down
-      C-k: up
-
-  - name: symlayer
-    remap:
-      C-7: shift-leftbrace
-      C-8: shift-rightbrace
-      C-9: leftbrace
-      C-0: rightbrace
-      C-comma: equal
-      C-dot: shift-equal
-      C-slash: backslash
-      C-semicolon: shift-backslash
-      C-space: space # NOTE :: don't interrupt fast typed command sequences by any binding
-#+end_src
-
-* full symbols layer (deprecated)
+* symbols layer
 - this greatly increases precision, typing accuracy (and speed) when typing sybols.
 - typing mistakes are worse than typing slow. since you now have to interrupt your flow, delete and then resume again.
 - the most qualitative and longterm efficient typing style is with consistent speed with a focus on avoiding typos (getting things right the first time). there is no shortcut to typing fast, you must learn first to type correct, only then should you start to speed up (and will do so naturally). if you don't focus on correctness, you will encourage and develop bad habits and mistakes into your typing that would have been easily avoideable.
 - and since programmers use symbols super-frequently this makes complete and total sense to have them accessible and not having reach across the entire keyboard every second word, just to type some ~()~ or a ~_~.
 
+
 ** layout
 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 |
 |---+---+---+---+---+---+---+---+---+---|
-| ' | < | > | " | ` | & | : | [ | ] | % |
+|   | < | > | / | ` | & | : | [ | ] | % |
 |---+---+---+---+---+---+---+---+---+---|
-| ! | + | = | - | # | ∣ | _ | ( | ) | ? |
+|   | + | = | - | # | ∣ | _ | ( | ) | ? |
 |---+---+---+---+---+---+---+---+---+---|
-|   | ^ | * | / | \ | ~ | $ | { | } | @ |
+|   | ! | ^ | * | ~ | \ | $ | { | } | @ |
 |---+---+---+---+---+---+---+---+---+---|
 
 ** design principles
@@ -100,76 +59,6 @@ we include on this symbol layer all symbols that are accessed with shift and tho
 - most symbols are double tapped in some use: ~<< == && || ** \\~. so pinky keys are deliberately things that aren’t commonly double tapped
 - right has all the braces under the powerfingers (ordered by frequency: ~() -> {} -> []~)
 - ~_~ is one of the most frequently used keys for namespacing in programming => under the powerfinger (and on the other hand the counterpart: ~-~, also under powerfinger, but on the operator side).
-
-** src
-#+begin_src yaml :tangle no
-virtual_modifiers:
-  - capslock
-
-modmap:
-  - name: global
-    remap:
-      capslock:
-        alone: esc
-        held: capslock
-        alone_timeout_millis: 200
-      alt_l: super_l
-
-keymap:
-  - name: browser
-    application:
-      only: firefox
-    remap:
-      # NAVIGATION
-      M-t: c-t
-      M-q: c-w
-      M-e: c-l
-      # EDITING
-      C-h: backspace
-      C-w: c-backspace
-      C-u: [shift-home, delete]
-      # COMPLETION
-      C-j: down
-      C-k: up
-
-  - name: symlayer
-    remap:
-      capslock-q: apostrophe
-      capslock-w: shift-comma
-      capslock-e: shift-dot
-      capslock-r: shift-apostrophe
-      capslock-t: grave
-
-      capslock-a: shift-key_1
-      capslock-s: shift-equal
-      capslock-d: equal
-      capslock-f: minus
-      capslock-g: shift-key_3
-
-      capslock-x: shift-key_6
-      capslock-c: shift-key_8
-      capslock-v: slash
-      capslock-b: backslash
-
-      capslock-y: shift-key_7
-      capslock-h: shift-backslash
-      capslock-n: shift-grave
-
-      capslock-u: shift-semicolon
-      capslock-j: shift-minus
-      capslock-m: shift-key_4
-
-      capslock-i: leftbrace
-      capslock-o: rightbrace
-      capslock-k: shift-key_9
-      capslock-l: shift-key_0
-      capslock-comma: shift-leftbrace
-      capslock-dot: shift-rightbrace
-
-      capslock-p: shift-key_2
-      capslock-semicolon: shift-slash
-      capslock-slash: shift-key_5
-#+end_src
 
 ** symbol character frequencies
 this section is on measuring character frequencies, which helps optimize the layout for the programming languages you use. some symbols occur much more often than others. it’s helpful to know the distribution so that we can prioritize the layout for more frequent symbols.
@@ -213,3 +102,71 @@ this section is on measuring character frequencies, which helps optimize the lay
 
 - caveat :: what we actually care about are keys typed. but considering editor hotkeys, that’s not necessarily the same as characters written, which is what the above counts. for instance in vim, many symbol keys are hotkeys in normal mode, like ~/~ for search.
 - digits :: my conclusion is digits better go on the base layer, even for coding, contrary to “programmer” layout variants. since we need number's frequently numbered arguments to vim's commands, and sometimes for heavy data entry (calculator's, spreadsheets, etc...).
+
+* src
+#+begin_src yaml
+virtual_modifiers:
+  - capslock
+
+modmap:
+  - name: global
+    remap:
+      capslock:
+        alone: esc
+        held: capslock
+        alone_timeout_millis: 200
+      alt_l: super_l
+
+keymap:
+  - name: browser
+    application:
+      only: firefox
+    remap:
+      # NAVIGATION
+      M-t: c-t
+      M-q: c-w
+      M-e: c-l
+      # EDITING
+      C-h: backspace
+      C-w: c-backspace
+      C-u: [shift-home, delete]
+      # COMPLETION
+      C-j: down
+      C-k: up
+
+  - name: symlayer
+    remap:
+      capslock-w: shift-comma
+      capslock-e: shift-dot
+      capslock-r: slash
+      capslock-t: grave
+
+      capslock-s: shift-equal
+      capslock-d: equal
+      capslock-f: minus
+      capslock-g: shift-key_3
+
+      capslock-x: shift-key_1
+      capslock-c: shift-key_6
+      capslock-v: slash
+      capslock-b: shift-grave
+
+      capslock-y: shift-key_7
+      capslock-h: shift-backslash
+      capslock-n: backslash
+
+      capslock-u: shift-semicolon
+      capslock-j: shift-minus
+      capslock-m: shift-key_4
+
+      capslock-i: leftbrace
+      capslock-o: rightbrace
+      capslock-k: shift-key_9
+      capslock-l: shift-key_0
+      capslock-comma: shift-leftbrace
+      capslock-dot: shift-rightbrace
+
+      capslock-p: shift-key_2
+      capslock-semicolon: shift-slash
+      capslock-slash: shift-key_5
+#+end_src

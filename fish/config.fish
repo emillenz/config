@@ -41,8 +41,8 @@ alias yay="yay --noconfirm"
 fzf_configure_bindings --history=\cr --directory=\cf --git_log= --git_status= --variables= --processes= # NOTE :: disable unused
 bind -M normal U redo
 bind -M normal K __fish_man_page
-bind -M insert \t accept-autosuggestion
-bind -M insert -k nul complete # HACK ::
+bind -M insert \ct accept-autosuggestion
+bind -M insert \t complete
 bind -M insert \ck up-or-search
 bind -M default \ee edit_command_buffer
 bind -M default \ep __fish_paginate

@@ -66,16 +66,16 @@ $map $mod+period $cmd playerctl next
 $map $mod+comma  $cmd playerctl previous
 $map $mod+slash  $cmd playerctl play-pause
 
-$map $mod+j      focus next
-$map $mod+k      focus prev
+$map $mod+l      focus next
+$map $mod+h      focus prev
 $map $mod+q      kill
 $map $mod+g      $cmd rofi -show window
 $map $mod+x      $cmd rofi -show drun
 $map $mod+s      layout toggle tabbed splith
 $map $mod+Return move workspace to output next
-$map $mod+l      workspace back_and_forth
+$map $mod+b      workspace back_and_forth
 
-# WORKSPACES
+# WORKSPACES :: we abstract the name from the program.  this means we can change the program but the underlying bindings and functionality remain the same under the alias (eg. using vim instead of emacs, but is still the editor)
 for_window [urgent="latest"] focus
 # random window -> scratch.  goto window using s-g
 for_window [all] $mv scratch, focus, title_window_icon no
@@ -83,7 +83,7 @@ for_window [all] $mv scratch, focus, title_window_icon no
 set $ws_cmd "cmd"
 workspace $ws_cmd output primary
 $map $mod+c workspace $ws_cmd
-$map $mod+shift+c $cmd alacritty --class cmd --title cmd --command tmux new-session -A -s cmd $esc
+$map $mod+shift+c $cmd alacritty --command tmux new-session -A -s cmd $esc
 for_window [class="(?i)cmd"] $mv $ws_cmd, focus
 
 set $ws_viewer "viewer"

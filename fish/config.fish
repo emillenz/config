@@ -29,7 +29,7 @@ set -gx BROWSER firefox
 set -gx PAGER bat
 set -gx MANPAGER bat
 set -gx MANWIDTH 100
-set -gx FZF_DEFAULT_OPTS --reverse --height 8 --color light --scheme path # os-consistent completion (rofi, emacs, fzf ..)
+set -gx FZF_DEFAULT_OPTS --reverse --height 16 --color light --scheme path # os-consistent completion (rofi, emacs, fzf ..)
 
 # aliases for saner defaults / shortcuts
 alias e="emacsclient -nw"

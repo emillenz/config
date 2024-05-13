@@ -197,23 +197,23 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 ** global navigation scheme
 - follows the os-consistent keymap, using alt for the only & essential navigational commands (there may better ones for what you want to achive => inside leadermode)
 - buffers ::
-  - use [[kbd:C-l][C-l]] to alternate between the [L]ast buffer and current buffer.  for all other buffer navigation needs use: [[kbd:C-g][C-g]] for pulling up an arbitrary buffer.
+  - use [[kbd:C-b][C-b]] to switch [B]ack and forth between last [b]uffer and current [b]uffer.  for all other buffer navigation needs use: [[kbd:C-g][C-g]] for pulling up an arbitrary buffer.
 - efficiency :: this minimalistic but powerful navigation workflow is the most efficient & overheadfree way of navigating between multiple different files/buffer at the same time (low overhead when context-switching and remaining distractionfree, works from anywhere.  improves typing speed)
 - splits :: we never manually create split-windows for buffers, prefer the full screen, full focus, no distractions - workflow.  (no multitasking, no clutter)
   - when emacs creates splits we must handle them => minimal bindings for switching and closing splits: [[kbd:c-q, c-w][c-q, c-w]].
   - [[kbd:c-w][c-w]] and [[kbd:c-q][c-q]] is minimalistic, but all you will ever need to manage buffers and windows, since if you have more than 2 windows side by side, you are screwed anyway and need to clean up.  hence it replaces the gazillion of vim's window shortcuts with a faster, simpler alternative.
-- terminal :: we never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...).  instead all we do is use [[kbd:M-!, M-&, M-|]] if more is needed than that we should switch over to the proper shell anyway.
+- terminal :: we never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...).  instead all we do is use [[kbd:M-!/&|][M-!/&|]] if more is needed than that we should switch over to the proper shell anyway.
 
 #+begin_src emacs-lisp
 (map! :map 'override
       :nm "C-w" #'next-window-any-frame
       :nm "C-q" #'kill-buffer-and-window
-      :nm "C-e" #'find-file
+      :nm "C-l" #'find-file
       :nm "C-f" #'consult-find
       :nm "C-F" (cmd! (consult-find "~"))
       :nm "C-g" #'consult-buffer
       :nm "C-r" #'consult-recent-file
-      :nm "C-l" #'evil-switch-to-windows-last-buffer)
+      :nm "C-b" #'evil-switch-to-windows-last-buffer)
 #+end_src
 
 ** vim editing
@@ -222,15 +222,15 @@ see [[file:~/.config/xremap/config.org][global keyboard remaps]] for additional 
 frequently used & coding/editing related functions are mapped to ~g+~ (ex: lookup full documentation with ~gk~)
 
 - relative lines ::
-- more sensible default
-- minimizes mental overhead (and spamming of [[kbd:gj][gj]] / [[kbd:gk][gk]] )
+  - more sensible default
+  - minimizes mental overhead (and spamming of [[kbd:gj][gj]] / [[kbd:gk][gk]] )
 - splits ::
-- at most have 2 splits => toggle between windows with single key (instead of mental overhead for directional navigation ex: [[kbd:c-hjkl][c-hjkl]] )
-- this is for navigating and controlling some inevitable popup-buffers.
-- avoid splits at all costs and use tabs instead
+  - at most have 2 splits => toggle between windows with single key (instead of mental overhead for directional navigation ex: [[kbd:c-hjkl][c-hjkl]] )
+  - this is for navigating and controlling some inevitable popup-buffers.
+  - avoid splits at all costs and use tabs instead
 - useless default mappings :: remap underused/useless keys to statistically frequently used commands
 - [[kbd:q][q]] :: shortcut to [[kbd:@@][@@]] (def macro with [[kbd:qq][qq]], execute with [[kbd:@q][@q]] in 99% of cases)
-- this has basically replaced my need for vim's marks as i mostly alternate between two positions for quick edits, and if i need two separate positions.
+  - this has basically replaced my need for vim's marks as i mostly alternate between two positions for quick edits, and if i need two separate positions.
 - [[kbd:&][&]] :: allows for same usage as normal: [[kbd:&][&]], but more powerful (repeat any last ~ex~ command)
 - [[kbd:tab][tab]] :: folding.  inspired by org-modes folding functionality.  (smart/simple one-key folding))
 - whichkey :: removed on purpose
@@ -412,9 +412,8 @@ This is sensible default behaviour, and integrates it into evil."
 - greatly improves overall typing speed.
 - limit the showing of number of completion candidates (can't view more than ~8 at a glance anyways) in order to make the completion-menu less distracting and more focused.
 #+begin_src emacs-lisp
-(defvar z-completion-count
-  "how many completion candidates to display"
-  8)
+(defvar z-completion-count 8
+  "how many completion candidates to display")
 
 (after! company
   (setq company-minimum-prefix-length 0
@@ -535,39 +534,40 @@ this is automated using a snippet
 * programming
 ** indentation
 - formatting :: always configure language formatters externally (config-file) to use 8 spaces indentation.
-
-we need to re-setq some variables in the respective ~mode~ in order for them to take effect.
+- we need to re-setq some variables in the respective ~mode~ in order for them to take effect.
 #+begin_src emacs-lisp
 (advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
 
-(setq-default standard-indent 8
-              evil-shift-width standard-indent
-              tab-width standard-indent
+(defvar z-indent-width 8)
+
+(setq-default standard-indent z-indent-width
+              evil-shift-width z-indent-width
+              tab-width z-indent-width
               fill-column 100
               tab-always-indent t
-              tab-width standard-indent
-              org-indent-indentation-per-level standard-indent
+              tab-width z-indent-width
+              org-indent-indentation-per-level z-indent-width
               evil-indent-convert-tabs t
               indent-tabs-mode nil)
 
 (after! cc-mode
-  (setq c-basic-offset standard-indent))
+  (setq c-basic-offset z-indent-width))
 
 (after! ruby-mode
-  (setq evil-shift-width standard-indent
-        ruby-indent-level standard-indent))
+  (setq evil-shift-width z-indent-width
+        ruby-indent-level z-indent-width))
 
 (after! rustic
-  (setq rustic-indent standard-indent
-        rustic-indent-offset standard-indent))
+  (setq rustic-indent z-indent-width
+        rustic-indent-offset z-indent-width))
 
 (after! verilog-mode
-  (setq verilog-case-indent standard-indent
-        verilog-cexp-indent standard-indent
-        verilog-indent-level standard-indent
-        verilog-indent-level-behavioral standard-indent
-        verilog-indent-level-declaration standard-indent
-        verilog-indent-level-module standard-indent))
+  (setq verilog-case-indent z-indent-width
+        verilog-cexp-indent z-indent-width
+        verilog-indent-level z-indent-width
+        verilog-indent-level-behavioral z-indent-width
+        verilog-indent-level-declaration z-indent-width
+        verilog-indent-level-module z-indent-width))
 #+end_src
 
 *** rationale

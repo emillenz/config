@@ -1,4 +1,3 @@
-# [[file:config.org::*layout][layout:1]]
 modmap:
   - name: global
     remap:
@@ -15,9 +14,12 @@ keymap:
     remap:
       # NAVIGATION
       C-q: c-w
-      C-e: c-l
-      C-g: [c-t, %, space] # HACK :: goto tab
-      C-p: c-tab
+      C-b: c-tab
+
+  - name: editing
+    application:
+      not: [emacs, alacritty]
+    remap:
       # EDITING
       C-h: backspace
       C-w: c-backspace
@@ -25,4 +27,3 @@ keymap:
       # COMPLETION
       C-j: down
       C-k: up
-# layout:1 ends here

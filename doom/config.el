@@ -144,12 +144,12 @@
 (map! :map 'override
       :nm "C-w" #'next-window-any-frame
       :nm "C-q" #'kill-buffer-and-window
-      :nm "C-e" #'find-file
+      :nm "C-l" #'find-file
       :nm "C-f" #'consult-find
       :nm "C-F" (cmd! (consult-find "~"))
       :nm "C-g" #'consult-buffer
       :nm "C-r" #'consult-recent-file
-      :nm "C-l" #'evil-switch-to-windows-last-buffer)
+      :nm "C-b" #'evil-switch-to-windows-last-buffer)
 ;; global navigation scheme:1 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:1]]
@@ -290,9 +290,8 @@ This is sensible default behaviour, and integrates it into evil."
 ;; jumplist:1 ends here
 
 ;; [[file:config.org::*completion][completion:1]]
-(defvar z-completion-count
-  "how many completion candidates to display"
-  8)
+(defvar z-completion-count 8
+  "how many completion candidates to display")
 
 (after! company
   (setq company-minimum-prefix-length 0
@@ -382,34 +381,36 @@ This is sensible default behaviour, and integrates it into evil."
 ;; [[file:config.org::*indentation][indentation:1]]
 (advice-add #'doom-highlight-non-default-indentation-h :override #'ignore)
 
-(setq-default standard-indent 8
-              evil-shift-width standard-indent
-              tab-width standard-indent
+(defvar z-indent-width 8)
+
+(setq-default standard-indent z-indent-width
+              evil-shift-width z-indent-width
+              tab-width z-indent-width
               fill-column 100
               tab-always-indent t
-              tab-width standard-indent
-              org-indent-indentation-per-level standard-indent
+              tab-width z-indent-width
+              org-indent-indentation-per-level z-indent-width
               evil-indent-convert-tabs t
               indent-tabs-mode nil)
 
 (after! cc-mode
-  (setq c-basic-offset standard-indent))
+  (setq c-basic-offset z-indent-width))
 
 (after! ruby-mode
-  (setq evil-shift-width standard-indent
-        ruby-indent-level standard-indent))
+  (setq evil-shift-width z-indent-width
+        ruby-indent-level z-indent-width))
 
 (after! rustic
-  (setq rustic-indent standard-indent
-        rustic-indent-offset standard-indent))
+  (setq rustic-indent z-indent-width
+        rustic-indent-offset z-indent-width))
 
 (after! verilog-mode
-  (setq verilog-case-indent standard-indent
-        verilog-cexp-indent standard-indent
-        verilog-indent-level standard-indent
-        verilog-indent-level-behavioral standard-indent
-        verilog-indent-level-declaration standard-indent
-        verilog-indent-level-module standard-indent))
+  (setq verilog-case-indent z-indent-width
+        verilog-cexp-indent z-indent-width
+        verilog-indent-level z-indent-width
+        verilog-indent-level-behavioral z-indent-width
+        verilog-indent-level-declaration z-indent-width
+        verilog-indent-level-module z-indent-width))
 ;; indentation:1 ends here
 
 ;; [[file:config.org::*org][org:1]]

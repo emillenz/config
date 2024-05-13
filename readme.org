@@ -87,28 +87,6 @@ Iosevka Nerd Font optimises for inter-glyph and inter-style consistency within t
 * dependencies
 - all packages & other commands found under: [[file:setup.org][setup]].
 
-* keymaps
-- consistency is important because they make the keys easier to remember and you will not have to learn multiple paradigms of keymaps.
-- in the wm, the set of program-names during runtime is known and consistent (unlike the set of buffers in applications, where tab-names are either unnamed, arbitrary or change during runtime), we use specific-chars for switching to the tabs
-- keychords :: (vs modal bindings)
-  - chords fast-repeat commands: page up/down, switch to prev/next tab, undo, redo, increase/decrease font size, zoom in/out, close tab.
-    - thus we need to be able to hold down the key to repeat the action multiple times.
-    - and with holding down it is quicker to access
-- inside applications: alt => in order to minimize conflict with existing shortcuts.
-  - alt acts as the navigational-layer above the applications normal keybindings (chars, ctrl, shift), it condenses down a minimal set of universal, efficient navigational commands.
-  - alt is available in (almost) every program, leadermode is not.
-
-| mod+key | action                         | consistency         |
-|---------+--------------------------------+---------------------|
-| [[kbd:g][g]]       | goto buffer  (find)            | vim: goto           |
-| [[kbd:q][q]]       | quit (buffer)                  | mnemonic / standard |
-| [[kbd:e][e]]       | edit file / editor (from path) | mnemonic, vim ~:e~    |
-| [[kbd:f][f]]       | find (program/file, fuzzy)     | mnemonic / standard |
-| [[kbd:r][r]]       | recent (file, fuzzy)           | mnemonic / standard |
-| [[kbd:x][x]]       | run-command (internal)         | emacs               |
-| [[kbd:l][l]]       | last/alternate-buffer          | mnemonic, ergo      |
-| [[kbd:spc][spc]]     | leader-key                     | vim / ergonomic     |
-
 * software
 the aim is to be able to run software for years without it breaking or bugging.
 learning a tool is an investment and you wouldn't want to sink your time into soemthing that will be useless in a short time.
@@ -131,11 +109,8 @@ i'm very opinionated and have high standards regarding design process and the ph
 - workstation apps :: assigned their own workspaces and keys
   - these are apps that you use frequently (statistically) and need hotkey access to (application switching)
   - each assigned workspace is specific.   ex: having ~assistant~ in its own workspace even though it is accessed throught the browser.  )
-- rest :: all sent mixed to ws1 => if neccessary assign them to their own by putting a window into 1-4 to be able to hotkey to it.
-- scratch workspaces :: 1-4, for moving windows to, viewing things side by side
-- Order of ws assignments is relevant: abstract -> detail
-- The idea is to bind to the abstract function of the program, and not to the specific instance itself => if a different program is used, the functionality remains the same.  (eg: 'doc' instead of 'zathura')
-- these main apps have a dedicated open shortcut, all other apps are better to be opened via ~M-x~
+- The idea is to bind to the abstract function of the program, and not to the specific instance itself => if a different program is used, the functionality and bindings remains the same.  (eg: vim instead of emacs)
+- these main apps have a dedicated open shortcut, all other apps are better to be opened via ~S-x~
 
 ** constrain text width & center text
  - center text windows for better ergonomics & less eye travel (distance - switching from left to middle from eg: terminal to webpage).
@@ -285,3 +260,42 @@ When i write software, i write and think of it mostly in the timespan of decades
 --- alexey kutepov (YT:tsoding)
 #+end_quote
 This same principle is applied to plain text computing.
+* keybindings
+implemented using ~xremap~
+** general notes
+- super / alt :: remapped [[kbd:super][super]] to [[kbd:alt_l][alt_l]] opposite to [[kbd:alt_r][alt_r]] key for ergonomics (alternative is to just use alt as the wm-modkey, however sometimes alt is needed, so this is not a good solution.)
+- esc :: remapped ergonomically to [[kbd:capslock][capslock]]
+- ctrl :: mapped to otherwise useless [[kbd:caps]].  this is an essential remap.  it is ergonomic and allows fast control key chording.
+- insert-mode :: make using [[kbd:c-u][c-u]], [[kbd:c-w][c-w]], [[kbd:c-h][c-h]] a habit and ditch the terribly placed [[kbd:backspace][backspace]].  it is more ergonomic and faster than using the incredibly unergonomic and hard to reach [[kbd:backspace][backspace]] (hence we implement these bindings in all apps)
+- vim layer :: we purposefully do not implement a vim-navigation layer globally, since if you are doing more than just typing something into a prompt, you should just use ~emacs-everywhere~ instead.  the implemented keybinds are consistent with vim's insert state and provide the most useful deletion commands when typing into a prompt.
+- typing technique :: get into the habit of proper technique in touch typing.  staying on the homerow, typing with little pressure as needed and not using excess force.  this includes touchtyping all numberrow symbols, brackets & braces.  to enforce this, spraypaint the keycaps blank in order to force you to never look at the keyboard again.  force yourself to use the right finger for the right key (right side symbols :: all with the pinky)
+- chords :: for repeating/high-usage commands: switch buffer, save, close buffer, etc..  thus we need to be able to hold down the key to repeat the action multiple times.  and with holding down it is quicker to access.
+- sequence :: for more infrequent, single call functionality (ex: compile / )
+- key-repetition :: disable it.  it causes bad habits of you holding down a key instead of moving intelligently and fast using the appropriate motion (not holding down [[kbd:j][j]], istead using ~c-d~. not spamming delete, instead using ~d...~).
+
+** navigational standard
+- inter program keyboard shortcuts consistency is important because they make the keys easier to remember and you will not have to learn multiple paradigms of keymaps.  the here defined set of keybindings are shared across applications (webbrowser, emacs, terminal, etc)
+- windowmanager :: the set of program-names during runtime is known and consistent (unlike the set of buffers in applications, where tab-names are either unnamed, arbitrary or change during runtime), we use specific-chars for switching to the tabs (similar as vim's per file marks).
+- applications :: [[kbd:ctrl][ctrl]] since that is the defacto standard, aligns with vim's navigational-ctrl-layer-keybind (and is now ergonomically bound).
+  - it condenses down a minimal set of universal, efficient navigational commands.
+- implementation :: emacs, tmux, fish, firefox,... all implement this mapping scheme.
+
+| mod+key | action                       | consistency         |
+|---------+------------------------------+---------------------|
+| [[kbd:g][g]]       | [g]oto buffer  (find)        | vim: goto           |
+| [[kbd:t][t]]       | new-[t]ab                    | standard            |
+| [[kbd:s][s]]       | [s]ave file                  |                     |
+| [[kbd:q][q]]       | [q]uit (buffer)              | mnemonic / standard |
+| [[kbd:l][l]]       | [l]ocation (open file/url)   | mnemonic / standard |
+| [[kbd:f][f]]       | [f]ind (program/file, fuzzy) | mnemonic / standard |
+| [[kbd:r][r]]       | [r]ecent (file, fuzzy)       | mnemonic / standard |
+| [[kbd:x][x]]       | e[x]ecute-command (internal) | emacs               |
+| [[kbd:b][b]]       | [b]ack to last [b]uffer      | mnemonic, ergo      |
+| [[kbd:j][j]]       | completion-menu next         | vim                 |
+| [[kbd:k][k]]       | completion-menu previous     | vim                 |
+| [[kbd:tab][tab]]     | complete                     | emacs            |
+| [[kbd:spc][spc]]     | leader-key                   | vim / ergonomic     |
+
+** forget symbol layers and homerow mods
+- they are a gimics and introduce unneccessary complexity into the system. you are slowing yourself down using them, since the always require a modifier, and waiting for that modifier to be released makes you need to wait before continuing to hammer on in typing. using a symbol top layer layout: programmer-dvorak is far superior, more ergonomic and allows you to bang out symbols as fast as if you were writing prose.
+- we want to reduce the depth of layering in our system.  layers always bring an increase in complexity and introduce mental overhead which is our aim to reduce as much as possible without limiting functionality.

@@ -46,6 +46,28 @@ It may looks ridiculous to the outside observer, but efficiency it’s about eli
   - ex: use vims search replace with patterns instead of manually going through and changing each instance
   - ex: relative line jumping over spamming =j=
   - ex: tab switching => thinking fast & instinctive, develop muscle memory (when there are too many => use analytical brain by searching through the list)
+
+** constrain text width & center text
+ - center text windows for better ergonomics & less eye travel (distance - switching from left to middle from eg: terminal to webpage).
+ - narrowed fov yields improved readability & focus of textparagraphs, especially if you stare at the computer for 8h- a day.
+ - the data is compact and coherent
+ - allows the user to keep the entire window in the fov
+ - vertical navigation is easier than horizontal
+ - reading code/data/formulas is easiest sequentially = top to bottom // vs horizontally
+   - take math as example, its easier to read equations if they are short and concise on newline, rather than in one big equation
+   - coding: typically one statement per line
+
+** statusbar: none
+- a wm statusbar unneccessarily take up screen real-estate and usually just causes a distraction rather than actually being useful.
+  - no need for context about the current tab (uniqe per app & navigation is static (fixed bindings))
+  - statusbars/tabbars make sense for tmux/browser/emacs, because we need the information as in which mode/context we are in.
+- for full immersion, reduced distraction and enhanced focus, disable it and work fullscreen.
+  - no overlapping functionality.  ex:: you wear a watch (if not, you should) => don't need time & date displayed, and have timer's at hand.
+  - you always know what window you are looking at by its contents.
+  - you don't need visual indication of how to navigate to tabs, nor interact with the statusbar (ex: click something) => each specific tab is always on the same keybind.
+- the aestetic and efficiency of a decluttered and maximized screen is (imo) unmatched.
+- the theory is to make switching so ergonomic and instantaneous, engrained into muscle memory, that you are faster that people using, say 2 monitors.
+
 ** The mouse
 #+begin_quote
 My preference for emacs boils down to the fact that it doesn't force me to use a mouse.  A mouse is a pseudoanalog device that suffers from all the control-theory anomalies like overshoot and oscillation, plus lack of haptic confirmation.  Using the mouse forces my hands off the home row, forces my eyes off my cursor (to the target of a gesture).  The mouse and all its control-theory ephemera are a source of sheer agony.  They cause me to hate my computer and to tire quickly from any use of it.  Emacs, however, lets me focus my mind, keep my hands in an efficient pose, lets me look at my work, gives me digital feedback (press a physical keyboard button, see a result, no overshoot and oscillation) and enables longer hours in a state of pleasant flow.
@@ -112,26 +134,6 @@ i'm very opinionated and have high standards regarding design process and the ph
 - The idea is to bind to the abstract function of the program, and not to the specific instance itself => if a different program is used, the functionality and bindings remains the same.  (eg: vim instead of emacs)
 - these main apps have a dedicated open shortcut, all other apps are better to be opened via ~S-x~
 
-** constrain text width & center text
- - center text windows for better ergonomics & less eye travel (distance - switching from left to middle from eg: terminal to webpage).
- - narrowed fov yields improved readability & focus of textparagraphs, especially if you stare at the computer for 8h- a day.
- - the data is compact and coherent
- - allows the user to keep the entire window in the fov
- - vertical navigation is easier than horizontal
- - reading code/data/formulas is easiest sequentially = top to bottom // vs horizontally
-   - take math as example, its easier to read equations if they are short and concise on newline, rather than in one big equation
-   - coding: typically one statement per line
-
-** statusbar: none
-- a wm statusbar unneccessarily take up screen real-estate and usually just causes a distraction rather than actually being useful.
-  - no need for context about the current tab (uniqe per app & navigation is static (fixed bindings))
-  - statusbars/tabbars make sense for tmux/browser/emacs, because we need the information as in which mode/context we are in.
-- for full immersion, reduced distraction and enhanced focus, disable it and work fullscreen.
-  - no overlapping functionality.  ex:: you wear a watch (if not, you should) => don't need time & date displayed, and have timer's at hand.
-  - you always know what window you are looking at by its contents.
-  - you don't need visual indication of how to navigate to tabs, nor interact with the statusbar (ex: click something) => each specific tab is always on the same keybind.
-- the aestetic and efficiency of a decluttered and maximized screen is (imo) unmatched.
-- the theory is to make switching so ergonomic and instantaneous, engrained into muscle memory, that you are faster that people using, say 2 monitors.
 ** shell: fish / ruby
 a shell only exists for simple system management (launching processes, etc) and interactive use (filtering, text, redirections, etc, not for heavy data processing).  for any scripting beyond that you should always opt towards a proper scripting language.  i highly believe that any scripting away from interactive use should be done in a proper language.
 bash is coherent with respect to the mind of certain benevolent dictator.  bash is a steaming pile of inconsistent user-unfrienly shit.
@@ -217,11 +219,10 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 ** webbrowser: firefox
 *** install & configure extensions manually
-- keybindings (vim extension)
-- passwords
+- use ~*~ for accessing bookmarks
+- password manager
 - theming
 - font (set to system wide font and don't allow custom fonts)
-- open files
 - bookmarks: name them hierarchically w keywords (syntax <=> org-mode-tags), ex: =cs:math:exercises=
   - quickly open website using bookmark searching
   - structured, easy to patternmatch (not having to put them into folders)
@@ -237,29 +238,6 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
   - eg: pulsemixer, nmtui, ncmpcpp
 - using custom rofi-scripts/i3-leadermenu for small, onetime tasks such as switching things such as devices, outputs, kblayouts...
 
-* principles
-** keep your workflow dry
-when you find yourself doing the same things repetitively or you get annoyed it is time to find a program / plugin / script for that step to facilitate the workflow.  (if there is none => write your own script (eg.  killprocess script).
-
-** review the worflow
-- review the tool's and workflow you are using from time to time (see if you're missing out and can use something better).
-- disable parts of the configuration and evaluate wether it is neccessary or has become obsolete/bloat.
-
-** save state & progress
-- ex: do not shut down the computer.  instead: hibernate // shuts it down, but preserves the working state & restores it => resume where left off
-- have undo - redo in software: use terminal sessionizers (tmux) => when accidentally closing terminal => reattach to the session, to restore
-
-** the mit-approach
-- simplicity :: the design must be simple, both in implementation and interface.  it is more important for the interface to be simple than the implementation.
-- correctness :: the design must be correct in all observable aspects.  incorrectness is simply not allowed.
-- consistency :: the design must be consistent.  a design is allowed to be slightly less simple and less complete to avoid inconsistency.  consistency is as important as correctness.
-- completeness :: the design must cover as many important situations as is practical.  all reasonably expected cases must be covered.  simplicity is not allowed to overly reduce completeness.
-
-#+begin_quote
-When i write software, i write and think of it mostly in the timespan of decades, not shortterm.  Hence valuing languages like C, which will still compile, even in a decade from now.
---- alexey kutepov (YT:tsoding)
-#+end_quote
-This same principle is applied to plain text computing.
 * keybindings
 implemented using ~xremap~
 ** general notes
@@ -296,6 +274,30 @@ implemented using ~xremap~
 | [[kbd:tab][tab]]     | complete                     | emacs            |
 | [[kbd:spc][spc]]     | leader-key                   | vim / ergonomic     |
 
-** forget symbol layers and homerow mods
+** no symbol layers and homerow mods
 - they are a gimics and introduce unneccessary complexity into the system. you are slowing yourself down using them, since the always require a modifier, and waiting for that modifier to be released makes you need to wait before continuing to hammer on in typing. using a symbol top layer layout: programmer-dvorak is far superior, more ergonomic and allows you to bang out symbols as fast as if you were writing prose.
 - we want to reduce the depth of layering in our system.  layers always bring an increase in complexity and introduce mental overhead which is our aim to reduce as much as possible without limiting functionality.
+
+* principles
+** keep your workflow dry
+when you find yourself doing the same things repetitively or you get annoyed it is time to find a program / plugin / script for that step to facilitate the workflow.  (if there is none => write your own script (eg.  killprocess script).
+
+** review the worflow
+- review the tool's and workflow you are using from time to time (see if you're missing out and can use something better).
+- disable parts of the configuration and evaluate wether it is neccessary or has become obsolete/bloat.
+
+** save state & progress
+- ex: do not shut down the computer.  instead: hibernate // shuts it down, but preserves the working state & restores it => resume where left off
+- have undo - redo in software: use terminal sessionizers (tmux) => when accidentally closing terminal => reattach to the session, to restore
+
+** the mit-approach
+- simplicity :: the design must be simple, both in implementation and interface.  it is more important for the interface to be simple than the implementation.
+- correctness :: the design must be correct in all observable aspects.  incorrectness is simply not allowed.
+- consistency :: the design must be consistent.  a design is allowed to be slightly less simple and less complete to avoid inconsistency.  consistency is as important as correctness.
+- completeness :: the design must cover as many important situations as is practical.  all reasonably expected cases must be covered.  simplicity is not allowed to overly reduce completeness.
+
+#+begin_quote
+When i write software, i write and think of it mostly in the timespan of decades, not shortterm.  Hence valuing languages like C, which will still compile, even in a decade from now.
+--- alexey kutepov (YT:tsoding)
+#+end_quote
+This same principle is applied to plain text computing.

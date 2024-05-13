@@ -179,6 +179,11 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 
 ** leader ([[kbd:SPC][SPC]], [[kbd:,][,]])
 #+begin_src emacs-lisp
+(setq doom-leader-key "SPC"
+      doom-leader-alt-key "M-SPC"
+      doom-localleader-key ","
+      doom-leader-alt-key "M-,")
+
 (map! :leader
       (:prefix "c"
                "r" #'lsp-rename
@@ -190,50 +195,25 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 #+end_src
 
 ** global navigation scheme
-- simplified, fast window & buffer navigation (vim makes it overly complex: window-left/right/up/down, kill-buffer/close-window -> next/prev, quit)
-  - c-w is all you need, since if you have more than 2 splits open at a time you are doing something wrong anyways
 - follows the os-consistent keymap, using alt for the only & essential navigational commands (there may better ones for what you want to achive => inside leadermode)
-- tabs ::
-  - open buffers in specific tabs in order to hotswitch between them.  (ex: working on 3 project files) => one maximized buffer open per tab
-  - 1 :: scratch workspace, where you'll be working if not inside a project.  is never associated with a specific buffer.
-  - 2-4 ::
-  - when you are working in a project with multiple different files, open each file in a new tab.
-  - then you can hotkey to that exact file instantly.
-  - 3 simultaneous files are enough for all projects, if we enable more, the overhead becomes too large.  (you would't open and manage 5 splits either, would you?)
 - buffers ::
-  - use last-buffer [[kbd:C-^][C-^]]  to alternate/go-back to last and find-buffer.  [[kbd:C-g][C-g]] for pulling up arbitrary buffers
-- efficiency :: they are the most efficient way of navigating between multiple different files/buffer at the same time (most efficient way i have found to introduce little overhead when context-switching and remaining distractionfree)
-- splits :: never create splits for buffers, prefer the full screen, full focus, no distractions - workflow.  (no multitasking, no clutter)
-  - when emacs creates splits we must handle them (includes minimal bindings for switching and closing splits)
+  - use [[kbd:C-l][C-l]] to alternate between the [L]ast buffer and current buffer.  for all other buffer navigation needs use: [[kbd:C-g][C-g]] for pulling up an arbitrary buffer.
+- efficiency :: this minimalistic but powerful navigation workflow is the most efficient & overheadfree way of navigating between multiple different files/buffer at the same time (low overhead when context-switching and remaining distractionfree, works from anywhere.  improves typing speed)
+- splits :: we never manually create split-windows for buffers, prefer the full screen, full focus, no distractions - workflow.  (no multitasking, no clutter)
+  - when emacs creates splits we must handle them => minimal bindings for switching and closing splits: [[kbd:c-q, c-w][c-q, c-w]].
+  - [[kbd:c-w][c-w]] and [[kbd:c-q][c-q]] is minimalistic, but all you will ever need to manage buffers and windows, since if you have more than 2 windows side by side, you are screwed anyway and need to clean up.  hence it replaces the gazillion of vim's window shortcuts with a faster, simpler alternative.
 - terminal :: we never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...).  instead all we do is use [[kbd:M-!, M-&, M-|]] if more is needed than that we should switch over to the proper shell anyway.
 
 #+begin_src emacs-lisp
 (map! :map 'override
-      :nm "M-w" #'next-window-any-frame
-      :nm "M-q" #'kill-buffer-and-window
-      :nm "M-1" (cmd! (tab-bar-select-tab 1))
-      :nm "M-2" (cmd! (tab-bar-select-tab 2))
-      :nm "M-3" (cmd! (tab-bar-select-tab 3))
-      :nm "M-4" (cmd! (tab-bar-select-tab 4))
-      :nm "M-e" #'find-file
-      :nm "M-f" #'consult-find
-      :nm "M-F" (cmd! (consult-find "~"))
-      :nm "M-g" #'consult-buffer
-      :nm "M-r" #'consult-recent-file
-      :nm "M-c" #'async-shell-command)
-#+end_src
-
-- we never want visual indication for tabs.  instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.
-- tabs are already available, like workspaces, to assign things to.
-#+begin_src emacs-lisp
-(setq tab-bar-show nil)
-
-(defadvice! z-ensure-tab (&optional tab-nr)
-  "when selecting a tab by index, create it, if it doesn't exist yet (efficient & overheadfree)"
-  :before #'tab-bar-select-tab
-  (when (and tab-nr (< (length (tab-bar-tabs)) tab-nr))
-    (tab-bar-new-tab)
-    (z-ensure-tab (1- tab-nr))))
+      :nm "C-w" #'next-window-any-frame
+      :nm "C-q" #'kill-buffer-and-window
+      :nm "C-e" #'find-file
+      :nm "C-f" #'consult-find
+      :nm "C-F" (cmd! (consult-find "~"))
+      :nm "C-g" #'consult-buffer
+      :nm "C-r" #'consult-recent-file
+      :nm "C-l" #'evil-switch-to-windows-last-buffer)
 #+end_src
 
 ** vim editing
@@ -250,27 +230,26 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
 - avoid splits at all costs and use tabs instead
 - useless default mappings :: remap underused/useless keys to statistically frequently used commands
 - [[kbd:q][q]] :: shortcut to [[kbd:@@][@@]] (def macro with [[kbd:qq][qq]], execute with [[kbd:@q][@q]] in 99% of cases)
-- [[kbd:m][m]] :: save point to jumplist (save pos -> do edits elsewhere -> jump back to saved pos: [[kbd:c-o][c-o]])
 - this has basically replaced my need for vim's marks as i mostly alternate between two positions for quick edits, and if i need two separate positions.
 - [[kbd:&][&]] :: allows for same usage as normal: [[kbd:&][&]], but more powerful (repeat any last ~ex~ command)
 - [[kbd:tab][tab]] :: folding.  inspired by org-modes folding functionality.  (smart/simple one-key folding))
 - whichkey :: removed on purpose
-- the concept of ~whichkey~ is creating the bad habit of searching through a menu to find a keybindings (the exact opposite of what a keybind is for, to be executed instantaneously, engrained in memory)
-- if you know roughly what you are looking for, then use [[kbd:m-x][m-x]] and fuzzy search for the command and it will show you the binding for next time.  fuzzy finding is more efficient.
-- we remove annoying unwanted popup's and reduce visual sugar (=> distractionless, focused workflow).
-- this idea correlates with the insight that you should use a keyboard with blank keycaps.  which will force you to learn to type, without ever taking the focus off the screen.  (reduced context switching, no speed bottleneck, increased continuity).
-- [[kbd:c-l][c-l]] :: same as [[kbd:c-l][c-l]] in the shell.  is quicker & more mnemonic than [[kbd:zz][zz]].  additionally is consistent with the other screen movement commands ([[kbd:c-u/d][c-u/d..]]) being mapped on the control layer.
-- learn them all (also the one's in insert mode) for seizing vim's full power.
+  - the concept of ~whichkey~ is creating the bad habit of searching through a menu to find a keybindings (the exact opposite of what a keybind is for, to be executed instantaneously, engrained in memory)
+  - if you know roughly what you are looking for, then use [[kbd:m-x][m-x]] and fuzzy search for the command and it will show you the binding for next time.  fuzzy finding is more efficient.
+  - we remove annoying unwanted popup's and reduce visual sugar (=> distractionless, focused workflow).
+  - this idea correlates with the insight that you should use a keyboard with blank keycaps.  which will force you to learn to type, without ever taking the focus off the screen.  (reduced context switching, no speed bottleneck, increased continuity).
+  - learn them all (also the one's in insert mode) for seizing vim's full power.
 - managing buffers ::
 - ~save-buffer~ is frequently used => mapped to system-wide-default: [[kbd:C-s][C-s]]
 - completion :: select & activate: [[kbd:C-j/k][C-j/k]], superior to [[kbd:TAB][TAB]] since it is faster & more ergonomic to navigate between entries.  confirm/exit: [[kbd:RET][RET]]
 
 #+begin_src emacs-lisp
-(map! :nm   "C-l" #'recenter-top-bottom
+(map! :after evil
       :i    "C-h" #'backward-delete-char
+      :i    "C-v" (cmd! (evil-paste-from-register ?\")) ;; NOTE :: more convenient than <c-r>"
+
       :m    "C-s" #'write-file
       :in   "C-s" (cmd! (evil-force-normal-state) (basic-save-buffer))
-      :i    "C-v" (cmd! (evil-paste-from-register ?\"))
 
       :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
@@ -281,7 +260,6 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
       :nmv  "U"   #'evil-redo
       :nmv  "Q"   #'evil-execute-last-recorded-macro
       :nmv  "&"   #'evil-ex-repeat
-      :nm   "M"   #'evil-set-jump
 
       :nmv  "+"   #'evil-numbers/inc-at-pt
       :nmv  "-"   #'evil-numbers/dec-at-pt
@@ -432,11 +410,15 @@ This is sensible default behaviour, and integrates it into evil."
 - this enforces more thoughtful coding, evaluating what the function actually does and let's you see what is really happening underneath.
 - it actually makes you faster, since it removes the mental overhead and interruption that arises from the distracting completion menu, where you will choose the option from.
 - greatly improves overall typing speed.
-- limit the showing of number of completion candidates (can't view more than ~8 at a glance anyways)
+- limit the showing of number of completion candidates (can't view more than ~8 at a glance anyways) in order to make the completion-menu less distracting and more focused.
 #+begin_src emacs-lisp
+(defvar z-completion-count
+  "how many completion candidates to display"
+  8)
+
 (after! company
   (setq company-minimum-prefix-length 0
-        company-tooltip-limit 16
+        company-tooltip-limit z-completion-count
         company-idle-delay nil
         company-tooltip-idle-delay 0.1
         company-show-quick-access t
@@ -448,8 +430,7 @@ This is sensible default behaviour, and integrates it into evil."
           vterm-mode)))
 
 (after! vertico
-  (setq vertico-count 16)
-  (vertico-flat-mode))
+  (setq vertico-count z-completion-count))
 
 (map! :map minibuffer-mode-map
       :im "C-j" #'next-line-or-history-element
@@ -457,8 +438,8 @@ This is sensible default behaviour, and integrates it into evil."
 
 (map! :map vertico-map
       :im "C-w" #'vertico-directory-delete-word
-      :im "M-d" #'consult-dir
-      :im "M-f" #'consult-dir-jump-file)
+      :im "C-d" #'consult-dir
+      :im "C-f" #'consult-dir-jump-file)
 #+end_src
 
 ** snippets

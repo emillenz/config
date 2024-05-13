@@ -125,6 +125,11 @@
 ;; misc options:1 ends here
 
 ;; [[file:config.org::*leader (\[\[kbd:SPC\]\[SPC\]\], \[\[kbd:,\]\[,\]\])][leader ([[kbd:SPC][SPC]], [[kbd:,][,]]):1]]
+(setq doom-leader-key "SPC"
+      doom-leader-alt-key "M-SPC"
+      doom-localleader-key ","
+      doom-leader-alt-key "M-,")
+
 (map! :leader
       (:prefix "c"
                "r" #'lsp-rename
@@ -137,37 +142,23 @@
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:1]]
 (map! :map 'override
-      :nm "M-w" #'next-window-any-frame
-      :nm "M-q" #'kill-buffer-and-window
-      :nm "M-1" (cmd! (tab-bar-select-tab 1))
-      :nm "M-2" (cmd! (tab-bar-select-tab 2))
-      :nm "M-3" (cmd! (tab-bar-select-tab 3))
-      :nm "M-4" (cmd! (tab-bar-select-tab 4))
-      :nm "M-e" #'find-file
-      :nm "M-f" #'consult-find
-      :nm "M-F" (cmd! (consult-find "~"))
-      :nm "M-g" #'consult-buffer
-      :nm "M-r" #'consult-recent-file
-      :nm "M-c" #'async-shell-command)
+      :nm "C-w" #'next-window-any-frame
+      :nm "C-q" #'kill-buffer-and-window
+      :nm "C-e" #'find-file
+      :nm "C-f" #'consult-find
+      :nm "C-F" (cmd! (consult-find "~"))
+      :nm "C-g" #'consult-buffer
+      :nm "C-r" #'consult-recent-file
+      :nm "C-l" #'evil-switch-to-windows-last-buffer)
 ;; global navigation scheme:1 ends here
 
-;; [[file:config.org::*global navigation scheme][global navigation scheme:2]]
-(setq tab-bar-show nil)
-
-(defadvice! z-ensure-tab (&optional tab-nr)
-  "when selecting a tab by index, create it, if it doesn't exist yet (efficient & overheadfree)"
-  :before #'tab-bar-select-tab
-  (when (and tab-nr (< (length (tab-bar-tabs)) tab-nr))
-    (tab-bar-new-tab)
-    (z-ensure-tab (1- tab-nr))))
-;; global navigation scheme:2 ends here
-
 ;; [[file:config.org::*vim editing][vim editing:1]]
-(map! :nm   "C-l" #'recenter-top-bottom
+(map! :after evil
       :i    "C-h" #'backward-delete-char
+      :i    "C-v" (cmd! (evil-paste-from-register ?\")) ;; NOTE :: more convenient than <c-r>"
+
       :m    "C-s" #'write-file
       :in   "C-s" (cmd! (evil-force-normal-state) (basic-save-buffer))
-      :i    "C-v" (cmd! (evil-paste-from-register ?\"))
 
       :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
@@ -178,7 +169,6 @@
       :nmv  "U"   #'evil-redo
       :nmv  "Q"   #'evil-execute-last-recorded-macro
       :nmv  "&"   #'evil-ex-repeat
-      :nm   "M"   #'evil-set-jump
 
       :nmv  "+"   #'evil-numbers/inc-at-pt
       :nmv  "-"   #'evil-numbers/dec-at-pt
@@ -300,9 +290,13 @@ This is sensible default behaviour, and integrates it into evil."
 ;; jumplist:1 ends here
 
 ;; [[file:config.org::*completion][completion:1]]
+(defvar z-completion-count
+  "how many completion candidates to display"
+  8)
+
 (after! company
   (setq company-minimum-prefix-length 0
-        company-tooltip-limit 16
+        company-tooltip-limit z-completion-count
         company-idle-delay nil
         company-tooltip-idle-delay 0.1
         company-show-quick-access t
@@ -314,8 +308,7 @@ This is sensible default behaviour, and integrates it into evil."
           vterm-mode)))
 
 (after! vertico
-  (setq vertico-count 16)
-  (vertico-flat-mode))
+  (setq vertico-count z-completion-count))
 
 (map! :map minibuffer-mode-map
       :im "C-j" #'next-line-or-history-element
@@ -323,8 +316,8 @@ This is sensible default behaviour, and integrates it into evil."
 
 (map! :map vertico-map
       :im "C-w" #'vertico-directory-delete-word
-      :im "M-d" #'consult-dir
-      :im "M-f" #'consult-dir-jump-file)
+      :im "C-d" #'consult-dir
+      :im "C-f" #'consult-dir-jump-file)
 ;; completion:1 ends here
 
 ;; [[file:config.org::*snippets][snippets:1]]

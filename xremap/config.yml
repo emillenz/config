@@ -14,9 +14,10 @@ keymap:
       only: firefox
     remap:
       # NAVIGATION
-      M-t: c-t
-      M-q: c-w
-      M-e: c-l
+      C-q: c-w
+      C-e: c-l
+      C-g: [c-t, %, space] # HACK :: goto tab
+      C-p: c-tab
       # EDITING
       C-h: backspace
       C-w: c-backspace

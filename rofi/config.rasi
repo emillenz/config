@@ -22,7 +22,7 @@ configuration {
         display-filebrowser : "  files >";
         display-window      : "  window >";
 
-        window-format    : "{c}  |  {t}";
+        window-format    : "{t} | {c}";
         window-command   : "wmctrl -i -R {window}";
         window-thumbnail : false;
 
@@ -93,18 +93,20 @@ inputbar {
 }
 
 prompt {
-        enabled          : true;
-        padding          : 0px;
-        background-color : inherit;
-        text-color       : @prompt;
+        enabled           : true;
+        padding           : 0px;
+        background-color  : inherit;
+        text-color        : @prompt;
 }
+
 textbox-prompt-colon {
-        enabled          : true;
-        expand           : false;
-        str              : ">>";
-        background-color : inherit;
-        text-color       : inherit;
+        enabled           : true;
+        expand            : false;
+        str               : ">";
+        background-color  : inherit;
+        text-color        : inherit;
 }
+
 entry {
         enabled           : true;
         padding           : 0px;
@@ -118,14 +120,14 @@ entry {
 listview {
         enabled          : true;
         columns          : 1;
-        lines            : 16;
+        lines            : 8;
         cycle            : true;
         dynamic          : true;
         scrollbar        : false;
         layout           : vertical;
         reverse          : false;
         fixed-height     : true; // nice and consistent prompt
-        fixed-columns    : false;
+        fixed-columns    : true;
 
         spacing          : 0px;
         margin           : 0px;

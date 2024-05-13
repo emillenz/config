@@ -89,36 +89,25 @@ Iosevka Nerd Font optimises for inter-glyph and inter-style consistency within t
 
 * keymaps
 - consistency is important because they make the keys easier to remember and you will not have to learn multiple paradigms of keymaps.
-- in the wm, the set of program-names during runtime is known and consistent (unlike the set of buffers in applications, where tab-names are either unnamed, arbitrary or change during runtime), we use specific-chars for switching to the tabs instead of 1-4 (more ergonomic, better mnemonics, more consistent).  we limit tabs to 4 since this is a good size for files needed simultaneously when working on a project (if you have more you should refactor probably).
-- abstain from using [[kbd:alt-tab][alt-tab]] (switching back to recent tab)
-  - enforce the habit of direct buffer switching (instead of spamming alt-tab to get back to the tab that is desired, which is what happens if you use it)
+- in the wm, the set of program-names during runtime is known and consistent (unlike the set of buffers in applications, where tab-names are either unnamed, arbitrary or change during runtime), we use specific-chars for switching to the tabs
 - keychords :: (vs modal bindings)
   - chords fast-repeat commands: page up/down, switch to prev/next tab, undo, redo, increase/decrease font size, zoom in/out, close tab.
     - thus we need to be able to hold down the key to repeat the action multiple times.
     - and with holding down it is quicker to access
-- it is important that new-tab inserts the tab at the end of the tabline
-  - no rearraging of the numbers => able to memorize tab numbers by muscle-memory intiutive
 - inside applications: alt => in order to minimize conflict with existing shortcuts.
   - alt acts as the navigational-layer above the applications normal keybindings (chars, ctrl, shift), it condenses down a minimal set of universal, efficient navigational commands.
   - alt is available in (almost) every program, leadermode is not.
-- tabs ::
-  - use them as hotkey workspace inside an app (ex: emacs / tmux)
-  - avoid manual tab creation if possible => auto-create a tab if it doesn't exist upon focusing it
-  - we never want visual indication for tabs.   instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.
 
-| mod+key | action                      | consistency         |
-|---------+-----------------------------+---------------------|
-| [[kbd:k/j][k/j]]     | prev/next window (!not tab) | vim, ergonomics     |
-| [[kbd:1-4][1-4]]     | switch to tab by index      | logic / stardard    |
-| [[kbd:g][g]]       | goto tab/buffer  (find)     | vim: goto           |
-| [[kbd:q][q]]       | quit (buffer/program)       | mnemonic / standard |
-| [[kbd:e][e]]       | edit file / editor          | mnemonic, vim ~:e~    |
-| [[kbd:f][f]]       | find (program/file)         | mnemonic / standard |
-| [[kbd:x][x]]       | run-command (program)       | emacs               |
-| [[kbd:c][c]]       | command-line (shell)        | standard            |
-| [[kbd:w][w]]       | web (browser)               | mnemonic, www       |
-| [[kbd:o][o]]       | open (file/program)         | mnemonic / standard |
-| [[kbd:spc][spc]]     | leader-key                  | vim / ergonomic     |
+| mod+key | action                         | consistency         |
+|---------+--------------------------------+---------------------|
+| [[kbd:g][g]]       | goto buffer  (find)            | vim: goto           |
+| [[kbd:q][q]]       | quit (buffer)                  | mnemonic / standard |
+| [[kbd:e][e]]       | edit file / editor (from path) | mnemonic, vim ~:e~    |
+| [[kbd:f][f]]       | find (program/file, fuzzy)     | mnemonic / standard |
+| [[kbd:r][r]]       | recent (file, fuzzy)           | mnemonic / standard |
+| [[kbd:x][x]]       | run-command (internal)         | emacs               |
+| [[kbd:l][l]]       | last/alternate-buffer          | mnemonic, ergo      |
+| [[kbd:spc][spc]]     | leader-key                     | vim / ergonomic     |
 
 * software
 the aim is to be able to run software for years without it breaking or bugging.

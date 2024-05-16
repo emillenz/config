@@ -142,17 +142,16 @@
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:1]]
 (map! :map 'override
-      :nm "M-j" #'next-window-any-frame
-      :nm "M-q" #'kill-buffer-and-window
-      :nm "M-1" (cmd! (tab-bar-select-tab 1))
-      :nm "M-2" (cmd! (tab-bar-select-tab 2))
-      :nm "M-3" (cmd! (tab-bar-select-tab 3))
-      :nm "M-4" (cmd! (tab-bar-select-tab 4))
-      :nm "M-e" #'find-file
-      :nm "M-f" #'consult-find
-      :nm "M-F" (cmd! (consult-find "~"))
-      :nm "M-g" #'consult-buffer
-      :nm "M-r" #'consult-recent-file)
+      :nm "C-w" #'next-window-any-frame
+      :nm "C-q" #'kill-buffer-and-window
+      :nm "C-1" (cmd! (tab-bar-select-tab 1))
+      :nm "C-2" (cmd! (tab-bar-select-tab 2))
+      :nm "C-3" (cmd! (tab-bar-select-tab 3))
+      :nm "C-4" (cmd! (tab-bar-select-tab 4))
+      :nm "C-e" #'find-file
+      :nm "C-f" #'consult-find
+      :nm "C-g" #'consult-buffer
+      :nm "C-r" #'consult-recent-file)
 ;; global navigation scheme:1 ends here
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:2]]

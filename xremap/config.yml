@@ -3,23 +3,37 @@ modmap:
     remap:
       capslock:
         alone: esc
-        held: ctrl_l
+        held: super_l
         alone_timeout_millis: 200
-      alt_r: super_l
+      alt_l: ctrl_l
+      ctrl_l: alt_l
+      alt_r: ctrl_r
+      ctrl_r: alt_r
 
 keymap:
   - name: editing
     application:
       not: [Emacs, Alacritty]
     remap:
+      # HACK :: make tab-switching consistent with all other apps (emacs, alacritty, ..)
+      C-1: M-1
+      C-2: M-2
+      C-3: M-3
+      C-4: M-4
+      C-5: M-5
+      C-6: M-6
+      C-7: M-7
+      C-8: M-8
+      C-9: M-9
+      C-0: M-0
       # NAVIGATION
-      M-q: c-w
-      M-e: c-l
-      M-t: c-t
-      # editing
+      C-q: c-w
+      C-e: c-l
+      # EDITING
       c-h: backspace
       c-w: c-backspace
       C-u: [shift-home, delete]
-      # COMPLETION && bash
+      C-k: [shift-end, delete]
+      # COMPLETION
       C-n: down
       C-p: up

@@ -53,9 +53,7 @@ bind -M insert \cn complete
 bind -M default \cn complete
 bind -M insert \cp up-or-search
 bind -M default \cp up-or-search
-bind -M default \ee edit_command_buffer
-bind -M insert \ee edit_command_buffer
-bind -M default \ev __fish_preview_current_file
-bind -M insert \ev __fish_preview_current_file
-bind -M default \el __fish_list_current_token
+bind -M default \ce edit_command_buffer
+bind -M insert \ce edit_command_buffer
+bind -M default V __fish_preview_current_file
 bind -M default z clear-screen

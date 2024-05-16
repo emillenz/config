@@ -237,9 +237,9 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 * keybindings
 implemented using ~xremap~
 ** general notes
-- super / alt :: remapped [[kbd:super][super]] to [[kbd:alt_l][alt_l]] opposite to [[kbd:alt_r][alt_r]] key for ergonomics.
 - esc :: remapped ergonomically to [[kbd:capslock][capslock]]
-- ctrl :: mapped to otherwise useless [[kbd:caps]].  this is an essential remap.  it is ergonomic and allows fast control key chording.
+- [[kbd:super][super]] :: mapped to otherwise useless [[kbd:caps]].  this is an essential remap.  it is and ergonomic remap.
+- [[kbd:ctrl][ctrl]] :: swapped with [[kbd:alt][alt]], since we use [[kbd:ctrl][ctrl]] much more often as a modifier than alt, and this now allows ergonomic pressing of the ctrl keys (using the opposite hand, the same way you do for shift).
 - insert-mode :: make using [[kbd:c-u][c-u]], [[kbd:c-w][c-w]], [[kbd:c-h][c-h]] a habit and ditch the terribly placed [[kbd:backspace][backspace]].  it is more ergonomic and faster than using the incredibly unergonomic and hard to reach [[kbd:backspace][backspace]] (hence we implement these bindings in all apps)
 - vim layer :: we purposefully do not implement a vim-navigation layer globally, since if you are doing more than just typing something into a prompt, you should just use ~emacs-everywhere~ instead.  the implemented keybinds are consistent with vim's insert state and provide the most useful deletion commands when typing into a prompt.
 - typing technique :: get into the habit of proper technique in touch typing.  staying on the homerow, typing with little pressure as needed and not using excess force.  this includes touchtyping all numberrow symbols, brackets & braces.  to enforce this, spraypaint the keycaps blank in order to force you to never look at the keyboard again.  force yourself to use the right finger for the right key (right side symbols :: all with the pinky)
@@ -248,14 +248,14 @@ implemented using ~xremap~
 - key-repetition :: disable it.  it causes bad habits of you holding down a key instead of moving intelligently and fast using the appropriate motion (not holding down [[kbd:j][j]], istead using ~c-d~. not spamming delete, instead using ~d...~).
 
 ** navigational standard
+- it condenses down a minimal set of universal, efficient navigational commands.
 - inter program keyboard shortcuts consistency is important because they make the keys easier to remember and you will not have to learn multiple paradigms of keymaps.  the here defined set of keybindings are shared across applications (webbrowser, emacs, terminal, etc)
 - windowmanager :: the set of program-names during runtime is known and consistent (unlike the set of buffers in applications, where tab-names are either unnamed, arbitrary or change during runtime), we use specific-chars for switching to the tabs (similar as vim's per file marks).
 - tabs ::
   - use them as hotkey workspace inside an app (ex: emacs / tmux)
   - avoid manual tab creation if possible => auto-create a tab if it doesn't exist upon focusing it
   - - we never want visual indication for tabs.   instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.
-- [[kbd:alt][alt]] :: inside applications since it is available everywhere and (almost) never overrides other bindings, aligns with vim's navigational-ctrl-layer-keybind (and is now ergonomically bound).
-  - it condenses down a minimal set of universal, efficient navigational commands.
+- [[kbd:ctrl][ctrl]] :: inside applications since it is the defacto standard & aligns with vim's navigational-ctrl-layer-keybind (and is now ergonomically bound).
 - implementation :: emacs, tmux, fish, firefox,... all implement this mapping scheme.
 
 | mod+key | action                       | consistency         |
@@ -269,8 +269,8 @@ implemented using ~xremap~
 | [[kbd:r][r]]       | [r]ecent (file, fuzzy)       | mnemonic / standard |
 | [[kbd:x][x]]       | e[x]ecute-command (internal) | emacs               |
 | [[kbd:l][l]]       | [l]ast buffer (a[l]ternate)  | mnemonic, ergo      |
-| [[kbd:n][n]]       | completion-menu [n]ext       | vim                 |
-| [[kbd:p][p]]       | completion-menu [p]revious   | vim                 |
+| [[kbd:n][n]]       | [n]ext completion            | vim                 |
+| [[kbd:p][p]]       | [p]revious completion        | vim                 |
 | [[kbd:tab][tab]]     | complete                     | emacs               |
 | [[kbd:spc][spc]]     | leader-key                   | vim / ergonomic     |
 

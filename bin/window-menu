@@ -1,0 +1,42 @@
+#!/bin/env ruby
+#  ---
+#  title:  i3 focus window menu
+#  author: emil lenz
+#  email:  emillenz@protonmail.com
+#  date:   2024-05-15
+#  dependencies: i3, dmenu
+#  notes:
+#  -
+#  ---
+
+require 'json'
+
+DMENU = 'dmenu -b -i -fn "Iosevka Nerd Font-10" -nb "#ffffff" -nf "#000000" -sb "#c0deff" -sf "#000000"'.freeze
+
+def main
+        windows = windows(JSON.parse(`i3-msg -t get_tree`)['nodes']).flatten.compact
+        pp windows
+        dmenu_in = windows.map { |win| win[:name] }.join("\n")
+        sel = `echo "#{dmenu_in}" | #{DMENU} -p 'window > '`.chomp
+        exit 1 if sel == ''
+        win_id = windows.find { |win| win[:name] == sel }[:id]
+        `i3-msg '[con_id=#{win_id}] focus'`
+end
+
+def windows(nodes)
+        return nil if nodes == []
+
+        nodes.map do |node|
+                if node['window_type'] == 'normal'
+                        {
+                                id: node['id'],
+                                name: node['window_properties']['title'],
+                                class: node['window_properties']['class']
+                        }
+                else
+                        windows(node['nodes'])
+                end
+        end
+end
+
+main if __FILE__ == $PROGRAM_NAME

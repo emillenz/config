@@ -197,28 +197,51 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 ** global navigation scheme
 - follows the os-consistent keymap, using alt for the only & essential navigational commands (there may better ones for what you want to achive => inside leadermode)
 - buffers ::
-  - use [[kbd:C-b][C-b]] to switch [B]ack and forth between last [b]uffer and current [b]uffer.  for all other buffer navigation needs use: [[kbd:C-g][C-g]] for pulling up an arbitrary buffer.
+  - use [[kbd:m-b][m-b]] to switch [B]ack and forth between last [b]uffer and current [b]uffer.  for all other buffer navigation needs use: [[kbd:m-g][m-g]] for pulling up an arbitrary buffer.
+- tabs ::
+  - misc workspace: [1] :: editing various different files, switching between them with [[kbd:m-g][m-g]]
+  - project files [2..4] ::
+    - open buffers in specific tabs (one file per tab), in order to hotswitch between them.  (ex: working on 3 project files) => one maximized buffer open per tab
+    - then you can hotkey to that exact file instantly.
+    - 3 simultaneous files are enough for all projects, if we enable more, the overhead becomes too large.  (you would't open and manage 5 splits either, would you?)
+- efficiency :: they are the most efficient way of navigating between multiple different files/buffer at the same time (most efficient way i have found to introduce little overhead when context-switching and remaining distractionfree)
 - efficiency :: this minimalistic but powerful navigation workflow is the most efficient & overheadfree way of navigating between multiple different files/buffer at the same time (low overhead when context-switching and remaining distractionfree, works from anywhere.  improves typing speed)
 - splits :: we never manually create split-windows for buffers, prefer the full screen, full focus, no distractions - workflow.  (no multitasking, no clutter)
-  - when emacs creates splits we must handle them => minimal bindings for switching and closing splits: [[kbd:c-q, c-w][c-q, c-w]].
-  - [[kbd:c-w][c-w]] and [[kbd:c-q][c-q]] is minimalistic, but all you will ever need to manage buffers and windows, since if you have more than 2 windows side by side, you are screwed anyway and need to clean up.  hence it replaces the gazillion of vim's window shortcuts with a faster, simpler alternative.
+  - when emacs creates splits we must handle them => minimal bindings for switching and closing splits: [[kbd:m-q, m-w][m-q, m-w]].
+  - [[kbd:m-w][m-w]] and [[kbd:m-q][m-q]] is minimalistic, but all you will ever need to manage buffers and windows, since if you have more than 2 windows side by side, you are screwed anyway and need to clean up.  hence it replaces the gazillion of vim's window shortcuts with a faster, simpler alternative.
 - terminal :: we never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...).  instead all we do is use [[kbd:M-!/&|][M-!/&|]] if more is needed than that we should switch over to the proper shell anyway.
 
 #+begin_src emacs-lisp
 (map! :map 'override
-      :nm "C-w" #'next-window-any-frame
-      :nm "C-q" #'kill-buffer-and-window
-      :nm "C-l" #'find-file
-      :nm "C-f" #'consult-find
-      :nm "C-F" (cmd! (consult-find "~"))
-      :nm "C-g" #'consult-buffer
-      :nm "C-r" #'consult-recent-file
-      :nm "C-b" #'evil-switch-to-windows-last-buffer)
+      :nm "M-j" #'next-window-any-frame
+      :nm "M-q" #'kill-buffer-and-window
+      :nm "M-1" (cmd! (tab-bar-select-tab 1))
+      :nm "M-2" (cmd! (tab-bar-select-tab 2))
+      :nm "M-3" (cmd! (tab-bar-select-tab 3))
+      :nm "M-4" (cmd! (tab-bar-select-tab 4))
+      :nm "M-e" #'find-file
+      :nm "M-f" #'consult-find
+      :nm "M-F" (cmd! (consult-find "~"))
+      :nm "M-g" #'consult-buffer
+      :nm "M-r" #'consult-recent-file)
+#+end_src
+
+- we never want visual indication for tabs.  instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.
+- tabs are already available, like workspaces, to assign things to.
+#+begin_src emacs-lisp
+(setq tab-bar-show nil)
+
+(defadvice! z-ensure-tab (&optional tab-nr)
+  "when selecting a tab by index, create it, if it doesn't exist yet (efficient & overheadfree)"
+  :before #'tab-bar-select-tab
+  (when (and tab-nr (< (length (tab-bar-tabs)) tab-nr))
+    (tab-bar-new-tab)
+    (z-ensure-tab (1- tab-nr))))
 #+end_src
 
 ** vim editing
 goal :: make vim's bindings even more mnemonic/sane/sensible/efficient and improve consistency of implementation.  maximize the keyboard real-estate usage.
-see [[file:~/.config/xremap/config.org][global keyboard remaps]] for additional details.
+see [[file:~/.config/xremap/config.yml][global keyboard remaps]] for additional details.
 frequently used & coding/editing related functions are mapped to ~g+~ (ex: lookup full documentation with ~gk~)
 
 - relative lines ::
@@ -239,9 +262,9 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
   - we remove annoying unwanted popup's and reduce visual sugar (=> distractionless, focused workflow).
   - this idea correlates with the insight that you should use a keyboard with blank keycaps.  which will force you to learn to type, without ever taking the focus off the screen.  (reduced context switching, no speed bottleneck, increased continuity).
   - learn them all (also the one's in insert mode) for seizing vim's full power.
-- managing buffers ::
 - ~save-buffer~ is frequently used => mapped to system-wide-default: [[kbd:C-s][C-s]]
-- completion :: select & activate: [[kbd:C-j/k][C-j/k]], superior to [[kbd:TAB][TAB]] since it is faster & more ergonomic to navigate between entries.  confirm/exit: [[kbd:RET][RET]]
+- completion :: select & activate: [[kbd:C-n/p][C-n/p]], superior to [[kbd:TAB][TAB]] since it is faster & more ergonomic to navigate between entries.  confirm/exit: [[kbd:RET][RET]]
+-
 
 #+begin_src emacs-lisp
 (map! :after evil
@@ -272,12 +295,11 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
       :nmv  "g/"  #'+default/search-buffer)
 
 (map! :after minibuffer :map minibuffer-mode-map
-      :i "C-j"  #'next-line-or-history-element
-      :i "C-k"  #'previous-line-or-history-element)
+      :i "C-n"  #'next-line-or-history-element
+      :i "C-p"  #'previous-line-or-history-element)
 
 (map! :after company :map company-mode-map
-      :i "TAB" #'company-complete-common
-      :i "C-j" #'company-complete-common)
+      :i "C-n" #'company-complete-common)
 
 ;; HACK :: make c-h work everywhere
 (map! :after company :map company-active-map "C-h" #'backward-delete-char)
@@ -352,7 +374,7 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "z" #'dired-do-compress
       :nm "." #'dired-omit-mode
       :nm "e" #'dired-create-empty-file
-      :nm "+" #'dired-create-directory)
+      :nm "E" #'dired-create-directory)
 
 (map! :map dired-mode-map :localleader :after dired
       :nm "a" #'z-dired-archive)
@@ -386,6 +408,7 @@ This is sensible default behaviour, and integrates it into evil."
 
 ** jumplist
 - jumplist is for functions that jump out of screen
+- don't add functions to jumplist that are executed repeatedly
 #+begin_src emacs-lisp
 (dolist (cmd '(flycheck-next-error
                flycheck-previous-error
@@ -397,6 +420,7 @@ This is sensible default behaviour, and integrates it into evil."
   (evil-add-command-properties cmd :jump t))
 
 (dolist (cmd '(evil-backward-section-begin
+               evil-forward-section-begin
                evil-jump-item
                evil-backward-paragraph
                evil-forward-paragraph
@@ -410,14 +434,11 @@ This is sensible default behaviour, and integrates it into evil."
 - this enforces more thoughtful coding, evaluating what the function actually does and let's you see what is really happening underneath.
 - it actually makes you faster, since it removes the mental overhead and interruption that arises from the distracting completion menu, where you will choose the option from.
 - greatly improves overall typing speed.
-- limit the showing of number of completion candidates (can't view more than ~8 at a glance anyways) in order to make the completion-menu less distracting and more focused.
+- make the completion-menu less distracting and more focused we use ~vertico-flat-mode~ (it promotes finding items not by navigating via scrolling through candidates, but instead by searching). we don't need a fancy popup everytime we want to switch to a candidate, we only want to know when the completion matches, since we already know beforehand what we are looking for.
 #+begin_src emacs-lisp
-(defvar z-completion-count 8
-  "how many completion candidates to display")
-
 (after! company
   (setq company-minimum-prefix-length 0
-        company-tooltip-limit z-completion-count
+        company-tooltip-limit 12
         company-idle-delay nil
         company-tooltip-idle-delay 0.1
         company-show-quick-access t
@@ -428,12 +449,11 @@ This is sensible default behaviour, and integrates it into evil."
           org-mode
           vterm-mode)))
 
-(after! vertico
-  (setq vertico-count z-completion-count))
+(vertico-flat-mode)
 
 (map! :map minibuffer-mode-map
-      :im "C-j" #'next-line-or-history-element
-      :im "C-k" #'previous-line-or-history-element)
+      :im "C-n" #'next-line-or-history-element
+      :im "C-p" #'previous-line-or-history-element)
 
 (map! :map vertico-map
       :im "C-w" #'vertico-directory-delete-word
@@ -456,7 +476,8 @@ in each new file systematically insert heading metadata (as comments) with the f
 # author: emil lenz
 # email:  emillenz@protonmail.com
 # date:   2024-01-06
-# info:   outlines file-metadata template, to be inserted at top of every file systematically.
+# notes:
+# - outlines file-metadata template, to be inserted at top of every file systematically.
 # ---
 #+end_example
 
@@ -507,7 +528,7 @@ this is automated using a snippet
         dired-recursive-copies 'always
         dired-recursive-deletes 'top
         global-auto-revert-non-file-buffers t
-        dired-no-confirm '(compress uncompress move copy touch)))
+        dired-no-confirm '(uncompress move copy)))
 #+end_src
 
 ** Archive file

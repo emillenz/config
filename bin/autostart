@@ -9,7 +9,7 @@
 def main
         processes = [
                 'playerctld',
-                'alacritty --command tmux new-session -A -s cmd',
+                'alacritty --title cmd --command tmux new-session -A -s cmd',
                 'emacs --daemon && emacsclient --reuse-frame',
                 'unclutter',
                 'batsignal -bpe -w 50 -c 20 -d 5',

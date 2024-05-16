@@ -5,25 +5,21 @@ modmap:
         alone: esc
         held: ctrl_l
         alone_timeout_millis: 200
-      alt_l: super_l
+      alt_r: super_l
 
 keymap:
-  - name: browser
-    application:
-      only: firefox
-    remap:
-      # NAVIGATION
-      C-q: c-w
-      C-b: c-tab
-
   - name: editing
     application:
-      not: [emacs, alacritty]
+      not: [Emacs, Alacritty]
     remap:
-      # EDITING
-      C-h: backspace
-      C-w: c-backspace
+      # NAVIGATION
+      M-q: c-w
+      M-e: c-l
+      M-t: c-t
+      # editing
+      c-h: backspace
+      c-w: c-backspace
       C-u: [shift-home, delete]
-      # COMPLETION
-      C-j: down
-      C-k: up
+      # COMPLETION && bash
+      C-n: down
+      C-p: up

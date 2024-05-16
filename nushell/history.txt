@@ -1863,3 +1863,87 @@ ls
 fish
 exit
 fish
+print "a2ad4\nasdf3"
+"a2ad4\nasdf3"
+"a2ad4\nasdf3" | string replace
+man "a2ad4\nasdf3" | str replace
+man "a2ad4\nasdf3" | str replace --help
+man "a2ad4\nasdf3" | str replace -r '\D' ''
+"a2ad4\nasdf3" | str replace -r '\D' ''
+"a2ad4\nasdf3" | str replace -r '[a-z]' ''
+"a2ad4\nasdf3" | lines | each { |line| str replace -r '[a-z]' ''}
+man | "a2ad4\nasdf3" | str replace -r '[a-z]' ''
+"a2ad4\nasdf3" | str replace -r '[a-z]' '' --hel
+"a2ad4\nasdf3" | str replace -r '[a-z]' '' -h
+"a2ad4\nasdf3" | str replace -ar '[a-z]' '' -h
+"a2ad4\nasdf3" | str replace -ar '[a-z]' '' 
+"a2ad4\nasdf3" | str replace -ar '[a-z]' '' | reduce { |n, acc| acc += n } 
+"a2ad4\nasdf3" | str replace -ar '[a-z]' '' | lines | reduce { |n, acc| acc += n } 
+"a2ad4\nasdf3" | str replace -ar '[a-z]' '' | lines | reduce { |n, acc| $acc += $n } 
+"a2ad4\nasdf3" | str replace -ar '[a-z]' '' | lines | reduce { |n, acc| acc + $n } 
+"a2ad4\nasdf3" | str replace -ar '[a-z]' '' | lines | reduce { |n, acc| $acc + $n } 
+"a2ad4\nasdf3" | str replace -ar '[a-z]' '' 
+"a2ad4\nasdf3" | str replace -ar '[a-z]' '' | lines | to int
+"a2ad4\nasdf3" | str replace -ar '[a-z]' '' | lines 
+"a2ad4\nasdf3" | str replace -ar '[a-z]' '' | lines | into int 
+"a2ad4\nasdf3" | str replace -ar '[a-z]' '' | lines | into int | reduce { |it, acc| $acc + $it }
+"a2ad4\nasdf3" | str replace -ar '[a-z]' '' | lines | into int | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33" | str replace -ar '[a-z]' '' | lines | into int | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33" | str replace -ar '\d' '' | lines | into int | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33" | str replace -ar '[0-9]' '' | lines | into int | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33" | str replace -ar '[^\d]' '' | lines | into int | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33" | str replace -ar '[^\w]' '' | lines | into int | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33" | str replace -ar '[\w]' '' | lines | into int | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33" | str replace -ar '\w' '' | lines | into int | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+'a1' | str replace -ar '\d' '.'
+'a1' | str replace -ar '\d' '_'
+'a1' | str replace -ar '\d' '-'
+'a1' | str replace -ar '\d' '.'
+'a1' | str replace -ar '\d' '#'
+'a1' | str replace -ar '\d' '.'
+'a1' | str replace -ar '\D' '.'
+tmux new-window -c '#{pane_current_path}'
+tmux source-file ~/.config/tmux/tmux.conf
+help str replace
+"a b" | sed -E 's/(a)/$1'
+"a b" | sed -E 's/(a)/$1/g'
+"a b" | sed -E 's/(a)/\1/g'
+"a2ad4\nasdf33" | str replace -ar '\D' '' | lines | into int | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33" | str replace -ar '\D' '' | lines | into int 
+"a2ad4\nasdf33" | str replace -ar '\D' '' | lines | into int # | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33" | lines | str replace -ar '\D' '' | into int # | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33" | lines | str replace -ar '\D' '' | into int  | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+["1" "2"] | into int
+"1 2" | into int
+"1.2" | into int
+man parse 
+help parse
+"a2ad4\nasdf33" | lines | parse -r '.*(\d).*(?:\d)'| into int  | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33" | parse -r '.*(\d).*(?:\d)' # | into int  | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33" | parse -r '.*(\d).*(\d)' # | into int  | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33" | parse -r '.*(\d).*(\d)?' # | into int  | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33" | parse -r '.*(\d).*[(\d)]' # | into int  | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33" | parse -r '.*(\d).*(\d)' # | into int  | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf3" | parse -r '.*(\d).*(\d)' # | into int  | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33" | parse -r '(.*(\d).*(\d))|(.*(\d).*)' # | into int  | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33\na2dsf" | parse -r '(.*(\d).*(\d))|(.*(\d).*)' # | into int  | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33\na2dsf\nakdsf3" | parse -r '(.*(\d).*(\d))|(.*(\d).*)' # | into int  | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33\na2dsf\nakdsf3\ndas3klajdsf0" | parse -r '(.*(\d).*(\d))|(.*(\d).*)' # | into int  | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+man help reject
+help reject
+"a2ad4\nasdf33\na2dsf\nakdsf3\ndas3klajdsf0" | parse -r '(.*(\d).*(\d))|(.*(\d).*)' | reject capture0 capture4  | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33\na2dsf\nakdsf3\ndas3klajdsf0" | parse -r '(.*(\d).*(\d))|(.*(\d).*)' | reject capture0 capture4  # | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33\na2dsf\nakdsf3\ndas3klajdsf0" | parse -r '(.*(\d).*(\d))|(.*(\d).*)' # | reject capture0 capture4   | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33\na2dsf\nakdsf3\ndas3klajdsf0" | parse -r '(.*(\d).*(\d))|(.*(\d).*)'  | reject capture0 capture3   | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33\na2dsf\nakdsf3\ndas3klajdsf0" | parse -r '(.*(\d).*(\d))|(.*(\d).*)'  | reject capture0 capture3  # | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33\na2dsf\nakdsf3\ndas3klajdsf0" | parse -r '(.*(\d).*(\d))|(.*(\d).*)'  | reject capture0 capture3 #| reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+"a2ad4\nasdf33\na2dsf\nakdsf3\ndas3klajdsf0" | parse -r '(.*(\d).*(\d))|(.*(\d).*)'  | reject capture0 capture3 | into int | reduce { |it, acc| (if $it < 10 {2 * $it} else {$it}) + $acc }
+node
+python
+ils
+ls -la
+man tmiux
+man tmux
+hexit
+exit
+exit

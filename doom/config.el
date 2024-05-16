@@ -142,15 +142,29 @@
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:1]]
 (map! :map 'override
-      :nm "C-w" #'next-window-any-frame
-      :nm "C-q" #'kill-buffer-and-window
-      :nm "C-l" #'find-file
-      :nm "C-f" #'consult-find
-      :nm "C-F" (cmd! (consult-find "~"))
-      :nm "C-g" #'consult-buffer
-      :nm "C-r" #'consult-recent-file
-      :nm "C-b" #'evil-switch-to-windows-last-buffer)
+      :nm "M-j" #'next-window-any-frame
+      :nm "M-q" #'kill-buffer-and-window
+      :nm "M-1" (cmd! (tab-bar-select-tab 1))
+      :nm "M-2" (cmd! (tab-bar-select-tab 2))
+      :nm "M-3" (cmd! (tab-bar-select-tab 3))
+      :nm "M-4" (cmd! (tab-bar-select-tab 4))
+      :nm "M-e" #'find-file
+      :nm "M-f" #'consult-find
+      :nm "M-F" (cmd! (consult-find "~"))
+      :nm "M-g" #'consult-buffer
+      :nm "M-r" #'consult-recent-file)
 ;; global navigation scheme:1 ends here
+
+;; [[file:config.org::*global navigation scheme][global navigation scheme:2]]
+(setq tab-bar-show nil)
+
+(defadvice! z-ensure-tab (&optional tab-nr)
+  "when selecting a tab by index, create it, if it doesn't exist yet (efficient & overheadfree)"
+  :before #'tab-bar-select-tab
+  (when (and tab-nr (< (length (tab-bar-tabs)) tab-nr))
+    (tab-bar-new-tab)
+    (z-ensure-tab (1- tab-nr))))
+;; global navigation scheme:2 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:1]]
 (map! :after evil
@@ -181,12 +195,11 @@
       :nmv  "g/"  #'+default/search-buffer)
 
 (map! :after minibuffer :map minibuffer-mode-map
-      :i "C-j"  #'next-line-or-history-element
-      :i "C-k"  #'previous-line-or-history-element)
+      :i "C-n"  #'next-line-or-history-element
+      :i "C-p"  #'previous-line-or-history-element)
 
 (map! :after company :map company-mode-map
-      :i "TAB" #'company-complete-common
-      :i "C-j" #'company-complete-common)
+      :i "C-n" #'company-complete-common)
 
 ;; HACK :: make c-h work everywhere
 (map! :after company :map company-active-map "C-h" #'backward-delete-char)
@@ -246,7 +259,7 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "z" #'dired-do-compress
       :nm "." #'dired-omit-mode
       :nm "e" #'dired-create-empty-file
-      :nm "+" #'dired-create-directory)
+      :nm "E" #'dired-create-directory)
 
 (map! :map dired-mode-map :localleader :after dired
       :nm "a" #'z-dired-archive)
@@ -282,6 +295,7 @@ This is sensible default behaviour, and integrates it into evil."
   (evil-add-command-properties cmd :jump t))
 
 (dolist (cmd '(evil-backward-section-begin
+               evil-forward-section-begin
                evil-jump-item
                evil-backward-paragraph
                evil-forward-paragraph
@@ -290,12 +304,9 @@ This is sensible default behaviour, and integrates it into evil."
 ;; jumplist:1 ends here
 
 ;; [[file:config.org::*completion][completion:1]]
-(defvar z-completion-count 8
-  "how many completion candidates to display")
-
 (after! company
   (setq company-minimum-prefix-length 0
-        company-tooltip-limit z-completion-count
+        company-tooltip-limit 12
         company-idle-delay nil
         company-tooltip-idle-delay 0.1
         company-show-quick-access t
@@ -306,12 +317,11 @@ This is sensible default behaviour, and integrates it into evil."
           org-mode
           vterm-mode)))
 
-(after! vertico
-  (setq vertico-count z-completion-count))
+(vertico-flat-mode)
 
 (map! :map minibuffer-mode-map
-      :im "C-j" #'next-line-or-history-element
-      :im "C-k" #'previous-line-or-history-element)
+      :im "C-n" #'next-line-or-history-element
+      :im "C-p" #'previous-line-or-history-element)
 
 (map! :map vertico-map
       :im "C-w" #'vertico-directory-delete-word
@@ -357,7 +367,7 @@ This is sensible default behaviour, and integrates it into evil."
         dired-recursive-copies 'always
         dired-recursive-deletes 'top
         global-auto-revert-non-file-buffers t
-        dired-no-confirm '(compress uncompress move copy touch)))
+        dired-no-confirm '(uncompress move copy)))
 ;; dired:1 ends here
 
 ;; [[file:config.org::*Archive file][Archive file:1]]

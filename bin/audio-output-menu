@@ -9,15 +9,16 @@
 
 require 'json'
 
+DMENU = 'dmenu -b -i -fn "Iosevka Nerd Font-10" -nb "#ffffff" -nf "#000000" -sb "#c0deff" -sf "#000000"'.freeze
+
 def main
-        icon = '󱀞'
         sinks = JSON.parse(`pactl --format json list sinks`)
 
-        rofi_opts = sinks.map { |sink| sink['description'] }.join("\n")
-        sink_selected = `echo "#{rofi_opts}" | rofi -dmenu -i -no-custom -p "#{icon}  audio-output >"`.strip
-        exit(1) if sink_selected == ''
+        dmenu_in= sinks.map { |sink| sink['description'] }.join("\n")
+        sink_sel = `echo "#{dmenu_in}" | #{DMENU} -p "audio-output > "`.strip
+        exit 1 if sink_sel == ''
 
-        sink_id = sinks.find { |s| s['description'] == sink_selected }['index']
+        sink_id = sinks.find { |s| s['description'] == sink_sel }['index']
         `pactl set-default-sink #{sink_id}`
 
         JSON.parse(`pactl --format json list sink-inputs`).map do |sink|

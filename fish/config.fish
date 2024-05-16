@@ -29,13 +29,19 @@ set -gx BROWSER firefox
 set -gx PAGER bat
 set -gx MANPAGER bat
 set -gx MANWIDTH 100
-set -gx FZF_DEFAULT_OPTS --reverse --height 16 --color light --scheme path # os-consistent completion (rofi, emacs, fzf ..)
+set -gx FZF_DEFAULT_OPTS --reverse --height 16 --color light --scheme path
 
-# aliases for saner defaults / shortcuts
-alias e="emacsclient -nw"
-alias cat="bat"
-alias rm="rm --recursive --verbose --interactive=once"
-alias yay="yay --noconfirm"
+# ALIASES :: better defaults
+alias e "emacsclient -nw"
+alias cat bat
+alias rm "rm --recursive --verbose --interactive=once"
+alias mv "mv --verbose --interactive"
+alias cp "cp --interactive --recursive --verbose"
+alias yay "yay --noconfirm"
+alias irb "irb --readline"
+alias sed "sed --regexp-extended"
+alias grep "grep --extended-regexp"
+alias echo "echo -e"
 
 # KEYBINDINGS
 fzf_configure_bindings --history=\cr --directory=\cf --git_log= --git_status= --variables= --processes= # NOTE :: disable useless
@@ -43,9 +49,13 @@ bind -M normal U redo
 bind -M normal K __fish_man_page
 bind -M insert \ca accept-autosuggestion
 bind -M insert \t complete
-bind -M insert \ck up-or-search
-bind -M default \ce edit_command_buffer
-bind -M insert \ce edit_command_buffer
-bind -M default V __fish_preview_current_file
-bind -M default z clear-screen
+bind -M insert \cn complete
+bind -M default \cn complete
+bind -M insert \cp up-or-search
+bind -M default \cp up-or-search
+bind -M default \ee edit_command_buffer
+bind -M insert \ee edit_command_buffer
+bind -M default \ev __fish_preview_current_file
+bind -M insert \ev __fish_preview_current_file
 bind -M default \el __fish_list_current_token
+bind -M default z clear-screen

@@ -1,14 +1,8 @@
 modmap:
   - name: global
     remap:
-      capslock:
-        alone: esc
-        held: super_l
-        alone_timeout_millis: 200
-      alt_l: ctrl_l
-      ctrl_l: alt_l
+      capslock: esc
       alt_r: ctrl_r
-      ctrl_r: alt_r
 
 keymap:
   - name: editing
@@ -25,7 +19,6 @@ keymap:
       C-7: M-7
       C-8: M-8
       C-9: M-9
-      C-0: M-0
       # NAVIGATION
       C-q: c-w
       C-e: c-l
@@ -33,7 +26,6 @@ keymap:
       c-h: backspace
       c-w: c-backspace
       C-u: [shift-home, delete]
-      C-k: [shift-end, delete]
       # COMPLETION
       C-n: down
       C-p: up

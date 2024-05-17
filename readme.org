@@ -237,9 +237,8 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 * keybindings
 implemented using ~xremap~
 ** general notes
-- esc :: remapped ergonomically to [[kbd:capslock][capslock]]
-- [[kbd:super][super]] :: mapped to otherwise useless [[kbd:caps]].  this is an essential remap.  it is and ergonomic remap.
-- [[kbd:ctrl][ctrl]] :: swapped with [[kbd:alt][alt]], since we use [[kbd:ctrl][ctrl]] much more often as a modifier than alt, and this now allows ergonomic pressing of the ctrl keys (using the opposite hand, the same way you do for shift).
+- esc :: remapped to the most optimal (ergonomical) key [[kbd:capslock][capslock]]
+- [[kbd:ctrl][ctrl]] :: mapped to [[kbd:alt_r][alt_r]], since [[kbd:alt][alt]] is the wm-modkey.  using the thumbs for the modifiers is fast and ergonomic since all fingers have full range of motion and the thumb is the strongest finger.  inspired by the reasearchers that fabricate ergonomic keyboards with a thumb cluster such as: kinesis advatage.
 - insert-mode :: make using [[kbd:c-u][c-u]], [[kbd:c-w][c-w]], [[kbd:c-h][c-h]] a habit and ditch the terribly placed [[kbd:backspace][backspace]].  it is more ergonomic and faster than using the incredibly unergonomic and hard to reach [[kbd:backspace][backspace]] (hence we implement these bindings in all apps)
 - vim layer :: we purposefully do not implement a vim-navigation layer globally, since if you are doing more than just typing something into a prompt, you should just use ~emacs-everywhere~ instead.  the implemented keybinds are consistent with vim's insert state and provide the most useful deletion commands when typing into a prompt.
 - typing technique :: get into the habit of proper technique in touch typing.  staying on the homerow, typing with little pressure as needed and not using excess force.  this includes touchtyping all numberrow symbols, brackets & braces.  to enforce this, spraypaint the keycaps blank in order to force you to never look at the keyboard again.  force yourself to use the right finger for the right key (right side symbols :: all with the pinky)

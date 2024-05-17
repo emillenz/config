@@ -36,4 +36,4 @@ def main
         `sleep 1 && xset r off` # HACK: wait for xremap
 end
 
-main if __FILE__ == $PROGRAM_NAME
+main

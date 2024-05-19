@@ -34,9 +34,9 @@ set -gx FZF_DEFAULT_OPTS --reverse --height 16 --color light --scheme path
 # ALIASES :: better defaults
 alias e "emacsclient -nw"
 alias cat bat
-alias rm "rm --recursive --verbose --interactive=once"
+alias rm "rm --recursive --verbose"
 alias mv "mv --verbose --interactive"
-alias cp "cp --interactive --recursive --verbose"
+alias cp "cp --recursive --verbose"
 alias yay "yay --noconfirm"
 alias irb "irb --readline"
 alias sed "sed --regexp-extended"
@@ -44,13 +44,12 @@ alias grep "grep --extended-regexp"
 alias echo "echo -e"
 
 # KEYBINDINGS
-fzf_configure_bindings --history=\cr --directory=\cf --git_log= --git_status= --variables= --processes= # NOTE :: disable useless
+fzf_configure_bindings --directory=\cf --history= --git_log= --git_status= --variables= --processes= # NOTE :: disable useless (history already inbuilt in fish)
 bind -M normal U redo
 bind -M normal K __fish_man_page
-bind -M insert \ca accept-autosuggestion
-bind -M insert \t complete
+bind -M insert \t accept-autosuggestion
+bind -M default \t accept-autosuggestion
 bind -M insert \cn complete
-bind -M default \cn complete
 bind -M insert \cp up-or-search
 bind -M default \cp up-or-search
 bind -M default \ce edit_command_buffer

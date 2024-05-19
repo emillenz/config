@@ -5,7 +5,7 @@ set page-padding 1
 set selection-clipboard clipboard
 set window-title-basename true
 set statusbar-basename true
-set font "Iosevka Nerd Font 10"
+set font "Iosevka Comfy 10"
 set adjust-open "best-fit"
 set window-title-page true
 set render-loading true

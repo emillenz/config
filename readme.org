@@ -90,7 +90,7 @@ after extensive testing i found to use the light theme always & everywhere.   st
 - #ffffff and #000000 as the base are minimalist colors and are the least limiting on the range of different colors that can be use while maintaining stark contrast.
 the display brightness must be adjusted align with the ambient brightness.   thus in dim light (night), an additional source of light other than that of the monitor is required to reduce eye strain.   the eyes are more relaxed (strain less) when they do not have to focus on one point to gather light.
 
-* font: iosevka nerd font
+* font: iosevka comfy
 - it is incredibly compact in width to allow a lot of code on screen, especially when viewing content side by side.
 - designed for writing code, using in terminals, and preparing technical documents.
   - the intent is to make everything feel part of the same aesthetic, hence setting the font system-wide.
@@ -103,7 +103,7 @@ the display brightness must be adjusted align with the ambient brightness.   thu
 - it is lean, thin and sharp.  this allows it to be used in all context and interfaces.
 - economical use of screen space and clarity/legibility at small sizes.
 #+begin_quote
-Iosevka Nerd Font optimises for inter-glyph and inter-style consistency within the overarching constraint of usability at small point sizes.
+Iosevka Comfy optimises for inter-glyph and inter-style consistency within the overarching constraint of usability at small point sizes. The shapes are round and are designed in concert to both impose a predictable rhythm and keep characters distinct from each other.  Distinctions are drawn on the premise of contributing to the demands of the design in light of usability, without ever calling attention to themselves (as opposed to sporadic calligraphic glyphs amid an otherwise austere presentation which seem to say "look how pretty I am!").
 --- protesilaos stavrou
 #+end_quote
 
@@ -249,29 +249,28 @@ implemented using ~xremap~
 ** navigational standard
 - it condenses down a minimal set of universal, efficient navigational commands.
 - inter program keyboard shortcuts consistency is important because they make the keys easier to remember and you will not have to learn multiple paradigms of keymaps.  the here defined set of keybindings are shared across applications (webbrowser, emacs, terminal, etc)
-- windowmanager :: the set of program-names during runtime is known and consistent (unlike the set of buffers in applications, where tab-names are either unnamed, arbitrary or change during runtime), we use specific-chars for switching to the tabs (similar as vim's per file marks).
+- windowmanager :: the set of program-names during runtime is known and consistent (unlike the set of buffers in applications, where tab-names are either unnamed, arbitrary or change during runtime), we use specific-chars for switching to the tabs (same as emacs's per file marks).
 - tabs ::
-  - use them as hotkey workspace inside an app (ex: emacs / tmux)
+  - use them as hotkey workspace inside an app (ex: tmux, browser) // this is the more simple alternative to marks.
   - avoid manual tab creation if possible => auto-create a tab if it doesn't exist upon focusing it
-  - - we never want visual indication for tabs.   instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.
+  - we never want visual indication for tabs.   instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.
 - [[kbd:ctrl][ctrl]] :: inside applications since it is the defacto standard & aligns with vim's navigational-ctrl-layer-keybind (and is now ergonomically bound).
 - implementation :: emacs, tmux, fish, firefox,... all implement this mapping scheme.
 
 | mod+key | action                       | consistency         |
 |---------+------------------------------+---------------------|
 | [[kbd:g][g]]       | [g]oto buffer  (find)        | vim: goto           |
-| [[kbd:t][t]]       | new-[t]ab                    | standard            |
 | [[kbd:s][s]]       | [s]ave file                  |                     |
 | [[kbd:q][q]]       | [q]uit (buffer)              | mnemonic / standard |
 | [[kbd:e][e]]       | [e]dit (file/url/...)        | standard            |
 | [[kbd:f][f]]       | [f]ind (program/file, fuzzy) | mnemonic / standard |
 | [[kbd:r][r]]       | [r]ecent (file, fuzzy)       | mnemonic / standard |
 | [[kbd:x][x]]       | e[x]ecute-command (internal) | emacs               |
-| [[kbd:l][l]]       | [l]ast buffer (a[l]ternate)  | mnemonic, ergo      |
 | [[kbd:n][n]]       | [n]ext completion            | vim                 |
 | [[kbd:p][p]]       | [p]revious completion        | vim                 |
 | [[kbd:tab][tab]]     | complete                     | emacs               |
 | [[kbd:spc][spc]]     | leader-key                   | vim / ergonomic     |
+| 1-4     | focus tab 1-3                | standard            |
 
 ** no symbol layers and homerow mods
 - they are a gimics and introduce unneccessary complexity into the system. you are slowing yourself down using them, since the always require a modifier, and waiting for that modifier to be released makes you need to wait before continuing to hammer on in typing. using a symbol top layer layout: programmer-dvorak is far superior, more ergonomic and allows you to bang out symbols as fast as if you were writing prose.

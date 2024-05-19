@@ -1947,3 +1947,40 @@ man tmux
 hexit
 exit
 exit
+i3-msg -t get_tree
+exit
+exi
+exit
+table --help
+nuy
+i3-msg -t get_tree
+i3-msg -t get_tree | from json
+i3-msg -t get_tree | from json | table
+i3-msg -t get_tree | from json | table | get nodes
+table
+i3-msg -t get_tree | from json |  get nodes
+man table
+table 
+table --help
+ls
+tmux source-file ~/.config/tmux/tmux.conf
+ls
+i3-msg -t get_tree | from json | table | get nodes
+i3-msg -t get_tree | from json | get nodes
+transpose --help | bat --language help
+man i3-msg -t get_tree | from json | get nodes | fl
+flatten
+man flatten
+man table
+man i3-msg -t get_tree | from json | get nodes | describe
+man describe
+describe --help | bat --language help
+i3-msg -t get_tree | from json | get nodes | describe
+i3-msg -t get_tree | from json | describe
+man commandline
+commandline --help | bat --language help
+commandline -r "a"
+sudo killall xreamp
+sudo killall xremap
+autostart
+exit

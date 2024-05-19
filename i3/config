@@ -6,7 +6,7 @@
 # ---
 
 # ALIASES
-set $DMENU dmenu -b -i -fn 'Iosevka Nerd Font-10' -nb '#ffffff' -nf '#000000' -sb '#c0deff' -sf '#000000'
+set $DMENU dmenu -b -i -fn 'Iosevka Comfy-10' -nb '#ffffff' -nf '#000000' -sb '#c0deff' -sf '#000000'
 set $ESC ; mode "default"
 set $BIN ~/.config/bin
 set $MV move container to workspace
@@ -32,7 +32,7 @@ default_orientation horizontal
 default_border pixel 2
 hide_edge_borders smart
 title_align left
-font pango: Iosevka Nerd Font 10
+font pango: Iosevka Comfy 10
 focus_on_window_activation focus
 
 # KEYBINDINGS
@@ -78,19 +78,18 @@ $MAP $MOD+Return move workspace to output next
 for_window [urgent="latest"] focus
 # random window -> 1
 for_window [all] $MV 1, focus, title_window_icon no
-$MAP $MOD+1 workspace 1
 
 set $WS_CMD "cmd"
 workspace $WS_CMD output primary
 $MAP $MOD+c workspace $WS_CMD
 $MAP $MOD+shift+c $CMD alacritty --title cmd --command tmux new-session -A -s cmd $ESC
-for_window [class="Alacritty|cmd"] $MV $WS_CMD, focus
+for_window [class="Alacritty"] $MV $WS_CMD, focus
 
 set $WS_DOCS "docs"
 workspace $WS_DOCS output primary
 $MAP $MOD+d workspace $WS_DOCS
 $MAP $MOD+shift+d $CMD xdg-open "$(fd --type file . ~ | $DMENU -p 'find-file >')"
-for_window [class="zathura"] $MV $WS_DOCS, focus
+for_window [class="Zathura"] $MV $WS_DOCS, focus
 
 set $WS_WEB "web"
 workspace $WS_WEB output primary
@@ -104,10 +103,10 @@ $MAP $MOD+e workspace $WS_EDIT
 $MAP $MOD+shift+e $CMD emacsclient --reuse-frame || emacs --daemon && emacsclient --reuse-frame
 for_window [class="Emacs|Eclipse"] $MV $WS_EDIT, focus
 
+# NOTE :: copy link to clipboard > open mpv with binding to view there
 set $WS_VIDEO "video"
 workspace $WS_VIDEO output primary
 $MAP $MOD+v workspace $WS_VIDEO
-# NOTE :: copy link to clipboard > open mpv with binding to view there
 $MAP $MOD+shift+v $CMD mpv "$(xclip -out)"
 for_window [class="mpv"] $MV $WS_VIDEO, focus
 

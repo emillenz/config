@@ -11,7 +11,7 @@
 
 require 'json'
 
-DMENU = 'dmenu -b -i -fn "Iosevka Nerd Font-10" -nb "#ffffff" -nf "#000000" -sb "#c0deff" -sf "#000000"'.freeze
+DMENU = 'dmenu -b -i -fn "Iosevka Comfy-10" -nb "#ffffff" -nf "#000000" -sb "#c0deff" -sf "#000000"'.freeze
 
 def main
         windows = windows(JSON.parse(`i3-msg -t get_tree`)['nodes']).flatten.compact

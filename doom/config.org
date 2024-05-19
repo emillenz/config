@@ -15,6 +15,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 - i encourage you to master the tool that you are using.  this means reading the documentation, keybinding cheatsheets for the tools you are using (ex: vertico).  additionally when something is repetetive / unefficcient, look up if there exists a command to do what you need to get done.
   + try to first fundamentally understand & master the functionality your tool offers.  then you can assess and see if a extension really provides value to you, or wether that functionality is already included.
     + eg: all the plugins like vim easymotion, avy-goto-char etc. are bloat and not needed, since a faster, more powerful, inter-line function already exitsts: incremental-search: [[kbd:/, ?][/, ?]]
+- terminal :: we never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...).  instead all we do is use [[kbd:M-!/&|][M-!/&|]] if more is needed than that we should switch over to the proper shell anyway.
 
 
 * user
@@ -64,10 +65,10 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 
 ** font
 #+begin_src emacs-lisp
-(setq doom-font                (font-spec :family "Iosevka Nerd Font" :size 14)
-      doom-variable-pitch-font (font-spec :family "Iosevka Nerd Font" :size 14)
-      doom-serif-font          (font-spec :family "Iosevka Nerd Font" :size 14)
-      doom-big-font            (font-spec :family "Iosevka Nerd Font" :size 28))
+(setq doom-font                (font-spec :family "Iosevka Comfy" :size 14)
+      doom-variable-pitch-font (font-spec :family "Iosevka Comfy" :size 14)
+      doom-serif-font          (font-spec :family "Iosevka Comfy" :size 14)
+      doom-big-font            (font-spec :family "Iosevka Comfy" :size 28))
 
 (custom-set-faces!
   '(font-lock-keyword-face :slant normal :weight bold)
@@ -100,14 +101,6 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       window-combination-resize t
       split-height-threshold nil
       split-width-threshold 0)
-
-(setq +popup-defaults
-      '(:side right
-        :select nil
-        :quit t
-        :width 0.5
-        :modeline t))
-(apply #'set-popup-rule! "\\*" +popup-defaults) ;; HACK :: apply defaults to all
 
 (after! org
   (setq org-src-window-setup 'current-window
@@ -182,7 +175,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 (setq doom-leader-key "SPC"
       doom-leader-alt-key "M-SPC"
       doom-localleader-key ","
-      doom-leader-alt-key "M-,")
+      doom-localleader-alt-key "M-,")
 
 (map! :leader
       (:prefix "c"
@@ -196,46 +189,34 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 
 ** global navigation scheme
 - follows the os-consistent keymap, using alt for the only & essential navigational commands (there may better ones for what you want to achive => inside leadermode)
-- buffers ::
-  - use [[kbd:m-b][m-b]] to switch [B]ack and forth between last [b]uffer and current [b]uffer.  for all other buffer navigation needs use: [[kbd:m-g][m-g]] for pulling up an arbitrary buffer.
-- tabs ::
-  - misc workspace: [1] :: editing various different files, switching between them with [[kbd:m-g][m-g]]
-  - project files [2..4] ::
-    - open buffers in specific tabs (one file per tab), in order to hotswitch between them.  (ex: working on 3 project files) => one maximized buffer open per tab
-    - then you can hotkey to that exact file instantly.
-    - 3 simultaneous files are enough for all projects, if we enable more, the overhead becomes too large.  (you would't open and manage 5 splits either, would you?)
-- efficiency :: they are the most efficient way of navigating between multiple different files/buffer at the same time (most efficient way i have found to introduce little overhead when context-switching and remaining distractionfree)
-- efficiency :: this minimalistic but powerful navigation workflow is the most efficient & overheadfree way of navigating between multiple different files/buffer at the same time (low overhead when context-switching and remaining distractionfree, works from anywhere.  improves typing speed)
 - splits :: we never manually create split-windows for buffers, prefer the full screen, full focus, no distractions - workflow.  (no multitasking, no clutter)
   - when emacs creates splits we must handle them => minimal bindings for switching and closing splits: [[kbd:m-q, m-w][m-q, m-w]].
   - [[kbd:m-w][m-w]] and [[kbd:m-q][m-q]] is minimalistic, but all you will ever need to manage buffers and windows, since if you have more than 2 windows side by side, you are screwed anyway and need to clean up.  hence it replaces the gazillion of vim's window shortcuts with a faster, simpler alternative.
-- terminal :: we never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...).  instead all we do is use [[kbd:M-!/&|][M-!/&|]] if more is needed than that we should switch over to the proper shell anyway.
 
 #+begin_src emacs-lisp
 (map! :map 'override
       :nm "C-w" #'next-window-any-frame
       :nm "C-q" #'kill-buffer-and-window
-      :nm "C-1" (cmd! (tab-bar-select-tab 1))
-      :nm "C-2" (cmd! (tab-bar-select-tab 2))
-      :nm "C-3" (cmd! (tab-bar-select-tab 3))
-      :nm "C-4" (cmd! (tab-bar-select-tab 4))
       :nm "C-e" #'find-file
       :nm "C-f" #'consult-find
+      :nm "C-l" #'evil-switch-to-windows-last-buffer
       :nm "C-g" #'consult-buffer
       :nm "C-r" #'consult-recent-file)
 #+end_src
 
-- we never want visual indication for tabs.  instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.
-- tabs are already available, like workspaces, to assign things to.
+- buffers ::
+  - filemarks :: hotswitch between files in a project you are working on (ex: mark ~Main.java~ with [[kbd:M][M]] and then always jump back to it using ~'m~ )
+  - else :: use [[kbd:C-g][c-g]] and partial completion for all other buffer switching (never use next/pre buffer (inefficient))
+- efficiency :: this minimalistic but powerful navigation workflow is the most efficient & overheadfree way of navigating simultaneously between multiple different files/buffer when working within a project (low overhead when context-switching and remaining distractionfree, works from anywhere.  improves typing speed)
 #+begin_src emacs-lisp
-(setq tab-bar-show nil)
-
-(defadvice! z-ensure-tab (&optional tab-nr)
-  "when selecting a tab by index, create it, if it doesn't exist yet (efficient & overheadfree)"
-  :before #'tab-bar-select-tab
-  (when (and tab-nr (< (length (tab-bar-tabs)) tab-nr))
-    (tab-bar-new-tab)
-    (z-ensure-tab (1- tab-nr))))
+(defadvice! z-filemark-goto (char)
+  "we use vim's per file marks (upper case char's) for efficent and fast buffer navigation.  however
+  we just want to jump back to the buffer (but not to the place in the buffer where we placed the
+  mark).  for ergonomics we use the redundant key: ' and use lowercase chars for jumping to the file
+  for ergonomics and speed.
+ (vim soltion: `nnoremap ' '`\"`, jumps to last position in buffer)"
+  :override #'evil-goto-mark-line
+  (switch-to-buffer (marker-buffer (evil-get-marker (upcase char)))))
 #+end_src
 
 ** vim editing
@@ -263,15 +244,14 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
   - learn them all (also the one's in insert mode) for seizing vim's full power.
 - ~save-buffer~ is frequently used => mapped to system-wide-default: [[kbd:C-s][C-s]]
 - completion :: select & activate: [[kbd:C-n/p][C-n/p]], superior to [[kbd:TAB][TAB]] since it is faster & more ergonomic to navigate between entries.  confirm/exit: [[kbd:RET][RET]]
--
 
 #+begin_src emacs-lisp
 (map! :after evil
       :i    "C-h" #'backward-delete-char
       :i    "C-v" (cmd! (evil-paste-from-register ?\")) ;; NOTE :: more convenient than <c-r>"
-
       :m    "C-s" #'write-file
       :in   "C-s" (cmd! (evil-force-normal-state) (basic-save-buffer))
+      :n    "C-j" #'newline-and-indent
 
       :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
@@ -900,7 +880,7 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
 - motivation :: this scheme of =agenda/notes= is used to have a structured and consistent approach for generic projects-management.
 - prepending :: if recent item's are of higher relevance
 - appending :: for hierarchical order eg. book-quotes ordered from begin -> end
-      #+begin_src emacs-lisp
+#+begin_src emacs-lisp
   (defvar z-org-literature-dir "~/Documents/literature/notes/")
 
   (defvar z-org-journal-dir (file-name-concat "~/Documents/journal/"))

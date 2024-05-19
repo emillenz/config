@@ -7,7 +7,7 @@
 # dependencies: dmenu, dunst
 # ---
 
-DMENU = 'dmenu -b -i -fn "Iosevka Nerd Font-10" -nb "#ffffff" -nf "#000000" -sb "#c0deff" -sf "#000000"'.freeze # NOTE :: modus vivendi theme
+DMENU = 'dmenu -b -i -fn "Iosevka Comfy-10" -nb "#ffffff" -nf "#000000" -sb "#c0deff" -sf "#000000"'.freeze # NOTE :: modus vivendi theme
 
 def main
         pss = `ps -e`.lines.drop(1).map do |line|

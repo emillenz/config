@@ -37,10 +37,10 @@
 ;; modus-theme:1 ends here
 
 ;; [[file:config.org::*font][font:1]]
-(setq doom-font                (font-spec :family "Iosevka Nerd Font" :size 14)
-      doom-variable-pitch-font (font-spec :family "Iosevka Nerd Font" :size 14)
-      doom-serif-font          (font-spec :family "Iosevka Nerd Font" :size 14)
-      doom-big-font            (font-spec :family "Iosevka Nerd Font" :size 28))
+(setq doom-font                (font-spec :family "Iosevka Comfy" :size 14)
+      doom-variable-pitch-font (font-spec :family "Iosevka Comfy" :size 14)
+      doom-serif-font          (font-spec :family "Iosevka Comfy" :size 14)
+      doom-big-font            (font-spec :family "Iosevka Comfy" :size 28))
 
 (custom-set-faces!
   '(font-lock-keyword-face :slant normal :weight bold)
@@ -62,14 +62,6 @@
       window-combination-resize t
       split-height-threshold nil
       split-width-threshold 0)
-
-(setq +popup-defaults
-      '(:side right
-        :select nil
-        :quit t
-        :width 0.5
-        :modeline t))
-(apply #'set-popup-rule! "\\*" +popup-defaults) ;; HACK :: apply defaults to all
 
 (after! org
   (setq org-src-window-setup 'current-window
@@ -128,7 +120,7 @@
 (setq doom-leader-key "SPC"
       doom-leader-alt-key "M-SPC"
       doom-localleader-key ","
-      doom-leader-alt-key "M-,")
+      doom-localleader-alt-key "M-,")
 
 (map! :leader
       (:prefix "c"
@@ -144,34 +136,31 @@
 (map! :map 'override
       :nm "C-w" #'next-window-any-frame
       :nm "C-q" #'kill-buffer-and-window
-      :nm "C-1" (cmd! (tab-bar-select-tab 1))
-      :nm "C-2" (cmd! (tab-bar-select-tab 2))
-      :nm "C-3" (cmd! (tab-bar-select-tab 3))
-      :nm "C-4" (cmd! (tab-bar-select-tab 4))
       :nm "C-e" #'find-file
       :nm "C-f" #'consult-find
+      :nm "C-l" #'evil-switch-to-windows-last-buffer
       :nm "C-g" #'consult-buffer
       :nm "C-r" #'consult-recent-file)
 ;; global navigation scheme:1 ends here
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:2]]
-(setq tab-bar-show nil)
-
-(defadvice! z-ensure-tab (&optional tab-nr)
-  "when selecting a tab by index, create it, if it doesn't exist yet (efficient & overheadfree)"
-  :before #'tab-bar-select-tab
-  (when (and tab-nr (< (length (tab-bar-tabs)) tab-nr))
-    (tab-bar-new-tab)
-    (z-ensure-tab (1- tab-nr))))
+(defadvice! z-filemark-goto (char)
+  "we use vim's per file marks (upper case char's) for efficent and fast buffer navigation.  however
+  we just want to jump back to the buffer (but not to the place in the buffer where we placed the
+  mark).  for ergonomics we use the redundant key: ' and use lowercase chars for jumping to the file
+  for ergonomics and speed.
+ (vim soltion: `nnoremap ' '`\"`, jumps to last position in buffer)"
+  :override #'evil-goto-mark-line
+  (switch-to-buffer (marker-buffer (evil-get-marker (upcase char)))))
 ;; global navigation scheme:2 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:1]]
 (map! :after evil
       :i    "C-h" #'backward-delete-char
       :i    "C-v" (cmd! (evil-paste-from-register ?\")) ;; NOTE :: more convenient than <c-r>"
-
       :m    "C-s" #'write-file
       :in   "C-s" (cmd! (evil-force-normal-state) (basic-save-buffer))
+      :n    "C-j" #'newline-and-indent
 
       :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line

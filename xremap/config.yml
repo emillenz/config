@@ -9,16 +9,6 @@ keymap:
     application:
       not: [Emacs, Alacritty]
     remap:
-      # HACK :: make tab-switching consistent with all other apps (emacs, alacritty, ..)
-      C-1: M-1
-      C-2: M-2
-      C-3: M-3
-      C-4: M-4
-      C-5: M-5
-      C-6: M-6
-      C-7: M-7
-      C-8: M-8
-      C-9: M-9
       # NAVIGATION
       C-q: c-w
       C-e: c-l

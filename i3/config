@@ -58,13 +58,13 @@ $MAP XF86AudioRaiseVolume  $CMD $VOL_INC
 $MAP XF86AudioMute         $CMD $VOL_MUTE
 $MAP XF86AudioMicMute      $CMD $VOL_MIC_MUTE
 
-$MAP $MOD+9      $CMD $VOL_MIC_MUTE
-$MAP $MOD+0      $CMD $VOL_MUTE
-$MAP $MOD+minus  $CMD $VOL_DEC
-$MAP $MOD+equal  $CMD $VOL_INC
-$MAP $MOD+period $CMD playerctl next
-$MAP $MOD+comma  $CMD playerctl previous
-$MAP $MOD+slash  $CMD playerctl play-pause
+$MAP $MOD+9            $CMD $VOL_MIC_MUTE
+$MAP $MOD+0            $CMD $VOL_MUTE
+$MAP $MOD+minus        $CMD $VOL_DEC
+$MAP $MOD+equal        $CMD $VOL_INC
+$MAP $MOD+bracketright $CMD playerctl next
+$MAP $MOD+bracketleft  $CMD playerctl previous
+$MAP $MOD+backslash    $CMD playerctl play-pause
 
 $MAP $MOD+n      focus next
 $MAP $MOD+p      focus prev

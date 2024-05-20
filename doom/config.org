@@ -188,33 +188,33 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 #+end_src
 
 ** global navigation scheme
-- follows the os-consistent keymap, using alt for the only & essential navigational commands (there may better ones for what you want to achive => inside leadermode)
+- follows the os-consistent keymap
 - splits :: we never manually create split-windows for buffers, prefer the full screen, full focus, no distractions - workflow.  (no multitasking, no clutter)
   - when emacs creates splits we must handle them => minimal bindings for switching and closing splits: [[kbd:m-q, m-w][m-q, m-w]].
   - [[kbd:m-w][m-w]] and [[kbd:m-q][m-q]] is minimalistic, but all you will ever need to manage buffers and windows, since if you have more than 2 windows side by side, you are screwed anyway and need to clean up.  hence it replaces the gazillion of vim's window shortcuts with a faster, simpler alternative.
+- these mappings are universal to all programs (shell, emacs, browser, i3) and highly frequently accessed (from any mode/file).
 
 #+begin_src emacs-lisp
 (map! :map 'override
       :nm "C-w" #'next-window-any-frame
       :nm "C-q" #'kill-buffer-and-window
       :nm "C-e" #'find-file
-      :nm "C-f" #'consult-find
-      :nm "C-l" #'evil-switch-to-windows-last-buffer
+      :nm "C-f" #'projectile-find-file
       :nm "C-g" #'consult-buffer
       :nm "C-r" #'consult-recent-file)
 #+end_src
 
 - buffers ::
-  - filemarks :: hotswitch between files in a project you are working on (ex: mark ~Main.java~ with [[kbd:M][M]] and then always jump back to it using ~'m~ )
+  - global-marks ::
+    - we use vim's global marks for efficent and fast buffer navigation.
+    - hotswitch between files (buffers) in a project you are working on (ex: within a project: mark ~Main.java~ -> ~m~, ~buildscript.sh~ -> ~b~, ~compilation~ -> ~c~; then hotswitch between these buffers, to whichever one you need.)
   - else :: use [[kbd:C-g][c-g]] and partial completion for all other buffer switching (never use next/pre buffer (inefficient))
 - efficiency :: this minimalistic but powerful navigation workflow is the most efficient & overheadfree way of navigating simultaneously between multiple different files/buffer when working within a project (low overhead when context-switching and remaining distractionfree, works from anywhere.  improves typing speed)
 #+begin_src emacs-lisp
-(defadvice! z-filemark-goto (char)
-  "we use vim's per file marks (upper case char's) for efficent and fast buffer navigation.  however
-  we just want to jump back to the buffer (but not to the place in the buffer where we placed the
-  mark).  for ergonomics we use the redundant key: ' and use lowercase chars for jumping to the file
-  for ergonomics and speed.
- (vim soltion: `nnoremap ' '`\"`, jumps to last position in buffer)"
+(defadvice! z-globalmark-goto (char)
+  "vim global marks, however it just switches to the buffer (at the previous position).  replaces redundant '.  for ergonomics using lowercase-char.
+
+(vim solution: `nnoremap ' '`\"`, jumps to last position in buffer)"
   :override #'evil-goto-mark-line
   (switch-to-buffer (marker-buffer (evil-get-marker (upcase char)))))
 #+end_src
@@ -231,10 +231,7 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
   - at most have 2 splits => toggle between windows with single key (instead of mental overhead for directional navigation ex: [[kbd:c-hjkl][c-hjkl]] )
   - this is for navigating and controlling some inevitable popup-buffers.
   - avoid splits at all costs and use tabs instead
-- useless default mappings :: remap underused/useless keys to statistically frequently used commands
-- [[kbd:q][q]] :: shortcut to [[kbd:@@][@@]] (def macro with [[kbd:qq][qq]], execute with [[kbd:@q][@q]] in 99% of cases)
-  - this has basically replaced my need for vim's marks as i mostly alternate between two positions for quick edits, and if i need two separate positions.
-- [[kbd:&][&]] :: allows for same usage as normal: [[kbd:&][&]], but more powerful (repeat any last ~ex~ command)
+- useless default mappings :: remap underused/useless keys to statistically frequently used commands.
 - [[kbd:tab][tab]] :: folding.  inspired by org-modes folding functionality.  (smart/simple one-key folding))
 - whichkey :: removed on purpose
   - the concept of ~whichkey~ is creating the bad habit of searching through a menu to find a keybindings (the exact opposite of what a keybind is for, to be executed instantaneously, engrained in memory)
@@ -242,37 +239,41 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
   - we remove annoying unwanted popup's and reduce visual sugar (=> distractionless, focused workflow).
   - this idea correlates with the insight that you should use a keyboard with blank keycaps.  which will force you to learn to type, without ever taking the focus off the screen.  (reduced context switching, no speed bottleneck, increased continuity).
   - learn them all (also the one's in insert mode) for seizing vim's full power.
-- ~save-buffer~ is frequently used => mapped to system-wide-default: [[kbd:C-s][C-s]]
-- completion :: select & activate: [[kbd:C-n/p][C-n/p]], superior to [[kbd:TAB][TAB]] since it is faster & more ergonomic to navigate between entries.  confirm/exit: [[kbd:RET][RET]]
 
 #+begin_src emacs-lisp
 (map! :after evil
-      :i    "C-h" #'backward-delete-char
-      :i    "C-v" (cmd! (evil-paste-from-register ?\")) ;; NOTE :: more convenient than <c-r>"
-      :m    "C-s" #'write-file
+      :i    "C-h" #'backward-delete-char                ;; ensure this works
+      :i    "C-v" (cmd! (evil-paste-from-register ?\")) ;; more fast and default than <c-r>"
+      :m    "C-s" #'write-file ;; super frequently called command needs top layer mapping
       :in   "C-s" (cmd! (evil-force-normal-state) (basic-save-buffer))
-      :n    "C-j" #'newline-and-indent
+      :n    "C-j" #'newline-and-indent  ;; sensible inverse of J
+      :nm   "C-l" #'recenter-top-bottom ;; consistent with the shell (and faster than zz)
 
+
+      ;; always use visual line navigation
       :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
+      :nmvo "^"   #'evil-first-non-blank-of-visual-line
+      :nmvo "$"   #'evil-end-of-visual-line
 
-      :nmv  "("   #'sp-beginning-of-sexp
-      :nmv  ")"   #'sp-end-of-sexp
+      ;; better defaults
+      :nmv  "U"   #'evil-redo ;; original: <c-r>, makes no sense
+      :nmv  "Q"   #'evil-execute-last-recorded-macro ;; quickly recall recorded macro
+      :nmv  "&"   #'evil-ex-repeat ;; similar behaviour bur more powerful
+      :nmv  ";"   #'execute-extended-command
 
-      :nmv  "U"   #'evil-redo
-      :nmv  "Q"   #'evil-execute-last-recorded-macro
-      :nmv  "&"   #'evil-ex-repeat
-
+      ;; more sensible than C-x C-a
       :nmv  "+"   #'evil-numbers/inc-at-pt
       :nmv  "-"   #'evil-numbers/dec-at-pt
       :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
       :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
 
       :nmv  "gt"  #'dictionary-search
-      :nmv  "gk"  (cmd! (devdocs-lookup nil (current-word t)))
-      :nmv  "go"  #'consult-imenu
-      :nmv  "g/"  #'+default/search-buffer)
+      :nmv  "gk"  (cmd! (devdocs-lookup nil (current-word t))) ;; stronger K
+      :nmv  "go"  #'consult-imenu ;; search outline
+      :nmv  "g/"  #'+default/search-buffer) ;; alternative /
 
+;; using vim default keys
 (map! :after minibuffer :map minibuffer-mode-map
       :i "C-n"  #'next-line-or-history-element
       :i "C-p"  #'previous-line-or-history-element)
@@ -329,9 +330,6 @@ This is sensible default behaviour, and integrates it into evil."
 ** dired (keybindings)
 - filemanagers :: avoid using integrated filemanagers (such as dired / ranger / lf) whenever possible replace them with shell commands and finding (fzf: recent-files, root, current dir..)
 - in most cases it is more extensible and faster using tools such as emac's find-file in combination with fuzzy finding and using global bookmarks for frequently used projects/files.
-- ~:e & ~:w~ for creating and opening files in the same dir from the vim-cmd-line
-- ~:%!~ & ~:'<,'>!~ for processing the buffer with external shell-tools.
-- ~:!~ for all other commands such as ~cp~, ~mv~, ~rm~, ~chmod~...
 - use fuzzyfinding of files that exist
 - create files/directories in other directories
 - ~cd~ into different dir

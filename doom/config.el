@@ -137,51 +137,54 @@
       :nm "C-w" #'next-window-any-frame
       :nm "C-q" #'kill-buffer-and-window
       :nm "C-e" #'find-file
-      :nm "C-f" #'consult-find
-      :nm "C-l" #'evil-switch-to-windows-last-buffer
+      :nm "C-f" #'projectile-find-file
       :nm "C-g" #'consult-buffer
       :nm "C-r" #'consult-recent-file)
 ;; global navigation scheme:1 ends here
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:2]]
-(defadvice! z-filemark-goto (char)
-  "we use vim's per file marks (upper case char's) for efficent and fast buffer navigation.  however
-  we just want to jump back to the buffer (but not to the place in the buffer where we placed the
-  mark).  for ergonomics we use the redundant key: ' and use lowercase chars for jumping to the file
-  for ergonomics and speed.
- (vim soltion: `nnoremap ' '`\"`, jumps to last position in buffer)"
+(defadvice! z-globalmark-goto (char)
+  "vim global marks, however it just switches to the buffer (at the previous position).  replaces redundant '.  for ergonomics using lowercase-char.
+
+(vim solution: `nnoremap ' '`\"`, jumps to last position in buffer)"
   :override #'evil-goto-mark-line
   (switch-to-buffer (marker-buffer (evil-get-marker (upcase char)))))
 ;; global navigation scheme:2 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:1]]
 (map! :after evil
-      :i    "C-h" #'backward-delete-char
-      :i    "C-v" (cmd! (evil-paste-from-register ?\")) ;; NOTE :: more convenient than <c-r>"
-      :m    "C-s" #'write-file
+      :i    "C-h" #'backward-delete-char                ;; ensure this works
+      :i    "C-v" (cmd! (evil-paste-from-register ?\")) ;; more fast and default than <c-r>"
+      :m    "C-s" #'write-file ;; super frequently called command needs top layer mapping
       :in   "C-s" (cmd! (evil-force-normal-state) (basic-save-buffer))
-      :n    "C-j" #'newline-and-indent
+      :n    "C-j" #'newline-and-indent  ;; sensible inverse of J
+      :nm   "C-l" #'recenter-top-bottom ;; consistent with the shell (and faster than zz)
 
+
+      ;; always use visual line navigation
       :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
+      :nmvo "^"   #'evil-first-non-blank-of-visual-line
+      :nmvo "$"   #'evil-end-of-visual-line
 
-      :nmv  "("   #'sp-beginning-of-sexp
-      :nmv  ")"   #'sp-end-of-sexp
+      ;; better defaults
+      :nmv  "U"   #'evil-redo ;; original: <c-r>, makes no sense
+      :nmv  "Q"   #'evil-execute-last-recorded-macro ;; quickly recall recorded macro
+      :nmv  "&"   #'evil-ex-repeat ;; similar behaviour bur more powerful
+      :nmv  ";"   #'execute-extended-command
 
-      :nmv  "U"   #'evil-redo
-      :nmv  "Q"   #'evil-execute-last-recorded-macro
-      :nmv  "&"   #'evil-ex-repeat
-
+      ;; more sensible than C-x C-a
       :nmv  "+"   #'evil-numbers/inc-at-pt
       :nmv  "-"   #'evil-numbers/dec-at-pt
       :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
       :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
 
       :nmv  "gt"  #'dictionary-search
-      :nmv  "gk"  (cmd! (devdocs-lookup nil (current-word t)))
-      :nmv  "go"  #'consult-imenu
-      :nmv  "g/"  #'+default/search-buffer)
+      :nmv  "gk"  (cmd! (devdocs-lookup nil (current-word t))) ;; stronger K
+      :nmv  "go"  #'consult-imenu ;; search outline
+      :nmv  "g/"  #'+default/search-buffer) ;; alternative /
 
+;; using vim default keys
 (map! :after minibuffer :map minibuffer-mode-map
       :i "C-n"  #'next-line-or-history-element
       :i "C-p"  #'previous-line-or-history-element)

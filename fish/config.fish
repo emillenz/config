@@ -35,7 +35,7 @@ set -gx FZF_DEFAULT_OPTS --reverse --height 16 --color light --scheme path
 alias e "emacsclient -nw"
 alias cat bat
 alias rm "rm --recursive --verbose"
-alias mv "mv --verbose --interactive"
+alias mv "mv --verbose"
 alias cp "cp --recursive --verbose"
 alias yay "yay --noconfirm"
 alias irb "irb --readline"
@@ -47,6 +47,8 @@ alias echo "echo -e"
 fzf_configure_bindings --directory=\cf --history= --git_log= --git_status= --variables= --processes= # NOTE :: disable useless (history already inbuilt in fish)
 bind -M normal U redo
 bind -M normal K __fish_man_page
+bind -M normal \cr history-pager
+bind -M insert \cr history-pager
 bind -M insert \t accept-autosuggestion
 bind -M default \t accept-autosuggestion
 bind -M insert \cn complete
@@ -55,4 +57,3 @@ bind -M default \cp up-or-search
 bind -M default \ce edit_command_buffer
 bind -M insert \ce edit_command_buffer
 bind -M default V __fish_preview_current_file
-bind -M default z clear-screen

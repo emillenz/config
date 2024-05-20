@@ -9,9 +9,6 @@ keymap:
     application:
       not: [Emacs, Alacritty]
     remap:
-      # NAVIGATION
-      C-q: c-w
-      C-e: c-l
       # EDITING
       c-h: backspace
       c-w: c-backspace
@@ -19,3 +16,10 @@ keymap:
       # COMPLETION
       C-n: down
       C-p: up
+
+  - name: browser
+    application:
+      only: firefox
+    remap:
+      C-q: c-w
+      C-e: c-l

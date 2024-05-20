@@ -17,7 +17,7 @@ map d scroll half-down
 map i jumplist forward
 map o jumplist backward
 map z snap_to_page # vim
-map v toggle_page_mode # mnemonic: split
+map s toggle_page_mode # mnemonic: split
 map = zoom in
 map - zoom out
 map w adjust_window best-fit # mnemonic: width/window

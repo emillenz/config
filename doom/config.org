@@ -102,6 +102,15 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       split-height-threshold nil
       split-width-threshold 0)
 
+;; HACK :: needs to go here
+(setq +popup-defaults
+      '(:side right
+        :select nil
+        :quit t
+        :width 0.5
+        :modeline t))
+(apply #'set-popup-rule! "\\*" +popup-defaults) ;; HACK :: apply defaults to all
+
 (after! org
   (setq org-src-window-setup 'current-window
         org-agenda-window-setup 'current-window)
@@ -178,6 +187,9 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       doom-localleader-alt-key "M-,")
 
 (map! :leader
+      (:prefix "s"
+               "k" #'devdocs-lookup
+               "g" #'occur) ;; like grep
       (:prefix "c"
                "r" #'lsp-rename
                (:prefix-map ("'" . "org-src")
@@ -190,8 +202,8 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 ** global navigation scheme
 - follows the os-consistent keymap
 - splits :: we never manually create split-windows for buffers, prefer the full screen, full focus, no distractions - workflow.  (no multitasking, no clutter)
-  - when emacs creates splits we must handle them => minimal bindings for switching and closing splits: [[kbd:m-q, m-w][m-q, m-w]].
-  - [[kbd:m-w][m-w]] and [[kbd:m-q][m-q]] is minimalistic, but all you will ever need to manage buffers and windows, since if you have more than 2 windows side by side, you are screwed anyway and need to clean up.  hence it replaces the gazillion of vim's window shortcuts with a faster, simpler alternative.
+  - when emacs creates splits we must handle them => minimal bindings for switching and closing splits: [[kbd:c-q, c-w][c-q, c-w]].
+  - [[kbd:c-w][c-w]] and [[kbd:c-q][c-q]] is minimalistic, but all you will ever need to manage buffers and windows, since if you have more than 2 windows side by side, you are screwed anyway and need to clean up.  hence it replaces the gazillion of vim's window shortcuts with a faster, simpler alternative.
 - these mappings are universal to all programs (shell, emacs, browser, i3) and highly frequently accessed (from any mode/file).
 
 #+begin_src emacs-lisp
@@ -216,13 +228,16 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 
 (vim solution: `nnoremap ' '`\"`, jumps to last position in buffer)"
   :override #'evil-goto-mark-line
-  (switch-to-buffer (marker-buffer (evil-get-marker (upcase char)))))
+  (condition-case  nil
+      (switch-to-buffer (marker-buffer (evil-get-marker (upcase char))))
+    (error
+     (message "global-mark [%s] not set" (upcase (char-to-string char))))))
 #+end_src
 
 ** vim editing
 goal :: make vim's bindings even more mnemonic/sane/sensible/efficient and improve consistency of implementation.  maximize the keyboard real-estate usage.
 see [[file:~/.config/xremap/config.yml][global keyboard remaps]] for additional details.
-frequently used & coding/editing related functions are mapped to ~g+~ (ex: lookup full documentation with ~gk~)
+frequently used & coding/editing related functions are mapped to ~g+~
 
 - relative lines ::
   - more sensible default
@@ -247,8 +262,6 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
       :m    "C-s" #'write-file ;; super frequently called command needs top layer mapping
       :in   "C-s" (cmd! (evil-force-normal-state) (basic-save-buffer))
       :n    "C-j" #'newline-and-indent  ;; sensible inverse of J
-      :nm   "C-l" #'recenter-top-bottom ;; consistent with the shell (and faster than zz)
-
 
       ;; always use visual line navigation
       :nmvo "j"   #'evil-next-visual-line
@@ -260,7 +273,6 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
       :nmv  "U"   #'evil-redo ;; original: <c-r>, makes no sense
       :nmv  "Q"   #'evil-execute-last-recorded-macro ;; quickly recall recorded macro
       :nmv  "&"   #'evil-ex-repeat ;; similar behaviour bur more powerful
-      :nmv  ";"   #'execute-extended-command
 
       ;; more sensible than C-x C-a
       :nmv  "+"   #'evil-numbers/inc-at-pt
@@ -268,8 +280,6 @@ frequently used & coding/editing related functions are mapped to ~g+~ (ex: looku
       :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
       :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
 
-      :nmv  "gt"  #'dictionary-search
-      :nmv  "gk"  (cmd! (devdocs-lookup nil (current-word t))) ;; stronger K
       :nmv  "go"  #'consult-imenu ;; search outline
       :nmv  "g/"  #'+default/search-buffer) ;; alternative /
 
@@ -350,8 +360,7 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "y" #'dired-copy-filename-as-kill
       :nm "z" #'dired-do-compress
       :nm "." #'dired-omit-mode
-      :nm "e" #'dired-create-empty-file
-      :nm "E" #'dired-create-directory)
+      :nm "e" #'dired-create-empty-file)
 
 (map! :map dired-mode-map :localleader :after dired
       :nm "a" #'z-dired-archive)
@@ -548,24 +557,24 @@ this is automated using a snippet
               evil-indent-convert-tabs t
               indent-tabs-mode nil)
 
-(after! cc-mode
-  (setq c-basic-offset z-indent-width))
+(setq-hook! '(c-mode-hook java-mode-hook)
+  c-basic-offset z-indent-width)
 
-(after! ruby-mode
-  (setq evil-shift-width z-indent-width
-        ruby-indent-level z-indent-width))
+(setq-hook! 'ruby-mode
+  evil-shift-width z-indent-width
+  ruby-indent-level z-indent-width)
 
-(after! rustic
-  (setq rustic-indent z-indent-width
-        rustic-indent-offset z-indent-width))
+(setq-hook! 'rustic
+  rustic-indent z-indent-width
+  rustic-indent-offset z-indent-width)
 
-(after! verilog-mode
-  (setq verilog-case-indent z-indent-width
-        verilog-cexp-indent z-indent-width
-        verilog-indent-level z-indent-width
-        verilog-indent-level-behavioral z-indent-width
-        verilog-indent-level-declaration z-indent-width
-        verilog-indent-level-module z-indent-width))
+(setq-hook! 'verilog-mode
+  verilog-case-indent z-indent-width
+  verilog-cexp-indent z-indent-width
+  verilog-indent-level z-indent-width
+  verilog-indent-level-behavioral z-indent-width
+  verilog-indent-level-declaration z-indent-width
+  verilog-indent-level-module z-indent-width)
 #+end_src
 
 *** rationale

@@ -2,14 +2,6 @@
 
 ;; NOTE :: ensure that the language server package is installed on the os for each language under the :lang: section
 
-;; HACK :: needs to go here
-(setq +popup-defaults
-      '(:side right
-        :select nil
-        :quit t
-        :width 0.5
-        :modeline t))
-
 (doom! :input
        ;;bidi              ; (tfel ot) thgir etirw uoy gnipleh
        ;;chinese

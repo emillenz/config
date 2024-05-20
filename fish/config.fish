@@ -57,3 +57,4 @@ bind -M default \cp up-or-search
 bind -M default \ce edit_command_buffer
 bind -M insert \ce edit_command_buffer
 bind -M default V __fish_preview_current_file
+bind -M default z clear-screen

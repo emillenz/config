@@ -66,13 +66,13 @@ $MAP $MOD+bracketright $CMD playerctl next
 $MAP $MOD+bracketleft  $CMD playerctl previous
 $MAP $MOD+backslash    $CMD playerctl play-pause
 
-$MAP $MOD+n      focus next
-$MAP $MOD+p      focus prev
-$MAP $MOD+q      kill
-$MAP $MOD+g      $CMD $BIN/window-menu
-$MAP $MOD+x      $CMD i3-dmenu-desktop --dmenu "$DMENU -p 'run >'"
-$MAP $MOD+s      layout toggle tabbed splith
-$MAP $MOD+Return move workspace to output next
+$MAP $MOD+n         focus next
+$MAP $MOD+p         focus prev
+$MAP $MOD+q         kill
+$MAP $MOD+g         $CMD $BIN/window-menu
+$MAP $MOD+semicolon $CMD i3-dmenu-desktop --dmenu "$DMENU -p 'run >'"
+$MAP $MOD+s         layout toggle tabbed splith
+$MAP $MOD+Return    move workspace to output next
 
 # WORKSPACES
 for_window [urgent="latest"] focus
@@ -124,8 +124,8 @@ for_window [class="firefox" title="Spotify"] $MV $WS_MUSIC, focus
 
 $MAP $MOD+1 workspace 1
 
-$MAP $MOD+f mode "search_file"
-mode "search_file" {
+$MAP $MOD+f mode "find-file"
+mode "find-file" {
         $MAP $MOD+c $CMD xdg-open "$(fd --extension pdf . ~/Documents/uni/cs/s2 | $DMENU -p 'find-file >')" $ESC
         $MAP $MOD+l $CMD xdg-open "$(fd . ~/Documents/literature/source | $DMENU -p 'find-file >')" $ESC
         $MAP $MOD+f $CMD xdg-open "$(fd --type file . ~ | $DMENU -p 'find-file >')" $ESC

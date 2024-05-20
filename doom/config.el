@@ -63,6 +63,15 @@
       split-height-threshold nil
       split-width-threshold 0)
 
+;; HACK :: needs to go here
+(setq +popup-defaults
+      '(:side right
+        :select nil
+        :quit t
+        :width 0.5
+        :modeline t))
+(apply #'set-popup-rule! "\\*" +popup-defaults) ;; HACK :: apply defaults to all
+
 (after! org
   (setq org-src-window-setup 'current-window
         org-agenda-window-setup 'current-window)
@@ -123,6 +132,9 @@
       doom-localleader-alt-key "M-,")
 
 (map! :leader
+      (:prefix "s"
+               "k" #'devdocs-lookup
+               "g" #'occur) ;; like grep
       (:prefix "c"
                "r" #'lsp-rename
                (:prefix-map ("'" . "org-src")
@@ -148,7 +160,10 @@
 
 (vim solution: `nnoremap ' '`\"`, jumps to last position in buffer)"
   :override #'evil-goto-mark-line
-  (switch-to-buffer (marker-buffer (evil-get-marker (upcase char)))))
+  (condition-case  nil
+      (switch-to-buffer (marker-buffer (evil-get-marker (upcase char))))
+    (error
+     (message "global-mark [%s] not set" (upcase (char-to-string char))))))
 ;; global navigation scheme:2 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:1]]
@@ -158,8 +173,6 @@
       :m    "C-s" #'write-file ;; super frequently called command needs top layer mapping
       :in   "C-s" (cmd! (evil-force-normal-state) (basic-save-buffer))
       :n    "C-j" #'newline-and-indent  ;; sensible inverse of J
-      :nm   "C-l" #'recenter-top-bottom ;; consistent with the shell (and faster than zz)
-
 
       ;; always use visual line navigation
       :nmvo "j"   #'evil-next-visual-line
@@ -171,7 +184,6 @@
       :nmv  "U"   #'evil-redo ;; original: <c-r>, makes no sense
       :nmv  "Q"   #'evil-execute-last-recorded-macro ;; quickly recall recorded macro
       :nmv  "&"   #'evil-ex-repeat ;; similar behaviour bur more powerful
-      :nmv  ";"   #'execute-extended-command
 
       ;; more sensible than C-x C-a
       :nmv  "+"   #'evil-numbers/inc-at-pt
@@ -179,8 +191,6 @@
       :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
       :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
 
-      :nmv  "gt"  #'dictionary-search
-      :nmv  "gk"  (cmd! (devdocs-lookup nil (current-word t))) ;; stronger K
       :nmv  "go"  #'consult-imenu ;; search outline
       :nmv  "g/"  #'+default/search-buffer) ;; alternative /
 
@@ -249,8 +259,7 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "y" #'dired-copy-filename-as-kill
       :nm "z" #'dired-do-compress
       :nm "." #'dired-omit-mode
-      :nm "e" #'dired-create-empty-file
-      :nm "E" #'dired-create-directory)
+      :nm "e" #'dired-create-empty-file)
 
 (map! :map dired-mode-map :localleader :after dired
       :nm "a" #'z-dired-archive)
@@ -394,24 +403,24 @@ This is sensible default behaviour, and integrates it into evil."
               evil-indent-convert-tabs t
               indent-tabs-mode nil)
 
-(after! cc-mode
-  (setq c-basic-offset z-indent-width))
+(setq-hook! '(c-mode-hook java-mode-hook)
+  c-basic-offset z-indent-width)
 
-(after! ruby-mode
-  (setq evil-shift-width z-indent-width
-        ruby-indent-level z-indent-width))
+(setq-hook! 'ruby-mode
+  evil-shift-width z-indent-width
+  ruby-indent-level z-indent-width)
 
-(after! rustic
-  (setq rustic-indent z-indent-width
-        rustic-indent-offset z-indent-width))
+(setq-hook! 'rustic
+  rustic-indent z-indent-width
+  rustic-indent-offset z-indent-width)
 
-(after! verilog-mode
-  (setq verilog-case-indent z-indent-width
-        verilog-cexp-indent z-indent-width
-        verilog-indent-level z-indent-width
-        verilog-indent-level-behavioral z-indent-width
-        verilog-indent-level-declaration z-indent-width
-        verilog-indent-level-module z-indent-width))
+(setq-hook! 'verilog-mode
+  verilog-case-indent z-indent-width
+  verilog-cexp-indent z-indent-width
+  verilog-indent-level z-indent-width
+  verilog-indent-level-behavioral z-indent-width
+  verilog-indent-level-declaration z-indent-width
+  verilog-indent-level-module z-indent-width)
 ;; indentation:1 ends here
 
 ;; [[file:config.org::*org][org:1]]

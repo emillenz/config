@@ -5,10 +5,15 @@ modmap:
       alt_r: ctrl_r
 
 keymap:
-  - name: editing
+  - name: browser
     application:
-      not: [Emacs, Alacritty]
+      only: firefox
     remap:
+      # GLOBAL NAVIGATION SCHEME
+      C-q: c-w
+      C-e: c-l # locate
+      C-r: [c-t, shift-key_6, space] # history search
+      C-g: [c-t, shift-key_8, space] # goto bookmark
       # EDITING
       c-h: backspace
       c-w: c-backspace
@@ -16,10 +21,3 @@ keymap:
       # COMPLETION
       C-n: down
       C-p: up
-
-  - name: browser
-    application:
-      only: firefox
-    remap:
-      C-q: c-w
-      C-e: c-l

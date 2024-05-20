@@ -247,29 +247,29 @@ implemented using ~xremap~
 - key-repetition :: disable it.  it causes bad habits of you holding down a key instead of moving intelligently and fast using the appropriate motion (not holding down [[kbd:j][j]], istead using ~c-d~. not spamming delete, instead using ~d...~).
 
 ** navigational standard
-- it condenses down a minimal set of universal, efficient navigational commands.
+- condenses down a minimal set of universal, efficient navigational commands, which are found in basically all applications (editor, browser, terminal,..).  they will suffice 90% of all your navigational needs.
+  - [[kbd:ctrl][ctrl]] :: inside applications since it is the defacto standard & aligns with vim's navigational-ctrl-layer-keybind (and is now ergonomically bound).
 - inter program keyboard shortcuts consistency is important because they make the keys easier to remember and you will not have to learn multiple paradigms of keymaps.  the here defined set of keybindings are shared across applications (webbrowser, emacs, terminal, etc)
 - windowmanager :: the set of program-names during runtime is known and consistent (unlike the set of buffers in applications, where tab-names are either unnamed, arbitrary or change during runtime), we use specific-chars for switching to the tabs (same as emacs's per file marks).
 - tabs ::
   - use them as hotkey workspace inside an app (ex: tmux, browser) // this is the more simple alternative to marks.
   - avoid manual tab creation if possible => auto-create a tab if it doesn't exist upon focusing it
   - we never want visual indication for tabs.   instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.
-- [[kbd:ctrl][ctrl]] :: inside applications since it is the defacto standard & aligns with vim's navigational-ctrl-layer-keybind (and is now ergonomically bound).
 - implementation :: emacs, tmux, fish, firefox,... all implement this mapping scheme.
 
-| mod+key | action                       | consistency         |
-|---------+------------------------------+---------------------|
-| [[kbd:g][g]]       | [g]oto buffer  (find)        | vim: goto           |
-| [[kbd:q][q]]       | [q]uit (buffer)              | mnemonic / standard |
-| [[kbd:e][e]]       | [e]dit (file/url/...)        | standard            |
-| [[kbd:f][f]]       | [f]ind (program/file, fuzzy) | mnemonic / standard |
-| [[kbd:r][r]]       | [r]ecent (file, fuzzy)       | mnemonic / standard |
-| [[kbd:x][x]]       | e[x]ecute-command (internal) | emacs               |
-| [[kbd:n][n]]       | [n]ext completion            | vim                 |
-| [[kbd:p][p]]       | [p]revious completion        | vim                 |
-| [[kbd:tab][tab]]     | complete                     | emacs               |
-| [[kbd:spc][spc]]     | leader-key                   | vim / ergonomic     |
-| [[kbd:1-4][1-4]]   | focus tab 1-3                | standard            |
+| mod+key | action                      | consistency         |
+|---------+-----------------------------+---------------------|
+| [[kbd:g][g]]       | [g]oto   (buffer/window)    | vim: goto           |
+| [[kbd:q][q]]       | [q]uit (buffer/window)      | mnemonic / standard |
+| [[kbd:e][e]]       | [e]dit (file/url/editor)    | standard            |
+| [[kbd:f][f]]       | [f]ind (program/file)       | mnemonic / standard |
+| [[kbd:r][r]]       | [r]ecent (file/history/cmd) | mnemonic / standard |
+| [[kbd:;][;]]       | run-cmd                     | vim                 |
+| [[kbd:n][n]]       | [n]ext completion           | vim                 |
+| [[kbd:p][p]]       | [p]revious completion       | vim                 |
+| [[kbd:tab][tab]]     | complete                    | emacs               |
+| [[kbd:spc][spc]]     | leader-key                  | vim / ergonomic     |
+| [[kbd:1-4][1-4]]     | focus tab 1-4               | standard            |
 
 ** no symbol layers and homerow mods
 - they are a gimics and introduce unneccessary complexity into the system. you are slowing yourself down using them, since the always require a modifier, and waiting for that modifier to be released makes you need to wait before continuing to hammer on in typing. using a symbol top layer layout: programmer-dvorak is far superior, more ergonomic and allows you to bang out symbols as fast as if you were writing prose.

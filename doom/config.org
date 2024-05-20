@@ -189,7 +189,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 (map! :leader
       (:prefix "s"
                "k" #'devdocs-lookup
-               "g" #'occur) ;; like grep
+               "g" #'occur)
       (:prefix "c"
                "r" #'lsp-rename
                (:prefix-map ("'" . "org-src")
@@ -205,6 +205,9 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
   - when emacs creates splits we must handle them => minimal bindings for switching and closing splits: [[kbd:c-q, c-w][c-q, c-w]].
   - [[kbd:c-w][c-w]] and [[kbd:c-q][c-q]] is minimalistic, but all you will ever need to manage buffers and windows, since if you have more than 2 windows side by side, you are screwed anyway and need to clean up.  hence it replaces the gazillion of vim's window shortcuts with a faster, simpler alternative.
 - these mappings are universal to all programs (shell, emacs, browser, i3) and highly frequently accessed (from any mode/file).
+- workflow :: this minimalistic but powerful navigation workflow is the most efficient & overheadfree way of navigating simultaneously between multiple different files/buffer when working within a project (low overhead when context-switching and remaining distractionfree, works from anywhere.  improves typing speed)
+  - buffer-marks :: hotswitch between buffers in a project you are working on simultaneoutsly (ex: within a project: mark ~Main.java~ -> ~1~, ~buildscript.sh~ -> ~2~, ~compilation~ -> ~3~).  we intentionally use [[kbd:c-1-4][c-1-4]], since using numbers causes less mental overhead and makes no presumptions about the buffers assigned.  additionally it is consistent with tmux and the webbrowser.
+  - misc-buffers :: all other buffernavigation is done using ~consult-buffer~ and ~evil-switch-to-windows-last-buffer~.
 
 #+begin_src emacs-lisp
 (map! :map 'override
@@ -213,26 +216,33 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       :nm "C-e" #'find-file
       :nm "C-f" #'projectile-find-file
       :nm "C-g" #'consult-buffer
-      :nm "C-r" #'consult-recent-file)
+      :nm "C-r" #'consult-recent-file
+      :nm "C-;" #'execute-extended-command
+      :nm "C-1" (cmd! (z-bmark-goto 1))
+      :nm "C-2" (cmd! (z-bmark-goto 2))
+      :nm "C-3" (cmd! (z-bmark-goto 3))
+      :nm "C-4" (cmd! (z-bmark-goto 4))
+      :nm "M"   #'z-bmark-set)
+
+(defun z-bmark-set (mark)
+  "Assign the current buffer to the MARK (nr 1-4 allowed)."
+  (interactive "cbmark-set [1-4]:")
+  (let ((nr (- mark 48)))
+    (when (or (< nr 1) (> nr 4))
+      (error "bmark [%d] not in: 1-4" nr))
+    (evil-set-marker (alist-get nr z-bmark-chars))))
+
+(defun z-bmark-goto (nr)
+  "Switch to the buffer marked with NR."
+  (ignore-errors (switch-to-buffer (marker-buffer (evil-get-marker (alist-get nr z-bmark-chars))))))
+
+(defvar z-bmark-chars'((1 . ?A)
+                       (2 . ?B)
+                       (3 . ?C)
+                       (4 . ?D))
+  "Char's that are used as aliases to store the marks for evil.")
 #+end_src
 
-- buffers ::
-  - global-marks ::
-    - we use vim's global marks for efficent and fast buffer navigation.
-    - hotswitch between files (buffers) in a project you are working on (ex: within a project: mark ~Main.java~ -> ~m~, ~buildscript.sh~ -> ~b~, ~compilation~ -> ~c~; then hotswitch between these buffers, to whichever one you need.)
-  - else :: use [[kbd:C-g][c-g]] and partial completion for all other buffer switching (never use next/pre buffer (inefficient))
-- efficiency :: this minimalistic but powerful navigation workflow is the most efficient & overheadfree way of navigating simultaneously between multiple different files/buffer when working within a project (low overhead when context-switching and remaining distractionfree, works from anywhere.  improves typing speed)
-#+begin_src emacs-lisp
-(defadvice! z-globalmark-goto (char)
-  "vim global marks, however it just switches to the buffer (at the previous position).  replaces redundant '.  for ergonomics using lowercase-char.
-
-(vim solution: `nnoremap ' '`\"`, jumps to last position in buffer)"
-  :override #'evil-goto-mark-line
-  (condition-case  nil
-      (switch-to-buffer (marker-buffer (evil-get-marker (upcase char))))
-    (error
-     (message "global-mark [%s] not set" (upcase (char-to-string char))))))
-#+end_src
 
 ** vim editing
 goal :: make vim's bindings even more mnemonic/sane/sensible/efficient and improve consistency of implementation.  maximize the keyboard real-estate usage.
@@ -262,6 +272,7 @@ frequently used & coding/editing related functions are mapped to ~g+~
       :m    "C-s" #'write-file ;; super frequently called command needs top layer mapping
       :in   "C-s" (cmd! (evil-force-normal-state) (basic-save-buffer))
       :n    "C-j" #'newline-and-indent  ;; sensible inverse of J
+      :nm   "C-l" #'evil-scroll-line-to-center
 
       ;; always use visual line navigation
       :nmvo "j"   #'evil-next-visual-line

@@ -267,9 +267,9 @@ implemented using ~xremap~
 | [[kbd:;][;]]       | run-cmd                     | vim                 |
 | [[kbd:n][n]]       | [n]ext completion           | vim                 |
 | [[kbd:p][p]]       | [p]revious completion       | vim                 |
+| [[kbd:1-4][1-4]]     | focus buffer/tab 1-4      | standard            |
 | [[kbd:tab][tab]]     | complete                    | emacs               |
 | [[kbd:spc][spc]]     | leader-key                  | vim / ergonomic     |
-| [[kbd:1-4][1-4]]     | focus tab 1-4               | standard            |
 
 ** no symbol layers and homerow mods
 - they are a gimics and introduce unneccessary complexity into the system. you are slowing yourself down using them, since the always require a modifier, and waiting for that modifier to be released makes you need to wait before continuing to hammer on in typing. using a symbol top layer layout: programmer-dvorak is far superior, more ergonomic and allows you to bang out symbols as fast as if you were writing prose.

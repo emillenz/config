@@ -134,7 +134,7 @@
 (map! :leader
       (:prefix "s"
                "k" #'devdocs-lookup
-               "g" #'occur) ;; like grep
+               "g" #'occur)
       (:prefix "c"
                "r" #'lsp-rename
                (:prefix-map ("'" . "org-src")
@@ -151,20 +151,32 @@
       :nm "C-e" #'find-file
       :nm "C-f" #'projectile-find-file
       :nm "C-g" #'consult-buffer
-      :nm "C-r" #'consult-recent-file)
+      :nm "C-r" #'consult-recent-file
+      :nm "C-;" #'execute-extended-command
+      :nm "C-1" (cmd! (z-bmark-goto 1))
+      :nm "C-2" (cmd! (z-bmark-goto 2))
+      :nm "C-3" (cmd! (z-bmark-goto 3))
+      :nm "C-4" (cmd! (z-bmark-goto 4))
+      :nm "M"   #'z-bmark-set)
+
+(defun z-bmark-set (mark)
+  "Assign the current buffer to the MARK (nr 1-4 allowed)."
+  (interactive "cbmark-set [1-4]:")
+  (let ((nr (- mark 48)))
+    (when (or (< nr 1) (> nr 4))
+      (error "bmark [%d] not in: 1-4" nr))
+    (evil-set-marker (alist-get nr z-bmark-chars))))
+
+(defun z-bmark-goto (nr)
+  "Switch to the buffer marked with NR."
+  (ignore-errors (switch-to-buffer (marker-buffer (evil-get-marker (alist-get nr z-bmark-chars))))))
+
+(defvar z-bmark-chars'((1 . ?A)
+                       (2 . ?B)
+                       (3 . ?C)
+                       (4 . ?D))
+  "Char's that are used as aliases to store the marks for evil.")
 ;; global navigation scheme:1 ends here
-
-;; [[file:config.org::*global navigation scheme][global navigation scheme:2]]
-(defadvice! z-globalmark-goto (char)
-  "vim global marks, however it just switches to the buffer (at the previous position).  replaces redundant '.  for ergonomics using lowercase-char.
-
-(vim solution: `nnoremap ' '`\"`, jumps to last position in buffer)"
-  :override #'evil-goto-mark-line
-  (condition-case  nil
-      (switch-to-buffer (marker-buffer (evil-get-marker (upcase char))))
-    (error
-     (message "global-mark [%s] not set" (upcase (char-to-string char))))))
-;; global navigation scheme:2 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:1]]
 (map! :after evil
@@ -173,6 +185,7 @@
       :m    "C-s" #'write-file ;; super frequently called command needs top layer mapping
       :in   "C-s" (cmd! (evil-force-normal-state) (basic-save-buffer))
       :n    "C-j" #'newline-and-indent  ;; sensible inverse of J
+      :nm   "C-l" #'evil-scroll-line-to-center
 
       ;; always use visual line navigation
       :nmvo "j"   #'evil-next-visual-line

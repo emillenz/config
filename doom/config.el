@@ -153,29 +153,12 @@
       :nm "C-g" #'consult-buffer
       :nm "C-r" #'consult-recent-file
       :nm "C-;" #'execute-extended-command
-      :nm "C-1" (cmd! (z-bmark-goto 1))
-      :nm "C-2" (cmd! (z-bmark-goto 2))
-      :nm "C-3" (cmd! (z-bmark-goto 3))
-      :nm "C-4" (cmd! (z-bmark-goto 4))
-      :nm "M"   #'z-bmark-set)
-
-(defun z-bmark-set (mark)
-  "Assign the current buffer to the MARK (nr 1-4 allowed)."
-  (interactive "cbmark-set [1-4]:")
-  (let ((nr (- mark 48)))
-    (when (or (< nr 1) (> nr 4))
-      (error "bmark [%d] not in: 1-4" nr))
-    (evil-set-marker (alist-get nr z-bmark-chars))))
-
-(defun z-bmark-goto (nr)
-  "Switch to the buffer marked with NR."
-  (ignore-errors (switch-to-buffer (marker-buffer (evil-get-marker (alist-get nr z-bmark-chars))))))
-
-(defvar z-bmark-chars'((1 . ?A)
-                       (2 . ?B)
-                       (3 . ?C)
-                       (4 . ?D))
-  "Char's that are used as aliases to store the marks for evil.")
+      :nm "C-1" #'harpoon-go-to-1
+      :nm "C-2" #'harpoon-go-to-2
+      :nm "C-3" #'harpoon-go-to-3
+      :nm "C-4" #'harpoon-go-to-4
+      :nm "C-t" #'harpoon-add-file ;; like new-tab in browser
+      :nm "C-h" #'harpoon-quick-menu-hydra)
 ;; global navigation scheme:1 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:1]]

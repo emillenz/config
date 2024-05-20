@@ -206,7 +206,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
   - [[kbd:c-w][c-w]] and [[kbd:c-q][c-q]] is minimalistic, but all you will ever need to manage buffers and windows, since if you have more than 2 windows side by side, you are screwed anyway and need to clean up.  hence it replaces the gazillion of vim's window shortcuts with a faster, simpler alternative.
 - these mappings are universal to all programs (shell, emacs, browser, i3) and highly frequently accessed (from any mode/file).
 - workflow :: this minimalistic but powerful navigation workflow is the most efficient & overheadfree way of navigating simultaneously between multiple different files/buffer when working within a project (low overhead when context-switching and remaining distractionfree, works from anywhere.  improves typing speed)
-  - buffer-marks :: hotswitch between buffers in a project you are working on simultaneoutsly (ex: within a project: mark ~Main.java~ -> ~1~, ~buildscript.sh~ -> ~2~, ~compilation~ -> ~3~).  we intentionally use [[kbd:c-1-4][c-1-4]], since using numbers causes less mental overhead and makes no presumptions about the buffers assigned.  additionally it is consistent with tmux and the webbrowser.
+  - harpoon :: essentially persistent vim global marks on a per project basis (more powerful, faster and more generalized).  hotswitch between buffers in a project you are working on simultaneoutsly.  we intentionally use [[kbd:c-1-4][c-1-4]], since using numbers causes less mental overhead and makes no presumptions about the buffers assigned.  additionally it is consistent with tmux and the webbrowser.  you are restrained to 4 buffer's, since that is all you'll need and if you have more than that, you must reprioritize your marks.
   - misc-buffers :: all other buffernavigation is done using ~consult-buffer~ and ~evil-switch-to-windows-last-buffer~.
 
 #+begin_src emacs-lisp
@@ -218,31 +218,13 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       :nm "C-g" #'consult-buffer
       :nm "C-r" #'consult-recent-file
       :nm "C-;" #'execute-extended-command
-      :nm "C-1" (cmd! (z-bmark-goto 1))
-      :nm "C-2" (cmd! (z-bmark-goto 2))
-      :nm "C-3" (cmd! (z-bmark-goto 3))
-      :nm "C-4" (cmd! (z-bmark-goto 4))
-      :nm "M"   #'z-bmark-set)
-
-(defun z-bmark-set (mark)
-  "Assign the current buffer to the MARK (nr 1-4 allowed)."
-  (interactive "cbmark-set [1-4]:")
-  (let ((nr (- mark 48)))
-    (when (or (< nr 1) (> nr 4))
-      (error "bmark [%d] not in: 1-4" nr))
-    (evil-set-marker (alist-get nr z-bmark-chars))))
-
-(defun z-bmark-goto (nr)
-  "Switch to the buffer marked with NR."
-  (ignore-errors (switch-to-buffer (marker-buffer (evil-get-marker (alist-get nr z-bmark-chars))))))
-
-(defvar z-bmark-chars'((1 . ?A)
-                       (2 . ?B)
-                       (3 . ?C)
-                       (4 . ?D))
-  "Char's that are used as aliases to store the marks for evil.")
+      :nm "C-1" #'harpoon-go-to-1
+      :nm "C-2" #'harpoon-go-to-2
+      :nm "C-3" #'harpoon-go-to-3
+      :nm "C-4" #'harpoon-go-to-4
+      :nm "C-t" #'harpoon-add-file ;; like new-tab in browser
+      :nm "C-h" #'harpoon-quick-menu-hydra)
 #+end_src
-
 
 ** vim editing
 goal :: make vim's bindings even more mnemonic/sane/sensible/efficient and improve consistency of implementation.  maximize the keyboard real-estate usage.

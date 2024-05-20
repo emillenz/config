@@ -12,3 +12,4 @@
 (package! modus-themes)
 (package! verilog-mode)
 (package! devdocs)
+(package! harpoon)

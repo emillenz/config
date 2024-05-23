@@ -9,6 +9,14 @@
 - if you use a different packagemanager you must ensure to install these programs on your own in order to get my workflow to work.
 - run this script as root -> get no prompts
 
+* link neccessary config files
+- some programs don't adhere to ~XDG_CONFIG_DIR~ standards, hence we symlink to the right location.
+#+begin_src sh
+ln -s inputrc $HOME/.inputrc
+ln -s clang-format $HOME/.clang-format
+#+end_src
+
+
 * setup
 #+begin_src sh
 sudo pacman -Syyu
@@ -17,7 +25,7 @@ sudo pacman -Syyu
 * core tools
 ** terminal, shell, scripting
 #+begin_src sh
-yay --noconfirm --sync alacritty curl libtool fzf fd ripgrep xclip xdg-utils cmake bat git gcc make xdotool htop ttf-iosevka-comfy tmux
+yay --noconfirm --sync alacritty curl libtool fzf fd ripgrep xclip xdg-utils cmake bat git gcc make xdotool htop ttf-iosevka-comfy tmux rlwrap
 #+end_src
 
 *** interactive shell: fish
@@ -34,6 +42,7 @@ chsh --shell /usr/bin/fish
 *** scripting: ruby
 #+begin_src sh
 yay --noconfirm --sync ruby solargraph
+gem install ruby-notify-send # for shellscript notifications
 #+end_src
 
 

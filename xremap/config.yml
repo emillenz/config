@@ -11,7 +11,8 @@ keymap:
     remap:
       # GLOBAL NAVIGATION SCHEME
       C-q: c-w
-      C-e: c-l # locate
+      C-e: c-l
+      C-l: c-tab
       C-r: [c-t, shift-key_6, space] # history search
       C-g: [c-t, shift-key_8, space] # goto bookmark
       # EDITING

@@ -4,28 +4,43 @@
 # author: emil lenz
 # email:  emillenz@protonmail.com
 # date:   2023-05-07
-# dependencies: rofi, pamixer, dunst
+# dependencies:
+# - sh: rofi, pamixer
+# - ruby gems: ruby-notify-send
 # ---
 
 require 'json'
+require 'notify-send'
+require 'open3'
 
-DMENU = 'dmenu -b -i -fn "Iosevka Comfy-10" -nb "#ffffff" -nf "#000000" -sb "#c0deff" -sf "#000000"'.freeze
+
+DMENU_CMD = [
+        'dmenu',
+        '-b',
+        '-i',
+        '-fn', 'Iosevka Comfy-10',
+        '-nb', '#ffffff',
+        '-nf', '#000000',
+        '-sb', '#c0deff',
+        '-sf', '#000000',
+        '-p',  'audio-output >'
+].freeze
 
 def main
         sinks = JSON.parse(`pactl --format json list sinks`)
 
-        dmenu_in= sinks.map { |sink| sink['description'] }.join("\n")
-        sink_sel = `echo "#{dmenu_in}" | #{DMENU} -p "audio-output > "`.strip
-        exit 1 if sink_sel == ''
+        dmenu_stdin = sinks.map { |sink| sink['description'] }.join("\n")
+        read, status = Open3.capture2(*DMENU_CMD, stdin_data: dmenu_stdin)
+        exit(1) unless status.success?
 
-        sink_id = sinks.find { |s| s['description'] == sink_sel }['index']
+        sink_id = sinks.find { |s| s['description'] == read.chomp }['index']
         `pactl set-default-sink #{sink_id}`
 
         JSON.parse(`pactl --format json list sink-inputs`).map do |sink|
                 `pactl move-sink-input #{sink['index']} #{sink_id}`
         end
 
-        `dunstify "#{icon}  audio-output" "changed output device\n#{choice}"`
+        NotifySend.send('audio-output', "changed output device\n#{read}")
 end
 
 main if __FILE__ == $PROGRAM_NAME

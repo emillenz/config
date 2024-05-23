@@ -7,6 +7,12 @@
 # -----
 
 def main
+        processes
+        no_screensaving
+        remaps
+end
+
+def processes
         processes = [
                 'playerctld',
                 'alacritty --title cmd --command tmux new-session -A -s cmd',
@@ -16,24 +22,33 @@ def main
                 'keepassxc',
                 'firefox',
                 'firefox --new-window https://chat.openai.com',
-                'firefox --new-window https://spotify.com',
-                'sudo xremap --watch=device ~/.config/xremap/config.yml'
+                'firefox --new-window https://spotify.com'
         ]
-
         ps_data = `ps -e`.lines.drop(1)
 
-        # get running ps names
         ps_running = ps_data.map do |line|
                 line.split(/\s+/) [4..].join(' ').strip
         end
 
-        processes.each do |prog|
-                `#{prog} &>/dev/null & disown` unless ps_running.include?(prog.split[0])
+        processes.each do |ps|
+                spawn_ps(ps) unless ps_running.include?(ps.split[0])
         end
-
-        `xsetroot -solid '#ffffff'`
-        `xset dpms 0 0 0; xset s off`
-        `sleep 1 && xset r off` # HACK: wait for xremap
 end
 
-main
+def remaps
+        spawn_ps('sudo xremap --watch=device ~/.config/xremap/config.yml & disown') # HACK: disown needed
+        sleep(2) # HACK: wait for xremap
+        `xset r off`
+end
+
+def no_screensaving
+        `xsetroot -solid '#ffffff'`
+        `xset dpms 0 0 0`
+        `xset s off`
+end
+
+def spawn_ps(ps)
+        Process.detach(spawn(ps, %i[out err] => File::NULL))
+end
+
+main if __FILE__ == $PROGRAM_NAME

@@ -90,7 +90,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 ** window layout & behavior
 - vsplit always :: constrain popup buffers (inevitable) to consistently, and always ~vsplit~, and have a reasonable size.
 - never mix vertical with horizontal splitting => creates mental overhead navigating the windows (+requires another set of totally unneccessary keybindings)
-  - the only reason to hsplit is when you specifically know that a buffer has very few line.
+  - the only reason to hsplit is when you specifically know that a buffer has very few lines.
     - don't focus help buffer's.
     - maximize buffer's that are standalone / proper (ex: info-mode, org-src).
 - we are not in a position to presume what content will be displayed in the popup-buffer for the defaut settings, hence we give it equal width (50%) to accomodate for most possible cases.
@@ -102,7 +102,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       split-height-threshold nil
       split-width-threshold 0)
 
-;; HACK :: needs to go here
+;; HACK :: we need to override rules after packages have loaded
 (setq +popup-defaults
       '(:side right
         :select nil
@@ -122,7 +122,8 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
   (set-popup-rule! "^\\*info" :ignore t))
 
 (after! lsp-mode
-  (set-popup-rule! "^\\*lsp-help" :side 'bottom))
+  (set-popup-rules! `(("^\\*lsp-help" :side 'bottom)
+                      ("^\\*compilation" ,@+popup-defaults))))
 #+end_src
 
 - centered windows :: better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).
@@ -192,9 +193,9 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
                "g" #'occur)
       (:prefix "c"
                "r" #'lsp-rename
-               (:prefix-map ("'" . "org-src")
-                            "t" #'org-babel-tangle
-                            "T" #'org-babel-detangle))
+               (:prefix "'"
+                        "t" #'org-babel-tangle
+                        "T" #'org-babel-detangle))
       (:prefix "t"
                "c" #'global-visual-fill-column-mode))
 #+end_src
@@ -205,9 +206,8 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
   - when emacs creates splits we must handle them => minimal bindings for switching and closing splits: [[kbd:c-q, c-w][c-q, c-w]].
   - [[kbd:c-w][c-w]] and [[kbd:c-q][c-q]] is minimalistic, but all you will ever need to manage buffers and windows, since if you have more than 2 windows side by side, you are screwed anyway and need to clean up.  hence it replaces the gazillion of vim's window shortcuts with a faster, simpler alternative.
 - these mappings are universal to all programs (shell, emacs, browser, i3) and highly frequently accessed (from any mode/file).
-- workflow :: this minimalistic but powerful navigation workflow is the most efficient & overheadfree way of navigating simultaneously between multiple different files/buffer when working within a project (low overhead when context-switching and remaining distractionfree, works from anywhere.  improves typing speed)
-  - harpoon :: essentially persistent vim global marks on a per project basis (more powerful, faster and more generalized).  hotswitch between buffers in a project you are working on simultaneoutsly.  we intentionally use [[kbd:c-1-4][c-1-4]], since using numbers causes less mental overhead and makes no presumptions about the buffers assigned.  additionally it is consistent with tmux and the webbrowser.  you are restrained to 4 buffer's, since that is all you'll need and if you have more than that, you must reprioritize your marks.
-  - misc-buffers :: all other buffernavigation is done using ~consult-buffer~ and ~evil-switch-to-windows-last-buffer~.
+- workflow :: this minimalistic but powerful navigation workflow (fuzzy-find, find-file, harpoon, and find-buffer) is the most efficient & overheadfree way of navigating simultaneously between multiple different files/buffer when working within a project (low overhead when context-switching and remaining distractionfree, works from anywhere.  improves typing speed)
+  - harpoon :: essentially persistent vim global marks on a per project basis (more powerful, faster and more generalized).  hotswitch between files in a project you are working on simultaneoutsly.  we intentionally use [[kbd:c-1-4][c-1-4]], since using numbers causes less mental overhead and makes no presumptions about the files assigned.  additionally it is consistent with tmux and the webbrowser.  you are restrained to 4 files since that is all you'll need and if you have more than that, you must reprioritize your marks.
 
 #+begin_src emacs-lisp
 (map! :map 'override
@@ -222,24 +222,20 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       :nm "C-2" #'harpoon-go-to-2
       :nm "C-3" #'harpoon-go-to-3
       :nm "C-4" #'harpoon-go-to-4
-      :nm "C-t" #'harpoon-add-file ;; like new-tab in browser
-      :nm "C-h" #'harpoon-quick-menu-hydra)
+      :nm "C-l" #'evil-switch-to-windows-last-buffer)
+
+(map! :leader "j" #'harpoon-quick-menu-hydra) ;; add/delete marks etc.
 #+end_src
 
 ** vim editing
 goal :: make vim's bindings even more mnemonic/sane/sensible/efficient and improve consistency of implementation.  maximize the keyboard real-estate usage.
 see [[file:~/.config/xremap/config.yml][global keyboard remaps]] for additional details.
 frequently used & coding/editing related functions are mapped to ~g+~
-
-- relative lines ::
-  - more sensible default
-  - minimizes mental overhead (and spamming of [[kbd:gj][gj]] / [[kbd:gk][gk]] )
 - splits ::
   - at most have 2 splits => toggle between windows with single key (instead of mental overhead for directional navigation ex: [[kbd:c-hjkl][c-hjkl]] )
   - this is for navigating and controlling some inevitable popup-buffers.
   - avoid splits at all costs and use tabs instead
 - useless default mappings :: remap underused/useless keys to statistically frequently used commands.
-- [[kbd:tab][tab]] :: folding.  inspired by org-modes folding functionality.  (smart/simple one-key folding))
 - whichkey :: removed on purpose
   - the concept of ~whichkey~ is creating the bad habit of searching through a menu to find a keybindings (the exact opposite of what a keybind is for, to be executed instantaneously, engrained in memory)
   - if you know roughly what you are looking for, then use [[kbd:m-x][m-x]] and fuzzy search for the command and it will show you the binding for next time.  fuzzy finding is more efficient.
@@ -249,12 +245,10 @@ frequently used & coding/editing related functions are mapped to ~g+~
 
 #+begin_src emacs-lisp
 (map! :after evil
-      :i    "C-h" #'backward-delete-char                ;; ensure this works
-      :i    "C-v" (cmd! (evil-paste-from-register ?\")) ;; more fast and default than <c-r>"
-      :m    "C-s" #'write-file ;; super frequently called command needs top layer mapping
+      :i    "C-v" (cmd! (evil-paste-from-register ?\")) ;; faster than <c-r>" && default
+      :m    "C-s" #'write-file ;; super frequently called command needs top layer mapping (smart)
       :in   "C-s" (cmd! (evil-force-normal-state) (basic-save-buffer))
-      :n    "C-j" #'newline-and-indent  ;; sensible inverse of J
-      :nm   "C-l" #'evil-scroll-line-to-center
+      :n    "C-j" #'newline-and-indent  ;; inverse of J (freq used)
 
       ;; always use visual line navigation
       :nmvo "j"   #'evil-next-visual-line
@@ -263,30 +257,28 @@ frequently used & coding/editing related functions are mapped to ~g+~
       :nmvo "$"   #'evil-end-of-visual-line
 
       ;; better defaults
-      :nmv  "U"   #'evil-redo ;; original: <c-r>, makes no sense
-      :nmv  "Q"   #'evil-execute-last-recorded-macro ;; quickly recall recorded macro
-      :nmv  "&"   #'evil-ex-repeat ;; similar behaviour bur more powerful
+      :nmv  "U"   #'evil-redo ;; inverse of u (+ <c-r> makes no sense)
+      :nmv  "Q"   #'evil-execute-last-recorded-macro ;; quickly recall recorded macro (used 80% of the time since we just have a single macro, recorded with 'qq')
+      :nmv  "&"   #'evil-ex-repeat ;; more extensible than normal '&'
+      :nmv  "("   #'sp-beginning-of-sexp ;; jump out of delimiter's from anywhere
+      :nmv  ")"   #'sp-end-of-sexp
 
-      ;; more sensible than C-x C-a
-      :nmv  "+"   #'evil-numbers/inc-at-pt
+      :nmv  "+"   #'evil-numbers/inc-at-pt ;; more sensible than C-x/C-a
       :nmv  "-"   #'evil-numbers/dec-at-pt
       :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
       :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
 
       :nmv  "go"  #'consult-imenu ;; search outline
-      :nmv  "g/"  #'+default/search-buffer) ;; alternative /
+      :nmv  "g/"  #'+default/search-buffer) ;; more powerful '/' => preview matches interactively
 
-;; using vim default keys
-(map! :after minibuffer :map minibuffer-mode-map
+(map! :after minibuffer :map minibuffer-mode-map ;; more useful (+ consistent)
       :i "C-n"  #'next-line-or-history-element
       :i "C-p"  #'previous-line-or-history-element)
 
-(map! :after company :map company-mode-map
+(map! :after company :map company-mode-map ;; use 'C-n' / 'C-p' for completion
       :i "C-n" #'company-complete-common)
 
-;; HACK :: make c-h work everywhere
-(map! :after company :map company-active-map "C-h" #'backward-delete-char)
-(map! :after evil-org :map evil-org-mode-map :i "C-h" #'backward-delete-char)
+(map! :map 'override :i "C-h" #'backward-delete-char) ;; HACK :: make 'c-h' work always
 #+end_src
 
 #+begin_src emacs-lisp
@@ -353,7 +345,7 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "y" #'dired-copy-filename-as-kill
       :nm "z" #'dired-do-compress
       :nm "." #'dired-omit-mode
-      :nm "e" #'dired-create-empty-file)
+      :nm "+" #'dired-create-empty-file)
 
 (map! :map dired-mode-map :localleader :after dired
       :nm "a" #'z-dired-archive)
@@ -361,9 +353,8 @@ This is sensible default behaviour, and integrates it into evil."
 
 ** verilog (bindings)
 #+begin_src emacs-lisp
-(map! :map verilog-mode-map :after verilog-mode
-      :localleader
-      :nm "f" #'verilog-indent-buffer)
+(map! :after verilog-mode :map verilog-mode-map :localleader
+      "cf" #'verilog-indent-buffer) ;; code -> format
 #+end_src
 
 
@@ -553,15 +544,15 @@ this is automated using a snippet
 (setq-hook! '(c-mode-hook java-mode-hook)
   c-basic-offset z-indent-width)
 
-(setq-hook! 'ruby-mode
+(setq-hook! 'ruby-mode-hook
   evil-shift-width z-indent-width
   ruby-indent-level z-indent-width)
 
-(setq-hook! 'rustic
+(setq-hook! 'rustic-mode-hook
   rustic-indent z-indent-width
   rustic-indent-offset z-indent-width)
 
-(setq-hook! 'verilog-mode
+(setq-hook! 'verilog-mode-hook
   verilog-case-indent z-indent-width
   verilog-cexp-indent z-indent-width
   verilog-indent-level z-indent-width
@@ -1109,4 +1100,9 @@ PARENT-PATH :: nil | used for recursion"
 (after! dictionary
   (setq dictionary-server "dict.org"
         dictionary-default-dictionary "*")) ;; no confirmation prompt which server to use
+#+end_src
+
+* lisp
+#+begin_src emacs-lisp
+(after! lispy (setq lispy-key-theme '())) ;; don't use insert bindings ('lispyville' is enough)
 #+end_src

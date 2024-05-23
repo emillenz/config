@@ -5,6 +5,7 @@
 # date:   2022-02-25
 # info:   minimal, coinsistent and fast config
 # ---
+
 import = ["~/.config/alacritty/modus_operandi.toml"]
 ipc_socket = true
 live_config_reload = true
@@ -41,7 +42,7 @@ dynamic_title = true
 startup_mode = "Maximized"
 opacity = 1.0
 
-# HACK :: make c-<n> send right key sequence (for tmux, emacs, etc..)
+# HACK :: make c-number work send right key sequence (for tmux, emacs, etc..)
 [keyboard]
 bindings= [
   {key="Key1", mods= "Control", chars= "\u001b[49;5u" },
@@ -53,5 +54,4 @@ bindings= [
   {key="Key7", mods= "Control", chars= "\u001b[55;5u" },
   {key="Key8", mods= "Control", chars= "\u001b[56;5u" },
   {key="Key9", mods= "Control", chars= "\u001b[57;5u" },
-  {key="Key0", mods= "Control", chars= "\u001b[48;5u" }
 ]

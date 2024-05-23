@@ -63,7 +63,7 @@
       split-height-threshold nil
       split-width-threshold 0)
 
-;; HACK :: needs to go here
+;; HACK :: we need to override rules after packages have loaded
 (setq +popup-defaults
       '(:side right
         :select nil
@@ -83,7 +83,8 @@
   (set-popup-rule! "^\\*info" :ignore t))
 
 (after! lsp-mode
-  (set-popup-rule! "^\\*lsp-help" :side 'bottom))
+  (set-popup-rules! `(("^\\*lsp-help" :side 'bottom)
+                      ("^\\*compilation" ,@+popup-defaults))))
 ;; window layout & behavior:1 ends here
 
 ;; [[file:config.org::*window layout & behavior][window layout & behavior:2]]
@@ -137,9 +138,9 @@
                "g" #'occur)
       (:prefix "c"
                "r" #'lsp-rename
-               (:prefix-map ("'" . "org-src")
-                            "t" #'org-babel-tangle
-                            "T" #'org-babel-detangle))
+               (:prefix "'"
+                        "t" #'org-babel-tangle
+                        "T" #'org-babel-detangle))
       (:prefix "t"
                "c" #'global-visual-fill-column-mode))
 ;; leader ([[kbd:SPC][SPC]], [[kbd:,][,]]):1 ends here
@@ -157,18 +158,17 @@
       :nm "C-2" #'harpoon-go-to-2
       :nm "C-3" #'harpoon-go-to-3
       :nm "C-4" #'harpoon-go-to-4
-      :nm "C-t" #'harpoon-add-file ;; like new-tab in browser
-      :nm "C-h" #'harpoon-quick-menu-hydra)
+      :nm "C-l" #'evil-switch-to-windows-last-buffer)
+
+(map! :leader "j" #'harpoon-quick-menu-hydra) ;; add/delete marks etc.
 ;; global navigation scheme:1 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:1]]
 (map! :after evil
-      :i    "C-h" #'backward-delete-char                ;; ensure this works
-      :i    "C-v" (cmd! (evil-paste-from-register ?\")) ;; more fast and default than <c-r>"
-      :m    "C-s" #'write-file ;; super frequently called command needs top layer mapping
+      :i    "C-v" (cmd! (evil-paste-from-register ?\")) ;; faster than <c-r>" && default
+      :m    "C-s" #'write-file ;; super frequently called command needs top layer mapping (smart)
       :in   "C-s" (cmd! (evil-force-normal-state) (basic-save-buffer))
-      :n    "C-j" #'newline-and-indent  ;; sensible inverse of J
-      :nm   "C-l" #'evil-scroll-line-to-center
+      :n    "C-j" #'newline-and-indent  ;; inverse of J (freq used)
 
       ;; always use visual line navigation
       :nmvo "j"   #'evil-next-visual-line
@@ -177,30 +177,28 @@
       :nmvo "$"   #'evil-end-of-visual-line
 
       ;; better defaults
-      :nmv  "U"   #'evil-redo ;; original: <c-r>, makes no sense
-      :nmv  "Q"   #'evil-execute-last-recorded-macro ;; quickly recall recorded macro
-      :nmv  "&"   #'evil-ex-repeat ;; similar behaviour bur more powerful
+      :nmv  "U"   #'evil-redo ;; inverse of u (+ <c-r> makes no sense)
+      :nmv  "Q"   #'evil-execute-last-recorded-macro ;; quickly recall recorded macro (used 80% of the time since we just have a single macro, recorded with 'qq')
+      :nmv  "&"   #'evil-ex-repeat ;; more extensible than normal '&'
+      :nmv  "("   #'sp-beginning-of-sexp ;; jump out of delimiter's from anywhere
+      :nmv  ")"   #'sp-end-of-sexp
 
-      ;; more sensible than C-x C-a
-      :nmv  "+"   #'evil-numbers/inc-at-pt
+      :nmv  "+"   #'evil-numbers/inc-at-pt ;; more sensible than C-x/C-a
       :nmv  "-"   #'evil-numbers/dec-at-pt
       :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
       :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
 
       :nmv  "go"  #'consult-imenu ;; search outline
-      :nmv  "g/"  #'+default/search-buffer) ;; alternative /
+      :nmv  "g/"  #'+default/search-buffer) ;; more powerful '/' => preview matches interactively
 
-;; using vim default keys
-(map! :after minibuffer :map minibuffer-mode-map
+(map! :after minibuffer :map minibuffer-mode-map ;; more useful (+ consistent)
       :i "C-n"  #'next-line-or-history-element
       :i "C-p"  #'previous-line-or-history-element)
 
-(map! :after company :map company-mode-map
+(map! :after company :map company-mode-map ;; use 'C-n' / 'C-p' for completion
       :i "C-n" #'company-complete-common)
 
-;; HACK :: make c-h work everywhere
-(map! :after company :map company-active-map "C-h" #'backward-delete-char)
-(map! :after evil-org :map evil-org-mode-map :i "C-h" #'backward-delete-char)
+(map! :map 'override :i "C-h" #'backward-delete-char) ;; HACK :: make 'c-h' work always
 ;; vim editing:1 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:2]]
@@ -255,16 +253,15 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "y" #'dired-copy-filename-as-kill
       :nm "z" #'dired-do-compress
       :nm "." #'dired-omit-mode
-      :nm "e" #'dired-create-empty-file)
+      :nm "+" #'dired-create-empty-file)
 
 (map! :map dired-mode-map :localleader :after dired
       :nm "a" #'z-dired-archive)
 ;; dired (keybindings):1 ends here
 
 ;; [[file:config.org::*verilog (bindings)][verilog (bindings):1]]
-(map! :map verilog-mode-map :after verilog-mode
-      :localleader
-      :nm "f" #'verilog-indent-buffer)
+(map! :after verilog-mode :map verilog-mode-map :localleader
+      "cf" #'verilog-indent-buffer) ;; code -> format
 ;; verilog (bindings):1 ends here
 
 ;; [[file:config.org::*editor][editor:1]]
@@ -402,15 +399,15 @@ This is sensible default behaviour, and integrates it into evil."
 (setq-hook! '(c-mode-hook java-mode-hook)
   c-basic-offset z-indent-width)
 
-(setq-hook! 'ruby-mode
+(setq-hook! 'ruby-mode-hook
   evil-shift-width z-indent-width
   ruby-indent-level z-indent-width)
 
-(setq-hook! 'rustic
+(setq-hook! 'rustic-mode-hook
   rustic-indent z-indent-width
   rustic-indent-offset z-indent-width)
 
-(setq-hook! 'verilog-mode
+(setq-hook! 'verilog-mode-hook
   verilog-case-indent z-indent-width
   verilog-cexp-indent z-indent-width
   verilog-indent-level z-indent-width
@@ -834,3 +831,7 @@ PARENT-PATH :: nil | used for recursion"
   (setq dictionary-server "dict.org"
         dictionary-default-dictionary "*")) ;; no confirmation prompt which server to use
 ;; dictionary:1 ends here
+
+;; [[file:config.org::*lisp][lisp:1]]
+(after! lispy (setq lispy-key-theme '())) ;; don't use insert bindings ('lispyville' is enough)
+;; lisp:1 ends here

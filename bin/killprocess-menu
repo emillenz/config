@@ -4,10 +4,14 @@
 # author: emil lenz
 # email:  emillenz@protonmail.com
 # date:   2023-05-08
-# dependencies: dmenu, dunst
+# dependencies:
+# - sh: dmenu
+# - ruby gem: ruby-notify-send
 # ---
 
-DMENU = 'dmenu -b -i -fn "Iosevka Comfy-10" -nb "#ffffff" -nf "#000000" -sb "#c0deff" -sf "#000000"'.freeze # NOTE :: modus vivendi theme
+require 'notify-send'
+
+DMENU = 'dmenu -b -i -fn "Iosevka Comfy-10" -nb "#ffffff" -nf "#000000" -sb "#c0deff" -sf "#000000"'.freeze # NOTE: : modus vivendi theme
 
 def main
         pss = `ps -e`.lines.drop(1).map do |line|
@@ -23,7 +27,7 @@ def main
         ps_id = pss[ps_sel]
 
         `sudo kill #{ps_id}`
-        `dunstify "#{icon}  killprocess" #{ps_sel}`
+        NotifySend.send('killprocess', ps_sel)
 end
 
 main if __FILE__ == $PROGRAM_NAME

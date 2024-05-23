@@ -17,8 +17,7 @@
        ;;  +fuzzy
        ;;  +icons
        ;;  )
-       (vertico           ; the best => fastest & most minimal
-        +icons)
+       (vertico +icons) ; the best => fastest & most minimal
 
        :ui
        ;;deft              ; notational velocity for Emacs
@@ -153,8 +152,7 @@
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ; a language you can depend on
        json              ; At least it ain't XML
-       (java
-        +lsp)       ; the poster child for carpal tunnel syndrome
+       (java +lsp)       ; the poster child for carpal tunnel syndrome
        ;;javascript        ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)

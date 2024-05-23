@@ -17,12 +17,12 @@ set $SCREENSHOT_SEL scrot --select '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pict
 set $VOL_INC pamixer --unmute --increase 5 && dunstify --replace 69 "vol: $(pamixer --get-volume-human)"
 set $VOL_DEC pamixer --unmute --decrease 5 && dunstify --replace 69 "vol: $(pamixer --get-volume-human)"
 set $VOL_MUTE pamixer --toggle-mute && dunstify --replace 69 "vol: $(pamixer --get-volume-human)" $ESC
-set $VOL_MIC_MUTE pamixer --default-source --toggle-mute && dunstify --replace 69 "mic mute: $(pamixer --default-source --get-mute)" $ESC
+set $VOL_MIC_MUTE pamixer --default-source --toggle-mute && dunstify --replace 69 "mic-mute: $(pamixer --default-source --get-mute)" $ESC
 set $SYS_SLEEP i3lock --color ffffff && systemctl suspend
 set $SYS_SCREENOFF sleep 1 && xset dpms force off
 
 # AUTOSTART
-$CMD $BIN/autostart
+exec --always $BIN/autostart
 
 # OPTS
 workspace_auto_back_and_forth no
@@ -73,6 +73,7 @@ $MAP $MOD+g         $CMD $BIN/window-menu
 $MAP $MOD+semicolon $CMD i3-dmenu-desktop --dmenu "$DMENU -p 'run >'"
 $MAP $MOD+s         layout toggle tabbed splith
 $MAP $MOD+Return    move workspace to output next
+$MAP $MOD+l         workspace back_and_forth
 
 # WORKSPACES
 for_window [urgent="latest"] focus

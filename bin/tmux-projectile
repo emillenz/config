@@ -29,8 +29,8 @@ def main
 end
 
 def switch(target)
-        system("tmux has-session -t #{target}", %i[out err] => File::NULL)
-        system("tmux new-session -d -s #{target} -c #{target}", %i[out err] => File::NULL) unless $CHILD_STATUS.success?
+        system("tmux has-session -t #{target}", out: File::NULL, err: File::NULL)
+        system("tmux new-session -d -s #{target} -c #{target}", out: File::NULL, err: File::NULL) unless $CHILD_STATUS.success?
 
         if ENV['TMUX'].nil?
                 `tmux attach-session -t #{target}`

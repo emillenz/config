@@ -48,7 +48,7 @@ def no_screensaving
 end
 
 def spawn_ps(ps)
-        Process.detach(spawn(ps, %i[out err] => File::NULL))
+        Process.detach(spawn(ps, out: File::NULL, err: File::NULL))
 end
 
 main if __FILE__ == $PROGRAM_NAME

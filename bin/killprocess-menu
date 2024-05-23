@@ -10,8 +10,19 @@
 # ---
 
 require 'notify-send'
+require 'open3'
 
-DMENU = 'dmenu -b -i -fn "Iosevka Comfy-10" -nb "#ffffff" -nf "#000000" -sb "#c0deff" -sf "#000000"'.freeze # NOTE: : modus vivendi theme
+DMENU_CMD = [
+        'dmenu',
+        '-b',
+        '-i',
+        '-fn', 'Iosevka Comfy-10',
+        '-nb', '#ffffff',
+        '-nf', '#000000',
+        '-sb', '#c0deff',
+        '-sf', '#000000',
+        '-p',  'killprocess > '
+].freeze
 
 def main
         pss = `ps -e`.lines.drop(1).map do |line|
@@ -21,13 +32,13 @@ def main
                 [name, pid]
         end.to_h
 
-        dmenu_in = pss.keys.join("\n")
-        ps_sel = `echo "#{dmenu_in}" | #{DMENU} -p "killprocess > "`.strip
-        exit 1 if ps_sel == ''
-        ps_id = pss[ps_sel]
+        dmenu_stdin = pss.keys.join("\n")
+        read, status = Open3.capture2(*DMENU_CMD, stdin_data: dmenu_stdin)
+        exit 1 unless status.success?
+        ps_id = pss[read.chomp]
 
         `sudo kill #{ps_id}`
-        NotifySend.send('killprocess', ps_sel)
+        NotifySend.send('killprocess', read)
 end
 
 main if __FILE__ == $PROGRAM_NAME

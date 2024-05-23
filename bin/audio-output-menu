@@ -13,7 +13,6 @@ require 'json'
 require 'notify-send'
 require 'open3'
 
-
 DMENU_CMD = [
         'dmenu',
         '-b',

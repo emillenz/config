@@ -7,48 +7,43 @@
 # -----
 
 def main
-        processes
-        no_screensaving
-        remaps
+        spawn_processes
+        CMDS.each { |cmd| system(cmd) }
 end
 
-def processes
-        processes = [
-                'playerctld',
-                'alacritty --title cmd --command tmux new-session -A -s cmd',
-                'emacs --daemon && emacsclient --reuse-frame',
-                'unclutter',
-                'batsignal -bpe -w 50 -c 20 -d 5',
-                'keepassxc',
-                'firefox',
-                'firefox --new-window https://chat.openai.com',
-                'firefox --new-window https://spotify.com'
-        ]
+PROCESSES = [
+        'playerctld',
+        'alacritty --title cmd --command tmux new-session -A -s cmd',
+        'emacs --daemon && emacsclient --reuse-frame',
+        'unclutter',
+        'batsignal -bpe -w 50 -c 20 -d 5',
+        'keepassxc',
+        'firefox',
+        'firefox --new-window https://chat.openai.com',
+        'firefox --new-window https://spotify.com',
+        'sudo xremap --watch=device ~/.config/xremap/config.yml & disown' # HACK: disown needed
+].freeze
+
+CMDS = [
+        'xsetroot -solid "#ffffff"', # bg
+        'xset dpms 0 0 0', # no screensaving
+        'xset s off',
+        'xset r off' # disable key repeat
+].freeze
+
+def spawn_processes
         ps_data = `ps -e`.lines.drop(1)
 
         ps_running = ps_data.map do |line|
                 line.split(/\s+/) [4..].join(' ').strip
         end
 
-        processes.each do |ps|
-                spawn_ps(ps) unless ps_running.include?(ps.split[0])
+        PROCESSES.each do |ps|
+                unless ps_running.include?(ps.split[0])
+                        Process.detach(spawn(ps, out: File::NULL))
+                        puts("started: #{ps}")
+                end
         end
-end
-
-def remaps
-        spawn_ps('sudo xremap --watch=device ~/.config/xremap/config.yml & disown') # HACK: disown needed
-        sleep(2) # HACK: wait for xremap
-        `xset r off`
-end
-
-def no_screensaving
-        `xsetroot -solid '#ffffff'`
-        `xset dpms 0 0 0`
-        `xset s off`
-end
-
-def spawn_ps(ps)
-        Process.detach(spawn(ps, out: File::NULL, err: File::NULL))
 end
 
 main if __FILE__ == $PROGRAM_NAME

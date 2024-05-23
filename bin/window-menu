@@ -36,11 +36,9 @@ def windows(nodes)
 
         nodes.map do |node|
                 if node['window_type'] == 'normal'
-                        {
-                                id: node['id'],
-                                name: node['window_properties']['title'],
-                                class: node['window_properties']['class']
-                        }
+                        { id: node['id'],
+                          name: node['window_properties']['title'],
+                          class: node['window_properties']['class'] }
                 else
                         windows(node['nodes'])
                 end

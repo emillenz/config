@@ -42,7 +42,7 @@ chsh --shell /usr/bin/fish
 *** scripting: ruby
 #+begin_src sh
 yay --noconfirm --sync ruby solargraph
-gem install ruby-notify-send # for shellscript notifications
+bundle install --gemfile $HOME/.config/bin/Gemfile
 #+end_src
 
 

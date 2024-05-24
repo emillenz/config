@@ -6,7 +6,7 @@
 # ---
 
 # ALIASES
-set $DMENU dmenu -b -i -fn 'Iosevka Comfy-10' -nb '#ffffff' -nf '#000000' -sb '#c0deff' -sf '#000000'
+set $ROFI rofi -dmenu -i -no-custom -p
 set $ESC ; mode "default"
 set $BIN ~/.config/bin
 set $MV move container to workspace
@@ -66,11 +66,11 @@ $MAP $MOD+bracketright $CMD playerctl next
 $MAP $MOD+bracketleft  $CMD playerctl previous
 $MAP $MOD+backslash    $CMD playerctl play-pause
 
-$MAP $MOD+n         focus next
-$MAP $MOD+p         focus prev
+$MAP $MOD+j         focus next
+$MAP $MOD+k         focus prev
 $MAP $MOD+q         kill
-$MAP $MOD+g         $CMD $BIN/window-menu
-$MAP $MOD+semicolon $CMD i3-dmenu-desktop --dmenu "$DMENU -p 'run >'"
+$MAP $MOD+g         $CMD rofi -show window
+$MAP $MOD+semicolon $CMD rofi -show drun
 $MAP $MOD+s         layout toggle tabbed splith
 $MAP $MOD+Return    move workspace to output next
 $MAP $MOD+l         workspace back_and_forth
@@ -89,7 +89,7 @@ for_window [class="Alacritty"] $MV $WS_CMD, focus
 set $WS_DOCS "docs"
 workspace $WS_DOCS output primary
 $MAP $MOD+d workspace $WS_DOCS
-$MAP $MOD+shift+d $CMD xdg-open "$(fd --type file . ~ | $DMENU -p 'find-file >')"
+$MAP $MOD+shift+d $CMD xdg-open "$(fd --type file . ~ | $ROFI 'find-file')"
 for_window [class="Zathura"] $MV $WS_DOCS, focus
 
 set $WS_WEB "web"
@@ -127,10 +127,10 @@ $MAP $MOD+1 workspace 1
 
 $MAP $MOD+f mode "find-file"
 mode "find-file" {
-        $MAP $MOD+c $CMD xdg-open "$(fd --extension pdf . ~/Documents/uni/cs/s2 | $DMENU -p 'find-file >')" $ESC
-        $MAP $MOD+l $CMD xdg-open "$(fd . ~/Documents/literature/source | $DMENU -p 'find-file >')" $ESC
-        $MAP $MOD+f $CMD xdg-open "$(fd --type file . ~ | $DMENU -p 'find-file >')" $ESC
-        $MAP $MOD+d $CMD xdg-open "$(fd --extension pdf . ~/Downloads | $DMENU -p 'find-file >')" $ESC
+        $MAP $MOD+c $CMD xdg-open "$(fd --extension pdf . ~/Documents/uni/cs/s2 | $ROFI 'find [cs]')" $ESC
+        $MAP $MOD+l $CMD xdg-open "$(fd . ~/Documents/literature/source | $ROFI 'find-file')" $ESC
+        $MAP $MOD+f $CMD xdg-open "$(fd --type file . ~ | $ROFI 'find [all]')" $ESC
+        $MAP $MOD+d $CMD xdg-open "$(fd --extension pdf . ~/Downloads | $ROFI 'find [downloads]')" $ESC
         $MAP Escape mode "default"
 }
 
@@ -140,7 +140,7 @@ mode "leader" {
         $MAP --release $MOD+s $CMD $SCREENSHOT_SEL $ESC
         $MAP $MOD+shift+s     $CMD $SCREENSHOT_FULL $ESC
         $MAP $MOD+k           $CMD $BIN/killprocess-menu $ESC
-        $MAP $MOD+d           $CMD fd . ~/.screenlayout | $DMENU -p 'display-layout >' | sh $ESC
+        $MAP $MOD+d           $CMD fd . ~/.screenlayout | $ROFI 'screen-layout' | sh $ESC
         $MAP $MOD+q           mode "quit"
         $MAP Escape           mode "default"
 }

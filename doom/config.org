@@ -272,11 +272,11 @@ frequently used & coding/editing related functions are mapped to ~g+~
       :nmv  "g/"  #'+default/search-buffer) ;; more powerful '/' => preview matches interactively
 
 (map! :after minibuffer :map minibuffer-mode-map ;; more useful (+ consistent)
-      :i "C-n"  #'next-line-or-history-element
-      :i "C-p"  #'previous-line-or-history-element)
+      :i "C-j"  #'next-line-or-history-element
+      :i "C-k"  #'previous-line-or-history-element)
 
-(map! :after company :map company-mode-map ;; use 'C-n' / 'C-p' for completion
-      :i "C-n" #'company-complete-common)
+(map! :after company :map company-mode-map ;; use 'C-j' / 'C-k' for completion
+      :i "TAB" #'company-complete-common)
 
 (map! :map 'override :i "C-h" #'backward-delete-char) ;; HACK :: make 'c-h' work always
 #+end_src
@@ -422,8 +422,8 @@ This is sensible default behaviour, and integrates it into evil."
 (vertico-flat-mode)
 
 (map! :map minibuffer-mode-map
-      :im "C-n" #'next-line-or-history-element
-      :im "C-p" #'previous-line-or-history-element)
+      :im "C-j" #'next-line-or-history-element
+      :im "C-k" #'previous-line-or-history-element)
 
 (map! :map vertico-map
       :im "C-w" #'vertico-directory-delete-word

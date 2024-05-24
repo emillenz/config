@@ -50,11 +50,10 @@ bind -M normal U redo
 bind -M normal K __fish_man_page
 bind -M normal \cr history-pager
 bind -M insert \cr history-pager
-bind -M insert \t accept-autosuggestion
-bind -M default \t accept-autosuggestion
-bind -M insert \cn complete
-bind -M insert \cp up-or-search
-bind -M default \cp up-or-search
+bind -M insert \ca accept-autosuggestion
+bind -M default \ca accept-autosuggestion
+bind -M insert \cj complete
+bind -M insert \ck up-or-search
 bind -M default \ce edit_command_buffer
 bind -M insert \ce edit_command_buffer
 bind -M default V __fish_preview_current_file

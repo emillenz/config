@@ -262,10 +262,10 @@ implemented using ~xremap~
 | [[kbd:r][r]]       | [r]ecent (file/history/cmd)      |
 | [[kbd:l][l]]       | [l]last buffer/tab (a[l]ternate) |
 | [[kbd:;][;]]       | run-cmd                          |
-| [[kbd:n][n]]       | [n]ext completion                |
-| [[kbd:p][p]]       | [p]revious completion            |
+| [[kbd:j][j]]       | up completion menu               |
+| [[kbd:k][k]]       | down completion menu             |
 | [[kbd:1-4][1-4]]     | focus buffer/tab 1-4             |
-| [[kbd:tab][tab]]     | complete                         |
+| [[kbd:tab][tab]]     | completion                       |
 | [[kbd:spc][spc]]     | leader-key                       |
 
 - condenses down a minimal set of universal, efficient navigational commands, which are found in basically all applications (editor, browser, terminal,..).  they will suffice 90% of all your navigational needs.

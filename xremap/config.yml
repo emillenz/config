@@ -14,11 +14,11 @@ keymap:
       C-e: c-l
       C-l: c-tab
       C-r: [c-t, shift-key_6, space] # history search
-      C-g: [c-t, shift-key_8, space] # goto bookmark
+      C-Enter: [c-t, shift-key_8, space] # goto bookmark
       # EDITING
       c-h: backspace
       c-w: c-backspace
       C-u: [shift-home, delete]
       # COMPLETION
-      C-n: down
-      C-p: up
+      C-j: down
+      C-k: up

@@ -5,24 +5,14 @@
 # email:  emillenz@protonmail.com
 # date:   2023-05-08
 # dependencies:
-# - sh: dmenu
+# - sh: rofi
 # - ruby gem: ruby-notify-send
 # ---
 
 require 'notify-send'
 require 'open3'
 
-DMENU_CMD = [
-        'dmenu',
-        '-b',
-        '-i',
-        '-fn', 'Iosevka Comfy-10',
-        '-nb', '#ffffff',
-        '-nf', '#000000',
-        '-sb', '#c0deff',
-        '-sf', '#000000',
-        '-p',  'killprocess > '
-].freeze
+ROFI_CMD = %w[rofi -dmenu -i -no-custom -p killprocess].freeze
 
 def main
         pss = `ps -e`.lines.drop(1).map do |line|
@@ -32,8 +22,8 @@ def main
                 [name, pid]
         end.to_h
 
-        dmenu_stdin = pss.keys.join("\n")
-        read, status = Open3.capture2(*DMENU_CMD, stdin_data: dmenu_stdin)
+        rofi_stdin = pss.keys.join("\n")
+        read, status = Open3.capture2(*ROFI_CMD, stdin_data: rofi_stdin)
         exit 1 unless status.success?
         ps_id = pss[read.chomp]
 

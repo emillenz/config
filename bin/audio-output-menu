@@ -13,23 +13,13 @@ require 'json'
 require 'notify-send'
 require 'open3'
 
-DMENU_CMD = [
-        'dmenu',
-        '-b',
-        '-i',
-        '-fn', 'Iosevka Comfy-10',
-        '-nb', '#ffffff',
-        '-nf', '#000000',
-        '-sb', '#c0deff',
-        '-sf', '#000000',
-        '-p',  'audio-output >'
-].freeze
+ROFI_CMD = %w[rofi -dmenu -i -no-custom -p audio-output].freeze
 
 def main
         sinks = JSON.parse(`pactl --format json list sinks`)
 
-        dmenu_stdin = sinks.map { |sink| sink['description'] }.join("\n")
-        read, status = Open3.capture2(*DMENU_CMD, stdin_data: dmenu_stdin)
+        rofi_stdin = sinks.map { |sink| sink['description'] }.join("\n")
+        read, status = Open3.capture2(*ROFI_CMD, stdin_data: rofi_stdin)
         exit(1) unless status.success?
 
         sink_id = sinks.find { |s| s['description'] == read.chomp }['index']

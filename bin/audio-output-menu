@@ -5,15 +5,15 @@
 # email:  emillenz@protonmail.com
 # date:   2023-05-07
 # dependencies:
-# - sh: rofi, pamixer
-# - ruby gems: ruby-notify-send
+# - sh: rofi, pactl
 # ---
 
 require 'json'
 require 'notify-send'
 require 'open3'
+require 'English'
 
-ROFI_CMD = %w[rofi -dmenu -i -no-custom -p audio-output].freeze
+ROFI_CMD = %w[rofi -dmenu -no-custom -i -p audio-output].freeze
 
 def main
         sinks = JSON.parse(`pactl --format json list sinks`)
@@ -24,12 +24,13 @@ def main
 
         sink_id = sinks.find { |s| s['description'] == read.chomp }['index']
         `pactl set-default-sink #{sink_id}`
+        exit 1 unless $CHILD_STATUS.success?
 
         JSON.parse(`pactl --format json list sink-inputs`).map do |sink|
                 `pactl move-sink-input #{sink['index']} #{sink_id}`
         end
 
-        NotifySend.send('audio-output', "changed output device\n#{read}")
+        NotifySend.send('audio-output changed', read)
 end
 
 main if __FILE__ == $PROGRAM_NAME

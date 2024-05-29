@@ -253,20 +253,20 @@ implemented using ~xremap~
 - key-repetition :: disable it.  it causes bad habits of you holding down a key instead of moving intelligently and fast using the appropriate motion (not holding down [[kbd:j][j]], istead using ~c-d~. not spamming delete, instead using ~d...~).
 
 ** navigational standard
-| mod+key | action                           |
-|---------+----------------------------------|
-| [[kbd:g][g]]       | [g]oto   (buffer/window)         |
-| [[kbd:q][q]]       | [q]uit (buffer/window)           |
-| [[kbd:e][e]]       | [e]dit (file/url/editor)         |
-| [[kbd:f][f]]       | [f]ind (program/file)            |
-| [[kbd:r][r]]       | [r]ecent (file/history/cmd)      |
-| [[kbd:l][l]]       | [l]last buffer/tab (a[l]ternate) |
-| [[kbd:;][;]]       | run-cmd                          |
-| [[kbd:j][j]]       | up completion menu               |
-| [[kbd:k][k]]       | down completion menu             |
-| [[kbd:1-4][1-4]]     | focus buffer/tab 1-4             |
-| [[kbd:tab][tab]]     | completion                       |
-| [[kbd:spc][spc]]     | leader-key                       |
+| mod+key | action                          |
+|---------+---------------------------------|
+| [[kbd:g][g]]       | [g]oto   (buffer/window)        |
+| [[kbd:q][q]]       | [q]uit (buffer/window)          |
+| [[kbd:e][e]]       | [e]dit (file/url/editor)        |
+| [[kbd:f][f]]       | [f]ind (program/file)           |
+| [[kbd:r][r]]       | [r]ecent (file/history/cmd)     |
+| [[kbd:b][b]]       | [b]ack [b]uffer/tab (alternate) |
+| [[kbd:;][;]]       | run-cmd                         |
+| [[kbd:n][n]]       | [n]ext completion               |
+| [[kbd:p][p]]       | [p]revious completion           |
+| [[kbd:1-4][1-4]]     | focus buffer/tab 1-4            |
+| [[kbd:tab][tab]]     | complete                        |
+| [[kbd:spc][spc]]     | leader-key                      |
 
 - condenses down a minimal set of universal, efficient navigational commands, which are found in basically all applications (editor, browser, terminal,..).  they will suffice 90% of all your navigational needs.
   - [[kbd:ctrl][ctrl]] :: inside applications since it is the defacto standard & aligns with vim's navigational-ctrl-layer-keybind (and is now ergonomically bound).
@@ -275,7 +275,7 @@ implemented using ~xremap~
 
 ***  workflow
 when you need to navigate to a different file/tab, this should be your order of modus-operandi ::
-1. [l]ast tab :: when you are alternating between 2 files/tabs or need to just jump back to the last visited buffer.  this takes the least amount of overhead and is the fastest.
+1. back (alternate) buffer :: when you are alternating between 2 files/tabs or need to just jump back to the last visited buffer.  this takes the least amount of overhead and is the fastest.
 2. hotswitch tab [1..4] :: use each of them for a file/tmux window/page within the project you are working on (ex: tmux: [1]repl, [2] compilation, [3] manpages, emacs: [1] main.c, [2] srcfile.c, [3] makefile).  you can then navigate between these files instantly without mental overhead.  we purposefully do not allow more than 4 tabs, since that is usually all that is neede within a project.  we want to ensure that it really is frequently visited files and thus keep the overhead low.  avoid manual tab creation if possible => auto-create a tab if it doesn't exist upon focusing it. we never want visual indication for tabs.   instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.  no tablines, no statusbars.
 3. find buffer/tab :: search through the list of open buffers/tabs to switch to the one you need.
 

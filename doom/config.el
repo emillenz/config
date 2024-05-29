@@ -21,12 +21,12 @@
 
   ;; HACK :: cannot customize these things with `modus-themes-common-palette-overrides'
   (modus-themes-with-colors
-    (setq evil-insert-state-cursor `(,fg-main bar)
-          evil-normal-state-cursor `(,fg-main box)
+    (setq evil-normal-state-cursor `(,fg-main box)
           evil-motion-state-cursor `(,fg-main box)
-          evil-visual-state-cursor `(,yellow box)
-          evil-operator-state-cursor `(,red box)
-          evil-replace-state-cursor `(,red hbar)))
+          evil-insert-state-cursor `(,fg-main box)
+          evil-visual-state-cursor `(,fg-main box)
+          evil-operator-state-cursor `(,red-intense box)
+          evil-replace-state-cursor `(,red-intense box)))
 
   (custom-set-faces!
     `(org-list-dt :inherit modus-themes-heading-1)
@@ -106,7 +106,7 @@
 ;; window layout & behavior:2 ends here
 
 ;; [[file:config.org::*misc options][misc options:1]]
-(setq bookmark-default-file "~/.config/doom/bookmarks"
+(setq initial-scratch-message ""
       delete-by-moving-to-trash t
       truncate-string-ellipsis "…"
       auto-save-default t
@@ -127,10 +127,7 @@
 ;; misc options:1 ends here
 
 ;; [[file:config.org::*leader (\[\[kbd:SPC\]\[SPC\]\], \[\[kbd:,\]\[,\]\])][leader ([[kbd:SPC][SPC]], [[kbd:,][,]]):1]]
-(setq doom-leader-key "SPC"
-      doom-leader-alt-key "M-SPC"
-      doom-localleader-key ","
-      doom-localleader-alt-key "M-,")
+(setq doom-localleader-key ",")
 
 (map! :leader
       (:prefix "s"
@@ -147,55 +144,44 @@
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:1]]
 (map! :map 'override
-      :nm "C-w" #'next-window-any-frame
       :nm "C-q" #'kill-buffer-and-window
+      :nm "C-b" #'evil-switch-to-windows-last-buffer
       :nm "C-e" #'find-file
       :nm "C-f" #'projectile-find-file
       :nm "C-g" #'consult-buffer
       :nm "C-r" #'consult-recent-file
-      :nm "C-;" #'execute-extended-command
       :nm "C-1" #'harpoon-go-to-1
       :nm "C-2" #'harpoon-go-to-2
       :nm "C-3" #'harpoon-go-to-3
-      :nm "C-4" #'harpoon-go-to-4
-      :nm "C-l" #'evil-switch-to-windows-last-buffer)
+      :nm "C-4" #'harpoon-go-to-4)
 
-(map! :leader "j" #'harpoon-quick-menu-hydra) ;; add/delete marks etc.
+(map! :leader "j" #'harpoon-quick-menu-hydra)
 ;; global navigation scheme:1 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:1]]
 (map! :after evil
-      :i    "C-v" (cmd! (evil-paste-from-register ?\")) ;; faster than <c-r>" && default
-      :m    "C-s" #'write-file ;; super frequently called command needs top layer mapping (smart)
-      :in   "C-s" (cmd! (evil-force-normal-state) (basic-save-buffer))
-      :n    "C-j" #'newline-and-indent  ;; inverse of J (freq used)
-
-      ;; always use visual line navigation
+      :n    "C-j" #'newline-and-indent
       :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
       :nmvo "^"   #'evil-first-non-blank-of-visual-line
       :nmvo "$"   #'evil-end-of-visual-line
-
-      ;; better defaults
       :nmv  "U"   #'evil-redo ;; inverse of u (+ <c-r> makes no sense)
       :nmv  "Q"   #'evil-execute-last-recorded-macro ;; quickly recall recorded macro (used 80% of the time since we just have a single macro, recorded with 'qq')
       :nmv  "&"   #'evil-ex-repeat ;; more extensible than normal '&'
-      :nmv  "("   #'sp-beginning-of-sexp ;; jump out of delimiter's from anywhere
-      :nmv  ")"   #'sp-end-of-sexp
-
+      :nmv  "("   #'backward-sexp ;; better that navigating by scentences
+      :nmv  ")"   #'forward-sexp
       :nmv  "+"   #'evil-numbers/inc-at-pt ;; more sensible than C-x/C-a
       :nmv  "-"   #'evil-numbers/dec-at-pt
       :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
       :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
-
       :nmv  "go"  #'consult-imenu ;; search outline
       :nmv  "g/"  #'+default/search-buffer) ;; more powerful '/' => preview matches interactively
 
 (map! :after minibuffer :map minibuffer-mode-map ;; more useful (+ consistent)
-      :i "C-j"  #'next-line-or-history-element
-      :i "C-k"  #'previous-line-or-history-element)
+      :i "C-n"  #'next-line-or-history-element
+      :i "C-p"  #'previous-line-or-history-element)
 
-(map! :after company :map company-mode-map ;; use 'C-j' / 'C-k' for completion
+(map! :after company :map company-mode-map ;; use 'TAB' to activate completion and 'C-p' for dabbrev-expand com[p]letion.
       :i "TAB" #'company-complete-common)
 
 (map! :map 'override :i "C-h" #'backward-delete-char) ;; HACK :: make 'c-h' work always
@@ -267,7 +253,7 @@ This is sensible default behaviour, and integrates it into evil."
 ;; [[file:config.org::*editor][editor:1]]
 (evil-surround-mode 1)
 
-(setq evil-magic 'very-magic
+(setq ;; evil-magic 'very-magic
       evil-want-fine-undo nil
       evil-ex-substitute-global t
       evil-want-C-i-jump t
@@ -313,8 +299,8 @@ This is sensible default behaviour, and integrates it into evil."
 (vertico-flat-mode)
 
 (map! :map minibuffer-mode-map
-      :im "C-j" #'next-line-or-history-element
-      :im "C-k" #'previous-line-or-history-element)
+      :i "C-n" #'next-line-or-history-element
+      :i "C-p" #'previous-line-or-history-element)
 
 (map! :map vertico-map
       :im "C-w" #'vertico-directory-delete-word

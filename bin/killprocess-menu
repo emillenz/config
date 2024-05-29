@@ -5,14 +5,14 @@
 # email:  emillenz@protonmail.com
 # date:   2023-05-08
 # dependencies:
-# - sh: rofi
-# - ruby gem: ruby-notify-send
+# - rofi
 # ---
 
 require 'notify-send'
 require 'open3'
+require 'English'
 
-ROFI_CMD = %w[rofi -dmenu -i -no-custom -p killprocess].freeze
+ROFI_CMD = %w[rofi -dmenu -no-custom -i -p killprocess].freeze
 
 def main
         pss = `ps -e`.lines.drop(1).map do |line|
@@ -28,6 +28,7 @@ def main
         ps_id = pss[read.chomp]
 
         `sudo kill #{ps_id}`
+        exit 1 unless $CHILD_STATUS.success?
         NotifySend.send('killprocess', read)
 end
 

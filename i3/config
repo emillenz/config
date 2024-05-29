@@ -66,14 +66,14 @@ $MAP $MOD+bracketright $CMD playerctl next
 $MAP $MOD+bracketleft  $CMD playerctl previous
 $MAP $MOD+backslash    $CMD playerctl play-pause
 
-$MAP $MOD+j         focus next
-$MAP $MOD+k         focus prev
+$MAP $MOD+n         focus next
+$MAP $MOD+p         focus prev
 $MAP $MOD+q         kill
 $MAP $MOD+g         $CMD rofi -show window
 $MAP $MOD+semicolon $CMD rofi -show drun
 $MAP $MOD+s         layout toggle tabbed splith
 $MAP $MOD+Return    move workspace to output next
-$MAP $MOD+l         workspace back_and_forth
+$MAP $MOD+b         workspace back_and_forth
 
 # WORKSPACES
 for_window [urgent="latest"] focus

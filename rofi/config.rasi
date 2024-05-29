@@ -20,11 +20,6 @@ configuration {
         window-format: "{t}"; // available: {w}workspace {t}itle {c}lass
         run-command: "{cmd}";
         run-shell-command: "{terminal} -e {cmd}";
-
-        kb-accept-entry: "Return";
-        kb-remove-to-eol: "";
-        kb-row-up: "Control+k,Up";
-        kb-row-down: "Control+j,Down";
 }
 
 window {

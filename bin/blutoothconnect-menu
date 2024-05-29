@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+#  ---
+#  title:  blutoothconnect menu
+#  author: emil lenz
+#  email:  emillenz@protonmail.com
+#  date:   2024-05-26
+#  dependecies: bluetoothctl
+#  ---
+
+require 'open3'
+require 'notify-send'
+require 'English'
+
+ROFI_CMD = %w[rofi -dmenu -no-custom -i -p bluetooth-connect].freeze
+
+def main
+        `bluetoothctl power on`
+        devices = `bluetoothctl devices`.split("\n").map do |line|
+                words = line.split
+                name = words[2..].join(' ')
+                addr = words[1]
+                [name, addr]
+        end.to_h
+        read, status = Open3.capture2(*ROFI_CMD, stdin_data: devices.keys.join("\n"))
+        exit(1) unless status.success?
+
+        device_addr = devices[read.chomp]
+        `bluetoothctl connect #{device_addr}`
+        exit(1) unless $CHILD_STATUS.success?
+
+        NotifySend.send('bluetooth connected', read)
+end
+
+main if __FILE__ == $PROGRAM_NAME

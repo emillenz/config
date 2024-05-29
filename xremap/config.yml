@@ -1,3 +1,10 @@
+# ---
+# title:  config
+# author: emil lenz
+# email:  emillenz@protonmail.com
+# date:   2024-01-18
+# ---
+
 modmap:
   - name: global
     remap:
@@ -9,16 +16,14 @@ keymap:
     application:
       only: firefox
     remap:
-      # GLOBAL NAVIGATION SCHEME
+      # GLOBAL NAVIGATION SCHEME (note using plugin that enables tabswitching using CTRL)
+      C-b: C-Tab
       C-q: c-w
-      C-e: c-l
-      C-l: c-tab
       C-r: [c-t, shift-key_6, space] # history search
       C-Enter: [c-t, shift-key_8, space] # goto bookmark
       # EDITING
       c-h: backspace
       c-w: c-backspace
-      C-u: [shift-home, delete]
       # COMPLETION
-      C-j: down
-      C-k: up
+      C-n: down
+      C-p: up

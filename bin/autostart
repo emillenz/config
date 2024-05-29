@@ -21,7 +21,7 @@ PROCESSES = [
         'firefox',
         'firefox --new-window https://chat.openai.com',
         'firefox --new-window https://spotify.com',
-        'sudo xremap --watch=device ~/.config/xremap/config.yml & disown' # HACK: disown needed
+        "sudo xremap --watch=device #{ENV['HOME']}/.config/xremap/config.yml & disown" # HACK: disown needed
 ].freeze
 
 CMDS = [
@@ -40,7 +40,7 @@ def spawn_processes
 
         PROCESSES.each do |ps|
                 unless ps_running.include?(ps.split[0])
-                        Process.detach(spawn(ps, out: File::NULL))
+                        Process.detach(spawn(ps, out: File::NULL, err: File::NULL))
                         puts("started: #{ps}")
                 end
         end

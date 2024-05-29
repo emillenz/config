@@ -7,12 +7,7 @@
 # - favor '--long-flags' over '-f' in order to make the code more readeable and easier to maintain
 # ---
 
-
 # OPTIONS
-set -g fish_cursor_default block
-set -g fish_cursor_replace_one underscore
-set -g fish_cursor_insert line
-set -g fish_cursor_visual block
 set -g fish_key_bindings fish_vi_key_bindings
 set -g fish_greeting ''
 fish_config theme choose modus_vivendi
@@ -50,10 +45,11 @@ bind -M normal U redo
 bind -M normal K __fish_man_page
 bind -M normal \cr history-pager
 bind -M insert \cr history-pager
-bind -M insert \ca accept-autosuggestion
-bind -M default \ca accept-autosuggestion
-bind -M insert \cj complete
-bind -M insert \ck up-or-search
+bind -M insert \t accept-autosuggestion
+bind -M default \t accept-autosuggestion
+bind -M insert \cn complete
+bind -M insert \cp up-or-search
+bind -M default \cp up-or-search
 bind -M default \ce edit_command_buffer
 bind -M insert \ce edit_command_buffer
 bind -M default V __fish_preview_current_file

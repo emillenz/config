@@ -241,16 +241,18 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - using a single monitor only not only makes you faster, but it also aligns with the focused singletasking fullscreen workflow.
 
 * keybindings
-implemented using ~xremap~
 ** general notes
-- esc :: remapped to the most optimal (ergonomical) key [[kbd:capslock][capslock]]
-- [[kbd:ctrl][ctrl]] :: mapped to [[kbd:alt_r][alt_r]], since [[kbd:alt][alt]] is the wm-modkey.  using the thumbs for the modifiers is fast and ergonomic since all fingers have full range of motion and the thumb is the strongest finger.  inspired by the reasearchers that fabricate ergonomic keyboards with a thumb cluster such as: kinesis advatage.
-- insert-mode :: make using [[kbd:c-u][c-u]], [[kbd:c-w][c-w]], [[kbd:c-h][c-h]] a habit and ditch the terribly placed [[kbd:backspace][backspace]].  it is more ergonomic and faster than using the incredibly unergonomic and hard to reach [[kbd:backspace][backspace]] (hence we implement these bindings in all apps)
-- vim layer :: we purposefully do not implement a vim-navigation layer globally, since if you are doing more than just typing something into a prompt, you should just use ~emacs-everywhere~ instead.  the implemented keybinds are consistent with vim's insert state and provide the most useful deletion commands when typing into a prompt.
+- [[kbd:ctrl][ctrl]] :: mapped to [[kbd:caps][caps]] this greatly increases ergonomics and speed for all ctrl-bindings and goes hand in hand with [[kbd:c-w/h][c-w/h]] for deleting words and characters in the shell.
+  - esc :: never use the actual [[kbd:esc][esc]] key, instead habit of exiting insert mode using ~c-[~ which is reacheable fast & overheadfree from the homerow.
+  - this was the original position of when emacs and vi were developed, when developer's used [[kbd:ctrl][ctrl]] for everything (rub out, navigation, etc..) on the old terminals.
+- deleting characters :: make using [[kbd:c-w][c-w]], [[kbd:c-h][c-h]] instead of [[kbd:backspace][backspace]] a habit.  it is more ergonomic and faster than using the incredibly unergonomic and hard to reach [[kbd:backspace][backspace]] (hence we implement these bindings in all apps) (this is inspired from terminals, since there [[kbd:c-<backspace>][c-<backspace>]] doesn't even work to begin with.)
+- no vim layer :: we purposefully do not implement a vim-navigation layer globally, since if you are doing more than just typing something into a prompt, you should just use ~emacs-everywhere~ instead.  the implemented keybinds are consistent with vim's insert state and provide the most useful deletion commands when typing into a prompt.
+- no homerowmods :: they greatly increase the complexity of the keybinding layer's and introduce unneccessary mental overhead.  additionally and most importantly they cause a delay in typing the actual character which is absolutely inacceptable.  (slow's you down, bottlenecking your typing speed)
+  - this config is kept simple, fast and overheadfree (no double functionality: hold down and single-press)
 - typing technique :: get into the habit of proper technique in touch typing.  staying on the homerow, typing with little pressure as needed and not using excess force.  this includes touchtyping all numberrow symbols, brackets & braces.  to enforce this, spraypaint the keycaps blank in order to force you to never look at the keyboard again.  force yourself to use the right finger for the right key (right side symbols :: all with the pinky)
-- chords :: for repeating/high-usage commands: switch buffer, save, close buffer, etc..  thus we need to be able to hold down the key to repeat the action multiple times.  and with holding down it is quicker to access.
-- sequence :: for more infrequent, single call functionality (ex: compile / )
-- key-repetition :: disable it.  it causes bad habits of you holding down a key instead of moving intelligently and fast using the appropriate motion (not holding down [[kbd:j][j]], istead using ~c-d~. not spamming delete, instead using ~d...~).
+- ctrl-map :: bindings found on this layer are related to navigation (~switch-to-buffer~, ~find-file~, ~jump-backwards~, etc..)
+- key-repetition :: disable it.  it empowers bad habits of you holding down a key instead of moving intelligently and fast using the appropriate motion (not holding down [[kbd:jk][jk]], instead using [[kbd:c-u/d][c-u/d]].  not spamming delete, instead using [[kbd:d-<motion>][d-<motion>]]).
+- keychords
 
 ** navigational standard
 | mod+key | action                          |

@@ -9,5 +9,4 @@
 # ---
 
 set editing-mode vi
-# set show-mode-in-prompt on
 set keyseq-timeout 0

@@ -8,8 +8,7 @@
 modmap:
   - name: global
     remap:
-      capslock: esc
-      alt_r: ctrl_r
+      capslock: ctrl_r
 
 keymap:
   - name: browser
@@ -18,12 +17,14 @@ keymap:
     remap:
       # GLOBAL NAVIGATION SCHEME (note using plugin that enables tabswitching using CTRL)
       C-b: C-Tab
+      C-e: C-l
       C-q: c-w
       C-r: [c-t, shift-key_6, space] # history search
       C-Enter: [c-t, shift-key_8, space] # goto bookmark
       # EDITING
       c-h: backspace
       c-w: c-backspace
+      c-u: [shift-home, delete]
       # COMPLETION
-      C-n: down
-      C-p: up
+      c-n: down
+      c-p: up

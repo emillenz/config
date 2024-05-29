@@ -35,8 +35,6 @@ alias mv "mv --verbose"
 alias cp "cp --recursive --verbose"
 alias yay "yay --noconfirm"
 alias irb "irb --readline"
-alias sed "sed --regexp-extended"
-alias grep "grep --extended-regexp"
 alias echo "echo -e"
 
 # KEYBINDINGS

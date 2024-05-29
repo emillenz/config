@@ -89,7 +89,7 @@
 
 ;; [[file:config.org::*window layout & behavior][window layout & behavior:2]]
 (add-hook! '(text-mode-hook
-             ;; prog-mode-hook ;; NOTE :: breaks with flycheck
+             ;; prog-mode-hook
              dired-mode-hook
              conf-mode-hook
              Info-mode-hook
@@ -144,6 +144,7 @@
 
 ;; [[file:config.org::*global navigation scheme][global navigation scheme:1]]
 (map! :map 'override
+      :nm "C-w" #'next-window-any-frame
       :nm "C-q" #'kill-buffer-and-window
       :nm "C-b" #'evil-switch-to-windows-last-buffer
       :nm "C-e" #'find-file
@@ -182,9 +183,7 @@
       :i "C-p"  #'previous-line-or-history-element)
 
 (map! :after company :map company-mode-map ;; use 'TAB' to activate completion and 'C-p' for dabbrev-expand com[p]letion.
-      :i "TAB" #'company-complete-common)
-
-(map! :map 'override :i "C-h" #'backward-delete-char) ;; HACK :: make 'c-h' work always
+      :i "C-n" #'company-complete-common)
 ;; vim editing:1 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:2]]
@@ -253,14 +252,20 @@ This is sensible default behaviour, and integrates it into evil."
 ;; [[file:config.org::*editor][editor:1]]
 (evil-surround-mode 1)
 
-(setq ;; evil-magic 'very-magic
-      evil-want-fine-undo nil
-      evil-ex-substitute-global t
-      evil-want-C-i-jump t
-      evil-want-C-h-delete t
-      evil-org-use-additional-insert nil
-      evil-want-minibuffer t
-      evil-snipe-scope 'visible)
+(after! evil
+  (setq ;; evil-magic 'very-magic
+   evil-want-fine-undo nil
+   evil-ex-substitute-global t
+   evil-want-C-i-jump t
+   evil-want-C-h-delete t
+   evil-want-minibuffer t
+   evil-org-use-additional-insert nil
+   evil-snipe-scope 'visible))
+
+;; HACK :: make C-h work in insert mode consistently
+(map! :after evil :i "C-h" #'evil-delete-backward-char-and-join)
+(map! :after lispy :map lispy-mode-map :i "C-h" #'lispy-delete-backward)
+(map! :after company :map company-active-map "C-h" #'evil-delete-backward-char-and-join)
 ;; editor:1 ends here
 
 ;; [[file:config.org::*jumplist][jumplist:1]]
@@ -285,7 +290,7 @@ This is sensible default behaviour, and integrates it into evil."
 ;; [[file:config.org::*completion][completion:1]]
 (after! company
   (setq company-minimum-prefix-length 0
-        company-tooltip-limit 12
+        company-tooltip-limit 1 ;; minimally intrusive
         company-idle-delay nil
         company-tooltip-idle-delay 0.1
         company-show-quick-access t

@@ -155,13 +155,12 @@ i am of the strong opinion that you should minimize things you do repeatedly.  t
  - additionally it allows you to ssh into your machine from anywhere and attach to these running clients seamlessly and keep processes alive when done.
 
 *** workflow with emacs
-- the terminal is used to run their own terminal-based programs and system related commands (mainly tuis and long async-processes) and commands: htop, nmtui, git, metasploit, transmission-cli, ssh.  (and ofc as the system commandline).
-  - all other commands, especially one's coupled with programming and file/data manipulation should be run from emacs.
+- the terminal is used to run their own terminal-based programs and system related commands (mainly tuis and long async-processes) and commands: htop, nmtui, git, metasploit, transmission-cli, ssh.
+- use simple minbuffer-shell-commands in emacs whenever possible (don't juggle a external terminal and emacs at the same time).  especially when programming, start REPL's and interactive environments from within emacs (terminal emulation) in order to have a seamless integration and navigation between running commands in the shell and programmning.  this has the benefit that you can navigate command output like a normal buffer and use the full power of emacs for the prompt editing.
 - extend emacs by writing custom functions for things that you do repetitivly (moving files, manipulating text...) instead of writing shell aliases / shellscripts
   + more extensible and in a proper language
   + write shell-scripts (purely) for launching programs & processes.
 - all coding, writing, fileopening, viewing, navigating is done inside emacs (do not leaving the environment), because this makes for a consistent and coherent workflow.
-  - never open a terminal-emulator inside emacs (no layering!), if you need, use single shellcommands (make executeable, etc...).  (things like: compiling...   etc should be done using hotkeys and displaying the output in a buffer)
   - use inbuilt programs like magit & diff for more speed interactivity and ergonomics than doing it with git command aliases on the command-line.
 
 ** editor: (doom) emacs

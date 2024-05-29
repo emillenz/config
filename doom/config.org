@@ -349,19 +349,17 @@ This is sensible default behaviour, and integrates it into evil."
 (evil-surround-mode 1)
 
 (after! evil
-  (setq ;; evil-magic 'very-magic
-   evil-want-fine-undo nil
-   evil-ex-substitute-global t
-   evil-want-C-i-jump t
-   evil-want-C-h-delete t
-   evil-want-minibuffer t
-   evil-org-use-additional-insert nil
-   evil-snipe-scope 'visible))
+  (setq evil-want-fine-undo nil
+        ;; evil-magic 'very-magic
+        evil-ex-substitute-global t
+        evil-want-C-i-jump t
+        evil-want-C-h-delete t
+        evil-want-minibuffer t
+        evil-org-use-additional-insert nil
+        evil-snipe-scope 'visible))
 
-;; HACK :: make C-h work in insert mode consistently
-(map! :after evil :i "C-h" #'evil-delete-backward-char-and-join)
-(map! :after lispy :map lispy-mode-map :i "C-h" #'lispy-delete-backward)
-(map! :after company :map company-active-map "C-h" #'evil-delete-backward-char-and-join)
+;; HACK :: use 'C-h' as a backspace replacement (in combo with 'C-u', 'C-w')
+(define-key key-translation-map (kbd "C-h") (kbd "DEL"))
 #+end_src
 
 ** jumplist

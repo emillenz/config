@@ -76,7 +76,7 @@
        ;;eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
-       ;; vterm             ; the best terminal emulation in Emacs
+       vterm             ; the best terminal emulation in Emacs NOTE :: turn off vi-mode in the shell in order for it to work properly
 
        :checkers
        (syntax

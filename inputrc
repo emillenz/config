@@ -8,5 +8,5 @@
 # - symlink :: `ln -s ~/.config/inputrc ~/.inputrc`, this is the location needed for readline
 # ---
 
-set editing-mode vi
-set keyseq-timeout 0
+# set editing-mode vi
+# set keyseq-timeout 0

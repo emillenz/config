@@ -23,9 +23,8 @@ set termguicolors
 set undolevels=10000
 
 nnoremap <silent> <esc> <esc>:nohl<cr>
-" restore point after jumping to global-mark (+ use lowercase <char> for ergonomics) for normal
-" marks use ` 
-nnoremap <expr> ' printf('`%c `"',toupper(getchar()))
+" restore point after jumping to global-mark (+ use lowercase <char> for ergonomics) for normal marks use ` 
+nnoremap <expr> ' printf('`%s`"zz', toupper(nr2char(getchar())))
 
 let g:netrw_banner=0
 let g:netrw_keepdir = 0

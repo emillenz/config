@@ -1,3 +1,4 @@
+" mininmalist, bare-mental config, no plugins (to be used on other machines)
 colorscheme shine " lightheme bois
 syntax enable
 filetype plugin on

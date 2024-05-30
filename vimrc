@@ -1,5 +1,5 @@
-" mininmalist, bare-mental config, no plugins (to be used on other machines)
-colorscheme shine " lightheme bois
+" mininmalist, bare-mental config, no plugins.  usage :: deploy as emergency config
+colorscheme shine
 syntax enable
 filetype plugin on
 set path+=**

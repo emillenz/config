@@ -17,7 +17,6 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
     + eg: all the plugins like vim easymotion, avy-goto-char etc. are bloat and not needed, since a faster, more powerful, inter-line function already exitsts: incremental-search: [[kbd:/, ?][/, ?]]
 - terminal :: we never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...).  instead all we do is use [[kbd:M-!/&|][M-!/&|]] if more is needed than that we should switch over to the proper shell anyway.
 
-
 * user
 #+begin_src emacs-lisp
 (setq user-full-name "emil lenz"
@@ -31,7 +30,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 #+end_src
 
 ** modus-theme
-- always keep cursor as a block (faster, consistency with shell)
+- use colorcoding on the cursor to indicate modes
 #+begin_src emacs-lisp
 (use-package! modus-themes
   :config
@@ -76,13 +75,13 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
 #+end_src
 
 ** modeline
-- no overlapping funcionality (time & date is on my analog watch, don't need it in any program).
-- very minimal, only displaying what's needed
+- no overlapping funcionality (time & date is on my physical wrist watch, don't need it in any program (also not wm)).
+- very minimal, only displaying what's needed (using (:modeline +light))
 #+begin_src emacs-lisp
 (setq display-battery-mode nil
       display-time-mode nil
-      doom-modeline-height 15
-      doom-modeline-bar-width 5)
+      +modeline-height 10
+      +modeline-bar-width nil) ;; visual clutter => off
 #+end_src
 
 ** window layout & behavior
@@ -181,6 +180,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       :nm "C-w" #'next-window-any-frame
       :nm "C-q" #'kill-buffer-and-window
       :nm "C-b" #'evil-switch-to-windows-last-buffer
+      :nm "C-s" #'evil-write
       :nm "C-e" #'find-file
       :nm "C-f" #'projectile-find-file
       :nm "C-g" #'consult-buffer
@@ -213,13 +213,13 @@ frequently used & coding/editing related functions are mapped to ~g+~
   - I can only improve vim's behaviour but need to stick to the defaults in order to allow seamless usage with other tools (tmux/less/browser/etc)
 #+begin_src emacs-lisp
 (map! :after evil
-      :n    "C-j" #'newline-and-indent
+      :n    "C-j" #'newline-and-indent ;; inverse of 'J'
       :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
       :nmvo "^"   #'evil-first-non-blank-of-visual-line
       :nmvo "$"   #'evil-end-of-visual-line
-      :nmv  "U"   #'evil-redo ;; inverse of u (+ <c-r> makes no sense)
       :nmv  "Q"   #'evil-execute-last-recorded-macro ;; quickly recall recorded macro (used 80% of the time since we just have a single macro, recorded with 'qq')
+      :nm   "U"   #'evil-redo ;; more mnemonic & sensible undo
       :nmv  "&"   #'evil-ex-repeat ;; more extensible than normal '&'
       :nmv  "("   #'backward-sexp ;; better that navigating by scentences
       :nmv  ")"   #'forward-sexp
@@ -325,7 +325,7 @@ This is sensible default behaviour, and integrates it into evil."
         evil-org-use-additional-insert nil
         evil-snipe-scope 'visible))
 
-;; HACK :: use 'C-h' as a backspace replacement (in combo with 'C-u', 'C-w')
+;; HACK :: make 'C-h' work like shell bindings everywhere
 (define-key key-translation-map (kbd "C-h") (kbd "DEL"))
 #+end_src
 
@@ -359,6 +359,8 @@ This is sensible default behaviour, and integrates it into evil."
 - greatly improves overall typing speed.
 - make the completion-menu less distracting and more focused we use ~vertico-flat-mode~ (it promotes finding items not by navigating via scrolling through candidates, but instead by searching). we don't need a fancy popup everytime we want to switch to a candidate, we only want to know when the completion matches, since we already know beforehand what we are looking for.
 #+begin_src emacs-lisp
+(vertico-flat-mode)
+
 (after! company
   (setq company-minimum-prefix-length 0
         consult-async-min-input 0
@@ -373,13 +375,11 @@ This is sensible default behaviour, and integrates it into evil."
           org-mode
           vterm-mode)))
 
-(vertico-flat-mode)
-
 (map! :after minibuffer :map minibuffer-local-map ;; more useful (+ consistent)
       :i "C-n" #'next-line-or-history-element
       :i "C-p" #'previous-line-or-history-element)
 
-(map! :after company :map company-mode-map ;; use 'TAB' to activate completion and 'C-p' for dabbrev-expand com[p]letion.
+(map! :after company :map company-mode-map ;; use 'C-n' to activate completion and 'C-p' for dabbrev-expand com[p]letion.
       :i "C-n" #'company-complete-common)
 
 (map! :map vertico-map

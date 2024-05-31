@@ -52,8 +52,8 @@
 ;; [[file:config.org::*modeline][modeline:1]]
 (setq display-battery-mode nil
       display-time-mode nil
-      doom-modeline-height 15
-      doom-modeline-bar-width 5)
+      +modeline-height 10
+      +modeline-bar-width nil) ;; visual clutter => off
 ;; modeline:1 ends here
 
 ;; [[file:config.org::*window layout & behavior][window layout & behavior:1]]
@@ -122,6 +122,7 @@
       :nm "C-w" #'next-window-any-frame
       :nm "C-q" #'kill-buffer-and-window
       :nm "C-b" #'evil-switch-to-windows-last-buffer
+      :nm "C-s" #'evil-write
       :nm "C-e" #'find-file
       :nm "C-f" #'projectile-find-file
       :nm "C-g" #'consult-buffer
@@ -136,13 +137,13 @@
 
 ;; [[file:config.org::*vim editing][vim editing:1]]
 (map! :after evil
-      :n    "C-j" #'newline-and-indent
+      :n    "C-j" #'newline-and-indent ;; inverse of 'J'
       :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
       :nmvo "^"   #'evil-first-non-blank-of-visual-line
       :nmvo "$"   #'evil-end-of-visual-line
-      :nmv  "U"   #'evil-redo ;; inverse of u (+ <c-r> makes no sense)
       :nmv  "Q"   #'evil-execute-last-recorded-macro ;; quickly recall recorded macro (used 80% of the time since we just have a single macro, recorded with 'qq')
+      :nm   "U"   #'evil-redo ;; more mnemonic & sensible undo
       :nmv  "&"   #'evil-ex-repeat ;; more extensible than normal '&'
       :nmv  "("   #'backward-sexp ;; better that navigating by scentences
       :nmv  ")"   #'forward-sexp
@@ -230,7 +231,7 @@ This is sensible default behaviour, and integrates it into evil."
         evil-org-use-additional-insert nil
         evil-snipe-scope 'visible))
 
-;; HACK :: use 'C-h' as a backspace replacement (in combo with 'C-u', 'C-w')
+;; HACK :: make 'C-h' work like shell bindings everywhere
 (define-key key-translation-map (kbd "C-h") (kbd "DEL"))
 ;; editor:1 ends here
 
@@ -254,6 +255,8 @@ This is sensible default behaviour, and integrates it into evil."
 ;; jumplist:1 ends here
 
 ;; [[file:config.org::*completion][completion:1]]
+(vertico-flat-mode)
+
 (after! company
   (setq company-minimum-prefix-length 0
         consult-async-min-input 0
@@ -268,13 +271,11 @@ This is sensible default behaviour, and integrates it into evil."
           org-mode
           vterm-mode)))
 
-(vertico-flat-mode)
-
 (map! :after minibuffer :map minibuffer-local-map ;; more useful (+ consistent)
       :i "C-n" #'next-line-or-history-element
       :i "C-p" #'previous-line-or-history-element)
 
-(map! :after company :map company-mode-map ;; use 'TAB' to activate completion and 'C-p' for dabbrev-expand com[p]letion.
+(map! :after company :map company-mode-map ;; use 'C-n' to activate completion and 'C-p' for dabbrev-expand com[p]letion.
       :i "C-n" #'company-complete-common)
 
 (map! :map vertico-map

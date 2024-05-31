@@ -34,7 +34,7 @@
         ;; +extra
         +iosevka)
        ;; minimap           ; show a map of the code on the side
-       (modeline)  ;; light => no icons
+       (modeline +light)  ;; light => much faster than doom's modeline
        ;; nav-flash         ; blink cursor line after big motions
        ;; neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
@@ -76,7 +76,7 @@
        ;;eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
-       vterm             ; the best terminal emulation in Emacs NOTE :: turn off vi-mode in the shell in order for it to work properly
+       ;; vterm             ; the best terminal emulation in Emacs NOTE :: turn off vi-mode in the shell in order for it to work properly
 
        :checkers
        (syntax

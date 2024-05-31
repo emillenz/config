@@ -24,7 +24,7 @@ set -gx PATH $PATH ~/.config/{bin, emacs/bin} ~/.cargo/bin
 
 # ENV
 set -gx EDITOR emacsclient -nw
-set -gx VISUAL emacsclient -nw
+set -gx VISUAL emacsclient
 set -gx BROWSER firefox
 set -gx PAGER bat
 set -gx MANPAGER bat
@@ -56,4 +56,3 @@ bind -M default \cp up-or-search
 bind -M default \ce edit_command_buffer
 bind -M insert \ce edit_command_buffer
 bind -M default V __fish_preview_current_file
-bind -M default z clear-screen

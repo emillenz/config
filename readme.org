@@ -241,8 +241,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 * keybindings
 ** general notes
-- [[kbd:ctrl][ctrl]] :: mapped to [[kbd:caps][caps]] this greatly increases ergonomics and speed for all ctrl-bindings and goes hand in hand with [[kbd:c-w/h][c-w/h]] for deleting words and characters in the shell.
-  - esc :: never use the actual [[kbd:esc][esc]] key, instead habit of exiting insert mode using ~c-[~ which is reacheable fast & overheadfree from the homerow.
+- [[kbd:ctrl/esc][ctrl/esc]] :: mapped to [[kbd:caps][caps]] this greatly increases ergonomics and speed for all ctrl-bindings and goes hand in hand with [[kbd:c-w/h][c-w/h]] for deleting words and characters in the shell.
   - this was the original position of when emacs and vi were developed, when developer's used [[kbd:ctrl][ctrl]] for everything (rub out, navigation, etc..) on the old terminals.
 - deleting characters :: make using [[kbd:c-w][c-w]], [[kbd:c-h][c-h]] instead of [[kbd:backspace][backspace]] a habit.  it is more ergonomic and faster than using the incredibly unergonomic and hard to reach [[kbd:backspace][backspace]] (hence we implement these bindings in all apps) (this is inspired from terminals, since there [[kbd:c-<backspace>][c-<backspace>]] doesn't even work to begin with.)
 - no vim layer :: we purposefully do not implement a vim-navigation layer globally, since if you are doing more than just typing something into a prompt, you should just use ~emacs-everywhere~ instead.  the implemented keybinds are consistent with vim's insert state and provide the most useful deletion commands when typing into a prompt.

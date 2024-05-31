@@ -8,6 +8,7 @@
 # ALIASES
 set $ROFI rofi -dmenu -i -no-custom -p
 set $ESC ; mode "default"
+set $EXIT bindsym Escape mode "default"
 set $BIN ~/.config/bin
 set $MV move container to workspace
 set $MAP bindsym
@@ -127,11 +128,11 @@ $MAP $MOD+1 workspace 1
 
 $MAP $MOD+f mode "find-file"
 mode "find-file" {
-        $MAP $MOD+c $CMD xdg-open "$(fd --extension pdf . ~/Documents/uni/cs/s2 | $ROFI 'find [cs]')" $ESC
-        $MAP $MOD+l $CMD xdg-open "$(fd . ~/Documents/literature/source | $ROFI 'find-file')" $ESC
-        $MAP $MOD+f $CMD xdg-open "$(fd --type file . ~ | $ROFI 'find [all]')" $ESC
-        $MAP $MOD+d $CMD xdg-open "$(fd --extension pdf . ~/Downloads | $ROFI 'find [downloads]')" $ESC
-        $MAP Escape mode "default"
+        $MAP $MOD+c      $CMD xdg-open "$(fd --extension pdf . ~/Documents/uni/cs/s2 | $ROFI 'find [cs]')" $ESC
+        $MAP $MOD+l      $CMD xdg-open "$(fd . ~/Documents/literature/source | $ROFI 'find-file')" $ESC
+        $MAP $MOD+f      $CMD xdg-open "$(fd --type file . ~ | $ROFI 'find [all]')" $ESC
+        $MAP $MOD+d      $CMD xdg-open "$(fd --extension pdf . ~/Downloads | $ROFI 'find [downloads]')" $ESC
+        $EXIT
 }
 
 $MAP $MOD+space mode "leader"
@@ -142,7 +143,7 @@ mode "leader" {
         $MAP $MOD+k           $CMD $BIN/killprocess-menu $ESC
         $MAP $MOD+d           $CMD fd . ~/.screenlayout | $ROFI 'screen-layout' | sh $ESC
         $MAP $MOD+q           mode "quit"
-        $MAP Escape           mode "default"
+        $EXIT
 }
 
 mode "quit" {
@@ -152,7 +153,7 @@ mode "quit" {
         $MAP $MOD+r           $CMD i3-msg restart $ESC
         $MAP $MOD+shift+r     $CMD systemctl reboot $ESC
         $MAP $MOD+o           $CMD $SYS_SCREENOFF $ESC
-        $MAP Escape           mode "default"
+        $EXIT
 }
 
 # MODUS-VIVENDI THEME

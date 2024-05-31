@@ -241,35 +241,33 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 * keybindings
 ** general notes
-- [[kbd:ctrl/esc][ctrl/esc]] :: mapped to [[kbd:caps][caps]] this greatly increases ergonomics and speed for all ctrl-bindings and goes hand in hand with [[kbd:c-w/h][c-w/h]] for deleting words and characters in the shell.
-  - this was the original position of when emacs and vi were developed, when developer's used [[kbd:ctrl][ctrl]] for everything (rub out, navigation, etc..) on the old terminals.
-- deleting characters :: make using [[kbd:c-w][c-w]], [[kbd:c-h][c-h]] instead of [[kbd:backspace][backspace]] a habit.  it is more ergonomic and faster than using the incredibly unergonomic and hard to reach [[kbd:backspace][backspace]] (hence we implement these bindings in all apps) (this is inspired from terminals, since there [[kbd:c-<backspace>][c-<backspace>]] doesn't even work to begin with.)
+- <ctrl/esc> :: mapped to <capslock> this greatly increases ergonomics and speed for all ctrl-bindings (even though we don't use emacs, vim still makes use of them all the time too (and other apps like the shell also)).  hold down for <ctrl>, single press for <esc>.
+  - when bill-joy orignially developed VI, the terminal's keyboard, had <esc> on todays <tab> and <ctrl> on <caps>.  this is where (at least) <ctrl> should have always stayed at.
+- deleting characters :: make using <c-h/w/u> instead of <backspace> a habit.  it is more ergonomic and faster than using the incredibly unergonomic and hard to reach <backspace>.  hence we implement these bindings in all apps.
 - no vim layer :: we purposefully do not implement a vim-navigation layer globally, since if you are doing more than just typing something into a prompt, you should just use ~emacs-everywhere~ instead.  the implemented keybinds are consistent with vim's insert state and provide the most useful deletion commands when typing into a prompt.
 - no homerowmods :: they greatly increase the complexity of the keybinding layer's and introduce unneccessary mental overhead.  additionally and most importantly they cause a delay in typing the actual character which is absolutely inacceptable.  (slow's you down, bottlenecking your typing speed)
   - this config is kept simple, fast and overheadfree (no double functionality: hold down and single-press)
 - typing technique :: get into the habit of proper technique in touch typing.  staying on the homerow, typing with little pressure as needed and not using excess force.  this includes touchtyping all numberrow symbols, brackets & braces.  to enforce this, spraypaint the keycaps blank in order to force you to never look at the keyboard again.  force yourself to use the right finger for the right key (right side symbols :: all with the pinky)
 - ctrl-map :: bindings found on this layer are related to navigation (~switch-to-buffer~, ~find-file~, ~jump-backwards~, etc..)
-- key-repetition :: disable it.  it empowers bad habits of you holding down a key instead of moving intelligently and fast using the appropriate motion (not holding down [[kbd:jk][jk]], instead using [[kbd:c-u/d][c-u/d]].  not spamming delete, instead using [[kbd:d-<motion>][d-<motion>]]).
-- keychords
+- key-repetition :: disable it.  it empowers bad habits of you holding down a key instead of moving intelligently and fast using the appropriate motion (not holding down <j/k> instead using <c-u/d>  not spamming delete, instead using <d-{motion}>
 
 ** navigational standard
-| mod+key | action                          |
-|---------+---------------------------------|
-| [[kbd:g][g]]       | [g]oto   (buffer/window)        |
-| [[kbd:q][q]]       | [q]uit (buffer/window)          |
-| [[kbd:e][e]]       | [e]dit (file/url/editor)        |
-| [[kbd:f][f]]       | [f]ind (program/file)           |
-| [[kbd:r][r]]       | [r]ecent (file/history/cmd)     |
-| [[kbd:b][b]]       | [b]ack [b]uffer/tab (alternate) |
-| [[kbd:;][;]]       | run-cmd                         |
-| [[kbd:n][n]]       | [n]ext completion               |
-| [[kbd:p][p]]       | [p]revious completion           |
-| [[kbd:1-4][1-4]]     | focus buffer/tab 1-4            |
-| [[kbd:tab][tab]]     | complete                        |
-| [[kbd:spc][spc]]     | leader-key                      |
+| mod+key | action                                |
+|---------+---------------------------------------|
+| g       | [g]oto (buffer/window, prompt)        |
+| q       | [q]uit (buffer/window)                |
+| e       | [e]dit (file/url/editor, path based)  |
+| f       | [f]ind (fuzzyfind: program/file)      |
+| b       | [b]ack to last buffer/tab (alternate) |
+| ;       | exec command                          |
+| n       | [n]ext completion                     |
+| p       | [p]rev completion                     |
+| 1-4     | switch to buffer/tab 1-4              |
+| tab     | complete                              |
+| spc     | leader-key                            |
 
 - condenses down a minimal set of universal, efficient navigational commands, which are found in basically all applications (editor, browser, terminal,..).  they will suffice 90% of all your navigational needs.
-  - [[kbd:ctrl][ctrl]] :: inside applications since it is the defacto standard & aligns with vim's navigational-ctrl-layer-keybind (and is now ergonomically bound).
+  - <ctrl> :: inside applications since it is the defacto standard & aligns with vim's navigational-ctrl-layer-keybind (and is now ergonomically bound).
 - inter program keyboard shortcuts consistency is important because they make the keys easier to remember and you will not have to learn multiple paradigms of keymaps.  the here defined set of keybindings are shared across applications (webbrowser, emacs, terminal, etc)
 - windowmanager :: the set of program-names during runtime is known and consistent (unlike tabs in applications, where we cannot make presumtions about the contents of the tabs, hence we use numbers), we use specific-chars for switching to the tabs.
 

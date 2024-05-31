@@ -19,15 +19,6 @@
         `((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
           (fg-heading-1 fg-heading-0)))
 
-  ;; HACK :: cannot customize these things with `modus-themes-common-palette-overrides'
-  (modus-themes-with-colors
-    (setq evil-normal-state-cursor `(,fg-main box)
-          evil-motion-state-cursor `(,fg-main box)
-          evil-insert-state-cursor `(,fg-main bar)
-          evil-visual-state-cursor `(,fg-main box)
-          evil-operator-state-cursor `(,red-intense box)
-          evil-replace-state-cursor `(,red-intense box)))
-
   (custom-set-faces!
     `(org-list-dt :inherit modus-themes-heading-1)
     `(org-block-begin-line :foreground ,(modus-themes-get-color-value 'prose-metadata))
@@ -58,10 +49,19 @@
 
 ;; [[file:config.org::*window layout & behavior][window layout & behavior:1]]
 (setq evil-vsplit-window-right t
+      evil-split-window-below t
       even-window-sizes 'width-only
       window-combination-resize t
       split-height-threshold nil
       split-width-threshold 0)
+
+(after! org
+  (setq org-src-window-setup 'current-window
+        org-agenda-window-setup 'current-window))
+
+(defvar z-popup-windows-rx "^\\*")
+(add-to-list 'display-buffer-alist
+             `(,z-popup-windows-rx display-buffer-reuse-mode-window))
 ;; window layout & behavior:1 ends here
 
 ;; [[file:config.org::*window layout & behavior][window layout & behavior:2]]
@@ -122,11 +122,10 @@
       :nm "C-w" #'next-window-any-frame
       :nm "C-q" #'kill-buffer-and-window
       :nm "C-b" #'evil-switch-to-windows-last-buffer
-      :nm "C-s" #'evil-write
+      :nm "C-s" #'basic-save-buffer  ;; statisticall most frequently called command -> first layer binding (ergonomic & standard)
       :nm "C-e" #'find-file
       :nm "C-f" #'projectile-find-file
       :nm "C-g" #'consult-buffer
-      :nm "C-r" #'consult-recent-file
       :nm "C-1" #'harpoon-go-to-1
       :nm "C-2" #'harpoon-go-to-2
       :nm "C-3" #'harpoon-go-to-3
@@ -137,21 +136,21 @@
 
 ;; [[file:config.org::*vim editing][vim editing:1]]
 (map! :after evil
-      :n    "C-j" #'newline-and-indent ;; inverse of 'J'
+      :n    "C-j" #'newline-and-indent ;; useful inverse of 'J'
+      :n    "C-l" #'recenter-top-bottom ;; consistent with shell
       :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
       :nmvo "^"   #'evil-first-non-blank-of-visual-line
       :nmvo "$"   #'evil-end-of-visual-line
-      :nmv  "Q"   #'evil-execute-last-recorded-macro ;; quickly recall recorded macro (used 80% of the time since we just have a single macro, recorded with 'qq')
+      :nmv  "Q"   #'evil-execute-last-recorded-macro ;; quickly recall recorded macro            (used 80% of the time since we just have a single macro, recorded with 'qq')
       :nm   "U"   #'evil-redo ;; more mnemonic & sensible undo
       :nmv  "&"   #'evil-ex-repeat ;; more extensible than normal '&'
-      :nmv  "("   #'backward-sexp ;; better that navigating by scentences
+      :nmv  "("   #'backward-sexp ;; more useful than navigation by sentences
       :nmv  ")"   #'forward-sexp
       :nmv  "+"   #'evil-numbers/inc-at-pt ;; more sensible than C-x/C-a
       :nmv  "-"   #'evil-numbers/dec-at-pt
       :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
       :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
-      :nmv  "go"  #'consult-imenu ;; search outline
       :nmv  "g/"  #'+default/search-buffer) ;; more powerful '/' => preview matches interactively (better than vim's: C-g/C-t in search-mode)
 ;; vim editing:1 ends here
 
@@ -207,7 +206,7 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "y" #'dired-copy-filename-as-kill
       :nm "z" #'dired-do-compress
       :nm "." #'dired-omit-mode
-      :nm "+" #'dired-create-empty-file)
+      :nm "+" #'dired-create-empty-file) ;; create directories / files using find-file.
 
 (map! :map dired-mode-map :localleader :after dired
       :nm "a" #'z-dired-archive)
@@ -215,7 +214,7 @@ This is sensible default behaviour, and integrates it into evil."
 
 ;; [[file:config.org::*verilog (bindings)][verilog (bindings):1]]
 (map! :after verilog-mode :map verilog-mode-map :localleader
-      "cf" #'verilog-indent-buffer) ;; code -> format
+      "cf" #'verilog-indent-buffer) ;; code:format
 ;; verilog (bindings):1 ends here
 
 ;; [[file:config.org::*editor][editor:1]]
@@ -223,7 +222,6 @@ This is sensible default behaviour, and integrates it into evil."
 
 (after! evil
   (setq evil-want-fine-undo nil
-        ;; evil-magic 'very-magic
         evil-ex-substitute-global t
         evil-want-C-i-jump t
         evil-want-C-h-delete t
@@ -255,31 +253,33 @@ This is sensible default behaviour, and integrates it into evil."
 ;; jumplist:1 ends here
 
 ;; [[file:config.org::*completion][completion:1]]
-(vertico-flat-mode)
+(vertico-flat-mode 1)
+(company-tng-mode 1) ;; note :: use <spc> or <(> to trigger match
 
 (after! company
   (setq company-minimum-prefix-length 0
         consult-async-min-input 0
-        company-tooltip-limit 1 ;; minimally intrusive
+        company-tooltip-limit 16
         company-idle-delay nil
         company-tooltip-idle-delay 0.1
         company-show-quick-access t
-        company-global-modes
-        '(not
-          help-mode
-          eshell-mode
-          org-mode
-          vterm-mode)))
+        company-global-modes '(not
+                               help-mode
+                               eshell-mode
+                               org-mode
+                               vterm-mode)))
 
-(map! :after minibuffer :map minibuffer-local-map ;; more useful (+ consistent)
+(map! :after minibuffer :map minibuffer-local-map ;; consistency with vim bindings
       :i "C-n" #'next-line-or-history-element
       :i "C-p" #'previous-line-or-history-element)
 
-(map! :after company :map company-mode-map ;; use 'C-n' to activate completion and 'C-p' for dabbrev-expand com[p]letion.
-      :i "C-n" #'company-complete-common)
+(map! :after company :map company-mode-map
+      :i "C-n" #'company-complete-common-or-cycle)
+(map! :after evil
+      :i "C-p" #'evil-complete-previous)
 
 (map! :map vertico-map
-      :im "C-w" #'vertico-directory-delete-word
+      :im "C-w" #'vertico-directory-delete-word ;; smarter C-w
       :im "C-d" #'consult-dir
       :im "C-f" #'consult-dir-jump-file)
 ;; completion:1 ends here
@@ -296,29 +296,27 @@ This is sensible default behaviour, and integrates it into evil."
 
 ;; [[file:config.org::*dired][dired:1]]
 (after! dired
-  (add-hook! 'dired-mode-hook #'dired-hide-details-mode)
+  (add-hook! 'dired-mode-hook #'dired-hide-details-mode) ;; less clutter (enable manually if needed)
 
-  ;; NOTE:: this is the elegant && extensible way to do regex.
-  (setq dired-omit-files
+    (setq dired-omit-files
         (rx (or (seq bol (? ".") "#")
                 (seq bol "." (not (any ".")))
                 (seq "~" eol)
-                (seq bol "CVS" eol)))
+                (seq bol "CVS" eol))))
 
-        dired-open-extensions
-        '(("mkv"  . "mpv")
-          ("mp4"  . "mpv")
-          ("mp3"  . "mpv")
-          ("gif"  . "nsxiv")
-          ("jpeg" . "nsxiv")
-          ("jpg"  . "nsxiv")
-          ("png"  . "nsxiv")
-          ("docx" . "libreoffice")
-          ("odt"  . "libreoffice")
-          ("odf"  . "libreoffice")
-          ("epub" . "zathura")
-          ("pdf"  . "zathura"))
-
+  ;; NOTE:: this is the elegant & extensible way to do regex.
+  (setq dired-open-extensions '(("mkv"  . "mpv")
+                                ("mp4"  . "mpv")
+                                ("mp3"  . "mpv")
+                                ("gif"  . "nsxiv")
+                                ("jpeg" . "nsxiv")
+                                ("jpg"  . "nsxiv")
+                                ("png"  . "nsxiv")
+                                ("docx" . "libreoffice")
+                                ("odt"  . "libreoffice")
+                                ("odf"  . "libreoffice")
+                                ("epub" . "zathura")
+                                ("pdf"  . "zathura"))
         dired-recursive-copies 'always
         dired-recursive-deletes 'top
         global-auto-revert-non-file-buffers t
@@ -383,13 +381,12 @@ This is sensible default behaviour, and integrates it into evil."
 ;; org:1 ends here
 
 ;; [[file:config.org::*options][options:1]]
-(add-hook! 'org-mode-hook
-           '(visual-line-mode
-             org-fragtog-mode
-             rainbow-mode
-             laas-mode
-             +org-pretty-mode
-             org-appear-mode))
+(add-hook! 'org-mode-hook '(visual-line-mode
+                            org-fragtog-mode
+                            rainbow-mode
+                            laas-mode
+                            +org-pretty-mode
+                            org-appear-mode))
 
 (setq org-directory "~/Documents/org/"
       org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
@@ -423,13 +420,12 @@ This is sensible default behaviour, and integrates it into evil."
       org-hide-emphasis-markers t
       org-pretty-entities t
       org-pretty-entities-include-sub-superscripts t
-      org-list-demote-modify-bullet
-      '(("-"  . "-")
-        ("+"  . "+")
-        ("*"  . "-")
-        ("a." . "a)")
-        ("1." . "1)")
-        ("1)" . "a)"))
+      org-list-demote-modify-bullet '(("-"  . "-")
+                                      ("+"  . "+")
+                                      ("*"  . "-")
+                                      ("a." . "a)")
+                                      ("1." . "1)")
+                                      ("1)" . "a)"))
       org-blank-before-new-entry
       '((heading . t)
         (plain-list-item . nil))
@@ -440,55 +436,49 @@ This is sensible default behaviour, and integrates it into evil."
 (add-hook! 'org-mode-hook '(org-superstar-mode
                             prettify-symbols-mode))
 
-(setq org-superstar-headline-bullets-list
-      '("◉" "◯" "▣" "□" "◈" "◇"))
+(setq org-superstar-headline-bullets-list '("◉" "◯" "▣" "□" "◈" "◇"))
 
-(setq org-superstar-item-bullet-alist
-      '((?- . "─")
-        (?* . "─") ;; NOTE :: asteriks are reserved for headings only (don't use in lists) => no unambigiuity
-        (?+ . "⇒")))
+(setq org-superstar-item-bullet-alist '((?- . "─")
+                                        (?* . "─") ;; NOTE :: asteriks are reserved for headings only (don't use in lists) => no unambigiuity
+                                        (?+ . "⇒")))
 
-(appendq! +ligatures-extra-symbols
-          '(:list_property "∷"
-            :em_dash       "—"
-            :ellipses      "…"
-            :arrow_right   "→"
-            :arrow_left    "←"
-            :arrow_lr      "↔"
-            :properties    "⚙"))
+(appendq! +ligatures-extra-symbols '(:list_property "∷"
+                                     :em_dash       "—"
+                                     :ellipses      "…"
+                                     :arrow_right   "→"
+                                     :arrow_left    "←"
+                                     :arrow_lr      "↔"
+                                     :properties    "⚙"))
 
 (add-hook! 'org-mode-hook
-  (appendq! prettify-symbols-alist
-            '(("--"  . "–")
-              ("---" . "—")
-              ("->" . "→")
-              ("=>" . "⇒")
-              ("<=>" . "⇔"))))
+  (appendq! prettify-symbols-alist '(("--"  . "–")
+                                     ("---" . "—")
+                                     ("->" . "→")
+                                     ("=>" . "⇒")
+                                     ("<=>" . "⇔"))))
 ;; symbols:1 ends here
 
 ;; [[file:config.org::*task states][task states:1]]
-(setq org-todo-keywords
-      '((sequence "[ ](t)"
-         "[@](e)"
-         "[?](?!)"
-         "[-](-!)"
-         "[>](>!)"
-         "[=](=!)"
-         "[&](&!)"
-         "|"
-         "[x](x!)"
-         "[\\](\\!)")))
+(setq org-todo-keywords '((sequence "[ ](t)"
+                           "[@](e)"
+                           "[?](?!)"
+                           "[-](-!)"
+                           "[>](>!)"
+                           "[=](=!)"
+                           "[&](&!)"
+                           "|"
+                           "[x](x!)"
+                           "[\\](\\!)")))
 
-(setq org-todo-keyword-faces
-      '(("[@]"  . '(bold +org-todo-project))
-        ("[ ]"  . '(bold org-todo))
-        ("[-]"  . '(bold +org-todo-active))
-        ("[>]"  . '(bold +org-todo-onhold))
-        ("[?]"  . '(bold +org-todo-onhold))
-        ("[=]"  . '(bold +org-todo-onhold))
-        ("[&]"  . '(bold +org-todo-onhold))
-        ("[\\]" . '(bold org-done))
-        ("[x]"  . '(bold org-done))))
+(setq org-todo-keyword-faces '(("[@]"  . '(bold +org-todo-project))
+                               ("[ ]"  . '(bold org-todo))
+                               ("[-]"  . '(bold +org-todo-active))
+                               ("[>]"  . '(bold +org-todo-onhold))
+                               ("[?]"  . '(bold +org-todo-onhold))
+                               ("[=]"  . '(bold +org-todo-onhold))
+                               ("[&]"  . '(bold +org-todo-onhold))
+                               ("[\\]" . '(bold org-done))
+                               ("[x]"  . '(bold org-done))))
 ;; task states:1 ends here
 
 ;; [[file:config.org::*task states][task states:2]]
@@ -502,34 +492,31 @@ This is sensible default behaviour, and integrates it into evil."
 (setq org-priority-highest 1
       org-priority-lowest 3)
 
-(setq org-log-note-headings
-      '((done        . "note-done: %t")
-        (state       . "state: %-3S -> %-3s %t") ;; NOTE :: the custom task-statuses are all 3- wide
-        (note        . "note: %t")
-        (reschedule  . "reschedule: %S, %t")
-        (delschedule . "noschedule: %S, %t")
-        (redeadline  . "deadline: %S, %t")
-        (deldeadline . "nodeadline: %S, %t")
-        (refile      . "refile: %t")
-        (clock-out   . "")))
+(setq org-log-note-headings '((done        . "note-done: %t")
+                              (state       . "state: %-3S -> %-3s %t") ;; NOTE :: the custom task-statuses are all 3- wide
+                              (note        . "note: %t")
+                              (reschedule  . "reschedule: %S, %t")
+                              (delschedule . "noschedule: %S, %t")
+                              (redeadline  . "deadline: %S, %t")
+                              (deldeadline . "nodeadline: %S, %t")
+                              (refile      . "refile: %t")
+                              (clock-out   . "")))
 ;; task states:2 ends here
 
 ;; [[file:config.org::*babel][babel:1]]
-(setq org-babel-default-header-args
-      '((:session  . "none")
-        (:results  . "replace")
-        (:exports  . "code")
-        (:cache    . "no")
-        (:noweb    . "no")
-        (:hlines   . "no")
-        (:tangle   . "no")
-        (:mkdirp   . "yes")
-        (:comments . "link")))
+(setq org-babel-default-header-args '((:session  . "none")
+                                      (:results  . "replace")
+                                      (:exports  . "code")
+                                      (:cache    . "no")
+                                      (:noweb    . "no")
+                                      (:hlines   . "no")
+                                      (:tangle   . "no")
+                                      (:mkdirp   . "yes")
+                                      (:comments . "link")))
 ;; babel:1 ends here
 
 ;; [[file:config.org::*agenda][agenda:1]]
-(add-hook! 'org-agenda-mode-hook
-           #'org-super-agenda-mode)
+(add-hook! 'org-agenda-mode-hook #'org-super-agenda-mode)
 
 (setq org-agenda-files (directory-files-recursively org-directory ".*\.org" t)
       org-agenda-skip-scheduled-if-done t
@@ -553,8 +540,11 @@ This is sensible default behaviour, and integrates it into evil."
 
 ;; [[file:config.org::*agenda][agenda:2]]
 (setq org-agenda-todo-keyword-format "%-3s"
-      org-agenda-scheduled-leaders '("──────" "<- %2dd") ;; NOTE :: unicode is not fixed width => breaks formatting => cannot use it.
-      org-agenda-deadline-leaders '("━━━━━━" "=> %2dd" "<= %2dd")
+      org-agenda-scheduled-leaders '("──────"
+                                     "<- %2dd") ;; NOTE :: unicode is not fixed width => breaks formatting => cannot use it.
+      org-agenda-deadline-leaders '("━━━━━━"
+                                    "=> %2dd"
+                                    "<= %2dd")
       org-agenda-prefix-format '((agenda . "%-12c%-7s%-12t")
                                  (todo .   "%-12c%-7s%-12t")
                                  (tags .   "%-12c%-7s%-12t")
@@ -578,15 +568,14 @@ This is sensible default behaviour, and integrates it into evil."
                       (format "%s_journal.org"
                               (format-time-string "%F" (or time (current-time))))))
 
-  (defvar z-doct-projects
-    '(("cs" :keys "c" :children
-       (("pp" :keys "p")
-        ("as1" :keys "a")
-        ("aw" :keys "w")
-        ("ddca" :keys "d")))
-      ("personal" :keys "p")
-      ("config" :keys "f")
-      ("compass" :keys "o")))
+  (defvar z-doct-projects '(("cs"       :keys "c"
+                             :children (("pp"     :keys "p")
+                                        ("as1"    :keys "a")
+                                        ("aw"     :keys "w")
+                                        ("ddca"   :keys "d")))
+                            ("personal" :keys "p")
+                            ("config"   :keys "f")
+                            ("compass"  :keys "o")))
 
   (defun z-doct-projects-file (type path)
     "TYPE :: [ 'agenda, 'notes ]"
@@ -690,8 +679,7 @@ PARENT-PATH :: nil | used for recursion"
                              :keys "y"
                              :unnarrowed t
                              :file (lambda ()
-                                     (z-doct-journal-file (time-subtract (current-time)
-                                                                         (days-to-time 1))))
+                                     (z-doct-journal-file (time-subtract (current-time) (days-to-time 1))))
                              :template ("* gratitude"
                                         "- %?"
                                         ""
@@ -710,13 +698,11 @@ PARENT-PATH :: nil | used for recursion"
                             ("init"
                              :keys "i"
                              :file (lambda ()
-                                     (let* ((name (concat
-                                                   (replace-regexp-in-string
-                                                    " " "_"
-                                                    (read-from-minibuffer "short title: "))
-                                                   ".org")))
-                                       (file-name-concat z-org-literature-dir
-                                                         name)))
+                                     (let* ((name (concat (replace-regexp-in-string " "
+                                                                                    "_"
+                                                                                    (read-from-minibuffer "short title: "))
+                                                          ".org")))
+                                       (file-name-concat z-org-literature-dir name)))
                              :type plain
                              :template ("#+title:  %^{full title}"
                                         "#+author: %(user-full-name)"
@@ -784,7 +770,6 @@ PARENT-PATH :: nil | used for recursion"
 
 ;; [[file:config.org::*verilog-mode][verilog-mode:1]]
 (after! verilog-mode
-  (add-hook! 'verilog-mode-hook (ligature-mode -1)) ;; don't display: <= as \leq
   (setq verilog-auto-newline nil))
 ;; verilog-mode:1 ends here
 
@@ -795,5 +780,5 @@ PARENT-PATH :: nil | used for recursion"
 ;; dictionary:1 ends here
 
 ;; [[file:config.org::*lisp][lisp:1]]
-(after! lispy (setq lispy-key-theme '())) ;; don't use insert bindings ('lispyville' is enough)
+(after! lispy (setq lispy-key-theme '())) ;; don't use insert bindings (unneccessary & creates mental overhead)
 ;; lisp:1 ends here

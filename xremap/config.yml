@@ -18,12 +18,10 @@ keymap:
     application:
       only: firefox
     remap:
-      # GLOBAL NAVIGATION SCHEME (note using plugin that enables tabswitching using CTRL)
+      # GLOBAL NAVIGATION SCHEME (using plugin that enables tabswitching using CTRL)
       C-b: C-Tab
       C-e: C-l
       C-q: c-w
-      C-r: [c-t, shift-key_6, space] # history search
-      C-Enter: [c-t, shift-key_8, space] # goto bookmark
       # EDITING
       c-h: backspace
       c-w: c-backspace

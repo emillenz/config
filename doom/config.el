@@ -23,7 +23,7 @@
   (modus-themes-with-colors
     (setq evil-normal-state-cursor `(,fg-main box)
           evil-motion-state-cursor `(,fg-main box)
-          evil-insert-state-cursor `(,fg-main box)
+          evil-insert-state-cursor `(,fg-main bar)
           evil-visual-state-cursor `(,fg-main box)
           evil-operator-state-cursor `(,red-intense box)
           evil-replace-state-cursor `(,red-intense box)))
@@ -62,29 +62,6 @@
       window-combination-resize t
       split-height-threshold nil
       split-width-threshold 0)
-
-;; HACK :: we need to override rules after packages have loaded
-(setq +popup-defaults
-      '(:side right
-        :select nil
-        :quit t
-        :width 0.5
-        :modeline t))
-(apply #'set-popup-rule! "\\*" +popup-defaults) ;; HACK :: apply defaults to all
-
-(after! org
-  (setq org-src-window-setup 'current-window
-        org-agenda-window-setup 'current-window)
-  (set-popup-rules! `(("^\\*Org Src" :ignore t)
-                      ("^CAPTURE" :ignore t)
-                      ("^\\*Org Select" :side bottom))))
-
-(after! info
-  (set-popup-rule! "^\\*info" :ignore t))
-
-(after! lsp-mode
-  (set-popup-rules! `(("^\\*lsp-help" :side 'bottom)
-                      ("^\\*compilation" ,@+popup-defaults))))
 ;; window layout & behavior:1 ends here
 
 ;; [[file:config.org::*window layout & behavior][window layout & behavior:2]]
@@ -111,8 +88,6 @@
       truncate-string-ellipsis "…"
       auto-save-default t
       confirm-kill-emacs nil
-      undo-limit 80000000
-      consult-async-min-input 0
       hscroll-margin 0
       scroll-margin 0
       enable-recursive-minibuffers nil
@@ -176,14 +151,7 @@
       :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
       :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
       :nmv  "go"  #'consult-imenu ;; search outline
-      :nmv  "g/"  #'+default/search-buffer) ;; more powerful '/' => preview matches interactively
-
-(map! :after minibuffer :map minibuffer-mode-map ;; more useful (+ consistent)
-      :i "C-n"  #'next-line-or-history-element
-      :i "C-p"  #'previous-line-or-history-element)
-
-(map! :after company :map company-mode-map ;; use 'TAB' to activate completion and 'C-p' for dabbrev-expand com[p]letion.
-      :i "C-n" #'company-complete-common)
+      :nmv  "g/"  #'+default/search-buffer) ;; more powerful '/' => preview matches interactively (better than vim's: C-g/C-t in search-mode)
 ;; vim editing:1 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:2]]
@@ -288,6 +256,7 @@ This is sensible default behaviour, and integrates it into evil."
 ;; [[file:config.org::*completion][completion:1]]
 (after! company
   (setq company-minimum-prefix-length 0
+        consult-async-min-input 0
         company-tooltip-limit 1 ;; minimally intrusive
         company-idle-delay nil
         company-tooltip-idle-delay 0.1
@@ -301,9 +270,12 @@ This is sensible default behaviour, and integrates it into evil."
 
 (vertico-flat-mode)
 
-(map! :map minibuffer-mode-map
+(map! :after minibuffer :map minibuffer-local-map ;; more useful (+ consistent)
       :i "C-n" #'next-line-or-history-element
       :i "C-p" #'previous-line-or-history-element)
+
+(map! :after company :map company-mode-map ;; use 'TAB' to activate completion and 'C-p' for dabbrev-expand com[p]letion.
+      :i "C-n" #'company-complete-common)
 
 (map! :map vertico-map
       :im "C-w" #'vertico-directory-delete-word

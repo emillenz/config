@@ -38,7 +38,7 @@
        ;; nav-flash         ; blink cursor line after big motions
        ;; neotree           ; a project drawer, like NERDTree for vim
        ophints           ; highlight the region an operation acts on
-       (popup +all)      ; NOTE :: we want all buffers starting with * to be treated as popups
+       ;; (popup +all)      ; NOTE :: NOT! enabled. (this just makes managing windows more complex)
        ;; tabs              ; a tab bar for Emacs
        ;;treemacs          ; a project drawer, like neotree but cooler
        unicode           ; extended unicode support for various languages

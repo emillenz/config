@@ -48,7 +48,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
   (modus-themes-with-colors
     (setq evil-normal-state-cursor `(,fg-main box)
           evil-motion-state-cursor `(,fg-main box)
-          evil-insert-state-cursor `(,fg-main box)
+          evil-insert-state-cursor `(,fg-main bar)
           evil-visual-state-cursor `(,fg-main box)
           evil-operator-state-cursor `(,red-intense box)
           evil-replace-state-cursor `(,red-intense box)))
@@ -92,36 +92,12 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
     - don't focus help buffer's.
     - maximize buffer's that are standalone / proper (ex: info-mode, org-src).
 - we are not in a position to presume what content will be displayed in the popup-buffer for the defaut settings, hence we give it equal width (50%) to accomodate for most possible cases.
-- popups :: Popups ought to be the second class citizens of my editor; spawned off to the side, discarded with the push of a button (e.g. [[kbd:][ESC]]]), and easily restored if I want to see them again.
 #+begin_src emacs-lisp
 (setq evil-vsplit-window-right t
       even-window-sizes 'width-only
       window-combination-resize t
       split-height-threshold nil
       split-width-threshold 0)
-
-;; HACK :: we need to override rules after packages have loaded
-(setq +popup-defaults
-      '(:side right
-        :select nil
-        :quit t
-        :width 0.5
-        :modeline t))
-(apply #'set-popup-rule! "\\*" +popup-defaults) ;; HACK :: apply defaults to all
-
-(after! org
-  (setq org-src-window-setup 'current-window
-        org-agenda-window-setup 'current-window)
-  (set-popup-rules! `(("^\\*Org Src" :ignore t)
-                      ("^CAPTURE" :ignore t)
-                      ("^\\*Org Select" :side bottom))))
-
-(after! info
-  (set-popup-rule! "^\\*info" :ignore t))
-
-(after! lsp-mode
-  (set-popup-rules! `(("^\\*lsp-help" :side 'bottom)
-                      ("^\\*compilation" ,@+popup-defaults))))
 #+end_src
 
 - centered windows :: better ergonomics & less eye travel (distance + switching from left to middle from eg: terminal to webpage).
@@ -158,8 +134,6 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       truncate-string-ellipsis "…"
       auto-save-default t
       confirm-kill-emacs nil
-      undo-limit 80000000
-      consult-async-min-input 0
       hscroll-margin 0
       scroll-margin 0
       enable-recursive-minibuffers nil
@@ -254,14 +228,7 @@ frequently used & coding/editing related functions are mapped to ~g+~
       :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
       :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
       :nmv  "go"  #'consult-imenu ;; search outline
-      :nmv  "g/"  #'+default/search-buffer) ;; more powerful '/' => preview matches interactively
-
-(map! :after minibuffer :map minibuffer-mode-map ;; more useful (+ consistent)
-      :i "C-n"  #'next-line-or-history-element
-      :i "C-p"  #'previous-line-or-history-element)
-
-(map! :after company :map company-mode-map ;; use 'TAB' to activate completion and 'C-p' for dabbrev-expand com[p]letion.
-      :i "C-n" #'company-complete-common)
+      :nmv  "g/"  #'+default/search-buffer) ;; more powerful '/' => preview matches interactively (better than vim's: C-g/C-t in search-mode)
 #+end_src
 
 #+begin_src emacs-lisp
@@ -394,6 +361,7 @@ This is sensible default behaviour, and integrates it into evil."
 #+begin_src emacs-lisp
 (after! company
   (setq company-minimum-prefix-length 0
+        consult-async-min-input 0
         company-tooltip-limit 1 ;; minimally intrusive
         company-idle-delay nil
         company-tooltip-idle-delay 0.1
@@ -407,9 +375,12 @@ This is sensible default behaviour, and integrates it into evil."
 
 (vertico-flat-mode)
 
-(map! :map minibuffer-mode-map
+(map! :after minibuffer :map minibuffer-local-map ;; more useful (+ consistent)
       :i "C-n" #'next-line-or-history-element
       :i "C-p" #'previous-line-or-history-element)
+
+(map! :after company :map company-mode-map ;; use 'TAB' to activate completion and 'C-p' for dabbrev-expand com[p]letion.
+      :i "C-n" #'company-complete-common)
 
 (map! :map vertico-map
       :im "C-w" #'vertico-directory-delete-word

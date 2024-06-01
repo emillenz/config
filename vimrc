@@ -59,6 +59,10 @@ nnoremap <silent> $ g$
 nnoremap <silent> ^ g^
 nnoremap Q @@
 nnoremap U <c-r>
+" jump to global-mark (lowercased for ergonomics) restoring cursor to last postion (usage:
+" individually mark the files you are working on in a project, then switch directly to them. ex:
+" [B]builfile, [M]ain.c, [L]ib.c,...
+nnoremap <expr> ' printf('`%s`"zz', toupper(nr2char(getchar())))
 
 " auto insert matching parenthesis
 inoremap {<CR> {<CR>}<Esc>O

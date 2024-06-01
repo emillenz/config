@@ -175,13 +175,14 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       :nm "C-e" #'find-file
       :nm "C-f" #'projectile-find-file
       :nm "C-g" #'consult-buffer
-      :nm "C-r" #'consult-recent-file
-      :nm "C-1" #'harpoon-go-to-1
-      :nm "C-2" #'harpoon-go-to-2
-      :nm "C-3" #'harpoon-go-to-3
-      :nm "C-4" #'harpoon-go-to-4)
+      :nm "C-r" #'consult-recent-file)
 
-(map! :leader "j" #'harpoon-quick-menu-hydra)
+(map! :leader 
+      "j" #'harpoon-quick-menu-hydra
+      "1" #'harpoon-go-to-1
+      "2" #'harpoon-go-to-2
+      "3" #'harpoon-go-to-3
+      "4" #'harpoon-go-to-4)
 #+end_src
 
 ** vim editing

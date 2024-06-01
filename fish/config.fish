@@ -46,8 +46,6 @@ alias echo "echo -e"
 fzf_configure_bindings --directory=\cf --history --git_log --git_status --variables --processes # NOTE :: disable useless (history already inbuilt in fish)
 bind -M normal U redo
 bind -M normal K __fish_man_page
-bind -M normal \cr history-pager
-bind -M insert \cr history-pager
 bind -M insert \t accept-autosuggestion
 bind -M default \t accept-autosuggestion
 bind -M insert \cn complete

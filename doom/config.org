@@ -43,15 +43,6 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
         `((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
           (fg-heading-1 fg-heading-0)))
 
-  ;; HACK :: cannot customize these things with `modus-themes-common-palette-overrides'
-  (modus-themes-with-colors
-    (setq evil-normal-state-cursor `(,fg-main box)
-          evil-motion-state-cursor `(,fg-main box)
-          evil-insert-state-cursor `(,fg-main box)
-          evil-visual-state-cursor `(,fg-main box)
-          evil-operator-state-cursor `(,red-intense box)
-          evil-replace-state-cursor `(,red-intense box)))
-
   (custom-set-faces!
     `(org-list-dt :inherit modus-themes-heading-1)
     `(org-block-begin-line :foreground ,(modus-themes-get-color-value 'prose-metadata))

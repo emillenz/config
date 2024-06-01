@@ -47,7 +47,7 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
   (modus-themes-with-colors
     (setq evil-normal-state-cursor `(,fg-main box)
           evil-motion-state-cursor `(,fg-main box)
-          evil-insert-state-cursor `(,fg-main bar)
+          evil-insert-state-cursor `(,fg-main box)
           evil-visual-state-cursor `(,fg-main box)
           evil-operator-state-cursor `(,red-intense box)
           evil-replace-state-cursor `(,red-intense box)))

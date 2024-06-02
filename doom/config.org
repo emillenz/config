@@ -3,19 +3,18 @@
 #+email:  emillenz@protonmail.com
 #+date:   2022-11-01
 #+info:   heavily opinionated config, with a principle-focused approach on: consistency, quality, efficiency & extensibility.
+
 #+macro: last-revision (eval (format-time-string "%F") )
 #+macro: src-len (eval (save-excursion (find-file doom-module-config-file) (count-lines (point-min) (point-max))))
 #+property: header-args:emacs-lisp tangle config.el :comments link :results silent
 
-last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of code.
 
 * preface
-- i use: ~z-~ (lenZ) in user defined functions and variables to distinguish them clearly from package related ones.
+- last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of code.
+- i prefix ~z~ in user defined functions and variables to distinguish them clearly from package related ones.
 - lazyload packages using ~after!~.  this keeps emacs efficent, since it now only loads the settings & packages when they are actually needed (no emacs bankruptcy).
-- i encourage you to master the tool that you are using.  this means reading the documentation, keybinding cheatsheets for the tools you are using (ex: vertico).  additionally when something is repetetive / unefficcient, look up if there exists a command to do what you need to get done.
-  + try to first fundamentally understand & master the functionality your tool offers.  then you can assess and see if a extension really provides value to you, or wether that functionality is already included.
-    + eg: all the plugins like vim easymotion, avy-goto-char etc. are bloat and not needed, since a faster, more powerful, inter-line function already exitsts: incremental-search: [[kbd:/, ?][/, ?]]
-- terminal :: we never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...).  instead all we do is use [[kbd:M-!/&|][M-!/&|]] if more is needed than that we should switch over to the proper shell anyway.
+- i encourage you to master the tool that you are using.  this means thuroughly reading the complete documentation, keybinding cheatsheets for the tools you are using (eg. vertico, evil-mode).
+- try to first fundamentally understand & master the functionality your tool offers.  then you can assess and see if a extension really provides value to you, or wether that functionality is already included.
 
 * user
 #+begin_src emacs-lisp
@@ -178,11 +177,10 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       :nm "C-w" #'next-window-any-frame
       :nm "C-q" #'kill-buffer-and-window
       :nm "C-b" #'evil-switch-to-windows-last-buffer
-      :nm "C-s" #'basic-save-buffer   ;; statisticall most frequently called command -> first layer binding (ergonomic & standard)
+      :nm "C-s" #'basic-save-buffer  ;; statistically most called command => ergonomic (& default) mapping
       :nm "C-e" #'find-file
       :nm "C-f" #'projectile-find-file
-      :nm "C-g" #'consult-buffer
-      :nm "C-r" #'consult-recent-file)
+      :nm "C-g" #'consult-buffer)
 
 (map! :leader
       "j" #'harpoon-quick-menu-hydra
@@ -192,7 +190,8 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
       "4" #'harpoon-go-to-4)
 
 (defadvice! z-goto-global-mark (char)
-  "Go to the buffer of the global-mark.  (evil-set-mark: uppercase , goto-global-mark: lowercase (ergonomics))"
+  "Go to the buffer of the global-mark.
+Usage: 'evil-set-mark' <uppercase> 'goto-global-mark' <lowercase>.  (faster/more ergonomic)"
   :override #'evil-goto-mark-line
   (let* ((marker (evil-get-marker (upcase char)))
          (already-in-buffer-p (numberp marker)))
@@ -270,12 +269,8 @@ This is sensible default behaviour, and integrates it into evil."
 #+end_src
 
 ** dired (keybindings)
-- filemanagers :: avoid using integrated filemanagers (such as dired / ranger / lf) whenever possible replace them with shell commands and finding (fzf: recent-files, root, current dir..)
+- filemanagers :: avoid using integrated filemanagers (such as dired / ranger / lf) whenever possible replace them with shell commands and fuzzy-finding (in project/root/recentfiles)
 - in most cases it is more extensible and faster using tools such as emac's find-file in combination with fuzzy finding and using global bookmarks for frequently used projects/files.
-- use fuzzyfinding of files that exist
-- create files/directories in other directories
-- ~cd~ into different dir
-
 #+begin_src emacs-lisp
 (map! :map dired-mode-map :after dired
       :nm "h" #'dired-up-directory
@@ -292,7 +287,7 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "y" #'dired-copy-filename-as-kill
       :nm "z" #'dired-do-compress
       :nm "." #'dired-omit-mode
-      :nm "+" #'dired-create-empty-file) ;; create directories / files using find-file.
+      :nm "+" #'dired-create-empty-file) ;; create directories / files using 'find-file'
 
 (map! :map dired-mode-map :localleader :after dired
       :nm "a" #'z-dired-archive)
@@ -306,7 +301,6 @@ This is sensible default behaviour, and integrates it into evil."
 
 
 * editor
-- evil-mode :: want it everywhere => enable evil mode in minibuffers (consistency!)
 #+begin_src emacs-lisp
 (evil-surround-mode 1)
 
@@ -315,11 +309,11 @@ This is sensible default behaviour, and integrates it into evil."
         evil-ex-substitute-global t
         evil-want-C-i-jump t
         evil-want-C-h-delete t
-        evil-want-minibuffer t
+        evil-want-minibuffer t ;; this is a must-have
         evil-org-use-additional-insert nil
         evil-snipe-scope 'visible))
 
-;; HACK :: make 'C-h' work like shell bindings everywhere
+;; HACK :: use 'C-h' as backspace everywhere (like vim/shell)
 (define-key key-translation-map (kbd "C-h") (kbd "DEL"))
 #+end_src
 
@@ -411,9 +405,7 @@ in each new file systematically insert heading metadata (as comments) with the f
 - track your coding/writing progress over the years and just generally it is important to document the timing of things, to analyze/order/reconstruct them.
 - info :: short document description/summary, think of it as a docstring for the file with this the reader should know what the document is about in one line.
 
-this is automated using a snippet
-[[file:snippets/org-mode/header][org-mode-header]]
-
+we automate this repetetive task using a snippets.
 #+begin_src emacs-lisp
 (set-file-templates!
  '(org-mode :trigger "header")
@@ -471,6 +463,10 @@ this is automated using a snippet
         (rename-file f dest 1)))
     (revert-buffer)))
 #+end_src
+
+* terminal
+we never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...).  instead all we do is use [[kbd:M-!/&|][M-!/&|]] if more is needed than that we should switch over to the proper shell anyway.
+
 
 * programming
 ** indentation
@@ -577,11 +573,9 @@ In short, 8-char indents make things easier to read, and have the added benefit 
         org-list-allow-alphabetical t
         org-tags-column 0
         org-fold-catch-invisible-edits 'smart
-        org-export-headline-levels 5
         org-refile-use-outline-path 'full-file-path
         org-refile-allow-creating-parent-nodes 'confirm
         org-use-sub-superscripts '{}
-        org-export-with-sub-superscripts '{}
         org-fontify-quote-and-verse-blocks t
         org-fontify-whole-block-delimiter-line t
         doom-themes-org-fontify-special-tags t
@@ -1036,7 +1030,7 @@ PARENT-PATH :: nil | used for recursion"
 #+begin_src emacs-lisp
 (after! dictionary
   (setq dictionary-server "dict.org"
-        dictionary-default-dictionary "*")) ;; no confirmation prompt which server to use
+        dictionary-default-dictionary "*"))
 #+end_src
 
 * lisp

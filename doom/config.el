@@ -122,11 +122,10 @@
       :nm "C-w" #'next-window-any-frame
       :nm "C-q" #'kill-buffer-and-window
       :nm "C-b" #'evil-switch-to-windows-last-buffer
-      :nm "C-s" #'basic-save-buffer   ;; statisticall most frequently called command -> first layer binding (ergonomic & standard)
+      :nm "C-s" #'basic-save-buffer  ;; statistically most called command => ergonomic (& default) mapping
       :nm "C-e" #'find-file
       :nm "C-f" #'projectile-find-file
-      :nm "C-g" #'consult-buffer
-      :nm "C-r" #'consult-recent-file)
+      :nm "C-g" #'consult-buffer)
 
 (map! :leader
       "j" #'harpoon-quick-menu-hydra
@@ -136,7 +135,8 @@
       "4" #'harpoon-go-to-4)
 
 (defadvice! z-goto-global-mark (char)
-  "Go to the buffer of the global-mark.  (evil-set-mark: uppercase , goto-global-mark: lowercase (ergonomics))"
+  "Go to the buffer of the global-mark.
+Usage: 'evil-set-mark' <uppercase> 'goto-global-mark' <lowercase>.  (faster/more ergonomic)"
   :override #'evil-goto-mark-line
   (let* ((marker (evil-get-marker (upcase char)))
          (already-in-buffer-p (numberp marker)))
@@ -209,7 +209,7 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "y" #'dired-copy-filename-as-kill
       :nm "z" #'dired-do-compress
       :nm "." #'dired-omit-mode
-      :nm "+" #'dired-create-empty-file) ;; create directories / files using find-file.
+      :nm "+" #'dired-create-empty-file) ;; create directories / files using 'find-file'
 
 (map! :map dired-mode-map :localleader :after dired
       :nm "a" #'z-dired-archive)
@@ -228,11 +228,11 @@ This is sensible default behaviour, and integrates it into evil."
         evil-ex-substitute-global t
         evil-want-C-i-jump t
         evil-want-C-h-delete t
-        evil-want-minibuffer t
+        evil-want-minibuffer t ;; this is a must-have
         evil-org-use-additional-insert nil
         evil-snipe-scope 'visible))
 
-;; HACK :: make 'C-h' work like shell bindings everywhere
+;; HACK :: use 'C-h' as backspace everywhere (like vim/shell)
 (define-key key-translation-map (kbd "C-h") (kbd "DEL"))
 ;; editor:1 ends here
 
@@ -400,11 +400,9 @@ This is sensible default behaviour, and integrates it into evil."
       org-list-allow-alphabetical t
       org-tags-column 0
       org-fold-catch-invisible-edits 'smart
-      org-export-headline-levels 5
       org-refile-use-outline-path 'full-file-path
       org-refile-allow-creating-parent-nodes 'confirm
       org-use-sub-superscripts '{}
-      org-export-with-sub-superscripts '{}
       org-fontify-quote-and-verse-blocks t
       org-fontify-whole-block-delimiter-line t
       doom-themes-org-fontify-special-tags t
@@ -776,7 +774,7 @@ PARENT-PATH :: nil | used for recursion"
 ;; [[file:config.org::*dictionary][dictionary:1]]
 (after! dictionary
   (setq dictionary-server "dict.org"
-        dictionary-default-dictionary "*")) ;; no confirmation prompt which server to use
+        dictionary-default-dictionary "*"))
 ;; dictionary:1 ends here
 
 ;; [[file:config.org::*lisp][lisp:1]]

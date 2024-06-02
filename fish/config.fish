@@ -7,12 +7,7 @@
 # - favor '--long-flags' over '-f' in order to make the code more readeable and easier to maintain
 # ---
 
-
 # OPTIONS
-set -g fish_cursor_default block
-set -g fish_cursor_replace_one underscore
-set -g fish_cursor_insert block # line
-set -g fish_cursor_visual block
 set -g fish_key_bindings fish_vi_key_bindings
 set -g fish_greeting ''
 fish_config theme choose modus_vivendi

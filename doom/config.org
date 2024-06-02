@@ -169,32 +169,33 @@ last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of cod
   - when emacs creates splits we must handle them => minimal bindings for switching and closing splits: [[kbd:c-q, c-w][c-q, c-w]].  all you will ever need to manage buffers and windows, since if you have more than 2 windows side by side, you are screwed anyway and need to fix your setup.  hence it replaces all [[kbd:c-w][c-w]].
 - these mappings are universal to all programs (shell, emacs, browser, i3) and highly frequently accessed (from any mode/file).
 - workflow :: this minimalistic but powerful navigation workflow (fuzzy-find, find-file, harpoon, and find-buffer) is the most efficient & overheadfree way of navigating simultaneously between multiple different files/buffer when working within a project (low overhead when context-switching and remaining distractionfree, works from anywhere.  improves typing speed)
-  - harpoon :: essentially persistent vim global marks on a per project basis (more powerful, faster and more generalized).  hotswitch between files in a project you are working on simultaneoutsly.  we intentionally use [[kbd:c-1-4][c-1-4]], since using numbers causes less mental overhead and makes no presumptions about the files assigned.  additionally it is consistent with tmux and the webbrowser.  you are restrained to 4 files since that is all you'll need and if you have more than that, you must reprioritize your marks.
+- harpoon :: hotswitch between files in a project you are working on simultaneoutsly.  you are restrained to 4 files since that is all you'll need and generally, if you have more than that, you have too much mental overhead remembering which files are where, when switching and you should reprioritize your marks. (4 seem's to be generally the limit for me for which i can subconsiously switch back and forth inbetween)
+- global marks (experimental?) :: This is a vim native option to harpoon (downside: not per project persistent).  When inside a project, mark the files you find yourself alternating between with global-marks, and jump to the exact file you want directly.
+  - (Vim's normal global-mark behaviour is to jump to the originally marked posion in that buffer.  This is the wrong behaviour because when we left the buffer we have changed the cursor position to some other place.  We override ~evil-mark-line~ binding, since it is redundant (for regular marks, use ~evil-goto-mark~ binding instead).)
 
 #+begin_src emacs-lisp
 (map! :map 'override
       :nm "C-w" #'next-window-any-frame
       :nm "C-q" #'kill-buffer-and-window
       :nm "C-b" #'evil-switch-to-windows-last-buffer
-      :nm "C-s" #'basic-save-buffer  ;; statisticall most frequently called command -> first layer binding (ergonomic & standard)
+      :nm "C-s" #'basic-save-buffer   ;; statisticall most frequently called command -> first layer binding (ergonomic & standard)
       :nm "C-e" #'find-file
       :nm "C-f" #'projectile-find-file
       :nm "C-g" #'consult-buffer
-<<<<<<< HEAD
       :nm "C-r" #'consult-recent-file)
-=======
-      :nm "C-1" #'harpoon-go-to-1
-      :nm "C-2" #'harpoon-go-to-2
-      :nm "C-3" #'harpoon-go-to-3
-      :nm "C-4" #'harpoon-go-to-4)
->>>>>>> 76db0e1 (emacs :: improved completion binndings)
 
-(map! :leader 
+(map! :leader
       "j" #'harpoon-quick-menu-hydra
       "1" #'harpoon-go-to-1
       "2" #'harpoon-go-to-2
       "3" #'harpoon-go-to-3
       "4" #'harpoon-go-to-4)
+
+(defadvice! z-goto-global-mark (char)
+  "Go to the buffer of the global-mark.
+(The mark is input lowercase for ergonomics.)"
+  :override #'evil-goto-mark-line
+  (switch-to-buffer (marker-buffer (evil-get-marker (upcase char)))))
 #+end_src
 
 ** vim editing

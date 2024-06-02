@@ -122,16 +122,24 @@
       :nm "C-w" #'next-window-any-frame
       :nm "C-q" #'kill-buffer-and-window
       :nm "C-b" #'evil-switch-to-windows-last-buffer
-      :nm "C-s" #'basic-save-buffer  ;; statisticall most frequently called command -> first layer binding (ergonomic & standard)
+      :nm "C-s" #'basic-save-buffer   ;; statisticall most frequently called command -> first layer binding (ergonomic & standard)
       :nm "C-e" #'find-file
       :nm "C-f" #'projectile-find-file
       :nm "C-g" #'consult-buffer
-      :nm "C-1" #'harpoon-go-to-1
-      :nm "C-2" #'harpoon-go-to-2
-      :nm "C-3" #'harpoon-go-to-3
-      :nm "C-4" #'harpoon-go-to-4)
+      :nm "C-r" #'consult-recent-file)
 
-(map! :leader "j" #'harpoon-quick-menu-hydra)
+(map! :leader
+      "j" #'harpoon-quick-menu-hydra
+      "1" #'harpoon-go-to-1
+      "2" #'harpoon-go-to-2
+      "3" #'harpoon-go-to-3
+      "4" #'harpoon-go-to-4)
+
+(defadvice! z-goto-global-mark (char)
+  "Go to the buffer of the global-mark.
+(The mark is input lowercase for ergonomics.)"
+  :override #'evil-goto-mark-line
+  (switch-to-buffer (marker-buffer (evil-get-marker (upcase char)))))
 ;; global navigation scheme:1 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:1]]

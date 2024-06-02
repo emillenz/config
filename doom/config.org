@@ -248,16 +248,6 @@ This is sensible default behaviour, and integrates it into evil."
     (setq evil-ex-search-pattern (list str t t))))
 #+end_src
 
-*** evil surround operator
-- for adding delimiters around objects.
-- very frequently used => gets a first-level-mapping.
-#+begin_src emacs-lisp
-(map! :map evil-operator-state-map
-      "gs" #'evil-surround-edit)
-
-(map! :nmv "gs" #'evil-surround-region)
-#+end_src
-
 *** Alignment
 #+begin_src emacs-lisp
 (map! :nmv "g<" #'evil-lion-left
@@ -359,15 +349,13 @@ This is sensible default behaviour, and integrates it into evil."
   - this enforces more thoughtful coding, evaluating what the function actually does and let's you see what is really happening underneath.
   - it actually makes you faster, since it removes the mental overhead and interruption that arises from the distracting completion menu, where you will choose the option from. greatly improves overall typing speed.
   - it makes coding more raw, distractionfree, and overall more enjoyeable
-- instant trigger :: make completion consistent with vim, when activated the completion is triggered and needs no confirmation (~company-tng-mode~).
 - evil completion :: If you want evil's dabbrev based completion, use <C-p>, which is more logical anyway, since the expansion is more likely to be above the current code position.  finally, if you want to expand a snippet/move through completion fields, use <tab>.
 - minibuffer completion :: less distracting and more focused we use ~vertico-flat-mode~ (it promotes finding items not by navigating via scrolling through candidates, but instead by searching).  we don't need a fancy popup everytime we want to switch to a candidate, we only want to know when the completion matches, since we already know beforehand what we are looking for.  (inspired by dmenu)
 #+begin_src emacs-lisp
 (vertico-flat-mode 1)
-(company-tng-mode 1) ;; note :: use <spc> or <(> to trigger match
 
 (after! company
-  (setq company-minimum-prefix-length 0
+  (setq company-minimum-prefix-length 0 ;; hide until activated
         consult-async-min-input 0
         company-tooltip-limit 16
         company-idle-delay nil
@@ -384,9 +372,7 @@ This is sensible default behaviour, and integrates it into evil."
       :i "C-p" #'previous-line-or-history-element)
 
 (map! :after company :map company-mode-map
-      :i "C-n" #'company-complete-common-or-cycle)
-(map! :after evil
-      :i "C-p" #'evil-complete-previous)
+      :i "C-n" #'company-complete)
 
 (map! :map vertico-map
       :im "C-w" #'vertico-directory-delete-word ;; smarter C-w

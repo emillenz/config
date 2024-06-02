@@ -167,13 +167,6 @@ This is sensible default behaviour, and integrates it into evil."
     (setq evil-ex-search-pattern (list str t t))))
 ;; vim editing:2 ends here
 
-;; [[file:config.org::*evil surround operator][evil surround operator:1]]
-(map! :map evil-operator-state-map
-      "gs" #'evil-surround-edit)
-
-(map! :nmv "gs" #'evil-surround-region)
-;; evil surround operator:1 ends here
-
 ;; [[file:config.org::*Alignment][Alignment:1]]
 (map! :nmv "g<" #'evil-lion-left
       :nmv "g>" #'evil-lion-right)
@@ -254,10 +247,9 @@ This is sensible default behaviour, and integrates it into evil."
 
 ;; [[file:config.org::*completion][completion:1]]
 (vertico-flat-mode 1)
-(company-tng-mode 1) ;; note :: use <spc> or <(> to trigger match
 
 (after! company
-  (setq company-minimum-prefix-length 0
+  (setq company-minimum-prefix-length 0 ;; hide until activated
         consult-async-min-input 0
         company-tooltip-limit 16
         company-idle-delay nil
@@ -274,9 +266,7 @@ This is sensible default behaviour, and integrates it into evil."
       :i "C-p" #'previous-line-or-history-element)
 
 (map! :after company :map company-mode-map
-      :i "C-n" #'company-complete-common-or-cycle)
-(map! :after evil
-      :i "C-p" #'evil-complete-previous)
+      :i "C-n" #'company-complete)
 
 (map! :map vertico-map
       :im "C-w" #'vertico-directory-delete-word ;; smarter C-w

@@ -67,8 +67,8 @@ $MAP $MOD+bracketright $CMD playerctl next
 $MAP $MOD+bracketleft  $CMD playerctl previous
 $MAP $MOD+backslash    $CMD playerctl play-pause
 
-$MAP $MOD+n         focus next
-$MAP $MOD+p         focus prev
+$MAP $MOD+l         focus next
+$MAP $MOD+h         focus prev
 $MAP $MOD+q         kill
 $MAP $MOD+g         $CMD rofi -show window
 $MAP $MOD+semicolon $CMD rofi -show drun
@@ -128,10 +128,10 @@ $MAP $MOD+1 workspace 1
 
 $MAP $MOD+f mode "find-file"
 mode "find-file" {
-        $MAP $MOD+c      $CMD xdg-open "$(fd --extension pdf . ~/Documents/uni/cs/s2 | $ROFI 'find [cs]')" $ESC
-        $MAP $MOD+l      $CMD xdg-open "$(fd . ~/Documents/literature/source | $ROFI 'find-file')" $ESC
-        $MAP $MOD+f      $CMD xdg-open "$(fd --type file . ~ | $ROFI 'find [all]')" $ESC
-        $MAP $MOD+d      $CMD xdg-open "$(fd --extension pdf . ~/Downloads | $ROFI 'find [downloads]')" $ESC
+        $MAP $MOD+c $CMD xdg-open "$(fd --extension pdf . ~/Documents/uni/cs/s2 | $ROFI 'find [cs]')" $ESC
+        $MAP $MOD+l $CMD xdg-open "$(fd . ~/Documents/literature/source | $ROFI 'find-file')" $ESC
+        $MAP $MOD+f $CMD xdg-open "$(fd --type file . ~ | $ROFI 'find [all]')" $ESC
+        $MAP $MOD+d $CMD xdg-open "$(fd --extension pdf . ~/Downloads | $ROFI 'find [downloads]')" $ESC
         $EXIT
 }
 
@@ -147,12 +147,12 @@ mode "leader" {
 }
 
 mode "quit" {
-        $MAP $MOD+e           $CMD i3-msg exit $ESC
-        $MAP $MOD+q           $CMD $SYS_SLEEP $ESC
-        $MAP $MOD+shift+q     $CMD systemctl poweroff $ESC
-        $MAP $MOD+r           $CMD i3-msg restart $ESC
-        $MAP $MOD+shift+r     $CMD systemctl reboot $ESC
-        $MAP $MOD+o           $CMD $SYS_SCREENOFF $ESC
+        $MAP $MOD+e                 $CMD i3-msg exit $ESC
+        $MAP $MOD+q                 $CMD $SYS_SLEEP $ESC
+        $MAP --release $MOD+shift+q $CMD systemctl poweroff $ESC
+        $MAP $MOD+r                 $CMD i3-msg restart $ESC
+        $MAP $MOD+shift+r           $CMD systemctl reboot $ESC
+        $MAP $MOD+o                 $CMD $SYS_SCREENOFF $ESC
         $EXIT
 }
 

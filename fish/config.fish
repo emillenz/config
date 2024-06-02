@@ -9,11 +9,12 @@
 
 
 # OPTIONS
+fish_config theme choose modus_vivendi
 set -g fish_cursor_replace_one underscore
 set -g fish_cursor_insert line
-set -g fish_key_bindings fish_vi_key_bindings
 set -g fish_greeting ''
-fish_config theme choose modus_vivendi
+function fish_mode_prompt # HACK :: disable mode indicator
+end
 
 # PATH
 set -gx PATH $PATH ~/.config/{bin, emacs/bin} ~/.cargo/bin
@@ -39,6 +40,7 @@ alias irb "irb --readline"
 alias echo "echo -e"
 
 # KEYBINDINGS
+set -g fish_key_bindings fish_vi_key_bindings
 fzf_configure_bindings --directory=\cf --history --git_log --git_status --variables --processes # NOTE :: disable useless (history already inbuilt in fish: /)
 bind -M normal U redo
 bind -M normal K __fish_man_page

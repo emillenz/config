@@ -1,6 +1,6 @@
 ;; -*- no-byte-compile: t; -*-
 
-(disable-packages! evil-escape which-key solaire-mode) ;; bloat
+(disable-packages! evil-escape solaire-mode)
 
 (package! dired-open)
 (package! rainbow-mode)

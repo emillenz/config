@@ -18,9 +18,8 @@ keymap:
     application:
       only: firefox
     remap:
-      # GLOBAL NAVIGATION SCHEME (using plugin that enables tabswitching using CTRL)
+      # GLOBAL NAVIGATION SCHEME (using vim browser extension)
       C-b: C-Tab
-      C-e: C-l
       C-q: c-w
       # EDITING
       c-h: backspace

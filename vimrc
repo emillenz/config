@@ -83,3 +83,8 @@ au filetype netrw call NetrwMaps()
 
 autocmd WinNew * wincmd L " always open window's in vsplit
 autocmd BufWritePre * :%s/\s\+$//e " strip trailing whitespace before save
+
+" make cursor mode-dependent
+let &t_SI = "\e[6 q"
+let &t_SR = "\e[4 q"
+let &t_EI = "\e[2 q"

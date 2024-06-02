@@ -8,12 +8,11 @@
 #+macro: src-len (eval (save-excursion (find-file doom-module-config-file) (count-lines (point-min) (point-max))))
 #+property: header-args:emacs-lisp tangle config.el :comments link :results silent
 
-
 * preface
 - last revision on: {{{last-revision}}} with a total of {{{src-len}}} lines of code.
 - i prefix ~z~ in user defined functions and variables to distinguish them clearly from package related ones.
 - lazyload packages using ~after!~.  this keeps emacs efficent, since it now only loads the settings & packages when they are actually needed (no emacs bankruptcy).
-- i encourage you to master the tool that you are using.  this means thuroughly reading the complete documentation, keybinding cheatsheets for the tools you are using (eg. vertico, evil-mode).
+- i encourage you to master the tool that you are using.  this means thuroughly reading the complete documentation, keymaps for the tools you are using (eg. vertico, evil-mode, magit, leader-mode).
 - try to first fundamentally understand & master the functionality your tool offers.  then you can assess and see if a extension really provides value to you, or wether that functionality is already included.
 
 * user
@@ -29,6 +28,7 @@
 #+end_src
 
 ** modus-theme
+- hack :: needs use-package
 #+begin_src emacs-lisp
 (use-package! modus-themes
   :config
@@ -309,7 +309,7 @@ This is sensible default behaviour, and integrates it into evil."
         evil-ex-substitute-global t
         evil-want-C-i-jump t
         evil-want-C-h-delete t
-        evil-want-minibuffer t ;; this is a must-have
+        evil-want-minibuffer t ;; don't loose all your power's in the minibuffer
         evil-org-use-additional-insert nil
         evil-snipe-scope 'visible))
 

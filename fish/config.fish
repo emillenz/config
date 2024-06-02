@@ -7,12 +7,13 @@
 # - favor '--long-flags' over '-f' in order to make the code more readeable and easier to maintain
 # ---
 
+
 # OPTIONS
+set -g fish_cursor_replace_one underscore
+set -g fish_cursor_insert line
 set -g fish_key_bindings fish_vi_key_bindings
 set -g fish_greeting ''
 fish_config theme choose modus_vivendi
-function fish_mode_prompt # HACK :: no mode indidcator
-end
 
 # PATH
 set -gx PATH $PATH ~/.config/{bin, emacs/bin} ~/.cargo/bin

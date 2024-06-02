@@ -228,7 +228,7 @@ This is sensible default behaviour, and integrates it into evil."
         evil-ex-substitute-global t
         evil-want-C-i-jump t
         evil-want-C-h-delete t
-        evil-want-minibuffer t ;; this is a must-have
+        evil-want-minibuffer t ;; don't loose all your power's in the minibuffer
         evil-org-use-additional-insert nil
         evil-snipe-scope 'visible))
 

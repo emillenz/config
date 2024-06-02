@@ -8,6 +8,10 @@
 #  commands using: }{ )
 #  ---
 
+function fish_mode_prompt
+end
+
+
 function fish_prompt
     set -l last_status $status # NOTE :: must be first statement
     set -l stat

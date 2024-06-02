@@ -4,8 +4,7 @@
 " author: emil lenz
 " email: emillenz@protonmail.com
 " info: the rationale for the keybindings and settings in this opinionated config are documented in
-" readme.org and the main editor (emacs) doom/config.org.
-" emacs-configuration file: doom/config.org
+" [readme.org] and the main editor (emacs) config file: [doom/config.org].
 " ---
 
 syntax enable

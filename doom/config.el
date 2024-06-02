@@ -136,10 +136,12 @@
       "4" #'harpoon-go-to-4)
 
 (defadvice! z-goto-global-mark (char)
-  "Go to the buffer of the global-mark.
-(The mark is input lowercase for ergonomics.)"
+  "Go to the buffer of the global-mark.  (evil-set-mark: uppercase , goto-global-mark: lowercase (ergonomics))"
   :override #'evil-goto-mark-line
-  (switch-to-buffer (marker-buffer (evil-get-marker (upcase char)))))
+  (let* ((marker (evil-get-marker (upcase char)))
+         (already-in-buffer-p (numberp marker)))
+    (unless already-in-buffer-p
+      (switch-to-buffer (marker-buffer marker)))))
 ;; global navigation scheme:1 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:1]]

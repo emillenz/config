@@ -1,65 +1,55 @@
 ;; ---
-;; title: bare metal, minmalist emacs config
+;; title: bare-metal, minimalist emacs evil-mode config
 ;; date: 2024-05-27
 ;; author: emil lenz
 ;; email: emillenz@protonmail.com
-;; info:
-;; - no 3rd party dependencies
-;;   => easy deployment on servers / other people's machines.
-;; - default emacs bindings for speed when editing text.
-;;   (it was observed that for simple propt editing a modal keybinding-scheme such as vim actually slows the typist down.)
-;;   additionally emacs bindings bring the benefit of being able to extend them in any prompt/gui terminal application.
+;; info: the rationale behind the keybindings scheme can be found in [readme.org].
 ;; ---
-
-;; (defun z-bootstrap-packages ()
-;;   (require 'package)
-;;   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-;;   (package-initialize)
-;;   (unless (package-installed-p 'use-package)
-;;     (package-refresh-contents)
-;;     (package-install 'use-package)))
-;; (z-bootstrap-packages)
 
 (defun z-ui ()
   (tool-bar-mode 0)
   (menu-bar-mode 0)
   (blink-cursor-mode 0)
   (scroll-bar-mode 0)
-  (hl-line-mode 1)
   (horizontal-scroll-bar-mode 0)
-  (add-hook 'emacs-startup-hook 'toggle-frame-maximized)
+  (add-hook 'emacs-startup-hook #'toggle-frame-maximized)
   (setq inhibit-startup-screen t
-        initial-scratch-message "")
-  (load-theme 'modus-operandi))
+        initial-scratch-message ""))
 (z-ui)
+
+(defun z-theme-modus-vivendi ()
+  (require-theme 'modus-themes) ;; inbuilt themes
+  (setq modus-themes-mixed-fonts t
+        modus-themes-italic-constructs t
+        modus-themes-bold-constructs t
+        modus-themes-org-blocks 'gray-background
+        modus-themes-common-palette-overrides '((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
+                                                (fg-heading-1 fg-heading-0)))
+  (load-theme 'modus-operandi))
+(z-theme-modus-vivendi)
 
 (defun z-relativenumbers ()
   (global-display-line-numbers-mode 1)
   (setq display-line-numbers-type 'relative))
 (z-relativenumbers)
 
-(defun z-editing-opts ()
+(defun z-editing-behaviour ()
+  (electric-indent-mode 1)
   (electric-pair-mode 1)
   (delete-selection-mode 1)
-  (add-hook 'before-save-hook #'delete-trailing-whitespace))
-(z-editing-opts)
-
-(defun z-indentation ()
-  (electric-indent-mode 1)
-  (setq tab-always-indent t
-        standard-indent 8)
-  (setq-default indent-tabs-mode nil)
-  (add-hook 'prog-mode-hook
-            (lambda ()
-              (setq c-basic-offset 8))))
-(z-indentation)
+  (add-hook 'before-save-hook #'delete-trailing-whitespace)
+  (setq-default indent-tabs-mode nil))
+(z-editing-behaviour)
 
 (defun z-better-defaults ()
   (global-auto-revert-mode 1)
   (column-number-mode 1)
   (savehist-mode 1)
   (global-word-wrap-whitespace-mode 1)
+  (save-place-mode 1)
+  (global-subword-mode 1)
   (setq ring-bell-function 'ignore
+        global-auto-revert-non-file-buffers t
         use-short-answers t
         save-interprogram-paste-before-kill t
         require-final-newline t
@@ -67,81 +57,106 @@
         frame-inhibit-implied-resize t
         ediff-window-setup-function 'ediff-setup-windows-plain
         backup-by-copying t
-        backup-directory-alist `(("." . ,(concat user-emacs-directory
-                                                 "backups")))
+        shell-command-prompt-show-cwd t
+        disabled-command-function nil
+        backup-directory-alist `(("." .
+                                  ,(concat user-emacs-directory "backups")))
         custom-file (expand-file-name "custom.el" user-emacs-directory)))
 (z-better-defaults)
 
-(defun z-scroll-down-half-page ()
-  (interactive)
-  (let ((ln (line-number-at-pos (point)))
-        (lmax (line-number-at-pos (point-max))))
-    (cond ((= ln 1) (move-to-window-line nil))
-          ((= ln lmax) (recenter (window-end)))
-          (t (progn
-               (move-to-window-line -1)
-               (recenter))))))
+(defun z-windows-wsl ()
+  (when (and (string-equal system-type "windows-nt")
+             (file-exists-p "C:/Windows/System32/bash.exe"))
+    (setq shell-file-name "C:/Windows/System32/bash.exe")))
+(z-windows-wsl)
 
-(defun z-scroll-up-half-page ()
-  (interactive)
-  (let ((ln (line-number-at-pos (point)))
-        (lmax (line-number-at-pos (point-max))))
-    (cond ((= ln 1) nil)
-          ((= ln lmax) (move-to-window-line nil))
-          (t (progn
-               (move-to-window-line 0)
-               (recenter))))))
-(defun z-smart-open-line-above ()
-  (interactive)
-  (move-beginning-of-line nil)
-  (insert "\n")
-  (if electric-indent-inhibit
-      (let* ((indent-end (progn (back-to-indentation)) (point)))
-        (indent-start (progn (move-beginning-of-line nil) (point)))
-        (indent-chars (buffer-substring indent-start indent-end)))
-    (forward-line -1)
-    (insert indent-chars))
-  (forward-line -1)
-  (indent-according-to-mode))
+(defun z-dired ()
+  (with-eval-after-load 'dired
+    (add-hook 'dired-mode-hook #'dired-hide-details-mode)
+    (add-hook 'dired-mode-hook #'dired-omit-mode)
+    (require 'dired-x)
+    (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
+    (setq dired-recursive-copies 'always
+          dired-recursive-deletes 'top
+          dired-no-confirm '(uncompress move copy))))
+(z-dired)
 
-(defun z-move-beginning-of-line (arg)
-  (interactive "^p")
-  (setq arg (or arg 1))
-  (when (/= arg 1)
-    (let ((line-move-visual nil))
-      (forward-line (1- arg))))
-  (let ((orig-point (point)))
-    (back-to-indentation)
-    (when (= orig-point (point))
-      (move-beginning-of-line 1))))
+(defvar z-packages '(use-package
+                      evil
+                      evil-collection
+                      vertico)
+  "Add the package you want to have installed to 'z-packackages' and then
+configure it somewhere in the config with 'use-package'.")
 
-(defmacro cmd! (&rest body)
-  `(lambda (count)
-     (interactive "p")
-     ,@body))
+(defun z-bootstrap-packages ()
+  (require 'package)
+  (setq package-archives '(("org" . "https://orgmode.org/elpa/")
+                           ("gnu" . "https://elpa.gnu.org/packages/")
+                           ("melpa" . "https://melpa.org/packages/")))
+  (package-initialize)
+  (unless package-archive-contents
+    (package-refresh-contents))
+  (dolist (package z-packages)
+    (unless (package-installed-p package)
+      (package-install package))))
+(z-bootstrap-packages)
 
-(defun z-better-default-bindings ()
-  (global-set-key [remap query-replace] #'query-replace-regexp)
-  (global-set-key [remap isearch-forward] #'isearch-forward-regexp)
-  (global-set-key [remap isearch-backward] #'isearch-backward-regexp)
-  (global-set-key (kbd "TAB") #'hippie-expand)
-  (global-set-key (kbd "C-.") #'repeat)
-  (global-set-key (kbd "C-q") #'kill-buffer-and-window)
-  (global-set-key (kbd "M-q") #'delete-other-windows)
-  (global-set-key (kbd "C-<tab>") (cmd! (switch-to-buffer nil)))
-  (global-set-key (kbd "C-t") #'next-window-any-frame)
-  (global-set-key (kbd "RET") #'newline-and-indent)
-  (global-set-key (kbd "M-u") #'upcase-dwim)
-  (global-set-key (kbd "M-l") #'downcase-dwim)
-  (global-set-key (kbd "M-]") #'forward-paragraph)
-  (global-set-key (kbd "M-[") #'backward-paragraph)
-  (global-set-key (kbd "C-v") #'z-scroll-down-half-page)
-  (global-set-key (kbd "M-v") #'z-scroll-up-half-page)
-  (global-set-key (kbd "C-j") (cmd! (delete-indentation 1))) ;; improved `join-line'
-  (global-set-key (kbd "M-<backspace>") (cmd! (kill-line 0) (indent-according-to-mode)))
-  (global-set-key [remap open-line] (cmd! (move-end-of-line nil) (newline-and-indent)))
-  (global-set-key (kbd "C-S-o") #'z-smart-open-line-above)
-  (global-set-key [remap move-beginning-of-line] #'z-move-beginning-of-line)
-  (global-set-key [remap kill-whole-line] (cmd! (kill-whole-line count) (back-to-indentation)))
-  (global-set-key (kbd "C-x C-y") #'duplicate-line))
-(z-better-default-bindings)
+(use-package evil
+  :ensure t
+  :init
+  (setq evil-want-keybinding nil
+        evil-ex-substitute-global t
+        evil-want-minibuffer t
+        evil-want-Y-yank-to-eol t
+        evil-undo-system 'undo-redo
+        evil-want-C-i-jump t
+        evil-want-C-u-scroll t
+        evil-want-C-w-delete t
+        evil-want-C-h-delete t
+        evil-want-C-u-delete t)
+  (evil-mode 1)
+  (evil-define-key '(normal visual motion) 'global
+    "j" #'evil-next-visual-line
+    "k" #'evil-previous-visual-line
+    "^" #'evil-first-non-blank-of-visual-line
+    "$" #'evil-end-of-visual-line
+    "U" #'evil-redo)
+  (define-key key-translation-map (kbd "C-h") (kbd "DEL")) ;; HACK :: make c-h work properly everywhere
+  (evil-define-key '(normal motion) 'global
+    (kbd "C-s") #'save-buffer
+    (kbd "C-q") #'kill-buffer-and-window
+    (kbd "C-w") #'next-window-any-frame
+    (kbd "C-e") #'find-file
+    (kbd "C-g") #'switch-to-buffer
+    (kbd "C-l") (lambda () (interactive) (switch-to-buffer nil)))
+  (defun z-goto-global-mark (char)
+    "Go to the buffer of the global-mark.
+Usage: 'evil-set-mark' <uppercase> 'goto-global-mark' <lowercase>.  (faster/more ergonomic)"
+    (let* ((marker (evil-get-marker (upcase char)))
+           (already-in-buffer-p (numberp marker)))
+      (unless already-in-buffer-p
+        (switch-to-buffer (marker-buffer marker)))))
+  (advice-add 'evil-goto-mark-line :override #'z-goto-global-mark))
+
+(use-package evil-collection ;; this is a rather large package, but we don't want to make any compromises on evil-mode
+  :after evil
+  :ensure t
+  :custom (evil-collection-setup-minibuffer t) ;; HACK :: must use custom
+  :config
+  (evil-collection-init)
+  (with-eval-after-load 'dired-aux ;; HACK
+    (evil-define-key 'normal dired-mode-map
+      (kbd ".") #'dired-omit-mode))
+  (with-eval-after-load 'dired
+    (evil-define-key 'normal dired-mode-map
+      "l" #'dired-find-alternate-file
+      "h" #'dired-up-directory)))
+
+(use-package vertico
+  :init
+  (vertico-mode 1)
+  (vertico-flat-mode 1)
+  (setq completion-styles '(substring basic)
+        read-file-name-completion-ignore-case t
+        read-buffer-completion-ignore-case t
+        completion-ignore-case t))

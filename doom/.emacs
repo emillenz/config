@@ -19,8 +19,7 @@
 
 (defun z-theme-modus-vivendi ()
   (require-theme 'modus-themes) ;; inbuilt themes
-  (setq modus-themes-mixed-fonts t
-        modus-themes-italic-constructs t
+  (setq modus-themes-italic-constructs t
         modus-themes-bold-constructs t
         modus-themes-org-blocks 'gray-background
         modus-themes-common-palette-overrides '((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region

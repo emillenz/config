@@ -8,10 +8,12 @@
 # ---
 
 # OPTIONS
+set -g fish_cursor_replace_one underscore
+set -g fish_cursor_insert line
 set -g fish_key_bindings fish_vi_key_bindings
 set -g fish_greeting ''
 fish_config theme choose modus_vivendi
-function fish_mode_prompt # HACK :: no mode indidcator
+function fish_mode_prompt # HACK :: disable (indicate mode by cursor state)
 end
 
 # PATH
@@ -39,7 +41,6 @@ alias echo "echo -e"
 
 # KEYBINDINGS
 fzf_configure_bindings --directory=\cf --history --git_log --git_status --variables --processes # NOTE :: disable useless (history already inbuilt in fish: /)
-bind -M normal U redo
 bind -M normal K __fish_man_page
 bind -M insert \t accept-autosuggestion
 bind -M default \t accept-autosuggestion

@@ -1,52 +1,48 @@
 ;; ---
-;; title: bare-metal, minimalist emacs evil-mode config
+;; title: bare-metal, minimalist emacs evil-mode config (just evil, no additions)
 ;; date: 2024-05-27
 ;; author: emil lenz
 ;; email: emillenz@protonmail.com
-;; info: the rationale behind the keybindings scheme can be found in [readme.org].
 ;; ---
 
-(defun z-ui ()
+;; UI
+(progn
   (tool-bar-mode 0)
   (menu-bar-mode 0)
   (blink-cursor-mode 0)
   (scroll-bar-mode 0)
   (horizontal-scroll-bar-mode 0)
   (add-hook 'emacs-startup-hook #'toggle-frame-maximized)
-  (setq inhibit-startup-screen t
+  (global-display-line-numbers-mode 1)
+  (setq display-line-numbers-type 'relative
+        inhibit-startup-screen t
         initial-scratch-message ""))
-(z-ui)
 
-(defun z-theme-modus-vivendi ()
-  (require-theme 'modus-themes) ;; inbuilt themes
+;; THEME :: MODUS VIENDI
+(progn
+  (require-theme 'modus-themes)
   (setq modus-themes-italic-constructs t
         modus-themes-bold-constructs t
         modus-themes-org-blocks 'gray-background
         modus-themes-common-palette-overrides '((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
                                                 (fg-heading-1 fg-heading-0)))
   (load-theme 'modus-operandi))
-(z-theme-modus-vivendi)
 
-(defun z-relativenumbers ()
-  (global-display-line-numbers-mode 1)
-  (setq display-line-numbers-type 'relative))
-(z-relativenumbers)
-
-(defun z-editing-behaviour ()
+;; GLOBAL OPTIONS
+(progn
   (electric-indent-mode 1)
   (electric-pair-mode 1)
   (delete-selection-mode 1)
-  (add-hook 'before-save-hook #'delete-trailing-whitespace)
-  (setq-default indent-tabs-mode nil))
-(z-editing-behaviour)
-
-(defun z-better-defaults ()
   (global-auto-revert-mode 1)
   (column-number-mode 1)
   (savehist-mode 1)
   (global-word-wrap-whitespace-mode 1)
   (save-place-mode 1)
   (global-subword-mode 1)
+
+  (add-hook 'before-save-hook #'delete-trailing-whitespace)
+
+  (setq-default indent-tabs-mode nil)
   (setq ring-bell-function 'ignore
         global-auto-revert-non-file-buffers t
         use-short-answers t
@@ -61,33 +57,25 @@
         backup-directory-alist `(("." .
                                   ,(concat user-emacs-directory "backups")))
         custom-file (expand-file-name "custom.el" user-emacs-directory)))
-(z-better-defaults)
 
-(defun z-windows-wsl ()
-  (when (and (string-equal system-type "windows-nt")
-             (file-exists-p "C:/Windows/System32/bash.exe"))
-    (setq shell-file-name "C:/Windows/System32/bash.exe")))
-(z-windows-wsl)
-
-(defun z-dired ()
-  (with-eval-after-load 'dired
-    (add-hook 'dired-mode-hook #'dired-hide-details-mode)
-    (add-hook 'dired-mode-hook #'dired-omit-mode)
-    (require 'dired-x)
-    (setq dired-omit-files (concat dired-omit-files "\\|^\\..+$"))
-    (setq dired-recursive-copies 'always
-          dired-recursive-deletes 'top
-          dired-no-confirm '(uncompress move copy))))
-(z-dired)
+;; DIRED
+(with-eval-after-load 'dired
+  (add-hook 'dired-mode-hook #'dired-hide-details-mode)
+  (add-hook 'dired-mode-hook #'dired-omit-mode)
+  (setq dired-omit-files "^\\..*$")
+  (setq dired-recursive-copies 'always
+        dired-recursive-deletes 'top
+        dired-no-confirm '(uncompress move copy)))
 
 (defvar z-packages '(use-package
                       evil
                       evil-collection
                       vertico)
-  "Add the package you want to have installed to 'z-packackages' and then
-configure it somewhere in the config with 'use-package'.")
+  "Add the package you want to have installed to this list and then
+configure it using: 'use-package'.")
 
-(defun z-bootstrap-packages ()
+;; PACKAGES SETUP
+(progn
   (require 'package)
   (setq package-archives '(("org" . "https://orgmode.org/elpa/")
                            ("gnu" . "https://elpa.gnu.org/packages/")
@@ -98,7 +86,6 @@ configure it somewhere in the config with 'use-package'.")
   (dolist (package z-packages)
     (unless (package-installed-p package)
       (package-install package))))
-(z-bootstrap-packages)
 
 (use-package evil
   :ensure t
@@ -113,21 +100,28 @@ configure it somewhere in the config with 'use-package'.")
         evil-want-C-w-delete t
         evil-want-C-h-delete t
         evil-want-C-u-delete t)
+
   (evil-mode 1)
+
   (evil-define-key '(normal visual motion) 'global
     "j" #'evil-next-visual-line
     "k" #'evil-previous-visual-line
     "^" #'evil-first-non-blank-of-visual-line
     "$" #'evil-end-of-visual-line
     "U" #'evil-redo)
+
   (define-key key-translation-map (kbd "C-h") (kbd "DEL")) ;; HACK :: make c-h work properly everywhere
+
+  ;; NAVIGATION SCHEME
   (evil-define-key '(normal motion) 'global
     (kbd "C-s") #'save-buffer
     (kbd "C-q") #'kill-buffer-and-window
     (kbd "C-w") #'next-window-any-frame
     (kbd "C-e") #'find-file
     (kbd "C-g") #'switch-to-buffer
-    (kbd "C-l") (lambda () (interactive) (switch-to-buffer nil)))
+    (kbd "C-b") (lambda () (interactive) (switch-to-buffer nil)))
+
+  ;; GLOBAL-MARKS
   (defun z-goto-global-mark (char)
     "Go to the buffer of the global-mark.
 Usage: 'evil-set-mark' <uppercase> 'goto-global-mark' <lowercase>.  (faster/more ergonomic)"
@@ -143,9 +137,10 @@ Usage: 'evil-set-mark' <uppercase> 'goto-global-mark' <lowercase>.  (faster/more
   :custom (evil-collection-setup-minibuffer t) ;; HACK :: must use custom
   :config
   (evil-collection-init)
+
   (with-eval-after-load 'dired-aux ;; HACK
-    (evil-define-key 'normal dired-mode-map
-      (kbd ".") #'dired-omit-mode))
+    (evil-define-key 'normal dired-mode-map (kbd ".") #'dired-omit-mode))
+
   (with-eval-after-load 'dired
     (evil-define-key 'normal dired-mode-map
       "l" #'dired-find-alternate-file
@@ -155,7 +150,14 @@ Usage: 'evil-set-mark' <uppercase> 'goto-global-mark' <lowercase>.  (faster/more
   :init
   (vertico-mode 1)
   (vertico-flat-mode 1)
+
   (setq completion-styles '(substring basic)
         read-file-name-completion-ignore-case t
         read-buffer-completion-ignore-case t
         completion-ignore-case t))
+
+;; WINDOWS? => USE WSL
+(progn
+  (when (and (string-equal system-type "windows-nt")
+             (file-exists-p "C:/Windows/System32/bash.exe"))
+    (setq shell-file-name "C:/Windows/System32/bash.exe")))

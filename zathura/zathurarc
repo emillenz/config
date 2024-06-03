@@ -14,8 +14,6 @@ set recolor-keephue true
 # more ergonomic top layer mappings
 map u scroll half-up
 map d scroll half-down
-map i jumplist forward
-map o jumplist backward
 map z snap_to_page # vim
 map s toggle_page_mode # mnemonic: split
 map = zoom in
@@ -23,37 +21,6 @@ map - zoom out
 map w adjust_window best-fit # mnemonic: width/window
 map W adjust_window width # mnemonic: width/window
 unmap a
-
-# # MODUS VIVENDI THEME
-# set recolor true
-# set notification-error-bg       "#303030"
-# set notification-error-fg       "#ff5f59"
-# set notification-warning-bg     "#303030"
-# set notification-warning-fg     "#ff5f59"
-# set notification-bg             "#303030"
-# set notification-fg             "#dfcf43"
-# set completion-group-bg         "#2f447f"
-# set completion-group-fg         "#ffffff"
-# set completion-bg               "#303030"
-# set completion-fg               "#ffffff"
-# set completion-highlight-bg     "#2f447f"
-# set completion-highlight-fg     "#ffffff"
-# set index-bg                    "#000000"
-# set index-fg                    "#ffffff"
-# set index-active-bg             "#2f447f"
-# set index-active-fg             "#ffffff"
-# set inputbar-bg                 "#303030"
-# set inputbar-fg                 "#ffffff"
-# set statusbar-bg                "#303030"
-# set statusbar-fg                "#ffffff"
-# # set highlight-color             "#2266ae" # TODO :: currently broken
-# # set highlight-active-color      "#7a6100"
-# set default-bg                  "#000000"
-# set default-fg                  "#ffffff"
-# set render-loading-fg           "#ffffff"
-# set render-loading-bg           "#000000"
-# set recolor-lightcolor          "#000000"
-# set recolor-darkcolor           "#ffffff"
 
 # MODUS OPERANDI THEME
 set notification-error-bg       "#c8c8c8"

@@ -10,14 +10,11 @@
 ;; [[file:config.org::*modus-theme][modus-theme:1]]
 (use-package! modus-themes
   :config
-  (setq modus-themes-mixed-fonts t
-        modus-themes-italic-constructs t
+  (setq modus-themes-italic-constructs t
         modus-themes-bold-constructs t
-        modus-themes-org-blocks 'gray-background
-
-        modus-themes-common-palette-overrides
-        `((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
-          (fg-heading-1 fg-heading-0)))
+        modus-themes-common-palette-overrides `((fg-region unspecified) ;; NOTE :: don't override syntax highlighting in region
+                                                (fg-heading-1 fg-heading-0)
+                                                (bg-prose-block-contents bg-dim)))
 
   (custom-set-faces!
     `(org-list-dt :inherit modus-themes-heading-1)
@@ -32,18 +29,12 @@
       doom-variable-pitch-font (font-spec :family "Iosevka Comfy" :size 14)
       doom-serif-font          (font-spec :family "Iosevka Comfy" :size 14)
       doom-big-font            (font-spec :family "Iosevka Comfy" :size 28))
-
-(custom-set-faces!
-  '(font-lock-keyword-face :slant normal :weight bold)
-  '(font-lock-type-face    :slant normal)
-  '(font-lock-comment-face :slant italic)
-  '(font-lock-string-face  :slant italic))
 ;; font:1 ends here
 
 ;; [[file:config.org::*modeline][modeline:1]]
 (setq display-battery-mode nil
       display-time-mode nil
-      +modeline-height 10
+      +modeline-height 8
       +modeline-bar-width nil) ;; visual clutter => off
 ;; modeline:1 ends here
 
@@ -85,7 +76,6 @@
 ;; [[file:config.org::*misc options][misc options:1]]
 (setq initial-scratch-message ""
       delete-by-moving-to-trash t
-      truncate-string-ellipsis "…"
       auto-save-default t
       confirm-kill-emacs nil
       hscroll-margin 0
@@ -152,16 +142,13 @@ Usage: 'evil-set-mark' <uppercase> 'goto-global-mark' <lowercase>.  (faster/more
       :nmvo "k"   #'evil-previous-visual-line
       :nmvo "^"   #'evil-first-non-blank-of-visual-line
       :nmvo "$"   #'evil-end-of-visual-line
-      :nmv  "Q"   #'evil-execute-last-recorded-macro ;; quickly recall recorded macro            (used 80% of the time since we just have a single macro, recorded with 'qq')
-      :nm   "U"   #'evil-redo ;; more mnemonic & sensible undo
       :nmv  "&"   #'evil-ex-repeat ;; more extensible than normal '&'
       :nmv  "("   #'backward-sexp ;; more useful than navigation by sentences
       :nmv  ")"   #'forward-sexp
       :nmv  "+"   #'evil-numbers/inc-at-pt ;; more sensible than C-x/C-a
       :nmv  "-"   #'evil-numbers/dec-at-pt
       :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
-      :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental
-      :nmv  "g/"  #'+default/search-buffer) ;; more powerful '/' => preview matches interactively (better than vim's: C-g/C-t in search-mode)
+      :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental) ;; more powerful '/' => preview matches interactively (better than vim's: C-g/C-t in search-mode)
 ;; vim editing:1 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:2]]
@@ -196,22 +183,11 @@ This is sensible default behaviour, and integrates it into evil."
 ;; [[file:config.org::*dired (keybindings)][dired (keybindings):1]]
 (map! :map dired-mode-map :after dired
       :nm "h" #'dired-up-directory
-      :nm "l" #'dired-open-file
+      :nm "l" #'dired-find-file
       :nm "f" #'dired-goto-file
-      :nm "c" #'dired-do-copy
-      :nm "r" #'dired-do-rename
-      :nm "R" #'dired-do-redisplay
-      :nm "d" #'dired-do-delete
-      :nm "x" #'dired-do-chmod
-      :nm "s" #'dired-sort-toggle-or-edit
-      :nm "o" #'dired-open-xdg
-      :nm "p" #'dired-do-print
-      :nm "y" #'dired-copy-filename-as-kill
-      :nm "z" #'dired-do-compress
-      :nm "." #'dired-omit-mode
-      :nm "+" #'dired-create-empty-file) ;; create directories / files using 'find-file'
+      :nm "." #'dired-omit-mode)
 
-(map! :map dired-mode-map :localleader :after dired
+(map! :after dired :map dired-mode-map :localleader
       :nm "a" #'z-dired-archive)
 ;; dired (keybindings):1 ends here
 
@@ -228,11 +204,11 @@ This is sensible default behaviour, and integrates it into evil."
         evil-ex-substitute-global t
         evil-want-C-i-jump t
         evil-want-C-h-delete t
-        evil-want-minibuffer t ;; this is a must-have
+        evil-want-minibuffer t ;; don't loose all your power's in the minibuffer
         evil-org-use-additional-insert nil
         evil-snipe-scope 'visible))
 
-;; HACK :: use 'C-h' as backspace everywhere (like vim/shell)
+;; HACK :: make 'C-h' work as backspace correctly everywhere (like vim/shell)
 (define-key key-translation-map (kbd "C-h") (kbd "DEL"))
 ;; editor:1 ends here
 
@@ -259,10 +235,9 @@ This is sensible default behaviour, and integrates it into evil."
 (vertico-flat-mode 1)
 
 (after! company
-  (setq company-minimum-prefix-length 0 ;; hide until activated
+  (setq company-minimum-prefix-length 0 ;; manually trigger
         consult-async-min-input 0
-        company-tooltip-limit 16
-        company-idle-delay nil
+        company-idle-delay 0.1          ;; show immediatly (since activated manually)
         company-tooltip-idle-delay 0.1
         company-show-quick-access t
         company-global-modes '(not
@@ -297,14 +272,6 @@ This is sensible default behaviour, and integrates it into evil."
 ;; [[file:config.org::*dired][dired:1]]
 (after! dired
   (add-hook! 'dired-mode-hook #'dired-hide-details-mode) ;; less clutter (enable manually if needed)
-
-    (setq dired-omit-files
-        (rx (or (seq bol (? ".") "#")
-                (seq bol "." (not (any ".")))
-                (seq "~" eol)
-                (seq bol "CVS" eol))))
-
-  ;; NOTE:: this is the elegant & extensible way to do regex.
   (setq dired-open-extensions '(("mkv"  . "mpv")
                                 ("mp4"  . "mpv")
                                 ("mp3"  . "mpv")
@@ -320,7 +287,8 @@ This is sensible default behaviour, and integrates it into evil."
         dired-recursive-copies 'always
         dired-recursive-deletes 'top
         global-auto-revert-non-file-buffers t
-        dired-no-confirm '(uncompress move copy)))
+        dired-no-confirm '(uncompress move copy)
+        dired-omit-files "^\\..*$"))
 ;; dired:1 ends here
 
 ;; [[file:config.org::*Archive file][Archive file:1]]
@@ -424,9 +392,8 @@ This is sensible default behaviour, and integrates it into evil."
                                       ("a." . "a)")
                                       ("1." . "1)")
                                       ("1)" . "a)"))
-      org-blank-before-new-entry
-      '((heading . t)
-        (plain-list-item . nil))
+      org-blank-before-new-entry '((heading . t)
+                                   (plain-list-item . nil))
       org-src-ask-before-returning-to-edit-buffer nil)
 ;; options:1 ends here
 
@@ -457,7 +424,8 @@ This is sensible default behaviour, and integrates it into evil."
 ;; symbols:1 ends here
 
 ;; [[file:config.org::*task states][task states:1]]
-(setq org-todo-keywords '((sequence "[ ](t)"
+(setq org-todo-keywords '((sequence
+                           "[ ](t)"
                            "[@](e)"
                            "[?](?!)"
                            "[-](-!)"

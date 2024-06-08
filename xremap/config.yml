@@ -8,18 +8,15 @@
 modmap:
   - name: global
     remap:
-      capslock:
-        held: ctrl_r
-        alone: esc
-        one_timeout_milis: 100
+      capslock: ctrl_r
 
 keymap:
   - name: browser
     application:
       only: firefox
     remap:
-      # GLOBAL NAVIGATION SCHEME (using vim browser extension)
-      C-b: C-Tab
+      # GLOBAL NAVIGATION SCHEME (+ vimium browser extension)
+      C-a: C-Tab
       C-q: c-w
       # EDITING
       c-h: backspace

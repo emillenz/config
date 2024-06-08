@@ -14,6 +14,7 @@
 - lazyload packages using ~after!~.  this keeps emacs efficent, since it now only loads the settings & packages when they are actually needed (no emacs bankruptcy).
 - i encourage you to master the tool that you are using.  this means thuroughly reading the complete documentation, keymaps for the tools you are using (eg. vertico, evil-mode, magit, leader-mode).
 - try to first fundamentally understand & master the functionality your tool offers.  then you can assess and see if a extension really provides value to you, or wether that functionality is already included.
+- i believe that customizations are personal and should not be blindly copied.  Everyone should carefully consider each customizable setting they hear about and decide for themselves whether they like it or not. Non-trivial customizations that include Lisp code should be fully understood before they are accepted, rejected, or amended to personal taste. (read the manual)
 
 * user
 #+begin_src emacs-lisp
@@ -48,10 +49,10 @@
 
 ** font
 #+begin_src emacs-lisp
-(setq doom-font                (font-spec :family "Iosevka Comfy" :size 14)
-      doom-variable-pitch-font (font-spec :family "Iosevka Comfy" :size 14)
-      doom-serif-font          (font-spec :family "Iosevka Comfy" :size 14)
-      doom-big-font            (font-spec :family "Iosevka Comfy" :size 28))
+(setq doom-font                (font-spec :family "Comic Code Ligatures" :size 12)
+      doom-variable-pitch-font (font-spec :family "Comic Code Ligatures" :size 12)
+      doom-serif-font          (font-spec :family "Comic Code Ligatures" :size 12)
+      doom-big-font            (font-spec :family "Comic Code Ligatures" :size 28))
 #+end_src
 
 ** modeline
@@ -166,7 +167,7 @@
 (map! :map 'override
       :nm "C-w" #'next-window-any-frame
       :nm "C-q" #'kill-buffer-and-window
-      :nm "C-b" #'evil-switch-to-windows-last-buffer
+      :nm "C-a" #'evil-switch-to-windows-last-buffer
       :nm "C-s" #'basic-save-buffer  ;; statistically most called command => ergonomic (& default) mapping
       :nm "C-e" #'find-file
       :nm "C-f" #'projectile-find-file
@@ -328,10 +329,10 @@ This is sensible default behaviour, and integrates it into evil."
 (vertico-flat-mode 1)
 
 (after! company
-  (setq company-minimum-prefix-length 0 ;; manually trigger
-        consult-async-min-input 0
-        company-idle-delay 0.1          ;; show immediatly (since activated manually)
-        company-tooltip-idle-delay 0.1
+  (setq company-minimum-prefix-length 0
+        consult-async-min-input 0 ;; immediate
+        company-idle-delay nil ;; manually trigger
+        company-tooltip-idle-delay 0.1 ;; faster
         company-show-quick-access t
         company-global-modes '(not
                                help-mode

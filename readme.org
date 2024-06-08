@@ -90,22 +90,23 @@ after extensive testing i found to use the light theme always & everywhere.   st
 - #ffffff and #000000 as the base are minimalist colors and are the least limiting on the range of different colors that can be use while maintaining stark contrast.
 the display brightness must be adjusted align with the ambient brightness.   thus in dim light (night), an additional source of light other than that of the monitor is required to reduce eye strain.   the eyes are more relaxed (strain less) when they do not have to focus on one point to gather light.
 
-* font: iosevka comfy
-- it is incredibly compact in width to allow a lot of code on screen, especially when viewing content side by side.
-- designed for writing code, using in terminals, and preparing technical documents.
-  - the intent is to make everything feel part of the same aesthetic, hence setting the font system-wide.
-- it was specifically designed for long terminal / editor sessions (8- hours).  it aims to reduce eye strain and help readability in the long term.  (try a light theme with a bitmap font like terminus for 8 hours.  it will be a tormenting experience! to maximamise the difficulty, do it in a dark room with the monitor’s brightness set to its maximum value.)
-- keep the fontsize as small as you can manage (and the font is sharp).
-  - working with big fontsizes, encourages bad eyesight and neckposture.
-  - makes you faster
-  - less disorientatation in the buffers
-  - less context switching
-- it is lean, thin and sharp.  this allows it to be used in all context and interfaces.
-- economical use of screen space and clarity/legibility at small sizes.
-#+begin_quote
-Iosevka Comfy optimises for inter-glyph and inter-style consistency within the overarching constraint of usability at small point sizes. The shapes are round and are designed in concert to both impose a predictable rhythm and keep characters distinct from each other.  Distinctions are drawn on the premise of contributing to the demands of the design in light of usability, without ever calling attention to themselves (as opposed to sporadic calligraphic glyphs amid an otherwise austere presentation which seem to say "look how pretty I am!").
---- protesilaos stavrou
-#+end_quote
+* [ ] include comic code
+# * font: iosevka comfy
+# - it is incredibly compact in width to allow a lot of code on screen, especially when viewing content side by side.
+# - designed for writing code, using in terminals, and preparing technical documents.
+#   - the intent is to make everything feel part of the same aesthetic, hence setting the font system-wide.
+# - it was specifically designed for long terminal / editor sessions (8- hours).  it aims to reduce eye strain and help readability in the long term.  (try a light theme with a bitmap font like terminus for 8 hours.  it will be a tormenting experience! to maximamise the difficulty, do it in a dark room with the monitor’s brightness set to its maximum value.)
+# - keep the fontsize as small as you can manage (and the font is sharp).
+#   - working with big fontsizes, encourages bad eyesight and neckposture.
+#   - makes you faster
+#   - less disorientatation in the buffers
+#   - less context switching
+# - it is lean, thin and sharp.  this allows it to be used in all context and interfaces.
+# - economical use of screen space and clarity/legibility at small sizes.
+# #+begin_quote
+# Iosevka Comfy optimises for inter-glyph and inter-style consistency within the overarching constraint of usability at small point sizes. The shapes are round and are designed in concert to both impose a predictable rhythm and keep characters distinct from each other.  Distinctions are drawn on the premise of contributing to the demands of the design in light of usability, without ever calling attention to themselves (as opposed to sporadic calligraphic glyphs amid an otherwise austere presentation which seem to say "look how pretty I am!").
+# --- protesilaos stavrou
+# #+end_quote
 
 * dependencies
 - all packages & other commands found under: [[file:setup.org][setup]].
@@ -252,19 +253,19 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 - key-repetition :: disable it.  it empowers bad habits of you holding down a key instead of moving intelligently and fast using the appropriate motion (not holding down <j/k> instead using <c-u/d>  not spamming delete, instead using <d-{motion}>
 
 ** navigational standard
-| mod+key | action                                |
-|---------+---------------------------------------|
-| g       | [g]oto (buffer/window, prompt)        |
-| q       | [q]uit (buffer/window)                |
-| e       | [e]dit (file/url/editor, path based)  |
-| f       | [f]ind (fuzzyfind: program/file)      |
-| b       | [b]ack to last buffer/tab (alternate) |
-| ;       | exec command                          |
-| n       | [n]ext completion                     |
-| p       | [p]rev completion                     |
-| 1-4     | switch to buffer/tab 1-4              |
-| tab     | complete                              |
-| spc     | leader-key                            |
+| mod+key | action                               |
+|---------+--------------------------------------|
+| g       | [g]oto (buffer/window, prompt)       |
+| q       | [q]uit (buffer/window)               |
+| e       | [e]dit (file/url/editor, path based) |
+| f       | [f]ind (fuzzyfind: program/file)     |
+| a       | [a]lterate buffer/tab                |
+| ;       | exec command                         |
+| n       | [n]ext completion                    |
+| p       | [p]rev completion                    |
+| 1-4     | switch to buffer/tab 1-4             |
+| tab     | complete                             |
+| spc     | leader-key                           |
 
 - condenses down a minimal set of universal, efficient navigational commands, which are found in basically all applications (editor, browser, terminal,..).  they will suffice 90% of all your navigational needs.
   - <ctrl> :: inside applications since it is the defacto standard & aligns with vim's navigational-ctrl-layer-keybind (and is now ergonomically bound).
@@ -273,7 +274,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 ***  workflow
 when you need to navigate to a different file/tab, this should be your order of modus-operandi ::
-1. back (alternate) buffer :: when you are alternating between 2 files/tabs or need to just jump back to the last visited buffer.  this takes the least amount of overhead and is the fastest.
+1. alternate buffer :: when you are alternating between 2 files/tabs or need to just jump back to the last visited buffer.  this takes the least amount of overhead and is the fastest.
 2. hotswitch tab [1..4] :: use each of them for a file/tmux window/page within the project you are working on (ex: tmux: [1]repl, [2] compilation, [3] manpages, emacs: [1] main.c, [2] srcfile.c, [3] makefile).  you can then navigate between these files instantly without mental overhead.  we purposefully do not allow more than 4 tabs, since that is usually all that is neede within a project.  we want to ensure that it really is frequently visited files and thus keep the overhead low.  avoid manual tab creation if possible => auto-create a tab if it doesn't exist upon focusing it. we never want visual indication for tabs.   instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.  no tablines, no statusbars.
 3. find buffer/tab :: search through the list of open buffers/tabs to switch to the one you need.
 

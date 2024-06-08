@@ -19,8 +19,8 @@ vi_mode_style = "Block"
 WINIT_X11_SCALE_FACTOR = "1" # NOTE :: same fontsize across different dpi displays
 
 [font]
-normal = {family = "Iosevka Comfy"}
-size = 10.5 # HACK :: .5 scales it properly
+normal = {family = "Comic Code Ligatures"}
+size = 8 # HACK :: 10.5 scales it properly
 
 [mouse]
 hide_when_typing = true

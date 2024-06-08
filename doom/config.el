@@ -25,10 +25,10 @@
 ;; modus-theme:1 ends here
 
 ;; [[file:config.org::*font][font:1]]
-(setq doom-font                (font-spec :family "Iosevka Comfy" :size 14)
-      doom-variable-pitch-font (font-spec :family "Iosevka Comfy" :size 14)
-      doom-serif-font          (font-spec :family "Iosevka Comfy" :size 14)
-      doom-big-font            (font-spec :family "Iosevka Comfy" :size 28))
+(setq doom-font                (font-spec :family "Comic Code Ligatures" :size 12)
+      doom-variable-pitch-font (font-spec :family "Comic Code Ligatures" :size 12)
+      doom-serif-font          (font-spec :family "Comic Code Ligatures" :size 12)
+      doom-big-font            (font-spec :family "Comic Code Ligatures" :size 28))
 ;; font:1 ends here
 
 ;; [[file:config.org::*modeline][modeline:1]]
@@ -111,7 +111,7 @@
 (map! :map 'override
       :nm "C-w" #'next-window-any-frame
       :nm "C-q" #'kill-buffer-and-window
-      :nm "C-b" #'evil-switch-to-windows-last-buffer
+      :nm "C-a" #'evil-switch-to-windows-last-buffer
       :nm "C-s" #'basic-save-buffer  ;; statistically most called command => ergonomic (& default) mapping
       :nm "C-e" #'find-file
       :nm "C-f" #'projectile-find-file
@@ -235,10 +235,10 @@ This is sensible default behaviour, and integrates it into evil."
 (vertico-flat-mode 1)
 
 (after! company
-  (setq company-minimum-prefix-length 0 ;; manually trigger
-        consult-async-min-input 0
-        company-idle-delay 0.1          ;; show immediatly (since activated manually)
-        company-tooltip-idle-delay 0.1
+  (setq company-minimum-prefix-length 0
+        consult-async-min-input 0 ;; immediate
+        company-idle-delay nil ;; manually trigger
+        company-tooltip-idle-delay 0.1 ;; faster
         company-show-quick-access t
         company-global-modes '(not
                                help-mode

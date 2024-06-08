@@ -33,7 +33,7 @@ default_orientation horizontal
 default_border pixel 2
 hide_edge_borders smart
 title_align left
-font pango: Comic Code Ligatures 8
+font pango: Comic Code Ligatures 9
 focus_on_window_activation focus
 
 # KEYBINDINGS

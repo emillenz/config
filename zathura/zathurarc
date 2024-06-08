@@ -5,7 +5,7 @@ set page-padding 1
 set selection-clipboard clipboard
 set window-title-basename true
 set statusbar-basename true
-set font "Comic Code Ligatures 10"
+set font "Comic Code Ligatures 9"
 set adjust-open "best-fit"
 set window-title-page true
 set render-loading true

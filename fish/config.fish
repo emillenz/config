@@ -38,6 +38,7 @@ alias cp "cp --recursive --verbose"
 alias yay "yay --noconfirm"
 alias irb "irb --readline"
 alias echo "echo -e"
+alias curl "curl --silent"
 
 # KEYBINDINGS
 fzf_configure_bindings --directory=\cf --history --git_log --git_status --variables --processes # NOTE :: disable useless (history already inbuilt in fish: /)

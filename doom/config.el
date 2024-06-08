@@ -183,7 +183,7 @@ This is sensible default behaviour, and integrates it into evil."
 ;; [[file:config.org::*dired (keybindings)][dired (keybindings):1]]
 (map! :map dired-mode-map :after dired
       :nm "h" #'dired-up-directory
-      :nm "l" #'dired-find-file
+      :nm "l" #'dired-open-file
       :nm "f" #'dired-goto-file
       :nm "." #'dired-omit-mode)
 
@@ -285,7 +285,7 @@ This is sensible default behaviour, and integrates it into evil."
                                 ("epub" . "zathura")
                                 ("pdf"  . "zathura"))
         dired-recursive-copies 'always
-        dired-recursive-deletes 'top
+        dired-recursive-deletes 'always
         global-auto-revert-non-file-buffers t
         dired-no-confirm '(uncompress move copy)
         dired-omit-files "^\\..*$"))

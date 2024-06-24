@@ -90,18 +90,22 @@ after extensive testing i found to use the light theme always & everywhere.   st
 - #ffffff and #000000 as the base are minimalist colors and are the least limiting on the range of different colors that can be use while maintaining stark contrast.
 the display brightness must be adjusted align with the ambient brightness.   thus in dim light (night), an additional source of light other than that of the monitor is required to reduce eye strain.   the eyes are more relaxed (strain less) when they do not have to focus on one point to gather light.
 
-* font: comic code
-- has incredibly good legibility due to the slightly irregular, but distinctly slanted characters. (most importantly at small sizes.) and is just easy to read overall.
-- it works well anywhere. /s
-- it is an unapologetic admittance of comic sans’s positives and a literal manifestation of “code like nobody’s watching”.
-- the fundamental concept: sometimes, professional appearance is exactly what you don’t want. make code less intimidating to humans and thus easier to comprehend.
-- it is designed by typographer toshi omagari.
-
-** comic code is the toyota corolla of cars
-- you can put comic code in every color, ever background, and it looks good.
-- imagine using this font in business emails, contracts, death certificates eviction notices, bank statements and university lectures, thesises or mathematical proofs. its ugly, its childish and juvenile, it looks like a worn out couch with beer stains on it in a trailer park. and this ridiculousness is exactly why i fucking love it. it does things differently and makes people smile because of the absurdity.
-- comic code is the crocs of fonts. it is ugly, it is childish, it is often colourful, it looks soft and curved and strange. it is the antithesis to all of the lovely liquid fonts out there, a wonky alternative to the minimal clean helvetica of the world. it is also a breath of childhood innocence against the seriousness of serif-based fonts like times new roman or georgia.
-
+* font: iosevka comfy
+ it is incredibly compact in width to allow a lot of code on screen, especially when viewing content side by side.
+ designed for writing code, using in terminals, and preparing technical documents.
+  - the intent is to make everything feel part of the same aesthetic, hence setting the font system-wide.
+ it was specifically designed for long terminal / editor sessions (8- hours).  it aims to reduce eye strain and help readability in the long term.  (try a light theme with a bitmap font like terminus for 8 hours.  it will be a tormenting experience! to maximamise the difficulty, do it in a dark room with the monitor’s brightness set to its maximum value.)
+ keep the fontsize as small as you can manage (and the font is sharp).
+  - working with big fontsizes, encourages bad eyesight and neckposture.
+  - makes you faster
+  - less disorientatation in the buffers
+  - less context switching
+ it is lean, thin and sharp.  this allows it to be used in all context and interfaces.
+ economical use of screen space and clarity/legibility at small sizes.
+#+begin_quote
+Iosevka Comfy optimises for inter-glyph and inter-style consistency within the overarching constraint of usability at small point sizes. The shapes are round and are designed in concert to both impose a predictable rhythm and keep characters distinct from each other.  Distinctions are drawn on the premise of contributing to the demands of the design in light of usability, without ever calling attention to themselves (as opposed to sporadic calligraphic glyphs amid an otherwise austere presentation which seem to say "look how pretty I am!").
+ --- protesilaos stavrou
+#+end_quote
 
 * dependencies
 - all packages & other commands found under: [[file:setup.org][setup]].
@@ -238,7 +242,7 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 * keybindings
 ** general notes
 - <ctrl/esc> :: mapped to <capslock> this greatly increases ergonomics and speed for all ctrl-bindings (even though we don't use emacs, vim still makes use of them all the time too (and other apps like the shell also)).  hold down for <ctrl>, single press for <esc>.
-  - when bill-joy orignially developed VI, the terminal's keyboard, had <esc> on todays <tab> and <ctrl> on <caps>.  this is where (at least) <ctrl> should have always stayed at.
+  - when bill-joy orignially developed VI, the terminal's keyboard, had <esc> on todays <tab> and <ctrl> on <caps>.  this is where <ctrl> should have always stayed at.
 - deleting characters :: make using <c-h/w/u> instead of <backspace> a habit.  it is more ergonomic and faster than using the incredibly unergonomic and hard to reach <backspace>.  hence we implement these bindings in all apps.
 - no vim layer :: we purposefully do not implement a vim-navigation layer globally, since if you are doing more than just typing something into a prompt, you should just use ~emacs-everywhere~ instead.  the implemented keybinds are consistent with vim's insert state and provide the most useful deletion commands when typing into a prompt.
 - no homerowmods :: they greatly increase the complexity of the keybinding layer's and introduce unneccessary mental overhead.  additionally and most importantly they cause a delay in typing the actual character which is absolutely inacceptable.  (slow's you down, bottlenecking your typing speed)

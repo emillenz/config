@@ -25,10 +25,10 @@
 ;; modus-theme:1 ends here
 
 ;; [[file:config.org::*font][font:1]]
-(setq doom-font                (font-spec :family "Comic Code Ligatures" :size 12)
-      doom-variable-pitch-font (font-spec :family "Comic Code Ligatures" :size 12)
-      doom-serif-font          (font-spec :family "Comic Code Ligatures" :size 12)
-      doom-big-font            (font-spec :family "Comic Code Ligatures" :size 28))
+(setq doom-font                (font-spec :family "Iosevka Comfy" :size 13)
+      doom-variable-pitch-font (font-spec :family "Iosevka Comfy" :size 13)
+      doom-serif-font          (font-spec :family "Iosevka Comfy" :size 13)
+      doom-big-font            (font-spec :family "Iosevka Comfy" :size 28))
 ;; font:1 ends here
 
 ;; [[file:config.org::*modeline][modeline:1]]
@@ -92,7 +92,10 @@
 ;; misc options:1 ends here
 
 ;; [[file:config.org::*leader (\[\[kbd:SPC\]\[SPC\]\], \[\[kbd:,\]\[,\]\])][leader ([[kbd:SPC][SPC]], [[kbd:,][,]]):1]]
-(setq doom-localleader-key ",")
+(setq doom-leader-key "SPC"
+      doom-leader-alt-key "C-SPC"
+      doom-localleader-key ","
+      doom-localleader-alt-key "C-,")
 
 (map! :leader
       (:prefix "s"

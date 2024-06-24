@@ -33,10 +33,10 @@ default_orientation horizontal
 default_border pixel 2
 hide_edge_borders smart
 title_align left
-font pango: Comic Code Ligatures 9
+font pango: Iosevka Comfy 10
 focus_on_window_activation focus
 
-# KEYBINDINGS
+# KEYBINDINGS (mod1 = alt, ergonomic)
 set $MOD Mod1
 floating_modifier $MOD
 $MAP --release button2 kill
@@ -67,8 +67,8 @@ $MAP $MOD+bracketright $CMD playerctl next
 $MAP $MOD+bracketleft  $CMD playerctl previous
 $MAP $MOD+backslash    $CMD playerctl play-pause
 
-$MAP $MOD+l         focus next
-$MAP $MOD+h         focus prev
+$MAP $MOD+n         focus next
+$MAP $MOD+p         focus prev
 $MAP $MOD+q         kill
 $MAP $MOD+g         $CMD rofi -show window
 $MAP $MOD+semicolon $CMD rofi -show drun
@@ -78,8 +78,7 @@ $MAP $MOD+a         workspace back_and_forth
 
 # WORKSPACES
 for_window [urgent="latest"] focus
-# random window -> 1
-for_window [all] $MV 1, focus, title_window_icon no
+for_window [all] focus , title_window_icon yes
 
 set $WS_CMD "cmd"
 workspace $WS_CMD output primary
@@ -123,8 +122,6 @@ workspace $WS_MUSIC output primary
 $MAP $MOD+m workspace $WS_MUSIC
 $MAP $MOD+shift+m $CMD firefox --new-window https://spotify.com
 for_window [class="firefox" title="Spotify"] $MV $WS_MUSIC, focus
-
-$MAP $MOD+1 workspace 1
 
 $MAP $MOD+f mode "find-file"
 mode "find-file" {

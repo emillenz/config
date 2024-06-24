@@ -9,7 +9,7 @@ configuration {
         case-insensitive: true;
         matching: "glob";
         terminal : "alacritty";
-        font     : "Iosevka Nerd Font 10";
+        font     : "Iosevka Comfy 10";
 	    modi: "drun,run,window";
         show-icons: true;
         display-drun: "  drun";
@@ -37,7 +37,7 @@ window {
         /* properties for all widgets */
         enabled:                     true;
         margin:                      0px;
-        padding:                     0px;
+        padding:                     0px 0px 0px 8px;
         border:                      1px 0px 0px 0px;
         border-radius:               0px;
         border-color:                @background-alt;
@@ -80,13 +80,13 @@ inputbar {
 
 prompt {
         enabled:                     true;
-        padding:                     0px 0px 0px 8px;
+        padding:                     0px 0px 0px 0px;
         background-color:            inherit;
         text-color:                  @prompt;
 }
 textbox-prompt-colon {
         enabled:                     true;
-        padding:                     0px;
+        padding:                     0px 0px 0px 0px;
         expand:                      false;
         str:                         " > ";
         background-color:            inherit;

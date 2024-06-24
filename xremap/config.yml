@@ -8,7 +8,10 @@
 modmap:
   - name: global
     remap:
-      capslock: ctrl_r
+      capslock:
+        held: ctrl_r
+        alone: esc
+        one_timeout_milis: 100
 
 keymap:
   - name: browser

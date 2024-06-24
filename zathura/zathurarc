@@ -1,3 +1,11 @@
+# ---
+# title:  zathura document viewer configuration file
+# author: emil lenz
+# email:  emillenz@protonmail.com
+# date:   2023-11-22
+# ---
+
+
 set sandbox none
 set statusbar-h-padding 0
 set statusbar-v-padding 0
@@ -5,7 +13,7 @@ set page-padding 1
 set selection-clipboard clipboard
 set window-title-basename true
 set statusbar-basename true
-set font "Comic Code Ligatures 9"
+set font "Iosevka Comfy 10"
 set adjust-open "best-fit"
 set window-title-page true
 set render-loading true

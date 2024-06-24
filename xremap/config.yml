@@ -9,9 +9,14 @@ modmap:
   - name: global
     remap:
       capslock:
-        held: ctrl_r
+        held: ctrl_l
         alone: esc
         one_timeout_milis: 100
+      ctrl_l: # hack :: support physical ctrl -> caps remaps
+        held: ctrl_l
+        alone: esc
+        one_timeout_milis: 100
+
 
 keymap:
   - name: browser

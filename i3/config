@@ -154,14 +154,14 @@ mode "quit" {
 }
 
 # MODUS-VIVENDI THEME
-set $BG          '#ffffff'
+set $BG          #ffffff
 set $FG          #000000
 set $MODELINE_BG #c8c8c8
 set $BORDER      #9f9f9f
 set $ACTIVE_BG   #c0deff
 set $URGENT_FG   #7f0000
 
-# element               $box       $bg          $fg $mark $border
+# element               $border    $bg          $fg $mark $border (child)
 client.focused          $ACTIVE_BG $ACTIVE_BG   $FG $FG   $ACTIVE_BG
 client.focused_inactive $BORDER    $MODELINE_BG $FG $FG   $BORDER
 client.unfocused        $BORDER    $MODELINE_BG $FG $FG   $BORDER
@@ -170,9 +170,9 @@ client.background       $BG
 
 # MODELINE
 bar {
-        mode hide
-        hidden_state hide
-        workspace_buttons no
+        mode dock # alt :: hide
+        # hidden_state hide
+        workspace_buttons yes
         binding_mode_indicator yes
         modifier none
         tray_output primary
@@ -183,7 +183,11 @@ bar {
                 background $MODELINE_BG
                 statusline $FG
                 separator  $FG
-                # class      $border      $bg          $fg
-                binding_mode $MODELINE_BG $MODELINE_BG $FG
+                #class             border     bg           fg
+                binding_mode       $ACTIVE_BG $ACTIVE_BG   $FG
+                focused_workspace  $ACTIVE_BG $ACTIVE_BG   $FG
+                active_workspace   $BORDER    $MODELINE_BG $FG
+                inactive_workspace $BORDER    $MODELINE_BG $FG
+                urgent_workspace   $URGENT_FG $URGENT_FG   $FG
         }
 }

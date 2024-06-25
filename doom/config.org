@@ -20,6 +20,7 @@
 #+begin_src emacs-lisp
 (setq user-full-name "emil lenz"
       user-mail-address "emillenz@protonmail.com")
+(defvar z-org-literature-dir "~/Documents/literature/notes/")
 #+end_src
 
 * ui
@@ -147,6 +148,8 @@
       (:prefix "s"
                "k" #'devdocs-lookup
                "g" #'occur)
+      (:prefix "f"
+               "F" #'+vertico/consult-fd-or-find) ;; HACK :: fix original binding
       (:prefix "c"
                "r" #'lsp-rename
                (:prefix "'"
@@ -225,7 +228,17 @@ goal :: make vim's bindings even more mnemonic/sane/sensible/efficient and impro
       :nmv  "+"   #'evil-numbers/inc-at-pt ;; more sensible than C-x/C-a
       :nmv  "-"   #'evil-numbers/dec-at-pt
       :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
-      :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental) ;; more powerful '/' => preview matches interactively (better than vim's: C-g/C-t in search-mode)
+      :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental ;; more powerful '/' => preview matches interactively (better than vim's: C-g/C-t in search-mode)
+      :v    "s"   #'evil-snipe-s
+      :v    "S"   #'evil-snipe-S
+      :nmv  "g<"  #'evil-lion-left
+      :nmv  "g>"  #'evil-lion-right
+      :nm   "gs"   #'evil-surround-region)
+
+(map! :map evil-surround-mode-map :after evil-surround ;; HACK :: override evil-snipe
+      :o "s" #'evil-snipe-s
+      :o "S" #'evil-snipe-S
+      :o "gs" #'evil-surround-edit)
 #+end_src
 
 #+begin_src emacs-lisp
@@ -239,12 +252,6 @@ This is sensible default behaviour, and integrates it into evil."
               (car consult--line-history))))
     (push str evil-ex-search-history)
     (setq evil-ex-search-pattern (list str t t))))
-#+end_src
-
-*** Alignment
-#+begin_src emacs-lisp
-(map! :nmv "g<" #'evil-lion-left
-      :nmv "g>" #'evil-lion-right)
 #+end_src
 
 ** org (keybindings)
@@ -283,7 +290,6 @@ This is sensible default behaviour, and integrates it into evil."
 * editor
 #+begin_src emacs-lisp
 (evil-surround-mode 1)
-
 (after! evil
   (setq evil-want-fine-undo nil
         evil-ex-substitute-global t
@@ -526,52 +532,54 @@ In short, 8-char indents make things easier to read, and have the added benefit 
 - archive all done tasks in current file/headings with org-agenda bulk action.
 - each file gets its own entry in ~~/archive/org~
 #+begin_src emacs-lisp
-  (add-hook! 'org-mode-hook '(visual-line-mode
-                              org-fragtog-mode
-                              rainbow-mode
-                              laas-mode
-                              +org-pretty-mode
-                              org-appear-mode))
+(add-hook! 'org-mode-hook '(visual-line-mode
+                            org-fragtog-mode
+                            rainbow-mode
+                            laas-mode
+                            +org-pretty-mode
+                            org-appear-mode))
+(setq-hook! 'org-mode-hook
+  warning-minimum-level :error) ;; prevent frequent popups of *warning* buffer
 
-  (setq org-directory "~/Documents/org/"
-        org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
-        org-use-property-inheritance t
-        org-reverse-note-order t
-        org-startup-with-latex-preview t
-        org-startup-with-inline-images t
-        org-startup-indented t
-        org-startup-numerated t
-        org-startup-align-all-tables t
-        org-list-allow-alphabetical t
-        org-tags-column 0
-        org-fold-catch-invisible-edits 'smart
-        org-refile-use-outline-path 'full-file-path
-        org-refile-allow-creating-parent-nodes 'confirm
-        org-use-sub-superscripts '{}
-        org-fontify-quote-and-verse-blocks t
-        org-fontify-whole-block-delimiter-line t
-        doom-themes-org-fontify-special-tags t
-        org-ellipsis "…"
-        org-num-max-level 3
-        org-hide-leading-stars t
-        org-appear-autoemphasis t
-        org-appear-autosubmarkers t
-        org-appear-autolinks t
-        org-appear-autoentities t
-        org-appear-autokeywords t
-        org-appear-inside-latex nil
-        org-hide-emphasis-markers t
-        org-pretty-entities t
-        org-pretty-entities-include-sub-superscripts t
-        org-list-demote-modify-bullet '(("-"  . "-")
-                                        ("+"  . "+")
-                                        ("*"  . "-")
-                                        ("a." . "a)")
-                                        ("1." . "1)")
-                                        ("1)" . "a)"))
-        org-blank-before-new-entry '((heading . t)
-                                     (plain-list-item . nil))
-        org-src-ask-before-returning-to-edit-buffer nil)
+(setq org-directory "~/Documents/org/"
+      org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
+      org-use-property-inheritance t
+      org-reverse-note-order t
+      org-startup-with-latex-preview t
+      org-startup-with-inline-images t
+      org-startup-indented t
+      org-startup-numerated t
+      org-startup-align-all-tables t
+      org-list-allow-alphabetical t
+      org-tags-column 0
+      org-fold-catch-invisible-edits 'smart
+      org-refile-use-outline-path 'full-file-path
+      org-refile-allow-creating-parent-nodes 'confirm
+      org-use-sub-superscripts '{}
+      org-fontify-quote-and-verse-blocks t
+      org-fontify-whole-block-delimiter-line t
+      doom-themes-org-fontify-special-tags t
+      org-ellipsis "…"
+      org-num-max-level 3
+      org-hide-leading-stars t
+      org-appear-autoemphasis t
+      org-appear-autosubmarkers t
+      org-appear-autolinks t
+      org-appear-autoentities t
+      org-appear-autokeywords t
+      org-appear-inside-latex nil
+      org-hide-emphasis-markers t
+      org-pretty-entities t
+      org-pretty-entities-include-sub-superscripts t
+      org-list-demote-modify-bullet '(("-"  . "-")
+                                      ("+"  . "+")
+                                      ("*"  . "-")
+                                      ("a." . "a)")
+                                      ("1." . "1)")
+                                      ("1)" . "a)"))
+      org-blank-before-new-entry '((heading . t)
+                                   (plain-list-item . nil))
+      org-src-ask-before-returning-to-edit-buffer nil)
 #+end_src
 
 ** symbols
@@ -722,7 +730,7 @@ In short, 8-char indents make things easier to read, and have the added benefit 
 #+begin_src emacs-lisp
   (add-hook! 'org-agenda-mode-hook #'org-super-agenda-mode)
 
-  (setq org-agenda-files (directory-files-recursively org-directory ".*\.org" t)
+  (setq org-agenda-files (list org-directory z-org-literature-dir "~/Documents/compass")
         org-agenda-skip-scheduled-if-done t
         org-agenda-sticky t
         org-agenda-skip-deadline-if-done t
@@ -780,8 +788,6 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
 - prepending :: if recent item's are of higher relevance
 - appending :: for hierarchical order eg. book-quotes ordered from begin -> end
 #+begin_src emacs-lisp
-  (defvar z-org-literature-dir "~/Documents/literature/notes/")
-
   (defvar z-org-journal-dir (file-name-concat "~/Documents/journal/"))
 
   (defun z-doct-journal-file (&optional time)
@@ -975,7 +981,7 @@ PARENT-PATH :: nil | used for recursion"
 
                             ;; NOTE :: make sure to complete the literature-task-headline in order to log closing time.
                             ("summarize"
-                             :keys "c"
+                             :keys "s"
                              :headline "summary"
                              :unnarrowed t
                              :type plain

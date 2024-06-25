@@ -15,10 +15,10 @@ set $MAP bindsym
 set $CMD exec --no-startup-id
 set $SCREENSHOT_FULL scrot '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' && dunstify "scrot" "saved in: ~/Pictures/screenshots"
 set $SCREENSHOT_SEL scrot --select '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' && dunstify "scrot" "saved in: ~/Pictures/screenshots"
-set $VOL_INC pamixer --unmute --increase 5 && dunstify --replace 69 "vol: $(pamixer --get-volume-human)"
-set $VOL_DEC pamixer --unmute --decrease 5 && dunstify --replace 69 "vol: $(pamixer --get-volume-human)"
-set $VOL_MUTE pamixer --toggle-mute && dunstify --replace 69 "vol: $(pamixer --get-volume-human)" $ESC
-set $VOL_MIC_MUTE pamixer --default-source --toggle-mute && dunstify --replace 69 "mic-mute: $(pamixer --default-source --get-mute)" $ESC
+set $VOL_INC pamixer --unmute --increase 5
+set $VOL_DEC pamixer --unmute --decrease 5
+set $VOL_MUTE pamixer --toggle-mute
+set $VOL_MIC_MUTE pamixer --default-source --toggle-mute
 set $SYS_SLEEP i3lock --color ffffff && systemctl suspend
 set $SYS_SCREENOFF sleep 1 && xset dpms force off
 
@@ -184,10 +184,10 @@ bar {
                 statusline $FG
                 separator  $FG
                 #class             border     bg           fg
-                binding_mode       $ACTIVE_BG $ACTIVE_BG   $FG
-                focused_workspace  $ACTIVE_BG $ACTIVE_BG   $FG
-                active_workspace   $BORDER    $MODELINE_BG $FG
-                inactive_workspace $BORDER    $MODELINE_BG $FG
-                urgent_workspace   $URGENT_FG $URGENT_FG   $FG
+                binding_mode       $BORDER $ACTIVE_BG   $FG
+                focused_workspace  $BORDER $ACTIVE_BG   $FG
+                active_workspace   $BORDER $MODELINE_BG $FG
+                inactive_workspace $BORDER $MODELINE_BG $FG
+                urgent_workspace   $BORDER $URGENT_FG   $FG
         }
 }

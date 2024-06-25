@@ -32,7 +32,7 @@ set -gx FZF_DEFAULT_OPTS --reverse --height 16 --color light --scheme path
 alias e "emacsclient -nw"
 alias cat bat
 alias rm "rm --recursive --verbose"
-alias du "du --human-readeable"
+alias du "du --human-readable"
 alias mv "mv --verbose"
 alias cp "cp --recursive --verbose"
 alias yay "yay --noconfirm"

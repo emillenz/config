@@ -58,16 +58,11 @@ It may looks ridiculous to the outside observer, but efficiency it’s about eli
    - take math as example, its easier to read equations if they are short and concise on newline, rather than in one big equation
    - coding: typically one statement per line
 
-** statusbar: none
-- a wm statusbar unneccessarily take up screen real-estate and usually just causes a distraction rather than actually being useful.
-  - no need for context about the current tab (uniqe per app & navigation is static (fixed bindings))
-  - statusbars/tabbars make sense for tmux/browser/emacs, because we need the information as in which mode/context we are in.
-- for full immersion, reduced distraction and enhanced focus, disable it and work fullscreen.
-  - no overlapping functionality.  ex:: you wear a watch (if not, you should) => don't need time & date displayed, and have timer's at hand.
-  - you always know what window you are looking at by its contents.
-  - you don't need visual indication of how to navigate to tabs, nor interact with the statusbar (ex: click something) => each specific tab is always on the same keybind.
-- the aestetic and efficiency of a decluttered and maximized screen is (imo) unmatched.
-- the theory is to make switching so ergonomic and instantaneous, engrained into muscle memory, that you are faster that people using, say 2 monitors.
+** modeline / tabbar
+- modelines are useful (browser / emacs) as they indicate in which mode/context we are in.
+- you don't need visual indication of how to navigate to tabs (tmux/emacs), each specific tab is always on the same keybind, and if not it's faster to search for it than visually navigate/select some list / menu
+- the aestetic and efficiency of a decluttered and maximized screen is unmatched.
+- the aim is to make switching so ergonomic and instantaneous, engrained into muscle memory, that you are faster that people using, say 2 monitors.
 
 ** The mouse
 #+begin_quote

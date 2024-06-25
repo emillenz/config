@@ -1,6 +1,7 @@
 ;; [[file:config.org::*user][user:1]]
 (setq user-full-name "emil lenz"
       user-mail-address "emillenz@protonmail.com")
+(defvar z-org-literature-dir "~/Documents/literature/notes/")
 ;; user:1 ends here
 
 ;; [[file:config.org::*misc][misc:1]]
@@ -101,6 +102,8 @@
       (:prefix "s"
                "k" #'devdocs-lookup
                "g" #'occur)
+      (:prefix "f"
+               "F" #'+vertico/consult-fd-or-find) ;; HACK :: fix original binding
       (:prefix "c"
                "r" #'lsp-rename
                (:prefix "'"
@@ -151,7 +154,17 @@ Usage: 'evil-set-mark' <uppercase> 'goto-global-mark' <lowercase>.  (faster/more
       :nmv  "+"   #'evil-numbers/inc-at-pt ;; more sensible than C-x/C-a
       :nmv  "-"   #'evil-numbers/dec-at-pt
       :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
-      :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental) ;; more powerful '/' => preview matches interactively (better than vim's: C-g/C-t in search-mode)
+      :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental ;; more powerful '/' => preview matches interactively (better than vim's: C-g/C-t in search-mode)
+      :v    "s"   #'evil-snipe-s
+      :v    "S"   #'evil-snipe-S
+      :nmv  "g<"  #'evil-lion-left
+      :nmv  "g>"  #'evil-lion-right
+      :nm   "gs"   #'evil-surround-region)
+
+(map! :map evil-surround-mode-map :after evil-surround ;; HACK :: override evil-snipe
+      :o "s" #'evil-snipe-s
+      :o "S" #'evil-snipe-S
+      :o "gs" #'evil-surround-edit)
 ;; vim editing:1 ends here
 
 ;; [[file:config.org::*vim editing][vim editing:2]]
@@ -166,11 +179,6 @@ This is sensible default behaviour, and integrates it into evil."
     (push str evil-ex-search-history)
     (setq evil-ex-search-pattern (list str t t))))
 ;; vim editing:2 ends here
-
-;; [[file:config.org::*Alignment][Alignment:1]]
-(map! :nmv "g<" #'evil-lion-left
-      :nmv "g>" #'evil-lion-right)
-;; Alignment:1 ends here
 
 ;; [[file:config.org::*org (keybindings)][org (keybindings):1]]
 (map! :localleader :map org-mode-map :after org
@@ -201,7 +209,6 @@ This is sensible default behaviour, and integrates it into evil."
 
 ;; [[file:config.org::*editor][editor:1]]
 (evil-surround-mode 1)
-
 (after! evil
   (setq evil-want-fine-undo nil
         evil-ex-substitute-global t
@@ -358,6 +365,8 @@ This is sensible default behaviour, and integrates it into evil."
                             laas-mode
                             +org-pretty-mode
                             org-appear-mode))
+(setq-hook! 'org-mode-hook
+  warning-minimum-level :error) ;; prevent frequent popups of *warning* buffer
 
 (setq org-directory "~/Documents/org/"
       org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
@@ -487,7 +496,7 @@ This is sensible default behaviour, and integrates it into evil."
 ;; [[file:config.org::*agenda][agenda:1]]
 (add-hook! 'org-agenda-mode-hook #'org-super-agenda-mode)
 
-(setq org-agenda-files (directory-files-recursively org-directory ".*\.org" t)
+(setq org-agenda-files (list org-directory z-org-literature-dir "~/Documents/compass")
       org-agenda-skip-scheduled-if-done t
       org-agenda-sticky t
       org-agenda-skip-deadline-if-done t
@@ -527,9 +536,7 @@ This is sensible default behaviour, and integrates it into evil."
 ;; clock:1 ends here
 
 ;; [[file:config.org::*capture templates][capture templates:1]]
-(defvar z-org-literature-dir "~/Documents/literature/notes/")
-
-  (defvar z-org-journal-dir (file-name-concat "~/Documents/journal/"))
+(defvar z-org-journal-dir (file-name-concat "~/Documents/journal/"))
 
   (defun z-doct-journal-file (&optional time)
     "TIME :: time in day of note to return. (default: today)"
@@ -722,7 +729,7 @@ PARENT-PATH :: nil | used for recursion"
 
                             ;; NOTE :: make sure to complete the literature-task-headline in order to log closing time.
                             ("summarize"
-                             :keys "c"
+                             :keys "s"
                              :headline "summary"
                              :unnarrowed t
                              :type plain

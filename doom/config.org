@@ -229,16 +229,10 @@ goal :: make vim's bindings even more mnemonic/sane/sensible/efficient and impro
       :nmv  "-"   #'evil-numbers/dec-at-pt
       :nmv  "g+"  #'evil-numbers/inc-at-pt-incremental
       :nmv  "g-"  #'evil-numbers/dec-at-pt-incremental ;; more powerful '/' => preview matches interactively (better than vim's: C-g/C-t in search-mode)
-      :v    "s"   #'evil-snipe-s
-      :v    "S"   #'evil-snipe-S
       :nmv  "g<"  #'evil-lion-left
       :nmv  "g>"  #'evil-lion-right
-      :nm   "gs"   #'evil-surround-region)
-
-(map! :map evil-surround-mode-map :after evil-surround ;; HACK :: override evil-snipe
-      :o "s" #'evil-snipe-s
-      :o "S" #'evil-snipe-S
-      :o "gs" #'evil-surround-edit)
+      :nmv  "s"   #'evil-surround-region ;; vim's <s/S> is useless (same as <x> and <C>)
+      :nmv  "S"   #'evil-Surround-region)
 #+end_src
 
 #+begin_src emacs-lisp
@@ -296,8 +290,7 @@ This is sensible default behaviour, and integrates it into evil."
         evil-want-C-i-jump t
         evil-want-C-h-delete t
         evil-want-minibuffer t ;; don't loose all your power's in the minibuffer
-        evil-org-use-additional-insert nil
-        evil-snipe-scope 'visible))
+        evil-org-use-additional-insert nil))
 
 ;; HACK :: make 'C-h' work as backspace correctly everywhere (like vim/shell)
 (define-key key-translation-map (kbd "C-h") (kbd "DEL"))

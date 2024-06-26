@@ -12,8 +12,33 @@ require 'notify-send'
 require 'English'
 
 ROFI_CMD = %w[rofi -dmenu -no-custom -i -p bluetooth-connect].freeze
+ROFI_ACTION_CMD = %w[rofi -dmenu -no-custom -i -p action].freeze
+BTCTL_ACTIONS = %i[connect off].freeze
 
 def main
+        action = action()
+        case action
+        when :connect
+                bt_connect
+        when :off
+                bt_off
+        else
+                exit(1)
+        end
+end
+
+def bt_off
+        `bluetoothctl power off`
+        NotifySend.send('bluetooth off')
+end
+
+def action
+        action, status = Open3.capture2(*ROFI_ACTION_CMD, stdin_data: BTCTL_ACTIONS.join("\n"))
+        exit(1) unless status.success?
+        action.chomp.to_sym
+end
+
+def bt_connect
         `bluetoothctl power on`
         devices = `bluetoothctl devices`.split("\n").map do |line|
                 words = line.split
@@ -21,14 +46,14 @@ def main
                 addr = words[1]
                 [name, addr]
         end.to_h
-        read, status = Open3.capture2(*ROFI_CMD, stdin_data: devices.keys.join("\n"))
+        device, status = Open3.capture2(*ROFI_CMD, stdin_data: devices.keys.join("\n"))
         exit(1) unless status.success?
 
-        device_addr = devices[read.chomp]
+        device_addr = devices[device.chomp]
         `bluetoothctl connect #{device_addr}`
         exit(1) unless $CHILD_STATUS.success?
 
-        NotifySend.send('bluetooth connected', read)
+        NotifySend.send('bluetooth connected', device)
 end
 
 main if __FILE__ == $PROGRAM_NAME

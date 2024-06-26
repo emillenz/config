@@ -36,12 +36,12 @@ title_align left
 font pango: Iosevka Comfy 10
 focus_on_window_activation focus
 
-# KEYBINDINGS (mod1 = alt, ergonomic)
+# KEYBINDINGS (mod1 = alt)
 set $MOD Mod1
 floating_modifier $MOD
 $MAP --release button2 kill
 $MAP --whole-window $MOD+button2 floating toggle
-# disable mousewheel function on titlebar (no accidental window switching)
+# disable mousewheel functionality on titlebar (no accidental window switching)
 $MAP button4 nop
 $MAP button5 nop
 
@@ -77,7 +77,7 @@ $MAP $MOD+Return    move workspace to output next
 $MAP $MOD+a         workspace back_and_forth
 
 # WORKSPACES
-# NOTE :: titles evenly padded: %5s
+# ws-titles have consistent width in statusbar: %5s
 for_window [urgent="latest"] focus
 for_window [all] focus , title_window_icon yes
 
@@ -105,7 +105,7 @@ $MAP $MOD+e workspace $WS_EDIT
 $MAP $MOD+shift+e $CMD emacsclient --reuse-frame || emacs --daemon && emacsclient --reuse-frame
 for_window [class="Emacs|Eclipse"] $MV $WS_EDIT, focus
 
-# NOTE :: copy link to clipboard > open mpv with binding to view there
+# copy media link to clipboard (ex: from browser) => open mpv view
 set $WS_VIDEO "video"
 workspace $WS_VIDEO output primary
 $MAP $MOD+v workspace $WS_VIDEO
@@ -136,11 +136,12 @@ mode "find-file" {
 $MAP $MOD+space mode "leader"
 mode "leader" {
         $MAP $MOD+a           $CMD $BIN/audio-output-menu $ESC
+        $MAP $MOD+b           $CMD bluetooth-conn-menu $ESC
+        $MAP $MOD+shift+b     $CMD bluetoothctl power off
         $MAP --release $MOD+s $CMD $SCREENSHOT_SEL $ESC
         $MAP $MOD+shift+s     $CMD $SCREENSHOT_FULL $ESC
         $MAP $MOD+k           $CMD $BIN/killprocess-menu $ESC
         $MAP $MOD+d           $CMD fd . ~/.screenlayout | $ROFI 'screen-layout' | sh $ESC
-        $MAP $MOD+q           mode "quit"
         $EXIT
 }
 
@@ -171,8 +172,7 @@ client.background       $BG
 
 # MODELINE
 bar {
-        mode dock # alt :: hide
-        # hidden_state hide
+        mode dock
         workspace_buttons yes
         binding_mode_indicator yes
         modifier none

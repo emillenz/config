@@ -142,14 +142,14 @@ Usage: 'evil-set-mark' <uppercase> 'goto-global-mark' <lowercase>.  (faster/more
 
 ;; [[file:config.org::*vim editing][vim editing:1]]
 (map! :after evil
-      :n    "C-j" #'newline-and-indent ;; useful inverse of 'J'
+      :n    "C-j" #'newline-and-indent  ;; useful inverse of 'J'
       :n    "C-l" #'recenter-top-bottom ;; consistent with shell
       :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
       :nmvo "^"   #'evil-first-non-blank-of-visual-line
       :nmvo "$"   #'evil-end-of-visual-line
       :nmv  "&"   #'evil-ex-repeat ;; more extensible than normal '&'
-      :nmv  "("   #'backward-sexp ;; more useful than navigation by sentences
+      :nmv  "("   #'backward-sexp  ;; more useful than navigation by sentences
       :nmv  ")"   #'forward-sexp
       :nmv  "+"   #'evil-numbers/inc-at-pt ;; more sensible than C-x/C-a
       :nmv  "-"   #'evil-numbers/dec-at-pt
@@ -159,9 +159,7 @@ Usage: 'evil-set-mark' <uppercase> 'goto-global-mark' <lowercase>.  (faster/more
       :nmv  "g>"  #'evil-lion-right
       :nmv  "s"   #'evil-surround-region ;; vim's <s/S> is useless (same as <x> and <C>)
       :nmv  "S"   #'evil-Surround-region)
-;; vim editing:1 ends here
 
-;; [[file:config.org::*vim editing][vim editing:2]]
 (defadvice! z-update-evil-search-reg ()
   "Update evil search register after jumping to a line with
   `+default/search-buffer' to be able to jump to next/prev matches.
@@ -172,7 +170,7 @@ This is sensible default behaviour, and integrates it into evil."
               (car consult--line-history))))
     (push str evil-ex-search-history)
     (setq evil-ex-search-pattern (list str t t))))
-;; vim editing:2 ends here
+;; vim editing:1 ends here
 
 ;; [[file:config.org::*org (keybindings)][org (keybindings):1]]
 (map! :localleader :map org-mode-map :after org

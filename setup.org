@@ -67,7 +67,7 @@ git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
 
 * gui apps & packages
 #+begin_src sh
-yay --noconfirm --sync i3 i3lock zathura zathura-pdf-mupdf arandr mpv yt-dlp brightnessctl unclutter firefox playerctl bluetoothctl xorg-xprop xremap-x11-bin mpd dunst nsxiv maim xorg-xset xorg-xsetroot batsignal pamixer tlp rofi
+yay --noconfirm --sync i3 i3lock zathura zathura-pdf-mupdf arandr mpv yt-dlp brightnessctl unclutter firefox playerctl bluetoothctl xorg-xprop xremap-x11-bin mpd dunst nsxiv maim xorg-xset xorg-xsetroot batsignal pamixer rofi auto-cpufreq
 #+end_src
 
 ** enable daemons
@@ -75,11 +75,17 @@ yay --noconfirm --sync i3 i3lock zathura zathura-pdf-mupdf arandr mpv yt-dlp bri
 sudo systemctl enable sshd
 sudo systemctl enable mpd
 sudo systemctl enable bluetooth
-sudo systemctl enable tlp.service
 #+end_src
 
 ** obs & nvidia drivers
 #+begin_src sh :tangle no
 yay --noconfirm --sync obs-studio
 yay --noconfirm --sync nvidia nvidia-utils lib32-nvidia-utils nvidia-settings
+#+end_src
+
+** batterylife optimization (laptop only)
+#+begin_src sh
+git clone https://github.com/AdnanHodzic/auto-cpufreq.git
+cd auto-cpufreq && sudo ./auto-cpufreq-installer
+sudo auto-cpufreq --install # enables it at boot
 #+end_src

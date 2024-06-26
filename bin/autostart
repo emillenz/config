@@ -18,6 +18,7 @@ PROCESSES = [
         # 'firefox --new-window https://chat.openai.com',
         # 'firefox --new-window https://spotify.com',
         'playerctld',
+        'nm-applet',
         'unclutter',
         'batsignal -bpe -w 50 -c 20 -d 5',
         'keepassxc',

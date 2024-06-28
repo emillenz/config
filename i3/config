@@ -15,10 +15,10 @@ set $MAP bindsym
 set $CMD exec --no-startup-id
 set $SCREENSHOT_FULL scrot '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' && dunstify "scrot" "saved in: ~/Pictures/screenshots"
 set $SCREENSHOT_SEL scrot --select '%Y-%m-%d_T%H-%M.png' -q 100 -e 'mv $f ~/Pictures/screenshots/' && dunstify "scrot" "saved in: ~/Pictures/screenshots"
-set $VOL_INC pamixer --unmute --increase 5
-set $VOL_DEC pamixer --unmute --decrease 5
-set $VOL_MUTE pamixer --toggle-mute
-set $VOL_MIC_MUTE pamixer --default-source --toggle-mute
+set $VOL_INC pamixer --unmute --increase 5 && dunstify --replace 69 "vol: $(pamixer --get-volume-human)"
+set $VOL_DEC pamixer --unmute --decrease 5 && dunstify --replace 69 "vol: $(pamixer --get-volume-human)"
+set $VOL_MUTE pamixer --toggle-mute && dunstify --replace 69 "vol: $(pamixer --get-volume-human)" $ESC
+set $VOL_MIC_MUTE pamixer --default-source --toggle-mute && dunstify --replace 69 "mic-mute: $(pamixer --default-source --get-mute)" $ESC
 set $SYS_SLEEP i3lock --color ffffff && systemctl suspend
 set $SYS_SCREENOFF sleep 1 && xset dpms force off
 
@@ -136,12 +136,12 @@ mode "find-file" {
 $MAP $MOD+space mode "leader"
 mode "leader" {
         $MAP $MOD+a           $CMD $BIN/audio-output-menu $ESC
-        $MAP $MOD+b           $CMD bluetooth-conn-menu $ESC
-        $MAP $MOD+shift+b     $CMD bluetoothctl power off
+        $MAP $MOD+b           $CMD bluetooth-menu $ESC
         $MAP --release $MOD+s $CMD $SCREENSHOT_SEL $ESC
         $MAP $MOD+shift+s     $CMD $SCREENSHOT_FULL $ESC
         $MAP $MOD+k           $CMD $BIN/killprocess-menu $ESC
         $MAP $MOD+d           $CMD fd . ~/.screenlayout | $ROFI 'screen-layout' | sh $ESC
+        $MAP $MOD+q           mode "quit"
         $EXIT
 }
 
@@ -161,7 +161,7 @@ set $FG          #000000
 set $MODELINE_BG #c8c8c8
 set $BORDER      #9f9f9f
 set $ACTIVE_BG   #c0deff
-set $URGENT_FG   #7f0000
+set $URGENT_FG   #ff8f88
 
 # element               $border    $bg          $fg $mark $border (child)
 client.focused          $ACTIVE_BG $ACTIVE_BG   $FG $FG   $ACTIVE_BG
@@ -172,7 +172,8 @@ client.background       $BG
 
 # MODELINE
 bar {
-        mode dock
+        mode hide
+        hidden_state hide # only show if explicitly activated
         workspace_buttons yes
         binding_mode_indicator yes
         modifier none
@@ -184,7 +185,7 @@ bar {
                 background $MODELINE_BG
                 statusline $FG
                 separator  $FG
-                #class             border     bg           fg
+                #class             border     bg        fg
                 binding_mode       $BORDER $ACTIVE_BG   $FG
                 focused_workspace  $BORDER $ACTIVE_BG   $FG
                 active_workspace   $BORDER $MODELINE_BG $FG

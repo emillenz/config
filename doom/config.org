@@ -14,7 +14,7 @@
 - lazyload packages using ~after!~.  this keeps emacs efficent, since it now only loads the settings & packages when they are actually needed (no emacs bankruptcy).
 - i encourage you to master the tool that you are using.  this means thuroughly reading the complete documentation, keymaps for the tools you are using (eg. vertico, evil-mode, magit, leader-mode).
 - try to first fundamentally understand & master the functionality your tool offers.  then you can assess and see if a extension really provides value to you, or wether that functionality is already included.
-- i believe that customizations are personal and should not be blindly copied.  Everyone should carefully consider each customizable setting they hear about and decide for themselves whether they like it or not. Non-trivial customizations that include Lisp code should be fully understood before they are accepted, rejected, or amended to personal taste. (read the manual)
+- i believe that customizations are personal and should not be blindly copied.  Everyone should carefully consider each customizable setting they hear about and decide for themselves whether they like it or not.  Non-trivial customizations that include Lisp code should be fully understood before they are accepted, rejected, or amended to personal taste.  (read the manual)
 
 * user
 #+begin_src emacs-lisp
@@ -146,7 +146,8 @@
 
 (map! :leader
       (:prefix "s"
-               "k" #'devdocs-lookup
+               "K" #'devdocs-lookup
+               "t" #'dictionary-search
                "g" #'occur)
       (:prefix "f"
                "F" #'+vertico/consult-fd-or-find) ;; HACK :: fix original binding
@@ -165,7 +166,7 @@
   - when emacs creates splits we must handle them => minimal bindings for switching and closing splits: [[kbd:c-q, c-w][c-q, c-w]].  all you will ever need to manage buffers and windows, since if you have more than 2 windows side by side, you are screwed anyway and need to fix your setup.  hence it replaces all [[kbd:c-w][c-w]].
 - these mappings are universal to all programs (shell, emacs, browser, i3) and highly frequently accessed (from any mode/file).
 - workflow :: this minimalistic but powerful navigation workflow (fuzzy-find, find-file, harpoon, and find-buffer) is the most efficient & overheadfree way of navigating simultaneously between multiple different files/buffer when working within a project (low overhead when context-switching and remaining distractionfree, works from anywhere.  improves typing speed)
-- harpoon :: hotswitch between files in a project you are working on simultaneoutsly.  you are restrained to 4 files since that is all you'll need and generally, if you have more than that, you have too much mental overhead remembering which files are where, when switching and you should reprioritize your marks. (4 seem's to be generally the limit for me for which i can subconsiously switch back and forth inbetween)
+- harpoon :: hotswitch between files in a project you are working on simultaneoutsly.  you are restrained to 4 files since that is all you'll need and generally, if you have more than that, you have too much mental overhead remembering which files are where, when switching and you should reprioritize your marks.  (4 seem's to be generally the limit for me for which i can subconsiously switch back and forth inbetween)
 - global marks (experimental?) :: This is a vim native option to harpoon (downside: not per project persistent).  When inside a project, mark the files you find yourself alternating between with global-marks, and jump to the exact file you want directly.
   - (Vim's normal global-mark behaviour is to jump to the originally marked posion in that buffer.  This is the wrong behaviour because when we left the buffer we have changed the cursor position to some other place.  We override ~evil-mark-line~ binding, since it is redundant (for regular marks, use ~evil-goto-mark~ binding instead).)
 
@@ -190,9 +191,8 @@
   "Go to the buffer of the global-mark.
 Usage: 'evil-set-mark' <uppercase> 'goto-global-mark' <lowercase>.  (faster/more ergonomic)"
   :override #'evil-goto-mark-line
-  (let* ((marker (evil-get-marker (upcase char)))
-         (already-in-buffer-p (numberp marker)))
-    (unless already-in-buffer-p
+  (let (marker (evil-get-marker (upcase char)))
+    (unless (numberp marker)
       (switch-to-buffer (marker-buffer marker)))))
 #+end_src
 
@@ -217,7 +217,6 @@ goal :: make vim's bindings even more mnemonic/sane/sensible/efficient and impro
 #+begin_src emacs-lisp
 (map! :after evil
       :n    "C-j" #'newline-and-indent  ;; useful inverse of 'J'
-      :n    "C-l" #'recenter-top-bottom ;; consistent with shell
       :nmvo "j"   #'evil-next-visual-line
       :nmvo "k"   #'evil-previous-visual-line
       :nmvo "^"   #'evil-first-non-blank-of-visual-line
@@ -236,7 +235,7 @@ goal :: make vim's bindings even more mnemonic/sane/sensible/efficient and impro
 
 (defadvice! z-update-evil-search-reg ()
   "Update evil search register after jumping to a line with
-  `+default/search-buffer' to be able to jump to next/prev matches.
+`+default/search-buffer' to be able to jump to next/prev matches.
 This is sensible default behaviour, and integrates it into evil."
   :after #'+default/search-buffer
   (let ((str (string-replace
@@ -284,10 +283,12 @@ This is sensible default behaviour, and integrates it into evil."
 (evil-surround-mode 1)
 (after! evil
   (setq evil-want-fine-undo nil
+        evil-magic 'very-magic
         evil-ex-substitute-global t
         evil-want-C-i-jump t
         evil-want-C-h-delete t
         evil-want-minibuffer t ;; don't loose all your power's in the minibuffer
+        evil-collection-want-unimpaired-p t
         evil-org-use-additional-insert nil))
 
 ;; HACK :: make 'C-h' work as backspace correctly everywhere (like vim/shell)
@@ -321,7 +322,7 @@ This is sensible default behaviour, and integrates it into evil."
   - i don't want company to show up and distract me when i already know exactly what i want.
   - make use of it only when you don't know the exact symbol name / function signature, or when typing overly long symbol-names becomes tedious.
   - this enforces more thoughtful coding, evaluating what the function actually does and let's you see what is really happening underneath.
-  - it actually makes you faster, since it removes the mental overhead and interruption that arises from the distracting completion menu, where you will choose the option from. greatly improves overall typing speed.
+  - it actually makes you faster, since it removes the mental overhead and interruption that arises from the distracting completion menu, where you will choose the option from.  greatly improves overall typing speed.
   - it makes coding more raw, distractionfree, and overall more enjoyeable
 - evil completion :: If you want evil's dabbrev based completion, use <C-p>, which is more logical anyway, since the expansion is more likely to be above the current code position.  finally, if you want to expand a snippet/move through completion fields, use <tab>.
 - minibuffer completion :: less distracting and more focused we use ~vertico-flat-mode~ (it promotes finding items not by navigating via scrolling through candidates, but instead by searching).  we don't need a fancy popup everytime we want to switch to a candidate, we only want to know when the completion matches, since we already know beforehand what we are looking for.  (inspired by dmenu)
@@ -393,18 +394,14 @@ we automate this repetetive task using a snippets.
 #+begin_src emacs-lisp
 (after! dired
   (add-hook! 'dired-mode-hook #'dired-hide-details-mode) ;; less clutter (enable manually if needed)
-  (setq dired-open-extensions '(("mkv"  . "mpv")
-                                ("mp4"  . "mpv")
-                                ("mp3"  . "mpv")
-                                ("gif"  . "nsxiv")
-                                ("jpeg" . "nsxiv")
-                                ("jpg"  . "nsxiv")
-                                ("png"  . "nsxiv")
-                                ("docx" . "libreoffice")
-                                ("odt"  . "libreoffice")
-                                ("odf"  . "libreoffice")
-                                ("epub" . "zathura")
-                                ("pdf"  . "zathura"))
+  (setq dired-open-extensions (mapcan (lambda (pair)
+                                        (mapcar (lambda (ext)
+                                                  (cons ext (cdr pair)))
+                                                (car pair)))
+                                      '((("mkv" "webm" "mp4" "mp3") . "mpv")
+                                        (("gif" "jpeg" "jpg" "png") . "nsxiv")
+                                        (("docx" "odt" "odf")       . "libreoffice")
+                                        (("epub" "pdf")             . "zathura")))
         dired-recursive-copies 'always
         dired-recursive-deletes 'always
         global-auto-revert-non-file-buffers t
@@ -412,30 +409,29 @@ we automate this repetetive task using a snippets.
         dired-omit-files "^\\..*$"))
 #+end_src
 
-** Archive file
-- Archive all things that were once written or created by you (instead of deleting them) => digital content cost's little to no space.  And you will be grateful later in life to have recorded data (that can be analyzed & crunched) what you were thinking and how you configured your tools etc...
-- This is a consistent archiving scheme (archive to original path under Archive)
+** archive file
+- archive all things that were once written or created by you (instead of deleting them) => digital content cost's little to no space.  and you will be grateful later in life to have recorded data (that can be analyzed & crunched) what you were thinking and how you configured your tools etc...
+- this ensures a predictable and consistent archiving scheme (archive to original path under archive)
 #+begin_src emacs-lisp
 (defvar z-archive-dir "~/Archive/"
-  "User's archive directory.")
+  "user's archive directory.")
 
 (defun z-dired-archive ()
+  "`mv' marked file/s to: `z-archive-dir'/{relative-filepath-to-HOME}/{filename}"
   (interactive)
-  (let ((files (dired-get-marked-files nil nil)))
-    (dolist (f files)
-      (let* ((dest (file-name-concat
-                    z-archive-dir
-                    (file-relative-name f "~/")))
-             (dir (file-name-directory dest)))
-        (unless (file-exists-p dir)
-          (make-directory dir t))
-        (rename-file f dest 1)))
-    (revert-buffer)))
+  (mapc (lambda (file)
+          (let* ((dest (file-name-concat z-archive-dir
+                                         (file-relative-name file "~/")))
+                 (dir (file-name-directory dest)))
+            (unless (file-exists-p dir)
+              (make-directory dir t))
+            (rename-file file dest 1)))
+        (dired-get-marked-files nil nil))
+  (revert-buffer))
 #+end_src
 
 * terminal
 we never use an integrated terminal (introduces additional complex layers, slowness, bad keybindings, etc...).  instead all we do is use [[kbd:M-!/&|][M-!/&|]] if more is needed than that we should switch over to the proper shell anyway.
-
 
 * programming
 ** indentation
@@ -480,7 +476,8 @@ we never use an integrated terminal (introduces additional complex layers, slown
 A useful time for a quote from the Linux Kernel coding standards [1] - exactly the first item in fact:
 
 #+begin_quote
-Tabs are 8 characters, and thus indentations are also 8 characters. There are heretic movements that try to make indentations 4 (or even 2!) characters deep, and that is akin to trying to define the value of PI to be 3.  If you need more than 4 levels of indentation within a function, you’re screwed anyway, and should fix your program.
+Tabs are 8 characters, and thus indentations are also 8 characters.  There are heretic movements that try to make indentations 4 (or even 2!) characters deep, and that is akin to trying to define the value of PI to be 3.  If you need more than 4 levels of indentation within a function, you’re screwed anyway, and should fix your program.
+--- Linus Torvalds
 #+end_quote
 
 The 8 space indent cannot exist in isolation.  It has to be coupled with a right-hand side limit of 100 columns.  Otherwise, you could just indent yourself off to infinity and there would be no consequences.  An 100 column limit forces you to keep your code within reasonable limits.
@@ -489,7 +486,7 @@ The whole idea behind indentation is to clearly define where a block of control 
 
 Every level of indentation represents a piece of program state the reader has to keep in their head to understand a function.  “In this line, I know line points to the nth line as long as X is not true, but Y > Z.” 8-character indentations, internal spacing, and the 100-column rule effectively limits you to 4 levels of indentation in a function.  This effectively limits the internal complexity of any give function, which makes the code easier to understand and debug!  So the underlying functionality remains minimal and concise.
 
-In short, 8-char indents make things easier to read, and have the added benefit of warning you when you’re nesting your functions too deep. Heed that warning.
+In short, 8-char indents make things easier to read, and have the added benefit of warning you when you’re nesting your functions too deep.  Heed that warning.
 
 - consistency :: the only reliable, repeatable, transportable way to ensure that indentation remains consistent across viewing environments is to indent you code using only spaces.
 - Using tabs for indentation and spaces for alignment requires extra care, and a carefully tuned editor setup which understands the semantic difference between the tabs and the spaces which follow.  In any sizeable team, deviations in formatting will creep in.  Enforcing it will just be a big waste of time, compared to the simplicity of banishing tabs.
@@ -523,54 +520,54 @@ In short, 8-char indents make things easier to read, and have the added benefit 
 - archive all done tasks in current file/headings with org-agenda bulk action.
 - each file gets its own entry in ~~/archive/org~
 #+begin_src emacs-lisp
-(add-hook! 'org-mode-hook '(visual-line-mode
-                            org-fragtog-mode
-                            rainbow-mode
-                            laas-mode
-                            +org-pretty-mode
-                            org-appear-mode))
-(setq-hook! 'org-mode-hook
-  warning-minimum-level :error) ;; prevent frequent popups of *warning* buffer
+  (add-hook! 'org-mode-hook '(visual-line-mode
+                              org-fragtog-mode
+                              rainbow-mode
+                              laas-mode
+                              +org-pretty-mode
+                              org-appear-mode))
+  (setq-hook! 'org-mode-hook
+    warning-minimum-level :error) ;; prevent frequent popups of *warning* buffer
 
-(setq org-directory "~/Documents/org/"
-      org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
-      org-use-property-inheritance t
-      org-reverse-note-order t
-      org-startup-with-latex-preview t
-      org-startup-with-inline-images t
-      org-startup-indented t
-      org-startup-numerated t
-      org-startup-align-all-tables t
-      org-list-allow-alphabetical t
-      org-tags-column 0
-      org-fold-catch-invisible-edits 'smart
-      org-refile-use-outline-path 'full-file-path
-      org-refile-allow-creating-parent-nodes 'confirm
-      org-use-sub-superscripts '{}
-      org-fontify-quote-and-verse-blocks t
-      org-fontify-whole-block-delimiter-line t
-      doom-themes-org-fontify-special-tags t
-      org-ellipsis "…"
-      org-num-max-level 3
-      org-hide-leading-stars t
-      org-appear-autoemphasis t
-      org-appear-autosubmarkers t
-      org-appear-autolinks t
-      org-appear-autoentities t
-      org-appear-autokeywords t
-      org-appear-inside-latex nil
-      org-hide-emphasis-markers t
-      org-pretty-entities t
-      org-pretty-entities-include-sub-superscripts t
-      org-list-demote-modify-bullet '(("-"  . "-")
-                                      ("+"  . "+")
-                                      ("*"  . "-")
-                                      ("a." . "a)")
-                                      ("1." . "1)")
-                                      ("1)" . "a)"))
-      org-blank-before-new-entry '((heading . t)
-                                   (plain-list-item . nil))
-      org-src-ask-before-returning-to-edit-buffer nil)
+  (setq org-directory "~/Documents/org/"
+        org-archive-location "~/Archive/org/%s::" ;; NOTE :: archive based on file path
+        org-use-property-inheritance t
+        org-reverse-note-order t
+        org-startup-with-latex-preview t
+        org-startup-with-inline-images t
+        org-startup-indented t
+        org-startup-numerated t
+        org-startup-align-all-tables t
+        org-list-allow-alphabetical t
+        org-tags-column 0
+        org-fold-catch-invisible-edits 'smart
+        org-refile-use-outline-path 'full-file-path
+        org-refile-allow-creating-parent-nodes 'confirm
+        org-use-sub-superscripts '{}
+        org-fontify-quote-and-verse-blocks t
+        org-fontify-whole-block-delimiter-line t
+        doom-themes-org-fontify-special-tags t
+        org-ellipsis "…"
+        org-num-max-level 3
+        org-hide-leading-stars t
+        org-appear-autoemphasis t
+        org-appear-autosubmarkers t
+        org-appear-autolinks t
+        org-appear-autoentities t
+        org-appear-autokeywords t
+        org-appear-inside-latex nil
+        org-hide-emphasis-markers t
+        org-pretty-entities t
+        org-pretty-entities-include-sub-superscripts t
+        org-list-demote-modify-bullet '(("-"  . "-")
+                                        ("+"  . "+")
+                                        ("*"  . "-")
+                                        ("a." . "a)")
+                                        ("1." . "1)")
+                                        ("1)" . "a)"))
+        org-blank-before-new-entry '((heading . t)
+                                     (plain-list-item . nil))
+        org-src-ask-before-returning-to-edit-buffer nil)
 #+end_src
 
 ** symbols
@@ -586,13 +583,11 @@ In short, 8-char indents make things easier to read, and have the added benefit 
                                           (?* . "─") ;; NOTE :: asteriks are reserved for headings only (don't use in lists) => no unambigiuity
                                           (?+ . "⇒")))
 
-  (appendq! +ligatures-extra-symbols '(:list_property "∷"
-                                       :em_dash       "—"
+  (appendq! +ligatures-extra-symbols '(:em_dash       "—"
                                        :ellipses      "…"
                                        :arrow_right   "→"
                                        :arrow_left    "←"
-                                       :arrow_lr      "↔"
-                                       :properties    "⚙"))
+                                       :arrow_lr      "↔"))
 
   (add-hook! 'org-mode-hook
     (appendq! prettify-symbols-alist '(("--"  . "–")
@@ -666,15 +661,15 @@ In short, 8-char indents make things easier to read, and have the added benefit 
                              "[x](x!)"
                              "[\\](\\!)")))
 
-  (setq org-todo-keyword-faces '(("[@]"  . '(bold +org-todo-project))
-                                 ("[ ]"  . '(bold org-todo))
-                                 ("[-]"  . '(bold +org-todo-active))
-                                 ("[>]"  . '(bold +org-todo-onhold))
-                                 ("[?]"  . '(bold +org-todo-onhold))
-                                 ("[=]"  . '(bold +org-todo-onhold))
-                                 ("[&]"  . '(bold +org-todo-onhold))
-                                 ("[\\]" . '(bold org-done))
-                                 ("[x]"  . '(bold org-done))))
+  (setq org-todo-keyword-faces '(("[@]"  . (bold +org-todo-project))
+                                 ("[ ]"  . (bold org-todo))
+                                 ("[-]"  . (bold +org-todo-active))
+                                 ("[>]"  . (bold +org-todo-onhold))
+                                 ("[?]"  . (bold +org-todo-onhold))
+                                 ("[=]"  . (bold +org-todo-onhold))
+                                 ("[&]"  . (bold +org-todo-onhold))
+                                 ("[\\]" . (bold org-done))
+                                 ("[x]"  . (bold org-done))))
 #+end_src
 
 - Log to drawer: ~LOG~
@@ -721,7 +716,9 @@ In short, 8-char indents make things easier to read, and have the added benefit 
 #+begin_src emacs-lisp
   (add-hook! 'org-agenda-mode-hook #'org-super-agenda-mode)
 
-  (setq org-agenda-files (list org-directory z-org-literature-dir "~/Documents/compass")
+  (setq org-agenda-files (list org-directory
+                               z-org-literature-dir
+                               "~/Documents/compass")
         org-agenda-skip-scheduled-if-done t
         org-agenda-sticky t
         org-agenda-skip-deadline-if-done t
@@ -753,8 +750,8 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
                                       "=> %2dd"
                                       "<= %2dd")
         org-agenda-prefix-format '((agenda . "%-12c%-7s%-12t")
-                                   (todo .   "%-12c%-7s%-12t")
-                                   (tags .   "%-12c%-7s%-12t")
+                                   (todo   . "%-12c%-7s%-12t")
+                                   (tags   . "%-12c%-7s%-12t")
                                    (search . "%-12c%-7s%-12t")))
 #+end_src
 
@@ -779,204 +776,203 @@ Org-agenda by default is a clusterfuck.  This will clean it up: cleanly align ev
 - prepending :: if recent item's are of higher relevance
 - appending :: for hierarchical order eg. book-quotes ordered from begin -> end
 #+begin_src emacs-lisp
-  (defvar z-org-journal-dir (file-name-concat "~/Documents/journal/"))
+(defvar z-org-journal-dir (file-name-concat "~/Documents/journal/"))
 
-  (defun z-doct-journal-file (&optional time)
-    "TIME :: time in day of note to return. (default: today)"
-    (file-name-concat z-org-journal-dir
-                      (format "%s_journal.org"
-                              (format-time-string "%F" (or time (current-time))))))
+(defun z-doct-journal-file (&optional time)
+  "TIME :: time in day of note to return. (default: today)"
+  (file-name-concat z-org-journal-dir
+                    (format "%s_journal.org"
+                            (format-time-string "%F" (or time (current-time))))))
 
-  (defvar z-doct-projects '(("cs"       :keys "c"
-                             :children (("pp"     :keys "p")
-                                        ("as1"    :keys "a")
-                                        ("aw"     :keys "w")
-                                        ("ddca"   :keys "d")))
-                            ("personal" :keys "p")
-                            ("config"   :keys "f")
-                            ("compass"  :keys "o")))
+(defvar z-doct-projects '(("cs" :keys "c"
+                           :children (("pp"   :keys "p")
+                                      ("as1"  :keys "a")
+                                      ("aw"   :keys "w")
+                                      ("ddca" :keys "d")))
+                          ("personal" :keys "p")
+                          ("config"   :keys "f")
+                          ("compass"  :keys "o")))
 
-  (defun z-doct-projects-file (type path)
-    "TYPE :: [ 'agenda, 'notes ]"
-    (file-name-concat org-directory
-                      path
-                      (format "%s.org" (symbol-name type))))
+(defun z-doct-projects-file (type path)
+  "TYPE :: 'agenda | 'notes"
+  (file-name-concat org-directory
+                    path
+                    (format "%s.org" (symbol-name type))))
 
-  (defun z-doct-task-template (path)
-    (list "task"
-          :keys "t"
-          :file (z-doct-projects-file 'agenda path)
-          :headline "inbox"
-          :prepend t
-          :empty-lines-after 1
-          :template '("* [ ] %^{title}%?")))
+(defun z-doct-task-template (path)
+  (list "task"
+        :keys "t"
+        :file (z-doct-projects-file 'agenda path)
+        :headline "inbox"
+        :prepend t
+        :empty-lines-after 1
+        :template '("* [ ] %^{title}%?")))
 
-  (defun z-doct-event-template (path)
-    (list "event"
-          :keys "e"
-          :file (z-doct-projects-file 'agenda path)
-          :headline "events"
-          :prepend t
-          :empty-lines-after 1
-          :template '("* [@] %^{title}%?"
-                      "%^T"
-                      ":PROPERTIES:"
-                      ":REPEAT_TO_STATE: [@]" ; NOTE :: in case is made repeating
-                      ":location: %^{location}"
-                      ":material: %^{material}"
-                      ":END:")))
+(defun z-doct-event-template (path)
+  (list "event"
+        :keys "e"
+        :file (z-doct-projects-file 'agenda path)
+        :headline "events"
+        :prepend t
+        :empty-lines-after 1
+        :template '("* [@] %^{title}%?"
+                    "%^T"
+                    ":PROPERTIES:"
+                    ":REPEAT_TO_STATE: [@]" ; NOTE :: in case is made repeating
+                    ":location: %^{location}"
+                    ":material: %^{material}"
+                    ":END:")))
 
-  (defun z-doct-note-template (path)
-    (list "note"
-          :keys "n"
-          :file (z-doct-projects-file 'notes path)
-          :prepend t
-          :empty-lines 1
-          :template '("* %^{title} %^g"
-                      ":PROPERTIES:"
-                      ":created: %U"
-                      ":END:"
-                      "%?")))
+(defun z-doct-note-template (path)
+  (list "note"
+        :keys "n"
+        :file (z-doct-projects-file 'notes path)
+        :prepend t
+        :empty-lines 1
+        :template '("* %^{title} %^g"
+                    ":PROPERTIES:"
+                    ":created: %U"
+                    ":END:"
+                    "%?")))
 
-  (defun z-doct-expand-projects (&optional projects parent-path)
-    "PROJECTS :: nil | used for recursion
-PARENT-PATH :: nil | used for recursion"
-    (mapcar (lambda (project)
-              (let* ((props (cdr project))
-                     (tag (car project))
-                     (key (plist-get props :keys))
-                     (self `(,tag :keys ,key))
-                     (children (plist-get props :children))
-                     (path (file-name-concat parent-path tag)))
-                (append self
-                        (if children
-                            (list :children (append (z-doct-expand-projects children ;; NOTE :: don't create subdir again for parent-project
-                                                                            path)
-                                                    (z-doct-expand-projects (list self)
-                                                                            nil)))
-                          (list :children (list (z-doct-task-template path)
-                                                (z-doct-event-template path)
-                                                (z-doct-note-template path)))))
-                ))
-            (or projects
-                z-doct-projects)))
+(defun z-doct-expand-projects (&optional projects parent-path)
+  "PROJECTS :: nil (used for recursion)
+PARENT-PATH :: nil (used for recursion)"
+  (mapcar (lambda (project)
+            (let* ((tag (car project))
+                   (props (cdr project))
+                   (key (plist-get props :keys))
+                   (self `(,tag :keys ,key))
+                   (children (plist-get props :children))
+                   (path (file-name-concat parent-path tag)))
+              (append self
+                      (if children
+                          (list :children (append (z-doct-expand-projects children ;; NOTE :: don't create subdir again for parent-project
+                                                                          path)
+                                                  (z-doct-expand-projects (list self)
+                                                                          nil)))
+                        (list :children (list (z-doct-task-template path)
+                                              (z-doct-event-template path)
+                                              (z-doct-note-template path)))))))
+          (or projects
+              z-doct-projects)))
 
-  (setq org-capture-templates
-        (doct `(,@(z-doct-expand-projects)
+(setq org-capture-templates
+      (doct `(,@(z-doct-expand-projects)
 
-                ("journal"
-                 :keys "j"
-                 :file (lambda () (z-doct-journal-file))
-                 :title (lambda () (downcase (format-time-string "daily note: %A, %e. %B %Y")))
-                 :children (("journal init"
-                             :keys "j"
-                             :type plain
-                             :template  ("#+title:  %{title}"
-                                         "#+author: %(user-full-name)"
-                                         "#+email:  %(message-user-mail-address)"
-                                         "#+date:   %<%F>"
-                                         "#+filetags: :journal:"
-                                         ""
-                                         "* goals"
-                                         "- [ ] %?"
-                                         ""
-                                         "* agenda"
-                                         "** [ ] "))
+              ("journal"
+               :keys "j"
+               :file (lambda () (z-doct-journal-file))
+               :title (lambda () (downcase (format-time-string "daily note: %A, %e. %B %Y")))
+               :children (("journal init"
+                           :keys "j"
+                           :type plain
+                           :template  ("#+title:  %{title}"
+                                       "#+author: %(user-full-name)"
+                                       "#+email:  %(message-user-mail-address)"
+                                       "#+date:   %<%F>"
+                                       "#+filetags: :journal:"
+                                       ""
+                                       "* goals"
+                                       "- [ ] %?"
+                                       ""
+                                       "* agenda"
+                                       "** [ ] "))
 
-                            ("note"
-                             :keys "n"
-                             :headline "notes"
-                             :prepent t
-                             :empty-lines-after 1
-                             :template ("* %^{title}"
-                                        ":PROPERTIES:"
-                                        ":created: %U"
-                                        ":END:"
-                                        "%?"))
+                          ("note"
+                           :keys "n"
+                           :headline "notes"
+                           :prepent t
+                           :empty-lines-after 1
+                           :template ("* %^{title}"
+                                      ":PROPERTIES:"
+                                      ":created: %U"
+                                      ":END:"
+                                      "%?"))
 
-                            ("yesterday review"
-                             :keys "y"
-                             :unnarrowed t
-                             :file (lambda ()
-                                     (z-doct-journal-file (time-subtract (current-time) (days-to-time 1))))
-                             :template ("* gratitude"
-                                        "- %?"
-                                        ""
-                                        "* reflection"
-                                        "-"))))
+                          ("yesterday review"
+                           :keys "y"
+                           :unnarrowed t
+                           :file (lambda ()
+                                   (z-doct-journal-file (time-subtract (current-time) (days-to-time 1))))
+                           :template ("* gratitude"
+                                      "- %?"
+                                      ""
+                                      "* reflection"
+                                      "-"))))
 
-                ("literature"
-                 :keys "l"
-                 :file (lambda () (read-file-name "file: " z-org-literature-dir))
-                 :children (("to read"
-                             :keys "r"
-                             :file ,(file-name-concat z-org-literature-dir "readlist.org")
-                             :prepend t
-                             :template ("* [ ] %^{title}%? %^g"))
+              ("literature"
+               :keys "l"
+               :file (lambda () (read-file-name "file: " z-org-literature-dir))
+               :children (("to read"
+                           :keys "r"
+                           :file ,(file-name-concat z-org-literature-dir "readlist.org")
+                           :prepend t
+                           :template ("* [ ] %^{title}%? %^g"))
 
-                            ("init"
-                             :keys "i"
-                             :file (lambda ()
-                                     (let* ((name (concat (replace-regexp-in-string " "
-                                                                                    "_"
-                                                                                    (read-from-minibuffer "short title: "))
-                                                          ".org")))
-                                       (file-name-concat z-org-literature-dir name)))
-                             :type plain
-                             :template ("#+title:  %^{full title}"
-                                        "#+author: %(user-full-name)"
-                                        "#+email:  %(message-user-mail-address)"
-                                        "#+date:   %<%F>"
-                                        "#+filetags: :literature:%^g"
-                                        ""
-                                        "* [-] %\\1%?"
-                                        ":PROPERTIES:"
-                                        ":title:  %\\1"
-                                        ":author: %^{author}"
-                                        ":year:   %^{year}"
-                                        ":type:   %^{ |book|textbook|ebook|paper|article|audiobook|podcast}"
-                                        ":pages:  %^{pages}"
-                                        ":END:"))
+                          ("init"
+                           :keys "i"
+                           :file (lambda ()
+                                   (file-name-concat z-org-literature-dir (concat (replace-regexp-in-string " "
+                                                                                                            "_"
+                                                                                                            (read-from-minibuffer "short title: "))
+                                                                                  ".org")))
+                           :type plain
+                           :template ("#+title:  %^{full title}"
+                                      "#+author: %(user-full-name)"
+                                      "#+email:  %(message-user-mail-address)"
+                                      "#+date:   %<%F>"
+                                      "#+filetags: :literature:%^g"
+                                      ""
+                                      "* [-] %\\1%?"
+                                      ":PROPERTIES:"
+                                      ":title:  %\\1"
+                                      ":author: %^{author}"
+                                      ":year:   %^{year}"
+                                      ":type:   %^{ |book|textbook|ebook|paper|article|audiobook|podcast}"
+                                      ":pages:  %^{pages}"
+                                      ":END:"))
 
-                            ("excerpt"
-                             :keys "e"
-                             :headline "excerpts"
-                             :empty-lines-before 1
-                             :template ("* %^{title} [pg:%^{page}]"
-                                        ":PROPERTIES:"
-                                        ":created: %U"
-                                        ":END:"
-                                        "#+begin_quote"
-                                        "%x"
-                                        "#+end_quote"))
+                          ("excerpt"
+                           :keys "e"
+                           :headline "excerpts"
+                           :empty-lines-before 1
+                           :template ("* %^{title} [pg:%^{page}]"
+                                      ":PROPERTIES:"
+                                      ":created: %U"
+                                      ":END:"
+                                      "#+begin_quote"
+                                      "%x"
+                                      "#+end_quote"))
 
-                            ("note: literary"
-                             :keys "l"
-                             :headline "literature notes"
-                             :empty-lines-before 1
-                             :template ("* %^{title} [pg:%^{page}] %^g"
-                                        ":PROPERTIES:"
-                                        ":created: %U"
-                                        ":END:"
-                                        "%?"))
+                          ("note: literary"
+                           :keys "l"
+                           :headline "literature notes"
+                           :empty-lines-before 1
+                           :template ("* %^{title} [pg:%^{page}] %^g"
+                                      ":PROPERTIES:"
+                                      ":created: %U"
+                                      ":END:"
+                                      "%?"))
 
-                            ("note: transient"
-                             :keys "t"
-                             :headline "transient notes"
-                             :empty-lines-before 1
-                             :template ("* %^{title} %^g"
-                                        ":PROPERTIES:"
-                                        ":created: %U"
-                                        ":END:"
-                                        "%?"))
+                          ("note: transient"
+                           :keys "t"
+                           :headline "transient notes"
+                           :empty-lines-before 1
+                           :template ("* %^{title} %^g"
+                                      ":PROPERTIES:"
+                                      ":created: %U"
+                                      ":END:"
+                                      "%?"))
 
-                            ;; NOTE :: make sure to complete the literature-task-headline in order to log closing time.
-                            ("summarize"
-                             :keys "s"
-                             :headline "summary"
-                             :unnarrowed t
-                             :type plain
-                             :template ("%?")))))))
+                          ("summarize"
+                           :keys "s"
+                           :headline "summary"
+                           :unnarrowed t
+                           :type plain
+                           :template ("%?")
+                           :hook (lambda ()
+                                   (message "don't forget to toggle: TODO -> DONE")))))))) ;; in order to log finishing date
 #+end_src
 
 - end: ~after! org~
@@ -1000,9 +996,4 @@ PARENT-PATH :: nil | used for recursion"
 (after! dictionary
   (setq dictionary-server "dict.org"
         dictionary-default-dictionary "*"))
-#+end_src
-
-* lisp
-#+begin_src emacs-lisp
-(after! lispy (setq lispy-key-theme '())) ;; don't use insert bindings (unneccessary & creates mental overhead)
 #+end_src

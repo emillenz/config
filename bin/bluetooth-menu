@@ -13,47 +13,40 @@ require 'English'
 
 ROFI_CMD = %w[rofi -dmenu -no-custom -i -p bluetooth-connect].freeze
 ROFI_ACTION_CMD = %w[rofi -dmenu -no-custom -i -p action].freeze
-BTCTL_ACTIONS = %i[connect off].freeze
 
 def main
-        action = action()
-        case action
-        when :connect
-                bt_connect
-        when :off
-                bt_off
+        select, devices = prompt_selection
+        case select
+        when 'off'
+                disconnect
         else
-                exit(1)
+                connect(select, devices)
         end
 end
 
-def bt_off
-        `bluetoothctl power off`
-        NotifySend.send('bluetooth off')
-end
-
-def action
-        action, status = Open3.capture2(*ROFI_ACTION_CMD, stdin_data: BTCTL_ACTIONS.join("\n"))
-        exit(1) unless status.success?
-        action.chomp.to_sym
-end
-
-def bt_connect
-        `bluetoothctl power on`
+def prompt_selection
         devices = `bluetoothctl devices`.split("\n").map do |line|
                 words = line.split
                 name = words[2..].join(' ')
                 addr = words[1]
                 [name, addr]
         end.to_h
-        device, status = Open3.capture2(*ROFI_CMD, stdin_data: devices.keys.join("\n"))
+
+        select, status = Open3.capture2(*ROFI_CMD, stdin_data: devices.keys.push(:off).join("\n"))
         exit(1) unless status.success?
+        [select.chomp, devices]
+end
 
-        device_addr = devices[device.chomp]
-        `bluetoothctl connect #{device_addr}`
+def connect(device, devices)
+        `bluetoothctl power on`
+        `bluetoothctl connect #{devices[device]}`
         exit(1) unless $CHILD_STATUS.success?
-
         NotifySend.send('bluetooth connected', device)
+end
+
+def disconnect
+        `bluetoothctl power off`
+        NotifySend.send('bluetooth off')
 end
 
 main if __FILE__ == $PROGRAM_NAME

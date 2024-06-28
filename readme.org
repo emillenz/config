@@ -59,10 +59,15 @@ It may looks ridiculous to the outside observer, but efficiency it’s about eli
    - coding: typically one statement per line
 
 ** modeline / tabbar
-- modelines are useful (browser / emacs) as they indicate in which mode/context we are in.
-- you don't need visual indication of how to navigate to tabs (tmux/emacs), each specific tab is always on the same keybind, and if not it's faster to search for it than visually navigate/select some list / menu
-- the aestetic and efficiency of a decluttered and maximized screen is unmatched.
-- the aim is to make switching so ergonomic and instantaneous, engrained into muscle memory, that you are faster that people using, say 2 monitors.
+- a wm statusbar unneccessarily take up screen real-estate and usually just causes a distraction rather than actually being useful.
+  - you don't need visual indication of how to navigate to tabs, each specific tab is always on the same keybind, and if not it's faster to search for it than visually navigate/select some list / menu.
+- for full immersion, reduced distraction and enhanced focus, disable it and work fullscreen.
+  - no overlapping functionality.  ex:: you wear a watch (if not, you should) => don't need time & date displayed, and have timer's at hand.
+  - you always know what window you are looking at by its contents.
+  - you don't need visual indication of how to navigate to tabs, nor interact with the statusbar (ex: click something) => each specific tab is always on the same keybind.
+- the aestetic and efficiency of a decluttered and maximized screen is (imo) unmatched.
+- the theory is to make switching so ergonomic and instantaneous, engrained into muscle memory, that you are faster that people using, say 2 monitors.
+- (modelines are useful (browser / emacs) as they indicate in which mode/context we are in.)
 
 ** The mouse
 #+begin_quote
@@ -98,7 +103,7 @@ the display brightness must be adjusted align with the ambient brightness.   thu
  it is lean, thin and sharp.  this allows it to be used in all context and interfaces.
  economical use of screen space and clarity/legibility at small sizes.
 #+begin_quote
-Iosevka Comfy optimises for inter-glyph and inter-style consistency within the overarching constraint of usability at small point sizes. The shapes are round and are designed in concert to both impose a predictable rhythm and keep characters distinct from each other.  Distinctions are drawn on the premise of contributing to the demands of the design in light of usability, without ever calling attention to themselves (as opposed to sporadic calligraphic glyphs amid an otherwise austere presentation which seem to say "look how pretty I am!").
+Iosevka Comfy optimises for inter-glyph and inter-style consistency within the overarching constraint of usability at small point sizes.  The shapes are round and are designed in concert to both impose a predictable rhythm and keep characters distinct from each other.  Distinctions are drawn on the premise of contributing to the demands of the design in light of usability, without ever calling attention to themselves (as opposed to sporadic calligraphic glyphs amid an otherwise austere presentation which seem to say "look how pretty I am!").
  --- protesilaos stavrou
 #+end_quote
 
@@ -131,8 +136,8 @@ i'm very opinionated and have high standards regarding design process and the ph
 - these main apps have a dedicated open shortcut, all other apps are better to be opened via ~S-x~
 
 ** shell: fish / ruby
-bash is coherent with respect to the mind of certain benevolent dictator.  bash is a steaming pile of inconsistent user-unfrienly shit. we want the best interactive features in a shell, fish has powerful features inbuilt and is consistent in its design and configuration.  (autocomplete, documentation, keybindings, aliases, etc..)
-On the command line, I don't really need a full language with a repl-like interface. I want a fast and quick way to interface with the OS. Anything beyond that should be written in a proper language (ruby) that will inherently bring more benefits.
+bash is coherent with respect to the mind of certain benevolent dictator.  bash is a steaming pile of inconsistent user-unfrienly shit.  we want the best interactive features in a shell, fish has powerful features inbuilt and is consistent in its design and configuration.  (autocomplete, documentation, keybindings, aliases, etc..)
+On the command line, I don't really need a full language with a repl-like interface.  I want a fast and quick way to interface with the OS.  Anything beyond that should be written in a proper language (ruby) that will inherently bring more benefits.
 
 *** ruby scripting rationale
 a shell only exists for interactive use and running commands: launching processes/commands, interaction with the filesystem and programs (mv, cp, find, grep..).
@@ -142,7 +147,7 @@ when writing shell commands in scripts one should always favor '--long-flags' ov
 
 even though it may have a steeper learning curve and requires a more structured and less hacky approach to scripting.  but once fluent in it, it smoothly bridges the gap between compiled highly efficient languages such as rust or c and the interactive nature of a shell.
 
-choosen over python since it is well designed, has a very minimal, clean, consistent syntax.  close interconnectedness with ~sh~ by running ~sh~-commands with ~``~.  i love the fact that everything is a expression (has a value). This means, it's a extreme joy for functional programers.  Python is pretty badly designed, lots inconsistencies in syntax as well as semantics.  ruby follows the MIT philosophy of making the userinterface consistent and a joy to use.
+choosen over python since it is well designed, has a very minimal, clean, consistent syntax.  close interconnectedness with ~sh~ by running ~sh~-commands with ~``~.  i love the fact that everything is a expression (has a value).  This means, it's a extreme joy for functional programers.  Python is pretty badly designed, lots inconsistencies in syntax as well as semantics.  ruby follows the MIT philosophy of making the userinterface consistent and a joy to use.
 
 ** terminal: alacritty & tmux
 i am of the strong opinion that you should minimize things you do repeatedly.  thus when closing the terminal by accident => can be restored instead of redoing everything.  launching emacs on every startup? => just run the daemon in the background => always accessible & no waiting time.
@@ -213,13 +218,16 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 
 ** webbrowser: firefox
 *** install & configure extensions manually
-- use ~*~ for accessing bookmarks
 - password manager
-- theming
+- theming (lightn)
 - font (set to system wide font and don't allow custom fonts)
+*** useage
 - bookmarks: name them hierarchically w keywords (syntax <=> org-mode-tags), ex: =cs:math:exercises=
   - quickly open website using bookmark searching
   - structured, easy to patternmatch (not having to put them into folders)
+- use ~*^%~ in the searchbar for finding tabs, bookmarks & history
+- make use of google search operators (~site:~, quoting, ~-~)
+- use shortcuts :: ~C-L, C-t, C-w, C-[], C-f (C-g)~
 
 ** filexplorer
 - avoid using integrated filemanagers (such as dired / ranger / lf / thunar) whenever possible (and dont even dare to suggest a gui file manager...).
@@ -269,11 +277,11 @@ The saying, "give 'em enough rope, and they'll likely hang themselves," holds tr
 ***  workflow
 when you need to navigate to a different file/tab, this should be your order of modus-operandi ::
 1. alternate buffer :: when you are alternating between 2 files/tabs or need to just jump back to the last visited buffer.  this takes the least amount of overhead and is the fastest.
-2. hotswitch tab [1..4] :: use each of them for a file/tmux window/page within the project you are working on (ex: tmux: [1]repl, [2] compilation, [3] manpages, emacs: [1] main.c, [2] srcfile.c, [3] makefile).  you can then navigate between these files instantly without mental overhead.  we purposefully do not allow more than 4 tabs, since that is usually all that is neede within a project.  we want to ensure that it really is frequently visited files and thus keep the overhead low.  avoid manual tab creation if possible => auto-create a tab if it doesn't exist upon focusing it. we never want visual indication for tabs.   instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.  no tablines, no statusbars.
+2. hotswitch tab [1..4] :: use each of them for a file/tmux window/page within the project you are working on (ex: tmux: [1]repl, [2] compilation, [3] manpages, emacs: [1] main.c, [2] srcfile.c, [3] makefile).  you can then navigate between these files instantly without mental overhead.  we purposefully do not allow more than 4 tabs, since that is usually all that is neede within a project.  we want to ensure that it really is frequently visited files and thus keep the overhead low.  avoid manual tab creation if possible => auto-create a tab if it doesn't exist upon focusing it.  we never want visual indication for tabs.   instead switching to other buffer's should be muscle memory => eliminate bad habit and mental overhead of looking at tab-bar to find the tab you want, and instead hotkey to the file instantly.  no tablines, no statusbars.
 3. find buffer/tab :: search through the list of open buffers/tabs to switch to the one you need.
 
 ** no symbol layers and homerow mods
-- they are a gimics and introduce unneccessary complexity into the system. you are slowing yourself down using them, since the always require a modifier, and waiting for that modifier to be released makes you need to wait before continuing to hammer on in typing. using a symbol top layer layout: programmer-dvorak is far superior, more ergonomic and allows you to bang out symbols as fast as if you were writing prose.
+- they are a gimics and introduce unneccessary complexity into the system.  you are slowing yourself down using them, since the always require a modifier, and waiting for that modifier to be released makes you need to wait before continuing to hammer on in typing.  using a symbol top layer layout: programmer-dvorak is far superior, more ergonomic and allows you to bang out symbols as fast as if you were writing prose.
 - we want to reduce the depth of layering in our system.  layers always bring an increase in complexity and introduce mental overhead which is our aim to reduce as much as possible without limiting functionality.
 
 * principles
@@ -296,6 +304,6 @@ when you find yourself doing the same things repetitively or you get annoyed it 
 
 #+begin_quote
 When i write software, i write and think of it mostly in the timespan of decades, not shortterm.  Hence valuing languages like C, which will still compile, even in a decade from now.
---- alexey kutepov (YT:tsoding)
+--- alexey kutepov (tsoding)
 #+end_quote
 This same principle is applied to plain text computing.

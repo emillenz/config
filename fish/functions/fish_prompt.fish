@@ -15,7 +15,7 @@ function fish_prompt
         set stat (set_color $fish_color_error)"[$last_status]"
     end
 
-    set -l dir (set_color $fish_color_cwd)(prompt_pwd --full-length-dirs 4)
+    set -l dir (set_color $fish_color_cwd)(prompt_pwd --full-length-dirs=4)
     set -l delimiter (set_color $fish_color_command)">"
 
     set -l fish_color_line_bg '#dae5ec'

@@ -33,4 +33,4 @@ def main
         NotifySend.send('audio-output changed', read)
 end
 
-main if __FILE__ == $PROGRAM_NAME
+main

@@ -135,8 +135,9 @@ mode "leader" {
         bindsym $MOD+b           $CMD bluetooth-menu $ESC
         bindsym $MOD+k           $CMD $BIN/killprocess-menu $ESC
         bindsym $MOD+d           $CMD fd . ~/.screenlayout | $ROFI 'screen-layout' | sh $ESC
-        bindsym --release $MOD+s $CMD scrot --select --file="$HOME/Pictures/screenshots/%Y-%m-%d_T%H-%M.png" --exec='dunstify "screenshot" "$f\n(path -> clipboard)" && echo $f | xclip -selection clipboard' $ESC
-        bindsym $MOD+shift+s     $CMD scrot --file="$HOME/Pictures/screenshots/%Y-%m-%d_T%H-%M.png" --exec='dunstify "screenshot" "$f\n(path -> clipboard)" && echo $f | xclip -selection clipboard' $ESC
+        # NOTE :: after screenshot is taken, the path is written to clipboard
+        bindsym --release $MOD+s $CMD scrot --select --file="$HOME/Pictures/screenshots/%Y-%m-%d_T%H-%M.png" --exec='dunstify "screenshot" "$f" && echo $f | xclip -selection clipboard' $ESC
+        bindsym $MOD+shift+s     $CMD scrot --file="$HOME/Pictures/screenshots/%Y-%m-%d_T%H-%M.png" --exec='dunstify "screenshot" "$f" && echo $f | xclip -selection clipboard' $ESC
         bindsym $MOD+q           mode "quit"
         $EXIT
 }

@@ -49,4 +49,4 @@ def disconnect
         NotifySend.send('bluetooth off')
 end
 
-main if __FILE__ == $PROGRAM_NAME
+main 

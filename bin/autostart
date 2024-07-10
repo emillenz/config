@@ -14,9 +14,9 @@ end
 PROCESSES = [
         # 'alacritty --title cmd --command tmux new-session -A -s cmd',
         'emacs --daemon && emacsclient --reuse-frame',
-        'firefox',
-        'firefox --new-window https://chat.openai.com',
+        'firefox https://chat.openai.com https://wolframalpha.com',
         'firefox --new-window https://spotify.com',
+        'firefox --new-window',
         'playerctld',
         'unclutter',
         'batsignal -bpe -w 50 -c 20 -d 5',
@@ -46,4 +46,4 @@ def spawn_processes
         end
 end
 
-main if __FILE__ == $PROGRAM_NAME
+main

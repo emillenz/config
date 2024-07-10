@@ -32,4 +32,4 @@ def main
         NotifySend.send('killprocess', read)
 end
 
-main if __FILE__ == $PROGRAM_NAME
+main

@@ -1,7 +1,6 @@
 ;; [[file:config.org::*user][user:1]]
 (setq user-full-name "emil lenz"
       user-mail-address "emillenz@protonmail.com")
-(defvar z-org-literature-dir "~/Documents/literature/notes/")
 ;; user:1 ends here
 
 ;; [[file:config.org::*misc][misc:1]]
@@ -77,6 +76,7 @@
 ;; [[file:config.org::*misc options][misc options:1]]
 (setq initial-scratch-message ""
       delete-by-moving-to-trash t
+      bookmark-default-file "~/.config/doom/bookmarks" ;; save bookmarks in config dir (preserve for newinstalls)
       auto-save-default t
       confirm-kill-emacs nil
       hscroll-margin 0
@@ -99,6 +99,8 @@
       doom-localleader-alt-key "C-,")
 
 (map! :leader
+      "." #'vertico-repeat
+      "'" #'consult-bookmark
       (:prefix "s"
                "K" #'devdocs-lookup
                "t" #'dictionary-search
@@ -175,8 +177,7 @@ This is sensible default behaviour, and integrates it into evil."
 (map! :localleader :map org-mode-map :after org
       "\\" #'org-latex-preview
       ","  #'org-ctrl-c-ctrl-c
-      "-"  (cmd! (let ((current-prefix-arg '(16)))
-                   (call-interactively #'org-toggle-checkbox)))
+      "-"  #'org-toggle-item
       "["  (cmd! (let ((current-prefix-arg '(4)))
                    (call-interactively #'org-toggle-checkbox)))
       "z"  #'org-add-note)
@@ -187,6 +188,7 @@ This is sensible default behaviour, and integrates it into evil."
       :nm "h" #'dired-up-directory
       :nm "l" #'dired-open-file
       :nm "f" #'dired-goto-file
+      :nm "+" #'dired-create-empty-file ;; file or directory (append: /)
       :nm "." #'dired-omit-mode)
 
 (map! :after dired :map dired-mode-map :localleader
@@ -207,7 +209,6 @@ This is sensible default behaviour, and integrates it into evil."
         evil-want-C-i-jump t
         evil-want-C-h-delete t
         evil-want-minibuffer t ;; don't loose all your power's in the minibuffer
-        evil-collection-want-unimpaired-p t
         evil-org-use-additional-insert nil))
 
 ;; HACK :: make 'C-h' work as backspace correctly everywhere (like vim/shell)
@@ -482,6 +483,8 @@ This is sensible default behaviour, and integrates it into evil."
 ;; [[file:config.org::*agenda][agenda:1]]
 (add-hook! 'org-agenda-mode-hook #'org-super-agenda-mode)
 
+(defvar z-org-literature-dir "~/Documents/literature/notes/")
+
 (setq org-agenda-files (list org-directory
                              z-org-literature-dir
                              "~/Documents/compass")
@@ -583,8 +586,8 @@ This is sensible default behaviour, and integrates it into evil."
                     ":END:"
                     "%?")))
 
-(defun z-doct-expand-projects (&optional projects parent-path)
-  "PROJECTS :: nil (used for recursion)
+(defun z-doct-expand-templates (projects &optional parent-path)
+  "PROJECTS :: `z-doct-projects'
 PARENT-PATH :: nil (used for recursion)"
   (mapcar (lambda (project)
             (let* ((tag (car project))
@@ -595,18 +598,15 @@ PARENT-PATH :: nil (used for recursion)"
                    (path (file-name-concat parent-path tag)))
               (append self
                       (if children
-                          (list :children (append (z-doct-expand-projects children ;; NOTE :: don't create subdir again for parent-project
-                                                                          path)
-                                                  (z-doct-expand-projects (list self)
-                                                                          nil)))
+                          (list :children (append (z-doct-expand-templates children path)
+                                                  (z-doct-expand-templates (list self) nil))) ;; NOTE :: don't nest self in it's own subdir
                         (list :children (list (z-doct-task-template path)
                                               (z-doct-event-template path)
                                               (z-doct-note-template path)))))))
-          (or projects
-              z-doct-projects)))
+          projects))
 
 (setq org-capture-templates
-      (doct `(,@(z-doct-expand-projects)
+      (doct `(,@(z-doct-expand-templates z-doct-projects)
 
               ("journal"
                :keys "j"
@@ -630,7 +630,7 @@ PARENT-PATH :: nil (used for recursion)"
                           ("note"
                            :keys "n"
                            :headline "notes"
-                           :prepent t
+                           :prepend t
                            :empty-lines-after 1
                            :template ("* %^{title}"
                                       ":PROPERTIES:"
@@ -652,13 +652,13 @@ PARENT-PATH :: nil (used for recursion)"
               ("literature"
                :keys "l"
                :file (lambda () (read-file-name "file: " z-org-literature-dir))
-               :children (("to read"
-                           :keys "r"
+               :children (("add to readlist"
+                           :keys "a"
                            :file ,(file-name-concat z-org-literature-dir "readlist.org")
                            :prepend t
                            :template ("* [ ] %^{title}%? %^g"))
 
-                          ("init"
+                          ("init source" ;; call when starting with new literature.
                            :keys "i"
                            :file (lambda ()
                                    (file-name-concat z-org-literature-dir (concat (replace-regexp-in-string " "
@@ -677,7 +677,7 @@ PARENT-PATH :: nil (used for recursion)"
                                       ":title:  %\\1"
                                       ":author: %^{author}"
                                       ":year:   %^{year}"
-                                      ":type:   %^{ |book|textbook|ebook|paper|article|audiobook|podcast}"
+                                      ":type:   %^{ |book|textbook|book|paper|article|audiobook|podcast}"
                                       ":pages:  %^{pages}"
                                       ":END:"))
 
@@ -720,7 +720,7 @@ PARENT-PATH :: nil (used for recursion)"
                            :type plain
                            :template ("%?")
                            :hook (lambda ()
-                                   (message "don't forget to toggle: TODO -> DONE")))))))) ;; in order to log finishing date
+                                   (message "don't forget to change: TODO -> DONE")))))))) ;; in order to log finishing date
 ;; capture templates:1 ends here
 
 ;; [[file:config.org::*capture templates][capture templates:2]]

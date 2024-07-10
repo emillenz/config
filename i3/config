@@ -11,7 +11,6 @@ set $EXIT bindsym Escape mode "default"
 set $BIN ~/.config/bin
 set $MV move container to workspace
 set $CMD exec --no-startup-id
-set $SCREENSHOT_TO_CLIP
 # no statusbar => use notifications for info
 set $VOL_INC pamixer --unmute --increase=5 && dunstify --replace=69 "vol: $(pamixer --get-volume-human)"
 set $VOL_DEC pamixer --unmute --decrease=5 && dunstify --replace=69 "vol: $(pamixer --get-volume-human)"
